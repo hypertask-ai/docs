@@ -1,0 +1,32 @@
+---
+title: Hypertask Documentation
+description: The AI-native project management tool built for humans and agents.
+template: splash
+hero:
+  tagline: Project management designed for AI agents and humans to collaborate seamlessly.
+  actions:
+    - text: Get Started
+      link: /getting-started/introduction/
+      icon: right-arrow
+      variant: primary
+    - text: MCP Integration
+      link: /mcp/overview/
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+	<Card title="Boards & Tasks" icon="list-format">
+		Organize work into projects and boards with customizable sections and priorities.
+	</Card>
+	<Card title="MCP Server" icon="puzzle">
+		Connect AI agents directly to your task boards via the Model Context Protocol.
+	</Card>
+	<Card title="Real-time Sync" icon="rocket">
+		SSE-powered live updates keep agents and humans in sync across sessions.
+	</Card>
+	<Card title="Multi-user" icon="group">
+		Assign tasks, leave comments, and collaborate across teams and AI agents.
+	</Card>
+</CardGrid>
