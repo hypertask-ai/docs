@@ -1,0 +1,116 @@
+---
+title: Tasks
+description: Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks.
+---
+
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Tasks are the core unit of work in Hypertask. Every task lives on a board, belongs to a section, and can carry rich metadata to help you organize, prioritize, and track progress.
+
+## Task fields
+
+| Field | Description |
+|-------|-------------|
+| **Title** | Short summary of the work |
+| **Description** | Rich HTML content via the TipTap editor — supports formatting, images, code blocks, and more |
+| **Ticket number** | Auto-generated identifier in the format `PROJ-123` (project prefix + sequential number) |
+| **Priority** | Urgency level (see below) |
+| **Estimate** | T-shirt size for effort estimation |
+| **Due date** | Deadline for the task |
+| **Labels** | Colored tags for categorization |
+| **Assignees** | One or more team members responsible for the work |
+| **Followers** | People who receive notifications about the task (added automatically via @mentions) |
+| **Attachments** | Files attached to the task, its comments, or its description |
+| **Subtasks** | Nested child tasks for breaking down larger work |
+
+## Priority levels
+
+Every task has a priority. The default is **None**, which means unprioritized.
+
+| Priority | When to use |
+|----------|-------------|
+| **Urgent** | Needs immediate attention — something is broken or blocked |
+| **High** | Important work that should be tackled soon |
+| **Medium** | Standard priority — the default for most planned work |
+| **Low** | Nice to have, do it when there's bandwidth |
+| **None** | Not yet prioritized |
+
+## Estimates
+
+Use T-shirt sizing to estimate effort without getting bogged down in hour counts:
+
+| Size | Typical meaning |
+|------|----------------|
+| **XS** | Trivial — a few minutes |
+| **S** | Small — under an hour |
+| **M** | Medium — a few hours |
+| **L** | Large — a full day |
+| **XL** | Extra large — multiple days |
+| **XXL** | Very large — a week or more |
+| **XXXL** | Massive — needs to be broken into subtasks |
+
+<Aside type="tip">
+If a task is estimated as XXXL, that's usually a signal to break it into smaller subtasks with their own estimates.
+</Aside>
+
+## Identifying tasks
+
+There are three ways to reference a task in Hypertask:
+
+1. **Task ID** — the global unique identifier (e.g., `42`). Used in API and MCP calls.
+2. **Ticket number** — the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
+3. **Project + unique index** — the combination of project ID and the task's index within that project. Used internally.
+
+## Task status lifecycle
+
+Tasks follow a three-stage lifecycle:
+
+<Steps>
+1. **Normal** — the task is active and visible on the board.
+2. **Archived** — the task is removed from the board but preserved for reference. It still appears in search results.
+3. **Deleted** — soft delete. The task is hidden from all views but can be recovered if needed.
+</Steps>
+
+Archiving is the recommended way to clean up completed work. It keeps your board focused without losing history.
+
+## Task relations
+
+Link related tasks together to capture dependencies and connections:
+
+| Relation | Meaning |
+|----------|---------|
+| **RelatedTo** | These tasks are connected but don't block each other |
+| **BlockedBy** | This task cannot proceed until the linked task is complete |
+| **BlockedTo** | This task is blocking another task from proceeding |
+
+Relations are bidirectional — creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
+
+## Subtasks
+
+Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right — they have all the same fields, can be assigned independently, and carry their own priority and estimates.
+
+Use subtasks to break large work items into actionable steps while keeping the parent task as an overview.
+
+## Assignees and followers
+
+- **Assignees** are the people responsible for completing the task. A task can have multiple assignees.
+- **Followers** receive notifications about task updates (comments, status changes, moves). Anyone @mentioned in a comment is automatically added as a follower.
+
+## Attachments
+
+Files can be attached to:
+
+- The task itself
+- Comments on the task
+- The task description (inline via the rich text editor)
+
+## Task sharing
+
+Generate a **public link** to share a task with people outside your project. Public links support:
+
+- **Expiration** — set a time limit on access
+- **Read-only access** — external viewers can see the task but cannot modify it
+
+<Aside type="caution">
+Public links expose task details to anyone with the URL. Use expiration dates and share only what's necessary.
+</Aside>

@@ -1,0 +1,108 @@
+---
+title: Boards & Sections
+description: Organize work with Kanban-style boards, customizable sections, and multiple views.
+---
+
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+
+## Sections
+
+Sections are the columns on your board. New projects start with three defaults:
+
+- **Todo** — work that needs to be done
+- **Doing** — work in progress
+- **Done** — completed work
+
+These defaults are just a starting point. You can rename them, reorder them, add new ones, or remove them entirely. Common setups include:
+
+| Workflow | Sections |
+|----------|----------|
+| Simple | Todo, Doing, Done |
+| Development | Backlog, Todo, In Progress, Review, Done |
+| Content | Ideas, Drafting, Editing, Published |
+| Support | New, Triaging, In Progress, Waiting, Resolved |
+
+### Customizing sections
+
+Each section supports the following configuration:
+
+- **Name** — the column label displayed on the board
+- **Visibility** — show or hide sections without deleting them (hidden sections retain their tasks)
+- **Ranking** — drag sections to reorder them, or set a rank value directly
+
+<Aside type="tip">
+Hiding a section is useful when you want to temporarily declutter the board without losing any task data. Tasks in hidden sections still appear in search results and saved views.
+</Aside>
+
+### Moving tasks between sections
+
+There are three ways to move a task to a different section:
+
+1. **Drag and drop** — in the web UI, drag a task card from one column to another.
+2. **MCP** — use the `hypertask_section` tool to move a task programmatically:
+   ```
+   hypertask_section(taskId: 42, sectionId: 5)
+   ```
+3. **API** — call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
+
+## Views
+
+Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data — they're just different lenses on the same information.
+
+### Board view
+
+The default Kanban layout. Tasks appear as cards organized into section columns. This is ideal for tracking work status at a glance.
+
+### Calendar view
+
+Displays tasks on a calendar based on their due dates. Useful for deadline-driven work where timing matters more than workflow stage.
+
+### Timeline / Schedule view
+
+A Gantt-style horizontal timeline showing task durations and dependencies. Best for project planning and identifying scheduling conflicts.
+
+## Saved Views
+
+Saved Views let you create reusable filter and sort configurations for a project. Instead of re-applying the same filters every time you open a board, save them as a named view and switch between them instantly.
+
+### Filters
+
+Narrow down which tasks appear on the board:
+
+| Filter | Description |
+|--------|-------------|
+| **Section** | Show tasks from specific sections only |
+| **Priority** | Filter by Urgent, High, Medium, Low, or None |
+| **Assignee** | Show tasks assigned to specific team members |
+| **Due date** | Filter by date range or relative periods (overdue, due this week) |
+| **Labels** | Filter by one or more labels |
+| **Status** | Filter by task status (active, archived) |
+| **Creator** | Show tasks created by a specific person |
+
+### Sort options
+
+Control the order tasks appear within each section:
+
+- **Manual** — custom drag-and-drop ordering
+- **Priority** — highest priority first
+- **Due Date** — earliest deadline first
+- **Size** — smallest estimate first
+- **Created At** — newest or oldest first
+- **Updated At** — most recently changed first
+
+### Subtask display
+
+Control how subtasks appear on the board:
+
+| Mode | Behavior |
+|------|----------|
+| **None** | Subtasks are hidden from the board |
+| **Parent** | Subtasks are grouped under their parent task |
+| **Flattened** | Subtasks appear as individual cards alongside regular tasks |
+| **Card** | Subtasks display as nested cards within the parent |
+
+<Aside>
+Saved Views are per-project. Each team member can create their own views without affecting others.
+</Aside>

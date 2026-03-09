@@ -4,9 +4,11 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://docs.hypertask.ai',
 	integrations: [
 		starlight({
 			title: 'Hypertask Docs',
+			customCss: ['./src/styles/custom.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/valentinyeo/hypertask' }],
 			sidebar: [
 				{
@@ -19,15 +21,26 @@ export default defineConfig({
 				},
 				{
 					label: 'Features',
-					autogenerate: { directory: 'features' },
+					items: [
+						{ label: 'AI Features', slug: 'features/ai-features' },
+						{ label: 'Boards & Sections', slug: 'features/boards' },
+						{ label: 'Tasks', slug: 'features/tasks' },
+						{ label: 'Inbox & Notifications', slug: 'features/inbox' },
+						{ label: 'Collaboration', slug: 'features/collaboration' },
+					],
 				},
 				{
 					label: 'MCP Integration',
-					autogenerate: { directory: 'mcp' },
+					items: [
+						{ label: 'Overview', slug: 'mcp/overview' },
+						{ label: 'Agent Workflows', slug: 'mcp/workflows' },
+					],
 				},
 				{
 					label: 'API Reference',
-					autogenerate: { directory: 'api' },
+					items: [
+						{ label: 'MCP Tools Reference', slug: 'api/tools-reference' },
+					],
 				},
 			],
 		}),

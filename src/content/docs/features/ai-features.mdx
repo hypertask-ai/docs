@@ -1,0 +1,131 @@
+---
+title: AI Features
+description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
+sidebar:
+  order: 0
+---
+
+import { Aside, Tabs, TabItem, Card, CardGrid } from '@astrojs/starlight/components';
+
+Hypertask is built from the ground up as an AI-native project management platform. AI isn't bolted on as an afterthought — it's woven into every part of the workflow, from creating tasks to communicating with your team.
+
+<CardGrid>
+  <Card title="AI Task Writer" icon="pencil">
+    Describe what you need. Get detailed, context-aware tasks.
+  </Card>
+  <Card title="Voice Dictation" icon="seti:audio">
+    Speak your thoughts. Hypertask transcribes and structures them.
+  </Card>
+  <Card title="HyperAI Co-worker" icon="comment">
+    Chat with an AI that knows your project inside and out.
+  </Card>
+  <Card title="Text Enhancement" icon="document">
+    Improve grammar and readability of any text with one click.
+  </Card>
+</CardGrid>
+
+## AI Task Writer
+
+Instead of manually writing detailed task descriptions, tell the AI Task Writer what you need in plain language. It generates fully structured tasks with context-aware details.
+
+**How it works:**
+
+1. Open the AI Task Writer from any board.
+2. Describe what you need — a sentence or two is enough.
+3. The AI uses your **project context** (existing tasks, descriptions, labels) and any **custom instructions** you've configured to generate a detailed task.
+4. Toggle **web search** on if the AI should research external information (documentation, APIs, best practices) while writing the task.
+5. Review, edit if needed, and add the task to your board.
+
+The Task Writer maintains a **history of responses**, so you can revisit previous suggestions and reuse them.
+
+<Aside type="tip">
+The more context your project has — existing tasks, custom instructions, attached documents — the better the AI Task Writer performs. It learns from your project's patterns.
+</Aside>
+
+## Voice Dictation
+
+Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
+
+| Feature | Details |
+|---------|---------|
+| **Keyboard shortcut** | `Shift + Cmd/Ctrl + D` |
+| **Continuous mode** | Keep talking without pressing buttons repeatedly |
+| **Echo cancellation** | Works in noisy environments and during calls |
+| **Noise suppression** | Filters out background noise for cleaner transcription |
+| **Multilingual** | Supports all languages that Whisper recognizes |
+
+Speak naturally. The transcription handles punctuation, formatting, and language detection automatically.
+
+## Text Enhancement
+
+Select any text in a task description or comment and click **Improve Readability**. The AI refines grammar, clarity, and style while preserving your meaning.
+
+- Works on any text field in the app
+- Preserves technical terms and project-specific language
+- **Undo support** — revert to the original text if you prefer it
+
+This is intentionally lightweight. It's not a rewrite — it's a polish.
+
+## HyperAI Co-worker
+
+HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: it knows your project, your tasks, and your team structure.
+
+### What makes it useful
+
+- **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday."
+- **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
+- **Persistent conversations** — chat history is saved, so you can pick up where you left off.
+
+### Keyboard shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
+| `Cmd/Ctrl + Shift + O` | Start a new chat |
+
+## Auto-Summary
+
+When a task accumulates a long comment thread, Hypertask generates an **automatic summary** so you can get up to speed without reading every message.
+
+Auto-summaries highlight:
+
+- Key decisions made in the thread
+- Current status and blockers
+- Action items that emerged from the discussion
+
+<Aside>
+Auto-summaries update as new comments are added, so they always reflect the latest state of the conversation.
+</Aside>
+
+## Custom AI Instructions
+
+Tailor how AI features behave on a per-project basis.
+
+### Project-level configuration
+
+- **Custom instructions** — write free-text instructions that guide AI behavior. For example: "Always include acceptance criteria in generated tasks" or "Use British English."
+- **Attached documents** — upload files that give the AI domain-specific knowledge (RAG). Product specs, API docs, style guides — anything that helps the AI understand your project's context.
+- **Model selection** — choose which AI model powers your project's AI features.
+- **Visibility** — set instructions as public (visible to all members) or private (visible only to you).
+
+### Supported models
+
+<Tabs>
+  <TabItem label="OpenAI">
+    - **GPT-5.2** — most capable OpenAI model
+    - **GPT-5 mini** — faster and more cost-effective
+  </TabItem>
+  <TabItem label="Anthropic">
+    - **Claude Opus 4.6** — strongest reasoning and analysis
+    - **Claude Sonnet 4.5** — balanced performance and speed
+    - **Claude Haiku 4.5** — fastest, ideal for high-volume tasks
+  </TabItem>
+  <TabItem label="Google">
+    - **Gemini 3 Pro** — most capable Google model
+    - **Gemini 3 Flash** — optimized for speed
+  </TabItem>
+</Tabs>
+
+<Aside type="tip">
+Different models have different strengths. Use a more capable model (Opus, GPT-5.2, Gemini 3 Pro) for complex task generation and a faster model (Haiku, GPT-5 mini, Gemini 3 Flash) for quick text improvements and summaries.
+</Aside>

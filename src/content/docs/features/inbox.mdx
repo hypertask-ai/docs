@@ -1,0 +1,61 @@
+---
+title: Inbox & Notifications
+description: Stay on top of assignments, mentions, and task updates with a unified inbox.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+The Hypertask inbox is a single feed of everything that needs your attention — assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
+
+## How it works
+
+Every action that involves you generates a notification in your inbox. Notifications stay in your inbox until you explicitly archive them, so nothing slips through the cracks.
+
+<Steps>
+1. **Receive** — a notification appears when something relevant happens.
+2. **Review** — open the notification to see the task and context.
+3. **Act** — respond, update the task, or take whatever action is needed.
+4. **Archive** — mark the notification as handled to clear it from your inbox.
+</Steps>
+
+## Notification types
+
+| Type | Triggered when... |
+|------|-------------------|
+| **Assigned** | You are assigned to a task |
+| **Comment** | Someone comments on a task you follow |
+| **Mentioned** | Someone @mentions you in a comment or description |
+| **Invited** | You are invited to a project |
+| **Reacted** | Someone reacts to your comment or task |
+| **TaskArchived** | A task you follow is archived |
+| **TaskMoved** | A task you follow is moved to a different section |
+| **TaskDueDate** | A due date is set or changed on a task you follow |
+| **TaskOverdue** | A task you're assigned to is past its due date |
+| **TaskReminder** | A scheduled reminder fires for a task |
+| **TaskUpdateDescription** | The description of a task you follow is edited |
+| **AddedToFollowerInTask** | You are added as a follower on a task |
+| **TaskMovedToInbox** | A task is explicitly sent to your inbox |
+
+## Archiving
+
+Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" — you've seen it, handled it, and don't need it front and center anymore.
+
+You can archive notifications one at a time or in bulk. Archived notifications can still be accessed if you need to refer back to them.
+
+## AI agent workflow
+
+The inbox is particularly useful for AI agents working through Hypertask via MCP. A typical agent loop looks like this:
+
+<Steps>
+1. **Check inbox** — call `hypertask_inbox_list` to see pending notifications.
+2. **Pick a task** — select the highest-priority item.
+3. **Do the work** — complete the task using whatever tools are available.
+4. **Comment** — use `hypertask_add_comment_to_task` to document what was done.
+5. **Move** — use `hypertask_section` to move the task to "Review" or "Done".
+6. **Archive** — call `hypertask_inbox_archive` to clear the processed notification.
+7. **Repeat** — go back to step 1.
+</Steps>
+
+<Aside type="tip">
+AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back — all through the same inbox and board system.
+</Aside>

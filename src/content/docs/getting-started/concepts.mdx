@@ -1,0 +1,186 @@
+---
+title: Core Concepts
+description: Reference for all key concepts in Hypertask.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page covers every core concept in Hypertask. Use it as a reference when building integrations or configuring your workspace.
+
+## Projects
+
+A project is the top-level container for work. Think of it as a board — a single workspace where your team organizes tasks into sections.
+
+Each project has:
+
+- **Name and description** — What the project is about.
+- **Prefix** — A short code (e.g., `HT`, `API`) used to generate ticket numbers like `HT-42`.
+- **Unique ID** — A numeric identifier used in the MCP API.
+- **Members** — The people (and AI agents) who have access.
+- **Sections** — The columns that define your workflow.
+- **Views** — Saved filter/sort configurations.
+- **Labels** — Custom tags for categorizing tasks.
+
+Projects map 1:1 with boards in the UI. When an MCP tool refers to a `board_id`, it means the project ID.
+
+## Sections
+
+Sections are the columns on a project board. They represent stages in your workflow.
+
+**Default sections** when you create a project:
+
+| Section | Typical use |
+|---------|-------------|
+| Todo | Work that's defined and ready to start |
+| Doing | Actively in progress |
+| Done | Completed and verified |
+
+You can add, rename, reorder, or remove sections at any time. Common additions include **Review**, **Build**, **Backlog**, or **Blocked**.
+
+Each section has:
+
+- **Name** — Displayed as the column header.
+- **Visibility** — Sections can be hidden without deleting them.
+- **Rank** — Controls left-to-right ordering on the board.
+- **Section ID** — Used by MCP tools to move tasks between sections.
+
+<Aside>
+Use the `hypertask_section` MCP tool to move a task into a section by name. You don't need to know the section ID — just pass the section name as a string.
+</Aside>
+
+## Tasks
+
+Tasks are the core unit of work. Every task belongs to exactly one section within one project.
+
+### Properties
+
+| Property | Description |
+|----------|-------------|
+| **Title** | Short, actionable summary of the work |
+| **Description** | Rich HTML content with full context, acceptance criteria, and links |
+| **Ticket number** | Auto-generated sequential ID scoped to the project (e.g., `PROJ-123`) |
+| **Priority** | `Urgent`, `High`, `Medium`, `Low`, or `None` |
+| **Estimate** | T-shirt sizing: `XS`, `S`, `M`, `L`, `XL`, `XXL`, `XXXL` |
+| **Due date** | Optional deadline |
+| **Status** | `Normal`, `Archive`, or `Deleted` |
+| **Section** | Current column on the board |
+| **Assignees** | One or more team members responsible for the work |
+| **Followers** | Users who receive notifications (auto-added via @mentions) |
+| **Labels** | Custom tags for categorization |
+| **Subtasks** | Nested tasks for breaking down work |
+
+### Subtasks
+
+Any task can have subtasks — smaller units of work nested under a parent. Subtasks are full tasks themselves, with their own title, assignee, priority, and status. Use them to break complex work into trackable steps.
+
+### Task relations
+
+Tasks can be linked to each other with typed relationships:
+
+| Relation | Meaning |
+|----------|---------|
+| `RelatedTo` | General association between two tasks |
+| `BlockedBy` | This task cannot proceed until the linked task is done |
+| `BlockedTo` | This task is blocking another task from proceeding |
+
+Relations are bidirectional — creating a `BlockedBy` link on Task A to Task B automatically creates a `BlockedTo` link from Task B to Task A.
+
+## Assignees and followers
+
+### Assignees
+
+A task can have **multiple assignees**. All assignees:
+
+- See the task in their inbox
+- Receive notifications when the task is updated or commented on
+- Are responsible for completing the work
+
+Use the `hypertask_assign_user` MCP tool to add or remove assignees programmatically.
+
+### Followers
+
+Followers are users who receive notifications about a task without being responsible for it. Users become followers when:
+
+- They are **@mentioned** in a comment or description
+- They **manually follow** the task through the UI
+- They **create** the task (the creator auto-follows)
+
+## Comments
+
+Comments are threaded discussions attached to a task. They serve as the primary communication channel for async collaboration.
+
+Each comment supports:
+
+- **HTML formatting** — Bold, italic, code blocks, links, lists, and more. All comments use HTML, not Markdown.
+- **@mentions** — Reference team members by name. Mentioned users are auto-added as followers and receive inbox notifications.
+- **Reactions** — Emoji reactions on any comment for lightweight feedback.
+- **Attachments** — Files attached to comments for sharing screenshots, documents, or other artifacts.
+
+<Aside type="tip">
+When an AI agent completes a task, best practice is to post a comment summarizing what was done, what changed, and any relevant file paths or URLs. This creates an audit trail that teammates can review async.
+</Aside>
+
+## Labels
+
+Labels are custom tags you define at the project level. Use them to categorize tasks by type, area, or any dimension that matters to your team.
+
+Examples:
+
+- `bug`, `feature`, `chore`
+- `frontend`, `backend`, `infra`
+- `quick-win`, `tech-debt`
+
+Tasks can have multiple labels. Labels are filterable in views.
+
+## Views
+
+Views are saved filter and sort configurations for a project. They let you slice the board in different ways without changing the underlying data.
+
+A view can filter by:
+
+- Section
+- Assignee
+- Priority
+- Label
+- Due date
+
+And sort by:
+
+- Priority
+- Due date
+- Created date
+- Ticket number
+
+Each project can have multiple saved views. They're useful for creating focused perspectives like "My tasks", "Urgent items", or "Overdue work".
+
+## Inbox
+
+The inbox is a unified notification center for each user. It surfaces work that needs your attention.
+
+You receive inbox notifications when:
+
+| Event | Notification |
+|-------|-------------|
+| **Assigned to a task** | Task appears in your inbox |
+| **Comment on your task** | New comment notification |
+| **@mentioned in a comment** | Mention notification |
+| **Task due date approaching** | Due date reminder |
+| **Task overdue** | Overdue warning |
+
+Inbox items can be **archived** once handled. Use `hypertask_inbox_list` to check notifications and `hypertask_inbox_archive` to clear them via MCP.
+
+<Aside>
+AI agents should check their inbox at the start of each session to pick up newly assigned work. This is the recommended pattern for agent-driven task execution.
+</Aside>
+
+## Teams
+
+Teams are organization-level containers that group projects and members under a shared billing account.
+
+Key aspects:
+
+- **Seat-based billing** — Each team member (human or AI agent account) occupies a seat.
+- **Member roles** — Control who can create projects, manage billing, or invite new members.
+- **Shared projects** — All projects within a team are accessible to team members based on their role.
+
+A user can belong to multiple teams, each with its own projects, billing, and member roster.

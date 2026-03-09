@@ -1,0 +1,84 @@
+---
+title: Collaboration
+description: Work together with team workspaces, real-time editing, mentions, reactions, and activity logs.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
+
+## Team workspaces
+
+Workspaces are the top-level container in Hypertask. Each workspace groups related projects together and manages team membership.
+
+A workspace might represent your company, a department, or a client engagement. You can belong to multiple workspaces.
+
+## Project members
+
+### Inviting people
+
+Invite team members to a project by generating an **invite link**. Invite links support several controls:
+
+| Setting | Description |
+|---------|-------------|
+| **Expiration** | Set when the link stops working (e.g., 7 days, 30 days, never) |
+| **Usage limit** | Cap how many people can join via this link |
+| **Domain restriction** | Limit invites to specific email domains (e.g., `@yourcompany.com`) |
+
+<Aside type="tip">
+Domain restrictions are useful when you want to share an invite link broadly (in Slack, for example) but limit access to people within your organization.
+</Aside>
+
+### Roles and permissions
+
+Project members can view boards, create and edit tasks, comment, and collaborate. Project-level settings control what members can do.
+
+## @mentions
+
+Type `@` in any comment to mention a team member. Mentions do two things:
+
+1. **Send a notification** — the mentioned person receives an inbox notification immediately.
+2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
+
+Mentions work in comments and task descriptions.
+
+## Emoji reactions
+
+React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
+
+Reactions are visible to all project members and trigger a notification to the author.
+
+## Real-time collaboration
+
+Hypertask uses **TipTap with Yjs** for real-time collaborative editing. Multiple people can edit the same task description simultaneously, with changes syncing live across all connected clients.
+
+This applies to:
+
+- Task descriptions
+- Comments (while drafting)
+- Any rich text field in the app
+
+There are no save buttons — changes persist as you type.
+
+<Aside>
+Real-time sync also means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
+</Aside>
+
+## Activity logs
+
+Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
+
+Tracked actions include:
+
+- Task creation, updates, and deletion
+- Section moves
+- Assignment and priority changes
+- Comments and reactions
+- Member joins and leaves
+- Board and section modifications
+
+Activity logs are available at the task level (see what happened to a specific task) and the project level (see all activity across the project).
+
+## Saved content
+
+Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal — only you see your bookmarks. Use it to track tasks you're interested in but not assigned to, or to build a reading list of important discussions.

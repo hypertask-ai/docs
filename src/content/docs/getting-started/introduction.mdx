@@ -1,0 +1,80 @@
+---
+title: What is Hypertask?
+description: AI-native project management for teams and AI agents.
+---
+
+import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+
+Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members — through the [Model Context Protocol (MCP)](/mcp/overview/).
+
+The web app lives at [app.hypertask.ai](https://app.hypertask.ai). It's a Next.js application designed for speed, with real-time sync via Server-Sent Events (SSE).
+
+## Why Hypertask?
+
+Most project management tools were designed for humans clicking through UIs. That breaks down when an AI coding agent needs to pick up a task, read context, do the work, and report back. Hypertask solves this.
+
+<CardGrid>
+  <Card title="AI Task Writer" icon="pencil">
+    Describe what you need in natural language. Hypertask generates structured tasks with titles, descriptions, priorities, and estimates.
+  </Card>
+  <Card title="Voice Dictation" icon="translate">
+    Capture tasks by speaking. Powered by Whisper, so you can dictate a task from your phone or desktop without typing a word.
+  </Card>
+  <Card title="HyperAI Co-worker" icon="rocket">
+    An AI assistant embedded in every project. It can summarize progress, suggest next steps, and help you write task descriptions.
+  </Card>
+  <Card title="MCP for AI Agents" icon="setting">
+    Connect Claude, Cursor, or any MCP client. Agents can list tasks, create work items, move cards between sections, and post comments — all programmatically.
+  </Card>
+</CardGrid>
+
+## How Hypertask is organized
+
+Work in Hypertask follows a simple hierarchy:
+
+```
+Team (Organization)
+  └── Projects
+        └── Sections (columns)
+              └── Tasks
+                    ├── Comments
+                    ├── Subtasks
+                    └── Attachments
+```
+
+- **Projects** are containers for related work — a product, a client engagement, a sprint. Each project has its own board, members, and settings.
+- **Sections** are the columns on a project board. Typical setups use Todo, Doing, Review, and Done, but you can customize them however you like.
+- **Tasks** are the units of work. They carry a title, HTML description, priority, estimate, assignee, due date, and a unique ticket number like `PROJ-123`.
+- **Comments** are threaded discussions on tasks. They support HTML formatting, @mentions, emoji reactions, and file attachments.
+
+<Aside>
+Every task gets a sequential ticket number scoped to its project (e.g., `HT-42`). Use these to reference tasks in commits, comments, or conversations with your AI agent.
+</Aside>
+
+## Built for async and deep work
+
+Hypertask is opinionated about how teams should work:
+
+- **Async-first.** The inbox, task comments, and auto-summaries keep everyone informed without requiring real-time meetings.
+- **Deep work friendly.** No chat. No presence indicators. No "typing..." animations. Communicate through tasks and comments when you're ready.
+- **AI agents as team members.** Assign tasks to an AI agent the same way you'd assign them to a colleague. The agent picks up work from its inbox, moves tasks through sections, and posts updates in comments.
+
+## Key capabilities at a glance
+
+| Capability | Human (Web UI) | AI Agent (MCP) |
+|---|---|---|
+| Create tasks | Yes | Yes |
+| Move tasks between sections | Yes | Yes |
+| Assign team members | Yes | Yes |
+| Add comments | Yes | Yes |
+| Search across tasks | Yes | Yes |
+| Check inbox | Yes | Yes |
+| Voice dictation | Yes | — |
+| AI Task Writer | Yes | — |
+| Auto-summaries | Yes | Yes |
+
+## Next steps
+
+- **[Quick Start](/getting-started/quickstart/)** — Create your first project and connect an AI agent in under 5 minutes.
+- **[Core Concepts](/getting-started/concepts/)** — Understand projects, sections, tasks, and the data model.
+- **[MCP Integration](/mcp/overview/)** — Deep dive into connecting AI agents via MCP.

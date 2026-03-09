@@ -1,0 +1,139 @@
+---
+title: MCP Integration
+description: Connect AI agents to Hypertask via the Model Context Protocol.
+---
+
+import { Aside, Tabs, TabItem, Steps, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Hypertask provides a full [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that lets AI agents create, update, search, and manage tasks programmatically. Any MCP-compatible client can connect to Hypertask and operate as an autonomous worker.
+
+## What is MCP?
+
+The Model Context Protocol is an open standard that defines how AI models interact with external tools and data sources. Instead of building custom integrations for each AI client, Hypertask exposes a single MCP server that works with all of them.
+
+MCP uses a tool-based architecture: the server advertises available operations (list tasks, create task, add comment, etc.) and the AI client calls them as needed to complete user requests.
+
+## Transport
+
+Hypertask's MCP server uses **SSE (Server-Sent Events)** transport. The server endpoint is:
+
+```
+https://mcp.hypertask.ai/sse
+```
+
+## Authentication
+
+MCP connections are authenticated with **JWT bearer tokens**. To get your token:
+
+<Steps>
+
+1. Open [app.hypertask.ai](https://app.hypertask.ai) and sign in.
+2. Go to **Settings** (gear icon in the sidebar).
+3. Copy your **API key** from the MCP section.
+
+</Steps>
+
+<Aside type="caution">
+Tokens expire after **30 days**. If your agent stops authenticating, generate a new token from Settings.
+</Aside>
+
+## Client configuration
+
+<Tabs>
+<TabItem label="Claude Desktop">
+
+Add to your Claude Desktop config file (`claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "hypertasks": {
+      "type": "sse",
+      "url": "https://mcp.hypertask.ai/sse",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem label="Claude Code">
+
+Add to your project's `.mcp.json` or global `~/.claude/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "hypertasks": {
+      "type": "sse",
+      "url": "https://mcp.hypertask.ai/sse",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+<TabItem label="Cursor">
+
+Open **Settings > MCP Servers** and add a new server:
+
+```json
+{
+  "mcpServers": {
+    "hypertasks": {
+      "type": "sse",
+      "url": "https://mcp.hypertask.ai/sse",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Available tools
+
+Once connected, your agent has access to 15 tools:
+
+| Tool | Description |
+|------|-------------|
+| `hypertask_get_user_context` | Get current user info (id, email, display name) |
+| `hypertask_list_projects` | List all accessible projects |
+| `hypertask_section` | List or create sections on a board |
+| `hypertask_list_tasks` | List tasks with filtering |
+| `hypertask_get_tasks` | Get specific tasks by ID or ticket number |
+| `hypertask_search_tasks` | Full-text search across all tasks |
+| `hypertask_create_task` | Create a new task |
+| `hypertask_update_task` | Update task fields |
+| `hypertask_move_task_between_boards` | Move a task to another project |
+| `hypertask_assign_user` | Assign or unassign users |
+| `hypertask_add_comment_to_task` | Add a comment (HTML) |
+| `hypertask_get_comments_for_task` | Read task comments |
+| `hypertask_list_project_members` | List team members |
+| `hypertask_inbox_list` | Check inbox notifications |
+| `hypertask_inbox_archive` | Archive inbox items |
+
+## Supported clients
+
+Hypertask MCP works with any client that supports the MCP standard:
+
+- **Claude Code** -- Anthropic's CLI agent
+- **Claude Desktop** -- Anthropic's desktop app
+- **Cursor** -- AI-powered code editor
+- **Windsurf** -- Codeium's AI editor
+- **Any MCP-compatible agent** -- anything that speaks the protocol
+
+## Next steps
+
+<CardGrid>
+  <LinkCard title="Agent Workflows" description="Patterns for how AI agents should pick up and complete work." href="/mcp/workflows/" />
+  <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all 15 tools." href="/api/tools-reference/" />
+</CardGrid>

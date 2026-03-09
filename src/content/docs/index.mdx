@@ -1,32 +1,37 @@
 ---
 title: Hypertask Documentation
 description: The AI-native project management tool built for humans and agents.
-template: splash
 hero:
-  tagline: Project management designed for AI agents and humans to collaborate seamlessly.
+  tagline: Everything you need to integrate Hypertask into your workflow. From first task to full automation.
   actions:
-    - text: Get Started
-      link: /getting-started/introduction/
+    - text: Quickstart
+      link: /getting-started/quickstart/
       icon: right-arrow
       variant: primary
     - text: MCP Integration
       link: /mcp/overview/
       variant: minimal
+    - text: API Reference
+      link: /api/tools-reference/
+      variant: minimal
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-<CardGrid stagger>
-	<Card title="Boards & Tasks" icon="list-format">
-		Organize work into projects and boards with customizable sections and priorities.
-	</Card>
-	<Card title="MCP Server" icon="puzzle">
-		Connect AI agents directly to your task boards via the Model Context Protocol.
-	</Card>
-	<Card title="Real-time Sync" icon="rocket">
-		SSE-powered live updates keep agents and humans in sync across sessions.
-	</Card>
-	<Card title="Multi-user" icon="group">
-		Assign tasks, leave comments, and collaborate across teams and AI agents.
-	</Card>
+## Choose how you work
+
+Pick the interface that matches your workflow.
+
+<CardGrid>
+	<LinkCard title="Web App" description="Manage tasks, boards, and projects through the Hypertask UI at app.hypertask.ai." href="https://app.hypertask.ai" />
+	<LinkCard title="MCP for AI Agents" description="Connect Claude, Cursor, or any MCP client to manage tasks programmatically." href="/mcp/overview/" />
+</CardGrid>
+
+## Explore the platform
+
+<CardGrid>
+	<LinkCard title="Boards & Sections" description="Organize work with Kanban-style boards and customizable columns." href="/features/boards/" />
+	<LinkCard title="Tasks" description="Create, assign, search, and manage tasks with priorities and comments." href="/features/tasks/" />
+	<LinkCard title="Inbox" description="Stay on top of assigned work and notifications." href="/features/inbox/" />
+	<LinkCard title="MCP Tools Reference" description="Complete reference for all 15 Hypertask MCP tools." href="/api/tools-reference/" />
 </CardGrid>

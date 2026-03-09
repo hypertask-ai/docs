@@ -1,0 +1,701 @@
+---
+title: MCP Tools Reference
+description: Complete parameter reference for all Hypertask MCP tools and their underlying API endpoints.
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+This is the complete reference for all 15 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
+
+<Aside type="note">
+All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
+</Aside>
+
+---
+
+## hypertask_get_user_context
+
+Returns information about the currently authenticated user.
+
+**Endpoint:** `GET /api/mcp/user/context`
+
+**Parameters:** None
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/user/context
+```
+
+**Example response:**
+
+```json
+{
+  "id": 6,
+  "email": "valentin@example.com",
+  "displayName": "Valentin"
+}
+```
+
+---
+
+## hypertask_list_projects
+
+List all projects accessible to the current user.
+
+**Endpoint:** `GET /api/mcp/projects`
+
+**Parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `status` | string | No | `Normal` | Filter by status: `Normal`, `Archive`, `Deleted` |
+| `search` | string | No | -- | Search projects by name |
+| `limit` | number | No | `50` | Max results to return |
+| `offset` | number | No | `0` | Pagination offset |
+| `sort_by` | string | No | `title` | Sort field: `title`, `createdAt`, `updatedAt` |
+| `sort_order` | string | No | `asc` | Sort direction: `asc`, `desc` |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/projects?status=Normal&limit=10"
+```
+
+**Example response:**
+
+```json
+{
+  "projects": [
+    {
+      "id": 15,
+      "title": "Hypertask Product",
+      "status": "Normal",
+      "createdAt": "2024-11-01T10:00:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## hypertask_section (list)
+
+List sections on a project board.
+
+**Endpoint:** `GET /api/mcp/projects/{projectId}/sections`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `include_hidden` | boolean | No | `false` | Include hidden sections |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/sections
+```
+
+**Example response:**
+
+```json
+{
+  "sections": [
+    { "id": 101, "title": "Backlog" },
+    { "id": 102, "title": "Todo" },
+    { "id": 103, "title": "Doing" },
+    { "id": 104, "title": "Review" },
+    { "id": 105, "title": "Done" }
+  ]
+}
+```
+
+---
+
+## hypertask_section (create)
+
+Create a new section on a project board.
+
+**Endpoint:** `POST /api/mcp/projects/{projectId}/sections`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | Yes | Section name (1-200 characters) |
+| `after_section_id` | number | No | Insert after this section. Omit to append at the end |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/sections \
+  -d '{"title": "QA", "after_section_id": 104}'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 106,
+  "title": "QA"
+}
+```
+
+---
+
+## hypertask_list_tasks / hypertask_get_tasks
+
+List tasks with filtering, or retrieve specific tasks by ID.
+
+**Endpoint:** `GET /api/mcp/tasks`
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `task_id` | number | No | Get a specific task by internal ID |
+| `ticket_number` | string | No | Get a task by ticket number (e.g. `HYP-42`) |
+| `project_id` | number | No | Filter by project |
+| `board_id` | number | No | Filter by board |
+| `section` | string | No | Filter by section name |
+| `assigned_to` | string | No | `me`, `unassigned`, or a user ID |
+| `priority` | string | No | `urgent`, `high`, `medium`, `low` |
+| `status` | string | No | `Normal`, `Archive`, `Deleted` |
+| `labels` | string | No | Comma-separated label names |
+| `has_due_date` | boolean | No | Filter tasks with/without due dates |
+| `due_date_before` | string | No | ISO 8601 date |
+| `due_date_after` | string | No | ISO 8601 date |
+| `created_by` | number | No | Filter by creator user ID |
+| `created_since` | string | No | ISO 8601 datetime |
+| `updated_since` | string | No | ISO 8601 datetime |
+| `has_comments` | boolean | No | Filter tasks with/without comments |
+| `has_attachments` | boolean | No | Filter tasks with/without attachments |
+| `search` | string | No | Simple text search on title |
+| `limit` | number | No | Max results (default varies) |
+| `offset` | number | No | Pagination offset |
+
+<Aside type="tip">
+To get a single task, use `task_id` or `ticket_number`. To list tasks on a board, use `board_id` with optional filters like `section` and `assigned_to`.
+</Aside>
+
+**Example request -- list tasks in "Todo" assigned to me:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/tasks?board_id=15&section=Todo&assigned_to=me"
+```
+
+**Example request -- get a single task by ticket number:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/tasks?ticket_number=HYP-42"
+```
+
+**Example response:**
+
+```json
+{
+  "tasks": [
+    {
+      "id": 1234,
+      "ticket_number": "HYP-42",
+      "title": "Add file upload validation",
+      "description": "<p>Validate file types before upload.</p>",
+      "priority": "high",
+      "section": "Todo",
+      "assignees": [
+        { "id": 6, "displayName": "Valentin" }
+      ],
+      "createdAt": "2025-01-15T09:00:00Z",
+      "updatedAt": "2025-01-16T14:30:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## hypertask_search_tasks
+
+Full-text search across all accessible tasks. Powered by Typesense for fast, typo-tolerant results.
+
+**Endpoint:** `GET /api/mcp/tasks/search`
+
+**Parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `query` | string | Yes | -- | Search query (max 200 characters) |
+| `board_id` | number | No | -- | Limit search to a specific board |
+| `project_id` | number | No | -- | Limit search to a specific project |
+| `section` | string | No | -- | Filter by section name |
+| `assigned_to` | string | No | -- | `me`, `unassigned`, or a user ID |
+| `priority` | string | No | -- | Filter by priority level |
+| `has_due_date` | boolean | No | -- | Filter by due date presence |
+| `status` | string | No | -- | `Normal`, `Archive`, `Deleted` |
+| `limit` | number | No | `10` | Max results (max 50) |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/tasks/search?query=upload%20validation&board_id=15&limit=5"
+```
+
+**Example response:**
+
+```json
+{
+  "tasks": [
+    {
+      "id": 1234,
+      "ticket_number": "HYP-42",
+      "title": "Add file upload validation",
+      "section": "Todo",
+      "priority": "high",
+      "score": 0.95
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## hypertask_create_task
+
+Create a new task in a project.
+
+**Endpoint:** `POST /api/mcp/tasks/create`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | number | Yes | Project to create the task in |
+| `title` | string | Yes | Task title |
+| `description` | string | No | HTML description |
+| `section_id` | number | No | Place in a specific section |
+| `priority` | string | No | `urgent`, `high`, `medium`, `low` |
+| `estimate` | number | No | Time estimate (in minutes) |
+| `images` | string[] | No | Array of image URLs to attach |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/tasks/create \
+  -d '{
+    "project_id": 15,
+    "title": "Add error handling to upload endpoint",
+    "description": "<p>Return 400 with descriptive error for invalid file types.</p>",
+    "priority": "high"
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 1235,
+  "ticket_number": "HYP-43",
+  "title": "Add error handling to upload endpoint",
+  "priority": "high",
+  "section": "Backlog",
+  "createdAt": "2025-01-17T10:00:00Z"
+}
+```
+
+---
+
+## hypertask_update_task
+
+Update fields on an existing task. The task can be identified by `task_id`, `ticket_number`, or the combination of `project_id` + `unique_index`.
+
+**Endpoint:** `POST /api/mcp/tasks/update`
+
+**Task identification (provide one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number (e.g. `HYP-42`) |
+| `project_id` + `unique_index` | number + number | Project-scoped index |
+
+**Updatable fields:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `title` | string | New title |
+| `description` | string | New HTML description |
+| `estimate` | number | Time estimate in minutes |
+| `priority` | string | `urgent`, `high`, `medium`, `low` |
+| `sectionId` | number | Move to a different section |
+| `status` | string | `Normal`, `Archive`, `Deleted` |
+
+**Example request -- move task to "Doing":**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/tasks/update \
+  -d '{
+    "ticket_number": "HYP-42",
+    "sectionId": 103
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 1234,
+  "ticket_number": "HYP-42",
+  "title": "Add file upload validation",
+  "section": "Doing",
+  "updatedAt": "2025-01-17T11:00:00Z"
+}
+```
+
+---
+
+## hypertask_move_task_between_boards
+
+Move a task from its current project to a different project.
+
+**Endpoint:** `POST /api/mcp/tasks/move`
+
+**Body parameters (identify task with one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number |
+| `unique_index` | number | Project-scoped index (requires context) |
+
+**Target (required):**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `target_project_id` | number | Yes | Destination project ID |
+| `target_section_id` | number | No | Section in the destination project |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/tasks/move \
+  -d '{
+    "ticket_number": "HYP-42",
+    "target_project_id": 20,
+    "target_section_id": 201
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 1234,
+  "ticket_number": "HYP-42",
+  "project_id": 20,
+  "section": "Backlog"
+}
+```
+
+---
+
+## hypertask_get_comments_for_task
+
+Retrieve comments on a task.
+
+**Endpoint:** `GET /api/mcp/comments`
+
+**Task identification (provide one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number |
+| `project_id` + `unique_index` | number + number | Project-scoped index |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `limit` | number | No | `50` | Max comments to return (max 100) |
+| `offset` | number | No | `0` | Pagination offset |
+| `sort_order` | string | No | `asc` | `asc` (oldest first) or `desc` (newest first) |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/comments?ticket_number=HYP-42&sort_order=desc&limit=5"
+```
+
+**Example response:**
+
+```json
+{
+  "comments": [
+    {
+      "id": 501,
+      "text": "<p>Implemented validation. Returns 400 for unsupported file types.</p>",
+      "author": {
+        "id": 6,
+        "displayName": "Valentin"
+      },
+      "createdAt": "2025-01-17T12:00:00Z"
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## hypertask_add_comment_to_task
+
+Add a comment to a task. Comments use HTML formatting.
+
+**Endpoint:** `POST /api/mcp/comments`
+
+**Body parameters:**
+
+**Task identification (provide one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number |
+| `unique_index` | number | Project-scoped index |
+
+**Comment content:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `text` | string | Yes | Comment body in HTML |
+| `images` | string[] | No | Array of image URLs to attach |
+| `mentions` | object[] | No | Users to mention. Each object: `{ "user_id": number, "display_name": string }` |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/comments \
+  -d '{
+    "ticket_number": "HYP-42",
+    "text": "<p>Done. Validated against a whitelist of MIME types.</p><ul><li>Added <code>validateFileType()</code> helper</li><li>Returns 400 with error details</li></ul>",
+    "mentions": [{ "user_id": 6, "display_name": "Valentin" }]
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 502,
+  "text": "<p>Done. Validated against a whitelist of MIME types.</p>...",
+  "createdAt": "2025-01-17T14:00:00Z"
+}
+```
+
+---
+
+## hypertask_assign_user
+
+Assign or unassign users on a task. Calling this with an already-assigned user will **toggle** them off (unassign).
+
+**Endpoint:** `POST /api/mcp/assignees/assign`
+
+**Body parameters:**
+
+**Task identification (provide one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number |
+| `unique_index` | number | Project-scoped index |
+
+**Assignment:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `user_id` | number | Single user to assign/unassign |
+| `user_ids` | number[] | Multiple users (requires `mode`) |
+| `mode` | string | Set to `multiple` when using `user_ids` |
+
+<Aside type="tip">
+To find user IDs, call `hypertask_list_project_members` first.
+</Aside>
+
+**Example request -- assign a single user:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/assignees/assign \
+  -d '{
+    "ticket_number": "HYP-42",
+    "user_id": 6
+  }'
+```
+
+**Example request -- assign multiple users:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/assignees/assign \
+  -d '{
+    "task_id": 1234,
+    "user_ids": [6, 836],
+    "mode": "multiple"
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "assignees": [
+    { "id": 6, "displayName": "Valentin" },
+    { "id": 836, "displayName": "Claude" }
+  ]
+}
+```
+
+---
+
+## hypertask_list_project_members
+
+List all members of a project with their user IDs.
+
+**Endpoint:** `GET /api/mcp/projects/{projectId}/members`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/members
+```
+
+**Example response:**
+
+```json
+{
+  "members": [
+    {
+      "id": 6,
+      "email": "valentin@example.com",
+      "displayName": "Valentin",
+      "photoURL": "https://example.com/avatar.jpg"
+    },
+    {
+      "id": 836,
+      "email": "claude@example.com",
+      "displayName": "Claude",
+      "photoURL": null
+    }
+  ]
+}
+```
+
+---
+
+## hypertask_inbox_list
+
+Get inbox notifications for the current user. Notifications are generated when you are assigned to a task, mentioned in a comment, or a task you are watching is updated.
+
+**Endpoint:** `GET /api/mcp/inbox/list`
+
+**Parameters:** None
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/inbox/list
+```
+
+**Example response:**
+
+```json
+{
+  "notifications": [
+    {
+      "id": 301,
+      "type": "assignment",
+      "task_id": 1234,
+      "ticket_number": "HYP-42",
+      "message": "You were assigned to 'Add file upload validation'",
+      "createdAt": "2025-01-17T08:00:00Z",
+      "read": false
+    }
+  ],
+  "total": 1
+}
+```
+
+---
+
+## hypertask_inbox_archive
+
+Archive (dismiss) inbox notifications.
+
+**Endpoint:** `POST /api/mcp/inbox/archive`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `notification_ids` | number[] | Yes | Array of notification IDs to archive |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/inbox/archive \
+  -d '{"notification_ids": [301, 302]}'
+```
+
+**Example response:**
+
+```json
+{
+  "archived": 2
+}
+```
