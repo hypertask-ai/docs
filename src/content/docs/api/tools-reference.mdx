@@ -5,7 +5,7 @@ description: Complete parameter reference for all Hypertask MCP tools and their 
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is the complete reference for all 15 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
+This is the complete reference for all 16 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
 
 <Aside type="note">
 All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
@@ -79,6 +79,80 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   "total": 1
 }
 ```
+
+---
+
+## hypertask_create_board
+
+Create a new board, including its sections, labels, and an initial set of tasks, in a single call.
+
+**Endpoint:** `POST /api/mcp/boards`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `team_id` | number | Yes | The team that owns the new board. Find yours via `hypertask_get_user_context`. |
+| `title` | string | Yes | Board title |
+| `sections` | object[] | Yes | Sections (columns) to create. Each: `{ "title": string }` |
+| `labels` | object[] | No | Labels to pre-create on the board. Each: `{ "name": string }` |
+| `tasks` | object[] | No | Starter tasks. Each: `{ "title", "section", "description"?, "priority"?, "labels"?, "assignee_ids"? }` |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "team_id": 3,
+    "title": "Website Redesign",
+    "sections": [
+      { "title": "Backlog" },
+      { "title": "Doing" },
+      { "title": "Done" }
+    ],
+    "labels": [
+      { "name": "Design" },
+      { "name": "Frontend" }
+    ],
+    "tasks": [
+      {
+        "title": "Wireframe the homepage",
+        "section": "Backlog",
+        "labels": ["Design"],
+        "priority": "high"
+      }
+    ]
+  }' \
+  https://mcp.hypertask.ai/api/mcp/boards
+```
+
+**Example response:**
+
+```json
+{
+  "board": {
+    "id": 42,
+    "title": "Website Redesign",
+    "sections": [
+      { "id": 201, "title": "Backlog" },
+      { "id": 202, "title": "Doing" },
+      { "id": 203, "title": "Done" }
+    ],
+    "labels": [
+      { "id": 7001, "name": "Design" },
+      { "id": 7002, "name": "Frontend" }
+    ],
+    "tasks": [
+      { "id": 9001, "ticketNumber": "WEB-1", "title": "Wireframe the homepage" }
+    ]
+  }
+}
+```
+
+<Aside type="tip">
+The CLI wraps this same endpoint via <code>hypertask project create-board --file board.json</code>.
+</Aside>
 
 ---
 
@@ -300,6 +374,11 @@ Create a new task in a project.
 | `priority` | string | No | `urgent`, `high`, `medium`, `low` |
 | `estimate` | number | No | Time estimate (in minutes) |
 | `images` | string[] | No | Array of image URLs to attach |
+| `attachments` | string[] | No | Array of file URLs to attach |
+
+<Aside type="caution">
+`due_date` and `labels` are **not yet supported** on task creation via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set these fields.
+</Aside>
 
 **Example request:**
 
@@ -354,6 +433,10 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
 | `sectionId` | number | Move to a different section |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
+
+<Aside type="caution">
+`due_date` and `labels` are **not yet supported** on task updates via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set these fields.
+</Aside>
 
 **Example request -- move task to "Doing":**
 
@@ -501,6 +584,10 @@ Add a comment to a task. Comments use HTML formatting.
 | `text` | string | Yes | Comment body in HTML |
 | `images` | string[] | No | Array of image URLs to attach |
 | `mentions` | object[] | No | Users to mention. Each object: `{ "user_id": number, "display_name": string }` |
+
+<Aside type="caution">
+**@mentions limitation:** Mentions added via MCP may appear as plain text and not trigger notifications. Always use the structured `mentions` parameter (with `user_id` and `display_name`) rather than writing `@username` in the HTML text. Ticket references (e.g. `HTPR-1234`) in comment text are also not automatically linked to related tasks when added via MCP.
+</Aside>
 
 **Example request:**
 

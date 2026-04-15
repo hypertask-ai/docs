@@ -1,0 +1,589 @@
+---
+title: CLI Reference
+description: Complete reference for the Hypertask CLI — manage tasks, projects, comments, and notifications from your terminal.
+---
+
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+The Hypertask CLI (`hypertask`) lets you manage tasks, projects, comments, and notifications directly from your terminal. It is the fastest way to interact with Hypertask programmatically and is the recommended interface for AI agents like Claude Code.
+
+## Installation
+
+```bash
+npm install -g @hypertask/hypertask_cli
+```
+
+Verify the installation:
+
+```bash
+hypertask --version
+```
+
+<Aside type="caution">
+The CLI package has moved to <code>@hypertask/hypertask_cli</code>. If you previously installed <code>hypertask_cli</code> (without the scope), uninstall it first: <code>npm uninstall -g hypertask_cli</code>
+</Aside>
+
+## Authentication
+
+<Steps>
+
+1. **Login via browser** (recommended):
+
+   ```bash
+   hypertask login
+   ```
+
+   This opens your browser to authenticate and saves the token locally.
+
+2. **Login with a token** (for CI/headless environments):
+
+   ```bash
+   hypertask login --token <your-jwt-token>
+   ```
+
+3. **Check your auth status:**
+
+   ```bash
+   hypertask auth:status
+   ```
+
+4. **Logout:**
+
+   ```bash
+   hypertask logout
+   ```
+
+</Steps>
+
+<Aside type="tip">
+For legacy setups, <code>hypertask auth:login --token &lt;jwt&gt;</code> also works to save a token directly. You can also pass <code>--api-url</code> to point at a custom API endpoint.
+</Aside>
+
+## Global Options
+
+These flags can be used with any command:
+
+| Flag | Description |
+|------|-------------|
+| `--token <jwt>` | Override the saved JWT token for this invocation |
+| `--api-url <url>` | Override the API URL (default: `https://app.hypertask.ai/api`) |
+| `--json` | Output raw JSON instead of formatted text |
+| `-V, --version` | Print the CLI version |
+| `-h, --help` | Show help for any command |
+
+```bash
+# Get JSON output for scripting
+hypertask task list --project 15 --json
+
+# Use a different token for a one-off command
+hypertask task list --project 15 --token eyJhbG...
+```
+
+---
+
+## Tasks
+
+### `task list`
+
+List tasks with filters.
+
+```bash
+hypertask task list --project 15 --section "Doing" --assigned-to me
+```
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--project <id>` | Filter by project ID | — |
+| `--section <name>` | Filter by section name | — |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
+| `--created-by <id>` | Filter by creator user ID (numeric) | — |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
+| `--limit <n>` | Results per page | `10` |
+| `--offset <n>` | Pagination offset | `0` |
+
+```bash
+# High-priority tasks assigned to you
+hypertask task list --project 15 --assigned-to me --priority urgent,high
+
+# Page through results
+hypertask task list --project 15 --limit 20 --offset 20
+```
+
+### `task get`
+
+Get full details of a single task by its ticket number or numeric task ID. Response includes labels, `parent_id` for subtasks, and the task URL.
+
+```bash
+hypertask task get HTPR-2992
+hypertask task get 1234
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<ticket>` | Ticket identifier (e.g., `HTPR-2992`) or numeric task ID |
+
+### `task tree`
+
+Show the full parent/subtask hierarchy for a task. Displays the family tree of a task including all parents and children.
+
+```bash
+hypertask task tree --ticket HTPR-2992
+```
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
+| `--task-id <id>` | Numeric task ID | — |
+| `--depth <n>` | Max levels deep to show | Full tree |
+
+```bash
+# Show subtask tree by ticket number
+hypertask task tree --ticket HTPR-2992
+
+# Show subtask tree by task ID, limited to 2 levels deep
+hypertask task tree --task-id 1234 --depth 2
+```
+
+### `task create`
+
+Create a new task.
+
+```bash
+hypertask task create \
+  --project 15 \
+  --title "Implement dark mode toggle" \
+  --description "<p>Add a toggle switch in the settings panel to switch between light and dark themes.</p>" \
+  --priority high \
+  --labels "frontend,UX" \
+  --estimate 3 \
+  --due 2026-04-01
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--title <text>` | Task title (required) |
+| `--description <text>` | Task description (HTML format) |
+| `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
+| `--estimate <n>` | Story points |
+| `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
+| `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
+| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
+| `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
+| `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
+| `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
+
+```bash
+# Create a subtask under an existing task
+hypertask task create \
+  --project 15 \
+  --title "Design the toggle component" \
+  --parent-task 1234 \
+  --priority medium
+
+# Create a task with file attachments
+hypertask task create \
+  --project 15 \
+  --title "Review mockups" \
+  --attach ./mockup.png \
+  --attach https://example.com/spec.pdf
+```
+
+<Aside type="note">
+Descriptions use <strong>HTML</strong> format, not Markdown. Wrap text in <code>&lt;p&gt;</code> tags and use standard HTML elements like <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;code&gt;</code>, and <code>&lt;strong&gt;</code>.
+</Aside>
+
+### `task update`
+
+Update an existing task's properties.
+
+```bash
+hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
+```
+
+| Flag | Description |
+|------|-------------|
+| `--title <text>` | New title |
+| `--description <text>` | New description (plain text or HTML) |
+| `--priority <p>` | New priority |
+| `--estimate <n>` | New story points |
+| `--due <date>` | New due date (ISO 8601) |
+| `--status <s>` | Status: `Normal`, `Archive`, `Deleted` |
+| `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
+| `--project <id>` | Project ID (required when using `--section` with a name across projects) |
+| `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
+| `--labels <list>` | Comma-separated label names or IDs |
+| `--attach <path>` | Attach a local file (repeatable) |
+
+```bash
+# Move a task to the "Doing" section
+hypertask task update HTPR-2992 --section "Doing"
+
+# Archive a completed task
+hypertask task update HTPR-2992 --status Archive
+
+# Update labels
+hypertask task update HTPR-2992 --labels "CLI,reviewed"
+```
+
+### `task assign`
+
+Assign a user to a task.
+
+```bash
+hypertask task assign HTPR-2992 --user 42
+```
+
+| Flag | Description |
+|------|-------------|
+| `--user <id>` | User ID to assign |
+
+<Aside type="tip">
+To find user IDs, use <code>hypertask project members &lt;project-id&gt;</code>.
+</Aside>
+
+### `task move`
+
+Move a task to a different section within the same board, or to a different project entirely.
+
+```bash
+# Move within the same board
+hypertask task move HTPR-2992 --section "Done"
+
+# Move to a different project
+hypertask task move HTPR-2992 --to 20 --to-section 5010
+```
+
+| Flag | Description |
+|------|-------------|
+| `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
+| `--to <id>` | Target project ID — move to a different project |
+| `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
+
+### `task move-board`
+
+Move a task to a different project/board entirely. Alias: `task move-project`.
+
+```bash
+hypertask task move-board HTPR-2992 --target-project 20 --target-section 5010
+```
+
+| Flag | Description |
+|------|-------------|
+| `--target-project <id>` | Target project ID |
+| `--target-section <id>` | Target section ID |
+
+---
+
+## Projects
+
+### `project list`
+
+List all projects you have access to.
+
+```bash
+hypertask project list
+```
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--limit <n>` | Results per page | `10` |
+| `--offset <n>` | Pagination offset | `0` |
+
+### `project sections`
+
+List all sections (columns) in a project.
+
+```bash
+hypertask project sections 15
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<project-id>` | The project ID |
+
+### `project members`
+
+List all members of a project.
+
+```bash
+hypertask project members 15
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<project-id>` | The project ID |
+
+### `project labels`
+
+List available labels for a project.
+
+```bash
+hypertask project labels 15
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<project-id>` | The project ID |
+
+### `project section create`
+
+Create a new section (column) on a board.
+
+```bash
+hypertask project section create --project 15 --title "In Review" --after 4005
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--title <text>` | Section title (required) |
+| `--after <section-id>` | Insert after this existing section (optional) |
+
+### `project label create`
+
+Create a new label in a project.
+
+```bash
+hypertask project label create --project 15 --name "CLI"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--name <text>` | Label name (required) |
+
+### `project create-board`
+
+Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+
+```bash
+hypertask project create-board --file board.json
+```
+
+Example `board.json`:
+
+```json
+{
+  "team_id": 3,
+  "title": "Website Redesign",
+  "sections": [
+    { "title": "Backlog" },
+    { "title": "Doing" },
+    { "title": "Done" }
+  ],
+  "labels": [
+    { "name": "Design" },
+    { "name": "Frontend" }
+  ],
+  "tasks": [
+    {
+      "title": "Wireframe the homepage",
+      "section": "Backlog",
+      "labels": ["Design"],
+      "priority": "high"
+    }
+  ]
+}
+```
+
+| Flag | Description |
+|------|-------------|
+| `--file <path>` | Path to a JSON manifest (required) |
+
+<Aside type="tip">
+<code>team_id</code> is required. To find yours, run <code>hypertask context --json</code> and look for the <code>teams</code> array.
+</Aside>
+
+---
+
+## Search
+
+### `search`
+
+Search for tasks by keyword.
+
+```bash
+hypertask search "dark mode" --project 15 --limit 5
+```
+
+| Argument / Flag | Description | Default |
+|-----------------|-------------|---------|
+| `<query>` | Search query (required) | — |
+| `--project <id>` | Restrict search to a project | — |
+| `--limit <n>` | Maximum results | `10` |
+
+---
+
+## Comments
+
+### `comment list`
+
+List all comments on a task.
+
+```bash
+hypertask comment list HTPR-2992
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<ticket>` | Ticket identifier |
+
+### `comment add`
+
+Add a comment to a task.
+
+```bash
+hypertask comment add HTPR-2992 --text "<p>Looks good, merging now.</p>"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--text <text>` | Comment text (HTML format) |
+
+### `comment update`
+
+Update an existing comment.
+
+```bash
+hypertask comment update 8450 --text "<p>Updated: shipped in v2.1.0</p>"
+```
+
+| Argument / Flag | Description |
+|-----------------|-------------|
+| `<id>` | Comment ID |
+| `--text <text>` | New comment text (HTML format) |
+
+### `comment delete`
+
+Delete a comment.
+
+```bash
+hypertask comment delete 8450
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<id>` | Comment ID |
+
+---
+
+## Inbox (Notifications)
+
+### `inbox list`
+
+List your unread notifications.
+
+```bash
+hypertask inbox list
+```
+
+### `inbox archive`
+
+Archive one or more notifications by ID.
+
+```bash
+hypertask inbox archive 101 102 103
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<ids...>` | One or more notification IDs to archive |
+
+---
+
+## Context
+
+### `context`
+
+Retrieve your user context, including projects and permissions.
+
+```bash
+hypertask context
+```
+
+This is useful to verify your identity, see which projects you belong to, and check your role/permissions.
+
+---
+
+## Utility Commands
+
+| Command | Description |
+|---------|-------------|
+| `hypertask update` | Update the CLI to the latest version |
+| `hypertask auth:status` | Check current authentication status |
+| `hypertask auth:login --token <jwt>` | Save a JWT token directly |
+| `hypertask auth:logout` | Clear saved authentication |
+| `hypertask logout` | Logout from Hypertask |
+
+---
+
+## Common Workflows
+
+### Pick up a task from your inbox
+
+```bash
+# 1. Check notifications
+hypertask inbox list
+
+# 2. Read the task details
+hypertask task get HTPR-2992
+
+# 3. Move it to "Doing"
+hypertask task move HTPR-2992 --section "Doing"
+
+# 4. Archive the notification
+hypertask inbox archive 101
+```
+
+### Create and assign a task
+
+```bash
+# 1. Find the project and its members
+hypertask project list
+hypertask project members 15
+
+# 2. Create the task
+hypertask task create \
+  --project 15 \
+  --title "Fix login timeout issue" \
+  --description "<p>Users are getting logged out after 5 minutes of inactivity. Expected session length is 24 hours.</p>" \
+  --priority urgent \
+  --labels "bug,auth"
+
+# 3. Assign it (use the user ID from project members)
+hypertask task assign HTPR-3050 --user 42
+```
+
+### Triage tasks by priority
+
+```bash
+# List all urgent and high-priority tasks
+hypertask task list --project 15 --priority urgent,high
+
+# Review unassigned tasks
+hypertask task list --project 15 --assigned-to unassigned
+
+# Search for something specific
+hypertask search "payment" --project 15
+```
+
+### Complete a task
+
+```bash
+# 1. Add a final comment
+hypertask comment add HTPR-2992 --text "<p>Deployed to production. Verified working.</p>"
+
+# 2. Move to Done
+hypertask task move HTPR-2992 --section "Done"
+```
+
+### Use JSON output for scripting
+
+```bash
+# Pipe task data to jq
+hypertask task list --project 15 --json | jq '.[].title'
+
+# Get a task's priority
+hypertask task get HTPR-2992 --json | jq '.priority'
+```

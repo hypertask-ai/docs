@@ -7,7 +7,11 @@ export default defineConfig({
 	site: 'https://docs.hypertask.ai',
 	integrations: [
 		starlight({
-			title: 'Hypertask Docs',
+			title: 'Hypertask',
+			logo: {
+				src: './public/hypertask-logo.png',
+				alt: 'Hypertask',
+			},
 			customCss: ['./src/styles/custom.css'],
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/valentinyeo/hypertask' }],
 			sidebar: [
@@ -40,6 +44,18 @@ export default defineConfig({
 					label: 'API Reference',
 					items: [
 						{ label: 'MCP Tools Reference', slug: 'api/tools-reference' },
+					],
+				},
+				{
+					label: 'CLI',
+					items: [
+						{ label: 'CLI Reference', slug: 'cli/reference' },
+					],
+				},
+			{
+					label: 'Changelog',
+					items: [
+						{ label: 'Changelog', slug: 'changelog' },
 					],
 				},
 			],

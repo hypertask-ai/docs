@@ -101,12 +101,13 @@ Open **Settings > MCP Servers** and add a new server:
 
 ## Available tools
 
-Once connected, your agent has access to 15 tools:
+Once connected, your agent has access to 16 tools:
 
 | Tool | Description |
 |------|-------------|
 | `hypertask_get_user_context` | Get current user info (id, email, display name) |
 | `hypertask_list_projects` | List all accessible projects |
+| `hypertask_create_board` | Create a new board with sections, labels, and starter tasks |
 | `hypertask_section` | List or create sections on a board |
 | `hypertask_list_tasks` | List tasks with filtering |
 | `hypertask_get_tasks` | Get specific tasks by ID or ticket number |
@@ -120,6 +121,31 @@ Once connected, your agent has access to 15 tools:
 | `hypertask_list_project_members` | List team members |
 | `hypertask_inbox_list` | Check inbox notifications |
 | `hypertask_inbox_archive` | Archive inbox items |
+
+## Known limitations
+
+The following features are not yet available via MCP:
+
+| Feature | Status | Details |
+|---------|--------|---------|
+| **Due dates** | Not supported | `hypertask_create_task` and `hypertask_update_task` do not accept a `due_date` parameter. Set due dates from the Hypertask UI for now. |
+| **Create labels** | Not supported | You can assign existing labels to tasks, but cannot create new labels via MCP. Create labels in the Hypertask UI first, then reference them. |
+| **Labels on tasks** | Not supported | `hypertask_create_task` and `hypertask_update_task` do not accept a `labels` parameter. Use the CLI or UI to manage labels on tasks. |
+| **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` is available, but mentions may appear as plain text and not trigger notifications. Use structured mention objects (`user_id` + `display_name`) for best results. |
+| **Related task linking** | Not supported | Ticket references (e.g. `HTPR-1234`) in comments added via MCP are not automatically parsed into "related tasks" links like they are in the UI. |
+
+<Aside type="tip">
+For features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports labels, due dates, and description updates.
+</Aside>
+
+## Troubleshooting
+
+**"Failed to Connect to MCP"** — If your client cannot connect:
+
+1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
+2. Confirm the URL is exactly `https://mcp.hypertask.ai/sse` (including `/sse`).
+3. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
+4. Restart your MCP client after updating the configuration.
 
 ## Supported clients
 
@@ -135,5 +161,5 @@ Hypertask MCP works with any client that supports the MCP standard:
 
 <CardGrid>
   <LinkCard title="Agent Workflows" description="Patterns for how AI agents should pick up and complete work." href="/mcp/workflows/" />
-  <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all 15 tools." href="/api/tools-reference/" />
+  <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all 16 tools." href="/api/tools-reference/" />
 </CardGrid>
