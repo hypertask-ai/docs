@@ -102,7 +102,7 @@ SHA_BEFORE="$(git rev-parse HEAD)"
 PROMPT=$(cat <<EOF
 You are running in a cron job inside the HypertaskDocs repo. Today is ${DATE_STAMP}.
 
-Your job: update the changelog (and any related feature pages) based on tickets currently in the "Review" section of Hypertask project 15.
+Your job: update the changelog (and any related feature pages) based on tickets currently in the "Review" section of Hypertask project 15, then post a notification comment on each ticket you covered.
 
 RULES — read these first:
 1. Read CLAUDE.md in this repo for the contribution guide, format, categories, filtering rules, and style guide. Follow it exactly.
@@ -115,10 +115,18 @@ RULES — read these first:
 8. Add new entries under today's date heading (${DATE_STAMP} format per CLAUDE.md — "Month Day, Year"). Newest entries at the top.
 9. If any feature pages (src/content/docs/features/*.mdx, mcp/*.mdx, api/*.mdx) clearly need updating based on a ticket (new CLI command, new MCP tool, new user-visible feature), update them too.
 10. After changes: run \`git add -A\`, \`git commit\` with message "Daily changelog: N entries (YYYY-MM-DD)", \`git push origin main\`.
-11. If nothing is worth adding, do NOT commit. Just print the summary and exit.
+11. If nothing is worth adding, do NOT commit. Skip straight to the RESULT line.
+
+AFTER the push succeeds, for EACH HTPR ticket you added to the changelog, post a comment via the Hypertask CLI:
+
+  hypertask comment add HTPR-XXXX --text '<p>📚 This ticket is now documented in the public changelog: <a href="https://docs.hypertask.ai/changelog/">docs.hypertask.ai/changelog</a></p><p>Stakeholders — please review the entry (and any feature pages linked from it) and reply here with corrections, missing context, or anything to reframe. The docs auto-sync daily from this board.</p>'
+
+Hypertask comments MUST be HTML (not Markdown). Do not embed images — use plain anchor tags for any URLs. If a feature page was also updated for this ticket, add a second <p> with its URL (e.g. https://docs.hypertask.ai/features/ai-features/).
+
+If a comment post fails for one ticket, log the failure and continue with the others. Do not abort the whole run.
 
 OUTPUT — at the very end, print one machine-readable line:
-RESULT: changed=<0|1> entries=<n> pages_updated=<comma-separated paths or "none"> summary=<short human line>
+RESULT: changed=<0|1> entries=<n> pages_updated=<comma-separated paths or "none"> tickets=<comma-separated HTPR-IDs or "none"> comments=<n_posted> summary=<short human line>
 
 Do not print anything else on that RESULT line. Do not omit it.
 EOF
@@ -142,6 +150,8 @@ fi
 CHANGED="$(echo   "$RESULT_LINE" | sed -nE 's/.*changed=([0-9]+).*/\1/p')"
 ENTRIES="$(echo   "$RESULT_LINE" | sed -nE 's/.*entries=([0-9]+).*/\1/p')"
 PAGES="$(echo     "$RESULT_LINE" | sed -nE 's/.*pages_updated=([^ ]+).*/\1/p')"
+TICKETS="$(echo   "$RESULT_LINE" | sed -nE 's/.*tickets=([^ ]+).*/\1/p')"
+COMMENTS="$(echo  "$RESULT_LINE" | sed -nE 's/.*comments=([0-9]+).*/\1/p')"
 SUMMARY="$(echo   "$RESULT_LINE" | sed -nE 's/.*summary=(.*)$/\1/p')"
 
 SHA_AFTER="$(git rev-parse HEAD)"
@@ -151,13 +161,20 @@ SHA_AFTER="$(git rev-parse HEAD)"
 # ---------------------------------------------------------------------------
 if [[ "$CHANGED" == "1" && "$SHA_BEFORE" != "$SHA_AFTER" ]]; then
   MSG="📚 <b>HypertaskDocs updated</b>%0A"
-  MSG+="<b>${ENTRIES:-?}</b> changelog entries added%0A"
+  MSG+="<b>${ENTRIES:-?}</b> changelog entries added"
+  if [[ -n "${COMMENTS:-}" && "${COMMENTS}" != "0" ]]; then
+    MSG+=" · ${COMMENTS} ticket comments posted"
+  fi
+  MSG+="%0A"
   if [[ -n "${SUMMARY:-}" ]]; then
     MSG+="<i>${SUMMARY}</i>%0A"
   fi
   MSG+="%0AChangelog: https://docs.hypertask.ai/changelog/"
   if [[ -n "${PAGES:-}" && "${PAGES}" != "none" ]]; then
     MSG+="%0APages updated: ${PAGES}"
+  fi
+  if [[ -n "${TICKETS:-}" && "${TICKETS}" != "none" ]]; then
+    MSG+="%0ATickets notified: ${TICKETS}"
   fi
   send_telegram "$MSG"
   echo "-- telegram sent"
