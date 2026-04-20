@@ -375,9 +375,10 @@ Create a new task in a project.
 | `estimate` | number | No | Time estimate (in minutes) |
 | `images` | string[] | No | Array of image URLs to attach |
 | `attachments` | string[] | No | Array of file URLs to attach |
+| `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 
 <Aside type="caution">
-`due_date` and `labels` are **not yet supported** on task creation via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set these fields.
+`labels` are **not yet supported** on task creation via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set labels.
 </Aside>
 
 **Example request:**
@@ -433,9 +434,10 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
 | `sectionId` | number | Move to a different section |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
+| `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 
 <Aside type="caution">
-`due_date` and `labels` are **not yet supported** on task updates via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set these fields.
+`labels` are **not yet supported** on task updates via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set labels.
 </Aside>
 
 **Example request -- move task to "Doing":**
