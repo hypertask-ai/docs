@@ -19,3 +19,10 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# tooling runtime state (not source)
+.claude/
+.playwright-mcp/
+node-compile-cache/
+.wrangler/
+.vscode/
