@@ -1,103 +1,85 @@
-/* Hypertask.ai dark theme for Starlight */
+/* Hypertask docs — clean dark theme */
 
 :root {
-	--sl-font: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-	--sl-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	--sl-font: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+	--sl-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-/* Force dark mode colors */
+/* Dark mode: neutral black/white, no purple */
 :root,
 [data-theme="light"],
 [data-theme="dark"] {
-	/* Background colors - deep dark with purple undertone */
-	--sl-color-bg: #0a0010;
-	--sl-color-bg-nav: #050008;
-	--sl-color-bg-sidebar: #08000f;
-	--sl-color-bg-accent: #7c3aed;
+	--sl-color-bg: #111111;
+	--sl-color-bg-nav: #0a0a0a;
+	--sl-color-bg-sidebar: #0e0e0e;
+	--sl-color-bg-accent: #ffffff;
 
-	/* Text colors */
-	--sl-color-text: #e8e0f0;
-	--sl-color-text-accent: #c4b5fd;
+	--sl-color-text: #e5e5e5;
+	--sl-color-text-accent: #ffffff;
 
-	/* Accent / purple from hypertask.ai */
-	--sl-color-accent-low: #1a0a30;
-	--sl-color-accent: #7c3aed;
-	--sl-color-accent-high: #c4b5fd;
+	--sl-color-accent-low: #1a1a1a;
+	--sl-color-accent: #ffffff;
+	--sl-color-accent-high: #ffffff;
 
-	/* Border */
-	--sl-color-hairline-light: rgba(255, 255, 255, 0.08);
-	--sl-color-hairline: rgba(255, 255, 255, 0.12);
-	--sl-color-hairline-shade: rgba(255, 255, 255, 0.16);
+	--sl-color-hairline-light: rgba(255, 255, 255, 0.06);
+	--sl-color-hairline: rgba(255, 255, 255, 0.1);
+	--sl-color-hairline-shade: rgba(255, 255, 255, 0.14);
 
-	/* White & black */
 	--sl-color-white: #ffffff;
 	--sl-color-black: #000000;
-	--sl-color-gray-1: #e8e0f0;
-	--sl-color-gray-2: #b3a8c4;
-	--sl-color-gray-3: #7a6f8c;
-	--sl-color-gray-4: #4a3f5c;
-	--sl-color-gray-5: #2a1f3c;
-	--sl-color-gray-6: #150d22;
-	--sl-color-gray-7: #0a0010;
-}
-
-/* Hero section styling */
-.hero {
-	background: linear-gradient(180deg, #000000 0%, #070012 40%, #0a0010 100%);
+	--sl-color-gray-1: #e5e5e5;
+	--sl-color-gray-2: #a3a3a3;
+	--sl-color-gray-3: #737373;
+	--sl-color-gray-4: #525252;
+	--sl-color-gray-5: #262626;
+	--sl-color-gray-6: #171717;
+	--sl-color-gray-7: #0a0a0a;
 }
 
 /* Navigation bar */
 header.header {
-	background-color: rgba(5, 0, 8, 0.85) !important;
+	background-color: rgba(10, 10, 10, 0.9) !important;
 	backdrop-filter: blur(12px);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Sidebar */
 nav.sidebar {
-	background-color: #08000f;
-	border-right: 1px solid rgba(255, 255, 255, 0.08);
+	border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-/* Links */
+/* Links — clean white/gray */
 a {
-	color: #c4b5fd;
+	color: #d4d4d4;
 }
 
 a:hover {
-	color: #ddd6fe;
+	color: #ffffff;
 }
 
-/* Primary CTA button */
+/* Buttons */
 a[data-variant="primary"].sl-link-button,
 .sl-link-button[data-variant="primary"] {
-	background: #7c3aed !important;
-	border-color: #7c3aed !important;
-	color: #fff !important;
+	background: #ffffff !important;
+	border-color: #ffffff !important;
+	color: #000000 !important;
 }
 
 a[data-variant="primary"].sl-link-button:hover,
 .sl-link-button[data-variant="primary"]:hover {
-	background: #6d28d9 !important;
-	border-color: #6d28d9 !important;
-}
-
-/* Hero action buttons */
-.hero .action a[data-variant="primary"],
-.hero a.primary {
-	background: #7c3aed !important;
-	color: #fff !important;
+	background: #e5e5e5 !important;
+	border-color: #e5e5e5 !important;
 }
 
 /* Code blocks */
 pre {
-	background-color: #0d0518 !important;
+	background-color: #0a0a0a !important;
 	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 code {
-	background-color: rgba(124, 58, 237, 0.15);
-	color: #c4b5fd;
+	background-color: rgba(255, 255, 255, 0.08);
+	color: #e5e5e5;
 }
 
 pre code {
@@ -106,12 +88,12 @@ pre code {
 
 /* Cards */
 .card {
-	background-color: rgba(255, 255, 255, 0.03);
+	background-color: rgba(255, 255, 255, 0.02);
 	border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .card:hover {
-	border-color: rgba(124, 58, 237, 0.4);
+	border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Tables */
@@ -120,7 +102,7 @@ table {
 }
 
 th {
-	background-color: rgba(124, 58, 237, 0.1);
+	background-color: rgba(255, 255, 255, 0.04);
 }
 
 td, th {
@@ -129,23 +111,18 @@ td, th {
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-	width: 8px;
+	width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-	background: #0a0010;
+	background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #2a1f3c;
-	border-radius: 4px;
+	background: #333333;
+	border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #3a2f4c;
-}
-
-/* Search */
-starlight-search-dialog {
-	--sl-color-bg: #0d0518;
+	background: #444444;
 }

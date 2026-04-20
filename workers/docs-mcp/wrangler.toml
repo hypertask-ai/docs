@@ -1,0 +1,18 @@
+name = "hypertask-docs-mcp"
+account_id = "6031a7dff0d4a6469414cfa8a6dedddf"
+main = "src/index.ts"
+compatibility_date = "2025-03-01"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[vars]
+GITHUB_OWNER = "valentinyeo"
+GITHUB_REPO = "HypertaskDocs"
+GITHUB_BRANCH = "main"
+DOCS_BASE_PATH = "src/content/docs"
+CONFIG_FILE_PATH = "astro.config.mjs"
+
+# Secrets (set via `wrangler secret put`):
+# GITHUB_TOKEN - GitHub personal access token with repo contents write access
+# JWT_SECRET - Shared JWT secret with Hypertask app (must match Vercel's JWT_SECRET)
+# CF_PAGES_DEPLOY_HOOK - Cloudflare Pages deploy hook URL

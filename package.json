@@ -10,7 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/rss": "^4.0.17",
     "@astrojs/starlight": "^0.37.7",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "astro": "^5.6.1",
     "sharp": "^0.34.2"
   }

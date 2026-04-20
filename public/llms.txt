@@ -1,0 +1,25 @@
+# Hypertask Documentation
+
+> Hypertask is an AI-native project management tool. This documentation covers the web app, CLI, and MCP integration for AI agents.
+
+## Docs
+
+- [What is Hypertask?](https://docs.hypertask.ai/getting-started/introduction/): Overview of the platform, architecture, and key capabilities
+- [Quick Start](https://docs.hypertask.ai/getting-started/quickstart/): Get up and running in under 5 minutes
+- [Core Concepts](https://docs.hypertask.ai/getting-started/concepts/): Projects, sections, tasks, comments, and the data model
+- [AI Features](https://docs.hypertask.ai/features/ai-features/): Task Writer, Voice Dictation, HyperAI co-worker
+- [Boards & Sections](https://docs.hypertask.ai/features/boards/): Kanban boards, section management, views
+- [Tasks](https://docs.hypertask.ai/features/tasks/): Task fields, priorities, relations, subtasks
+- [Inbox & Notifications](https://docs.hypertask.ai/features/inbox/): Notification system and inbox management
+- [Collaboration](https://docs.hypertask.ai/features/collaboration/): Teams, workspaces, mentions, reactions
+- [MCP Integration](https://docs.hypertask.ai/mcp/overview/): Connect AI agents via Model Context Protocol
+- [Agent Workflows](https://docs.hypertask.ai/mcp/workflows/): Patterns for AI agents working with tasks
+- [MCP Tools Reference](https://docs.hypertask.ai/api/tools-reference/): Complete parameter reference for all 15 MCP tools
+- [CLI Reference](https://docs.hypertask.ai/cli/reference/): Full command reference for the hypertask CLI
+- [Changelog](https://docs.hypertask.ai/changelog/): Daily log of shipped features, fixes, and improvements
+
+## MCP Access
+
+AI agents can connect to Hypertask via MCP to manage tasks programmatically. Connect to `https://mcp.hypertask.ai` with a Bearer token from your Hypertask account settings.
+
+AI agents can also connect to the docs MCP server at `https://hypertask-docs-mcp.valentin-603.workers.dev/mcp` to read and update documentation pages.
