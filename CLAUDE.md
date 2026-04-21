@@ -49,7 +49,7 @@ src/content/docs/
 
 1. Create the `.mdx` file in the appropriate directory
 2. Add it to the sidebar in `astro.config.mjs`
-3. Push to `main` — Cloudflare Pages auto-deploys
+3. Push to `main` + run the deploy command below (the CF Pages project is not connected to GitHub)
 
 ### Local development
 
@@ -61,13 +61,14 @@ npm run build   # Build for production
 
 ### Deployment
 
-Push to `main` branch → auto-deploys to https://docs.hypertask.ai via Cloudflare Pages.
+The CF Pages project `hypertask-docs` is **direct-upload only** (no Git integration), so `git push` does NOT auto-deploy. You must run wrangler explicitly:
 
-Manual deploy (if needed):
 ```bash
 npm run build
-CLOUDFLARE_ACCOUNT_ID=6031a7dff0d4a6469414cfa8a6dedddf npx wrangler pages deploy dist --project-name hypertask-docs
+CLOUDFLARE_ACCOUNT_ID=6031a7dff0d4a6469414cfa8a6dedddf npx wrangler pages deploy dist --project-name hypertask-docs --branch main
 ```
+
+The daily changelog cron (`scripts/daily-changelog.sh`) handles this automatically — it runs `npm run build` + `wrangler pages deploy` after a successful git push, then purges the CF edge cache.
 
 ## Remote MCP Server (for coworkers)
 

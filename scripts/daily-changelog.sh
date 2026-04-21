@@ -2,8 +2,12 @@
 # Daily HypertaskDocs changelog updater.
 # Runs via cron, queries Hypertask project 15 section "Review",
 # asks Claude to update the changelog (and related pages) per HypertaskDocs/CLAUDE.md,
-# commits + pushes on change (Cloudflare Pages auto-deploys),
+# commits + pushes on change, builds + deploys to Cloudflare Pages via wrangler,
 # sends a Telegram message when something was actually added.
+#
+# NOTE: The CF Pages project `hypertask-docs` is NOT connected to GitHub
+# (source: null), so `git push` alone does NOT trigger a deploy.
+# This script runs `wrangler pages deploy` explicitly after the push.
 
 set -euo pipefail
 
@@ -155,6 +159,42 @@ COMMENTS="$(echo  "$RESULT_LINE" | sed -nE 's/.*comments=([0-9]+).*/\1/p')"
 SUMMARY="$(echo   "$RESULT_LINE" | sed -nE 's/.*summary=(.*)$/\1/p')"
 
 SHA_AFTER="$(git rev-parse HEAD)"
+
+# ---------------------------------------------------------------------------
+# Build + deploy to Cloudflare Pages (the project has no GitHub integration,
+# so pushing alone does not redeploy). Only runs when the commit actually moved.
+# ---------------------------------------------------------------------------
+DEPLOY_STATUS="skipped"
+if [[ "$CHANGED" == "1" && "$SHA_BEFORE" != "$SHA_AFTER" ]]; then
+  echo "-- building site"
+  if ! npm run build >>"$LOG_FILE" 2>&1; then
+    fail "npm run build failed. See $LOG_FILE"
+  fi
+
+  echo "-- deploying dist/ to Cloudflare Pages"
+  if CLOUDFLARE_ACCOUNT_ID=6031a7dff0d4a6469414cfa8a6dedddf \
+     npx --yes wrangler pages deploy dist \
+       --project-name hypertask-docs \
+       --branch main \
+       --commit-hash "$SHA_AFTER" \
+       >>"$LOG_FILE" 2>&1; then
+    DEPLOY_STATUS="ok"
+    echo "-- deploy ok"
+    # Purge the CF edge so the changelog page and llms.txt reflect new content immediately
+    if [[ -n "${CLOUDFLARE_API_TOKEN:-}" ]]; then
+      curl -fsS -X POST \
+        "https://api.cloudflare.com/client/v4/zones/2a45a3125cda94f854e5b163392dc76e/purge_cache" \
+        -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+        -H "Content-Type: application/json" \
+        --data '{"files":["https://docs.hypertask.ai/","https://docs.hypertask.ai/changelog/","https://docs.hypertask.ai/llms.txt","https://docs.hypertask.ai/llms-full.txt","https://docs.hypertask.ai/llms-small.txt","https://docs.hypertask.ai/changelog.md"]}' \
+        >/dev/null && echo "-- cf purge ok" || echo "-- cf purge failed (non-fatal)"
+    fi
+  else
+    DEPLOY_STATUS="failed"
+    echo "-- deploy failed (non-fatal for the cron run, commit still pushed)"
+    send_telegram "⚠️ <b>HypertaskDocs deploy failed</b>%0Agit push ok but wrangler deploy failed. Log: ${LOG_FILE}"
+  fi
+fi
 
 # ---------------------------------------------------------------------------
 # Telegram notify — only when something actually landed
