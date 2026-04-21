@@ -38,6 +38,7 @@ export default defineConfig({
 					items: [
 						{ label: 'Overview', slug: 'mcp/overview' },
 						{ label: 'Agent Workflows', slug: 'mcp/workflows' },
+						{ label: 'Scheduling Agents', slug: 'mcp/scheduling' },
 					],
 				},
 				{
