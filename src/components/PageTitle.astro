@@ -3,5 +3,12 @@ import Default from '@astrojs/starlight/components/PageTitle.astro';
 import AIActions from './AIActions.astro';
 ---
 
-<Default><slot /></Default>
 <AIActions />
+<Default><slot /></Default>
+
+<style is:global>
+	.ai-actions {
+		justify-content: flex-end;
+		margin: 0 0 0.5rem !important;
+	}
+</style>
