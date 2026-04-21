@@ -11,9 +11,10 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.17",
-    "@astrojs/starlight": "^0.37.7",
+    "@astrojs/starlight": "^0.38.3",
     "@modelcontextprotocol/sdk": "^1.27.1",
-    "astro": "^5.6.1",
-    "sharp": "^0.34.2"
+    "astro": "^6.1.8",
+    "sharp": "^0.34.2",
+    "starlight-llms-txt": "^0.8.1"
   }
 }

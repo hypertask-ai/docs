@@ -1,0 +1,98 @@
+---
+const route = Astro.locals.starlightRoute;
+const slug = route?.id ?? '';
+const mdPath = slug ? `/${slug}.md` : '/llms-full.txt';
+const site = Astro.site?.toString().replace(/\/$/, '') ?? 'https://docs.hypertask.ai';
+const mdUrl = `${site}${mdPath}`;
+const prompt = `Read ${mdUrl} and help me with questions about this page.`;
+const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(prompt)}`;
+const chatgptUrl = `https://chatgpt.com/?hints=search&q=${encodeURIComponent(prompt)}`;
+---
+
+<div class="ai-actions" data-md-url={mdUrl}>
+	<button type="button" class="ai-btn" data-copy-md aria-label="Copy page as markdown">
+		<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+			<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+			<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+		</svg>
+		<span data-copy-label>Copy page</span>
+	</button>
+	<a href={claudeUrl} target="_blank" rel="noopener" class="ai-btn">
+		Open in Claude
+	</a>
+	<a href={chatgptUrl} target="_blank" rel="noopener" class="ai-btn">
+		Open in ChatGPT
+	</a>
+	<a href={mdPath} class="ai-btn ai-btn-ghost" title="View raw markdown">
+		View as markdown
+	</a>
+</div>
+
+<script>
+	document.addEventListener('click', async (event) => {
+		const target = event.target as HTMLElement;
+		const btn = target.closest('[data-copy-md]') as HTMLButtonElement | null;
+		if (!btn) return;
+		const wrap = btn.closest('.ai-actions') as HTMLElement | null;
+		const url = wrap?.dataset.mdUrl;
+		if (!url) return;
+		const label = btn.querySelector('[data-copy-label]') as HTMLElement | null;
+		const original = label?.textContent ?? 'Copy page';
+		try {
+			const res = await fetch(url);
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const text = await res.text();
+			await navigator.clipboard.writeText(text);
+			if (label) label.textContent = 'Copied';
+			btn.classList.add('ai-btn-ok');
+		} catch (err) {
+			console.error('copy page failed', err);
+			if (label) label.textContent = 'Copy failed';
+			btn.classList.add('ai-btn-err');
+		}
+		setTimeout(() => {
+			if (label) label.textContent = original;
+			btn.classList.remove('ai-btn-ok', 'ai-btn-err');
+		}, 1600);
+	});
+</script>
+
+<style>
+	.ai-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin: 0.75rem 0 1.25rem;
+	}
+	.ai-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.3rem 0.65rem;
+		font-size: 0.8rem;
+		font-weight: 500;
+		line-height: 1;
+		background: var(--sl-color-gray-6, #1e1e20);
+		border: 1px solid var(--sl-color-gray-5, #3a3a40);
+		border-radius: 0.375rem;
+		color: var(--sl-color-white);
+		text-decoration: none;
+		cursor: pointer;
+		transition: background 0.15s, border-color 0.15s;
+	}
+	.ai-btn:hover {
+		background: var(--sl-color-gray-5, #2a2a30);
+		border-color: var(--sl-color-gray-4, #55555d);
+	}
+	.ai-btn-ghost {
+		background: transparent;
+	}
+	.ai-btn-ok {
+		border-color: var(--sl-color-green, #4ade80);
+		color: var(--sl-color-green, #4ade80);
+	}
+	.ai-btn-err {
+		border-color: var(--sl-color-red, #f87171);
+		color: var(--sl-color-red, #f87171);
+	}
+</style>

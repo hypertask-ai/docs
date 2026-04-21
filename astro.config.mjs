@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightLlmsTxt from 'starlight-llms-txt';
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,6 +14,10 @@ export default defineConfig({
 				alt: 'Hypertask',
 			},
 			customCss: ['./src/styles/custom.css'],
+			plugins: [starlightLlmsTxt()],
+			components: {
+				PageTitle: './src/components/PageTitle.astro',
+			},
 			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/valentinyeo/hypertask' }],
 			sidebar: [
 				{
