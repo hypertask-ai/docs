@@ -13,6 +13,18 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## April 23, 2026
+
+### Bug Fixes
+
+- **Fixed: CLI `assign` is now idempotent** — Running `hypertask tasks assign <ticket> --user <id>` twice in a row no longer removes the user. The command now ensures the user is assigned regardless of current state, instead of toggling. ([HTPR-3130](https://app.hypertask.ai/detail/project-15/3130))
+
+### Improvements
+
+- **"Save as current view" button label corrected** — The view-saving button was labeled "Save current view" but now reads "Save as current view", accurately reflecting that it saves the current filter/sort configuration as a named view. ([HTPR-3209](https://app.hypertask.ai/detail/project-15/3209))
+
+---
+
 ## April 22, 2026
 
 ### Bug Fixes
