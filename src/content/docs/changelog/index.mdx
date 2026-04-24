@@ -13,6 +13,18 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## April 24, 2026
+
+### New Features
+
+- **CLI: Headless login for SSH and CI environments** — `hypertask login --headless` now prints the auth URL to stdout and waits for you to paste the callback URL back into the terminal, completing authentication without a local browser. Auto-detects headless mode when no display server is found — useful for SSH sessions, Docker containers, and CI runners. ([HTPR-3201](https://app.hypertask.ai/detail/project-15/3201))
+
+### Bug Fixes
+
+- **Fixed: CLI `move-board` now correctly moves tasks between projects** — `hypertask tasks move-board <ticket> --target-project <id>` was returning HTTP 404 for all cross-project moves. Tasks can now be moved between projects from the CLI as expected. ([HTPR-3199](https://app.hypertask.ai/detail/project-15/3199))
+
+---
+
 ## April 23, 2026
 
 ### Bug Fixes
