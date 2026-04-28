@@ -106,26 +106,53 @@ SHA_BEFORE="$(git rev-parse HEAD)"
 PROMPT=$(cat <<EOF
 You are running in a cron job inside the HypertaskDocs repo. Today is ${DATE_STAMP}.
 
-Your job: update the changelog (and any related feature pages) based on tickets currently in the "Review" section of Hypertask project 15, then post a notification comment on each ticket you covered.
+Your job: keep the documentation pages COMPLETE and CURRENT based on tickets in the "Review" section of Hypertask project 15. The pages are the product spec — they must always reflect what Hypertask can do today. The changelog is secondary, used only for noteworthy launches and user-visible fixes.
 
-RULES — read these first:
-1. Read CLAUDE.md in this repo for the contribution guide, format, categories, filtering rules, and style guide. Follow it exactly.
-2. The ticket list is in JSON at: ${TICKETS_FILE}
-3. Only include HTPR-* tickets. Skip anything else.
-4. Skip privacy-sensitive bugs (cross-tenant, user data leaks).
-5. Skip test tickets ("test", "testtask", etc.).
-6. Reframe bugs as user-facing fixes ("Fixed: X").
-7. Check src/content/docs/changelog/index.mdx for tickets already listed — do not duplicate.
-8. Add new entries under today's date heading (${DATE_STAMP} format per CLAUDE.md — "Month Day, Year"). Newest entries at the top.
-9. If any feature pages (src/content/docs/features/*.mdx, mcp/*.mdx, api/*.mdx) clearly need updating based on a ticket (new CLI command, new MCP tool, new user-visible feature), update them too.
-10. After changes: run \`git add -A\`, \`git commit\` with message "Daily changelog: N entries (YYYY-MM-DD)", \`git push origin main\`.
-11. If nothing is worth adding, do NOT commit. Skip straight to the RESULT line.
+MENTAL MODEL — pages first, changelog second:
+- Pages = canonical, complete reference (CLI, MCP tools, features). If we ship something, the relevant page MUST describe it.
+- Changelog = highlights reel. Only entries that a user would care about: new features worth announcing, behavior changes, user-visible bug fixes. Internal refactors, perf tweaks, and tiny bug fixes do NOT belong in the changelog (but may still update a page if they change documented behavior).
 
-AFTER the push succeeds, for EACH HTPR ticket you added to the changelog, post a comment via the Hypertask CLI:
+CLASSIFY EACH TICKET:
+A. New / changed feature, command, MCP tool, API surface, or user-visible behavior
+   → MUST update the canonical page(s). Pages to choose from:
+     - src/content/docs/cli/reference.mdx       (any CLI command / flag)
+     - src/content/docs/mcp/overview.mdx        (MCP setup / config)
+     - src/content/docs/mcp/workflows.mdx       (agent workflow patterns)
+     - src/content/docs/mcp/scheduling.mdx      (scheduled agents)
+     - src/content/docs/api/tools-reference.mdx (MCP tool list / schemas)
+     - src/content/docs/features/*.mdx          (AI features, boards, tasks, inbox, collaboration)
+     - src/content/docs/getting-started/*.mdx   (only if onboarding flow changed)
+   → If a feature page is clearly missing for the area (e.g. ticket adds a whole new product surface with no page), create one and add it to astro.config.mjs sidebar.
+   → Then ALSO add a changelog entry IF it's user-noteworthy.
+B. User-visible bug fix
+   → Changelog entry ("Fixed: X"). Update a page only if the fix changed documented behavior.
+C. Internal refactor / perf / infra / dev-only
+   → Skip entirely. No page, no changelog.
+D. Privacy-sensitive (cross-tenant, data leak), test tickets, non-HTPR tickets
+   → Skip entirely.
 
-  hypertask comment add HTPR-XXXX --text '<p>📚 This ticket is now documented in the public changelog: <a href="https://docs.hypertask.ai/changelog/">docs.hypertask.ai/changelog</a></p><p>Stakeholders — please review the entry (and any feature pages linked from it) and reply here with corrections, missing context, or anything to reframe. The docs auto-sync daily from this board.</p>'
+RULES:
+1. Read CLAUDE.md in this repo for format, categories, filtering, and style. Follow it exactly.
+2. Ticket list JSON: ${TICKETS_FILE}
+3. Only HTPR-* tickets.
+4. Check src/content/docs/changelog/index.mdx — do not duplicate existing entries.
+5. Changelog entries go under today's date heading ("Month Day, Year"), newest at the top.
+6. When updating a page, integrate the change into the relevant section — don't append a "recent changes" block. The page should read as if the feature was always there. Match existing voice and structure.
+7. For every category-A ticket, you MUST touch at least one page. If you can't decide which page, default to the closest match and note it in the commit message.
+8. After changes: \`git add -A\`, \`git commit -m "Docs sync: N pages, M changelog entries (YYYY-MM-DD)"\`, \`git push origin main\`.
+9. If nothing worth adding (all tickets are category C/D), do NOT commit. Skip to the RESULT line.
 
-Hypertask comments MUST be HTML (not Markdown). Do not embed images — use plain anchor tags for any URLs. If a feature page was also updated for this ticket, add a second <p> with its URL (e.g. https://docs.hypertask.ai/features/ai-features/).
+AFTER the push succeeds, for EACH HTPR ticket you touched (page update OR changelog entry), post a comment via the Hypertask CLI. The comment must point primarily at the page that was updated, with the changelog as secondary.
+
+Examples:
+- Page-only (category A, not changelog-worthy):
+  hypertask comment add HTPR-XXXX --text '<p>📚 Documented on <a href="https://docs.hypertask.ai/cli/reference/">CLI Reference</a>. Stakeholders — please review and reply with corrections or missing context.</p>'
+- Page + changelog:
+  hypertask comment add HTPR-XXXX --text '<p>📚 Documented on <a href="https://docs.hypertask.ai/cli/reference/">CLI Reference</a> and announced in the <a href="https://docs.hypertask.ai/changelog/">changelog</a>. Please review and reply with corrections.</p>'
+- Changelog-only (category B, no page change needed):
+  hypertask comment add HTPR-XXXX --text '<p>📚 Logged in the <a href="https://docs.hypertask.ai/changelog/">public changelog</a>. Please review and reply with corrections.</p>'
+
+Hypertask comments MUST be HTML (not Markdown). Do not embed images — use plain anchor tags only.
 
 If a comment post fails for one ticket, log the failure and continue with the others. Do not abort the whole run.
 
