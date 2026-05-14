@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+# ============================================================================
+# DEPRECATED 2026-05-14 — DO NOT RUN.
+# Superseded by the `hypertask-docs-agent` Cloudflare Worker in the agent-fleet
+# repo (~/projects/agent-fleet/workers/docs-agent). The VPS cron that invoked
+# this script was disabled in the crontab on 2026-05-14; the worker now does
+# the same job (and more: section-agnostic monitoring, 📚-marker dedup, volume
+# cap) on Cloudflare's reliable cron. Build+deploy of the docs site now happens
+# via HypertaskDocs/.github/workflows/deploy.yml. Kept only for reference.
+# ============================================================================
+#
 # Daily HypertaskDocs changelog updater.
 # Runs via cron, queries Hypertask project 15 section "Review",
 # asks Claude to update the changelog (and related pages) per HypertaskDocs/CLAUDE.md,
@@ -10,6 +20,9 @@
 # This script runs `wrangler pages deploy` explicitly after the push.
 
 set -euo pipefail
+
+echo "DEPRECATED: this script is disabled — see hypertask-docs-agent CF Worker. Exiting." >&2
+exit 0
 
 # ---------------------------------------------------------------------------
 # Config
