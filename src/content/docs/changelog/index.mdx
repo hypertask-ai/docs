@@ -24,6 +24,9 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Fixed: MCP `hypertask_get_user_context` no longer errors** — The tool threw a TypeError on every call, blocking MCP clients from fetching their user, team, and project context. It now returns the full context as JSON. ([HTPR-3439](https://app.hypertask.ai/detail/project-15/3439))
 - **Fixed: MCP `hypertask_inbox_list` returns JSON, not HTML** — `hypertask_inbox_list` was responding with a rendered HTML page instead of structured data, breaking any agent that called it. It now returns proper JSON. ([HTPR-3455](https://app.hypertask.ai/detail/project-15/3455))
 - **Fixed: MCP write tools restored** — `hypertask_add_comment_to_task` and `hypertask_attach_files` were failing with internal errors on every call. Both write tools now work correctly. ([HTPR-3660](https://app.hypertask.ai/detail/project-15/3660))
+- **Fixed: CLI `comment list` shows comment text** — `hypertask comment list` was returning empty `text` and `commentText` fields for every comment. Comment content now comes through correctly. ([HTPR-3032](https://app.hypertask.ai/detail/project-15/3032))
+- **Fixed: CLI `task create` reports the ticket number** — The success output printed the internal database task ID, which was easily confused with the ticket number used in URLs. It now prints `Created task HTPR-XXXX: <title>` along with the task link. ([HTPR-3034](https://app.hypertask.ai/detail/project-15/3034))
+- **Fixed: CLI `task list --project` no longer crashes** — `hypertask task list --project <id>` could crash with "Cannot read properties of undefined" partway through paginating results. It now lists tasks cleanly. ([HTPR-3030](https://app.hypertask.ai/detail/project-15/3030))
 
 ---
 
