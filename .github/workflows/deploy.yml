@@ -1,0 +1,57 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '.github/**'
+
+jobs:
+  deploy:
+    name: Build and deploy to Cloudflare Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 6031a7dff0d4a6469414cfa8a6dedddf
+        run: |
+          npx wrangler pages deploy dist \
+            --project-name hypertask-docs \
+            --branch main
+
+      - name: Purge Cloudflare edge cache
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          curl -fsS -X POST \
+            "https://api.cloudflare.com/client/v4/zones/2a45a3125cda94f854e5b163392dc76e/purge_cache" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{
+              "files": [
+                "https://docs.hypertask.ai/",
+                "https://docs.hypertask.ai/changelog/",
+                "https://docs.hypertask.ai/llms.txt",
+                "https://docs.hypertask.ai/llms-full.txt",
+                "https://docs.hypertask.ai/llms-small.txt",
+                "https://docs.hypertask.ai/changelog.md"
+              ]
+            }'
