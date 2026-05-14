@@ -236,6 +236,47 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+## hypertask_section (update)
+
+Rename a section or reorder it on the board.
+
+**Endpoint:** `PATCH /api/mcp/projects/{projectId}/sections/{sectionId}`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+| `sectionId` | number | Yes | The section to update |
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `title` | string | No | New section name |
+| `move_after_section_id` | number | No | Reorder the section so it appears immediately after this section ID |
+
+**Example request:**
+
+```bash
+# Move section 106 to sit right after section 104
+curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/sections/106 \
+  -d '{"move_after_section_id": 104}'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 106,
+  "title": "QA"
+}
+```
+
+---
+
 ## hypertask_list_tasks / hypertask_get_tasks
 
 List tasks with filtering, or retrieve specific tasks by ID.
