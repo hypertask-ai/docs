@@ -57,18 +57,17 @@ a:hover {
 	color: #ffffff;
 }
 
-/* Buttons */
-a[data-variant="primary"].sl-link-button,
-.sl-link-button[data-variant="primary"] {
+/* Buttons — Starlight uses a `.primary` class, not [data-variant] */
+.sl-link-button.primary {
 	background: #ffffff !important;
 	border-color: #ffffff !important;
 	color: #000000 !important;
 }
 
-a[data-variant="primary"].sl-link-button:hover,
-.sl-link-button[data-variant="primary"]:hover {
-	background: #e5e5e5 !important;
-	border-color: #e5e5e5 !important;
+.sl-link-button.primary:hover {
+	background: #d4d4d4 !important;
+	border-color: #d4d4d4 !important;
+	color: #000000 !important;
 }
 
 /* Code blocks */
