@@ -98,12 +98,17 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 | `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
 | `--created-by <id>` | Filter by creator user ID (numeric) | — |
 | `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
+| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
 ```bash
 # High-priority tasks assigned to you
 hypertask task list --project 15 --assigned-to me --priority urgent,high
+
+# Most recently updated tasks first
+hypertask task list --project 15 --sort-by updatedAt --sort-order desc
 
 # Page through results
 hypertask task list --project 15 --limit 20 --offset 20
