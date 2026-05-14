@@ -39,6 +39,12 @@ export default defineConfig({
 					],
 				},
 				{
+					label: 'CLI',
+					items: [
+						{ label: 'CLI Reference', slug: 'cli/reference' },
+					],
+				},
+				{
 					label: 'MCP Integration',
 					items: [
 						{ label: 'Overview', slug: 'mcp/overview' },
@@ -53,12 +59,6 @@ export default defineConfig({
 					],
 				},
 				{
-					label: 'CLI',
-					items: [
-						{ label: 'CLI Reference', slug: 'cli/reference' },
-					],
-				},
-			{
 					label: 'Changelog',
 					items: [
 						{ label: 'Changelog', slug: 'changelog' },

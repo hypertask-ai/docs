@@ -1,37 +1,121 @@
 ---
 title: Hypertask Documentation
-description: The AI-native project management tool built for humans and agents.
+description: The AI-native project manager built for humans and AI agents. Quickstart guides, CLI reference, and MCP integration docs for Hypertask.
+template: splash
 hero:
-  tagline: Everything you need to integrate Hypertask into your workflow. From first task to full automation.
+  tagline: The AI-native project manager built for humans and AI agents working side by side. Pick the interface that fits how you work — they all drive the same boards and tasks.
   actions:
     - text: Quickstart
       link: /getting-started/quickstart/
       icon: right-arrow
       variant: primary
-    - text: MCP Integration
-      link: /mcp/overview/
-      variant: minimal
-    - text: API Reference
-      link: /api/tools-reference/
+    - text: What is Hypertask?
+      link: /getting-started/introduction/
+      icon: open-book
       variant: minimal
 ---
 
-import { Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
-## Choose how you work
+## Choose your interface
 
-Pick the interface that matches your workflow.
+Hypertask works three ways. They all hit the same projects, boards, and tasks — pick whichever matches how you work.
 
 <CardGrid>
-	<LinkCard title="Web App" description="Manage tasks, boards, and projects through the Hypertask UI at app.hypertask.ai." href="https://app.hypertask.ai" />
-	<LinkCard title="MCP for AI Agents" description="Connect Claude, Cursor, or any MCP client to manage tasks programmatically." href="/mcp/overview/" />
+	<LinkCard
+		title="Web App"
+		description="The full Hypertask UI at app.hypertask.ai. Boards, tasks, inbox, search, and AI features in your browser."
+		href="https://app.hypertask.ai"
+	/>
+	<LinkCard
+		title="Command-Line (CLI)"
+		description="Drive Hypertask from your terminal with the hypertask CLI. The fastest interface — and the one built for AI coding agents like Claude Code."
+		href="/cli/reference/"
+	/>
+	<LinkCard
+		title="MCP for AI Agents"
+		description="Connect Claude, Cursor, or any MCP client so agents can list, create, and move tasks programmatically."
+		href="/mcp/overview/"
+	/>
+</CardGrid>
+
+## New to Hypertask?
+
+Start here if you're setting up Hypertask for the first time.
+
+<CardGrid>
+	<LinkCard
+		title="What is Hypertask?"
+		description="The idea behind AI-native project management, and how the pieces fit together."
+		href="/getting-started/introduction/"
+	/>
+	<LinkCard
+		title="Quickstart"
+		description="Create your first project, board, and task — and connect an AI agent — in under 5 minutes."
+		href="/getting-started/quickstart/"
+	/>
+	<LinkCard
+		title="Core Concepts"
+		description="Projects, sections, tasks, comments, and the full data model explained."
+		href="/getting-started/concepts/"
+	/>
 </CardGrid>
 
 ## Explore the platform
 
+What you can do with Hypertask, feature by feature.
+
 <CardGrid>
-	<LinkCard title="Boards & Sections" description="Organize work with Kanban-style boards and customizable columns." href="/features/boards/" />
-	<LinkCard title="Tasks" description="Create, assign, search, and manage tasks with priorities and comments." href="/features/tasks/" />
-	<LinkCard title="Inbox" description="Stay on top of assigned work and notifications." href="/features/inbox/" />
-	<LinkCard title="MCP Tools Reference" description="Complete reference for all 15 Hypertask MCP tools." href="/api/tools-reference/" />
+	<LinkCard
+		title="Boards & Sections"
+		description="Organize work with Kanban-style boards and customizable columns."
+		href="/features/boards/"
+	/>
+	<LinkCard
+		title="Tasks"
+		description="Create, assign, search, and manage tasks with priorities, estimates, and comments."
+		href="/features/tasks/"
+	/>
+	<LinkCard
+		title="Inbox & Notifications"
+		description="Stay on top of assigned work and updates — without meetings or chat."
+		href="/features/inbox/"
+	/>
+	<LinkCard
+		title="AI Features"
+		description="The AI Task Writer, voice dictation, and the HyperAI co-worker built into every project."
+		href="/features/ai-features/"
+	/>
+	<LinkCard
+		title="Collaboration"
+		description="Work alongside teammates and AI agents in the same boards and comment threads."
+		href="/features/collaboration/"
+	/>
+</CardGrid>
+
+## Reference
+
+Everything you need to automate and integrate Hypertask.
+
+<CardGrid>
+	<LinkCard
+		title="CLI Reference"
+		description="Every hypertask command — tasks, projects, comments, inbox — with flags, defaults, and examples."
+		href="/cli/reference/"
+	/>
+	<LinkCard
+		title="MCP Tools Reference"
+		description="All 15 Hypertask MCP tools with parameters and example calls."
+		href="/api/tools-reference/"
+	/>
+	<LinkCard
+		title="MCP Integration"
+		description="How AI agents connect to Hypertask, plus common agent workflows and scheduling."
+		href="/mcp/overview/"
+	/>
+	<LinkCard
+		title="Changelog"
+		description="What's new in Hypertask — updated daily from the product board."
+		href="/changelog/"
+	/>
 </CardGrid>

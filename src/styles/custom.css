@@ -126,3 +126,20 @@ td, th {
 ::-webkit-scrollbar-thumb:hover {
 	background: #444444;
 }
+
+/* --- Landing page (splash) polish --- */
+.hero {
+	padding-block: 2.5rem 1rem;
+}
+
+.hero .tagline {
+	max-width: 44rem;
+	margin-inline: auto;
+	color: var(--sl-color-gray-2);
+	font-size: var(--sl-text-lg);
+}
+
+/* Tighten the gap between landing-page card grids */
+.card-grid {
+	gap: 1rem;
+}
