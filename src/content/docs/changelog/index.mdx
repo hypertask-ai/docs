@@ -28,6 +28,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Fixed: CLI `comment list` shows comment text** — `hypertask comment list` was returning empty `text` and `commentText` fields for every comment. Comment content now comes through correctly. ([HTPR-3032](https://app.hypertask.ai/detail/project-15/3032))
 - **Fixed: CLI `task create` reports the ticket number** — The success output printed the internal database task ID, which was easily confused with the ticket number used in URLs. It now prints `Created task HTPR-XXXX: <title>` along with the task link. ([HTPR-3034](https://app.hypertask.ai/detail/project-15/3034))
 - **Fixed: CLI `task list --project` no longer crashes** — `hypertask task list --project <id>` could crash with "Cannot read properties of undefined" partway through paginating results. It now lists tasks cleanly. ([HTPR-3030](https://app.hypertask.ai/detail/project-15/3030))
+- **Fixed: Clearer CLI error when `--assignee` gets a non-ID** — Passing a name or email to `hypertask task update --assignee` used to fail with the cryptic `Expected number, received nan`. It now returns `assignee must be a list of integer user IDs`. ([HTPR-3181](https://app.hypertask.ai/detail/project-15/3181))
 
 ---
 
