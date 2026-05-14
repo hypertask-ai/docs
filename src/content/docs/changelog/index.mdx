@@ -19,6 +19,12 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **CLI: Sort `task list` results with `--sort-by` and `--sort-order`** — `hypertask task list` now accepts `--sort-by <createdAt|updatedAt|dueDate>` and `--sort-order <asc|desc>`, so you can pull the most recently updated tasks first without post-processing JSON. ([HTPR-3173](https://app.hypertask.ai/detail/project-15/3173))
 
+### Bug Fixes
+
+- **Fixed: MCP `hypertask_get_user_context` no longer errors** — The tool threw a TypeError on every call, blocking MCP clients from fetching their user, team, and project context. It now returns the full context as JSON. ([HTPR-3439](https://app.hypertask.ai/detail/project-15/3439))
+- **Fixed: MCP `hypertask_inbox_list` returns JSON, not HTML** — `hypertask_inbox_list` was responding with a rendered HTML page instead of structured data, breaking any agent that called it. It now returns proper JSON. ([HTPR-3455](https://app.hypertask.ai/detail/project-15/3455))
+- **Fixed: MCP write tools restored** — `hypertask_add_comment_to_task` and `hypertask_attach_files` were failing with internal errors on every call. Both write tools now work correctly. ([HTPR-3660](https://app.hypertask.ai/detail/project-15/3660))
+
 ---
 
 ## April 28, 2026
