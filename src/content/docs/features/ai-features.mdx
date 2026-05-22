@@ -88,6 +88,27 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 | `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
 | `Cmd/Ctrl + Shift + O` | Start a new chat |
 
+### What AI Chat can and cannot see
+
+AI Chat's access to your workspace is intentionally kept in line with what the CLI and MCP tools can read and write. This means AI Chat shares the same scope and limitations as those interfaces.
+
+| Workspace data | AI Chat | CLI / MCP |
+|---|---|---|
+| Tasks (title, description, status, priority, size) | ✅ | ✅ |
+| Assignees & followers | ✅ | ✅ |
+| Comments | ✅ | ✅ |
+| Labels | ✅ | ✅ |
+| Sections / board columns | ✅ | ✅ |
+| Subtask hierarchy | ✅ | ✅ |
+| Due dates | ✅ | ✅ |
+| Archived / completed tasks | ✅ | ✅ |
+| Saved views | ❌ | ❌ |
+| Tags | ❌ | ❌ |
+
+<Aside type="note">
+**Saved views and tags are not currently accessible to AI Chat, the CLI, or MCP tools.** All three interfaces share the same access boundary — if you need to work with views or tags, use the Hypertask web UI directly. This parity is intentional: AI Chat is powered by the same underlying tools as the CLI and MCP, so their capabilities stay in sync.
+</Aside>
+
 ## Auto-Summary
 
 When a task accumulates a long comment thread, Hypertask generates an **automatic summary** so you can get up to speed without reading every message.
