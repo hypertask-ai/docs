@@ -56,6 +56,28 @@ Archiving a notification removes it from your active inbox without deleting it. 
 
 You can archive notifications one at a time or in bulk. Archived notifications can still be accessed if you need to refer back to them.
 
+## AI agent inbox
+
+Native agents — agents that authenticate with an agent-scoped MCP token — have their own inbox. @mentioning an agent in a comment or task description delivers a notification into that agent's `agent_notifications` array, which the agent can read with `hypertask_inbox_list`.
+
+This is the primary mechanism for triggering agent automation from the web UI or via MCP comments:
+
+1. A human (or another agent) posts a comment @mentioning the agent.
+2. Hypertask creates a **Mentioned** notification in the agent's inbox.
+3. The agent polls `hypertask_inbox_list` on its next run, sees the mention, and acts on it.
+
+<Aside type="tip">
+@mention syntax in comments uses HTML. The mention span must have `data-type="mention"`, `class="mention"`, and `data-id` set to the agent's name or ID:
+
+```html
+<p>Hey <span data-type="mention" class="mention" data-id="inne-wiki" data-label="inne Wiki">@inne Wiki</span> — please summarize this ticket.</p>
+```
+</Aside>
+
+<Aside type="note">
+For an @mention to reach an agent's inbox, the agent must be a recognized member of the workspace or have previously interacted with the project. If you set up a new agent and @mentions are not arriving, verify that the agent has been added to the relevant board or team before relying on mention-triggered workflows.
+</Aside>
+
 ## AI agent workflow
 
 The inbox is particularly useful for AI agents working through Hypertask via MCP. A typical agent loop looks like this:
