@@ -168,7 +168,7 @@ hypertask task create \
 |------|-------------|
 | `--project <id>` | Project ID (required) |
 | `--title <text>` | Task title (required) |
-| `--description <text>` | Task description (HTML format) |
+| `--description <text>` | Task description (HTML format; plain text is auto-wrapped in `<p>` tags) |
 | `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
 | `--estimate <n>` | Story points |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
@@ -195,7 +195,7 @@ hypertask task create \
 ```
 
 <Aside type="note">
-Descriptions use <strong>HTML</strong> format, not Markdown. Wrap text in <code>&lt;p&gt;</code> tags and use standard HTML elements like <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;code&gt;</code>, and <code>&lt;strong&gt;</code>.
+Descriptions use <strong>HTML</strong> format, not Markdown. Wrap text in <code>&lt;p&gt;</code> tags and use standard HTML elements like <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;code&gt;</code>, and <code>&lt;strong&gt;</code>. If you pass plain text without HTML tags, the CLI automatically wraps it in <code>&lt;p&gt;...&lt;/p&gt;</code> before sending to the API.
 </Aside>
 
 ### `task update`
@@ -209,7 +209,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | Flag | Description |
 |------|-------------|
 | `--title <text>` | New title |
-| `--description <text>` | New description (plain text or HTML) |
+| `--description <text>` | New description (plain text or HTML; plain text is auto-wrapped in `<p>` tags) |
 | `--priority <p>` | New priority |
 | `--estimate <n>` | New story points |
 | `--due <date>` | New due date (ISO 8601) |
