@@ -99,7 +99,7 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 | `--created-by <id>` | Filter by creator user ID (numeric) | — |
 | `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
 | `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
-| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
+| `--sort-order <asc|desc>` | Sort direction — use together with `--sort-by` | — |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -174,7 +174,7 @@ hypertask task create \
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
 | `--parent-task <id>` | Parent task ID — creates this task as a subtask |
-| `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
+| `--section <id|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
 
@@ -213,12 +213,16 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--priority <p>` | New priority |
 | `--estimate <n>` | New story points |
 | `--due <date>` | New due date (ISO 8601) |
-| `--status <s>` | Status: `Normal`, `Archive`, `Deleted` |
-| `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
+| `--status <s>` | Lifecycle status: `Normal`, `Archive`, or `Deleted` |
+| `--section <id|name>` | Section (board column): ID or name like `"Doing"`, `"Done"` |
 | `--project <id>` | Project ID (required when using `--section` with a name across projects) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--labels <list>` | Comma-separated label names or IDs |
 | `--attach <path>` | Attach a local file (repeatable) |
+
+<Aside type="note">
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
+</Aside>
 
 ```bash
 # Move a task to the "Doing" section
