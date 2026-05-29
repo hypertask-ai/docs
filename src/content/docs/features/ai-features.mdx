@@ -42,6 +42,16 @@ The Task Writer maintains a **history of responses**, so you can revisit previou
 The more context your project has — existing tasks, custom instructions, attached documents — the better the AI Task Writer performs. It learns from your project's patterns.
 </Aside>
 
+### Properties during task creation
+
+When creating tasks via the AI Task Writer, you can set the following properties directly without needing a follow-up edit:
+
+| Property | Description |
+|----------|-------------|
+| Tags | Categorize the task with project labels |
+| Task Size | Story points or time estimate |
+| Priority | `urgent`, `high`, `medium`, `low` |
+
 ## Voice Dictation
 
 Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
@@ -74,6 +84,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 
 - **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
 - **Take action** — HyperAI can create tasks, assign team members, set priorities, add labels, and manage your board directly from the chat sidebar. Just tell it what you need — "Create a high-priority bug for the login issue and assign it to Sarah" — and it handles the rest.
+- **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
 - **Consistent formatting** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used.
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
 - **Ask AI from comments** — see a comment or description you want to dig into? Click the "Ask AI" button on any comment or task description to send it directly into an AI chat, where you can ask follow-up questions or get analysis.
@@ -83,10 +94,10 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 
 ### Attachments in AI Chat
 
-You can attach files directly to messages in AI Chat, giving the AI concrete reference material to work with alongside your prompt.
+You can attach files and images directly to messages in AI Chat, giving the AI concrete reference material to work with alongside your prompt.
 
 **Supported content:**
-- Images (screenshots, mockups, diagrams)
+- Images (screenshots, mockups, diagrams, photos)
 - Documents (PDFs, text files, spreadsheets, and other common formats)
 
 **How to attach:**
@@ -96,8 +107,12 @@ You can attach files directly to messages in AI Chat, giving the AI concrete ref
 4. Type your prompt and send — the AI receives both the file and your text.
 
 <Aside type="tip">
-Attachments are great for asking the AI to analyse a screenshot of a bug, review a spec document, or extract action items from a PDF — all without leaving your project context.
+Attachments are great for asking the AI to analyse a screenshot of a bug, review a spec document, extract action items from a PDF, or get feedback on a design mockup — all without leaving your project context.
 </Aside>
+
+### Voice input in AI Chat
+
+AI Chat supports voice dictation, allowing you to speak your messages instead of typing. Use `Shift + Cmd/Ctrl + D` to start recording, or tap the microphone icon in the chat composer.
 
 ### Keyboard shortcuts
 
@@ -140,6 +155,10 @@ Auto-summaries highlight:
 <Aside>
 Auto-summaries update as new comments are added, so they always reflect the latest state of the conversation.
 </Aside>
+
+## AI Triage
+
+Use the **AI Triage** button in your inbox to automatically categorize, prioritize, and suggest actions for incoming notifications and tasks. The AI analyses your inbox items and provides recommendations for how to handle them efficiently.
 
 ## Custom AI Instructions
 
