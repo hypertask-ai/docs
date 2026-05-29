@@ -33,6 +33,39 @@ Domain restrictions are useful when you want to share an invite link broadly (in
 
 Project members can view boards, create and edit tasks, comment, and collaborate. Project-level settings control what members can do.
 
+## AI Agents
+
+AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board's tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
+
+### Adding agents to boards
+
+<Steps>
+1. Open the board's settings or invite panel.
+2. Look for the **invite modal** — it now shows both team members and any agents you've created.
+3. Select the agent you want to add to the board.
+4. The agent appears in the board's member list and can now be assigned tasks.
+</Steps>
+
+Agents added to a board are treated as members of that board. This means:
+
+- Agents appear in the assignee dropdown for tasks on that board
+- Agents can be @mentioned in comments and will receive notifications
+- Agents can read and update tasks on that board via MCP
+
+<Aside type="note">
+Agents do not count as team seats toward your subscription limit. You can add as many agents as you need without affecting your seat count.
+</Aside>
+
+### Agent access scope
+
+When you create an agent, it inherits access to all boards in projects where you're a member. Use the board-level invite modal to **restrict which boards an agent can access** — boards not on the list treat the agent as if it doesn't exist.
+
+This is useful when:
+
+- You work across multiple clients or teams and don't want a given agent active everywhere
+- You want to limit an agent to only the boards where it has relevant context
+- You have specialized agents for different workflows and need to keep them scoped
+
 ## @mentions
 
 Type `@` in any comment to mention a team member. Mentions do two things:
