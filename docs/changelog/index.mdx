@@ -1,0 +1,12 @@
+---
+title: Changelog
+description: Daily log of new features, bug fixes, and improvements shipped to Hypertask.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## May 29, 2026
+
+### Bug Fixes
+
+- **Fixed: Agent bearer tokens now correctly attribute writes to the agent** — When an autonomous agent authenticated with its own bearer token created tasks or posted comments, the operations were incorrectly attributed to the agent's human owner. Writes are now correctly attributed to the agent, making activity logs and notifications accurately reflect the agent as the actor. ([HTPR-3684](https://app.hypertask.ai/detail/project-15/3684))
