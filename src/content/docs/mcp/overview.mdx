@@ -126,17 +126,20 @@ Once connected, your agent has access to 16 tools:
 | `hypertask_inbox_list` | Check inbox notifications |
 | `hypertask_inbox_archive` | Archive inbox items |
 
+### AI Chat integration
+
+New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
+
 ## Known limitations
 
 The following features are not yet available via MCP:
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| **Due dates** | Not supported | `hypertask_create_task` and `hypertask_update_task` do not accept a `due_date` parameter. Set due dates from the Hypertask UI for now. |
 | **Create labels** | Not supported | You can assign existing labels to tasks, but cannot create new labels via MCP. Create labels in the Hypertask UI first, then reference them. |
-| **Labels on tasks** | Not supported | `hypertask_create_task` and `hypertask_update_task` do not accept a `labels` parameter. Use the CLI or UI to manage labels on tasks. |
 | **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` is available, but mentions may appear as plain text and not trigger notifications. Use structured mention objects (`user_id` + `display_name`) for best results. |
 | **Related task linking** | Not supported | Ticket references (e.g. `HTPR-1234`) in comments added via MCP are not automatically parsed into "related tasks" links like they are in the UI. |
+| **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
 
 <Aside type="tip">
 For features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports labels, due dates, and description updates.
