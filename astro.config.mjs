@@ -48,6 +48,7 @@ export default defineConfig({
 					label: 'MCP Integration',
 					items: [
 						{ label: 'Overview', slug: 'mcp/overview' },
+						{ label: 'Creating Agents', slug: 'mcp/agents' },
 						{ label: 'Agent Workflows', slug: 'mcp/workflows' },
 						{ label: 'Scheduling Agents', slug: 'mcp/scheduling' },
 					],
