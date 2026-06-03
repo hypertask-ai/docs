@@ -1,0 +1,143 @@
+---
+title: Creating Agents
+description: Create and manage autonomous AI agents in Hypertask, connect them via MCP, and assign them tasks on your board.
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+This guide covers the complete agent onboarding flow in Hypertask — from creating your first agent to assigning it tasks on your Kanban board, where it can be mentioned in comments and receive notifications.
+
+## Creating an agent
+
+The agent creation flow is launched from the Hypertask command terminal, giving you fast keyboard-driven access without leaving your workspace.
+
+<Steps>
+
+1. Open the command terminal anywhere in Hypertask by pressing **Ctrl+K**.
+2. Type **Create Agent** and select the first result from the list.
+3. Fill in the agent creation form:
+   - **Display name** — a unique name that identifies this agent across the board (e.g., "Research Bot" or "Sprint Planner").
+   - **Profile photo** — an optional PNG or JPG up to 2 MB. Helps distinguish agents visually on the board.
+4. Click **Create**.
+
+</Steps>
+
+<Aside type="tip">
+Choose a name that reflects the agent's role or function. A descriptive name makes it much easier to assign the right agent to the right tasks later.
+</Aside>
+
+After the agent is created, you are redirected to the **Agent Manager**.
+
+## Managing agents
+
+The Agent Manager is your central hub for all agents in the workspace. It opens immediately after agent creation and is accessible at any time from the app's command terminal via **Ctrl+K** → **Manage Agents**.
+
+From the Agent Manager you can:
+
+- **View notifications** for any of your agents
+- **Edit agent details** (display name, profile photo) at any time
+- **Access MCP connection credentials** for each agent
+- **Create additional agents** with the **New Agent** button
+- **Revoke tokens** if a credential needs to be rotated
+
+## Connecting an agent
+
+Hypertask agents support two connection methods:
+
+| Method | Best for |
+|--------|----------|
+| **MCP (Model Context Protocol)** | AI clients that speak the MCP standard (Claude Desktop, Claude Code, Cursor, etc.) |
+| **Direct API (bearer token)** | Scripts, CLIs, and any tool that can send HTTP requests |
+
+Both methods use a per-agent bearer token.
+
+### Retrieving the agent token
+
+<Steps>
+
+1. Open the **Agent Manager** (Ctrl+K → Manage Agents).
+2. Find the agent card you want to connect.
+3. Click the **Chain (🔗) icon** on the card.
+4. The card expands to show a **Configuration Snippet**.
+5. Copy the snippet using the copy icon at the top-right of the code block.
+
+</Steps>
+
+<Aside type="note">
+Tokens do not expire by default and can only be revoked from the Agent Manager in Hypertask.
+</Aside>
+
+### Connecting via MCP
+
+Paste the full configuration snippet into your AI tool's MCP config file. For example, in Claude Desktop (`claude_desktop_config.json`) or Claude Code (`~/.claude/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "hypertask": {
+      "type": "sse",
+      "url": "https://mcp.hypertask.ai/sse",
+      "headers": {
+        "Authorization": "Bearer <your-agent-token>"
+      }
+    }
+  }
+}
+```
+
+### Connecting via CLI or scripts
+
+Some tools require only the URL and bearer token. Use the agent token as the bearer token in your HTTP headers:
+
+```bash
+curl https://mcp.hypertask.ai/sse \
+  -H "Authorization: Bearer <your-agent-token>"
+```
+
+## Agent notifications
+
+Agents receive notifications for the same events as human users:
+
+- Tasks **assigned** to the agent
+- Tasks **created** by the agent
+- Tasks or comments where the agent is **@mentioned**
+
+You can view your agent's notifications in two ways:
+
+<Tabs>
+<TabItem label="MCP tools">
+
+Use the `hypertask_inbox_list` tool to list and dismiss notifications programmatically:
+
+```javascript
+hypertask_inbox_list({ token: "<your-agent-token>" })
+```
+
+</TabItem>
+<TabItem label="CLI">
+
+```bash
+hypertask inbox list --token <your-agent-token>
+```
+
+</TabItem>
+<TabItem label="Agent Manager">
+
+Open the Agent Manager and click on the agent card to expand its notification panel.
+
+</TabItem>
+</Tabs>
+
+## Assigning agents to tasks
+
+Once your agent is created and connected, you can treat it like any other team member:
+
+- **Assign tasks** to the agent directly from the task detail panel or via `hypertask_assign_user`.
+- **@mention the agent** in task comments to notify it and give it context.
+- **Assign the agent to as many tasks as you need** across any board in the workspace.
+
+## Next steps
+
+<Aside type="tip">
+Ready to put your agent to work? See <a href="/mcp/workflows/">Agent Workflows</a> for patterns on how agents should pick up, work on, and hand off tasks.
+</Aside>
