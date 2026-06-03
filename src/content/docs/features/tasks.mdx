@@ -12,7 +12,7 @@ Tasks are the core unit of work in Hypertask. Every task lives on a board, belon
 | Field | Description |
 |-------|-------------|
 | **Title** | Short summary of the work |
-| **Description** | Rich HTML content via the TipTap editor — supports formatting, images, code blocks, and more |
+| **Description** | Rich HTML content via the TipTap editor â supports formatting, images, code blocks, and clickable links. |
 | **Ticket number** | Auto-generated identifier in the format `PROJ-123` (project prefix + sequential number) |
 | **Priority** | Urgency level (see below) |
 | **Estimate** | T-shirt size for effort estimation |
@@ -23,15 +23,19 @@ Tasks are the core unit of work in Hypertask. Every task lives on a board, belon
 | **Attachments** | Files attached to the task, its comments, or its description |
 | **Subtasks** | Nested child tasks for breaking down larger work |
 
+<Aside type="tip">
+URLs added to task descriptions or comments (whether via the web UI, CLI, or MCP) are automatically detected and converted into clickable links.
+</Aside>
+
 ## Priority levels
 
 Every task has a priority. The default is **None**, which means unprioritized.
 
 | Priority | When to use |
 |----------|-------------|
-| **Urgent** | Needs immediate attention — something is broken or blocked |
+| **Urgent** | Needs immediate attention â something is broken or blocked |
 | **High** | Important work that should be tackled soon |
-| **Medium** | Standard priority — the default for most planned work |
+| **Medium** | Standard priority â the default for most planned work |
 | **Low** | Nice to have, do it when there's bandwidth |
 | **None** | Not yet prioritized |
 
@@ -41,13 +45,13 @@ Use T-shirt sizing to estimate effort without getting bogged down in hour counts
 
 | Size | Typical meaning |
 |------|----------------|
-| **XS** | Trivial — a few minutes |
-| **S** | Small — under an hour |
-| **M** | Medium — a few hours |
-| **L** | Large — a full day |
-| **XL** | Extra large — multiple days |
-| **XXL** | Very large — a week or more |
-| **XXXL** | Massive — needs to be broken into subtasks |
+| **XS** | Trivial â a few minutes |
+| **S** | Small â under an hour |
+| **M** | Medium â a few hours |
+| **L** | Large â a full day |
+| **XL** | Extra large â multiple days |
+| **XXL** | Very large â a week or more |
+| **XXXL** | Massive â needs to be broken into subtasks |
 
 <Aside type="tip">
 If a task is estimated as XXXL, that's usually a signal to break it into smaller subtasks with their own estimates.
@@ -57,18 +61,18 @@ If a task is estimated as XXXL, that's usually a signal to break it into smaller
 
 There are three ways to reference a task in Hypertask:
 
-1. **Task ID** — the global unique identifier (e.g., `42`). Used in API and MCP calls.
-2. **Ticket number** — the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
-3. **Project + unique index** — the combination of project ID and the task's index within that project. Used internally.
+1. **Task ID** â the global unique identifier (e.g., `42`). Used in API and MCP calls.
+2. **Ticket number** â the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
+3. **Project + unique index** â the combination of project ID and the task's index within that project. Used internally.
 
 ## Task status lifecycle
 
 Tasks follow a three-stage lifecycle:
 
 <Steps>
-1. **Normal** — the task is active and visible on the board.
-2. **Archived** — the task is removed from the board but preserved for reference. It still appears in search results.
-3. **Deleted** — soft delete. The task is hidden from all views but can be recovered if needed.
+1. **Normal** â the task is active and visible on the board.
+2. **Archived** â the task is removed from the board but preserved for reference. It still appears in search results.
+3. **Deleted** â soft delete. The task is hidden from all views but can be recovered if needed.
 </Steps>
 
 Archiving is the recommended way to clean up completed work. It keeps your board focused without losing history.
@@ -83,11 +87,11 @@ Link related tasks together to capture dependencies and connections:
 | **BlockedBy** | This task cannot proceed until the linked task is complete |
 | **BlockedTo** | This task is blocking another task from proceeding |
 
-Relations are bidirectional — creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
+Relations are bidirectional â creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
 
 ## Subtasks
 
-Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right — they have all the same fields, can be assigned independently, and carry their own priority and estimates.
+Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right â they have all the same fields, can be assigned independently, and carry their own priority and estimates.
 
 Use subtasks to break large work items into actionable steps while keeping the parent task as an overview.
 
@@ -108,8 +112,8 @@ Files can be attached to:
 
 Generate a **public link** to share a task with people outside your project. Public links support:
 
-- **Expiration** — set a time limit on access
-- **Read-only access** — external viewers can see the task but cannot modify it
+- **Expiration** â set a time limit on access
+- **Read-only access** â external viewers can see the task but cannot modify it
 
 <Aside type="caution">
 Public links expose task details to anyone with the URL. Use expiration dates and share only what's necessary.
