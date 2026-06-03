@@ -1,0 +1,19 @@
+name: hypertaskdocs-daily-changelog
+description: >-
+  Daily HypertaskDocs changelog updater: queries Hypertask project 15 Review section, asks Claude to update the changelog, commits+pushes on change, deploys to Cloudflare Pages, sends Telegram
+  notification.
+tech: cron
+llm: claude
+provider: anthropic
+trigger:
+  type: cron
+  frequency: daily-7am
+status_check:
+  type: log_mtime
+  path: /home/valentin/.logs/daily-changelog
+  max_age_minutes: 1800
+owner: valentin
+tags:
+  - hypertask
+  - docs
+  - changelog
