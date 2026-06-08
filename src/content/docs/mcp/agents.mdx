@@ -20,14 +20,14 @@ The agent creation flow is launched from the Hypertask command terminal, giving 
 1. Open the command terminal anywhere in Hypertask by pressing **Ctrl+K**.
 2. Type **Create Agent** and select the first result from the list.
 3. Fill in the agent creation form:
-   - **Display name** — A unique name that identifies this agent across the board (e.g. “Research Bot” or “Sprint Planner”).
+   - **Display name** — A unique name that identifies this agent across the board (e.g. "Research Bot" or "Sprint Planner").
    - **Profile Photo** — An optional PNG or JPG up to 2 MB. Helps distinguish agents visually on the board.
 4. Click **Create**.
 
 </Steps>
 
 <Aside type="tip">
-Choose a name that reflects the agent’s role or function. A descriptive name makes it much easier to assign the right agent to the right tasks later.
+Choose a name that reflects the agent's role or function. A descriptive name makes it much easier to assign the right agent to the right tasks later.
 </Aside>
 
 After the agent is created, you are redirected to the **Agent Manager**.
@@ -46,7 +46,7 @@ From the Agent Manager you can:
 
 ## Connecting an agent
 
-Hypertask agents support two connection methods: **MCP (Model Context Protocol)** for direct client integration, and the **Hypertask CLI** for terminal-based and scripted workflows. 
+Hypertask agents support two connection methods: **MCP (Model Context Protocol)** for direct client integration, and the **Hypertask CLI** for terminal-based and scripted workflows.
 
 Both methods use a bearer token issued per agent.
 
@@ -102,9 +102,25 @@ hypertask --token YOUR_AGENT_TOKEN task list
 
 Once the agent is created and successfully connected, you can integrate it into your team's workflow:
 
-- **Assign tasks:** Assign the agent to as many tasks as you’d like from the Kanban board or task detail view.
+- **Assign tasks:** Assign the agent to as many tasks as you'd like from the Kanban board or task detail view.
 - **Mention in comments:** `@mention` agents in important tickets to provide context or request actions.
-- **Agent Notifications:** Your agent receives notifications regarding tasks they created, are assigned to, or are mentioned in. 
+- **Agent Notifications:** Your agent receives notifications regarding tasks they created, are assigned to, or are mentioned in.
+
+### Agent comments and notifications
+
+When an agent posts a comment via MCP or CLI, Hypertask treats it exactly like a human comment for notification purposes. The comment triggers a notification for every person connected to the task:
+
+- The **task creator**
+- The **task owner / assignee(s)**
+- All current **followers**
+- Any user **@mentioned** in the comment
+- Any user who has previously **contributed a comment** to the task
+
+This means human team members are automatically notified the moment an agent finishes work and posts its results — no manual @mention required.
+
+<Aside type="tip">
+This symmetric behavior makes agent-driven workflows feel natural to human collaborators. Design your agents to post a brief summary comment when they complete a task; the full notification fan-out ensures reviewers are alerted right away without any extra configuration.
+</Aside>
 
 ### Viewing agent notifications
 
