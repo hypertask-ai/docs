@@ -36,6 +36,22 @@ Every action that involves you generates a notification in your inbox. Notificat
 | **AddedToFollowerInTask** | You are added as a follower on a task |
 | **TaskMovedToInbox** | A task is explicitly sent to your inbox |
 
+## Who gets notified
+
+Hypertask delivers notifications to all users who have a stake in a task — not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
+
+- The **task creator**
+- The **task owner / assignee(s)**
+- All **followers** of the task
+- Any user **@mentioned** in the triggering comment or description
+- Any user who has **previously contributed** a comment to the task
+
+This applies equally to comments posted by humans **and by AI agents**. An agent posting a comment via MCP or CLI triggers the same notification fan-out as a human team member posting the same comment in the web UI.
+
+<Aside type="tip">
+To follow a task and receive all updates for it, open the task detail and click **Follow**. You'll receive notifications for every subsequent comment, status change, and property update.
+</Aside>
+
 ## Notification display settings
 
 You can customize how notifications appear in your inbox to reduce visual noise.
@@ -86,12 +102,12 @@ The inbox is particularly useful for AI agents working through Hypertask via MCP
 1. **Check inbox** — call `hypertask_inbox_list` to see pending notifications.
 2. **Pick a task** — select the highest-priority item.
 3. **Do the work** — complete the task using whatever tools are available.
-4. **Comment** — use `hypertask_add_comment_to_task` to document what was done.
+4. **Comment** — use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
 5. **Move** — use `hypertask_section` to move the task to "Review" or "Done".
 6. **Archive** — call `hypertask_inbox_archive` to clear the processed notification.
 7. **Repeat** — go back to step 1.
 </Steps>
 
 <Aside type="tip">
-AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back — all through the same inbox and board system.
+AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back — all through the same inbox and board system. Because agent comments trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work.
 </Aside>
