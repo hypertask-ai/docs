@@ -1,6 +1,6 @@
 ---
 title: CLI Reference
-description: Complete reference for the Hypertask CLI — manage tasks, projects, comments, and notifications from your terminal.
+description: Complete reference for the Hypertask CLI â manage tasks, projects, comments, and notifications from your terminal.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -93,13 +93,13 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--project <id>` | Filter by project ID | — |
-| `--section <name>` | Filter by section name | — |
-| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
-| `--created-by <id>` | Filter by creator user ID (numeric) | — |
-| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
-| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
-| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
+| `--project <id>` | Filter by project ID | â |
+| `--section <name>` | Filter by section name | â |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | â |
+| `--created-by <id>` | Filter by creator user ID (numeric) | â |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | â |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | â |
+| `--sort-order <asc\|desc>` | Sort direction â use together with `--sort-by` | â |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -114,18 +114,23 @@ hypertask task list --project 15 --sort-by updatedAt --sort-order desc
 hypertask task list --project 15 --limit 20 --offset 20
 ```
 
-### `task get`
+### `task get` / `task show`
 
 Get full details of a single task by its ticket number or numeric task ID. Response includes labels, `parent_id` for subtasks, and the task URL.
 
 ```bash
 hypertask task get HTPR-2992
+hypertask task show HTPR-2992   # alias for task get
 hypertask task get 1234
 ```
 
 | Argument | Description |
 |----------|-------------|
 | `<ticket>` | Ticket identifier (e.g., `HTPR-2992`) or numeric task ID |
+
+<Aside type="tip">
+<code>task show</code> is an alias for <code>task get</code> — both commands are identical.
+</Aside>
 
 ### `task tree`
 
@@ -137,8 +142,8 @@ hypertask task tree --ticket HTPR-2992
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
-| `--task-id <id>` | Numeric task ID | — |
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | â |
+| `--task-id <id>` | Numeric task ID | â |
 | `--depth <n>` | Max levels deep to show | Full tree |
 
 ```bash
@@ -173,7 +178,7 @@ hypertask task create \
 | `--estimate <n>` | Story points |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
-| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
+| `--parent-task <id>` | Parent task ID â creates this task as a subtask |
 | `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
@@ -221,7 +226,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--attach <path>` | Attach a local file (repeatable) |
 
 <Aside type="note">
-**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` â not section names.
 </Aside>
 
 ```bash
@@ -266,7 +271,7 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | Flag | Description |
 |------|-------------|
 | `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
-| `--to <id>` | Target project ID — move to a different project |
+| `--to <id>` | Target project ID â move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
 ### `task move-board`
@@ -364,7 +369,7 @@ hypertask project label create --project 15 --name "CLI"
 
 ### `project create-board`
 
-Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+Create a whole new board from a JSON manifest â sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
 ```bash
 hypertask project create-board --file board.json
@@ -418,8 +423,8 @@ hypertask search "dark mode" --project 15 --limit 5
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
+| `<query>` | Search query (required) | â |
+| `--project <id>` | Restrict search to a project | â |
 | `--limit <n>` | Maximum results | `10` |
 
 ---
@@ -537,6 +542,8 @@ hypertask inbox list
 
 # 2. Read the task details
 hypertask task get HTPR-2992
+# or use the alias
+hypertask task show HTPR-2992
 
 # 3. Move it to "Doing"
 hypertask task move HTPR-2992 --section "Doing"
