@@ -13,6 +13,18 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## June 22, 2026
+
+### Improvements
+
+- **Bare URLs in comments are now clickable links** — Any plain-text URL pasted into a comment is automatically converted into a clickable hyperlink at render time, no matter how the comment was created (web UI, CLI, MCP, or API). Previously, URLs posted programmatically — such as a deploy link from a CI script or a resume URL from an agent — stayed as inert text. Links open in a new tab. ([HTPR-3779](https://app.hypertask.ai/detail/project-15/3779))
+
+### Bug Fixes
+
+- **Fixed: Navigating to `app.hypertasks.ai` no longer gets stuck on a login spinner** — Users who landed on `app.hypertasks.ai` (with an extra "s") were silently dropped into an infinite login loop due to a Firebase auth mismatch with the canonical domain. The typo domain now immediately redirects to `app.hypertask.ai`, so login completes as expected. ([HTPR-3787](https://app.hypertask.ai/detail/project-15/3787))
+
+---
+
 ## June 19, 2026
 
 ### Improvements
