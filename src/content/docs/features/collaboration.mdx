@@ -116,6 +116,12 @@ You can manage comments on any task — including comments left by other team me
 
 To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
 
+### URL auto-linkification
+
+Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
+
+Links open in a new tab. URLs that are already formatted as hyperlinks or embedded inside images are left unchanged.
+
 ## Activity logs
 
 Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
