@@ -15,6 +15,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## June 27, 2026
 
+### Bug Fixes
+
+- **Fixed: `--attach` now works on `comment add`** — The `--attach <path-or-url>` flag is supported on `hypertask comment add` as well as `hypertask task create` and `hypertask task update`. Previously, the flag's placement wasn't obvious because `tasks --help` didn't surface it — it's scoped to the `comment add` and `task create/update` subcommands. Attach local files or remote URLs directly to comments from CLI v1.0.13 onwards. ([HTPR-3781](https://app.hypertask.ai/detail/project-15/3781))
+
 ### Improvements
 
 - **CLI & MCP: Plain `@Name` in comments now notifies the right person** — You no longer need to hand-craft mention spans when posting a comment via the CLI or MCP. Writing `@Alice` directly in the comment text is resolved server-side: Hypertask looks up the matching project member by name and fires a notification automatically. Works on `comment add` (CLI) and `POST /api/mcp/comments`. Comment updates and task descriptions are follow-up work. ([HTPR-3783](https://app.hypertask.ai/detail/project-15/3783))
