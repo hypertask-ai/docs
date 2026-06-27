@@ -141,7 +141,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
     ],
     "labels": [
       { "id": 7001, "name": "Design" },
-      { "id": 7002, "name": "Frontend" }
+      { "id": 7002, name": "Frontend" }
     ],
     "tasks": [
       { "id": 9001, "ticketNumber": "WEB-1", "title": "Wireframe the homepage" }
@@ -473,9 +473,13 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `description` | string | New HTML description |
 | `estimate` | number | Time estimate in minutes |
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
-| `sectionId` | number | Move to a different section |
+| `sectionId` | number | Move to a different section (camelCase — see note below) |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
 | `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
+
+<Aside type="caution">
+**Field name casing matters.** Most update fields use `snake_case`, but the section field is `sectionId` (camelCase). Passing `section_id` (snake_case) will be silently ignored — use `sectionId` to move a task between sections.
+</Aside>
 
 <Aside type="caution">
 `labels` are **not yet supported** on task updates via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set labels.
