@@ -13,6 +13,16 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## June 27, 2026
+
+### Improvements
+
+- **CLI & MCP: Plain `@Name` in comments now notifies the right person** — You no longer need to hand-craft mention spans when posting a comment via the CLI or MCP. Writing `@Alice` directly in the comment text is resolved server-side: Hypertask looks up the matching project member by name and fires a notification automatically. Works on `comment add` (CLI) and `POST /api/mcp/comments`. Comment updates and task descriptions are follow-up work. ([HTPR-3783](https://app.hypertask.ai/detail/project-15/3783))
+
+- **Settings: persistent "Show task history" toggle** — A new **Show task history** switch in **Settings → My Account** (directly below *Collapse Comments*) lets you permanently hide or show history events in every task feed. The preference persists across sessions and devices — it controls the same global toggle as `Ctrl+Shift+H`, so flipping it in Settings is reflected immediately in the keyboard shortcut and vice versa. ([HTPR-3778](https://app.hypertask.ai/detail/project-15/3778))
+
+---
+
 ## June 22, 2026
 
 ### Improvements
