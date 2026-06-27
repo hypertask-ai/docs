@@ -626,13 +626,29 @@ Add a comment to a task. Comments use HTML formatting.
 |-----------|------|----------|-------------|
 | `text` | string | Yes | Comment body in HTML |
 | `images` | string[] | No | Array of image URLs to attach |
-| `mentions` | object[] | No | Users to mention. Each object: `{ "user_id": number, "display_name": string }` |
+| `mentions` | object[] | No | Structured mention objects: `{ "user_id": number, "display_name": string }` |
 
-<Aside type="caution">
-**@mentions limitation:** Mentions added via MCP may appear as plain text and not trigger notifications. Always use the structured `mentions` parameter (with `user_id` and `display_name`) rather than writing `@username` in the HTML text. Ticket references (e.g. `HTPR-1234`) in comment text are also not automatically linked to related tasks when added via MCP.
+<Aside type="tip">
+**Plain `@Name` mentions are supported.** Writing `@Alice` directly in the comment `text` string is resolved server-side — the server looks up the matching project member by name and fires a notification automatically. No need to construct span markup by hand. The structured `mentions` parameter is also accepted if you already have user IDs available.
 </Aside>
 
-**Example request:**
+<Aside type="note">
+**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution — use the structured `mentions` parameter or the web UI for those.
+</Aside>
+
+**Example request — plain @mention in comment text:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/comments \
+  -d '{
+    "ticket_number": "HYP-42",
+    "text": "<p>@Alice this is ready for your review.</p>"
+  }'
+```
+
+**Example request — structured mentions (when you have user IDs):**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
