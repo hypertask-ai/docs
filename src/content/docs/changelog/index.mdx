@@ -21,6 +21,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: Ctrl+K assign now reflects immediately in the open task panel** — Assigning a team member via the Ctrl+K command palette (or pressing `a`) now updates the Assignees panel in real time, without requiring a page reload. Previously, the board cache was updated but the open task's own view stayed stale. ([HTPR-3820](https://app.hypertask.ai/detail/project-15/3820))
+
+- **Fixed: `update_task` no longer throws on Deleted-status tasks** — Calling `update_task` (via MCP or the API) on a task with `Deleted` status was throwing `Cannot read properties of undefined (reading 'ticketNumber')`. The task lookup now resolves Deleted tasks consistently, matching the behavior of `move_task` and `get_task`. ([HTPR-3801](https://app.hypertask.ai/detail/project-15/3801))
+
 - **Fixed: 1Password no longer hijacks the assign field** — Password managers (1Password, LastPass, and others) were incorrectly overlaying autofill suggestions on the task assign picker, making it difficult to search for and select team members. The assign field and all other modal inputs now carry the appropriate autofill-suppression attributes, so password managers no longer interfere. ([HTPR-3809](https://app.hypertask.ai/detail/project-15/3809))
 
 ---
