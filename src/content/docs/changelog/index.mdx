@@ -15,7 +15,11 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## June 29, 2026
 
-### Bug Fixes
+**New Features**
+
+- **CLI v1.3.1: `hypertask capabilities` — full command catalog in one call** — A new `hypertask capabilities --json` command (alias: `commands`) dumps the complete CLI command and option tree as machine-readable JSON. AI agents and scripts can now enumerate every available command, flag, and description in a single call instead of recursively scraping per-subcommand `--help` output. All three locations where `--attach` is supported (`task create`, `task update`, and `comment add`) appear explicitly in the output. The root, `task`, and `comment` help screens also now carry cross-reference lines pointing at `--attach` and the capabilities catalog, so the feature is discoverable from any entry point. ([HTPR-3807](https://app.hypertask.ai/detail/project-15/3807))
+
+**Bug Fixes**
 
 - **Fixed: 1Password no longer hijacks the assign field** — Password managers (1Password, LastPass, and others) were incorrectly overlaying autofill suggestions on the task assign picker, making it difficult to search for and select team members. The assign field and all other modal inputs now carry the appropriate autofill-suppression attributes, so password managers no longer interfere. ([HTPR-3809](https://app.hypertask.ai/detail/project-15/3809))
 
