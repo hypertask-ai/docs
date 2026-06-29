@@ -1,6 +1,6 @@
 ---
 title: CLI Reference
-description: Complete reference for the Hypertask CLI â manage tasks, projects, comments, and notifications from your terminal.
+description: Complete reference for the Hypertask CLI — manage tasks, projects, comments, and notifications from your terminal.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -85,6 +85,58 @@ hypertask task list --project 15 --token eyJhbG...
 
 ---
 
+## Capability Discovery
+
+### `capabilities` / `commands`
+
+Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call — no recursive `--help` grepping needed.
+
+```bash
+hypertask capabilities --json
+```
+
+`commands` is an alias for `capabilities`; both are identical.
+
+| Flag | Description |
+|------|-------------|
+| `--json` | Output as JSON (recommended for programmatic use) |
+
+**Sample output (abbreviated):**
+
+```json
+[
+  {
+    "name": "task create",
+    "description": "Create a new task",
+    "options": [
+      { "flags": "--project <id>",        "description": "Project ID (required)" },
+      { "flags": "--title <text>",         "description": "Task title (required)" },
+      { "flags": "--attach <path-or-url>", "description": "Attach a local file or URL (repeatable)" }
+    ]
+  },
+  {
+    "name": "task update",
+    "description": "Update an existing task",
+    "options": [
+      { "flags": "--attach <path>", "description": "Attach a local file (repeatable)" }
+    ]
+  },
+  {
+    "name": "comment add",
+    "description": "Add a comment to a task",
+    "options": [
+      { "flags": "--attach <path-or-url>", "description": "Attach a local file or URL to the comment (repeatable)" }
+    ]
+  }
+]
+```
+
+<Aside type="tip">
+**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported — `task create`, `task update`, and `comment add` — appear explicitly in the output, so agents do not need to infer capability from subcommand help text.
+</Aside>
+
+---
+
 ## Tasks
 
 ### `task list`
@@ -97,13 +149,13 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--project <id>` | Filter by project ID | â |
-| `--section <name>` | Filter by section name | â |
-| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | â |
-| `--created-by <id>` | Filter by creator user ID (numeric) | â |
-| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | â |
-| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | â |
-| `--sort-order <asc\|desc>` | Sort direction â use together with `--sort-by` | â |
+| `--project <id>` | Filter by project ID | — |
+| `--section <name>` | Filter by section name | — |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
+| `--created-by <id>` | Filter by creator user ID (numeric) | — |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
+| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -117,6 +169,10 @@ hypertask task list --project 15 --sort-by updatedAt --sort-order desc
 # Page through results
 hypertask task list --project 15 --limit 20 --offset 20
 ```
+
+<Aside type="note">
+**File attachments** are not on `task list` — use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
+</Aside>
 
 ### `task get` / `task show`
 
@@ -133,7 +189,7 @@ hypertask task get 1234
 | `<ticket>` | Ticket identifier (e.g., `HTPR-2992`) or numeric task ID |
 
 <Aside type="tip">
-<code>task show</code> is an alias for <code>task get</code> â both commands are identical.
+<code>task show</code> is an alias for <code>task get</code> — both commands are identical.
 </Aside>
 
 ### `task tree`
@@ -146,8 +202,8 @@ hypertask task tree --ticket HTPR-2992
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | â |
-| `--task-id <id>` | Numeric task ID | â |
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
+| `--task-id <id>` | Numeric task ID | — |
 | `--depth <n>` | Max levels deep to show | Full tree |
 
 ```bash
@@ -182,7 +238,7 @@ hypertask task create \
 | `--estimate <n>` | Story points |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
-| `--parent-task <id>` | Parent task ID â creates this task as a subtask |
+| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
 | `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
@@ -230,7 +286,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--attach <path>` | Attach a local file (repeatable) |
 
 <Aside type="note">
-**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` â not section names.
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
 </Aside>
 
 ```bash
@@ -275,7 +331,7 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | Flag | Description |
 |------|-------------|
 | `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
-| `--to <id>` | Target project ID â move to a different project |
+| `--to <id>` | Target project ID — move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
 ### `task move-board`
@@ -401,7 +457,7 @@ hypertask project label create --project 15 --name "CLI"
 
 ### `project create-board`
 
-Create a whole new board from a JSON manifest â sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
 ```bash
 hypertask project create-board --file board.json
@@ -455,8 +511,8 @@ hypertask search "dark mode" --project 15 --limit 5
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | â |
-| `--project <id>` | Restrict search to a project | â |
+| `<query>` | Search query (required) | — |
+| `--project <id>` | Restrict search to a project | — |
 | `--limit <n>` | Maximum results | `10` |
 
 ---
@@ -501,7 +557,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side â Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
@@ -579,6 +635,7 @@ This is useful to verify your identity, see which projects you belong to, and ch
 
 | Command | Description |
 |---------|-------------|
+| `hypertask capabilities` | Dump the full command + option tree as JSON (alias: `commands`) |
 | `hypertask update` | Update the CLI to the latest version |
 | `hypertask auth:status` | Check current authentication status |
 | `hypertask auth:login --token <jwt>` | Save a JWT token directly |
@@ -676,6 +733,16 @@ hypertask task update HTPR-2992 --attach ./final-spec.pdf
 hypertask comment add HTPR-2992 \
   --text "<p>Added the updated spec.</p>" \
   --attach ./updated-spec.pdf
+```
+
+### Discover all CLI capabilities (for agents)
+
+```bash
+# Dump the full command + option tree as JSON
+hypertask capabilities --json
+
+# Pipe to jq to find every command that supports --attach
+hypertask capabilities --json | jq '[.[] | select(.options[]?.flags | contains("--attach"))]'
 ```
 
 ### Use JSON output for scripting
