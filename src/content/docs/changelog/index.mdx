@@ -15,7 +15,13 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## June 30, 2026
 
+**Improvements**
+
+- **Assign menu: current assignees now sort to the top** — Opening the assign menu (press `a` on a task card, or use the task detail panel) now shows already-assigned people — including agents — at the top of the list, so your current assignees are always visible without scrolling. ([HTPR-3802](https://app.hypertask.ai/detail/project-15/3802))
+
 **Bug Fixes**
+
+- **Fixed: Removing an assignee now works reliably every time** — Selecting a person in the assign menu to remove them now clears all matching assignee rows in a single action. Previously, a duplicate-row edge case could leave a person listed as assigned even after removing them. ([HTPR-3802](https://app.hypertask.ai/detail/project-15/3802))
 
 - **Fixed: Attachments on new comments are now saved reliably** — Files attached to a brand-new comment (images, PDFs, and other file types) are now persisted correctly. Previously, attaching a file to an unsaved comment and submitting it could result in the attachment appearing locally and then vanishing on the next page load. The root cause was a race condition where the request to save the attachment link was fired without waiting for completion before the UI navigated away, dropping the write before it reached the database. ([HTPR-3794](https://app.hypertask.ai/detail/project-15/3794))
 
