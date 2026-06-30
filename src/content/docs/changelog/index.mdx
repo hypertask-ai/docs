@@ -13,6 +13,14 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## June 30, 2026
+
+**Bug Fixes**
+
+- **Fixed: Stripe billing no longer creates duplicate subscriptions** — A server-side guard now checks for an existing active subscription before creating a new one at checkout, preventing customers from being charged twice. The fix also resolves a webhook-persistence issue where completed checkout sessions were not reliably recorded, which could leave a team's subscription state inconsistent after payment. ([HTPR-3812](https://app.hypertask.ai/detail/project-15/3812))
+
+---
+
 ## June 29, 2026
 
 **New Features**
