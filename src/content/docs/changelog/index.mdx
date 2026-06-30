@@ -43,6 +43,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **CLI and Docs now discoverable from the command palette** — Press <kbd>Ctrl+K</kbd> and search for **CLI** to open a new install dialog that shows the install command (`npm install -g @hypertask/hypertask_cli`) and walks you through `hypertask login` without leaving the app. The CLI dialog and the existing MCP token dialog cross-link each other, so setting up both tools in one session is seamless. The **Learn Hypertask** section in the right sidebar now also includes a direct link to [docs.hypertask.ai](https://docs.hypertask.ai) alongside the Help Center. ([HTPR-3813](https://app.hypertask.ai/detail/project-15/3813))
 
+### Improvements
+
+- **Hide/show empty columns now available in the command palette** — The **Hide empty columns** / **Show empty columns** toggle is now accessible directly from Ctrl+K (search for "empty"), so you can declutter your board without opening the Manage Columns modal. The command label updates dynamically to reflect the current state, and it flips the same board setting as the existing modal toggle. ([HTPR-3785](https://app.hypertask.ai/detail/project-15/3785))
+
 ### Bug Fixes
 
 - **Fixed: `--attach` now works on `comment add`** — The `--attach <path-or-url>` flag is supported on `hypertask comment add` as well as `hypertask task create` and `hypertask task update`. Previously, the flag's placement wasn't obvious because `tasks --help` didn't surface it — it's scoped to the `comment add` and `task create/update` subcommands. Attach local files or remote URLs directly to comments from CLI v1.0.13 onwards. ([HTPR-3781](https://app.hypertask.ai/detail/project-15/3781))
