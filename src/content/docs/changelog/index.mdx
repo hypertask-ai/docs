@@ -17,6 +17,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: Attachments on new comments are now saved reliably** — Files attached to a brand-new comment (images, PDFs, and other file types) are now persisted correctly. Previously, attaching a file to an unsaved comment and submitting it could result in the attachment appearing locally and then vanishing on the next page load. The root cause was a race condition where the request to save the attachment link was fired without waiting for completion before the UI navigated away, dropping the write before it reached the database. ([HTPR-3794](https://app.hypertask.ai/detail/project-15/3794))
+
 - **Fixed: Stripe billing no longer creates duplicate subscriptions** — A server-side guard now checks for an existing active subscription before creating a new one at checkout, preventing customers from being charged twice. The fix also resolves a webhook-persistence issue where completed checkout sessions were not reliably recorded, which could leave a team's subscription state inconsistent after payment. ([HTPR-3812](https://app.hypertask.ai/detail/project-15/3812))
 
 ---
