@@ -13,6 +13,18 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## July 2, 2026
+
+**Improvements**
+
+- **AI model picker: Claude Sonnet 5 replaces Sonnet 4.6** — The default Anthropic model in the AI model picker has been upgraded from Claude Sonnet 4.6 to **Claude Sonnet 5**, bringing improved reasoning, instruction-following, and response quality to AI Chat, the Task Writer, and all other AI features. Update your project's model selection in **Settings → AI** to take advantage of it. ([HTPR-3824](https://app.hypertask.ai/detail/project-15/3824))
+
+**Bug Fixes**
+
+- **Fixed: AI Chat no longer shows raw content blocks when extended thinking is on** — When a model runs with extended thinking enabled, Claude returns its response as a list of content blocks that includes an encrypted thinking signature. AI Chat was passing this list through untouched, causing the thinking block's signature to appear in the chat panel as a raw array instead of the actual answer. The chat renderer now extracts and displays only the text content blocks, so responses always show the clean answer. ([HTPR-3824](https://app.hypertask.ai/detail/project-15/3824))
+
+---
+
 ## June 30, 2026
 
 **Improvements**
