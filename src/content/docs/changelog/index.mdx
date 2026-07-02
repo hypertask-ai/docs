@@ -89,6 +89,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ### Bug Fixes
 
+- **Fixed: Commenting while logged out is no longer possible** — The comment creation endpoint now requires an active session and returns `401 Unauthorized` for unauthenticated requests. Previously, the `/api/comments/create` route had no authentication gate, so a request that omitted the session cookie could still post a comment by supplying a `creatorId` in the request body. The HyperAI bot remains exempt via its own service token. ([HTPR-3803](https://app.hypertask.ai/detail/project-15/3803))
+
 - **Fixed: Navigating to `app.hypertasks.ai` no longer gets stuck on a login spinner** — Users who landed on `app.hypertasks.ai` (with an extra "s") were silently dropped into an infinite login loop due to a Firebase auth mismatch with the canonical domain. The typo domain now immediately redirects to `app.hypertask.ai`, so login completes as expected. ([HTPR-3787](https://app.hypertask.ai/detail/project-15/3787))
 
 ---
