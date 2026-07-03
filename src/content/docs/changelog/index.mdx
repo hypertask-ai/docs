@@ -21,6 +21,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: Images in task descriptions now respect their specified width** — Inline images embedded in a task description were always rendering at full column width, ignoring any `width` attribute set on the `<img>` tag. Images now render at the width specified in their markup, so layouts and screenshots included in descriptions display at the intended size. ([HTPR-3829](https://app.hypertask.ai/detail/project-15/3829))
 
+- **Fixed: Description image width respected in view mode** — A separate CSS rule was overriding `<img width="...">` attributes specifically in task description view mode (as opposed to the editor), causing images to always stretch to full column width when reading a task. View mode now honours the `width` attribute consistently with the editor, so a screenshot saved at `width=390` stays at 390 px whether you are editing or reading. ([HTPR-3830](https://app.hypertask.ai/detail/project-15/3830))
+
 ---
 
 ## July 2, 2026
