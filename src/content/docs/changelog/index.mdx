@@ -17,6 +17,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: Assigning via `a` on a board card now takes effect immediately** — Pressing `a` on a board card to assign someone was silently failing: the assign menu was force-closing after every pick, and reopening it raced the modal into a dead state where clicks stopped registering. Assignments appeared to go through but never saved, requiring a page reload to confirm. The menu now stays open correctly after a pick (matching the behaviour introduced for the task detail panel in HTPR-3802), so assignments from board cards persist instantly without a reload. ([HTPR-3731](https://app.hypertask.ai/detail/project-15/3731))
+
 - **Fixed: Images in task descriptions now respect their specified width** — Inline images embedded in a task description were always rendering at full column width, ignoring any `width` attribute set on the `<img>` tag. Images now render at the width specified in their markup, so layouts and screenshots included in descriptions display at the intended size. ([HTPR-3829](https://app.hypertask.ai/detail/project-15/3829))
 
 ---
