@@ -115,3 +115,21 @@ Control how subtasks appear on the board:
 <Aside>
 Saved Views are per-project. Each team member can create their own views without affecting others.
 </Aside>
+
+### Sharing a view via deep link
+
+Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately — no manual navigation required.
+
+The URL format is:
+
+```
+https://app.hypertask.ai/project?id=<project-id>&view=<view-slug>
+```
+
+For example, a view named **Bugs** in project `15` would share as:
+
+```
+https://app.hypertask.ai/project?id=15&view=bugs
+```
+
+Copy the URL from your browser's address bar while the view is active, or share it directly from the view picker. Using the browser **Back** button after following a deep link returns you to your previous location without disrupting the view selection.
