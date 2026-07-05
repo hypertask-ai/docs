@@ -13,6 +13,14 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## July 5, 2026
+
+**Bug Fixes**
+
+- **Fixed: File uploads, image paste, and screenshot attachments working again** — All file-storing paths in the app (task attachments, pasting images into comments or descriptions, and screenshot uploads) were broken after the Vercel migration. The root cause was missing AWS credentials: the previous EC2 host used an instance role that vanished in the cutover, and the S3 client was operating without credentials. New access keys have been provisioned and set on both Vercel projects, so all upload paths are fully restored. ([HTPR-3860](https://app.hypertask.ai/detail/project-15/3860))
+
+---
+
 ## July 4, 2026
 
 **Bug Fixes**
