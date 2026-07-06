@@ -56,6 +56,7 @@ export default defineConfig({
 				{
 					label: 'API Reference',
 					items: [
+						{ label: 'REST API', slug: 'api/rest-api' },
 						{ label: 'MCP Tools Reference', slug: 'api/tools-reference' },
 					],
 				},
