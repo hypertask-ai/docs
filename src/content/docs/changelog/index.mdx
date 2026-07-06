@@ -13,6 +13,14 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## July 6, 2026
+
+**New Features**
+
+- **CLI & MCP: Access saved views programmatically** — Two new read-only tools let AI agents and scripts work with named board views directly, without scanning every task. `hypertask view list --project <id>` (CLI) / `hypertask_views_list` (MCP) returns all saved views for a project (e.g. "Dev Review & QA", "Tests Running"). `hypertask view get <view-id>` (CLI) / `hypertask_view_get` (MCP) returns the pre-filtered task list for a specific view, with `limit` and `offset` for pagination. On large boards this dramatically reduces noise and token cost compared to fetching all tasks and filtering client-side. ([HTPR-3624](https://app.hypertask.ai/detail/project-15/3624))
+
+---
+
 ## July 5, 2026
 
 **Bug Fixes**
