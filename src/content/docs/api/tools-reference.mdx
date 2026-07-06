@@ -5,7 +5,7 @@ description: Complete parameter reference for all Hypertask MCP tools and their 
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is the complete reference for all 16 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
+This is the complete reference for all 18 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
 
 <Aside type="note">
 All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
@@ -277,6 +277,112 @@ curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+## hypertask_views_list
+
+List all saved views in a project. Views are named filter/sort configurations created in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). Use this tool to discover available view IDs before calling `hypertask_view_get`.
+
+**Endpoint:** `GET /api/mcp/projects/{projectId}/views`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/views
+```
+
+**Example response:**
+
+```json
+{
+  "views": [
+    {
+      "id": "view_abc123",
+      "name": "Dev Review & QA",
+      "createdAt": "2026-06-01T10:00:00Z"
+    },
+    {
+      "id": "view_def456",
+      "name": "Tests Running",
+      "createdAt": "2026-06-15T14:30:00Z"
+    }
+  ]
+}
+```
+
+<Aside type="tip">
+Views are a powerful shortcut for AI agents: instead of scanning every task on a large board, load a saved view like "Dev Review & QA" to instantly get the relevant, pre-filtered set of tasks.
+</Aside>
+
+---
+
+## hypertask_view_get
+
+Get tasks from a specific saved view, with that view's filters already applied. This is the recommended way for agents to efficiently pull a relevant subset of tasks from a large project without scanning all tasks manually.
+
+**Endpoint:** `GET /api/mcp/views/{viewId}/tasks`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `viewId` | string | Yes | The view identifier (from `hypertask_views_list`) |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `limit` | number | No | `50` | Max tasks to return |
+| `offset` | number | No | `0` | Pagination offset |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/views/view_abc123/tasks?limit=25"
+```
+
+**Example response:**
+
+```json
+{
+  "view": {
+    "id": "view_abc123",
+    "name": "Dev Review & QA"
+  },
+  "tasks": [
+    {
+      "id": 1234,
+      "ticket_number": "HYP-42",
+      "title": "Add file upload validation",
+      "description": "<p>Validate file types before upload.</p>",
+      "priority": "high",
+      "section": "Review",
+      "assignees": [
+        { "id": 6, "displayName": "Valentin" }
+      ],
+      "due_date": "2026-07-10T00:00:00Z",
+      "createdAt": "2026-06-15T09:00:00Z",
+      "updatedAt": "2026-07-05T14:30:00Z"
+    }
+  ],
+  "total": 12,
+  "offset": 0,
+  "limit": 25
+}
+```
+
+<Aside type="tip">
+Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any agent workflow on a large board. Loading a view typically returns a focused set of 5–30 tasks rather than scanning hundreds, which reduces token cost and improves response quality.
+</Aside>
+
+---
+
 ## hypertask_list_tasks / hypertask_get_tasks
 
 List tasks with filtering, or retrieve specific tasks by ID.
@@ -309,7 +415,7 @@ List tasks with filtering, or retrieve specific tasks by ID.
 | `offset` | number | No | Pagination offset |
 
 <Aside type="tip">
-To get a single task, use `task_id` or `ticket_number`. To list tasks on a board, use `board_id` with optional filters like `section` and `assigned_to`.
+To get a single task, use `task_id` or `ticket_number`. To list tasks on a board, use `board_id` with optional filters like `section` and `assigned_to`. For large projects, consider using `hypertask_views_list` + `hypertask_view_get` to load a pre-filtered saved view instead.
 </Aside>
 
 **Example request -- list tasks in "Todo" assigned to me:**
