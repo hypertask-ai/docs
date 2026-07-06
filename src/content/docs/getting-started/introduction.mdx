@@ -5,7 +5,7 @@ description: AI-native project management for teams and AI agents.
 
 import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
-Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members — through the [Model Context Protocol (MCP)](/mcp/overview/).
+Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members — through the [Model Context Protocol (MCP)](/mcp/overview/) and a full-featured [CLI](/cli/reference/).
 
 The web app lives at [app.hypertask.ai](https://app.hypertask.ai). It's a Next.js application designed for speed, with real-time sync via Server-Sent Events (SSE).
 
@@ -25,6 +25,9 @@ Most project management tools were designed for humans clicking through UIs. Tha
   </Card>
   <Card title="MCP for AI Agents" icon="setting">
     Connect Claude, Cursor, or any MCP client. Agents can list tasks, create work items, move cards between sections, and post comments — all programmatically.
+  </Card>
+  <Card title="CLI for Developers" icon="laptop">
+    Manage tasks without leaving your terminal. Install with <code>npm install -g @hypertask/hypertask_cli</code> and run <code>hypertask login</code> to get started. The CLI is also the recommended interface for AI coding agents like Claude Code.
   </Card>
 </CardGrid>
 
@@ -61,20 +64,37 @@ Hypertask is opinionated about how teams should work:
 
 ## Key capabilities at a glance
 
-| Capability | Human (Web UI) | AI Agent (MCP) |
+| Capability | Human (Web UI) | CLI | AI Agent (MCP) |
+|---|---|---|---|
+| Create tasks | Yes | Yes | Yes |
+| Move tasks between sections | Yes | Yes | Yes |
+| Assign team members | Yes | Yes | Yes |
+| Add comments | Yes | Yes | Yes |
+| Search across tasks | Yes | Yes | Yes |
+| Check inbox | Yes | Yes | Yes |
+| Attach files | Yes | Yes | Yes |
+| Invite project members | Yes | Yes | — |
+| Voice dictation | Yes | — | — |
+| AI Task Writer | Yes | — | — |
+| Auto-summaries | Yes | — | Yes |
+
+## Interfaces at a glance
+
+Hypertask offers three ways to interact programmatically, each suited to different use cases:
+
+| Interface | Best for | Install / setup |
 |---|---|---|
-| Create tasks | Yes | Yes |
-| Move tasks between sections | Yes | Yes |
-| Assign team members | Yes | Yes |
-| Add comments | Yes | Yes |
-| Search across tasks | Yes | Yes |
-| Check inbox | Yes | Yes |
-| Voice dictation | Yes | — |
-| AI Task Writer | Yes | — |
-| Auto-summaries | Yes | Yes |
+| **Web UI** | Daily task management, visual boards | [app.hypertask.ai](https://app.hypertask.ai) |
+| **CLI** | Terminal workflows, AI coding agents (Claude Code, etc.), scripts and CI | `npm install -g @hypertask/hypertask_cli` |
+| **MCP** | AI assistants (Claude Desktop, Cursor) that need rich tool schemas | See [MCP Integration](/mcp/overview/) |
+
+<Aside type="tip">
+**Which interface should I use for AI agents?**  CLI commands consume far fewer tokens than MCP tool schemas — an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
+</Aside>
 
 ## Next steps
 
 - **[Quick Start](/getting-started/quickstart/)** — Create your first project and connect an AI agent in under 5 minutes.
 - **[Core Concepts](/getting-started/concepts/)** — Understand projects, sections, tasks, and the data model.
+- **[CLI Reference](/cli/reference/)** — Complete command reference for the Hypertask CLI.
 - **[MCP Integration](/mcp/overview/)** — Deep dive into connecting AI agents via MCP.
