@@ -499,6 +499,63 @@ Example `board.json`:
 
 ---
 
+## Views
+
+Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks — especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
+
+### `view list`
+
+List all saved views for a project.
+
+```bash
+hypertask view list --project 15
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+
+**Example output:**
+
+```
+ID             NAME
+view_abc123    Dev Review & QA
+view_def456    Tests Running
+view_ghi789    My Open Tasks
+```
+
+### `view get`
+
+Fetch tasks from a specific saved view, with that view's filters already applied.
+
+```bash
+hypertask view get view_abc123
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<view-id>` | The view identifier (from `view list`) |
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `--limit <n>` | Max tasks to return | `50` |
+| `--offset <n>` | Pagination offset | `0` |
+
+```bash
+# Discover views, then pull tasks from one
+hypertask view list --project 15
+hypertask view get view_abc123 --limit 20
+
+# Use JSON output for scripting
+hypertask view get view_abc123 --json | jq '.[].title'
+```
+
+<Aside type="tip">
+**For AI agents on large boards:** start with `hypertask view list` to discover saved views, then `hypertask view get` to pull a focused, pre-filtered set of tasks. This is significantly faster and cheaper in tokens than listing all tasks and filtering client-side.
+</Aside>
+
+---
+
 ## Search
 
 ### `search`
@@ -704,6 +761,21 @@ hypertask task list --project 15 --assigned-to unassigned
 
 # Search for something specific
 hypertask search "payment" --project 15
+```
+
+### Work from a saved view (recommended for large boards)
+
+```bash
+# 1. Discover available views
+hypertask view list --project 15
+
+# 2. Pull tasks from a focused view
+hypertask view get view_abc123
+
+# 3. Work the task as normal
+hypertask task get HTPR-2992
+hypertask task move HTPR-2992 --section "Doing"
+hypertask comment add HTPR-2992 --text "<p>Starting work on this now.</p>"
 ```
 
 ### Complete a task
