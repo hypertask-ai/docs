@@ -17,6 +17,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: `--attach` on `task create` and `comment add` now reliably uploads and links files** — CLI 1.3.6 resolves two attachment issues confirmed in testing: `task create --attach <file>` and `comment add --attach <file>` now both upload the local file and attach it to the task or comment correctly. Previously, the flag existed but the upload could silently fail or the attachment would not appear linked. ([HTPR-3036](https://app.hypertask.ai/detail/project-15/3036), [HTPR-3722](https://app.hypertask.ai/detail/project-15/3722))
+
 - **Fixed: Bare ticket numbers now rejected with a clear error** — Commands like `task update`, `task move`, and `comment list` previously resolved a bare number (e.g. `2992`) to an unintended task, silently acting on the wrong item. The CLI now rejects bare numbers immediately with `Invalid ticket number, expected PREFIX-NNN` (e.g. `HTPR-2992`), preventing accidental edits to the wrong task. ([HTPR-3806](https://app.hypertask.ai/detail/project-15/3806))
 
 - **Fixed: Rich structured descriptions now accepted on `task create`** — Passing a description that uses markdown-style headers, numbered steps, or other structured text (a "bug template" style) was previously rejected by `task create`. Structured descriptions are now accepted and stored correctly. ([HTPR-3671](https://app.hypertask.ai/detail/project-15/3671))
