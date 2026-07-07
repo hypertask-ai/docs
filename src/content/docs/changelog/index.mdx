@@ -19,6 +19,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: AI Chat new session, delete chat, and icon now work correctly** — Creating a new chat session (via the icon or <kbd>Ctrl+Shift+O</kbd>) and deleting an existing chat were silently doing nothing. The root cause was that every AI-chat mutation awaited a QStash job scheduled 30 days out, but QStash caps delays at 7 days and rejected every request with a quota error, causing the whole operation to return a 500. The redundant delayed jobs have been removed (a separate sweep already handles chat expiry), so all three chat-session operations — create, update, and delete — now complete successfully. ([HTPR-3902](https://app.hypertask.ai/detail/project-15/3902))
 
+- **Fixed: Inbox no longer crashes with a TypeError on first load** — On a fresh browser session, the first visit to the Inbox could throw a `TypeError` at the FCM token retrieval step, crashing the page before any notifications loaded. A null-guard has been added to the FCM token hook so that an absent token is handled gracefully, and the Inbox now loads correctly even before push-notification permissions have been granted. ([HTPR-4001](https://app.hypertask.ai/detail/project-15/4001))
+
 ---
 
 ## July 7, 2026
