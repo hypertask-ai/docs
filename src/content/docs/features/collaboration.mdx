@@ -90,9 +90,22 @@ For the most common reaction — a simple thumbs-up — Hypertask provides a **f
 
 The like button is a shortcut for the 👍 reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
 
-## Real-time collaboration
+## Real-time sync
 
-Hypertask uses **TipTap with Yjs** for real-time collaborative editing. Multiple people can edit the same task description simultaneously, with changes syncing live across all connected clients.
+Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
+
+**What updates in real time:**
+
+- Tasks appearing, disappearing, or moving between sections when created, archived, or moved
+- Task title, status, priority, and assignee changes
+- New comments and reactions
+- Board and section changes
+
+This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow — useful for monitoring agents running in your terminal or CI pipeline.
+
+### Real-time collaborative text editing
+
+For simultaneous editing of the same task description, Hypertask uses **TipTap with Yjs**. Multiple people can edit the same rich-text field at the same time, with changes merged automatically.
 
 This applies to:
 
@@ -103,7 +116,7 @@ This applies to:
 There are no save buttons — changes persist as you type.
 
 <Aside>
-Real-time sync also means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
+Real-time sync means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
 </Aside>
 
 ## Managing comments
