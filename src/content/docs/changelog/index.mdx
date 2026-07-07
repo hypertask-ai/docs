@@ -15,6 +15,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## July 7, 2026
 
+**New Features**
+
+- **Real-time sync across the whole app** — Hypertask now pushes live updates to every connected browser via Pusher. Tasks created from the CLI, MCP, or a teammate's session appear on your open board instantly — no page refresh required. Archiving a task removes it from the board live. The same push channel covers task edits, section changes, new comments, and reactions, so every client stays in sync without polling. ([HTPR-3795](https://app.hypertask.ai/detail/project-15/3795))
+
 **Improvements**
 
 - **AI Task Writer: cleaner interface with automatic web search** — The Web Search toggle, mode dropdown, and Enhance prompt button have been removed from the AI Task Writer. Web search is now handled automatically — the AI decides when to look up external information (documentation, APIs, best practices) based on your prompt, so you get better results without managing extra controls. The writing surface is now the same across all entry points. ([HTPR-3792](https://app.hypertask.ai/detail/project-15/3792))
@@ -126,6 +130,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Assign menu: current assignees now sort to the top** — Opening the assign menu (press `a` on a task card, or use the task detail panel) now shows already-assigned people — including agents — at the top of the list, so your current assignees are always visible without scrolling. ([HTPR-3802](https://app.hypertask.ai/detail/project-15/3802))
 
 **Bug Fixes**
+
+- **Fixed: All Claude models working correctly after Sonnet 5 upgrade** — A `temperature` parameter deprecated in newer Claude models was causing every AI call (AI Task Writer, Write with AI, and AI Chat) to fail when Sonnet 5 was active. The parameter has been removed and all Claude models — including claude-sonnet-5 and claude-opus-4 — now generate output cleanly. ([HTPR-3826](https://app.hypertask.ai/detail/project-15/3826))
 
 - **Fixed: Removing an assignee now works reliably every time** — Selecting a person in the assign menu to remove them now clears all matching assignee rows in a single action. Previously, a duplicate-row edge case could leave a person listed as assigned even after removing them. ([HTPR-3802](https://app.hypertask.ai/detail/project-15/3802))
 
