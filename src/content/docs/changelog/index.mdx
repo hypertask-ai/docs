@@ -15,6 +15,14 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## July 7, 2026
 
+**Bug Fixes**
+
+- **Fixed: AI Chat new session, delete chat, and icon now work correctly** — Creating a new chat session (via the icon or <kbd>Ctrl+Shift+O</kbd>) and deleting an existing chat were silently doing nothing. The root cause was that every AI-chat mutation awaited a QStash job scheduled 30 days out, but QStash caps delays at 7 days and rejected every request with a quota error, causing the whole operation to return a 500. The redundant delayed jobs have been removed (a separate sweep already handles chat expiry), so all three chat-session operations — create, update, and delete — now complete successfully. ([HTPR-3902](https://app.hypertask.ai/detail/project-15/3902))
+
+---
+
+## July 7, 2026
+
 **New Features**
 
 - **ChatGPT can now connect to Hypertask via the OpenAPI adapter** — Hypertask now exposes an OpenAPI schema at `https://mcp.hypertask.ai/openapi.json` that ChatGPT can import as a custom action. This lets ChatGPT create tasks, search tickets, list projects, manage assignees, and more — the same full set of operations available to MCP clients — without requiring native MCP support. Authenticate with the same API key you use for MCP, and any new tool added to the MCP server automatically appears as an available action in ChatGPT. See the [MCP Integration docs](/mcp/overview/) for setup steps. ([HTPR-3635](https://app.hypertask.ai/detail/project-15/3635))
