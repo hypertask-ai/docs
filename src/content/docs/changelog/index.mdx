@@ -25,6 +25,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: Starred task list now matches inbox typography** — Starred task titles were rendering at 16 px on desktop while the inbox, all-tasks, and scheduled lists all use 14 px. The desktop size bump has been removed so Starred is now typographically identical to the other list views: 14 px title at weight 500 and the ticket number at weight 700. ([HTPR-2937](https://app.hypertask.ai/detail/project-15/2937))
+
 - **Fixed: `task get` now returns the full description** — `hypertask task get` (and its `task show` alias) now always prints the complete task description, including long multi-paragraph descriptions that were previously cut off. ([HTPR-3669](https://app.hypertask.ai/detail/project-15/3669))
 
 - **Fixed: Unknown subcommands now fail with a clear error message** — Running an unknown or misspelled subcommand (e.g. `hypertask tasks frobnicate`) previously silently printed the root help page, giving no indication that the command was wrong. The CLI now prints a descriptive error (`'task frobnicate' is not a valid subcommand`) and exits with code `2`, making capability discovery reliable for agents and scripts. ([HTPR-3873](https://app.hypertask.ai/detail/project-15/3873))
