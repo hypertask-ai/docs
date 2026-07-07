@@ -43,7 +43,7 @@ Tokens expire after **30 days**. If your agent stops authenticating, generate a 
 
 ## Agent bearer tokens
 
-When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations â task creation, comment posting, assignments â are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
+When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations — task creation, comment posting, assignments — are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
 
 ## Client configuration
 
@@ -105,6 +105,28 @@ Open **Settings > MCP Servers** and add a new server:
 ```
 
 </TabItem>
+<TabItem label="ChatGPT">
+
+Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more — without needing native MCP support.
+
+<Steps>
+
+1. In ChatGPT, open **My GPTs** (or the GPT editor for a custom GPT you control).
+2. Go to **Actions → Add action**.
+3. Import the Hypertask OpenAPI schema from:
+   ```
+   https://mcp.hypertask.ai/openapi.json
+   ```
+4. Under **Authentication**, choose **API Key** and paste your Hypertask API key (the same token you use for MCP). Set the header name to `Authorization` and the value format to `Bearer YOUR_API_KEY`.
+5. Save the action. ChatGPT will now list the available Hypertask operations and can call them on your behalf.
+
+</Steps>
+
+<Aside type="tip">
+The OpenAPI schema is auto-generated from the same endpoints that power the MCP server, so it always stays in sync with the latest tools. Any new MCP tool automatically appears as an available action in ChatGPT.
+</Aside>
+
+</TabItem>
 </Tabs>
 
 ## Available tools
@@ -146,12 +168,12 @@ The following features are not yet available via MCP:
 | **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
 
 <Aside type="tip">
-For features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround â it supports labels, due dates, and description updates.
+For features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports labels, due dates, and description updates.
 </Aside>
 
 ## Troubleshooting
 
-**"Failed to Connect to MCP"** â If your client cannot connect:
+**"Failed to Connect to MCP"** — If your client cannot connect:
 
 1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
 2. Confirm the URL is exactly `https://mcp.hypertask.ai/sse` (including `/sse`).
@@ -160,13 +182,14 @@ For features not yet available via MCP, use the <a href="/cli/reference/">Hypert
 
 ## Supported clients
 
-Hypertask MCP works with any client that supports the MCP standard:
+Hypertask MCP works with any client that supports the MCP standard, and ChatGPT via the OpenAPI adapter:
 
-- **Claude Code** -- Anthropic's CLI agent
-- **Claude Desktop** -- Anthropic's desktop app
-- **Cursor** -- AI-powered code editor
-- **Windsurf** -- Codeium's AI editor
-- **Any MCP-compatible agent** -- anything that speaks the protocol
+- **Claude Code** — Anthropic's CLI agent
+- **Claude Desktop** — Anthropic's desktop app
+- **Cursor** — AI-powered code editor
+- **Windsurf** — Codeium's AI editor
+- **ChatGPT** — via the Hypertask OpenAPI schema (custom actions / GPTs)
+- **Any MCP-compatible agent** — anything that speaks the protocol
 
 ## Next steps
 
