@@ -1,6 +1,6 @@
 ---
 title: CLI Reference
-description: Complete reference for the Hypertask CLI â manage tasks, projects, comments, and notifications from your terminal.
+description: Complete reference for the Hypertask CLI — manage tasks, projects, comments, and notifications from your terminal.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -83,6 +83,16 @@ hypertask task list --project 15 --json
 hypertask task list --project 15 --token eyJhbG...
 ```
 
+## Ticket Number Format
+
+All commands that accept a ticket identifier (e.g. `task get`, `task update`, `task move`, `comment list`) require the full **PREFIX-NNN** format such as `HTPR-2992`. Passing a bare number (e.g. `2992`) is rejected with a clear error:
+
+```
+Error: Invalid ticket number, expected PREFIX-NNN (e.g. HTPR-2992)
+```
+
+This validation prevents a bare number from silently resolving to an unintended task.
+
 ## Exit Codes
 
 The CLI uses standard exit codes so scripts and CI pipelines can reliably detect failures:
@@ -102,10 +112,10 @@ Before v1.3.4, an unrecognised subcommand exited with code `0`, making it invisi
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-  ╭────────────────────────────────────╮
+  ┌───────────────────────────────────┐
   │  Update available: 1.3.3 → 1.3.4  │
   │  Run: npm install -g @hypertask/hypertask_cli  │
-  ╰────────────────────────────────────╯
+  └───────────────────────────────────┘
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
@@ -116,7 +126,7 @@ To suppress the notifier in CI or automated scripts, set the environment variabl
 
 ### `capabilities` / `commands`
 
-Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call â no recursive `--help` grepping needed.
+Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call — no recursive `--help` grepping needed.
 
 ```bash
 hypertask capabilities --json
@@ -159,7 +169,7 @@ hypertask capabilities --json
 ```
 
 <Aside type="tip">
-**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported â `task create`, `task update`, and `comment add` â appear explicitly in the output, so agents do not need to infer capability from subcommand help text.
+**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported — `task create`, `task update`, and `comment add` — appear explicitly in the output, so agents do not need to infer capability from subcommand help text.
 </Aside>
 
 ---
@@ -176,13 +186,13 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--project <id>` | Filter by project ID | â |
-| `--section <name>` | Filter by section name | â |
-| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | â |
-| `--created-by <id>` | Filter by creator user ID (numeric) | â |
-| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | â |
-| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | â |
-| `--sort-order <asc\|desc>` | Sort direction â use together with `--sort-by` | â |
+| `--project <id>` | Filter by project ID | — |
+| `--section <name>` | Filter by section name | — |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
+| `--created-by <id>` | Filter by creator user ID (numeric) | — |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
+| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -198,25 +208,24 @@ hypertask task list --project 15 --limit 20 --offset 20
 ```
 
 <Aside type="note">
-**File attachments** are not on `task list` â use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
+**File attachments** are not on `task list` — use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
 </Aside>
 
 ### `task get` / `task show`
 
-Get full details of a single task by its ticket number or numeric task ID. Response includes labels, `parent_id` for subtasks, and the task URL.
+Get full details of a single task by its ticket number. Response includes the full task description, labels, `parent_id` for subtasks, and the task URL.
 
 ```bash
 hypertask task get HTPR-2992
 hypertask task show HTPR-2992   # alias for task get
-hypertask task get 1234
 ```
 
 | Argument | Description |
 |----------|-------------|
-| `<ticket>` | Ticket identifier (e.g., `HTPR-2992`) or numeric task ID |
+| `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 <Aside type="tip">
-<code>task show</code> is an alias for <code>task get</code> â both commands are identical.
+<code>task show</code> is an alias for <code>task get</code> — both commands are identical. The full task description is always included in the output, making <code>task get</code> the right tool to inspect a task's complete content.
 </Aside>
 
 ### `task tree`
@@ -229,8 +238,8 @@ hypertask task tree --ticket HTPR-2992
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | â |
-| `--task-id <id>` | Numeric task ID | â |
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
+| `--task-id <id>` | Numeric task ID | — |
 | `--depth <n>` | Max levels deep to show | Full tree |
 
 ```bash
@@ -260,12 +269,12 @@ hypertask task create \
 |------|-------------|
 | `--project <id>` | Project ID (required) |
 | `--title <text>` | Task title (required) |
-| `--description <text>` | Task description (HTML format; plain text is auto-wrapped in `<p>` tags) |
+| `--description <text>` | Task description (HTML preferred; see note below) |
 | `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
 | `--estimate <n>` | Story points |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
-| `--parent-task <id>` | Parent task ID â creates this task as a subtask |
+| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
 | `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
@@ -287,7 +296,7 @@ hypertask task create \
 ```
 
 <Aside type="note">
-Descriptions use <strong>HTML</strong> format, not Markdown. Wrap text in <code>&lt;p&gt;</code> tags and use standard HTML elements like <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;code&gt;</code>, and <code>&lt;strong&gt;</code>. If you pass plain text without HTML tags, the CLI automatically wraps it in <code>&lt;p&gt;...&lt;/p&gt;</code> before sending to the API.
+**Description format:** HTML is the canonical format — wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
 </Aside>
 
 ### `task update`
@@ -313,7 +322,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--attach <path>` | Attach a local file (repeatable) |
 
 <Aside type="note">
-**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` â not section names.
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
 </Aside>
 
 ```bash
@@ -358,7 +367,7 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | Flag | Description |
 |------|-------------|
 | `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
-| `--to <id>` | Target project ID â move to a different project |
+| `--to <id>` | Target project ID — move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
 ### `task move-board`
@@ -484,7 +493,7 @@ hypertask project label create --project 15 --name "CLI"
 
 ### `project create-board`
 
-Create a whole new board from a JSON manifest â sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
 ```bash
 hypertask project create-board --file board.json
@@ -528,7 +537,7 @@ Example `board.json`:
 
 ## Views
 
-Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks â especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
+Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks — especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
 
 ### `view list`
 
@@ -595,8 +604,8 @@ hypertask search "dark mode" --project 15 --limit 5
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | â |
-| `--project <id>` | Restrict search to a project | â |
+| `<query>` | Search query (required) | — |
+| `--project <id>` | Restrict search to a project | — |
 | `--limit <n>` | Maximum results | `10` |
 
 ---
@@ -613,7 +622,7 @@ hypertask comment list HTPR-2992
 
 | Argument | Description |
 |----------|-------------|
-| `<ticket>` | Ticket identifier |
+| `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 ### `comment add`
 
@@ -641,7 +650,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side â Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
@@ -736,7 +745,7 @@ This is useful to verify your identity, see which projects you belong to, and ch
 # 1. Check notifications
 hypertask inbox list
 
-# 2. Read the task details
+# 2. Read the task details (full description included)
 hypertask task get HTPR-2992
 # or use the alias
 hypertask task show HTPR-2992
