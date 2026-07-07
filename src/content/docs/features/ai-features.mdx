@@ -33,8 +33,9 @@ Instead of manually writing detailed task descriptions, tell the AI Task Writer 
 1. Open the AI Task Writer from any board.
 2. Describe what you need — a sentence or two is enough.
 3. The AI uses your **project context** (existing tasks, descriptions, labels) and any **custom instructions** you've configured to generate a detailed task.
-4. Toggle **web search** on if the AI should research external information (documentation, APIs, best practices) while writing the task.
-5. Review, edit if needed, and add the task to your board.
+4. Review, edit if needed, and add the task to your board.
+
+Web search is handled **automatically** — the AI decides when to look up external information (documentation, APIs, best practices) based on your prompt, without any manual toggle.
 
 The Task Writer maintains a **history of responses**, so you can revisit previous suggestions and reuse them.
 
@@ -141,8 +142,8 @@ AI Chat's access to your workspace is intentionally kept in line with what the C
 | Subtask hierarchy | ✓ | ✓ |
 | Due dates | ✓ | ✓ |
 | Archived / completed tasks | ✓ | ✓ |
-| Saved views | ✗ | ✗ |
-| Tags | ✗ | ✗ |
+| Saved views | ✓ | ✓ |
+| Tags | ✓ | ✓ |
 
 <Aside type="note">
 **Saved views and tags are not currently accessible to AI Chat, the CLI, or MCP tools.** All three interfaces share the same access boundary — if you need to work with views or tags, use the Hypertask web UI directly. This parity is intentional: AI Chat is powered by the same underlying tools as the CLI and MCP, so their capabilities stay in sync.
