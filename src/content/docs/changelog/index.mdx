@@ -15,6 +15,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## July 7, 2026
 
+**New Features**
+
+- **ChatGPT can now connect to Hypertask via the OpenAPI adapter** — Hypertask now exposes an OpenAPI schema at `https://mcp.hypertask.ai/openapi.json` that ChatGPT can import as a custom action. This lets ChatGPT create tasks, search tickets, list projects, manage assignees, and more — the same full set of operations available to MCP clients — without requiring native MCP support. Authenticate with the same API key you use for MCP, and any new tool added to the MCP server automatically appears as an available action in ChatGPT. See the [MCP Integration docs](/mcp/overview/) for setup steps. ([HTPR-3635](https://app.hypertask.ai/detail/project-15/3635))
+
 **Improvements**
 
 - **CLI 1.3.6: Search results show full titles, links, and cleaner tables** — `hypertask search` now wraps long ticket titles across multiple lines so nothing is truncated, includes a direct link to each task in the results table, and automatically omits empty columns to reduce noise. `--json` is also now listed in `--help` for every command, making it discoverable without consulting the docs. ([HTPR-3875](https://app.hypertask.ai/detail/project-15/3875))
