@@ -1,6 +1,6 @@
 ---
 title: CLI Reference
-description: Complete reference for the Hypertask CLI — manage tasks, projects, comments, and notifications from your terminal.
+description: Complete reference for the Hypertask CLI â manage tasks, projects, comments, and notifications from your terminal.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -89,12 +89,12 @@ hypertask task list --project 15 --token eyJhbG...
 
 ### Plain output vs. `--json`
 
-For **read commands** (`task get`, `task show`, `comment list`, and similar), the default plain-text output is **complete** — it contains every field returned by the API, formatted as tab-separated values. You do not need `--json` just to get complete data. Use `--json` when you need structured, machine-parseable output (e.g. piping to `jq`); omit it when you just want a human-readable summary or are parsing the tab-separated output directly in a script.
+For **read commands** (`task get`, `task show`, `comment list`, and similar), the default plain-text output is **complete** â it contains every field returned by the API, formatted as tab-separated values. You do not need `--json` just to get complete data. Use `--json` when you need structured, machine-parseable output (e.g. piping to `jq`); omit it when you just want a human-readable summary or are parsing the tab-separated output directly in a script.
 
 The `--help` output for each read command states this explicitly, and `hypertask capabilities --json` surfaces the same note automatically so agents do not need to guess.
 
 ```bash
-# Plain output is complete — safe to parse without --json
+# Plain output is complete â safe to parse without --json
 hypertask task get HTPR-2992
 hypertask comment list HTPR-2992
 
@@ -121,7 +121,7 @@ The CLI uses standard exit codes so scripts and CI pipelines can reliably detect
 |------|---------|
 | `0` | Success |
 | `1` | General runtime error (e.g. API error, authentication failure) |
-| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage â unknown or misspelled subcommand / missing required argument |
 
 Unknown subcommands fail loudly with a descriptive error instead of silently printing root help:
 
@@ -131,7 +131,7 @@ Error: 'task frobnicate' is not a valid subcommand
 ```
 
 <Aside type="tip">
-Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the root help page, making it invisible to shell scripts checking `$?`. Since v1.3.4 these exits use code `2` (the POSIX convention for command-line usage errors) and print a clear error message. Update to ≥ 1.3.4 if your scripts rely on exit codes.
+Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the root help page, making it invisible to shell scripts checking `$?`. Since v1.3.4 these exits use code `2` (the POSIX convention for command-line usage errors) and print a clear error message. Update to â¥ 1.3.4 if your scripts rely on exit codes.
 </Aside>
 
 ## Update Notifications
@@ -139,10 +139,10 @@ Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the r
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-  ╔═══════════════════════════════════════════╗
-  ║  Update available: 1.3.3 → 1.3.4         ║
-  ║  Run: npm install -g @hypertask/hypertask_cli  ║
-  ╚═══════════════════════════════════════════╝
+  âââââââââââââââââââââââââââââââââââââââââââââ
+  â  Update available: 1.3.3 â 1.3.4         â
+  â  Run: npm install -g @hypertask/hypertask_cli  â
+  âââââââââââââââââââââââââââââââââââââââââââââ
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
@@ -153,7 +153,7 @@ To suppress the notifier in CI or automated scripts, set the environment variabl
 
 ### `capabilities` / `commands`
 
-Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call — no recursive `--help` grepping needed.
+Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call â no recursive `--help` grepping needed.
 
 ```bash
 hypertask capabilities --json
@@ -199,7 +199,7 @@ hypertask capabilities --json
 ```
 
 <Aside type="tip">
-**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported — `task create`, `task update`, and `comment add` — appear explicitly in the output. Read commands like `task get` and `comment list` also advertise in the capabilities dump that their plain output is complete and tab-separated, so agents do not need to default to `--json` + custom parsers for these commands.
+**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported â `task create`, `task update`, and `comment add` â appear explicitly in the output. Read commands like `task get` and `comment list` also advertise in the capabilities dump that their plain output is complete and tab-separated, so agents do not need to default to `--json` + custom parsers for these commands.
 </Aside>
 
 ---
@@ -216,13 +216,13 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--project <id>` | Filter by project ID | — |
-| `--section <name>` | Filter by section name | — |
-| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
-| `--created-by <id>` | Filter by creator user ID (numeric) | — |
-| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
-| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
-| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
+| `--project <id>` | Filter by project ID | â |
+| `--section <name>` | Filter by section name | â |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | â |
+| `--created-by <id>` | Filter by creator user ID (numeric) | â |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | â |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | â |
+| `--sort-order <asc\|desc>` | Sort direction â use together with `--sort-by` | â |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -238,7 +238,7 @@ hypertask task list --project 15 --limit 20 --offset 20
 ```
 
 <Aside type="note">
-**File attachments** are not on `task list` — use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
+**File attachments** are not on `task list` â use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
 </Aside>
 
 ### `task get` / `task show`
@@ -255,9 +255,9 @@ hypertask task show HTPR-2992   # alias for task get
 | `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 <Aside type="tip">
-**Plain output is complete.** The default (non-`--json`) output of `task get` is tab-separated and contains every field — you do not need `--json` just to get the full task data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured output for tools like `jq`.
+**Plain output is complete.** The default (non-`--json`) output of `task get` is tab-separated and contains every field â you do not need `--json` just to get the full task data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured output for tools like `jq`.
 
-`task show` is an alias for `task get` — both commands are identical.
+`task show` is an alias for `task get` â both commands are identical.
 </Aside>
 
 ### `task tree`
@@ -270,8 +270,8 @@ hypertask task tree --ticket HTPR-2992
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
-| `--task-id <id>` | Numeric task ID | — |
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | â |
+| `--task-id <id>` | Numeric task ID | â |
 | `--depth <n>` | Max levels deep to show | Full tree |
 
 ```bash
@@ -306,7 +306,7 @@ hypertask task create \
 | `--estimate <n>` | Story points |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
-| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
+| `--parent-task <id>` | Parent task ID â creates this task as a subtask |
 | `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
@@ -328,15 +328,15 @@ hypertask task create \
 ```
 
 <Aside type="note">
-**Description format:** HTML is the canonical format — wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
+**Description format:** HTML is the canonical format â wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
 </Aside>
 
 <Aside type="caution">
-**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code — so you always know the task exists and can re-attach without creating a duplicate. Example:
+**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code â so you always know the task exists and can re-attach without creating a duplicate. Example:
 
 ```
-✓ Created task HTPR-3102: Review mockups
-✗ Attachment failed: unsupported content type text/html
+â Created task HTPR-3102: Review mockups
+â Attachment failed: unsupported content type text/html
   Retry: hypertask task update HTPR-3102 --attach ./mockup.png
 ```
 </Aside>
@@ -361,10 +361,12 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--project <id>` | Project ID (required when using `--section` with a name across projects) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--labels <list>` | Comma-separated label names or IDs |
+| `--parent-task <id>` | Re-parent: set a new parent task by numeric ID |
+| `--clear-parent` | Detach this task from its current parent, making it a top-level task |
 | `--attach <path>` | Attach a local file (repeatable) |
 
 <Aside type="note">
-**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` â not section names.
 </Aside>
 
 ```bash
@@ -376,7 +378,17 @@ hypertask task update HTPR-2992 --status Archive
 
 # Update labels
 hypertask task update HTPR-2992 --labels "CLI,reviewed"
+
+# Re-parent a task (make it a subtask of another task)
+hypertask task update HTPR-2992 --parent-task 1234
+
+# Detach a subtask from its parent (make it a top-level task)
+hypertask task update HTPR-2992 --clear-parent
 ```
+
+<Aside type="tip">
+**Detaching subtasks:** Use `--clear-parent` to remove a task's parent and promote it to a standalone top-level task. This is distinct from `--parent-task`, which sets or changes the parent. The `--clear-parent` flag works both from the CLI and via the MCP `hypertask_update_task` tool (pass `parent_task_id: null`).
+</Aside>
 
 ### `task assign`
 
@@ -409,7 +421,7 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | Flag | Description |
 |------|-------------|
 | `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
-| `--to <id>` | Target project ID — move to a different project |
+| `--to <id>` | Target project ID â move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
 ### `task move-board`
@@ -451,7 +463,7 @@ hypertask section create --project 15 --title "In Review" --after "Doing"
 ```
 
 <Aside type="caution">
-Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed — use `hypertask section create` instead.
+Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed â use `hypertask section create` instead.
 </Aside>
 
 ### `section rename`
@@ -482,7 +494,7 @@ hypertask section delete --project 15 --section "In Review"
 | `--section <id\|name>` | The section to delete, by ID or name (required) |
 
 <Aside type="caution">
-Deleting a section removes the column from the board. Tasks inside the section are not deleted — they are left without a section and may need to be moved manually. Verify section contents before deleting.
+Deleting a section removes the column from the board. Tasks inside the section are not deleted â they are left without a section and may need to be moved manually. Verify section contents before deleting.
 </Aside>
 
 ### `section reorder`
@@ -607,7 +619,7 @@ hypertask project label create --project 15 --name "CLI"
 
 ### `project create-board`
 
-Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+Create a whole new board from a JSON manifest â sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
 ```bash
 hypertask project create-board --file board.json
@@ -651,7 +663,7 @@ Example `board.json`:
 
 ## Views
 
-Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks — especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
+Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks â especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
 
 ### `view list`
 
@@ -710,7 +722,7 @@ hypertask view get view_abc123 --json | jq '.[].title'
 
 ### `search`
 
-Search for tasks by keyword. Results display full ticket titles (wrapping long titles across multiple lines in the table so nothing is cut off), links to each task, and only the columns that have data — empty columns are omitted automatically.
+Search for tasks by keyword. Results display full ticket titles (wrapping long titles across multiple lines in the table so nothing is cut off), links to each task, and only the columns that have data â empty columns are omitted automatically.
 
 ```bash
 hypertask search "dark mode" --project 15 --limit 5
@@ -718,10 +730,10 @@ hypertask search "dark mode" --project 15 --limit 5
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
+| `<query>` | Search query (required) | â |
+| `--project <id>` | Restrict search to a project | â |
 | `--limit <n>` | Maximum results | `10` |
-| `--json` | Output raw JSON instead of the formatted table | — |
+| `--json` | Output raw JSON instead of the formatted table | â |
 
 ```bash
 # Search and get JSON for scripting
@@ -745,12 +757,12 @@ hypertask comment list HTPR-2992
 | `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 <Aside type="tip">
-**Plain output is complete.** The default (non-`--json`) output of `comment list` is tab-separated and contains every comment field — author, timestamp, and full text. You do not need `--json` to get all the data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured data for downstream tools.
+**Plain output is complete.** The default (non-`--json`) output of `comment list` is tab-separated and contains every comment field â author, timestamp, and full text. You do not need `--json` to get all the data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured data for downstream tools.
 </Aside>
 
 ### `comment add`
 
-Add a comment to a task. The comment is persisted immediately and a real comment URL is returned — use `comment list` to confirm the comment appears.
+Add a comment to a task. The comment is persisted immediately and a real comment URL is returned â use `comment list` to confirm the comment appears.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>Looks good, merging now.</p>"
@@ -774,7 +786,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side â Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
@@ -853,7 +865,7 @@ hypertask inbox unarchive 301 302 303
 ```
 
 <Aside type="tip">
-Use `hypertask inbox list` to see your current active notifications. Archived notifications are not shown by default, so you will need to know the IDs of the notifications you want to restore — grab them from a previous `inbox list --json` call before archiving.
+Use `hypertask inbox list` to see your current active notifications. Archived notifications are not shown by default, so you will need to know the IDs of the notifications you want to restore â grab them from a previous `inbox list --json` call before archiving.
 </Aside>
 
 ---
@@ -953,6 +965,25 @@ hypertask section reorder --project 15 --section "Code Review" --after "Doing"
 hypertask section delete --project 15 --section "Code Review"
 ```
 
+### Manage subtask relationships
+
+```bash
+# Create a task as a subtask of an existing task
+hypertask task create \
+  --project 15 \
+  --title "Write unit tests for auth module" \
+  --parent-task 1234
+
+# Re-parent an existing task under a different parent
+hypertask task update HTPR-2992 --parent-task 5678
+
+# Promote a subtask to a top-level task (detach from its parent)
+hypertask task update HTPR-2992 --clear-parent
+
+# Inspect the full subtask hierarchy
+hypertask task tree --ticket HTPR-1234
+```
+
 ### Triage tasks by priority
 
 ```bash
@@ -1019,7 +1050,7 @@ hypertask capabilities --json
 # Pipe to jq to find every command that supports --attach
 hypertask capabilities --json | jq '[.[] | select(.options[]?.flags | contains("--attach"))]'
 
-# Identify read commands — their plain output is complete and tab-separated
+# Identify read commands â their plain output is complete and tab-separated
 hypertask capabilities --json | jq '[.[] | select(.description | contains("tab-separated"))]'
 ```
 
@@ -1035,7 +1066,7 @@ hypertask task get HTPR-2992 --json | jq '.priority'
 # Search and process results
 hypertask search "dark mode" --project 15 --json | jq '.[].ticketNumber'
 
-# For simple reads, plain output is sufficient — no --json needed
+# For simple reads, plain output is sufficient â no --json needed
 hypertask task get HTPR-2992
 hypertask comment list HTPR-2992
 ```
