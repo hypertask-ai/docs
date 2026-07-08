@@ -123,10 +123,10 @@ Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the r
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-  ╔══════════════════════════════════════╗
-  ║  Update available: 1.3.3 → 1.3.4  ║
-  ║  Run: npm install -g @hypertask/hypertask_cli  ║
-  ╚══════════════════════════════════════╝
+  ╭────────────────────────────────────────╮
+  │  Update available: 1.3.3 → 1.3.4  │
+  │  Run: npm install -g @hypertask/hypertask_cli  │
+  ╰────────────────────────────────────────╯
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
@@ -715,7 +715,7 @@ hypertask inbox list
 
 ### `inbox archive`
 
-Archive one or more notifications by ID.
+Archive one or more notifications by ID, removing them from your active inbox.
 
 ```bash
 hypertask inbox archive 101 102 103
@@ -724,6 +724,30 @@ hypertask inbox archive 101 102 103
 | Argument | Description |
 |----------|-------------|
 | `<ids...>` | One or more notification IDs to archive |
+
+### `inbox unarchive`
+
+Restore one or more previously archived notifications back to your active inbox. The notifications reappear as unread, with their `archivedAt` timestamp cleared.
+
+```bash
+hypertask inbox unarchive 101 102
+```
+
+| Argument | Description |
+|----------|-------------|
+| `<ids...>` | One or more notification IDs to restore |
+
+```bash
+# Restore a single notification
+hypertask inbox unarchive 301
+
+# Restore several at once
+hypertask inbox unarchive 301 302 303
+```
+
+<Aside type="tip">
+Use `hypertask inbox list` to see your current active notifications. Archived notifications are not shown by default, so you will need to know the IDs of the notifications you want to restore — grab them from a previous `inbox list --json` call before archiving.
+</Aside>
 
 ---
 
