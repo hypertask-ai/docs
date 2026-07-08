@@ -5,7 +5,7 @@ description: Complete parameter reference for all Hypertask MCP tools and their 
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is the complete reference for all 18 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
+This is the complete reference for all 19 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
 
 <Aside type="note">
 All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
@@ -141,7 +141,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
     ],
     "labels": [
       { "id": 7001, "name": "Design" },
-      { "id": 7002, name": "Frontend" }
+      { "id": 7002, "name": "Frontend" }
     ],
     "tasks": [
       { "id": 9001, "ticketNumber": "WEB-1", "title": "Wireframe the homepage" }
@@ -929,7 +929,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ## hypertask_inbox_archive
 
-Archive (dismiss) inbox notifications.
+Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted — they can be restored with `hypertask_inbox_unarchive`.
 
 **Endpoint:** `POST /api/mcp/inbox/archive`
 
@@ -955,3 +955,38 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   "archived": 2
 }
 ```
+
+---
+
+## hypertask_inbox_unarchive
+
+Restore previously archived inbox notifications back to the active inbox. The notifications reappear as unread, with their `archivedAt` timestamp cleared.
+
+**Endpoint:** `POST /api/mcp/inbox/unarchive`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `notification_ids` | number[] | Yes | Array of notification IDs to restore |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/inbox/unarchive \
+  -d '{"notification_ids": [301, 302]}'
+```
+
+**Example response:**
+
+```json
+{
+  "unarchived": 2
+}
+```
+
+<Aside type="tip">
+Use `hypertask_inbox_unarchive` to recover notifications that were archived by mistake, or to resurface items you want to act on again. Combine with `hypertask_inbox_archive` to build agent workflows that move notifications in and out of the active inbox as needed.
+</Aside>
