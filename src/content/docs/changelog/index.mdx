@@ -217,6 +217,12 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: HyperCommand no longer activates while writing a comment** — The HyperCommand keyboard shortcut was incorrectly triggering while the comment input field was focused, interrupting text entry. It now correctly suppresses activation whenever a comment or text field is active. ([HTPR-3329](https://app.hypertask.ai/detail/project-15/3329))
 
+- **Fixed: AI Task Writer no longer injects foreign images into multi-image tasks** — When a task description contained multiple images, the AI Task Writer could replace or inject unrelated images from outside the task during a write pass. A server-side stream filter on `/taskWriter` (AiTaskWriter mode) now drops any generated `<img>` whose `src` is not present in the submitted description, passing all other content through unchanged. The filter handles tags split across stream chunks and is fail-open, so a filtering error never blocks the rewrite. ([HTPR-3771](https://app.hypertask.ai/detail/project-15/3771))
+
+- **Fixed: HyperAI (@-mention assistant) no longer injects random images in responses** — The HyperAI @-mention assistant (Hypermention service) was injecting random images into its responses, producing malformed task content. The image-handling path in `create_prompt_for_hyper_mention` has been corrected, and responses now contain only content grounded in the task being discussed. ([HTPR-3775](https://app.hypertask.ai/detail/project-15/3775))
+
+- **Fixed: "Improve with AI" and Dictate no longer drop images during a rewrite** — Using **Improve with AI** (text enhancement) or voice dictation to rewrite a task description was silently removing all embedded images from the content. Both rewrite paths now preserve every image present in the original description. Verified on production with a 5-image task: text was improved and all 5 images were retained in place after the rewrite. ([HTPR-3776](https://app.hypertask.ai/detail/project-15/3776))
+
 ---
 
 ## June 17, 2026
