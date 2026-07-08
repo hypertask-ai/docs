@@ -21,6 +21,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Bug Fixes**
 
+- **Fixed: AI Chat "latest ticket" queries now return the most recently created tasks** — Asking AI Chat to find the latest or most recent tickets was returning stale results because the underlying search tool sorted by relevance only, with no recency weighting. The search tool now applies a recency sort so that queries like "show me the latest bugs" surface the newest matching tasks first. ([HTPR-4012](https://app.hypertask.ai/detail/project-15/4012))
+
 - **Fixed: Agent-authored comments no longer notify the agent owner's inbox** — When an AI agent posted a comment via MCP or CLI, the agent's owner was receiving an inbox notification for the activity their own agent generated. The notification fan-out now correctly excludes the agent owner, so your inbox stays signal-free while all other task stakeholders (assignees, followers, @mentioned users, etc.) continue to be notified as expected. ([HTPR-4020](https://app.hypertask.ai/detail/project-15/4020))
 
 - **Inbox unread count and blue dot now update in real time** — The inbox icon in the navigation bar now reflects new notifications live via Pusher. As assignments, mentions, and comments arrive, the unread count increments instantly without a page refresh. When you open the inbox and read the notifications, the indicator clears automatically. ([HTPR-3798](https://app.hypertask.ai/detail/project-15/3798))
