@@ -5,15 +5,15 @@ description: Organize work with Kanban-style boards, customizable sections, and 
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** â a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
 ## Sections
 
 Sections are the columns on your board. New projects start with three defaults:
 
-- **Todo** — work that needs to be done
-- **Doing** — work in progress
-- **Done** — completed work
+- **Todo** â work that needs to be done
+- **Doing** â work in progress
+- **Done** â completed work
 
 These defaults are just a starting point. You can rename them, reorder them, add new ones, or remove them entirely. Common setups include:
 
@@ -28,9 +28,9 @@ These defaults are just a starting point. You can rename them, reorder them, add
 
 Each section supports the following configuration:
 
-- **Name** — the column label displayed on the board
-- **Visibility** — show or hide sections without deleting them (hidden sections retain their tasks)
-- **Ranking** — drag sections to reorder them, or set a rank value directly
+- **Name** â the column label displayed on the board
+- **Visibility** â show or hide sections without deleting them (hidden sections retain their tasks)
+- **Ranking** â drag sections to reorder them, or set a rank value directly
 
 <Aside type="tip">
 Hiding a section is useful when you want to temporarily declutter the board without losing any task data. Tasks in hidden sections still appear in search results and saved views.
@@ -40,8 +40,8 @@ Hiding a section is useful when you want to temporarily declutter the board with
 
 You can hide columns that currently contain no tasks to reduce visual noise. There are two ways to toggle this:
 
-- **Ctrl+K** — open the command palette, search for "empty", and select **Show empty columns** or **Hide empty columns**. The command label updates to reflect the current state.
-- **Manage Columns modal** — use the visibility toggle for each individual section.
+- **Ctrl+K** â open the command palette, search for "empty", and select **Show empty columns** or **Hide empty columns**. The command label updates to reflect the current state.
+- **Manage Columns modal** â use the visibility toggle for each individual section.
 
 Both controls flip the same board-level setting, so changes made in one place are immediately reflected in the other.
 
@@ -49,16 +49,16 @@ Both controls flip the same board-level setting, so changes made in one place ar
 
 There are three ways to move a task to a different section:
 
-1. **Drag and drop** — in the web UI, drag a task card from one column to another.
-2. **MCP** — use the `hypertask_section` tool to move a task programmatically:
+1. **Drag and drop** â in the web UI, drag a task card from one column to another.
+2. **MCP** â use the `hypertask_section` tool to move a task programmatically:
    ```
    hypertask_section(taskId: 42, sectionId: 5)
    ```
-3. **API** — call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
+3. **API** â call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
 
 ## Views
 
-Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data — they're just different lenses on the same information.
+Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data â they're just different lenses on the same information.
 
 ### Board view
 
@@ -68,12 +68,16 @@ The default Kanban layout. Tasks appear as cards organized into section columns.
 
 Displays tasks on a calendar based on their due dates. Useful for deadline-driven work where timing matters more than workflow stage.
 
+#### Real-time updates in Calendar view
+
+The Calendar view updates **live via Pusher**. When a task's due date or schedule is changed â by a teammate, an agent, or a CLI command â the event moves to the new date instantly on every open Calendar view, without a page refresh. This keeps the calendar accurate even when multiple people are adjusting schedules simultaneously.
+
 #### Filtering in Calendar view
 
 The Calendar view supports the same filter set as the Kanban board. You can open the filter modal in two ways:
 
-- **Filter icon** — click the funnel icon in the calendar header (next to the **Today** button). The icon turns blue when any filters are active, so you can tell at a glance whether the calendar is filtered.
-- **Keyboard shortcut** — press <kbd>Shift+F</kbd> to open the same modal without using the mouse.
+- **Filter icon** â click the funnel icon in the calendar header (next to the **Today** button). The icon turns blue when any filters are active, so you can tell at a glance whether the calendar is filtered.
+- **Keyboard shortcut** â press <kbd>Shift+F</kbd> to open the same modal without using the mouse.
 
 Both methods open the same filter panel. You can also filter by tasks you are **following** using the **Following** filter, matching the filter already available on the Kanban board.
 
@@ -104,12 +108,12 @@ Narrow down which tasks appear on the board:
 
 Control the order tasks appear within each section:
 
-- **Manual** — custom drag-and-drop ordering
-- **Priority** — highest priority first
-- **Due Date** — earliest deadline first
-- **Size** — smallest estimate first
-- **Created At** — newest or oldest first
-- **Updated At** — most recently changed first
+- **Manual** â custom drag-and-drop ordering
+- **Priority** â highest priority first
+- **Due Date** â earliest deadline first
+- **Size** â smallest estimate first
+- **Created At** â newest or oldest first
+- **Updated At** â most recently changed first
 
 ### Subtask display
 
@@ -128,7 +132,7 @@ Saved Views are per-project. Each team member can create their own views without
 
 ### Sharing a view via deep link
 
-Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately — no manual navigation required.
+Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately â no manual navigation required.
 
 The URL format is:
 
