@@ -13,6 +13,14 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+## July 8, 2026
+
+**Bug Fixes**
+
+- **Fixed: `inbox unarchive` now works correctly from CLI and MCP** — The `hypertask inbox unarchive` CLI command and the `POST /api/mcp/inbox/unarchive` endpoint were returning an HTML error page instead of a JSON response, because the backend route was missing entirely. The route is now in place: unarchiving a notification restores it to your active inbox as unread and clears its `archivedAt` timestamp. The MCP tool `hypertask_inbox_unarchive` is also now available. ([HTPR-3993](https://app.hypertask.ai/detail/project-15/3993))
+
+---
+
 ## July 7, 2026
 
 **Bug Fixes**
