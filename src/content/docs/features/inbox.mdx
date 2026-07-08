@@ -66,11 +66,15 @@ To toggle: open your **Inbox settings** and switch **Show avatar images** on or 
 
 The **AI Triage** button in your inbox lets you automatically categorize and prioritize incoming notifications. Click it to have the AI analyze your unread notifications, suggest actions, and help you focus on what matters most — without manually reading through every item.
 
-## Archiving
+## Archiving and Unarchiving
 
 Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" — you've seen it, handled it, and don't need it front and center anymore.
 
-You can archive notifications one at a time or in bulk. Archived notifications can still be accessed if you need to refer back to them.
+You can archive notifications one at a time or in bulk. If you archive something by mistake or want to resurface a notification to act on it again, you can **unarchive** it: the notification is restored to your active inbox as unread, as if it had just arrived.
+
+- **Web UI:** Archive with the dismiss button on any notification. Unarchive from the archived notifications view.
+- **CLI:** `hypertask inbox archive <ids...>` / `hypertask inbox unarchive <ids...>`
+- **MCP:** `hypertask_inbox_archive` / `hypertask_inbox_unarchive` (see [MCP Tools Reference](/api/tools-reference/))
 
 ## AI agent inbox
 
