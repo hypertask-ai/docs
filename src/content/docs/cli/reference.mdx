@@ -123,10 +123,10 @@ Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the r
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-  ╭────────────────────────────────────────╮
+  ┌─────────────────────────────────────────┐
   │  Update available: 1.3.3 → 1.3.4  │
   │  Run: npm install -g @hypertask/hypertask_cli  │
-  ╰────────────────────────────────────────╯
+  └─────────────────────────────────────────┘
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
@@ -396,6 +396,92 @@ hypertask task move-board HTPR-2992 --target-project 20 --target-section 5010
 
 ---
 
+## Sections
+
+Section management lives under the top-level `section` command (not `project section`). Use these commands to create, rename, delete, and reorder board columns from the terminal.
+
+### `section create`
+
+Create a new section (column) on a board.
+
+```bash
+hypertask section create --project 15 --title "In Review"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--title <text>` | Section title (required) |
+| `--after <id\|name>` | Insert after this existing section (optional) |
+
+```bash
+# Create a section and place it after an existing one
+hypertask section create --project 15 --title "In Review" --after "Doing"
+```
+
+<Aside type="caution">
+Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed — use `hypertask section create` instead.
+</Aside>
+
+### `section rename`
+
+Rename an existing section.
+
+```bash
+hypertask section rename --project 15 --section "In Review" --title "Code Review"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--section <id\|name>` | The section to rename, by ID or current name (required) |
+| `--title <text>` | New title for the section (required) |
+
+### `section delete`
+
+Delete a section from a board.
+
+```bash
+hypertask section delete --project 15 --section "In Review"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--section <id\|name>` | The section to delete, by ID or name (required) |
+
+<Aside type="caution">
+Deleting a section removes the column from the board. Tasks inside the section are not deleted — they are left without a section and may need to be moved manually. Verify section contents before deleting.
+</Aside>
+
+### `section reorder`
+
+Move a section to a new position on the board by specifying which section it should appear after.
+
+```bash
+hypertask section reorder --project 15 --section "In Review" --after "Doing"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Project ID (required) |
+| `--section <id\|name>` | The section to move, by ID or name (required) |
+| `--after <id\|name>` | The section it should appear after, by ID or name (required) |
+
+```bash
+# Move "QA" to appear after "In Review"
+hypertask section reorder --project 15 --section "QA" --after "In Review"
+
+# Use section IDs for precision
+hypertask section reorder --project 15 --section 4012 --after 4005
+```
+
+<Aside type="tip">
+Use `hypertask project sections 15` to list all section IDs and names before reordering, so you can reference them exactly.
+</Aside>
+
+---
+
 ## Projects
 
 ### `project list`
@@ -474,20 +560,6 @@ hypertask project labels 15
 | Argument | Description |
 |----------|-------------|
 | `<project-id>` | The project ID |
-
-### `project section create`
-
-Create a new section (column) on a board.
-
-```bash
-hypertask project section create --project 15 --title "In Review" --after 4005
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--title <text>` | Section title (required) |
-| `--after <section-id>` | Insert after this existing section (optional) |
 
 ### `project label create`
 
@@ -825,6 +897,25 @@ hypertask project invite 15 --email newmember@example.com
 
 # 2. Confirm they appear in the member list (once they accept)
 hypertask project members 15
+```
+
+### Manage board sections
+
+```bash
+# List existing sections and their IDs
+hypertask project sections 15
+
+# Add a new section
+hypertask section create --project 15 --title "In Review"
+
+# Rename a section
+hypertask section rename --project 15 --section "In Review" --title "Code Review"
+
+# Reorder: move "Code Review" to appear after "Doing"
+hypertask section reorder --project 15 --section "Code Review" --after "Doing"
+
+# Remove a section
+hypertask section delete --project 15 --section "Code Review"
 ```
 
 ### Triage tasks by priority
