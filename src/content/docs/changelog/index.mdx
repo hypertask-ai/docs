@@ -17,11 +17,15 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Improvements**
 
+- **CLI: Full section management — create, rename, delete, and reorder** — Section commands have moved to a dedicated top-level `section` command. Use `hypertask section create`, `section rename`, `section delete`, and the newly added `section reorder` to manage board columns entirely from the terminal. `section reorder --project <id> --section <id|name> --after <id|name>` repositions a column on the board without touching the UI. ([HTPR-3750](https://app.hypertask.ai/detail/project-15/3750))
+
+**Bug Fixes**
+
+- **Fixed: Agent-authored comments no longer notify the agent owner's inbox** — When an AI agent posted a comment via MCP or CLI, the agent's owner was receiving an inbox notification for the activity their own agent generated. The notification fan-out now correctly excludes the agent owner, so your inbox stays signal-free while all other task stakeholders (assignees, followers, @mentioned users, etc.) continue to be notified as expected. ([HTPR-4020](https://app.hypertask.ai/detail/project-15/4020))
+
 - **Inbox unread count and blue dot now update in real time** — The inbox icon in the navigation bar now reflects new notifications live via Pusher. As assignments, mentions, and comments arrive, the unread count increments instantly without a page refresh. When you open the inbox and read the notifications, the indicator clears automatically. ([HTPR-3798](https://app.hypertask.ai/detail/project-15/3798))
 
 - **Calendar view now updates live when dates change** — The Calendar view now receives real-time Pusher updates for date and schedule changes. When a task's due date is updated — by a teammate, an agent, or a CLI command — the event moves to its new position on every open Calendar instantly, with no page refresh needed. ([HTPR-3799](https://app.hypertask.ai/detail/project-15/3799))
-
-**Bug Fixes**
 
 - **Fixed: Archiving inbox notifications now sticks** — Archiving a notification was silently failing for notifications without a linked task (e.g. notifications for tasks that had been moved or deleted). The single-archive route threw on a missing task ID before writing, and the bulk-archive route silently dropped any entry without a task ID, causing archived items to reappear on the next load. Both routes now handle task-less notifications correctly, so archived items stay archived. ([HTPR-3906](https://app.hypertask.ai/detail/project-15/3906))
 
