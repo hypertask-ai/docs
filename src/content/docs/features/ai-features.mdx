@@ -84,7 +84,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 ### What makes it useful
 
 - **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
-- **Take action** — HyperAI can create tasks, assign team members, set priorities, add labels, and manage your board directly from the chat sidebar. Just tell it what you need — "Create a high-priority bug for the login issue and assign it to Sarah" — and it handles the rest.
+- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, and handle inbox notifications — all directly from the chat sidebar. Just tell it what you need and it handles the rest.
 - **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
 - **Consistent formatting** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used.
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
@@ -97,7 +97,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 
 AI Chat is powered by the same MCP tools available to external AI agents. When new MCP tools or parameters are added to the Hypertask MCP server, they **automatically become available in AI Chat** — no separate integration step or redeployment is needed. AI Chat always checks for existing MCP tools in the session and makes them accessible to the AI model.
 
-This means that as the MCP toolset expands (for example, adding due date support to task creation), those capabilities are immediately usable from within AI Chat without any additional configuration.
+AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
 
 ### Attachments in AI Chat
 
@@ -130,24 +130,22 @@ AI Chat supports voice dictation, allowing you to speak your messages instead of
 
 ### What AI Chat can and cannot see
 
-AI Chat's access to your workspace is intentionally kept in line with what the CLI and MCP tools can read and write. This means AI Chat shares the same scope and limitations as those interfaces.
+AI Chat's access to your workspace matches what the CLI and MCP tools can read and write — all three interfaces share the same underlying tools and stay in sync.
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
 | Tasks (title, description, status, priority, size) | ✓ | ✓ |
 | Assignees & followers | ✓ | ✓ |
-| Comments | ✓ | ✓ |
-| Labels | ✓ | ✓ |
-| Sections / board columns | ✓ | ✓ |
-| Subtask hierarchy | ✓ | ✓ |
+| Comments (read, add, update, delete) | ✓ | ✓ |
+| Labels (read, create, assign) | ✓ | ✓ |
+| Sections / board columns (CRUD) | ✓ | ✓ |
+| Subtask hierarchy / task tree | ✓ | ✓ |
 | Due dates | ✓ | ✓ |
 | Archived / completed tasks | ✓ | ✓ |
 | Saved views | ✓ | ✓ |
+| Move tasks between boards | ✓ | ✓ |
+| Inbox (list, archive, unarchive) | ✓ | ✓ |
 | Tags | ✓ | ✓ |
-
-<Aside type="note">
-**Saved views and tags are not currently accessible to AI Chat, the CLI, or MCP tools.** All three interfaces share the same access boundary — if you need to work with views or tags, use the Hypertask web UI directly. This parity is intentional: AI Chat is powered by the same underlying tools as the CLI and MCP, so their capabilities stay in sync.
-</Aside>
 
 ## Auto-Summary
 
