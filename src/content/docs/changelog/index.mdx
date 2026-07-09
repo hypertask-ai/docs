@@ -19,7 +19,13 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **AI Chat now has full read/write parity with REST API, MCP, and CLI** — AI Chat can now perform every action available through the Hypertask REST API, MCP server, and CLI. The 11 previously missing capabilities are now available directly in the chat sidebar: unassign users, move tasks between boards, unarchive inbox notifications, create labels, create/rename/delete sections, update and delete comments, work with task draft content, navigate task trees, load saved views, and apply labels when creating or updating tasks. Ask the AI to do anything you could do from the terminal or via an agent — it now handles the full surface. ([HTPR-4043](https://app.hypertask.ai/detail/project-15/4043))
 
+**Improvements**
+
+- **Due date picker: "Pick a custom date" label and last-used shortcut** — The due date picker has two refinements. The calendar option is now labeled **Pick a custom date** (previously "Pick a custom date range"), accurately reflecting that Hypertask tasks use a single deadline rather than a range. A new **Last used** option has also been added directly below **Reset** and above the quick picks — it re-applies the most recently selected custom date with a single click, matching the same convenience pattern already used by the Remind Me picker. No more reopening the calendar to repeat a date you've set before. ([HTPR-4051](https://app.hypertask.ai/detail/project-15/4051))
+
 **Bug Fixes**
+
+- **Fixed: Task detail panel property labels now top-align, inbox row dot aligned** — Property labels in the task detail panel (status, priority, estimate, assignee, due date, labels, related tasks) now top-align against their values, so multi-line values always read cleanly from the top rather than being vertically centered. In the same release, the unread indicator dot in inbox split/row view is correctly aligned with the notification row. ([HTPR-4056](https://app.hypertask.ai/detail/project-15/4056))
 
 - **Fixed: System theme no longer flashes on load** — Users with their OS set to "system" (auto dark/light) were seeing a brief flash of the wrong theme on page load. A blocking script in the document `<head>` now resolves `prefers-color-scheme` before the first paint, so the correct theme is applied immediately. Explicit light and explicit dark theme selections were already handled correctly server-side. ([HTPR-4059](https://app.hypertask.ai/detail/project-15/4059))
 
