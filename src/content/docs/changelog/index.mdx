@@ -17,6 +17,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **Improvements**
 
+- **Mobile task property sidebar redesigned for consistency** — The property sidebar on mobile has been rebuilt as a unified, aligned system. Every property value (status, priority, estimate, assignee, due date, labels, related tasks) now renders as the same subtle pill on a fixed label grid, so everything lines up at a glance. Empty fields show as plain muted text instead of an empty box, and related tasks collapse to a single summary chip. ([HTPR-3901](https://app.hypertask.ai/detail/project-15/3901))
+
 - **REST API direct access is ~4× faster than the CLI for agent workloads** — The Hypertask CLI is a thin wrapper around the same REST endpoints it exposes publicly (`https://app.hypertask.ai/api/mcp/*` and `https://app.hypertask.ai/api/v1`). Calling those routes directly with `curl` or any HTTP client cuts per-request latency from ~0.84–1.06 s (CLI) down to ~0.21 s, with the difference being almost entirely Node.js process startup. For agents that issue many sequential API calls, switching to direct REST eliminates this overhead with no server-side changes. See the [REST API docs](/api/rest-api/) for the full route reference. ([HTPR-3895](https://app.hypertask.ai/detail/project-15/3895))
 
 **Bug Fixes**
