@@ -42,6 +42,30 @@ Error responses use this general shape:
 }
 ```
 
+## Calling the API Directly from Agents
+
+The Hypertask CLI is a thin wrapper around the REST API. Every CLI command ultimately calls a route under `https://app.hypertask.ai/api/mcp/*`. You can call those same routes directly with `curl` or any HTTP client, bypassing the Node.js process startup cost.
+
+Measured from a VPS, the difference is substantial:
+
+| Method | Typical latency |
+|--------|----------------|
+| `curl` direct to REST API | ~0.21 s |
+| `hypertask` CLI | ~0.84 – 1.06 s |
+
+The gap is almost entirely Node.js cold-start time. For agents that issue many sequential calls, this adds up quickly.
+
+**How the routes map:**
+
+- The `api/v1` routes documented on this page are the public, versioned REST API — use these for integrations and scripts.
+- The `api/mcp/*` routes are the same operations that the CLI and MCP server use internally. They accept the same authentication header (`Authorization: Bearer htk_...`).
+
+For agent workloads that currently shell out to the CLI, switching to direct `curl` calls against either the `api/v1` or `api/mcp/*` routes is a straightforward way to cut per-operation latency by ~4×.
+
+<Aside type="tip">
+The MCP server itself is already a direct API client — if you're using Hypertask via MCP from Claude, Cursor, or another agent host, you're already getting REST-speed access. Direct `curl` is most valuable when you're scripting in shell or want to avoid the Node.js runtime entirely.
+</Aside>
+
 ## Task Identifiers
 
 Routes that operate on a specific task usually accept exactly one task identifier:
