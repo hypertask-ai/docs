@@ -15,13 +15,19 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ## July 9, 2026
 
-**Improvements**
+**New Features**
+
+- **AI Chat now has full read/write parity with REST API, MCP, and CLI** — AI Chat can now perform every action available through the Hypertask REST API, MCP server, and CLI. The 11 previously missing capabilities are now available directly in the chat sidebar: unassign users, move tasks between boards, unarchive inbox notifications, create labels, create/rename/delete sections, update and delete comments, work with task draft content, navigate task trees, load saved views, and apply labels when creating or updating tasks. Ask the AI to do anything you could do from the terminal or via an agent — it now handles the full surface. ([HTPR-4043](https://app.hypertask.ai/detail/project-15/4043))
+
+**Bug Fixes**
+
+- **Fixed: System theme no longer flashes on load** — Users with their OS set to "system" (auto dark/light) were seeing a brief flash of the wrong theme on page load. A blocking script in the document `<head>` now resolves `prefers-color-scheme` before the first paint, so the correct theme is applied immediately. Explicit light and explicit dark theme selections were already handled correctly server-side. ([HTPR-4059](https://app.hypertask.ai/detail/project-15/4059))
+
+- **Fixed: Empty-board prompt no longer flashes on first load** — The "your board is empty" state was briefly appearing while the board's tasks were still hydrating, causing a visible blink on first load. The empty-board prompt now only renders once the board's task data has fully loaded. ([HTPR-4058](https://app.hypertask.ai/detail/project-15/4058))
 
 - **Mobile task property sidebar redesigned for consistency** — The property sidebar on mobile has been rebuilt as a unified, aligned system. Every property value (status, priority, estimate, assignee, due date, labels, related tasks) now renders as the same subtle pill on a fixed label grid, so everything lines up at a glance. Empty fields show as plain muted text instead of an empty box, and related tasks collapse to a single summary chip. ([HTPR-3901](https://app.hypertask.ai/detail/project-15/3901))
 
 - **REST API direct access is ~4× faster than the CLI for agent workloads** — The Hypertask CLI is a thin wrapper around the same REST endpoints it exposes publicly (`https://app.hypertask.ai/api/mcp/*` and `https://app.hypertask.ai/api/v1`). Calling those routes directly with `curl` or any HTTP client cuts per-request latency from ~0.84–1.06 s (CLI) down to ~0.21 s, with the difference being almost entirely Node.js process startup. For agents that issue many sequential API calls, switching to direct REST eliminates this overhead with no server-side changes. See the [REST API docs](/api/rest-api/) for the full route reference. ([HTPR-3895](https://app.hypertask.ai/detail/project-15/3895))
-
-**Bug Fixes**
 
 - **Fixed: @mention search now returns exact title matches** — The @mention dropdown was re-sorting Turbopuffer's relevance results by `updatedAt` before slicing to the top 5, so recently-touched tickets always won and exact title matches could vanish entirely. Two-word queries ("revert pri", etc.) were hit hardest. The dropdown now preserves the search engine's relevance ranking, so the ticket you're actually looking for appears first. The same ranking fix covers general search and slash-command lookup. ([HTPR-3870](https://app.hypertask.ai/detail/project-15/3870))
 
