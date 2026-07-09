@@ -25,6 +25,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: @mention search now returns exact title matches** — The @mention dropdown was re-sorting Turbopuffer's relevance results by `updatedAt` before slicing to the top 5, so recently-touched tickets always won and exact title matches could vanish entirely. Two-word queries ("revert pri", etc.) were hit hardest. The dropdown now preserves the search engine's relevance ranking, so the ticket you're actually looking for appears first. The same ranking fix covers general search and slash-command lookup. ([HTPR-3870](https://app.hypertask.ai/detail/project-15/3870))
 
+- **Fixed: Submitting a comment no longer posts it twice** — In some cases, hitting Send would create two identical comments on the same task. The duplicate submission has been resolved; each Send action now reliably creates exactly one comment. ([HTPR-4054](https://app.hypertask.ai/detail/project-15/4054))
+
 ---
 
 ## July 8, 2026
