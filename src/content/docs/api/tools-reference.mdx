@@ -5,7 +5,7 @@ description: Complete parameter reference for all Hypertask MCP tools and their 
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is the complete reference for all 19 Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
+This is the complete reference for all Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
 
 <Aside type="note">
 All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
@@ -277,6 +277,37 @@ curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+## hypertask_section (delete)
+
+Delete a section from a project board. Tasks currently in the section are moved to the project's default section before deletion.
+
+**Endpoint:** `DELETE /api/mcp/projects/{projectId}/sections/{sectionId}`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+| `sectionId` | number | Yes | The section to delete |
+
+**Example request:**
+
+```bash
+curl -s -X DELETE -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/sections/106
+```
+
+**Example response:**
+
+```json
+{
+  "deleted": true,
+  "id": 106
+}
+```
+
+---
+
 ## hypertask_views_list
 
 List all saved views in a project. Views are named filter/sort configurations created in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). Use this tool to discover available view IDs before calling `hypertask_view_get`.
@@ -457,6 +488,55 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+## hypertask_get_task_tree
+
+Retrieve a task and its full subtask hierarchy as a tree. Useful for understanding parent/child relationships without making multiple individual task lookups.
+
+**Endpoint:** `GET /api/mcp/tasks/{taskId}/tree`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `taskId` | number | Yes | Internal task ID of the root task |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/tasks/1234/tree
+```
+
+**Example response:**
+
+```json
+{
+  "id": 1234,
+  "ticket_number": "HYP-42",
+  "title": "Add file upload validation",
+  "children": [
+    {
+      "id": 1250,
+      "ticket_number": "HYP-58",
+      "title": "Validate MIME type on server",
+      "children": []
+    },
+    {
+      "id": 1251,
+      "ticket_number": "HYP-59",
+      "title": "Add client-side file type check",
+      "children": []
+    }
+  ]
+}
+```
+
+<Aside type="tip">
+The CLI exposes the same data via <code>hypertask task tree &lt;ticket&gt;</code>.
+</Aside>
+
+---
+
 ## hypertask_search_tasks
 
 Full-text search across all accessible tasks. Powered by Typesense for fast, typo-tolerant results.
@@ -520,13 +600,10 @@ Create a new task in a project.
 | `section_id` | number | No | Place in a specific section |
 | `priority` | string | No | `urgent`, `high`, `medium`, `low` |
 | `estimate` | number | No | Time estimate (in minutes) |
+| `labels` | string[] | No | Array of label names to apply. Creates the label if it doesn't exist on the project. |
 | `images` | string[] | No | Array of image URLs to attach |
 | `attachments` | string[] | No | Array of file URLs to attach |
 | `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
-
-<Aside type="caution">
-`labels` are **not yet supported** on task creation via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set labels.
-</Aside>
 
 **Example request:**
 
@@ -538,7 +615,8 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
     "project_id": 15,
     "title": "Add error handling to upload endpoint",
     "description": "<p>Return 400 with descriptive error for invalid file types.</p>",
-    "priority": "high"
+    "priority": "high",
+    "labels": ["Backend", "Bug"]
   }'
 ```
 
@@ -551,6 +629,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   "title": "Add error handling to upload endpoint",
   "priority": "high",
   "section": "Backlog",
+  "labels": ["Backend", "Bug"],
   "createdAt": "2025-01-17T10:00:00Z"
 }
 ```
@@ -582,16 +661,14 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `sectionId` | number | Move to a different section (camelCase — see note below) |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
 | `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
+| `labels` | string[] | Replace the task's labels. Pass an empty array to clear all labels. Creates any label that doesn't already exist on the project. |
+| `parent_task_id` | number \| null | Set or change the parent task. Pass `null` (explicit) to detach from current parent. |
 
 <Aside type="caution">
 **Field name casing matters.** Most update fields use `snake_case`, but the section field is `sectionId` (camelCase). Passing `section_id` (snake_case) will be silently ignored — use `sectionId` to move a task between sections.
 </Aside>
 
-<Aside type="caution">
-`labels` are **not yet supported** on task updates via MCP. Use the <a href="/cli/reference/">CLI</a> or the Hypertask UI to set labels.
-</Aside>
-
-**Example request -- move task to "Doing":**
+**Example request -- move task to "Doing" and add labels:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -599,7 +676,8 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   https://mcp.hypertask.ai/api/mcp/tasks/update \
   -d '{
     "ticket_number": "HYP-42",
-    "sectionId": 103
+    "sectionId": 103,
+    "labels": ["Frontend", "In Progress"]
   }'
 ```
 
@@ -611,6 +689,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   "ticket_number": "HYP-42",
   "title": "Add file upload validation",
   "section": "Doing",
+  "labels": ["Frontend", "In Progress"],
   "updatedAt": "2025-01-17T11:00:00Z"
 }
 ```
@@ -780,6 +859,119 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   "createdAt": "2025-01-17T14:00:00Z"
 }
 ```
+
+---
+
+## hypertask_update_comment
+
+Update the text of an existing comment.
+
+**Endpoint:** `PATCH /api/mcp/comments/{commentId}`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `commentId` | number | Yes | The comment to update |
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `text` | string | Yes | New comment body in HTML |
+
+**Example request:**
+
+```bash
+curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/comments/502 \
+  -d '{"text": "<p>Updated: validation now covers PDF and image MIME types as well.</p>"}'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 502,
+  "text": "<p>Updated: validation now covers PDF and image MIME types as well.</p>",
+  "updatedAt": "2025-01-17T15:00:00Z"
+}
+```
+
+---
+
+## hypertask_delete_comment
+
+Delete a comment from a task.
+
+**Endpoint:** `DELETE /api/mcp/comments/{commentId}`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `commentId` | number | Yes | The comment to delete |
+
+**Example request:**
+
+```bash
+curl -s -X DELETE -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/comments/502
+```
+
+**Example response:**
+
+```json
+{
+  "deleted": true,
+  "id": 502
+}
+```
+
+---
+
+## hypertask_create_label
+
+Create a new label on a project. Labels created this way are immediately available to assign to tasks via `hypertask_update_task` or `hypertask_create_task`.
+
+**Endpoint:** `POST /api/mcp/projects/{projectId}/labels`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `projectId` | number | Yes | The project ID |
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Label name (must be unique within the project) |
+| `color` | string | No | Hex color code (e.g. `#ff5733`). A color is assigned automatically if omitted. |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/projects/15/labels \
+  -d '{"name": "Regression", "color": "#e11d48"}'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 7003,
+  "name": "Regression",
+  "color": "#e11d48"
+}
+```
+
+<Aside type="tip">
+You can also create labels on the fly by passing a new name in the <code>labels</code> array of <code>hypertask_create_task</code> or <code>hypertask_update_task</code>. Use <code>hypertask_create_label</code> when you want to pre-register labels (with a specific color) before assigning them to tasks.
+</Aside>
 
 ---
 
