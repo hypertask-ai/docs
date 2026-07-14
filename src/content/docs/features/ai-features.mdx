@@ -53,6 +53,43 @@ When creating tasks via the AI Task Writer, you can set the following properties
 | Task Size | Story points or time estimate |
 | Priority | `urgent`, `high`, `medium`, `low` |
 
+## Time Tracking
+
+Hypertask includes built-in time tracking for tasks. Tracking is **opt-in per board** by default; time tracking starts automatically the first time you start tracking on a board where it's enabled.
+
+### Enabling and disabling tracking
+
+- **Per board** — Each project board can independently enable or disable time tracking. Shift toggles the state: off by default, enable when you need it, and re-disable when done.
+- **Server-side control** — Time tracking state is enforced on the server, so time reporting and history are always consistent across devices and users.
+
+### Time tracking API
+
+When time tracking is enabled on a board, the server enforces tracking for all API interactions:
+
+- **Time API** (`POST /time/start` / `POST /time/stop` / `GET /time`) includes an `enabled: true` flag per board. The API returns `enabled: false` if tracking is disabled on the board.
+- **Start tracking** on a board with tracking disabled returns a 403 error.
+- **Stop tracking** and paused/unpaused states persist correctly regardless of tracking state.
+- **Reports and history** use the server-managed timer state, not client-side timestamps.
+
+### Integration with workflows
+
+Time tracking integrates with other features:
+
+- **Board level** — Toggle tracking on or off from the board or via selected board shortcut.
+- **Task level** — Start and stop tracking from any field in the task detail.
+- **Running list** — View tasks currently being tracked from the board or task detail.
+- **Stop tracking** — Stop the timer and optionally auto-archive or dismiss the running task.
+
+### Per-user and admin defaults
+
+- **Per-user drag order** — When you reorder views in Manage Views, the new order is saved server-side and applied to your local board.
+- **Admin default order** — Project owners and admins can define a centralized default ordering for views. Newly created boards use this order, while existing boards preserve each user's custom order.
+- **Visibility toggles** — Hide views without deleting them, or show counts and zero state explicitly.
+
+<Aside type="tip">
+For frequent users, custom ordering lets you prioritize views you use most, while admins can ensure consistent organization for new and rolled-out teams.
+</Aside>
+
 ## Voice Dictation
 
 Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
@@ -135,25 +172,25 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✓ | ✓ |
-| Assignees & followers | ✓ | ✓ |
-| Comments (read, add, update, delete) | ✓ | ✓ |
-| Labels (read, create, assign) | ✓ | ✓ |
-| Sections / board columns (CRUD) | ✓ | ✓ |
-| Subtask hierarchy / task tree | ✓ | ✓ |
-| Due dates | ✓ | ✓ |
-| Archived / completed tasks | ✓ | ✓ |
-| Saved views | ✓ | ✓ |
-| Move tasks between boards | ✓ | ✓ |
-| Inbox (list, archive, unarchive) | ✓ | ✓ |
-| Tags | ✓ | ✓ |
+| Tasks (title, description, status, priority, size) | ✅ | ✅ |
+| Assignees & followers | ✅ | ✅ |
+| Comments (read, add, update, delete) | ✅ | ✅ |
+| Labels (read, create, assign) | ✅ | ✅ |
+| Sections / board columns (CRUD) | ✅ | ✅ |
+| Subtask hierarchy / task tree | ✅ | ✅ |
+| Due dates | ✅ | ✅ |
+| Archived / completed tasks | ✅ | ✅ |
+| Saved views | ✅ | ✅ |
+| Move tasks between boards | ✅ | ✅ |
+| Inbox (list, archive, unarchive) | ✅ | ✅ |
+| Tags | ✅ | ✅ |
+| Time tracking (start/stop) | ✅ | ✅ |
 
 ## Auto-Summary
 
 When a task accumulates a long comment thread, Hypertask generates an **automatic summary** so you can get up to speed without reading every message.
 
 Auto-summaries highlight:
-
 - Key decisions made in the thread
 - Current status and blockers
 - Action items that emerged from the discussion
