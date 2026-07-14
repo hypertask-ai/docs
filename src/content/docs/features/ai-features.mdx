@@ -7,7 +7,7 @@ sidebar:
 
 import { Aside, Tabs, TabItem, Card, CardGrid } from '@astrojs/starlight/components';
 
-Hypertask is built from the ground up as an AI-native project management platform. AI isn't bolted on as an afterthought â it's woven into every part of the workflow, from creating tasks to communicating with your team.
+Hypertask is built from the ground up as an AI-native project management platform. AI isn't bolted on as an afterthought — it's woven into every part of the workflow, from creating tasks to communicating with your team.
 
 <CardGrid>
   <Card title="AI Task Writer" icon="pencil">
@@ -17,7 +17,7 @@ Hypertask is built from the ground up as an AI-native project management platfor
     Speak your thoughts. Hypertask transcribes and structures them.
   </Card>
   <Card title="HyperAI Co-worker" icon="comment">
-    Chat with an AI that knows your project â and can take action on it.
+    Chat with an AI that knows your project — and can take action on it.
   </Card>
   <Card title="Text Enhancement" icon="document">
     Improve grammar and readability of any text with one click.
@@ -31,16 +31,16 @@ Instead of manually writing detailed task descriptions, tell the AI Task Writer 
 **How it works:**
 
 1. Open the AI Task Writer from any board.
-2. Describe what you need â a sentence or two is enough.
+2. Describe what you need — a sentence or two is enough.
 3. The AI uses your **project context** (existing tasks, descriptions, labels) and any **custom instructions** you've configured to generate a detailed task.
 4. Review, edit if needed, and add the task to your board.
 
-Web search is handled **automatically** â the AI decides when to look up external information (documentation, APIs, best practices) based on your prompt, without any manual toggle.
+Web search is handled **automatically** — the AI decides when to look up external information (documentation, APIs, best practices) based on your prompt, without any manual toggle.
 
 The Task Writer maintains a **history of responses**, so you can revisit previous suggestions and reuse them.
 
 <Aside type="tip">
-The more context your project has â existing tasks, custom instructions, attached documents â the better the AI Task Writer performs. It learns from your project's patterns.
+The more context your project has — existing tasks, custom instructions, attached documents — the better the AI Task Writer performs. It learns from your project's patterns.
 </Aside>
 
 ### Properties during task creation
@@ -55,7 +55,7 @@ When creating tasks via the AI Task Writer, you can set the following properties
 
 ## Voice Dictation
 
-Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type â task titles, descriptions, comments.
+Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
 
 | Feature | Details |
 |---------|---------|
@@ -73,9 +73,9 @@ Select any text in a task description or comment and click **Improve Readability
 
 - Works on any text field in the app
 - Preserves technical terms and project-specific language
-- **Undo support** â revert to the original text if you prefer it
+- **Undo support** — revert to the original text if you prefer it
 
-This is intentionally lightweight. It's not a rewrite â it's a polish.
+This is intentionally lightweight. It's not a rewrite — it's a polish.
 
 ## HyperAI Co-worker
 
@@ -83,21 +83,22 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 
 ### What makes it useful
 
-- **Project context** â HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
-- **Take action** â HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, and handle inbox notifications â all directly from the chat sidebar. Just tell it what you need and it handles the rest.
-- **Smart query analysis** â HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
-- **Consistent formatting** â Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used.
-- **@mentions** â reference specific tasks, people, or projects in your messages to give the AI precise context.
-- **Ask AI from comments** â see a comment or description you want to dig into? Click the "Ask AI" button on any comment or task description to send it directly into an AI chat, where you can ask follow-up questions or get analysis.
-- **Chat sessions with history** â conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off.
-- **Available on mobile** â AI Chat is now accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
-- **Fast, responsive streaming** â AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
+- **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
+- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, and handle inbox notifications — all directly from the chat sidebar. Just tell it what you need and it handles the rest.
+- **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
+- **Consistent formatting** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used.
+- **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
+- **Ask AI from comments** — see a comment or description you want to dig into? Click the "Ask AI" button on any comment or task description to send it directly into an AI chat, where you can ask follow-up questions or get analysis.
+- **Chat sessions with history** — conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off.
+- **Available on mobile** — AI Chat is now accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
+- **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
+- **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
 
 ### MCP tools automatically available
 
-AI Chat is powered by the same MCP tools available to external AI agents. When new MCP tools or parameters are added to the Hypertask MCP server, they **automatically become available in AI Chat** â no separate integration step or redeployment is needed. AI Chat always checks for existing MCP tools in the session and makes them accessible to the AI model.
+AI Chat is powered by the same MCP tools available to external AI agents. When new MCP tools or parameters are added to the Hypertask MCP server, they **automatically become available in AI Chat** — no separate integration step or redeployment is needed. AI Chat always checks for existing MCP tools in the session and makes them accessible to the AI model.
 
-AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces â including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views â is also available from the chat sidebar.
+AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
 
 ### Attachments in AI Chat
 
@@ -111,10 +112,10 @@ You can attach files and images directly to messages in AI Chat, giving the AI c
 1. Open AI Chat.
 2. Click the attachment icon in the message composer, or drag and drop a file into the chat input.
 3. Select your file. It appears as a preview alongside your message.
-4. Type your prompt and send â the AI receives both the file and your text.
+4. Type your prompt and send — the AI receives both the file and your text.
 
 <Aside type="tip">
-Attachments are great for asking the AI to analyse a screenshot of a bug, review a spec document, extract action items from a PDF, or get feedback on a design mockup â all without leaving your project context.
+Attachments are great for asking the AI to analyse a screenshot of a bug, review a spec document, extract action items from a PDF, or get feedback on a design mockup — all without leaving your project context.
 </Aside>
 
 ### Voice input in AI Chat
@@ -130,22 +131,22 @@ AI Chat supports voice dictation, allowing you to speak your messages instead of
 
 ### What AI Chat can and cannot see
 
-AI Chat's access to your workspace matches what the CLI and MCP tools can read and write â all three interfaces share the same underlying tools and stay in sync.
+AI Chat's access to your workspace matches what the CLI and MCP tools can read and write — all three interfaces share the same underlying tools and stay in sync.
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | â | â |
-| Assignees & followers | â | â |
-| Comments (read, add, update, delete) | â | â |
-| Labels (read, create, assign) | â | â |
-| Sections / board columns (CRUD) | â | â |
-| Subtask hierarchy / task tree | â | â |
-| Due dates | â | â |
-| Archived / completed tasks | â | â |
-| Saved views | â | â |
-| Move tasks between boards | â | â |
-| Inbox (list, archive, unarchive) | â | â |
-| Tags | â | â |
+| Tasks (title, description, status, priority, size) | ✓ | ✓ |
+| Assignees & followers | ✓ | ✓ |
+| Comments (read, add, update, delete) | ✓ | ✓ |
+| Labels (read, create, assign) | ✓ | ✓ |
+| Sections / board columns (CRUD) | ✓ | ✓ |
+| Subtask hierarchy / task tree | ✓ | ✓ |
+| Due dates | ✓ | ✓ |
+| Archived / completed tasks | ✓ | ✓ |
+| Saved views | ✓ | ✓ |
+| Move tasks between boards | ✓ | ✓ |
+| Inbox (list, archive, unarchive) | ✓ | ✓ |
+| Tags | ✓ | ✓ |
 
 ## Auto-Summary
 
@@ -167,7 +168,7 @@ Use the **AI Triage** button in your inbox to automatically categorize, prioriti
 
 ## AI Usage & Cost Attribution
 
-Hypertask tracks AI usage across your workspace through the built-in AI Gateway and provides a **cost-attribution breakdown** in **Settings â AI Usage**.
+Hypertask tracks AI usage across your workspace through the built-in AI Gateway and provides a **cost-attribution breakdown** in **Settings → AI Usage**.
 
 ### What's shown
 
@@ -189,27 +190,27 @@ Tailor how AI features behave on a per-project basis.
 
 ### Project-level configuration
 
-- **Custom instructions** â write free-text instructions that guide AI behavior. For example: "Always include acceptance criteria in generated tasks" or "Use British English."
-- **Attached documents** â upload files that give the AI domain-specific knowledge (RAG). Product specs, API docs, style guides â anything that helps the AI understand your project's context.
-- **Model selection** â choose which AI model powers your project's AI features.
-- **Visibility** â set instructions as public (visible to all members) or private (visible only to you).
+- **Custom instructions** — write free-text instructions that guide AI behavior. For example: "Always include acceptance criteria in generated tasks" or "Use British English."
+- **Attached documents** — upload files that give the AI domain-specific knowledge (RAG). Product specs, API docs, style guides — anything that helps the AI understand your project's context.
+- **Model selection** — choose which AI model powers your project's AI features.
+- **Visibility** — set instructions as public (visible to all members) or private (visible only to you).
 
 ### Supported models
 
 <Tabs>
   <TabItem label="OpenAI">
-    - **GPT-5.5** â most capable OpenAI model for complex reasoning and generation
-    - **GPT-5.4 mini** â faster and more cost-effective for high-volume tasks
+    - **GPT-5.5** — most capable OpenAI model for complex reasoning and generation
+    - **GPT-5.4 mini** — faster and more cost-effective for high-volume tasks
   </TabItem>
   <TabItem label="Anthropic">
-    - **Claude Opus 4.8** â strongest reasoning and analysis
-    - **Claude Opus 4.7** â powerful reasoning with optimized performance
-    - **Claude Sonnet 5** â balanced performance and speed *(default)*
-    - **Claude Haiku 4.5** â fastest, ideal for high-volume tasks
+    - **Claude Opus 4.8** — strongest reasoning and analysis
+    - **Claude Opus 4.7** — powerful reasoning with optimized performance
+    - **Claude Sonnet 5** — balanced performance and speed *(default)*
+    - **Claude Haiku 4.5** — fastest, ideal for high-volume tasks
   </TabItem>
   <TabItem label="Google">
-    - **Gemini 3.5 Flash** â optimized for speed via OpenRouter
-    - **Gemini 3.1 Pro Preview** â advanced reasoning via OpenRouter
+    - **Gemini 3.5 Flash** — optimized for speed via OpenRouter
+    - **Gemini 3.1 Pro Preview** — advanced reasoning via OpenRouter
   </TabItem>
 </Tabs>
 
