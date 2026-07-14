@@ -5,28 +5,28 @@ description: Stay on top of assignments, mentions, and task updates with a unifi
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-The Hypertask inbox is a single feed of everything that needs your attention â assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
+The Hypertask inbox is a single feed of everything that needs your attention — assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
 
 ## How it works
 
 Every action that involves you generates a notification in your inbox. Notifications stay in your inbox until you explicitly archive them, so nothing slips through the cracks.
 
 <Steps>
-1. **Receive** â a notification appears when something relevant happens.
-2. **Review** â open the notification to see the task and context.
-3. **Act** â respond, update the task, or take whatever action is needed.
-4. **Archive** â mark the notification as handled to clear it from your inbox.
+1. **Receive** — a notification appears when something relevant happens.
+2. **Review** — open the notification to see the task and context.
+3. **Act** — respond, update the task, or take whatever action is needed.
+4. **Archive** — mark the notification as handled to clear it from your inbox.
 </Steps>
 
 ## Live unread indicator
 
-The inbox icon in the navigation bar shows a **live blue dot and unread count** that updates in real time via Pusher. As new notifications arrive â from a teammate's comment, an assignment, or an agent posting results â the count increments immediately without a page refresh. When you open the inbox and read the notifications, the dot clears automatically.
+The inbox icon in the navigation bar shows a **live blue dot and unread count** that updates in real time via Pusher. As new notifications arrive — from a teammate's comment, an assignment, or an agent posting results — the count increments immediately without a page refresh. When you open the inbox and read the notifications, the dot clears automatically.
 
 This means you never need to refresh the page to know whether new work has landed in your inbox.
 
 ## Read status
 
-Notifications are automatically marked as **seen** (read) when you open and view them in the inbox. The unread indicator clears in real time as you read through your notifications â you do not need to manually mark items as read or refresh the page for the status to update.
+Notifications are automatically marked as **seen** (read) when you open and view them in the inbox. The unread indicator clears in real time as you read through your notifications — you do not need to manually mark items as read or refresh the page for the status to update.
 
 If a notification shows as unread despite having been viewed, try refreshing the page. If the issue persists, check that your browser has an active network connection, as read-status updates are delivered over the same real-time Pusher channel as incoming notifications.
 
@@ -50,7 +50,7 @@ If a notification shows as unread despite having been viewed, try refreshing the
 
 ## Who gets notified
 
-Hypertask delivers notifications to all users who have a stake in a task â not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
+Hypertask delivers notifications to all users who have a stake in a task — not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
 
 - The **task creator**
 - The **task owner / assignee(s)**
@@ -74,27 +74,28 @@ You can customize how notifications appear in your inbox to reduce visual noise.
 
 ### Avatar images
 
-By default, inbox notifications show the sender's avatar image. If you prefer a more minimal look â or want to reduce distractions â you can toggle avatar images off. When avatars are hidden, initials are shown instead.
+By default, inbox notifications show the sender's avatar image. If you prefer a more minimal look — or want to reduce distractions — you can toggle avatar images off. When avatars are hidden, initials are shown instead.
 
 To toggle: open your **Inbox settings** and switch **Show avatar images** on or off.
 
 ## AI Triage
 
-The **AI Triage** button in your inbox lets you automatically categorize and prioritize incoming notifications. Click it to have the AI analyze your unread notifications, suggest actions, and help you focus on what matters most â without manually reading through every item.
+The **AI Triage** button in your inbox lets you automatically categorize and prioritize incoming notifications. Click it to have the AI analyze your unread notifications, suggest actions, and help you focus on what matters most — without manually reading through every item.
 
 ## Archiving and Unarchiving
 
-Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" â you've seen it, handled it, and don't need it front and center anymore.
+Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" — you've seen it, handled it, and don't need it front and center anymore.
 
 You can archive notifications one at a time or in bulk. If you archive something by mistake or want to resurface a notification to act on it again, you can **unarchive** it: the notification is restored to your active inbox as unread, as if it had just arrived.
 
 - **Web UI:** Archive with the dismiss button on any notification. Unarchive from the archived notifications view.
+- **Task detail panel:** When you open an inbox task, the task detail header shows both a **remove-notification icon** (to dismiss the notification) and an **archive checkmark** (to archive the task's notification). Both icons appear side by side so you can clear or archive the notification without leaving the task detail view.
 - **CLI:** `hypertask inbox archive <ids...>` / `hypertask inbox unarchive <ids...>`
 - **MCP:** `hypertask_inbox_archive` / `hypertask_inbox_unarchive` (see [MCP Tools Reference](/api/tools-reference/))
 
 ## AI agent inbox
 
-Native agents â agents that authenticate with an agent-scoped MCP token â have their own inbox. @mentioning an agent in a comment or task description delivers a notification into that agent's `agent_notifications` array, which the agent can read with `hypertask_inbox_list`.
+Native agents — agents that authenticate with an agent-scoped MCP token — have their own inbox. @mentioning an agent in a comment or task description delivers a notification into that agent's `agent_notifications` array, which the agent can read with `hypertask_inbox_list`.
 
 This is the primary mechanism for triggering agent automation from the web UI or via MCP comments:
 
@@ -106,7 +107,7 @@ This is the primary mechanism for triggering agent automation from the web UI or
 @mention syntax in comments uses HTML. The mention span must have `data-type="mention"`, `class="mention"`, and `data-id` set to the agent's name or ID:
 
 ```html
-<p>Hey <span data-type="mention" class="mention" data-id="inne-wiki" data-label="inne Wiki">@inne Wiki</span> â please summarize this ticket.</p>
+<p>Hey <span data-type="mention" class="mention" data-id="inne-wiki" data-label="inne Wiki">@inne Wiki</span> — please summarize this ticket.</p>
 ```
 </Aside>
 
@@ -119,15 +120,15 @@ For an @mention to reach an agent's inbox, the agent must be a recognized member
 The inbox is particularly useful for AI agents working through Hypertask via MCP. A typical agent loop looks like this:
 
 <Steps>
-1. **Check inbox** â call `hypertask_inbox_list` to see pending notifications.
-2. **Pick a task** â select the highest-priority item.
-3. **Do the work** â complete the task using whatever tools are available.
-4. **Comment** â use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
-5. **Move** â use `hypertask_section` to move the task to "Review" or "Done".
-6. **Archive** â call `hypertask_inbox_archive` to clear the processed notification.
-7. **Repeat** â go back to step 1.
+1. **Check inbox** — call `hypertask_inbox_list` to see pending notifications.
+2. **Pick a task** — select the highest-priority item.
+3. **Do the work** — complete the task using whatever tools are available.
+4. **Comment** — use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
+5. **Move** — use `hypertask_section` to move the task to "Review" or "Done".
+6. **Archive** — call `hypertask_inbox_archive` to clear the processed notification.
+7. **Repeat** — go back to step 1.
 </Steps>
 
 <Aside type="tip">
-AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back â all through the same inbox and board system. Because agent comments trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work. The agent owner's own inbox is not included in that fan-out, keeping it signal-free.
+AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back — all through the same inbox and board system. Because agent comments trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work. The agent owner's own inbox is not included in that fan-out, keeping it signal-free.
 </Aside>
