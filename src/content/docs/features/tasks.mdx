@@ -130,6 +130,28 @@ Assigning and unassigning is reliable: selecting a person adds them exactly once
 Assigning via the Ctrl+K command palette also reflects immediately in the open task panel — no page reload required.
 </Aside>
 
+## Labels
+
+Labels (also called tags) are colored markers you can attach to any task for categorization and filtering. Every project has its own set of labels, and tasks can carry multiple labels at once.
+
+### Managing labels
+
+Open the **Manage Tags** panel from the board to view all labels in your project. Each label shows its color and the number of tasks currently using it. From here you can:
+
+- **Rename** a label — click the gear icon next to any label to rename it.
+- **Delete** a label — click the gear icon and choose delete. You'll be asked to confirm before the label is permanently removed.
+- **Bulk-delete labels** — select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the number of selected labels; click **Delete N tags** to remove them all. A confirmation modal warns that the deletion is permanent before proceeding. Bulk delete runs the same per-label delete endpoint as the individual gear-menu action, so each label is removed cleanly.
+
+<Aside type="tip">
+Use the search box in the Manage Tags panel to filter labels before selecting. **Select all** only covers the labels currently visible in the filtered list, so you can safely select and delete a subset of labels without affecting the rest.
+</Aside>
+
+You can also create and assign labels programmatically:
+
+- **CLI:** `hypertask project labels <project-id>` to list, `hypertask task update <ticket> --labels <name>` to assign.
+- **MCP:** `hypertask_update_task` with a `labels` parameter.
+- **AI Chat:** just ask — "Add the Bug label to HTPR-1234" works.
+
 ## Task properties on mobile
 
 On mobile, task properties are displayed in a dedicated sidebar panel. Every property value — status, priority, estimate, assignee, due date, labels, and related tasks — renders as a **uniform pill** on a consistent label grid, so the panel reads as one aligned system rather than a patchwork of styles.
