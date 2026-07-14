@@ -37,17 +37,17 @@ Work in Hypertask follows a simple hierarchy:
 
 ```
 Team (Organization)
-  âââ Projects
-        âââ Sections (columns)
-              âââ Tasks
-                    âââ Comments
-                    âââ Subtasks
-                    âââ Attachments
+  ├─Projects
+        ├─Sections (columns)
+              ├─Tasks
+                    ├─Comments
+                    ├─Subtasks
+                    └─Attachments
 ```
 
 - **Projects** are containers for related work — a product, a client engagement, a sprint. Each project has its own board, members, and settings.
 - **Sections** are the columns on a project board. Typical setups use Todo, Doing, Review, and Done, but you can customize them however you like.
-- **Tasks** are the units of work. They carry a title, HTML description, priority, estimate, assignee, due date, and a unique ticket number like `PROJ-123`.
+- **Tasks** are the units of work. They carry a title, HTML description, priority, estimate, assignee, due date, and a unique ticket number like `<code>PROJ-123</code>`.
 - **Comments** are threaded discussions on tasks. They support HTML formatting, @mentions, emoji reactions, and file attachments.
 
 <Aside>
@@ -84,6 +84,20 @@ Every surface uses a **splits-style header**: a home icon marks the primary view
 The left icon rail is a pure repositioning of existing icons and actions — no functionality is lost or changed. The classic top icon bar remains the default experience.
 </Aside>
 
+### Themes
+
+Hypertask supports multiple visual themes to match your preferences. Press <kbd>Ctrl+K</kbd> and search for **"Theme"** to open the theme picker. Available themes:
+
+| Theme | Description |
+|-------|-------------|
+| **System** | Uses your OS default (automatic) |
+| **Light** | Clean, bright interface |
+| **Dark** | High contrast for low-light environments |
+| **AMOLED** | Optimized for OLED displays with true blacks |
+| **Paper** | Warm editorial light theme with softer contrast, ideal for reading-heavy workflows |
+
+Themes persist across sessions and are applied globally to your workspace.
+
 ## Key capabilities at a glance
 
 | Capability | Human (Web UI) | CLI | AI Agent (MCP) |
@@ -95,10 +109,10 @@ The left icon rail is a pure repositioning of existing icons and actions — no 
 | Search across tasks | Yes | Yes | Yes |
 | Check inbox | Yes | Yes | Yes |
 | Attach files | Yes | Yes | Yes |
-| Invite project members | Yes | Yes | â |
-| Voice dictation | Yes | â | â |
-| AI Task Writer | Yes | â | â |
-| Auto-summaries | Yes | â | Yes |
+| Invite project members | Yes | Yes | — |
+| Voice dictation | Yes | — | — |
+| AI Task Writer | Yes | — | — |
+| Auto-summaries | Yes | — | Yes |
 
 ## Interfaces at a glance
 
