@@ -12,7 +12,7 @@ Tasks are the core unit of work in Hypertask. Every task lives on a board, belon
 | Field | Description |
 |-------|-------------|
 | **Title** | Short summary of the work |
-| **Description** | Rich HTML content via the TipTap editor â supports formatting, images, code blocks, and clickable links. |
+| **Description** | Rich HTML content via the TipTap editor — supports formatting, images, code blocks, and clickable links. |
 | **Ticket number** | Auto-generated identifier in the format `PROJ-123` (project prefix + sequential number) |
 | **Priority** | Urgency level (see below) |
 | **Estimate** | T-shirt size for effort estimation |
@@ -33,9 +33,9 @@ Every task has a priority. The default is **None**, which means unprioritized.
 
 | Priority | When to use |
 |----------|-------------|
-| **Urgent** | Needs immediate attention â something is broken or blocked |
+| **Urgent** | Needs immediate attention — something is broken or blocked |
 | **High** | Important work that should be tackled soon |
-| **Medium** | Standard priority â the default for most planned work |
+| **Medium** | Standard priority — the default for most planned work |
 | **Low** | Nice to have, do it when there's bandwidth |
 | **None** | Not yet prioritized |
 
@@ -44,14 +44,14 @@ Every task has a priority. The default is **None**, which means unprioritized.
 Use T-shirt sizing to estimate effort without getting bogged down in hour counts:
 
 | Size | Typical meaning |
-|------|----------------|
-| **XS** | Trivial â a few minutes |
-| **S** | Small â under an hour |
-| **M** | Medium â a few hours |
-| **L** | Large â a full day |
-| **XL** | Extra large â multiple days |
-| **XXL** | Very large â a week or more |
-| **XXXL** | Massive â needs to be broken into subtasks |
+|------|-----------------|
+| **XS** | Trivial — a few minutes |
+| **S** | Small — under an hour |
+| **M** | Medium — a few hours |
+| **L** | Large — a full day |
+| **XL** | Extra large — multiple days |
+| **XXL** | Very large — a week or more |
+| **XXXL** | Massive — needs to be broken into subtasks |
 
 <Aside type="tip">
 If a task is estimated as XXXL, that's usually a signal to break it into smaller subtasks with their own estimates.
@@ -61,18 +61,18 @@ If a task is estimated as XXXL, that's usually a signal to break it into smaller
 
 There are three ways to reference a task in Hypertask:
 
-1. **Task ID** â the global unique identifier (e.g., `42`). Used in API and MCP calls.
-2. **Ticket number** â the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
-3. **Project + unique index** â the combination of project ID and the task's index within that project. Used internally.
+1. **Task ID** — the global unique identifier (e.g., `42`). Used in API and MCP calls.
+2. **Ticket number** — the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
+3. **Project + unique index** — the combination of project ID and the task's index within that project. Used internally.
 
 ## Task status lifecycle
 
 Tasks follow a three-stage lifecycle:
 
 <Steps>
-1. **Normal** â the task is active and visible on the board.
-2. **Archived** â the task is removed from the board but preserved for reference. It still appears in search results.
-3. **Deleted** â soft delete. The task is hidden from all views but can be recovered if needed.
+1. **Normal** — the task is active and visible on the board.
+2. **Archived** — the task is removed from the board but preserved for reference. It still appears in search results.
+3. **Deleted** — soft delete. The task is hidden from all views but can be recovered if needed.
 </Steps>
 
 Archiving is the recommended way to clean up completed work. It keeps your board focused without losing history.
@@ -83,17 +83,21 @@ The task detail panel opens when you click a task card on the board. It shows al
 
 - **Property labels** are top-aligned against their values, so multi-line values (such as a long list of assignees or a multi-word label) always read cleanly from the top of the field rather than being vertically centered in a way that misaligns with the label.
 - Properties that have no value display as plain muted text rather than empty boxes, keeping the layout uncluttered.
+- **Title values** now render without the input styling they previously had, making them clearly distinguishable from editable fields.
+- Both the title and the hint ("CTRL+J to ask a question") are aligned with the card body rather than separate rows.
 
 This layout applies to all properties in the panel: status, priority, estimate, assignee, due date, labels, and related tasks.
+
+(HTML: <p>When you <strong>open a task detail panel</strong>, the title now renders without the input style, and is aligned with the card body. The <strong>hint label</strong> ("CTRL+J to ask a question") and <strong>Tags label</strong> sit directly under the title, so everything is row-aligned and clearly distinguishable from editable fields.</p>)
 
 ## Due date picker
 
 Open the due date picker from the task detail panel to set or change a task's deadline. The picker offers several quick options alongside a full calendar:
 
-- **Quick picks** â common relative dates such as Today, Tomorrow, Next Week, and Next Month.
-- **Last used** â re-applies the most recently selected custom date with a single click, mirroring the same convenience pattern as the Remind Me picker.
-- **Pick a custom date** â opens a calendar so you can choose any specific date.
-- **Reset** â clears the due date entirely.
+- **Quick picks** — common relative dates such as Today, Tomorrow, Next Week, and Next Month.
+- **Last used** — re-applies the most recently selected custom date with a single click, mirroring the same convenience pattern as the Remind Me picker.
+- **Pick a custom date** — opens a calendar so you can choose any specific date.
+- **Reset** — clears the due date entirely.
 
 The **Last used** option appears directly below **Reset** and above the quick picks, so repeating a date you've set before never requires re-opening the calendar.
 
@@ -107,11 +111,11 @@ Link related tasks together to capture dependencies and connections:
 | **BlockedBy** | This task cannot proceed until the linked task is complete |
 | **BlockedTo** | This task is blocking another task from proceeding |
 
-Relations are bidirectional â creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
+Relations are bidirectional — creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
 
 ## Subtasks
 
-Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right â they have all the same fields, can be assigned independently, and carry their own priority and estimates.
+Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right — they have all the same fields, can be assigned independently, and carry their own priority and estimates.
 
 Use subtasks to break large work items into actionable steps while keeping the parent task as an overview.
 
@@ -122,12 +126,12 @@ Use subtasks to break large work items into actionable steps while keeping the p
 
 ### Assign menu
 
-Open the assign menu by pressing **`a`** on a focused task card, or via the task detail panel. The menu lists all project members (including agents). People who are **already assigned** to the task â including any AI agents â sort to the **top** of the list, so your current assignees are always visible at a glance.
+Open the assign menu by pressing **`a`** on a focused task card, or via the task detail panel. The menu lists all project members (including agents). People who are **already assigned** to the task — including any AI agents — sort to the **top** of the list, so your current assignees are always visible at a glance.
 
-Assigning and unassigning is reliable: selecting a person adds them exactly once, and removing them clears all matching entries in a single action â no lingering assignees after a removal.
+Assigning and unassigning is reliable: selecting a person adds them exactly once, and removing them clears all matching entries in a single action — no lingering assignees after a removal.
 
 <Aside type="tip">
-Assigning via the Ctrl+K command palette also reflects immediately in the open task panel â no page reload required.
+Assigning via the Ctrl+K command palette also reflects immediately in the open task panel — no page reload required.
 </Aside>
 
 ## Labels
@@ -138,15 +142,15 @@ Labels (also called tags) are colored markers you can attach to any task for cat
 
 Open the **Manage Tags** panel from the board to view all labels in your project. The panel provides several features for efficient label management:
 
-- **Search with autofocus** â the search input automatically focuses when the panel opens, so you can start typing immediately to filter labels by name.
-- **Per-tag ticket counts** â each label displays a live count of tasks using it, broken down by status (e.g., "12 tickets Â· 5 archived"). Counts reflect only active (Normal-status) tasks and archived tasks separately, giving you a quick sense of how widely each label is used.
-- **Filter icon** â click the funnel icon next to any tag to instantly apply that label's filter to the board. The command palette closes and the board switches to a filtered view showing all columns with tasks matching that label.
+- **Search with autofocus** — the search input automatically focuses when the panel opens, so you can start typing immediately to filter labels by name.
+- **Per-tag ticket counts** — each label displays a live count of tasks using it, broken down by status (e.g., "12 tickets · 5 archived"). Counts reflect only active (Normal-status) tasks and archived tasks separately, giving you a quick sense of how widely each label is used.
+- **Filter icon** — click the funnel icon next to any tag to instantly apply that label's filter to the board. The command palette closes and the board switches to a filtered view showing all columns with tasks matching that label.
 
 From here you can also:
 
-- **Rename** a label â click the gear icon next to any label to rename it.
-- **Delete** a label â click the gear icon and choose delete. You'll be asked to confirm before the label is permanently removed.
-- **Bulk-delete labels** â select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the number of selected labels; click **Delete N tags** to remove them all. A confirmation modal warns that the deletion is permanent before proceeding. Bulk delete runs the same per-label delete endpoint as the individual gear-menu action, so each label is removed cleanly.
+- **Rename** a label — click the gear icon next to any label to rename it.
+- **Delete** a label — click the gear icon and choose delete. You'll be asked to confirm before the label is permanently removed.
+- **Bulk-delete labels** — select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the number of selected labels; click **Delete N tags** to remove them all. A confirmation modal warns that the deletion is permanent before proceeding. Bulk delete runs the same per-label delete endpoint as the individual gear-menu action, so each label is removed cleanly.
 
 <Aside type="tip">
 Use the search box in the Manage Tags panel to filter labels before selecting. **Select all** only covers the labels currently visible in the filtered list, so you can safely select and delete a subset of labels without affecting the rest.
@@ -156,11 +160,11 @@ You can also create and assign labels programmatically:
 
 - **CLI:** `hypertask project labels <project-id>` to list, `hypertask task update <ticket> --labels <name>` to assign.
 - **MCP:** `hypertask_update_task` with a `labels` parameter.
-- **AI Chat:** just ask â "Add the Bug label to HTPR-1234" works.
+- **AI Chat:** just ask — "Add the Bug label to HTPR-1234" works.
 
 ## Task properties on mobile
 
-On mobile, task properties are displayed in a dedicated sidebar panel. Every property value â status, priority, estimate, assignee, due date, labels, and related tasks â renders as a **uniform pill** on a consistent label grid, so the panel reads as one aligned system rather than a patchwork of styles.
+On mobile, task properties are displayed in a dedicated sidebar panel. Every property value — status, priority, estimate, assignee, due date, labels, and related tasks — renders as a **uniform pill** on a consistent label grid, so the panel reads as one aligned system rather than a patchwork of styles.
 
 A few specifics worth knowing:
 
@@ -182,16 +186,16 @@ Every task has an activity feed that combines comments and history events (field
 
 ### Comments and reactions
 
-Reactions are available on both comments and task descriptions. Click the emoji picker on any comment to add a reaction â the picker opens in an overlay above the comment composer so it's always accessible, even when the comment field is visible below it.
+Reactions are available on both comments and task descriptions. Click the emoji picker on any comment to add a reaction — the picker opens in an overlay above the comment composer so it's always accessible, even when the comment field is visible below it.
 
 ### Controlling history visibility
 
 History events are hidden by default so conversations stay readable. You can show or hide them in several ways:
 
-- **Show history pill** â click the **Show history** button at the top of the task activity feed to toggle history events in and out for that session.
-- **Keyboard shortcut** â press **`Ctrl+Shift+H`** anywhere to toggle task history globally.
-- **Command palette** â open `Ctrl+K` and search for **Show history** or **Hide history**.
-- **Settings toggle** â go to **Settings â My Account** and flip the **Show task history** switch (located directly below *Collapse Comments*). This is a persistent, account-wide preference that survives page refreshes and new sessions â the same as `Ctrl+Shift+H` but saved across devices.
+- **Show history pill** — click the **Show history** button at the top of the task activity feed to toggle history events in and out for that session.
+- **Keyboard shortcut** — press **`Ctrl+Shift+H`** anywhere to toggle task history globally.
+- **Command palette** — open `Ctrl+K` and search for **Show history** or **Hide history**.
+- **Settings toggle** — go to **Settings → My Account** and flip the **Show task history** switch (located directly below *Collapse Comments*). This is a persistent, account-wide preference that survives page refreshes and new sessions — the same as `Ctrl+Shift+H` but saved across devices.
 
 <Aside type="tip">
 The Settings toggle and the `Ctrl+Shift+H` shortcut control the same preference. Changing one updates the other.
@@ -201,8 +205,8 @@ The Settings toggle and the `Ctrl+Shift+H` shortcut control the same preference.
 
 Generate a **public link** to share a task with people outside your project. Public links support:
 
-- **Expiration** â set a time limit on access
-- **Read-only access** â external viewers can see the task but cannot modify it
+- **Expiration** — set a time limit on access
+- **Read-only access** — external viewers can see the task but cannot modify it
 
 <Aside type="caution">
 Public links expose task details to anyone with the URL. Use expiration dates and share only what's necessary.
