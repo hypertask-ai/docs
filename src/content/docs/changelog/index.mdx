@@ -13,6 +13,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+
 ## July 14, 2026
 
 **New Features**
@@ -38,6 +39,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **AI chat: create and delete saved views, edit sent messages** — AI chat can now create and delete saved views, alongside reading and updating them. Sent messages are also editable, giving you the ability to correct typos or adjust context after firing off an urgent response. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4218](https://app.hypertask.ai/detail/project-15/4218))
 
 - **Theme picker: multiple color modes + Paper theme** — A complete theme picker is now available in app settings, supporting Light, Dark, System, AMOLED, and the new Paper warm editorial light theme. Press <kbd>Ctrl+K</kbd> and search for **"Theme"** or use the prompt picker in Settings to switch themes. The picker is under the account section of the sidebar. ([HTPR-4199](https://app.hypertask.ai/detail/project-15/4199))
+
+- **Onboarding tour replay via Ctrl+K** — You can now replay the onboarding tour at any time using the command palette. Press <kbd>Ctrl+K</kbd>, search for **"Onboarding tour"**, and select the replay option to walk through the new features and interface. This is useful for new users who want a refresher or for teammates who joined after the initial welcome walkthrough. See the [What is Hypertask? docs](/getting-started/introduction/) for details. ([HTPR-4198](https://app.hypertask.ai/detail/project-15/4198))
 
 **Improvements**
 
@@ -69,6 +72,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: AI chat: board-wide requests now return accurate results** — Previously, AI chat would silently narrow broad board-wide requests (such as "every task tagged X") to only the open ticket when one was selected. The fix ensures that board-wide query patterns are evaluated consistently across all tasks. Verified with reproduction and testing. ([HTPR-4209](https://app.hypertask.ai/detail/project-15/4209))
 
+- **Fixed: AI chat: set tags by name** — Previously, AI chat would not accept tag names when using `setTaskLabels`. The tool would match only on `Label.id` (which are UUIDs) and throw a "Label(s) not found" error even for existing tags. The fix allows `setTaskLabels` to accept tag names in addition to IDs, so you can say "add tags [AI, bug]" and the AI will look up the tags by name. Tags are still matched by ID internally for performance, but the name lookup is now added as a fallback. ([HTPR-4202](https://app.hypertask.ai/detail/project-15/4202))
+
 **Improvements**
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
@@ -80,6 +85,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
 
 ---
+
 
 ## July 13, 2026
 
