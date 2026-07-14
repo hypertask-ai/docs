@@ -409,7 +409,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 ```
 
 <Aside type="tip">
-Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any agent workflow on a large board. Loading a view typically returns a focused set of 5–30 tasks rather than scanning hundreds, which reduces token cost and improves response quality.
+Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any agent workflow on a large board. Loading a view typically returns a focused set of 5ÃÂ¢30 tasks rather than scanning hundreds, which reduces token cost and improves response quality.
 </Aside>
 
 ---
@@ -658,14 +658,14 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `description` | string | New HTML description |
 | `estimate` | number | Time estimate in minutes |
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
-| `sectionId` | number | Move to a different section (camelCase — see note below) |
+| `sectionId` | number | Move to a different section (camelCase ÃÂ¢ see note below) |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
 | `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 | `labels` | string[] | Replace the task's labels. Pass an empty array to clear all labels. Creates any label that doesn't already exist on the project. |
 | `parent_task_id` | number \| null | Set or change the parent task. Pass `null` (explicit) to detach from current parent. |
 
 <Aside type="caution">
-**Field name casing matters.** Most update fields use `snake_case`, but the section field is `sectionId` (camelCase). Passing `section_id` (snake_case) will be silently ignored — use `sectionId` to move a task between sections.
+**Field name casing matters.** Most update fields use `snake_case`, but the section field is `sectionId` (camelCase). Passing `section_id` (snake_case) will be silently ignored ÃÂ¢ use `sectionId` to move a task between sections.
 </Aside>
 
 **Example request -- move task to "Doing" and add labels:**
@@ -818,14 +818,14 @@ Add a comment to a task. Comments use HTML formatting.
 | `mentions` | object[] | No | Structured mention objects: `{ "user_id": number, "display_name": string }` |
 
 <Aside type="tip">
-**Plain `@Name` mentions are supported.** Writing `@Alice` directly in the comment `text` string is resolved server-side — the server looks up the matching project member by name and fires a notification automatically. No need to construct span markup by hand. The structured `mentions` parameter is also accepted if you already have user IDs available.
+**Plain `@Name` mentions are supported.** Writing `@Alice` directly in the comment `text` string is resolved server-side ÃÂ¢ the server looks up the matching project member by name and fires a notification automatically. No need to construct span markup by hand. The structured `mentions` parameter is also accepted if you already have user IDs available.
 </Aside>
 
 <Aside type="note">
-**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution — use the structured `mentions` parameter or the web UI for those.
+**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution ÃÂ¢ use the structured `mentions` parameter or the web UI for those.
 </Aside>
 
-**Example request — plain @mention in comment text:**
+**Example request ÃÂ¢ plain @mention in comment text:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -837,7 +837,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   }'
 ```
 
-**Example request — structured mentions (when you have user IDs):**
+**Example request ÃÂ¢ structured mentions (when you have user IDs):**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -998,9 +998,10 @@ Assign or unassign users on a task. Calling this with an already-assigned user w
 | `user_id` | number | Single user to assign/unassign |
 | `user_ids` | number[] | Multiple users (requires `mode`) |
 | `mode` | string | Set to `multiple` when using `user_ids` |
+| `assign_self` | boolean | Set to `true` to add the calling agent as an assignee. Only valid when authenticated with an agent token. The existing `user_id` path is unaffected. |
 
 <Aside type="tip">
-To find user IDs, call `hypertask_list_project_members` first.
+To find user IDs, call `hypertask_list_project_members` first. For agent self-assignment, use <code>assign_self: true</code> instead of looking up the agent's own user ID.
 </Aside>
 
 **Example request -- assign a single user:**
@@ -1025,6 +1026,18 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
     "task_id": 1234,
     "user_ids": [6, 836],
     "mode": "multiple"
+  }'
+```
+
+**Example request -- agent self-assignment:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $AGENT_TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/assignees/assign \
+  -d '{
+    "ticket_number": "HYP-42",
+    "assign_self": true
   }'
 ```
 
@@ -1121,7 +1134,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ## hypertask_inbox_archive
 
-Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted — they can be restored with `hypertask_inbox_unarchive`.
+Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted ÃÂ¢ they can be restored with `hypertask_inbox_unarchive`.
 
 **Endpoint:** `POST /api/mcp/inbox/archive`
 
