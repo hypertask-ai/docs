@@ -63,6 +63,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Announcement slides no longer auto-open** — The announcement modal slide window that used to appear on app load has been removed. Announcements now appear in the Announcements sidebar (accessible from Home). See the [Inbox & Notifications docs](/features/inbox/) for details. ([HTPR-4204](https://app.hypertask.ai/detail/project-15/4204))
 
+- **Fixed: AI chat: board-wide requests now return accurate results** — Previously, AI chat would silently narrow broad board-wide requests (such as "every task tagged X") to only the open ticket when one was selected. The fix ensures that board-wide query patterns are evaluated consistently across all tasks. Verified with reproduction and testing. ([HTPR-4209](https://app.hypertask.ai/detail/project-15/4209))
+
 **Improvements**
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
