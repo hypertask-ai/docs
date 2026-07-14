@@ -37,12 +37,12 @@ Work in Hypertask follows a simple hierarchy:
 
 ```
 Team (Organization)
-  └── Projects
-        └── Sections (columns)
-              └── Tasks
-                    ├── Comments
-                    ├── Subtasks
-                    └── Attachments
+  âââ Projects
+        âââ Sections (columns)
+              âââ Tasks
+                    âââ Comments
+                    âââ Subtasks
+                    âââ Attachments
 ```
 
 - **Projects** are containers for related work — a product, a client engagement, a sprint. Each project has its own board, members, and settings.
@@ -62,6 +62,28 @@ Hypertask is opinionated about how teams should work:
 - **Deep work friendly.** No chat. No presence indicators. No "typing..." animations. Communicate through tasks and comments when you're ready.
 - **AI agents as team members.** Assign tasks to an AI agent the same way you'd assign them to a colleague. The agent picks up work from its inbox, moves tasks through sections, and posts updates in comments.
 
+## App layout
+
+Hypertask's web app uses a top icon bar for navigation across all surfaces (board, table, calendar, inbox, AI chat). A redesigned **left icon rail** layout is available as a beta opt-in.
+
+### Left icon rail (beta)
+
+Press <kbd>Ctrl+K</kbd> and search for **"New layout: left icon rail (beta)"** to toggle the new layout on or off. It is **off by default**.
+
+The rail is a fixed 48 px-wide column on the left edge of the app:
+
+| Position | Icons |
+|----------|-------|
+| **Top** | Inbox (with unread badge), AI Chat |
+| **Middle** | Board, Table, Calendar — surface switchers for the current project |
+| **Bottom** | Avatars, invite, theme toggle, settings |
+
+Every surface uses a **splits-style header**: a home icon marks the primary view, with search and filter controls inline.
+
+<Aside type="note">
+The left icon rail is a pure repositioning of existing icons and actions — no functionality is lost or changed. The classic top icon bar remains the default experience.
+</Aside>
+
 ## Key capabilities at a glance
 
 | Capability | Human (Web UI) | CLI | AI Agent (MCP) |
@@ -73,10 +95,10 @@ Hypertask is opinionated about how teams should work:
 | Search across tasks | Yes | Yes | Yes |
 | Check inbox | Yes | Yes | Yes |
 | Attach files | Yes | Yes | Yes |
-| Invite project members | Yes | Yes | — |
-| Voice dictation | Yes | — | — |
-| AI Task Writer | Yes | — | — |
-| Auto-summaries | Yes | — | Yes |
+| Invite project members | Yes | Yes | â |
+| Voice dictation | Yes | â | â |
+| AI Task Writer | Yes | â | â |
+| Auto-summaries | Yes | â | Yes |
 
 ## Interfaces at a glance
 
