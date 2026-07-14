@@ -37,11 +37,11 @@ Work in Hypertask follows a simple hierarchy:
 
 ```
 Team (Organization)
-  ├─Projects
-        ├─Sections (columns)
-              ├─Tasks
-                    ├─Comments
-                    ├─Subtasks
+  └─Projects
+        └─Sections (columns)
+              └─Tasks
+                    └─Comments
+                    └─Subtasks
                     └─Attachments
 ```
 
@@ -84,6 +84,26 @@ Every surface uses a **splits-style header**: a home icon marks the primary view
 The left icon rail is a pure repositioning of existing icons and actions — no functionality is lost or changed. The classic top icon bar remains the default experience.
 </Aside>
 
+### Onboarding tour
+
+When you first sign up for Hypertask, you'll walk through an interactive onboarding tour that covers the basics: creating your first project, adding your first task, and getting familiar with AI chat. The tour highlights key features and helps you set up a working workflow quickly.
+
+### Replay the onboarding tour
+
+You can replay the onboarding tour at any time using the command palette. This is helpful for:
+
+- New teammates who joined after the initial walkthrough
+- Users who want a refresher on features
+- Exploring the interface as new capabilities ship
+
+To replay the tour:
+
+1. Press <kbd>Ctrl+K</kbd> to open the command palette.
+2. Type **"Onboarding tour"**.
+3. Select the **Replay onboarding tour** option.
+
+The tour will restart from the beginning, walking you through the same steps as the initial setup.
+
 ### Themes
 
 Hypertask supports multiple visual themes to match your preferences. Press <kbd>Ctrl+K</kbd> and search for **"Theme"** to open the theme picker. Available themes:
@@ -125,7 +145,7 @@ Hypertask offers three ways to interact programmatically, each suited to differe
 | **MCP** | AI assistants (Claude Desktop, Cursor) that need rich tool schemas | See [MCP Integration](/mcp/overview/) |
 
 <Aside type="tip">
-**Which interface should I use for AI agents?**  CLI commands consume far fewer tokens than MCP tool schemas — an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
+**Which interface should I use for AI agents?** CLI commands consume far fewer tokens than MCP tool schemas — an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
 </Aside>
 
 ## Next steps
