@@ -13,7 +13,6 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
-
 ## July 14, 2026
 
 **New Features**
@@ -41,6 +40,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Theme picker: multiple color modes + Paper theme** — A complete theme picker is now available in app settings, supporting Light, Dark, System, AMOLED, and the new Paper warm editorial light theme. Press <kbd>Ctrl+K</kbd> and search for **"Theme"** or use the prompt picker in Settings to switch themes. The picker is under the account section of the sidebar. ([HTPR-4199](https://app.hypertask.ai/detail/project-15/4199))
 
 - **Onboarding tour replay via Ctrl+K** — You can now replay the onboarding tour at any time using the command palette. Press <kbd>Ctrl+K</kbd>, search for **"Onboarding tour"**, and select the replay option to walk through the new features and interface. This is useful for new users who want a refresher or for teammates who joined after the initial welcome walkthrough. See the [What is Hypertask? docs](/getting-started/introduction/) for details. ([HTPR-4198](https://app.hypertask.ai/detail/project-15/4198))
+
+- **Onboarding v3: question-first AI connect step with live connect confirmation + CLI/MCP/REST tabs** — The onboarding flow now introduces a question-first screen with 6 cards offering different ways to connect. Select an option (CLI, MCP, or REST), and the connection screens now show live status updates as the connection is being established. The CLI tab confirms the connection during `hypertask login`, the MCP tab handles authentication with bearer token fallback, and the REST tab provides a ready-to-paste curl command. Verified end-to-end: question screen → connection with live status → Claude Code successfully connects and can talk to Hypertask. ([HTPR-4167](https://app.hypertask.ai/detail/project-15/4167))
 
 **Improvements**
 
@@ -74,6 +75,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: AI chat: set tags by name** — Previously, AI chat would not accept tag names when using `setTaskLabels`. The tool would match only on `Label.id` (which are UUIDs) and throw a "Label(s) not found" error even for existing tags. The fix allows `setTaskLabels` to accept tag names in addition to IDs, so you can say "add tags [AI, bug]" and the AI will look up the tags by name. Tags are still matched by ID internally for performance, but the name lookup is now added as a fallback. ([HTPR-4202](https://app.hypertask.ai/detail/project-15/4202))
 
+- **Onboarding v3: trimmed experience for invited teammates** — Invited and allowed-domain members now see a trimmed onboarding flow that skips the board-generation step ("What will you use Hypertask for?") and the invite step, which are gated behind `isUserNew`. New users proceed through connect AI, tutorial, and launch; invited teammates go straight to connect AI and tutorial. This onboarding variant rides with the question-first connect screen updates. ([HTPR-4189](https://app.hypertask.ai/detail/project-15/4189))
+
 **Improvements**
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
@@ -83,8 +86,6 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Manage Views gear on hover + drag-reorder views** — The Manage Views panel now shows a gear icon in the header of each view tab on hover, for quick access to visibility, pinning, and editing options. Views can also be reordered by dragging them into place within the Manage Views section. Your custom sort persists server-side, so the order applies across devices. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
-
----
 
 
 ## July 13, 2026
