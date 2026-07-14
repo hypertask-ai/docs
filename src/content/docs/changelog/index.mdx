@@ -17,9 +17,17 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **New Features**
 
+- **Manage Tags: bulk-select and delete labels** — The Manage Tags panel now supports bulk deletion. Select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the count, and **Delete N tags** opens a confirmation modal warning that deletion is permanent before removing all selected labels in one action. See the [Tasks docs](/features/tasks/) for details. ([HTPR-4241](https://app.hypertask.ai/detail/project-15/4241))
+
 - **Beta app layout: left icon rail with splits-style header** — A redesigned app shell is available as an opt-in beta. Press <kbd>Ctrl+K</kbd> and search for **"New layout: left icon rail (beta)"** to toggle it on (default OFF). The new layout replaces the top icon bar with a fixed 48 px left rail: Inbox (with unread badge) and AI Chat on top, board/table/calendar surface switchers in the middle, and avatars, invite, theme toggle, and settings at the bottom. Every surface uses a splits-style header with a home icon for the primary view and inline search/filter controls. It's a pure repositioning of existing icons and actions — no functionality is lost. See the [What is Hypertask? docs](/getting-started/introduction/) for details. ([HTPR-4201](https://app.hypertask.ai/detail/project-15/4201))
 
 - **AI Usage cost-attribution report in Settings** — The **Settings → AI Usage** page now shows a first-party cost-attribution breakdown powered by the AI Gateway's internal metering table (AiUsage). Usage is broken down **By Feature** (AI Chat, Task Writer, Text Enhancement, etc.), **By Model** (Claude Sonnet 5, GPT-5.5, etc.), and **Top Users** — so workspace owners and admins can see exactly where AI spending goes. Access has been widened from owner-only to **owner or admin**. The breakdown degrades gracefully (hidden) if the underlying usage table is unavailable. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4136](https://app.hypertask.ai/detail/project-15/4136))
+
+**Improvements**
+
+- **AI Chat: animated thinking dots while waiting for a response** — When you send a message in AI Chat, animated thinking dots now appear immediately in a new assistant bubble, giving you instant visual confirmation that the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4235](https://app.hypertask.ai/detail/project-15/4235))
+
+- **Inbox task detail: archive checkmark alongside remove-notification icon** — When you open an inbox task, the task detail header now shows both the remove-notification icon and an archive checkmark side by side, so you can dismiss or archive the notification without leaving the task detail view. See the [Inbox & Notifications docs](/features/inbox/) for details. ([HTPR-4240](https://app.hypertask.ai/detail/project-15/4240))
 
 **Bug Fixes**
 
