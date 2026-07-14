@@ -16,6 +16,7 @@ When an agent session starts, it should find the highest-priority available work
 1. **Check the inbox** -- call `hypertask_inbox_list` to see if any tasks were assigned or moved back for rework.
 2. **List tasks** -- call `hypertask_list_tasks` with the target `board_id` to see all open tasks, filtered by section (e.g., "Todo" or "Backlog").
 3. **Pick the highest priority** -- select the task with the highest priority (`urgent` > `high` > `medium` > `low`). If priorities are equal, pick the oldest task.
+4. **Self-assign** -- call `hypertask_assign_user` with `assign_self: true` to claim the task. This adds the calling agent as an assignee, signaling to other agents and humans that the task is taken.
 
 </Steps>
 
@@ -26,11 +27,21 @@ hypertask_list_tasks({
   section: "Todo",
   assigned_to: "me"
 })
+
+// Example: self-assign a task
+hypertask_assign_user({
+  ticket_number: "HYP-42",
+  assign_self: true
+})
 ```
+
+<Aside type="tip">
+Self-assignment uses the <code>assign_self: true</code> parameter on <code>hypertask_assign_user</code>. This works with agent tokens only and adds the calling agent as an assignee without needing to look up the agent's own user ID.
+</Aside>
 
 ## Working on a task
 
-Once you have picked a task, follow this lifecycle:
+Once you have picked and self-assigned a task, follow this lifecycle:
 
 <Steps>
 
@@ -103,7 +114,7 @@ Each worker agent operates independently:
 
 <Steps>
 
-1. Claim a ticket by moving it to "Doing".
+1. Claim a ticket by self-assigning with `assign_self: true` and moving it to "Doing".
 2. Complete the work.
 3. Add a detailed completion comment.
 4. Move the task to "Review".
@@ -132,6 +143,7 @@ This separation ensures that only one agent handles deployments, preventing conf
 | Practice | Why |
 |----------|-----|
 | Always move to "Doing" before starting | Prevents duplicate work by other agents |
+| Use `assign_self: true` to claim tasks | Adds the agent as an assignee without needing its own user ID |
 | Use HTML in comments and descriptions | Markdown is not rendered -- HTML is the native format |
 | Check inbox at the start of each session | Catches assigned tasks and rework requests |
 | Add detailed completion comments | Helps reviewers (human or agent) understand what changed |
