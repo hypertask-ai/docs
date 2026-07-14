@@ -7,6 +7,18 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
+## Sidebar
+
+The sidebar groups your workspace navigation and project controls into a consistent layout. Use the account section in the sidebar to manage your config:
+
+- **Theme picker** — switch between Light, Dark, System, AMOLED, and Paper theme (Light, Dark, System, AMOLED, and the new Paper warm editorial light theme)
+- **Team switcher** — quickly switch between workspaces or projects
+- **Account chevron** — manage your account settings and preferences
+
+<Aside type="tip">
+Press <kbd>Ctrl+K</kbd> to open the command palette and quickly access board sorting toggles and view management.
+</Aside>
+
 ## Sections
 
 Sections are the columns on your board. New projects start with three defaults:
@@ -45,22 +57,17 @@ You can hide columns that currently contain no tasks to reduce visual noise. The
 
 Both controls flip the same board-level setting, so changes made in one place are immediately reflected in the other.
 
-### Showing archived tasks on the board
-
-Archived tasks are hidden from the board by default. To see them in place, dimmed, inside their original columns:
-
-- **Keyboard** — press **`G`** then **`X`** to toggle archived tasks on or off.
-- **Ctrl+K** — open the command palette and select **Show archived tasks on board** (or **Hide archived tasks on board** when they're visible).
-
-The setting persists per browser, so archived tasks stay visible until you toggle them off again. For a dedicated list of everything archived across projects, press **`G`** then **`E`** to open the Archived view.
-
 ### Sorting sections
 
-By default, sections appear in alphabetical order. You can now customize the order of your boards:
+By default, sections appear in alphabetical order. Customize your board layout with the following options:
 
-- **Drag and drop** sections in the layout to reorder them manually.
-- **Manage Views** provides per-user sort toggles and the ability to toggle visibility without deleting them.
-- **Admin default order** can be centrally configured for newly created boards.
+| Control | Description |
+|---------|-------------|
+| **Segmented mouse-only toggle** | Choose between **Teams** and **Recent** sections with a mouse-optimized segmented toggle below the search bar |
+| **Keyboard shortcut** | <kbd>Ctrl+K</kbd> → search for "sort" to open board sorting options |
+| **Drag and drop** | Drag sections in the layout to manually reorder them. Your custom sort persists per user. |
+| **Manage Views panel** | Provides per-user sort toggles and the ability to toggle visibility without deleting them. |
+| **Admin default order** | Project owners and admins can define a default order for newly created boards globally. |
 
 <Aside type="tip">
 Per-section counts, visibility toggles, and manual sorting persist server-side for each user, so different team members can organize the same board in the way that makes most sense for their workflow.
