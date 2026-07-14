@@ -5,7 +5,7 @@ description: Work together with team workspaces, real-time editing, mentions, re
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Hypertask is built for teams â whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
+Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
 ## Team workspaces
 
@@ -41,7 +41,7 @@ AI agents can be added to boards just like human team members. When you add an a
 
 <Steps>
 1. Open the board's settings or invite panel.
-2. Look for the **invite modal** â it now shows both team members and any agents you've created.
+2. Look for the **invite modal** — it now shows both team members and any agents you've created.
 3. Select the agent you want to add to the board.
 4. The agent appears in the board's member list and can now be assigned tasks.
 </Steps>
@@ -58,7 +58,7 @@ Agents do not count as team seats toward your subscription limit. You can add as
 
 ### Agent access scope
 
-When you create an agent, it inherits access to all boards in projects where you're a member. Use the board-level invite modal to **restrict which boards an agent can access** â boards not on the list treat the agent as if it doesn't exist.
+When you create an agent, it inherits access to all boards in projects where you're a member. Use the board-level invite modal to **restrict which boards an agent can access** — boards not on the list treat the agent as if it doesn't exist.
 
 This is useful when:
 
@@ -70,29 +70,29 @@ This is useful when:
 
 Type `@` in any comment to mention a team member. Mentions do two things:
 
-1. **Send a notification** â the mentioned person receives an inbox notification immediately.
-2. **Add as follower** â the mentioned person is automatically added as a follower on the task, so they receive future updates.
+1. **Send a notification** — the mentioned person receives an inbox notification immediately.
+2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
 
 Mentions work in comments and task descriptions.
 
 ## Emoji reactions
 
-React to tasks and comments with emoji. Reactions serve as lightweight feedback â a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
+React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
 
 Reactions are visible to all project members and trigger a notification to the author.
 
 ### Fast like button
 
-For the most common reaction â a simple thumbs-up â Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
+For the most common reaction — a simple thumbs-up — Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
 
 - **Mouse users:** hover over a task card or comment to reveal the like button, then click it to toggle your reaction on or off.
 - **Mobile users:** tap the like button that appears inline alongside the comment or task actions.
 
-The like button is a shortcut for the ð reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
+The like button is a shortcut for the thumbs-up reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
 
 ## Real-time sync
 
-Hypertask keeps every connected client live â no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
+Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
 **What updates in real time:**
 
@@ -101,7 +101,7 @@ Hypertask keeps every connected client live â no manual refreshes needed. C
 - New comments and reactions
 - Board and section changes
 
-This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow â useful for monitoring agents running in your terminal or CI pipeline.
+This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow — useful for monitoring agents running in your terminal or CI pipeline.
 
 ### Real-time collaborative text editing
 
@@ -113,7 +113,7 @@ This applies to:
 - Comments (while drafting)
 - Any rich text field in the app
 
-There are no save buttons â changes persist as you type.
+There are no save buttons — changes persist as you type.
 
 <Aside>
 Real-time sync means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
@@ -121,19 +121,23 @@ Real-time sync means AI agents editing task descriptions via MCP won't overwrite
 
 ## Managing comments
 
-You can manage comments on any task â including comments left by other team members or agents. This is useful when:
+You can manage comments on any task — including comments left by other team members or agents. This is useful when:
 
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
 - Tidying up task threads for better readability
 
-To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members â trust within the team is assumed for collaborative housekeeping.
+To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
 
 ### URL auto-linkification
 
-Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client â so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
+Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
 
 Links open in a new tab. URLs that are already formatted as hyperlinks or embedded inside images are left unchanged.
+
+### Comment composer sizing
+
+The comment composer adapts to its available space. When the AI panel is open (especially in narrow column layouts), the composer expands to fit available width rather than staying fixed at a small size. This prevents text overflow and keeps the Send toolbar visible. Blurred composer states scroll smoothly instead of spilling content off the screen.
 
 ### GIFs and emoji in comments
 
@@ -156,10 +160,10 @@ Browse and search a full emoji library. Click any emoji to insert it into your c
 
 The GIFs tab is powered by **Giphy** and offers two modes:
 
-- **Trending** â shows popular GIFs by default when you open the tab.
-- **Search** â type any query to find a GIF that fits the moment.
+- **Trending** — shows popular GIFs by default when you open the tab.
+- **Search** — type any query to find a GIF that fits the moment.
 
-Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** â drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
+Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** — drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
 
 <Aside type="note">
 GIF search requires a Giphy API key configured on the Hypertask deployment. If GIFs are not loading, contact your workspace admin.
@@ -167,7 +171,7 @@ GIF search requires a Giphy API key configured on the Hypertask deployment. If G
 
 ## Activity logs
 
-Every change in Hypertask is recorded in the activity log â a full audit trail of who did what, and when.
+Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
 
@@ -182,7 +186,7 @@ Activity logs are available at the task level (see what happened to a specific t
 
 ### Comments-only view (default)
 
-The task feed defaults to **comments only** â history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
+The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
 
@@ -197,4 +201,4 @@ If you need a full audit trail of every change on a task, use **Show history** (
 
 ## Saved content
 
-Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal â only you see your bookmarks. Use it to track tasks you're interested in but not assigned to, or to build a reading list of important discussions.
+Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal — only you see your bookmarks. Use it to track tasks you're interested in but not assigned to, or to build a reading list of important discussions.
