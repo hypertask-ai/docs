@@ -13,152 +13,64 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
-## May 29, 2026
+## July 14, 2026
 
-### New Features
+**New Features**
 
-- **Delete comments from any team member or agent** — You can now delete comments left by other project members, including AI agents. This makes it easy to clean up outdated or agent-generated comments without needing admin intervention. Trust within the team is assumed for collaborative housekeeping. ([HTPR-3666](https://app.hypertask.ai/detail/project-15/3666))
+- **Manage Tags: bulk-select and delete labels** — The Manage Tags panel now supports bulk deletion. Select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the count, and **Delete N tags** opens a confirmation modal warning that deletion is permanent before removing all selected labels in one action. See the [Tasks docs](/features/tasks/) for details. ([HTPR-4241](https://app.hypertask.ai/detail/project-15/4241))
 
-### Bug Fixes
+- **Beta app layout: left icon rail with splits-style header** — A redesigned app shell is available as an opt-in beta. Press <kbd>Ctrl+K</kbd> and search for **"New layout: left icon rail (beta)"** to toggle it on (default OFF). The new layout replaces the top icon bar with a fixed 48 px left rail: Inbox (with unread badge) and AI Chat on top, board/table/calendar surface switchers in the middle, and avatars, invite, theme toggle, and settings at the bottom. Every surface uses a splits-style header with a home icon for the primary view and inline search/filter controls. It's a pure repositioning of existing icons and actions — no functionality is lost. See the [What is Hypertask? docs](/getting-started/introduction/) for details. ([HTPR-4201](https://app.hypertask.ai/detail/project-15/4201))
 
-- **Fixed: CLI `task create --description` no longer rejects plain text** — Passing plain text to `--description` now works automatically. The CLI wraps it in `<p>...</p>` before sending to the API, so automation scripts and AI agents don't need to handle HTML formatting manually. ([HTPR-3664](https://app.hypertask.ai/detail/project-15/3664))
+- **AI Usage cost-attribution report in Settings** — The **Settings → AI Usage** page now shows a first-party cost-attribution breakdown powered by the AI Gateway's internal metering table (AiUsage). Usage is broken down **By Feature** (AI Chat, Task Writer, Text Enhancement, etc.), **By Model** (Claude Sonnet 5, GPT-5.5, etc.), and **Top Users** — so workspace owners and admins can see exactly where AI spending goes. Access has been widened from owner-only to **owner or admin**. The breakdown degrades gracefully (hidden) if the underlying usage table is unavailable. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4136](https://app.hypertask.ai/detail/project-15/4136))
 
----
+- **Manage Views: per-user drag order + admin default order** — The Manage Views panel now lets you reorder views by clicking and dragging. Your custom sort persists server-side, so the order is applied across all your devices and teammates can also pin their preferred views. For projects where you want a consistent start, admins can define a **default view order** for newly created boards. Hidden views retain their task counts (even when zero) and reappear automatically when tasks are added. A "Reset" button restores the default order for boards with centralized settings. See the [Boards & Sections docs](/features/boards/) for details. ([HTPR-4225](https://app.hypertask.ai/detail/project-15/4225))
 
-## May 14, 2026
+- **Time tracking: opt-in per board (off by default)** — Time tracking has been decoupled from the board level and is now opt-in per board, starting disabled. Boards with tracking off return an `enabled: false` flag from the Time API and block start tracking requests with a 403 error. To start tracking, enable time tracking from the board or use the Shift shortcut before starting. Shift reverses the state: disable after you're done, and it remains off on next restart. Time reports and history are now powered by server-managed timers across all boards. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4221](https://app.hypertask.ai/detail/project-15/4221))
 
-### New Features
+- **Manage Views gear on hover** — A gear icon appears in the header of each view tab, revealing quick access to view options (visibility, pinned status, edit, delete) on hover. This gives you faster control over your views without needing to open the full Manage Views panel. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
 
-- **CLI: Sort `task list` results with `--sort-by` and `--sort-order`** — `hypertask task list` now accepts `--sort-by <createdAt|updatedAt|dueDate>` and `--sort-order <asc|desc>`, so you can pull the most recently updated tasks first without post-processing JSON. ([HTPR-3173](https://app.hypertask.ai/detail/project-15/3173))
-- **MCP: Reorder board sections programmatically** — the `hypertask_section` tool's `update` action now accepts `move_after_section_id`, so agents can reposition a board's columns without dragging them in the UI. ([HTPR-2987](https://app.hypertask.ai/detail/project-15/2987))
+- **Manage Views available state** — Child views that are hidden because they contain no items now appear dimmed when displayed in the Manage Views panel. When a view subsequently receives tasks, it automatically reappears in its previous position as a normal view. This makes it easier to spot which views are currently operational versus temporarily hidden. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
 
-### Bug Fixes
+- **Time tracking: per-task timers, running-timers view, CLI/AI control** — Time tracking is now more granular. You can start and stop timers on individual tasks for per-task tracking. A dedicated "Running" board surface (accessed via shortcut <kbd>G-H</kbd>) lists all tasks with active timers. The CLI and AI agents also have control over time tracking, letting you start, stop, and monitor time from the terminal without switching contexts. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4190](https://app.hypertask.ai/detail/project-15/4190))
 
-- **Fixed: MCP `hypertask_get_user_context` no longer errors** — The tool threw a TypeError on every call, blocking MCP clients from fetching their user, team, and project context. It now returns the full context as JSON. ([HTPR-3439](https://app.hypertask.ai/detail/project-15/3439))
-- **Fixed: MCP `hypertask_inbox_list` returns JSON, not HTML** — `hypertask_inbox_list` was responding with a rendered HTML page instead of structured data, breaking any agent that called it. It now returns proper JSON. ([HTPR-3455](https://app.hypertask.ai/detail/project-15/3455))
-- **Fixed: MCP write tools restored** — `hypertask_add_comment_to_task` and `hypertask_attach_files` were failing with internal errors on every call. Both write tools now work correctly. ([HTPR-3660](https://app.hypertask.ai/detail/project-15/3660))
-- **Fixed: CLI `comment list` shows comment text** — `hypertask comment list` was returning empty `text` and `commentText` fields for every comment. Comment content now comes through correctly. ([HTPR-3032](https://app.hypertask.ai/detail/project-15/3032))
-- **Fixed: CLI `task create` reports the ticket number** — The success output printed the internal database task ID, which was easily confused with the ticket number used in URLs. It now prints `Created task HTPR-XXXX: <title>` along with the task link. ([HTPR-3034](https://app.hypertask.ai/detail/project-15/3034))
-- **Fixed: CLI `task list --project` no longer crashes** — `hypertask task list --project <id>` could crash with "Cannot read properties of undefined" partway through paginating results. It now lists tasks cleanly. ([HTPR-3030](https://app.hypertask.ai/detail/project-15/3030))
-- **Fixed: Clearer CLI error when `--assignee` gets a non-ID** — Passing a name or email to `hypertask task update --assignee` used to fail with the cryptic `Expected number, received nan`. It now returns `assignee must be a list of integer user IDs`. ([HTPR-3181](https://app.hypertask.ai/detail/project-15/3181))
+- **AI chat: create and delete saved views, edit sent messages** — AI chat can now create and delete saved views, alongside reading and updating them. Sent messages are also editable, giving you the ability to correct typos or adjust context after firing off an urgent response. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4218](https://app.hypertask.ai/detail/project-15/4218))
 
----
+**Improvements**
 
-## April 28, 2026
+- **AI Chat: animated thinking dots while waiting for a response** — When you send a message in AI Chat, animated thinking dots now appear immediately in a new assistant bubble, giving you instant visual confirmation that the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4235](https://app.hypertask.ai/detail/project-15/4235))
 
-### New Features
+- **Inbox task detail: archive checkmark alongside remove-notification icon** — When you open an inbox task, the task detail header now shows both the remove-notification icon and an archive checkmark side by side, so you can dismiss or archive the notification without leaving the task detail view. See the [Inbox & Notifications docs](/features/inbox/) for details. ([HTPR-4240](https://app.hypertask.ai/detail/project-15/4240))
 
-- **CLI: `task update --parent-task` for re-parenting tasks** — You can now change a task's parent directly from the terminal with `hypertask tasks update <ticket> --parent-task <parent-id>`. Pass `--parent-task none` to detach a task from its current parent entirely. Completes the parent-task workflow that was previously only available at creation time via `tasks create --parent-task`. ([HTPR-3264](https://app.hypertask.ai/detail/project-15/3264))
+- **Manage Tags: autofocus search, per-tag ticket counts, and filter-board link** — The Manage Tags panel now autofocuses the search input when opened, so you can start typing immediately to filter labels by name. Each tag displays a live per-tag ticket count (e.g., "12 tickets · 5 archived"), counting active (Normal-status) and archived tasks separately so you can see how widely each label is used. A filter icon next to each tag applies that label's filter to the board instantly — the command palette closes and the board switches to a filtered view showing all columns with matching tasks. See the [Tasks docs](/features/tasks/) for details. ([HTPR-4177](https://app.hypertask.ai/detail/project-15/4177))
 
----
+- **Calendar view redesigned for the new app shell** — In the new shell layout, the calendar toolbar sits on the dark shell background with the date range and navigation chevrons left-aligned next to the sidebar hamburger and back arrow. The week grid renders inside a single grey rounded bordered card, giving the calendar a clean, contained appearance that matches the rest of the shell. See the [Boards & Sections docs](/features/boards/) for details. ([HTPR-4237](https://app.hypertask.ai/detail/project-15/4237))
 
-## April 24, 2026
+**Bug Fixes**
 
-### New Features
+- **Fixed: Ctrl+E as it does not advance to the next task** — Previously, pressing <kbd>Ctrl+E</kbd> on an inbox task would archive the notification and flip the task to Archive status, but then nothing would happen—the focus and view would not move to the next task. The navigation now completes correctly, so each <kbd>Ctrl+E</kbd> moves the workflow forward through your inbox. Verified on production with real-browser tests. ([HTPR-4234](https://app.hypertask.ai/detail/project-15/4234))
 
-- **CLI: Headless login for SSH and CI environments** — `hypertask login --headless` now prints the auth URL to stdout and waits for you to paste the callback URL back into the terminal, completing authentication without a local browser. Auto-detects headless mode when no display server is found — useful for SSH sessions, Docker containers, and CI runners. ([HTPR-3201](https://app.hypertask.ai/detail/project-15/3201))
+- **Fixed: Board header sidebar icon replaces in-pill chevron** — The board header now shows a dedicated panel-left sidebar icon to the left of the board name pill, replacing the chevron that was embedded inside the pill. Clicking the icon opens the board manager; clicking the board name still selects the home view. ([HTPR-4242](https://app.hypertask.ai/detail/project-15/4242))
 
-### Bug Fixes
+- **GIFs and emoji in comments: GIF picker tab with /giphy and /emoji slash commands** — The comment composer now includes a built-in Emoji & GIFs picker with two tabs. Type `/emoji` to jump straight to the emoji library, or `/giphy` to open the GIFs tab powered by Giphy. Browse trending GIFs or search by keyword, then click to insert. Inserted GIFs render as resizable media — drag the corner handles to set the size, and the dimensions are preserved when the comment is posted. See the [Collaboration docs](/features/collaboration/) for details. ([HTPR-4232](https://app.hypertask.ai/detail/project-15/4232))
 
-- **Fixed: CLI `move-board` now correctly moves tasks between projects** — `hypertask tasks move-board <ticket> --target-project <id>` was returning HTTP 404 for all cross-project moves. Tasks can now be moved between projects from the CLI as expected. ([HTPR-3199](https://app.hypertask.ai/detail/project-15/3199))
+- **Fixed: AI agents can now self-assign tasks via MCP** — The MCP assign route previously only accepted a numeric `user_id`, preventing agents from adding themselves as assignees without knowing their own user ID. The `assign_self: true` parameter has been added to `hypertask_assign_user`, letting an authenticated agent token add the calling agent as an assignee directly. The existing `user_id` path is unaffected. See the [MCP Tools Reference](/api/tools-reference/) for details. ([HTPR-4141](https://app.hypertask.ai/detail/project-15/4141))
 
----
+- **Fixed: Comment composer overflows when quoting with AI chat open in narrow column** — Previously, when you quoted a comment while the AI panel was open in a narrow column, the composer would stay at a capped small size and the text would overflow upward, making the Send toolbar unreadable. The composer now expands to fit its available width (380px measured) so the comment can be read and posted without scrolling. Blurred composers now scroll smoothly instead of spilling content off the screen. Verified on production with headless click-through testing. ([HTPR-4231](https://app.hypertask.ai/detail/project-15/4231))
 
-## April 23, 2026
+- **Fixed: Dia theme: comment edit surface renders stark white** — Comments opened for editing in the Dia theme now render with neutral background colors instead of completely white surfaces, improving contrast and readability across themes. Verified visually in production. ([HTPR-4226](https://app.hypertask.ai/detail/project-15/4226))
 
-### Bug Fixes
+- **Fixed: Board view deep links now switch to the correct view on open** — Sharing a URL like `https://app.hypertask.ai/project?id=15&view=bugs` now reliably switches the board to the named view as soon as the link is opened. Previously, the board would load but stay on whichever view was last active, requiring a manual switch. Using the browser Back button after following a deep link also works correctly — the board re-arms the view selection rather than silently ignoring the navigation. ([HTPR-3828](https://app.hypertask.ai/detail/project-15/3828))
 
-- **Fixed: CLI `assign` is now idempotent** — Running `hypertask tasks assign <ticket> --user <id>` twice in a row no longer removes the user. The command now ensures the user is assigned regardless of current state, instead of toggling. ([HTPR-3130](https://app.hypertask.ai/detail/project-15/3130))
-
-### Improvements
-
-- **"Save as current view" button label corrected** — The view-saving button was labeled "Save current view" but now reads "Save as current view", accurately reflecting that it saves the current filter/sort configuration as a named view. ([HTPR-3209](https://app.hypertask.ai/detail/project-15/3209))
+- **Fixed: Task detail: title now renders as a label, aligned with the card body** — The task detail panel previously included the title in an input-like row. After this fix, the title title now renders as a clean label aligned with the surrounding card properties, making it clear which are editable fields. The "CTRL+J to ask a question" hint and Tags label also sit directly under the title in the same row alignment. Verified on production. ([HTPR-4211](https://app.hypertask.ai/detail/project-15/4211))
 
 ---
 
-## April 22, 2026
+## July 13, 2026
 
-### Bug Fixes
+**New Features**
 
-- **Fixed: CLI `--section` filter now returns correct results** — `hypertask task list --section <id>` was returning 0 results despite tasks existing in that section. The filter now correctly scopes the query and returns matching tasks. ([HTPR-3189](https://app.hypertask.ai/detail/project-15/3189))
+- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive new tasks, after which they automatically reappear in place. Adding a task to an empty view restores it to an un-dimmed state with the updated count. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
 
----
+**Improvements**
 
-## April 21, 2026
-
-### New Features
-
-- **AI Chat is now an agentic system** — AI Chat has been upgraded from a conversational assistant to an action-taking agent. It can now create tasks, update properties, assign team members, and manage your board directly from the chat interface — no separate tool call needed. ([HTPR-3543](https://app.hypertask.ai/detail/project-15/3543))
-- **MCP and AI Chat can move tickets between boards** — Agents can now move tasks between projects and boards using `hypertask_move_task_between_boards` or by asking AI Chat. This closes the gap between the web command center and agent interfaces. ([HTPR-3590](https://app.hypertask.ai/detail/project-15/3590))
-- **CLI: full label management** — The CLI now supports listing project labels and managing labels on tasks. Use `hypertask project labels <project-id>` to browse available labels, and `hypertask task update <ticket> --labels <name>` to add or change labels on existing tasks. ([HTPR-2996](https://app.hypertask.ai/detail/project-15/2996), [HTPR-3029](https://app.hypertask.ai/detail/project-15/3029), [HTPR-3105](https://app.hypertask.ai/detail/project-15/3105))
-
-### Bug Fixes
-
-- **Fixed: Task Writer mobile view rendering** — A rendering discrepancy in the Task Writer's mobile view has been resolved. The accept button and viewport now behave consistently across environments. ([HTPR-3109](https://app.hypertask.ai/detail/project-15/3109))
-
----
-
-## April 20, 2026
-
-### New Features
-
-- **AI Chat now available on mobile** — The full AI Chat experience is now accessible on mobile devices. Open AI Chat full-screen to get the same context-aware assistant you have on desktop, wherever you are. ([HTPR-3056](https://app.hypertask.ai/detail/project-15/3056))
-- **Task Writer supports Properties during task creation** — You can now set Tags, Task Size, and Priority directly in the Task Writer when creating tasks, bringing AI-generated tasks closer to ready without a follow-up edit. ([HTPR-2969](https://app.hypertask.ai/detail/project-15/2969))
-- **CLI: `task move` command** — Move tasks between sections from the terminal with `hypertask task move <ticket> --section <name>`. No web UI needed for board housekeeping. ([HTPR-3658](https://app.hypertask.ai/detail/project-15/3658))
-- **CLI: First-run onboarding** — New users running the Hypertask CLI for the first time now get an interactive onboarding guide to authenticate, explore commands, and get productive fast. ([HTPR-3171](https://app.hypertask.ai/detail/project-15/3171))
-- **MCP: `due_date` now supported on create and update** — `hypertask_create_task` and `hypertask_update_task` now accept a `due_date` field (ISO 8601), letting agents set deadlines without needing the CLI or web UI. ([HTPR-3646](https://app.hypertask.ai/detail/project-15/3646))
-- **MCP: Inbox tools** — Two new MCP tools — `hypertask_inbox_list` and `hypertask_inbox_archive` — let agents read and dismiss inbox notifications programmatically. Useful for building triage and notification-routing workflows. ([HTPR-3625](https://app.hypertask.ai/detail/project-15/3625))
-- **Deep link to create a task on a specific board** — Append `?board=<board-id>` to the task creation URL (e.g. `/new?board=inne`) to pre-select a destination board. Useful for bookmarks and integrations. ([HTPR-3578](https://app.hypertask.ai/detail/project-15/3578))
-- **Calendar keyboard navigation** — Use a keyboard shortcut to jump forward and backward through calendar periods without reaching for the mouse. ([HTPR-3517](https://app.hypertask.ai/detail/project-15/3517))
-- **One-click IDE connect buttons on the MCP page** — The MCP settings page now includes ready-to-use connect buttons for VS Code, Cursor, and other popular IDEs, making it easier to get your agent setup running in minutes. ([HTPR-3546](https://app.hypertask.ai/detail/project-15/3546))
-
-### Improvements
-
-- **Search powered by Typesense** — Task search is now backed by Typesense, delivering faster queries and more accurate results, especially on large boards. ([HTPR-3539](https://app.hypertask.ai/detail/project-15/3539))
-- **AI Chat suggested queries use full MCP context** — The quick-action prompts in AI Chat now reflect the full set of available MCP tools, so suggestions are more relevant and actionable for each project. ([HTPR-3653](https://app.hypertask.ai/detail/project-15/3653))
-- **CLI: `--created-by` filter for `task list`** — Filter tasks by creator: `hypertask task list --created-by <user-id>`. Removes the need to paginate through all tasks when looking for your own or a colleague's work. ([HTPR-3088](https://app.hypertask.ai/detail/project-15/3088))
-- **F2 to edit task titles on Kanban** — Press F2 on a focused task card to edit its title inline, without opening the task detail panel. ([HTPR-3657](https://app.hypertask.ai/detail/project-15/3657))
-- **Kanban filter panel available in Calendar view** — The same filter modal you use on the Kanban board is now available in Calendar view, so you can apply the same filters across both layouts. ([HTPR-3611](https://app.hypertask.ai/detail/project-15/3611))
-- **"Following" filter on Calendar view** — Filter the Calendar to show only tasks you're following, matching the filter already available on Kanban. ([HTPR-3581](https://app.hypertask.ai/detail/project-15/3581))
-- **Inbox page title shows account name** — The browser tab for the Inbox now displays the relevant section or account name, making it easier to distinguish multiple Hypertask tabs. ([HTPR-3620](https://app.hypertask.ai/detail/project-15/3620))
-- **Left sidebar sort improvements** — Projects and sections in the left sidebar now sort more predictably, with refinements to ordering logic based on user feedback. ([HTPR-3580](https://app.hypertask.ai/detail/project-15/3580))
-
-### Bug Fixes
-
-- **Fixed: @mention emails not delivered to newly-invited users** — Users invited to a project and @mentioned before completing sign-up now correctly receive the notification email. ([HTPR-3185](https://app.hypertask.ai/detail/project-15/3185))
-- **Fixed: Commenting on a board task no longer navigates to inbox** — Submitting a comment while viewing a task on a board now stays on the board, as expected. ([HTPR-3089](https://app.hypertask.ai/detail/project-15/3089))
-- **Fixed: MCP @mentions now trigger notifications** — Comments posted via MCP that @mention a user now render the mention as a link and fire a notification, matching the behavior of web UI mentions. ([HTPR-3633](https://app.hypertask.ai/detail/project-15/3633))
-- **Fixed: MCP connection reliability** — Intermittent connection failures when connecting agents to the Hypertask MCP server have been resolved. ([HTPR-3618](https://app.hypertask.ai/detail/project-15/3618))
-- **Fixed: CLI `tasks get` type error** — The `tasks get` command no longer fails with a type mismatch when fetching tasks by ID. ([HTPR-3659](https://app.hypertask.ai/detail/project-15/3659))
-- **Fixed: CLI `inbox list --token` returning empty** — Using the `--token` flag with `inbox list` now returns the correct results instead of an empty list. ([HTPR-3079](https://app.hypertask.ai/detail/project-15/3079))
-- **Fixed: Comments from MCP and CLI show related task** — Comments added programmatically via MCP or CLI now correctly display their linked task in the web UI. ([HTPR-2985](https://app.hypertask.ai/detail/project-15/2985))
-- **Fixed: AI Chat tool call display** — Responses that include tool call results now render correctly in AI Chat instead of showing raw output or blank sections. ([HTPR-3642](https://app.hypertask.ai/detail/project-15/3642))
-- **Fixed: Task owner no longer duplicated as follower** — Updating a task no longer adds the task owner as a follower a second time, which was causing duplicate notifications. ([HTPR-3641](https://app.hypertask.ai/detail/project-15/3641))
-- **Fixed: PWA opens existing window instead of a new one** — Clicking the PWA launcher when Hypertask is already open now focuses the existing window instead of opening a duplicate. ([HTPR-2989](https://app.hypertask.ai/detail/project-15/2989))
-- **Fixed: Mobile undo close button** — Tapping X on the mobile undo prompt now dismisses it without triggering the undo action. ([HTPR-3612](https://app.hypertask.ai/detail/project-15/3612))
-- **Fixed: Calendar month view rendering** — Several UX issues in the Calendar month view, including misaligned events and scroll position, have been corrected. ([HTPR-3595](https://app.hypertask.ai/detail/project-15/3595))
-- **Fixed: Task Writer with custom instructions** — Adding custom AI instructions no longer causes the Task Writer to fail when generating tasks. ([HTPR-3579](https://app.hypertask.ai/detail/project-15/3579))
-
----
-
-## April 9, 2026
-
-### New Features
-
-- **CLI & MCP: Create entire boards in one call** — A new `hypertask_create_board` MCP tool and matching `hypertask project create-board --file board.json` CLI command let you spin up a full board — sections, labels, and starter tasks — from a single JSON manifest. Great for scripting project templates or having an agent scaffold a board end-to-end. ([HTPR-3139](https://app.hypertask.ai/detail/project-15/3139), [HTPR-3142](https://app.hypertask.ai/detail/project-15/3142))
-
----
-
-## April 8, 2026
-
-### Improvements
-
-- **CLI: `task update --assignee` flag** — You can now set or change a task's assignees directly from `hypertask task update` without a separate `task assign` call. Accepts a comma-separated list of user IDs. The same `--assignee` flag is also available on `task create`. ([HTPR-3049](https://app.hypertask.ai/detail/project-15/3049))
-
----
-
-## March 31, 2026
-
-### Improvements
-
-- **CLI & MCP: Subtask hierarchy exposed via `parent_id`** — Task responses from both the CLI and MCP now include a `parent_id` field, making it straightforward for agents to walk parent/child relationships. The `hypertask task tree` command
+- **Manage Views gear on hover + drag-reorder views** — The Manage Views panel now shows a gear icon in the header of each view tab on hover, for quick access to visibility, pinning, and editing options. Views can also be reordered by dragging them into place within the Manage Views section. Your custom sort persists server-side, so the order applies across devices. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
