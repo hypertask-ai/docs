@@ -63,7 +63,7 @@ By default, sections appear in alphabetical order. You can now customize the ord
 - **Admin default order** can be centrally configured for newly created boards.
 
 <Aside type="tip">
-Per-section counts, visibility toggles, and manual sorting persist server-side for each user, so different team members can organize the same board in the way that makes the most sense for their workflow.
+Per-section counts, visibility toggles, and manual sorting persist server-side for each user, so different team members can organize the same board in the way that makes most sense for their workflow.
 </Aside>
 
 ### Moving tasks between sections
@@ -72,9 +72,11 @@ There are three ways to move a task to a different section:
 
 1. **Drag and drop** — in the web UI, drag a task card from one column to another.
 2. **MCP** — use the `hypertask_section` tool to move a task programmatically:
+
    ```
    hypertask_section(taskId: 42, sectionId: 5)
    ```
+
 3. **API** — call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
 
 ## Views
@@ -171,29 +173,25 @@ https://app.hypertask.ai/project?id=15&view=bugs
 
 Copy the URL from your browser's address bar while the view is active, or share it directly from the view picker. Using the browser **Back** button after following a deep link returns you to your previous location without disrupting the view selection.
 
-## Manage Views
+### Reordering views
 
-The **Manage Views** panel lets you customize how views appear, count tasks, and display in your workspace.
+You can customize the order of your views in the **Manage Views** panel:
+
+- **Drag and drop** — click and drag view tabs to reorder them. Your custom sort persists server-side, so the order applies across all your devices.
+- **Per-user sort** — different team members can drag and pin their preferred top views.
+- **Admin default order** — project owners and admins can define a default order for views. Newly created boards use this centralized arrangement, while existing boards keep each user's custom order.
+- **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
+- **Reset** — quickly restore the default view order for boards with centralized settings.
+
+When you hover over a view tab, a gear icon (⚙️) appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
 Each view displays a count of active tasks (Normal status) and archived tasks separately:
 
 - The total count shows all non-archived tasks in the view.
-- If a view is hidden because it contains no items, the view appears dimmed in the views list.
-
-### Hiding empty views
-
-When you hide a view that has no tasks, the view is temporarily removed from your active list. Hidden views still exist and will show their task counts (even if zero) when you hover or when they reappear after receiving tasks.
-
-### Sorting and customization
-
-Manage Views provides controls to:
-
-- **Per-user sort** — Reorder views by clicking and dragging. Your custom order is saved server-side, so other team members can also drag and pin their preferred top views.
-- **Admin default order** — Project owners and admins can define a default order for views. Newly created boards use this centralized arrangement, while existing boards keep each user's custom order.
-- **Visibility toggle** — Optionally hide views without deleting them (hidden views are restored when tasks are added).
-- **Reset to default** — Quickly restore the default view order for boards with centralized defaults.
+- Hidden views that contain no items appear dimmed in the views list. When they subsequently receive tasks, they automatically reappear in their previous position as a normal view with a task count.
+- Views that are hidden because they contain a zero count will display "0 tasks" but remain visible (dimmed) until tasks are added.
 
 <Aside type="tip">
 For frequent users, per-user sorting lets you prioritize the views you use most often, while admins can maintain a predictable organization for new users.
