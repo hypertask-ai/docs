@@ -27,6 +27,10 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Time tracking: opt-in per board (off by default)** — Time tracking has been decoupled from the board level and is now opt-in per board, starting disabled. Boards with tracking off return an `enabled: false` flag from the Time API and block start tracking requests with a 403 error. To start tracking, enable time tracking from the board or use the Shift shortcut before starting. Shift reverses the state: disable after you're done, and it remains off on next restart. Time reports and history are now powered by server-managed timers across all boards. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4221](https://app.hypertask.ai/detail/project-15/4221))
 
+- **Manage Views gear on hover** — A gear icon appears in the header of each view tab, revealing quick access to view options (visibility, pinned status, edit, delete) on hover. This gives you faster control over your views without needing to open the full Manage Views panel. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
+
+- **Manage Views available state** — Child views that are hidden because they contain no items now appear dimmed when displayed in the Manage Views panel. When a view subsequently receives tasks, it automatically reappears in its previous position as a normal view. This makes it easier to spot which views are currently operational versus temporarily hidden. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
+
 **Improvements**
 
 - **AI Chat: animated thinking dots while waiting for a response** — When you send a message in AI Chat, animated thinking dots now appear immediately in a new assistant bubble, giving you instant visual confirmation that the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives. See the [AI Features docs](/features/ai-features/) for details. ([HTPR-4235](https://app.hypertask.ai/detail/project-15/4235))
@@ -54,3 +58,13 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Fixed: Board view deep links now switch to the correct view on open** — Sharing a URL like `https://app.hypertask.ai/project?id=15&view=bugs` now reliably switches the board to the named view as soon as the link is opened. Previously, the board would load but stay on whichever view was last active, requiring a manual switch. Using the browser Back button after following a deep link also works correctly — the board re-arms the view selection rather than silently ignoring the navigation. ([HTPR-3828](https://app.hypertask.ai/detail/project-15/3828))
 
 ---
+
+## July 13, 2026
+
+**New Features**
+
+- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive new tasks, after which they automatically reappear in place. Adding a task to an empty view restores it to an un-dimmed state with the updated count. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
+
+**Improvements**
+
+- **Manage Views gear on hover + drag-reorder views** — The Manage Views panel now shows a gear icon in the header of each view tab on hover, for quick access to visibility, pinning, and editing options. Views can also be reordered by dragging them into place within the Manage Views section. Your custom sort persists server-side, so the order applies across devices and teammates. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
