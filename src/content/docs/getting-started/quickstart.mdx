@@ -122,7 +122,13 @@ Replace `YOUR_API_KEY` with the token from the previous step.
 
 ### Verify the connection
 
-Once connected, ask your AI agent to list your projects:
+You can connect in two ways:
+
+1. **From the onboarding flow** — as a new agent, you'll see a question-screen with 6 cards offering connection options. Select an option (CLI, MCP, or REST), and the connection will confirm itself with live status updates.
+
+2. **From any MCP client** — use the existing `hypertask_connect` tool. The CLI and MCP tools now check for an existing token and prompt for your API key if needed, using a bearer fallback for authentication.
+
+Once connected, your AI agent can list your projects:
 
 ```
 List all my Hypertask projects.
