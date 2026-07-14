@@ -87,7 +87,6 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
 
-
 ## July 13, 2026
 
 **New Features**
@@ -97,3 +96,11 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 **Improvements**
 
 - **Manage Views gear on hover + drag-reorder views** — The Manage Views panel now shows a gear icon in the header of each view tab on hover, for quick access to visibility, pinning, and editing options. Views can also be reordered by dragging them into place within the Manage Views section. Your custom sort persists server-side, so the order applies across devices. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
+
+## July 12, 2026
+
+**Bug Fixes**
+
+- **Fixed: AI writer scroll + confirm modal interaction** — The AI Task Writer dialog now scrolls correctly when content exceeds the viewport, and the ESC key properly triggers a confirm dialog instead of negating user intent. When the confirm dialog appears, dismissing it leaves the pending draft in place, and accepting confirms the discard action cleanly. Users can also escape the confirm dialog back to the draft state. Verified on production. ([HTPR-4183](https://app.hypertask.ai/detail/project-15/4183))
+
+- **Sidebar polish: segmented board-sort toggle, manage-favorites gear, remove dead account chevron** — The sidebar board-sort toggle has been simplified to a segmented <kbd>Teams</kbd> | <kbd>Recent</kbd> toggle for easy mouse-based switching below the search bar. A gear icon appears for managing favorites, and the account chevron has been removed to reduce visual clutter. Search now renders as a 14px field on a raised surface with a visible caret. Uses keyboard navigation in favor of a dropdown with the `aria-haspopup` attribute and a 2-level submenu structure. ([HTPR-4180](https://app.hypertask.ai/detail/project-15/4180))
