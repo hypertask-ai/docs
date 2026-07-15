@@ -48,6 +48,7 @@ export default defineConfig({
             { label: "Tasks", slug: "features/tasks" },
             { label: "Inbox & Notifications", slug: "features/inbox" },
             { label: "Collaboration", slug: "features/collaboration" },
+            { label: "Superhuman-Style Snippets", slug: "features/superhuman-snippets" },
           ],
           API: [
             { label: "REST API", slug: "api/rest-api" },
