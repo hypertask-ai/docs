@@ -21,7 +21,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **New Features**
 
-- **Created by filter** — You can now filter board tasks by who created them. The filter appears in the Kanban board filter list between the Assignee and Date created options. Use the filter icon or <kbd>Shift+F</kbd> to open the filter menu, then select "Created by" and choose a team member or agent from the picker. ([HTPR-4188](https://app.hypertask.ai/detail/project-15/4188))
+- **Archived view: hide archived boards by default + optimize for narrow viewports** — The Archive section now defaults to showing only active boards. Archived boards are not displayed unless you explicitly access them via the Ctrl+K command palette. On narrower viewports (<1024px), the Archive section uses the full available width for better readability and interaction. Archived boards remain available when you need to review or restore them, while the default view focuses on current work. ([HTPR-4184](https://app.hypertask.ai/detail/project-15/4184))
+- **AMOLED theme: true-black terminal colorscheme** — AMOLED now renders with pure-black backgrounds instead of dark gray. The theme applies terminal-style color palettes to comment inputs, form fields, and interactive surfaces, providing maximum contrast on OLED and AMOLED displays. Activate via Ctrl+K command palette or the theme picker in settings. ([HTPR-4179](https://app.hypertask.ai/detail/project-15/4179))
 
 ## July 14, 2026
 
@@ -91,7 +92,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Inbox @mentions priority over updates** — Inbox rows are now bucketed by the strongest active notification on the task (@Mentions, then Important, then Reactions, then Updates) while still displaying the latest event. This ensures that @mentions you receive take precedence over status updates or comments, so you don't miss critical context. Verified on production with real-browser testing. ([HTPR-4236](https://app.hypertask.ai/detail/project-15/4236))
 
-- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive tasks, after which they automatically reappear in place. Adding a task to an empty view restores it to an un-dimmed state with the updated count. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
+- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive tasks, after which they automatically reappear in place. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
 
 - **Manage Views gear on hover + drag-reorder views** — The Manage Views panel now shows a gear icon in the header of each view tab on hover, for quick access to visibility, pinning, and editing options. Views can also be reordered by dragging them into place within the Manage Views section. Your custom sort persists server-side, so the order applies across devices. ([HTPR-4217](https://app.hypertask.ai/detail/project-15/4217))
 
@@ -101,7 +102,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 **New Features**
 
-- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive tasks, after which they automatically reappear in place. Adding a task to an empty view restores it to an un-dimmed state with the updated count. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
+- **Manage Views: show task counts + gray out views hidden by hide-empty** — The Manage Views panel now displays task counts for all views, whether they currently contain tasks or not. Hidden child views (those with zero tasks) appear dimmed until they receive tasks, after which they automatically reappear in place. ([HTPR-4224](https://app.hypertask.ai/detail/project-15/4224))
 
 **Improvements**
 
