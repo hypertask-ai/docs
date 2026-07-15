@@ -19,6 +19,29 @@ The sidebar groups your workspace navigation and project controls into a consist
 Press <kbd>Ctrl+K</kbd> to open the command palette and quickly access board sorting toggles and view management.
 </Aside>
 
+## Archive View
+
+The Archive section shows tasks and boards that have been archived. The Archive view defaults to showing only active boards to reduce visual noise. Hidden archived boards are not shown unless you invoke them explicitly.
+
+To access archived boards:
+
+- **Ctrl+K command palette** — search for "archived" to access archived board items
+- **Keyboard** press <kbd>Ctrl+K</kbd> and select the archived view option
+
+On narrow viewports (below `< 1024px`), the Archive section uses the full available width, giving you more space to read and interact with archived content.
+
+### Archived Boards
+
+- By default, archived boards appear hidden in the Archive view — only active boards are displayed initially
+- Archived boards can be accessed via the Ctrl+K command palette when you need to review or restore them
+- The view optimizes space so you focus on currently relevant boards
+
+### Viewing Archived Tasks
+
+- Tasks are listed with their associated board and section
+- Archive status is clearly indicated on each item
+- You can unarchive items to restore them to their original section
+
 ## Sections
 
 Sections are the columns on your board. New projects start with three defaults:
@@ -190,7 +213,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon 🛠 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon 🛠️ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
@@ -206,8 +229,8 @@ For frequent users, per-user sorting lets you prioritize the views you use most 
 
 #### Quick view-tabs pill bar
 
-You can switch between saved views without opening the Manage Views panel. At the top of the board surface is a pill bar that exposes a selection of your 8 most-used views. Click a pill to instantly switch the board to that view — the URL updates (for example, <code>?view=bugs</code>) and the board content loads accordingly. This provides one-click access to your preferred views for day-to-day work.
+You can switch between saved views without opening the Manage Views panel. At the top of the board surface is a pill bar that exposes a selection of your 8 most-used views. Click a pill to instantly switch the board to that view — the URL updates (for example, `<code>?view=bugs</code>`) and the board content loads accordingly. This provides one-click access to your preferred views for day-to-day work.
 
 #### View tabs
 
-In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its <code>?view=</code> parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.
+In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its `<code>?view=</code>` parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.
