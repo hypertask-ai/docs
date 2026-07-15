@@ -7,6 +7,21 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
+## Authentication
+
+Hypertask supports multiple authentication methods, all integrated through the server-side session layer:
+
+### Email-based authentication
+
+- Sign-in with a six-digit code delivered via email
+- Access a persistent sign-in link (doesn't expire until used)
+- No need to manage custom tokens — the session is handled server-side
+- Reliable across mail scanners and email clients
+
+### Sign-out
+
+All authentication flows support clean sign-out that immediately invalidates the session and clears cookies.
+
 ## Sidebar
 
 The sidebar groups your workspace navigation and project controls into a consistent layout. Use the account section in the sidebar to manage your config:
@@ -18,6 +33,18 @@ The sidebar groups your workspace navigation and project controls into a consist
 <Aside type="tip">
 Press <kbd>Ctrl+K</kbd> to open the command palette and quickly access board sorting toggles and view management.
 </Aside>
+
+### Sidebar overlay sidebars
+
+At half-screen viewports (typically 1024px width), overlay sidebars for Settings and Calendar boards/filters use fixed widths for better space management:
+
+| Sidebar type | Width at half-screen |
+|--------------|----------------------|
+| **Settings** | 480px |
+| **Calendar boards** | 384px |
+| **Calendar filters** | 384px |
+
+These widths are applied via Tailwind's `sm:` breakpoint, providing consistent layout behavior regardless of viewport size. All content within these sidebars is fully accessible and scrollable within the fixed width.
 
 ## Archive View
 
@@ -213,7 +240,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon 🛠️ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon 🛠 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
