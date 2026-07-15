@@ -47,9 +47,9 @@ To see who contributes which tasks:
 
 ---
 
-⚠️ **Security note:** Members can only associate tasks they own to a specific board, and the system prevents them from adding tasks to boards in which they have no work. This ensures board-specific permissions are enforced.
+**Security note:** Members can only associate tasks they own to a specific board, and the system prevents them from adding tasks to boards in which they have no work. This ensures board-specific permissions are enforced.
 
-### Multi-user login and Better Auth sessions
+### M and better Auth integration
 
 Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
 
@@ -66,6 +66,10 @@ Hypertask uses **Better Auth** for server-led authentication. When you log in vi
 <Aside type="note">
 All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
 </Aside>
+
+### BYOK and API keys
+
+API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
 
 ### Switching accounts without logout
 
