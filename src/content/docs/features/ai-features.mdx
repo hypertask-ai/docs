@@ -182,19 +182,19 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✓ | ✓ |
-| Assignees & followers | ✓ | ✓ |
-| Comments (read, add, update, delete) | ✓ | ✓ |
-| Labels (read, create, assign) | ✓ | ✓ |
-| Sections / board columns (CRUD) | ✓ | ✓ |
-| Subtask hierarchy / task tree | ✓ | ✓ |
-| Due dates | ✓ | ✓ |
-| Archived / completed tasks | ✓ | ✓ |
-| Saved views (create, delete, edit) | ✓ | ✓ |
-| Move tasks between boards | ✓ | ✓ |
-| Inbox (list, archive, unarchive) | ✓ | ✓ |
-| Tags (read, create, assign) by name and ID | ✓ | ✓ |
-| Time tracking (start/stop) | ✓ | ✓ |
+| Tasks (title, description, status, priority, size) | ✅ | ✅ |
+| Assignees & followers | ✅ | ✅ |
+| Comments (read, add, update, delete) | ✅ | ✅ |
+| Labels (read, create, assign) | ✅ | ✅ |
+| Sections / board columns (CRUD) | ✅ | ✅ |
+| Subtask hierarchy / task tree | ✅ | ✅ |
+| Due dates | ✅ | ✅ |
+| Archived / completed tasks | ✅ | ✅ |
+| Saved views (create, delete, edit) | ✅ | ✅ |
+| Move tasks between boards | ✅ | ✅ |
+| Inbox (list, archive, unarchive) | ✅ | ✅ |
+| Tags (read, create, assign) by name and ID | ✅ | ✅ |
+| Time tracking (start/stop) | ✅ | ✅ |
 
 ## Auto-Summary
 
@@ -264,4 +264,30 @@ Tailor how AI features behave on a per-project basis.
 
 <Aside type="tip">
 Different models have different strengths. Use a more capable model (Opus, GPT-5.5, Gemini 3.1 Pro Preview) for complex task generation and a faster model (Haiku, GPT-5.4 mini, Gemini 3.5 Flash) for quick text improvements and summaries.
+</Aside>
+
+## Theme: AMOLED
+
+AMOLED is a specialized dark theme that displays true-black backgrounds for maximum contrast on devices with OLED or AMOLED displays. The theme applies automatic color adjustments to elements that were previously rendered with dark grays.
+
+### Key visual changes
+
+- **True-black base** — backgrounds and backgrounds now render as pure black (0,0,0) instead of dark gray
+- **Terminal-style colors** — comment inputs, form fields, and other interactive surfaces use terminal-friendly color palettes optimized for OLED screens
+- **Enhanced contrast** — lighter elements pop more clearly against the pure-black background
+
+### Activating AMOLED theme
+
+- **Ctrl+K command palette** — press <kbd>Ctrl+K</kbd>, search for **"Theme"**, and select **AMOLED** from the theme list
+- **Settings** — navigate to the account section of the sidebar and select AMOLED from the theme picker
+- **Available in** — Light, Dark, System, AMOLED, and Paper theme options
+
+### When to use AMOLED
+
+- When using a device with OLED or AMOLED display technology
+- For low-light environments where a pure-black display reduces eye strain
+- When you want maximum contrast and a distinctive, high-tech aesthetic
+
+<Aside type="tip">
+AMOLED is automatically selected by default when your OS is set to "Dark mode" so that badge text remains readable on OLED screens. You can override this via the theme picker if you prefer a dark gray appearance on hybrid-display devices.
 </Aside>
