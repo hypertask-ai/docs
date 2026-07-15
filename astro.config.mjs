@@ -1,72 +1,68 @@
-// @ts-check
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-import starlightLlmsTxt from 'starlight-llms-txt';
+import starlight from "@astrojs/starlight";
+import { defineConfig } from "astro/config";
 
-// https://astro.build/config
 export default defineConfig({
-	site: 'https://docs.hypertask.ai',
-	integrations: [
-		starlight({
-			title: 'Hypertask',
-			logo: {
-				src: './public/hypertask-logo.png',
-				alt: 'Hypertask',
-			},
-			customCss: ['./src/styles/custom.css'],
-			plugins: [starlightLlmsTxt()],
-			components: {
-				PageTitle: './src/components/PageTitle.astro',
-			},
-			social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/valentinyeo/hypertask' }],
-			sidebar: [
-				{
-					label: 'Getting Started',
-					items: [
-						{ label: 'What is Hypertask?', slug: 'getting-started/introduction' },
-						{ label: 'Quick Start', slug: 'getting-started/quickstart' },
-						{ label: 'Core Concepts', slug: 'getting-started/concepts' },
-					],
-				},
-				{
-					label: 'Features',
-					items: [
-						{ label: 'AI Features', slug: 'features/ai-features' },
-						{ label: 'Boards & Sections', slug: 'features/boards' },
-						{ label: 'Tasks', slug: 'features/tasks' },
-						{ label: 'Inbox & Notifications', slug: 'features/inbox' },
-						{ label: 'Collaboration', slug: 'features/collaboration' },
-					],
-				},
-				{
-					label: 'CLI',
-					items: [
-						{ label: 'CLI Reference', slug: 'cli/reference' },
-					],
-				},
-				{
-					label: 'MCP Integration',
-					items: [
-						{ label: 'Overview', slug: 'mcp/overview' },
-						{ label: 'Creating Agents', slug: 'mcp/agents' },
-						{ label: 'Agent Workflows', slug: 'mcp/workflows' },
-						{ label: 'Scheduling Agents', slug: 'mcp/scheduling' },
-					],
-				},
-				{
-					label: 'API Reference',
-					items: [
-						{ label: 'REST API', slug: 'api/rest-api' },
-						{ label: 'MCP Tools Reference', slug: 'api/tools-reference' },
-					],
-				},
-				{
-					label: 'Changelog',
-					items: [
-						{ label: 'Changelog', slug: 'changelog' },
-					],
-				},
-			],
-		}),
-	],
+  vite: {
+    define: {
+      "globalThis.Astro": "undefined",
+    },
+    optimizeDeps: {
+      exclude: ["mermaid"],
+    },
+  },
+  integrations: [
+    starlight({
+      title: "Hypertask",
+      favicon: "/favicon.ico",
+      lastUpdated: true,
+      aside: {
+        collapseLevel: 1,
+      },
+      social: {
+        twitter: "https://twitter.com/hypertask",
+      },
+      editLink: {
+        services: [],
+      },
+      themeConfig: {
+        defaultDark: "dim",
+        disableLinkHash: true,
+        editLink: {
+          services: [
+            {
+              label: "GitHub",
+              icon: "github",
+              url: "https://github.com/hypertask-inc/hypertask-docs",
+            },
+          ],
+        },
+        sidebar: {
+          "Getting Started": [
+            { label: "What is Hypertask?", slug: "getting-started/introduction" },
+            { label: "Core Concepts", slug: "getting-started/concepts" },
+            { label: "Quick Start", slug: "getting-started/quickstart" },
+          ],
+          Features: [
+            { label: "AI Features", slug: "features/ai-features" },
+            { label: "Boards & Sections", slug: "features/boards" },
+            { label: "Tasks", slug: "features/tasks" },
+            { label: "Inbox & Notifications", slug: "features/inbox" },
+            { label: "Collaboration", slug: "features/collaboration" },
+          ],
+          API: [
+            { label: "REST API", slug: "api/rest-api" },
+            { label: "MCP Tools Reference", slug: "api/tools-reference" },
+          ],
+          MCP: [
+            { label: "MCP Integration", slug: "mcp/overview" },
+            { label: "Creating Agents", slug: "mcp/agents" },
+            { label: "Agent Workflows", slug: "mcp/workflows" },
+            { label: "Scheduling Agents", slug: "mcp/scheduling" },
+          ],
+          CLI: [{ label: "CLI Reference", slug: "cli/reference" }],
+          Docs: [{ label: "Changelog", slug: "changelog" }],
+        },
+      },
+    }),
+  ],
 });
