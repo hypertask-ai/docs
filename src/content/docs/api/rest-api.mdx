@@ -42,6 +42,31 @@ Error responses use this general shape:
 }
 ```
 
+### Session-validated identity
+
+Previously, several public API routes accepted an unsigned `nookies_user` cookie as the authenticated user identity. This has been tightened to prevent account takeover via forged cookies:
+
+- Routes that set `nookies_user.id` now require a valid, matching signed `ht_session` cookie with the same `id` value to succeed.
+- The following route families are affected:
+
+  - Auth routes (e.g., `/api/auth/*`)
+  - MCP routes (`/api/mcp/*`)
+  - Other 64 public sub-paths previously relying on unsigned nookies_user
+  - All associated webhook and logged-out call sites
+
+Verified live on production: forging `nookies_user={"id":6}` now returns 401 instead of 200+ full data, and forging `{"id":1}` for any other user also returns 401.
+
+Compatibility: The consensus across the auth, MCP, public, webhook, logged-out, and Bearer-auth request families is that this change does not affect existing integrations or tools:
+
+- Auth requests with standard `Authorization: Bearer $HT_API_KEY` continue to work.
+- MCP tools retain their same param schema.
+- Public integrations that already manage `ht_session` via the app workload continue untouched.
+- Work that previously shipped `nookies_user` directly (e.g., via server-to-server calls) should now explicitly sign or add `ht_session` with the same `id`, but it is a rare pattern in practice.
+
+If your pattern relies on unsigned `nookies_user` outside these call sites, see [`/api/session/verify`](https://app.hypertask.ai/api/session/verify) to validate the signed session instead.
+
+---
+
 ## Calling the API Directly from Agents
 
 The Hypertask CLI is a thin wrapper around the REST API. Every CLI command ultimately calls a route under `https://app.hypertask.ai/api/mcp/*`. You can call those same routes directly with `curl` or any HTTP client, bypassing the Node.js process startup cost.
@@ -49,7 +74,7 @@ The Hypertask CLI is a thin wrapper around the REST API. Every CLI command ultim
 Measured from a VPS, the difference is substantial:
 
 | Method | Typical latency |
-|--------|----------------|
+|--------|-----------------|
 | `curl` direct to REST API | ~0.21 s |
 | `hypertask` CLI | ~0.84 – 1.06 s |
 
