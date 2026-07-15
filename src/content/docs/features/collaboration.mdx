@@ -21,9 +21,9 @@ Invite team members to a project by generating an **invite link**. Invite links 
 
 | Setting | Description |
 |---------|-------------|
-| **Expiration** | Set when the link stops working (e.g., 7 days, 30 days, never) |
+| **Expiration** | Set when the link stops working (e.g. 7 days, 30 days, never) |
 | **Usage limit** | Cap how many people can join via this link |
-| **Domain restriction** | Limit invites to specific email domains (e.g., `@yourcompany.com`) |
+| **Domain restriction** | Limit invites to specific email domains (e.g. `@yourcompany.com`) |
 
 <Aside type="tip">
 Domain restrictions are useful when you want to share an invite link broadly (in Slack, for example) but limit access to people within your organization.
@@ -89,7 +89,7 @@ After login, your session persists until you explicitly sign out. Hiding or clos
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
 <Aside type="warning">
-If you persist LocalStorage across sign-ins or sessions (e.g., in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
+If you persist LocalStorage across sign-ins or sessions (e.g. in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
 </Aside>
 
 ## AI Agents
@@ -133,6 +133,10 @@ Type `@` in any comment to mention a team member. Mentions do two things:
 2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
 
 Mentions work in comments and task descriptions.
+
+<Aside type="tip">
+If you receive a mention that looks suspicious, report it to your workspace owner. All mentions are sanitized to prevent potential injection attacks.
+</Aside>
 
 ## Emoji reactions
 
