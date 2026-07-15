@@ -29,6 +29,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Fixed: unsigned identity cookie no longer forgable** — The `nookies_user` cookie is now properly signed and authenticated before being accepted as user identity. Previously, forging an unsigned cookie could load any authenticated page; now such requests return 401. Verified live on production. ([HTPR-3944](https://app.hypertask.ai/detail/project-15/3944))
 - **Fixed: section update ownership check** — The `/api/section/update` endpoint now validates ownership permissions by scoping the section lookup to the user's accessible project before allowing updates. Previously, an IDOR allowed unauthorized section modifications. Verified deployed (HTPR-3974)
 - **Fixed: task previously appeared twice** — Tasks in the In Progress column now render uniquely without duplication. The issue affecting HTPR-4140 was caused by an in-memory list displaying the same task back-to-back due to move hooks and board caching. Verified on production. ([HTPR-4142](https://app.hypertask.ai/detail/project-15/4142))
+- **Fixed: displayName rendered unescaped into mention HTML (stored XSS)** — Mentioned usernames are now properly escaped when rendering mention elements in comments, preventing stored cross-site scripting (XSS) via malicious username payloads. Verified deployed with API security hardening batch PR #1293. ([HTPR-3965](https://app.hypertask.ai/detail/project-15/3965))
 
 ### Bug Fixes
 
