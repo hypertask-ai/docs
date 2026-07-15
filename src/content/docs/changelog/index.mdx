@@ -25,6 +25,7 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 **Bug Fixes**
 
 - **Post-login toast behavior** — The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
+- **HTML hydration warning in dev overlay** — The false `<html>` hydration warning from the Next.js dev overlay script has been suppressed. This resolves the developer overlay warning that appeared during development, keeping the dev experience clean. Verified deployed on staging and ready for prod rollout. ([HTPR-4154](https://app.hypertask.ai/detail/project-15/4154))
 
 **Infrastructure**
 
