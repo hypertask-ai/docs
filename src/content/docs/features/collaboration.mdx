@@ -31,9 +31,25 @@ Domain restrictions are useful when you want to share an invite link broadly (in
 
 ### Roles and permissions
 
-Project members can view boards, create and edit tasks, comment, and collaborate. Project-level settings control what members can do.
+Project members are assigned one of three roles, each with different privileges for managing the project:
 
-## Multi-user login and Better Auth sessions
+| Role | Privileges |
+|------|------------|
+| **Owner** | Full control over the project: invite or remove members, board settings (renaming, sharing, archiving, deleting), view billing (plan + invoices), set payment method and invoicing email, and **grant or revoke Admin** permissions for other members |
+| **Admin** | All day-to-day task work (create, edit, delete, assign, reply in comments) plus the ability to **invite/remove other members**, modify board settings, and view billing (plan + invoices) |
+| **Member** | All day-to-day task work (create, edit, delete, assign, reply in comments) with no additional permissions |
+
+To see who contributes which tasks:
+
+1. Open the project board.
+2. Check the board header for member avatars and counts.
+3. Hover over an avatar to see their role (Owner, Admin, or Member).
+
+---
+
+⚠️ **Security note:** Members can only associate tasks they own to a specific board, and the system prevents them from adding tasks to boards in which they have no work. This ensures board-specific permissions are enforced.
+
+### Multi-user login and Better Auth sessions
 
 Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
 
