@@ -33,6 +33,45 @@ Domain restrictions are useful when you want to share an invite link broadly (in
 
 Project members can view boards, create and edit tasks, comment, and collaborate. Project-level settings control what members can do.
 
+## Multi-user login and Better Auth sessions
+
+Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
+
+### Login flow
+
+1. **Initiate login** — Click email code or magic-link in the login modal.
+2. **Server processes** — Better Auth verifies your identity on the server.
+3. **Response includes cookies** — The login response sets:
+   - **Better Auth session** — Server-side session for your authentication.
+   - **nookies_user** — Client-side user identity token.
+   - **ht_session** — Server-validated signature for cookie integrity.
+4. **Redirect to board** — You're redirected to a board in the app.
+
+<Aside type="note">
+All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
+</Aside>
+
+### Switching accounts without logout
+
+When you're already logged in and want to switch to a different account (for example, on the same browser):
+
+1. **Initiate new login** — Start logging in via email code or magic-link for the target account.
+2. **Previous session cleared** — The login response now properly clears the previous user's Better Auth session cookies (Max-Age=0). This prevents the old user's session from persisting.
+3. **Fresh cookies set** — Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
+4. **Redirect to board** — You're now logged in as the intended user.
+
+This ensures that account switching works correctly and you always see the correct user in the app.
+
+### Persistent sign-in state
+
+After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn't automatically log you out.
+
+Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
+
+<Aside type="warning">
+If you persist LocalStorage across sign-ins or sessions (e.g., in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
+</Aside>
+
 ## AI Agents
 
 AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board's tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
@@ -95,7 +134,6 @@ The like button is a shortcut for the thumbs-up reaction. It appears in the full
 Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
 **What updates in real time:**
-
 - Tasks appearing, disappearing, or moving between sections when created, archived, or moved
 - Task title, status, priority, and assignee changes
 - New comments and reactions
@@ -108,7 +146,6 @@ This is powered by **Pusher**, so updates are pushed directly to connected brows
 For simultaneous editing of the same task description, Hypertask uses **TipTap with Yjs**. Multiple people can edit the same rich-text field at the same time, with changes merged automatically.
 
 This applies to:
-
 - Task descriptions
 - Comments (while drafting)
 - Any rich text field in the app
@@ -122,7 +159,6 @@ Real-time sync means AI agents editing task descriptions via MCP won't overwrite
 ## Managing comments
 
 You can manage comments on any task — including comments left by other team members or agents. This is useful when:
-
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
 - Tidying up task threads for better readability
@@ -159,7 +195,6 @@ Browse and search a full emoji library. Click any emoji to insert it into your c
 #### GIFs tab
 
 The GIFs tab is powered by **Giphy** and offers two modes:
-
 - **Trending** — shows popular GIFs by default when you open the tab.
 - **Search** — type any query to find a GIF that fits the moment.
 
@@ -174,7 +209,6 @@ GIF search requires a Giphy API key configured on the Hypertask deployment. If G
 Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
-
 - Task creation, updates, and deletion
 - Section moves
 - Assignment and priority changes
@@ -189,7 +223,6 @@ Activity logs are available at the task level (see what happened to a specific t
 The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
-
 - Click the **Show history** pill at the top of the feed, or
 - Press **`Ctrl+Shift+H`**
 
