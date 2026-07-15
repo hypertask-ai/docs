@@ -22,6 +22,35 @@ Hypertask supports multiple authentication methods, all integrated through the s
 
 All authentication flows support clean sign-out that immediately invalidates the session and clears cookies.
 
+## Board Management
+
+Hypertask provides direct actions to archive and delete boards through the **Ctrl+K** command palette.
+
+### Archive a board
+
+To temporarily remove a board from your workspace:
+
+1. Press **Ctrl+K** to open the command palette
+2. Search for **"Archive"** and select the board you want to archive
+3. Confirm the action in the palette-styled modal
+
+Archived boards are hidden from the main board list but preserved in the **Archive** section. You can unarchive them at any time using the same Ctrl+K command.
+
+### Delete a board
+
+To permanently remove a board:
+
+1. Press **Ctrl+K** to open the command palette
+2. Search for **"Delete"** and select the board you want to delete
+3. Type the board name to confirm in the modal that appears (required for safety)
+4. Click **Delete** to remove the board and all its tasks permanently
+
+Deleted boards cannot be recovered. This action permanently deletes all tasks, comments, labels, and customizations on the board, so use it with caution.
+
+### First-board redirect
+
+When you first create your first board using Ctrl+K, the command palette will redirect you directly to that new board for immediate use. After your first board, the redirect behavior applies when creating additional boards — you'll be taken to the newly created board automatically.
+
 ## Sidebar
 
 The sidebar groups your workspace navigation and project controls into a consistent layout. Use the account section in the sidebar to manage your config:
