@@ -1,136 +1,154 @@
 ---
 title: What is Hypertask?
-description: AI-native project management for teams and AI agents.
+description: AI-native project management for teams and AI agents – manage tasks, collaborate in real-time, and connect AI agents with MCP, CLI, and REST APIs.
 ---
 
-import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
+import { LinkCard, Htwo, Steps, TabItem, TabGroup, Aside, Card, CardGrid, Steps, InlineCode } from '@astrojs/starlight/components';
 
-Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members â\x80\x94 through the [Model Context Protocol (MCP)](/mcp/overview/) and a full-featured [CLI](/cli/reference/).
+# What is Hypertask?
 
-The web app lives at [app.hypertask.ai](https://app.hypertask.ai). It's a Next.js application designed for speed, with real-time sync via Server-Sent Events (SSE).
-
-## Why Hypertask?
-
-Most project management tools were designed for humans clicking through UIs. That breaks down when an AI coding agent needs to pick up a task, read context, do the work, and report back. Hypertask solves this.
-
-<CardGrid>
-  <Card title="AI Task Writer" icon="pencil">
-    Describe what you need in natural language. Hypertask generates structured tasks with titles, descriptions, priorities, and estimates.
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <Card title="AI-native collaboration" icon="🤖">
+    Built with agents first. Hypertask comes with an intelligent co-worker that can read your board, create tasks, and respond to comments—all via Chat, CLI, MCP, or REST.
   </Card>
-  <Card title="Voice Dictation" icon="translate">
-    Capture tasks by speaking. Powered by Whisper, so you can dictate a task from your phone or desktop without typing a word.
+  <Card title="Full control, no lock-in" icon="🔑">
+    Use the built-in email login, or integrate programmatically. The CLI, MCP and REST APIs cover every piece of your workflow, so you own the experience.
   </Card>
-  <Card title="HyperAI Co-worker" icon="rocket">
-    An AI assistant embedded in every project. It can summarize progress, suggest next steps, and help you write task descriptions.
+  <Card title="Workspace-ready" icon="👥">
+    Multi-tenant workspaces with optional boards per workspace, team invites, role-based permissions, and real-time collaboration for many teams.
   </Card>
-  <Card title="MCP for AI Agents" icon="setting">
-    Connect Claude, Cursor, or any MCP client. Agents can list tasks, create work items, move cards between sections, and post comments â\x80\x94 all programmatically.
+  <Card title="Modern UX" icon="🎨">
+    Clean Kanban boards, calendar views, a unified Inbox for mentions and updates, and a Theme picker supporting Light, Dark, AMOLED, and custom Paper theme.
   </Card>
-  <Card title="CLI for Developers" icon="laptop">
-    Manage tasks without leaving your terminal. Install with <code>npm install -g @hypertask/hypertask_cli</code> and run <code>hypertask login</code> to get started. The CLI is also the recommended interface for AI coding agents like Claude Code.
-  </Card>
-</CardGrid>
+</div>
 
-## How Hypertask is organized
+## Setup options
 
-Work in Hypertask follows a simple hierarchy:
+Whether you prefer a browser UI, the command line, or integrating via code, there's a path that fits your workflow.
 
-```
-Team (Organization)
-  â\x94\x94â\x80Projects
-        â\x94\x94â\x80Sections (columns)
-              â\x94\x94â\x80Tasks
-                    â\x94\x94â\x80Comments
-                    â\x94\x94â\x80Subtasks
-                    â\x94\x94â\x80Attachments
-```
+<TabGroup>
+  <TabItem label="Browser" open>
+    <p class="lead">Sign in with email on <code>app.hypertask.ai</code> to start collaborating immediately. Invite your team and start adding tasks, boards, and workflows.</p>
+  </TabItem>
+  <TabItem label="CLI">
+    <p class="lead">Manage and create tasks from the terminal with the <code>hypertask</code> CLI. Install via your package manager, login, and start creating.</p>
+  </TabGroup>
 
-- **Projects** are containers for related work â\x80\x94 a product, a client engagement, a sprint. Each project has its own board, members, and settings.
-- **Sections** are the columns on a project board. Typical setups use Todo, Doing, Review, and Done, but you can customize them however you like.
-- **Tasks** are the units of work. They carry a title, HTML description, priority, estimate, assignee, due date, and a unique ticket number like `<code>PROJ-123</code>`.
-- **Comments** are threaded discussions on tasks. They support HTML formatting, @mentions, emoji reactions, and file attachments.
+<Steps>
+  <Step>Install the CLI via npm or homebrew.</Step>
+  <Step>Run <code>hypertask login</code> and follow the on-screen prompts.</Step>
+  <Step>Use commands like <code>hypertask task create</code>, <code>hypertask list</code>, and <code>hypertask chat</code> from your shell.</Step>
+</Steps>
+
+  <TabItem label="MCP">
+    <p class="lead">Connect Hypertask to your AI agents via the Model Context Protocol. The MCP server exposes tools for tasks, boards, chat, and more.</p>
+  </TabItem>
+
+<Steps>
+  <Step>Add the Hypertask MCP endpoint to your LM Studio, Claude Desktop, or another MCP-compatible client.</Step>
+  <Step>Authenticate with a Bearer token or session cookie.</Step>
+  <Step>Use tools like <code>hypertask_assign_user</code>, <code>hypertask_create_task</code>, and <code>hypertask_chat</code> in your agent.</Step>
+</Steps>
+
+<TabItem label="REST API">
+  <p class="lead">Use our REST API to build integration or mobile apps. Seeds, boards, views, tasks, comments, and more are all reachable via simple HTTP requests.</p>
+</TabItem>
+
+<Steps>
+  <Step>Get an API key from the Settings sidebar in the app.</Step>
+  <Step>Add <code>Authorization: Bearer &lt;key&gt;</code> headers to your requests.</Step>
+  <Step>Use endpoints like <code>GET /boards</code>, <code>POST /tasks</code>, <code>POST /messages/chat</code>, and more.</Step>
+</Steps>
+</TabGroup>
+
+## Core concepts
+
+Here's a quick overview of the key concepts you'll use in Hypertask.
+
+| Concept | Description |
+|---------|-------------|
+| **Workspace** | The top-level container for your organization. Board owners can choose whether a board belongs to one workspace or automatically inherits from the owner. |
+| **Board** | A flexible surface for organizing work: Kanban columns, tables, lists, or calendars. Boards contain sections, views, and tasks. |
+| **Section** | A column on a Kanban board with tasks that share a common state or trigger. Sections support drag-to-reorder. |
+| **View** | A custom perspective on a board—filtering, sorting, grouping, or hiding tasks. Views can be pinned, hidden, or deleted as needed. |
+| **Task** | A unit of work with a title, description, assignee, tags, subtasks, and relations with other tasks and issues. |
+| **Chat** | An in-app AI assistant that understands your context—tasks, boards, messages, and more. You can create and edit saved GPTs, speed up writing, and control agents and time tracking. |
+| **Inbox** | A unified feed of mentions, important items, reactions, and updates across your boards. Unread items are highlighted and accessible via keyboard navigation. |
+| **Agents** | Autonomous AI agents that can pull context from your board, create and update tasks, respond to comments, run schedules, and interact with your workspace via tools. |
+
+<Aside type="info">
+It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and your own SMTP for signing in, with Firebase kept exclusively for push notifications. You can also integrate via CLI, MCP, or REST without going through the app UI at all.</Aside>
+
+## Getting started
+
+<Steps>
+  <Step>Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.</Step>
+  <Step>Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).</Step>
+  <Step>Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).</Step>
+  <Step>Start adding tasks, tagging them for organization, and assigning them.</Step>
+  <Step>Use <kbd>Ctrl+K</kbd> to access the command palette for quick navigation and actions.</Step>
+  <Step>Chat with the AI assistant to create tasks, summarize boards, or brainstorm without leaving the page.</Step>
+  <Step>Optional: install the CLI or set up an MCP agent for programmatic control over your tasks.</Step>
+</Steps>
+
+## Keyboard shortcuts
+
+Hypertask has a rich set of keyboard shortcuts across surfaces. Press <kbd>Ctrl+K</kbd> to open the command palette and search for shortcuts by name.
 
 <Aside>
-Every task gets a sequential ticket number scoped to its project (e.g., `HT-42`). Use these to reference tasks in commits, comments, or conversations with your AI agent.
-</Aside>
+Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and <code>⌘</code> on macOS.</Aside>
 
-## Built for async and deep work
+<InlineCode>Ctrl+K</InlineCode> — Open command palette for shortcuts and actions.
 
-Hypertask is opinionated about how teams should work:
+<InlineCode>Ctrl+G</InlineCode> — Navigate surfaces (Inbox → Boards → Calendar → Tasks).
 
-- **Async-first.** The inbox, task comments, and auto-summaries keep everyone informed without requiring real-time meetings.
-- **Deep work friendly.** No chat. No presence indicators. No "typing..." animations. Communicate through tasks and comments when you're ready.
-- **AI agents as team members.** Assign tasks to an AI agent the same way you'd assign them to a colleague. The agent picks up work from its inbox, moves tasks through sections, and posts updates in comments.
+<InlineCode>G-H</InlineCode> — Open Running timers view.
 
-## App layout
+<InlineCode>Ctrl+E</InlineCode> — Archive notification and move to next task in Inbox.
 
-Hypertask's web app uses a top icon bar for navigation across all surfaces (board, table, calendar, inbox, AI chat). A redesigned **left icon rail** layout is available as a beta opt-in.
+<InlineCode>Shift</InlineCode> + <InlineCode>Start/Stop</InlineCode> task — Start or stop per-task timers.
 
-### Left icon rail (beta)
+### Live shortcuts
 
-Press <kbd>Ctrl+K</kbd> and search for **"New layout: left icon rail (beta)"** to toggle the new layout on or off. It is **off by default**.
+The command palette shows all shortcuts relevant to your current context, such as boards, tasks, inbox, and chat. Hover over a shortcut to see its location (modal, board surface, or button).
 
-The rail is a fixed 48 px-wide column on the left edge of the app:
+## Onboarding
 
-| Position | Icons |
-|----------|-------|
-| **Top** | Inbox (with unread badge), AI Chat |
-| **Middle** | Board, Table, Calendar â\x80\x94 surface switchers for the current project |
-| **Bottom** | Avatars, invite, theme toggle, settings |
+First-time users see an <strong>Onboarding Tour</strong> when they sign in. You can replay it at any time by pressing <kbd>Ctrl+K</kbd>, searching for **"Onboarding tour"**, and selecting the replay option.
 
-Every surface uses a **splits-style header**: a home icon marks the primary view, with search and filter controls inline.
+The tour walks you through connecting AI, creating your first board, and using key features. Invited teammates see a trimmed version that skips heavy setup but still introduces essential workflows.
 
-<Aside type="note">
-The left icon rail is a pure repositioning of existing icons and actions â\x80\x94 no functionality is lost or changed. The classic top icon bar remains the default experience.
-</Aside>
+## Security, auth, and permissions
 
-### Themes
+Hypertask uses server-side authentication and ensures that other users' data never leaks into your boards or views. Here are some key principles:
 
-Hypertask supports multiple visual themes to match your preferences. Press <kbd>Ctrl+K</kbd> and search for **"Theme"** to open the theme picker. Available themes:
-
-| Theme | Description |
-|-------|-------------|
-| **System** | Uses your OS default (automatic) |
-| **Light** | Clean, bright interface |
-| **Dark** | High contrast for low-light environments |
-| **AMOLED** | Optimized for OLED displays with true blacks |
-| **Paper** | Warm editorial light theme with softer contrast, ideal for reading-heavy workflows |
-
-Themes persist across sessions and are applied globally to your workspace.
-
-## Key capabilities at a glance
-
-| Capability | Human (Web UI) | CLI | AI Agent (MCP) |
-|---|---|---|---|
-| Create tasks | Yes | Yes | Yes |
-| Move tasks between sections | Yes | Yes | Yes |
-| Assign team members | Yes | Yes | Yes |
-| Add comments | Yes | Yes | Yes |
-| Search across tasks | Yes | Yes | Yes |
-| Check inbox | Yes | Yes | Yes |
-| Attach files | Yes | Yes | â\x80\x94 |
-| Invite project members | Yes | â\x80\x94 | â\x80\x94 |
-| Voice dictation | Yes | â\x80\x94 | â\x80\x94 |
-| AI Task Writer | Yes | â\x80\x94 | â\x80\x94 |
-| Auto-summaries | Yes | â\x80\x94 | Yes |
-
-## Interfaces at a glance
-
-Hypertask offers three ways to interact programmatically, each suited to different use cases:
-
-| Interface | Best for | Install / setup |
-|---|---|---|
-| **Web UI** | Daily task management, visual boards | [app.hypertask.ai](https://app.hypertask.ai) |
-| **CLI** | Terminal workflows, AI coding agents (Claude Code, etc.), scripts and CI | `npm install -g @hypertask/hypertask_cli` |
-| **MCP** | AI assistants (Claude Desktop, Cursor) that need rich tool schemas | See [MCP Integration](/mcp/overview/) |
+- <strong>Email sign-in & Better Auth</strong>: Sign in is handled server-side. Email login takes you directly to your board; magic-links and sign-out remain functional.
+- <strong>Firebase for push only</strong>: Firebase Auth is not used for login or signup. Firebase is strictly for FCM push notifications.
+- <strong>Route cleanup</strong>: Dead authentication routes that no longer exist (e.g. old signup or password reset paths) return 404, and CORS carve-outs are removed for production security.
+- <strong>Session integrity</strong>: API routes validate signed <code>ht_session</code> cookies alongside <code>nookies_user</code>. This prevents cookie forging and account takeovers.
+- <strong>Strict account linking</strong>: Linking a Google login to an unverified local account is blocked, ensuring verified local accounts are not orphaned.
+- <strong>Multi-tenant isolation</strong>: By design, boards, views, and tasks belong to the user. Archive and other features show only your data unless explicitly shared.
 
 <Aside type="tip">
-**Which interface should I use for AI agents?** CLI commands consume far fewer tokens than MCP tool schemas â\x80\x94 an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
-</Aside>
+For finer-grained security, you can use the REST API to enforce claims, tokens, and additional checks for your integrations.</Aside>
 
-## Next steps
+## Frequently asked questions
 
-- **[Quick Start](/getting-started/quickstart/)** â\x80\x94 Create your first project and connect an AI agent in under 5 minutes.
-- **[Core Concepts](/getting-started/concepts/)** â\x80\x94 Understand projects, sections, tasks, and the data model.
-- **[CLI Reference](/cli/reference/)** â\x80\x94 Complete command reference for the Hypertask CLI.
-- **[MCP Integration](/mcp/overview/)** â\x80\x94 Deep dive into connecting AI agents via MCP.
+<details>
+<summary>Is Hypertask free?</summary>
+
+Hypertask offers a free tier for small teams. Paid plans provide additional workspace seats, increased board/task limits, and priority support. See Pricing for details.
+</details>
+
+<details>
+<summary>Can I export my tasks?</summary>
+
+Yes. Export options include CSV, JSON, and integrations with IDEs, build tools, and CI/CD pipelines using the CLI and REST API.
+</details>
+
+<details>
+<summary>Is there a mobile app?</summary>
+
+The web app is fully responsive and works seamlessly on mobile and tablet. A dedicated native app is not required for day-to-day use.
+
+</details>
