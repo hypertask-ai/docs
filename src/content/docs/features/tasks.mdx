@@ -77,6 +77,8 @@ Tasks follow a three-stage lifecycle:
 
 Archiving is the recommended way to clean up completed work. It keeps your board focused without losing history.
 
+**Real-time archive behavior.** The archive view now provides stable high counts and returns results at the query boundary (page size 50) using a stable compound cursor. Archive state from other users reflects live via the `useArchivedRealtime` hook, and changes are re-fetched through the existing Pusher `INBOX_EVENT` / `BOARD_EVENT` infrastructure. This improves reliability during bulk archival and narrows query boundaries to the authenticated user. ([HTPR-4019](https://app.hypertask.ai/detail/project-15/4019))
+
 ## Task detail panel
 
 The task detail panel opens when you click a task card on the board. It shows all task properties in a consistent, scannable layout:
@@ -122,7 +124,7 @@ Use subtasks to break large work items into actionable steps while keeping the p
 ## Assignees and followers
 
 - **Assignees** are the people responsible for completing the task. A task can have multiple assignees.
-- **Followers** receive notifications about task updates (comments, status changes, moves). Anyone @mentioned in a comment is automatically added as a follower.
+- **Followers** receive notifications about task updates (comments, status changes, assignments). Anyone @mentioned in a comment is automatically added as a follower.
 
 ### Assign menu
 
@@ -211,3 +213,13 @@ Generate a **public link** to share a task with people outside your project. Pub
 <Aside type="caution">
 Public links expose task details to anyone with the URL. Use expiration dates and share only what's necessary.
 </Aside>
+
+## Sign in with email (magic-link)
+
+You can sign in from the landing page or through the web app. The sign-in flow now uses a legacy reusable link+code email again:
+
+- You receive an email with both a **sign-in link** and a **6-digit code**.
+- Clicking the link or entering the code in the app authenticates your session.
+- The link and code do not expire, and they remain valid across multiple devices.
+
+This behavior replaces the single-use magic-link that previously lacked a code and expired before many users could click it. Sign in via email is now reliable across clients and networks. ([HTPR-4175](https://app.hypertask.ai/detail/project-15/4175))
