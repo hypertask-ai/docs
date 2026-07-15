@@ -64,7 +64,7 @@ By default, sections appear in alphabetical order. Customize your board layout w
 | Control | Description |
 |---------|-------------|
 | **Segmented mouse-only toggle** | Choose between **Teams** and **Recent** sections with a mouse-optimized segmented toggle below the search bar |
-| **Keyboard shortcut** | <kbd>Ctrl+K</kbd> → search for "sort" to open board sorting options |
+| **Keyboard shortcut** | <kbd>Ctrl+K</kbd> — search for "sort" to open board sorting options |
 | **Drag and drop** | Drag sections in the layout to manually reorder them. Your custom sort persists per user. |
 | **Manage Views panel** | Provides per-user sort toggles and the ability to toggle visibility without deleting them. |
 | **Admin default order** | Project owners and admins can define a default order for newly created boards globally. |
@@ -117,11 +117,11 @@ Both methods open the same filter panel. You can also filter by tasks you are **
 
 A Gantt-style horizontal timeline showing task durations and dependencies. Best for project planning and identifying scheduling conflicts.
 
-## Saved Views
+### Saved Views
 
 Saved Views let you create reusable filter and sort configurations for a project. Instead of re-applying the same filters every time you open a board, save them as a named view and switch between them instantly.
 
-### Filters
+#### Filters
 
 Narrow down which tasks appear on the board:
 
@@ -136,7 +136,7 @@ Narrow down which tasks appear on the board:
 | **Creator** | Show tasks created by a specific person |
 | **Following** | Show only tasks you are following |
 
-### Sort options
+#### Sort options
 
 Control the order tasks appear within each section:
 
@@ -147,7 +147,7 @@ Control the order tasks appear within each section:
 - **Created At** — newest or oldest first
 - **Updated At** — most recently changed first
 
-### Subtask display
+#### Subtask display
 
 Control how subtasks appear on the board:
 
@@ -162,7 +162,7 @@ Control how subtasks appear on the board:
 Saved Views are per-project. Each team member can create their own views without affecting others.
 </Aside>
 
-### Sharing a view via deep link
+#### Sharing a view via deep link
 
 Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately — no manual navigation required.
 
@@ -180,7 +180,7 @@ https://app.hypertask.ai/project?id=15&view=bugs
 
 Copy the URL from your browser's address bar while the view is active, or share it directly from the view picker. Using the browser **Back** button after following a deep link returns you to your previous location without disrupting the view selection.
 
-### Reordering views
+#### Reordering views
 
 You can customize the order of your views in the **Manage Views** panel:
 
@@ -190,7 +190,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon (⚙️) appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon 🛠 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
@@ -203,3 +203,11 @@ Each view displays a count of active tasks (Normal status) and archived tasks se
 <Aside type="tip">
 For frequent users, per-user sorting lets you prioritize the views you use most often, while admins can maintain a predictable organization for new users.
 </Aside>
+
+#### Quick view-tabs pill bar
+
+You can switch between saved views without opening the Manage Views panel. At the top of the board surface is a pill bar that exposes a selection of your 8 most-used views. Click a pill to instantly switch the board to that view — the URL updates (for example, <code>?view=bugs</code>) and the board content loads accordingly. This provides one-click access to your preferred views for day-to-day work.
+
+#### View tabs
+
+In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its <code>?view=</code> parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.
