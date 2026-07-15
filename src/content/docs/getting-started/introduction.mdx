@@ -5,7 +5,7 @@ description: AI-native project management for teams and AI agents.
 
 import { Card, CardGrid, Aside } from '@astrojs/starlight/components';
 
-Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members — through the [Model Context Protocol (MCP)](/mcp/overview/) and a full-featured [CLI](/cli/reference/).
+Hypertask is a project management platform built for a world where humans and AI agents work side by side. Instead of treating AI as an afterthought, Hypertask gives agents the same first-class access as human team members â\x80\x94 through the [Model Context Protocol (MCP)](/mcp/overview/) and a full-featured [CLI](/cli/reference/).
 
 The web app lives at [app.hypertask.ai](https://app.hypertask.ai). It's a Next.js application designed for speed, with real-time sync via Server-Sent Events (SSE).
 
@@ -24,7 +24,7 @@ Most project management tools were designed for humans clicking through UIs. Tha
     An AI assistant embedded in every project. It can summarize progress, suggest next steps, and help you write task descriptions.
   </Card>
   <Card title="MCP for AI Agents" icon="setting">
-    Connect Claude, Cursor, or any MCP client. Agents can list tasks, create work items, move cards between sections, and post comments — all programmatically.
+    Connect Claude, Cursor, or any MCP client. Agents can list tasks, create work items, move cards between sections, and post comments â\x80\x94 all programmatically.
   </Card>
   <Card title="CLI for Developers" icon="laptop">
     Manage tasks without leaving your terminal. Install with <code>npm install -g @hypertask/hypertask_cli</code> and run <code>hypertask login</code> to get started. The CLI is also the recommended interface for AI coding agents like Claude Code.
@@ -37,15 +37,15 @@ Work in Hypertask follows a simple hierarchy:
 
 ```
 Team (Organization)
-  └─Projects
-        └─Sections (columns)
-              └─Tasks
-                    └─Comments
-                    └─Subtasks
-                    └─Attachments
+  â\x94\x94â\x80Projects
+        â\x94\x94â\x80Sections (columns)
+              â\x94\x94â\x80Tasks
+                    â\x94\x94â\x80Comments
+                    â\x94\x94â\x80Subtasks
+                    â\x94\x94â\x80Attachments
 ```
 
-- **Projects** are containers for related work — a product, a client engagement, a sprint. Each project has its own board, members, and settings.
+- **Projects** are containers for related work â\x80\x94 a product, a client engagement, a sprint. Each project has its own board, members, and settings.
 - **Sections** are the columns on a project board. Typical setups use Todo, Doing, Review, and Done, but you can customize them however you like.
 - **Tasks** are the units of work. They carry a title, HTML description, priority, estimate, assignee, due date, and a unique ticket number like `<code>PROJ-123</code>`.
 - **Comments** are threaded discussions on tasks. They support HTML formatting, @mentions, emoji reactions, and file attachments.
@@ -75,13 +75,13 @@ The rail is a fixed 48 px-wide column on the left edge of the app:
 | Position | Icons |
 |----------|-------|
 | **Top** | Inbox (with unread badge), AI Chat |
-| **Middle** | Board, Table, Calendar — surface switchers for the current project |
+| **Middle** | Board, Table, Calendar â\x80\x94 surface switchers for the current project |
 | **Bottom** | Avatars, invite, theme toggle, settings |
 
 Every surface uses a **splits-style header**: a home icon marks the primary view, with search and filter controls inline.
 
 <Aside type="note">
-The left icon rail is a pure repositioning of existing icons and actions — no functionality is lost or changed. The classic top icon bar remains the default experience.
+The left icon rail is a pure repositioning of existing icons and actions â\x80\x94 no functionality is lost or changed. The classic top icon bar remains the default experience.
 </Aside>
 
 ### Onboarding tour
@@ -128,11 +128,11 @@ Themes persist across sessions and are applied globally to your workspace.
 | Add comments | Yes | Yes | Yes |
 | Search across tasks | Yes | Yes | Yes |
 | Check inbox | Yes | Yes | Yes |
-| Attach files | Yes | Yes | Yes |
-| Invite project members | Yes | Yes | — |
-| Voice dictation | Yes | — | — |
-| AI Task Writer | Yes | — | — |
-| Auto-summaries | Yes | — | Yes |
+| Attach files | Yes | Yes | â\x80\x94 |
+| Invite project members | Yes | â\x80\x94 | â\x80\x94 |
+| Voice dictation | Yes | â\x80\x94 | â\x80\x94 |
+| AI Task Writer | Yes | â\x80\x94 | â\x80\x94 |
+| Auto-summaries | Yes | â\x80\x94 | Yes |
 
 ## Interfaces at a glance
 
@@ -145,12 +145,12 @@ Hypertask offers three ways to interact programmatically, each suited to differe
 | **MCP** | AI assistants (Claude Desktop, Cursor) that need rich tool schemas | See [MCP Integration](/mcp/overview/) |
 
 <Aside type="tip">
-**Which interface should I use for AI agents?** CLI commands consume far fewer tokens than MCP tool schemas — an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
+**Which interface should I use for AI agents?** CLI commands consume far fewer tokens than MCP tool schemas â\x80\x94 an MCP server injects its full schema into the agent's context window at startup, whereas CLI commands are learned from training data and cost tokens only when executed. For agents with terminal access (like Claude Code), the CLI is the most token-efficient choice. For AI assistants without shell access (like Claude Desktop), MCP is the right fit.
 </Aside>
 
 ## Next steps
 
-- **[Quick Start](/getting-started/quickstart/)** — Create your first project and connect an AI agent in under 5 minutes.
-- **[Core Concepts](/getting-started/concepts/)** — Understand projects, sections, tasks, and the data model.
-- **[CLI Reference](/cli/reference/)** — Complete command reference for the Hypertask CLI.
-- **[MCP Integration](/mcp/overview/)** — Deep dive into connecting AI agents via MCP.
+- **[Quick Start](/getting-started/quickstart/)** â\x80\x94 Create your first project and connect an AI agent in under 5 minutes.
+- **[Core Concepts](/getting-started/concepts/)** â\x80\x94 Understand projects, sections, tasks, and the data model.
+- **[CLI Reference](/cli/reference/)** â\x80\x94 Complete command reference for the Hypertask CLI.
+- **[MCP Integration](/mcp/overview/)** â\x80\x94 Deep dive into connecting AI agents via MCP.
