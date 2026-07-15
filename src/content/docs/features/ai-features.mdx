@@ -73,6 +73,7 @@ Hypertask includes built-in time tracking for tasks. Tracking is **opt-in per bo
 - **Per-task timers** — You can start and stop timers on individual tasks, giving you fine-grained tracking for each activity.
 - **Running-timers view** — A dedicated board surface (accessed via shortcut `G-H`) shows all tasks currently being tracked, making it easy to see active work.
 - **CLI/AI control** — You can start, stop, and view time tracking through the CLI and AI agents, keeping everything synchronized.
+- **Per-inference metering** — Each AI inference call is tracked in the first-party `AiUsage` table, making usage data available in the AI Usage report.
 
 ### Time tracking API
 
@@ -129,7 +130,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 ### What makes it useful
 
 - **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
-- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, **create and delete saved views**, and **edit sent messages** — all directly from the chat sidebar. Just tell it what you need and it handles the rest.
+- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, create and delete saved views, and edit sent messages — all directly from the chat sidebar. Just tell it what you need and it handles the rest. Per-inference usage is tracked automatically and reported in the AI Usage breakdown.
 - **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
 - **Consistent formatting** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used.
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
@@ -195,7 +196,7 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 | Move tasks between boards | ✅ | ✅ |
 | Inbox (list, archive, unarchive) | ✅ | ✅ |
 | Tags (read, create, assign) by name and ID | ✅ | ✅ |
-| Time tracking (start/stop) | ✅ | ✅ |
+| Time tracking (start/stop, per-inference metering) | ✅ | ✅ |
 
 ## Auto-Summary
 
@@ -228,6 +229,8 @@ The AI Usage report breaks down usage across three dimensions:
 | **By Feature** | Usage grouped by AI feature (AI Chat, Task Writer, Text Enhancement, etc.) |
 | **By Model** | Usage grouped by AI model (e.g., Claude Sonnet 5, GPT-5.5) |
 | **Top Users** | Usage grouped by team member, showing who consumed the most AI resources |
+| **By Inference** | Each individual AI inference call is tracked in the first-party `AiUsage` table, including the feature that triggered it, the model used, and the token count |
+| **Instant reports** | Per-inference data is available immediately after each deployment, as verified in staging and production |
 
 ### Access
 
