@@ -79,6 +79,8 @@ Archiving is the recommended way to clean up completed work. It keeps your board
 
 **Real-time archive behavior.** The archive view now provides stable high counts and returns results at the query boundary (page size 50) using a stable compound cursor. Archive state from other users reflects live via the `useArchivedRealtime` hook, and changes are re-fetched through the existing Pusher `INBOX_EVENT` / `BOARD_EVENT` infrastructure. This improves reliability during bulk archival and narrows query boundaries to the authenticated user. ([HTPR-4019](https://app.hypertask.ai/detail/project-15/4019))
 
+**Priority updates reflect immediately on the board.** When you change a task's priority in the task detail panel, the new value appears on the card immediately instead of waiting for an approximate 10-second refresh cycle. If you're on a filtered view, the task's priority badge is updated as soon as your filter is applied. ([HTPR-4139](https://app.hypertask.ai/detail/project-15/4139))
+
 ## Task detail panel
 
 The task detail panel opens when you click a task card on the board. It shows all task properties in a consistent, scannable layout:
