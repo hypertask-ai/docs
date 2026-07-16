@@ -64,6 +64,7 @@ When using the AI Task Writer, you can review the task before adding it to your 
 Discard and confirm dialogs manage your draft state; they're treated as preview steps before commit.
 
 ## Time Tracking
+
 Hypertask includes built-in time tracking for tasks. Tracking is **opt-in per board** by default; time tracking starts automatically the first time you start tracking on a board where it's enabled.
 
 ### Enabling and disabling tracking
@@ -74,6 +75,11 @@ Hypertask includes built-in time tracking for tasks. Tracking is **opt-in per bo
 - **CLI/AI control** — You can start, stop, and view time tracking through the CLI and AI agents, keeping everything synchronized.
 - **Per-inference metering** — Each AI inference call is tracked in the first-party `AiUsage` table, making usage data available in the AI Usage report.
 
+### Timer filter and live badge
+- **Timer toggle in board header** — When time tracking is enabled on a board, a Timer toggle appears next to Filter, Sort, and Columns in the header. It shows a live count badge with the number of tasks currently being tracked.
+- **Running-timer filter** — Clicking the Timer toggle collapses the board to show only tasks with active timers, helping you focus on tasks currently in progress.
+- **Ctrl+K board toggle** — The command palette can also toggle this filter. Open Ctrl+K, search for "timer filter," and select the option to show or hide the running-timer view. The filter is per-board and respects your current board settings.
+
 ### Time tracking API
 When time tracking is enabled on a board, the server enforces tracking for all API interactions:
 
@@ -82,7 +88,7 @@ When time tracking is enabled on a board, the server enforces tracking for all A
 - **Stop tracking** and paused/unpaused states persist correctly regardless of tracking state.
 - **Per-task timers** — Timers can be started and stopped on specific tasks, and the running list surface shows all active timers.
 - **Running-timers surface** — The `G-H` shortcut opens a board surface that lists all tasks with running timers, making it easy to review active work.
-- **Reports and history** — Use server-managed timer state, not client-side timestamps.
+- **Per-user and admin defaults** — Display running-timers as a board surface that can be pinned; admins can define default configurations.
 
 ### Integration with workflows
 Time tracking integrates with other features:
@@ -97,6 +103,7 @@ For frequent users, custom ordering lets you prioritize views you use most, whil
 </Aside>
 
 ## Voice Dictation
+
 Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
 
 | Feature | Details |
@@ -109,9 +116,10 @@ Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it any
 
 Speak naturally. The transcription handles punctuation, formatting, and language detection automatically.
 
-For even faster composition, use **Superhuman-style snippets** to insert predefined templates and commands with just `.` followed by a keyword (e.g., `.`ack, `.oro`, `.contact`). Pin your most-used snippets to the top of the menu for one-tap insertion.
+For even faster composition, use **Superhuman-style snippets** to insert predefined templates and commands with just `.` followed by a keyword (e.g., `.ack`, `.oro`, `.contact`). Pin your most-used snippets to the top of the menu for one-tap insertion.
 
 ## Text Enhancement
+
 Select any text in a task description or comment and click **Improve Readability**. The AI refines grammar, clarity, and style while preserving your meaning.
 
 - Works on any text field in the app
@@ -121,6 +129,7 @@ Select any text in a task description or comment and click **Improve Readability
 This is intentionally lightweight. It's not a rewrite — it's a polish.
 
 ## HyperAI Co-worker
+
 HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: it knows your project, your tasks, and your team structure.
 
 ### What makes it useful
@@ -135,14 +144,37 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
-- **Keyboard navigation in search** — when using the search bar, pressing `<kbd>Arrow Down</kbd>` from the input focuses the Ask AI row, and `<kbd>Arrow Up</kbd>` returns focus to the search input. The Ask AI row appears with a purple accent color (`#C668FF`) to distinguish it from regular search results.
+
+### Keyboard shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
+| `Cmd/Ctrl + Shift + O` | Start a new chat |
+
+### Full-screen chat mode
+
+AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Chat is unscoped: you can reference tasks, boards, and project context across all boards in your project without selecting a specific board.
+
+### House style and brevity
+
+All chat responses now follow a consistent house style:
+
+- The first line is a BLUF (bottom line up front).
+- Body consists of numbered bullets with key points in bold.
+- Responses are capped at approximately 120 words. An end-of-prompt reminder with the style instruction is added if the response exceeds this limit.
+- The older "In summary" closure rule is removed, leading to more concise answers.
+
+This brevity policy applies to all models used for chat.
 
 ### MCP tools automatically available
+
 AI Chat is powered by the same MCP tools available to external AI agents. When new MCP tools or parameters are added to the Hypertask MCP server, they **automatically become available in AI Chat** — no separate integration step or redeployment is needed. AI Chat always checks for existing MCP tools in the session and makes them accessible to the AI model.
 
 AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
 
 ### Attaching files to AI Chat
+
 You can attach files and images directly to messages in AI Chat, giving the AI concrete reference material to work with alongside your prompt.
 
 **Supported content:**
@@ -162,39 +194,35 @@ Attachments are great for asking the AI to analyse a screenshot of a bug, review
 </Aside>
 
 ### Voice input in AI Chat
+
 AI Chat supports voice dictation, allowing you to speak your messages instead of typing. Use `Shift + Cmd/Ctrl + D` to start recording, or tap the microphone icon in the chat composer.
 
-### Keyboard shortcuts
+### Using AI Chat
 
-| Shortcut | Action |
-|----------|--------|
-| `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
-| `Cmd/Ctrl + Shift + O` | Start a new chat |
-
-### What AI Chat can and cannot see
 AI Chat's access to your workspace matches what the CLI and MCP tools can read and write — all three interfaces share the same underlying tools and stay in sync.
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✔ | ✔ |
-| Assignees & followers | ✔ | ✔ |
-| Comments (read, add, update, delete) | ✔ | ✔ |
-| Labels (read, create, assign) | ✔ | ✔ |
-| Sections / board columns (CRUD) | ✔ | ✔ |
-| Subtask hierarchy / task tree | ✔ | ✔ |
-| **Due dates** | ✔ | ✔ |
-| Archived / completed tasks | ✔ | ✔ |
-| Saved views (create, delete, edit) | ✔ | ✔ |
-| Move tasks between boards | ✔ | ✔ |
-| Inbox (list, archive, unarchive) | ✔ | ✔ |
-| Tags (read, create, assign) by name and ID | ✔ | ✔ |
-| Time tracking (start/stop, per-inference metering) | ✔ | ✔ |
+| Tasks (title, description, status, priority, size) | ✓ | ✓ |
+| Assignees & followers | ✓ | ✓ |
+| Comments (read, add, update, delete) | ✓ | ✓ |
+| Labels (read, create, assign) | ✓ | ✓ |
+| Sections / board columns (CRUD) | ✓ | ✓ |
+| Subtask hierarchy / task tree | ✓ | ✓ |
+| **Due dates** | ✓ | ✓ |
+| Archived / completed tasks | ✓ | ✓ |
+| Saved views (create, delete, edit) | ✓ | ✓ |
+| Move tasks between boards | ✓ | ✓ |
+| Inbox (list, archive, unarchive) | ✓ | ✓ |
+| Tags (read, create, assign) by name and ID | ✓ | ✓ |
+| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
 
 <Aside type="note">
 When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
 </Aside>
 
 ## Auto-Summary
+
 When a task accumulates a long comment thread, Hypertask generates an **automatic summary** so you can get up to speed without reading every message.
 
 Auto-summaries highlight:
@@ -208,9 +236,11 @@ Auto-summaries update as new comments are added, so they always reflect the late
 </Aside>
 
 ## AI Triage
+
 Use the **AI Triage** button in your inbox to automatically categorize, prioritize, and suggest actions for incoming notifications and tasks. The AI analyses your inbox items and provides recommendations for how to handle them efficiently.
 
 ## AI Usage & Cost Attribution
+
 Hypertask tracks AI usage across your workspace through the built-in AI Gateway and provides a **cost-attribution breakdown** in **Settings → AI Usage**.
 
 ### What's shown
@@ -228,6 +258,7 @@ The AI Usage report breaks down usage across three dimensions:
 The AI Usage report is visible to **project owners and admins**. If the underlying usage data is unavailable, the breakdown section is hidden gracefully.
 
 ## Custom AI Instructions
+
 Tailor how AI features behave on a per-project basis.
 
 ### Project-level configuration
@@ -263,7 +294,7 @@ Different models have different strengths. Use a more capable model (Opus, GPT-5
 AMOLED is a specialized dark theme that displays true-black backgrounds for maximum contrast on devices with OLED or AMOLED displays. The theme applies automatic color adjustments to elements that were previously rendered with dark grays.
 
 ### Key visual changes
-- **True-black base** — backgrounds and backgrounds now render as pure black (0,0,0) instead of dark gray
+- **True-black base** — backgrounds and surfaces now render as pure black (0,0,0) instead of dark gray
 - **Terminal-style colors** — comment inputs, form fields, and other interactive surfaces use terminal-friendly color palettes optimized for OLED screens
 - **Enhanced contrast** — lighter elements pop more clearly against the pure-black background
 
