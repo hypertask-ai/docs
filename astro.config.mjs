@@ -60,6 +60,7 @@ export default defineConfig({
             { label: "Boards & Sections", slug: "features/boards" },
             { label: "Keyboard Shortcuts", slug: "features/keyboard-shortcuts" },
             { label: "Tasks", slug: "features/tasks" },
+            { label: "Time Tracking", slug: "features/time-tracking" },
             { label: "Inbox & Notifications", slug: "features/inbox" },
             { label: "Collaboration", slug: "features/collaboration" },
             { label: "Superhuman-Style Snippets", slug: "features/superhuman-snippets" },
