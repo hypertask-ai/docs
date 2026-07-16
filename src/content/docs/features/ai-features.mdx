@@ -176,19 +176,23 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✓ | ✓ |
-| Assignees & followers | ✓ | ✓ |
-| Comments (read, add, update, delete) | ✓ | ✓ |
-| Labels (read, create, assign) | ✓ | ✓ |
-| Sections / board columns (CRUD) | ✓ | ✓ |
-| Subtask hierarchy / task tree | ✓ | ✓ |
-| Due dates | ✓ | ✓ |
-| Archived / completed tasks | ✓ | ✓ |
-| Saved views (create, delete, edit) | ✓ | ✓ |
-| Move tasks between boards | ✓ | ✓ |
-| Inbox (list, archive, unarchive) | ✓ | ✓ |
-| Tags (read, create, assign) by name and ID | ✓ | ✓ |
-| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
+| Tasks (title, description, status, priority, size) | ✔ | ✔ |
+| Assignees & followers | ✔ | ✔ |
+| Comments (read, add, update, delete) | ✔ | ✔ |
+| Labels (read, create, assign) | ✔ | ✔ |
+| Sections / board columns (CRUD) | ✔ | ✔ |
+| Subtask hierarchy / task tree | ✔ | ✔ |
+| **Due dates** | ✔ | ✔ |
+| Archived / completed tasks | ✔ | ✔ |
+| Saved views (create, delete, edit) | ✔ | ✔ |
+| Move tasks between boards | ✔ | ✔ |
+| Inbox (list, archive, unarchive) | ✔ | ✔ |
+| Tags (read, create, assign) by name and ID | ✔ | ✔ |
+| Time tracking (start/stop, per-inference metering) | ✔ | ✔ |
+
+<Aside type="note">
+When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
+</Aside>
 
 ## Auto-Summary
 When a task accumulates a long comment thread, Hypertask generates an **automatic summary** so you can get up to speed without reading every message.
