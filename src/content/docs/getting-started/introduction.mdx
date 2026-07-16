@@ -3,7 +3,7 @@ title: What is Hypertask?
 description: AI-native project management for teams and AI agents – manage tasks, collaborate in real-time, and connect AI agents with MCP, CLI, and REST APIs.
 ---
 
-import { LinkCard, Htwo, Steps, TabItem, TabGroup, Aside, Card, CardGrid, Steps, InlineCode } from '@astrojs/starlight/components';
+import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/components';
 
 # What is Hypertask?
 
@@ -26,40 +26,43 @@ import { LinkCard, Htwo, Steps, TabItem, TabGroup, Aside, Card, CardGrid, Steps,
 
 Whether you prefer a browser UI, the command line, or integrating via code, there's a path that fits your workflow.
 
-<TabGroup>
-  <TabItem label="Browser" open>
-    <p class="lead">Sign in with email on <code>app.hypertask.ai</code> to start collaborating immediately. Invite your team and start adding tasks, boards, and workflows.</p>
-  </TabItem>
-  <TabItem label="CLI">
-    <p class="lead">Manage and create tasks from the terminal with the <code>hypertask</code> CLI. Install via your package manager, login, and start creating.</p>
-  </TabGroup>
-
+<Tabs>
+<TabItem label="Browser" open>
+<p class="lead">Sign in with email on <code>app.hypertask.ai</code> to start collaborating immediately. Invite your team and start adding tasks, boards, and workflows.</p>
+</TabItem>
+<TabItem label="CLI">
+<p class="lead">Manage and create tasks from the terminal with the <code>hypertask</code> CLI. Install via your package manager, login, and start creating.</p>
 <Steps>
-  <Step>Install the CLI via npm or homebrew.</Step>
-  <Step>Run <code>hypertask login</code> and follow the on-screen prompts.</Step>
-  <Step>Use commands like <code>hypertask task create</code>, <code>hypertask list</code>, and <code>hypertask chat</code> from your shell.</Step>
+
+1. Install the CLI via npm or homebrew.
+2. Run <code>hypertask login</code> and follow the on-screen prompts.
+3. Use commands like <code>hypertask task create</code>, <code>hypertask list</code>, and <code>hypertask chat</code> from your shell.
+
 </Steps>
-
-  <TabItem label="MCP">
-    <p class="lead">Connect Hypertask to your AI agents via the Model Context Protocol. The MCP server exposes tools for tasks, boards, chat, and more.</p>
-  </TabItem>
-
-<Steps>
-  <Step>Add the Hypertask MCP endpoint to your LM Studio, Claude Desktop, or another MCP-compatible client.</Step>
-  <Step>Authenticate with a Bearer token or session cookie.</Step>
-  <Step>Use tools like <code>hypertask_assign_user</code>, <code>hypertask_create_task</code>, and <code>hypertask_chat</code> in your agent.</Step>
-</Steps>
-
-<TabItem label="REST API">
-  <p class="lead">Use our REST API to build integration or mobile apps. Seeds, boards, views, tasks, comments, and more are all reachable via simple HTTP requests.</p>
 </TabItem>
 
+<TabItem label="MCP">
+<p class="lead">Connect Hypertask to your AI agents via the Model Context Protocol. The MCP server exposes tools for tasks, boards, chat, and more.</p>
 <Steps>
-  <Step>Get an API key from the Settings sidebar in the app.</Step>
-  <Step>Add <code>Authorization: Bearer &lt;key&gt;</code> headers to your requests.</Step>
-  <Step>Use endpoints like <code>GET /boards</code>, <code>POST /tasks</code>, <code>POST /messages/chat</code>, and more.</Step>
+
+1. Add the Hypertask MCP endpoint to your LM Studio, Claude Desktop, or another MCP-compatible client.
+2. Authenticate with a Bearer token or session cookie.
+3. Use tools like <code>hypertask_assign_user</code>, <code>hypertask_create_task</code>, and <code>hypertask_chat</code> in your agent.
+
 </Steps>
-</TabGroup>
+</TabItem>
+
+<TabItem label="REST API">
+<p class="lead">Use our REST API to build integration or mobile apps. Seeds, boards, views, tasks, comments, and more are all reachable via simple HTTP requests.</p>
+<Steps>
+
+1. Get an API key from the Settings sidebar in the app.
+2. Add <code>Authorization: Bearer &lt;key&gt;</code> headers to your requests.
+3. Use endpoints like <code>GET /boards</code>, <code>POST /tasks</code>, <code>POST /messages/chat</code>, and more.
+
+</Steps>
+</TabItem>
+</Tabs>
 
 ## Core concepts
 
@@ -77,18 +80,21 @@ Here's a quick overview of the key concepts you'll use in Hypertask.
 | **Agents** | Autonomous AI agents that can pull context from your board, create and update tasks, respond to comments, run schedules, and interact with your workspace via tools. |
 
 <Aside type="info">
-It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and your own SMTP for signing in, with Firebase kept exclusively for push notifications. You can also integrate via CLI, MCP, or REST without going through the app UI at all.</Aside>
+It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and your own SMTP for signing in, with Firebase kept exclusively for push notifications. You can also integrate via CLI, MCP, or REST without going through the app UI at all.
+</Aside>
 
 ## Getting started
 
 <Steps>
-  <Step>Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.</Step>
-  <Step>Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).</Step>
-  <Step>Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).</Step>
-  <Step>Start adding tasks, tagging them for organization, and assigning them.</Step>
-  <Step>Use <kbd>Ctrl+K</kbd> to access the command palette for quick navigation and actions.</Step>
-  <Step>Chat with the AI assistant to create tasks, summarize boards, or brainstorm without leaving the page.</Step>
-  <Step>Optional: install the CLI or set up an MCP agent for programmatic control over your tasks.</Step>
+
+1. Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.
+2. Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).
+3. Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).
+4. Start adding tasks, tagging them for organization, and assigning them.
+5. Use <kbd>Ctrl+K</kbd> to access the command palette for quick navigation and actions.
+6. Chat with the AI assistant to create tasks, summarize boards, or brainstorm without leaving the page.
+7. Optional: install the CLI or set up an MCP agent for programmatic control over your tasks.
+
 </Steps>
 
 ## Keyboard shortcuts
@@ -96,17 +102,18 @@ It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and yo
 Hypertask has a rich set of keyboard shortcuts across surfaces. Press <kbd>Ctrl+K</kbd> to open the command palette and search for shortcuts by name.
 
 <Aside>
-Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and <code>⌘</code> on macOS.</Aside>
+Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and <code>⌘</code> on macOS.
+</Aside>
 
-<InlineCode>Ctrl+K</InlineCode> — Open command palette for shortcuts and actions.
+<code>Ctrl+K</code> — Open command palette for shortcuts and actions.
 
-<InlineCode>Ctrl+G</InlineCode> — Navigate surfaces (Inbox → Boards → Calendar → Tasks).
+<code>Ctrl+G</code> — Navigate surfaces (Inbox → Boards → Calendar → Tasks).
 
-<InlineCode>G-H</InlineCode> — Open Running timers view.
+<code>G-H</code> — Open Running timers view.
 
-<InlineCode>Ctrl+E</InlineCode> — Archive notification and move to next task in Inbox.
+<code>Ctrl+E</code> — Archive notification and move to next task in Inbox.
 
-<InlineCode>Shift</InlineCode> + <InlineCode>Start/Stop</InlineCode> task — Start or stop per-task timers.
+<code>Shift</code> + <code>Start/Stop</code> task — Start or stop per-task timers.
 
 ### Live shortcuts
 
@@ -130,7 +137,8 @@ Hypertask uses server-side authentication and ensures that other users' data nev
 - <strong>Multi-tenant isolation</strong>: By design, boards, views, and tasks belong to the user. Archive and other features show only your data unless explicitly shared.
 
 <Aside type="tip">
-For finer-grained security, you can use the REST API to enforce claims, tokens, and additional checks for your integrations.</Aside>
+For finer-grained security, you can use the REST API to enforce claims, tokens, and additional checks for your integrations.
+</Aside>
 
 ## Frequently asked questions
 
