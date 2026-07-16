@@ -24,6 +24,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 * Fixed AI chat task retrieval dropdowns — tasks with due dates now appear correctly when requesting tasks with comments ([HTPR-4326](https://app.hypertask.ai/detail/project-15/4326))
 * Improved /time view — redesigned reports interface with prompt-saved states, 'quiet' rows, filtered views by task/board/user/running timer ([HTPR-4324](https://app.hypertask.ai/detail/project-15/4324))
 * Added /time team reports surface — Team/Board/User/Range/Group filters, manual entry, CSV export ([HTPR-4328](https://app.hypertask.ai/detail/project-15/4328))
+* Fixed announcement endpoints missing auth: gate in‑app announcements to Bearer ADMIN_SECRET, closing live admin endpoints from unauthorized access ([HTPR-4316](https://app.hypertask.ai/detail/project-15/4316))
+* Fixed duplicate comment creation after real‑time refetch caused by virtualizer remounts, now enforced by server‑side idempotency ([HTPR-4084](https://app.hypertask.ai/detail/project-15/4084))
 </Update>
 
 ### New Features
