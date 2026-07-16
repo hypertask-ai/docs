@@ -63,45 +63,6 @@ When using the AI Task Writer, you can review the task before adding it to your 
 
 Discard and confirm dialogs manage your draft state; they're treated as preview steps before commit.
 
-## Time Tracking
-
-Hypertask includes built-in time tracking for tasks. Tracking is **opt-in per board** by default; time tracking starts automatically the first time you start tracking on a board where it's enabled.
-
-### Enabling and disabling tracking
-- **Per board** — Each project board can independently enable or disable time tracking. Shift toggles the state: off by default, enable when you need it, and re-disable when done.
-- **Server-side control** — Time tracking state is enforced on the server, so time reporting and history are always consistent across devices and users.
-- **Per-task timers** — You can start and stop timers on individual tasks, giving you fine-grained tracking for each activity.
-- **Running-timers view** — A dedicated board surface (accessed via shortcut `G-H`) shows all tasks currently being tracked, making it easy to see active work.
-- **CLI/AI control** — You can start, stop, and view time tracking through the CLI and AI agents, keeping everything synchronized.
-- **Per-inference metering** — Each AI inference call is tracked in the first-party `AiUsage` table, making usage data available in the AI Usage report.
-
-### Timer filter and live badge
-- **Timer toggle in board header** — When time tracking is enabled on a board, a Timer toggle appears next to Filter, Sort, and Columns in the header. It shows a live count badge with the number of tasks currently being tracked.
-- **Running-timer filter** — Clicking the Timer toggle collapses the board to show only tasks with active timers, helping you focus on tasks currently in progress.
-- **Ctrl+K board toggle** — The command palette can also toggle this filter. Open Ctrl+K, search for "timer filter," and select the option to show or hide the running-timer view. The filter is per-board and respects your current board settings.
-
-### Time tracking API
-When time tracking is enabled on a board, the server enforces tracking for all API interactions:
-
-- **Time API** (`POST /time/start` / `POST /time/stop` / `GET /time`) includes an `enabled: true` flag per board. The API returns `enabled: false` if tracking is disabled on the board.
-- **Start tracking** on a board with tracking disabled returns a 403 error.
-- **Stop tracking** and paused/unpaused states persist correctly regardless of tracking state.
-- **Per-task timers** — Timers can be started and stopped on specific tasks, and the running list surface shows all active timers.
-- **Running-timers surface** — The `G-H` shortcut opens a board surface that lists all tasks with running timers, making it easy to review active work.
-- **Per-user and admin defaults** — Display running-timers as a board surface that can be pinned; admins can define default configurations.
-
-### Integration with workflows
-Time tracking integrates with other features:
-
-- **Board level** — Toggle tracking on or off from the board or via selected board shortcut.
-- **Task level** — Start and stop tracking from any field in the task detail, or use the CLI/AI.
-- **Running list** — View tasks currently being tracked from the board or task detail, or use the `G-H` shortcut to see a dedicated running-timers surface.
-- **Per-user and admin defaults** — Display running-timers as a board surface that can be pinned; admins can define default configurations.
-
-<Aside type="tip">
-For frequent users, custom ordering lets you prioritize views you use most, while admins can ensure consistent organization for new and rolled-out teams.
-</Aside>
-
 ## Voice Dictation
 
 Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
@@ -144,6 +105,14 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
+
+### Board agents
+
+You can @mention board agents in AI Chat to have them help answer questions. When you @mention an agent, the chat stream shows "Asking the board agent..." and the agent's specialized knowledge (e.g., a wiki or database) informs the response.
+
+<Aside type="tip">
+Board agents have access to your project through the Board Membership gate, so you can safely share project-specific context without exposing other team workspaces.
+</Aside>
 
 ### Keyboard shortcuts
 
