@@ -1,13 +1,12 @@
 ---
 title: Time Tracking
-description: Track hours on tasks with the /time command: reports, timers, and CSV exports.
+description: "Track hours on tasks with the /time command: reports, timers, and CSV exports."
 ---
 
-import { Card, Steps, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Card, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
 
-<Steps>
 
-<Step>Start a timer or log time manually</Step>
+#### Start a timer or log time manually
 
 Use **`/time`** from the command palette to open the time tracking interface:
 
@@ -16,7 +15,7 @@ Use **`/time`** from the command palette to open the time tracking interface:
 
 Both modes support saving the entry directly from the form.
 
-<Step>Use filters to view reports</Step>
+#### Use filters to view reports
 
 The **`/time`** view aggregates time across your workspace and lets you filter by:
 
@@ -30,7 +29,7 @@ The **`/time`** view aggregates time across your workspace and lets you filter b
 
 Filters are saved per prompt so you can quickly re-apply the same view.
 
-<Step>View and export CSV reports</Step>
+#### View and export CSV reports
 
 After applying filters, click **Export** to download a comma-separated values (CSV) file:
 
@@ -40,7 +39,6 @@ After applying filters, click **Export** to download a comma-separated values (C
 
 CSV export supports the same range and group filters as the table view.
 
-</Steps>
 
 ### Prompt shortcuts
 
@@ -68,15 +66,14 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
 - **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn't affect timers on other boards
 
-<Steps style={{ marginTop: '1.5rem' }}>
 
-<Step>Start a timer</Step>
+#### Start a timer
 
-1. Select a task on the board (or use `<kbd>Tab</kbd>` to pick one)
-2. Press `<kbd>T</kbd>` — the timer starts automatically
-3. Press `<kbd>T</kbd>` again to pause and save the entry
+1. Select a task on the board (or use <kbd>Tab</kbd> to pick one)
+2. Press <kbd>T</kbd> — the timer starts automatically
+3. Press <kbd>T</kbd> again to pause and save the entry
 
-<Step>Refine filter views</Step>
+#### Refine filter views
 
 1. Open `/time` from the command palette
 2. Select filters from the Dropdown panel:
@@ -84,13 +81,12 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 3. Click **Save filters** to prompt-saved states
 4. Quickly re-open saved filters from the left panel
 
-<Step>Export data</Step>
+#### Export data
 
 1. Apply filters you want to export
 2. Click **Export CSV**
 3. Open in Excel or Google Sheets — times display as decimal hours ready for calculations
 
-</Steps>
 
 <Aside>
 <details>
@@ -98,7 +94,7 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 <summary>Technical notes</summary>
 
 - The `/time` interface includes an integrated header with no floating back button (consistent with settings-style pages)
-- Report API supports query parameters: <code>?board={id}&amp;task={id}&amp;user=me&amp;running</code>
+- Report API supports query parameters: `?board=<id>&task=<id>&user=me&running`
 - Manual entries use integer and decimal hours for duration (e.g., <code>2h 30m = 2.5h</code>)
 - Timer state is stored as <code>startTime</code> and <code>endTime</code> timestamps relative to the board scope
 

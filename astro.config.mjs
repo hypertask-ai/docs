@@ -39,9 +39,14 @@ export default defineConfig({
       lastUpdated: true,
       social: [
         {
-          icon: "twitter",
-          label: "Twitter",
-          href: "https://twitter.com/hypertask",
+          icon: "x.com",
+          label: "X",
+          href: "https://x.com/hypertasks",
+        },
+        {
+          icon: "youtube",
+          label: "YouTube",
+          href: "https://www.youtube.com/@hypertasks",
         },
       ],
       sidebar: [
