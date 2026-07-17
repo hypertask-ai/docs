@@ -13,7 +13,7 @@ Use skills to surface specialized work: "React", "Schema Design", "Customer Rese
 
 ## Create & assign skills
 
-Skills are scoped to: personal (for you), project (for a board), or team (for all members of that team). When you assign a skill to a person, the assignment is also scoped to the skill’s.scope, so a team-level skill appears in each project’s skill list.
+Skills are scoped to: personal (for you), project (for a board), or team (for all members of that team). When you assign a skill to a person, the assignment is also scoped to the skillâ\x80\x99s.scope, so a team-level skill appears in each projectâ\x80\x99s skill list.
 
 <Steps>
 
@@ -25,14 +25,14 @@ Skills are scoped to: personal (for you), project (for a board), or team (for al
    - Give it a name (e.g., "Python" or "Design System").
    - Optionally add a description.
    - Choose the scope:
-     - **Personal** — skill available only to you.
-     - **Project** — skill available on a specific board/project.
-     - **Team** — skill available to all members of your team, regardless of project.
+     - **Personal** â\x80\x94 skill available only to you.
+     - **Project** â\x80\x94 skill available on a specific board/project.
+     - **Team** â\x80\x94 skill available to all members of your team, regardless of project.
 
 3. **Assign a person**
    - On the skill card, click **Assign People**.
    - Search for a team member and add them.
-   - Assignments are scoped: a personal skill assignment is only visible to you; a project assignment is only visible on that project’s board.
+   - Assignments are scoped: a personal skill assignment is only visible to you; a project assignment is only visible on that projectâ\x80\x99s board.
 
 4. **Backlog/assign tasks by skill**
    - Filter a task list by skill using the skill picker.
@@ -41,9 +41,17 @@ Skills are scoped to: personal (for you), project (for a board), or team (for al
 
 </Steps>
 
-## Manage skills in workflows
+## Available from / commands and AI chat
 
-Skills shine in agent workflows and saved views. Use them as metadata tags that don’t crowd your task cards.
+Skills are now surfaced both in the **/ menu** and in the AI chat composer, so you can quickly insert shared expertise patterns without leaving your flow.
+
+- **Comment composer** — open the / menu to browse skills. Select a skill to insert its slug directly into the comment text. Press Enter again to send your full message.
+- **AI chat** — in AI chat, press / to open the menu, pick a skill, and continue typing your prompt. Enter selects the skill and keeps your message unsent until you press Enter a second time.
+
+This makes it easy to:
+- Add consistent templates or meta tags to comments (e.g., `/minimalist-review`)
+- Ask the AI to reference a specific skill when answering (e.g., "Asking the `React` skill...")
+- Streamline workflows where a particular skill name appears repeatedly in conversations
 
 <Aside type="tip">
 Only tasks with an assigned skill or a matching person+skill combination will show up when you filter by that skill on a board or in a saved view.
@@ -53,7 +61,7 @@ Only tasks with an assigned skill or a matching person+skill combination will sh
 
 An agent that handles "Frontend bugs" might:
 
-- Ask: "List 5 tasks with the 'React' or 'Frontend' skill and assigned to me."
+- Ask: "List 5 tasks with the `'React'` or `'Frontend'` skill and assigned to me."
 - Use a saved view that filters by skill "React" and priority "High".
 
 ### Saved view example
@@ -70,15 +78,15 @@ Result: a view that always surfaces the most urgent React work.
 
 Quickly assign or filter by skill using your keyboard:
 
-- **Ctrl+K** — Command palette; start typing **"Skill"** to find:
-  - **Skills** — Open Skill management.
-  - **Filter tasks by skill** — Pop up the skill selector.
+- **Ctrl+K** â\x80\x94 Command palette; start typing **"Skill"** to find:
+  - **Skills** â\x80\x94 Open Skill management.
+  - **Filter tasks by skill** â\x80\x94 Pop up the skill selector.
 
 - Use the skill picker in a board or task detail to click or navigate with arrow keys to select skills.
 
 ## Data model (for integrators)
 
-- **Scope** — `personal` | `project` | `team`.
+- **Scope** â\x80\x94 `personal` | `project` | `team`.
 - A skill on a board applies only when that board is opened.
 - A project skill applies across all boards in that project.
 - A team skill applies automatically to all boards that your team owns.
