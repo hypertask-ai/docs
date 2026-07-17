@@ -1,0 +1,46 @@
+---
+title: Typography & Sidebar Visuals
+description: Control panel for icon sizes, type scales, and sidebar visual hierarchy across Announcements, Navigation, and Settings.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page defines the controlled typographic style and sidebar visual layout for Hypertask. It ensures consistent visual translation for Announcements, Navigation, and Settings sidebars, with specific sizing and weight rules.
+
+## Overview
+
+Hypertask uses a consistent visual scale across its primary sidebars. This scale applies to titles, section labels, item text, and action labels, anchoring those surfaces in a controlled token system rather than raw CSS classes.
+
+<Aside type="tip">
+These rules ship to production; modals and other containers are audited separately (see [Sidebar & Modal Visual Standard](/design-system/visual-standard/)).
+</Aside>
+
+## Sidebar typography
+
+All main sidebars (Announcements, Navigation, Settings) follow these rules:
+
+**Title:** `18px`, weight `600`
+
+**Section labels:** `12px`, weight `600`, uppercase, muted
+
+**Item text:** `14px`, weight `400`
+
+**Quiet action labels (e.g., Delete, Edit):** `12px`, left-aligned, muted, weight `400`
+
+**Announcements titles:** `14px`, weight `600`, on their own line; body text `14px`, weight `400`, muted; Delete/Edit `12px`, left-aligned, muted.
+
+<Aside type="note">
+If a surface deviates from this scale, it’s considered a future improvement candidate. Open a discussion on the boundary case.
+</Aside>
+
+## Design token mapping
+
+- No raw `lucide` icons with default 24px size elsewhere in production
+- Modals use the icon scale defined in Sidebar & Modal Visual Standard
+
+> Adhering to this scale keeps titles legible and reduces visual jank when switching contexts across Navigation, Settings, and Announcements.
+
+## Navigation to related
+
+- [Sidebar & Modal Visual Standard](/design-system/visual-standard/) — icon strokes, modal typography, and modal-level tokens
+- [Core Concepts](/getting-started/concepts/) — high-level style guidelines (applies broadly)
