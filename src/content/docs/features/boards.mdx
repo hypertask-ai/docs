@@ -34,7 +34,7 @@ To temporarily remove a board from your workspace:
 2. Search for **"Archive"** and select the board you want to archive
 3. Confirm the action in the palette-styled modal
 
-Archived boards are hidden from the main board list but preserved in the **Archive** section. You can unarchive them at any time using the same Ctrl+K command.
+Archived boards are hidden from the main board list but preserved in the **Archive** section. You can unarchive them at any time using the same Ctrl+K.
 
 ### Delete a board
 
@@ -74,6 +74,17 @@ At half-screen viewports (typically 1024px width), overlay sidebars for Settings
 | **Calendar filters** | 384px |
 
 These widths are applied via Tailwind's `sm:` breakpoint, providing consistent layout behavior regardless of viewport size. All content within these sidebars is fully accessible and scrollable within the fixed width.
+
+### Browser tab title
+
+The browser tab now displays your board name in a clear, scannable format:
+
+- **Board name first** — Your board appears before the application name (e.g., "ine • Hypertask (board name)")
+- **Bullet separator** — Uses a subtle bullet (•) to separate board and app names
+- **No prefix or repetition** — No Hypertask prefix or repeated name
+- **Dynamic on board switch** — Updates automatically when you switch to a different board
+
+This change improves clarity in tab managers and on task-switching workflows.
 
 ## Archive View
 
@@ -273,7 +284,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon 🛠 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon 🛠️ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
