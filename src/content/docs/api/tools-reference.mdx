@@ -13,7 +13,17 @@ All request and response bodies use JSON. Task descriptions and comments use **H
 
 ---
 
-## hypertask_get_user_context
+## Skills
+
+Skills let you cluster related tasks, projects, and workflows around shared expertise. The MCP provides full CRUD and import for skills, scoped to personal, project, or team.
+
+<Aside type="tip">
+To see which MCP tools are available for skills, call `hypertask_get_user_context` to learn your scope, then use `hypertask_skill_list` with `--project ID` to list project-skill endpoints you can call.
+</Aside>
+
+## Global MCP tools
+
+### `hypertask_get_user_context`
 
 Returns information about the currently authenticated user.
 
@@ -40,7 +50,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_list_projects
+### `hypertask_list_projects`
 
 List all projects accessible to the current user.
 
@@ -82,7 +92,194 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_create_board
+## Skills
+
+### `hypertask_skill_list`
+
+List your personal skills or skills on a specific project.
+
+**Endpoint:** `GET /api/mcp/skill/list`
+
+**Parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `project_id` | number | No | -- | Filter to project-scope skills |
+
+**Example request:** (list your personal skills)
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/skill/list
+```
+
+**Example response:**
+
+```json
+{
+  "skills": [
+    { "name": "Python", "scope": "personal" },
+    { "name": "React", "scope": "personal" }
+  ]
+}
+```
+
+**Example request:** (list project skills)
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  https://mcp.hypertask.ai/api/mcp/skill/list?project_id=15
+```
+
+---
+
+### `hypertask_skill_create`
+
+Create a new skill. Provide `scope` to choose personal project or team-scope; omit for a personal skill.
+
+**Endpoint:** `POST /api/mcp/skill/create`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `name` | string | Yes | Skill name |
+| `scope` | string | No | `project` or `team` (required if you pass `project_id`) |
+| `project_id` | number | No | Project ID to associate a project-scope skill with |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/skill/create \
+  -d '{"name": "Design", "scope": "project", "project_id": 15}'
+```
+
+**Example response:**
+
+```json
+{
+  "id": 3001,
+  "name": "Design",
+  "scope": "project",
+  "project_id": 15
+}
+```
+
+---
+
+### `hypertask_skill_assign`
+
+Assign a person to a skill.
+
+**Endpoint:** `POST /api/mcp/skill/assign`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `skill_name` | string | Yes | Skill name |
+| `user_id` | number | Yes | User ID to assign |
+| `project_id` | number | No | Project ID (required when the skill is project- or team-scope) |
+| `scope` | string | No | `project` or `team` (required when the skill is scoped to a group; equivalent to using project_id for project-scope) |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/skill/assign \
+  -d '{"skill_name": "Design", "user_id": 42, "project_id": 15}'
+```
+
+**Example response:**
+
+```json
+{
+  "skill_name": "Design",
+  "user_id": 42,
+  "assigned_at": "2025-01-17T14:30:00Z"
+}
+```
+
+---
+
+### `hypertask_skill_unassign`
+
+Unassign a person from a skill.
+
+**Endpoint:** `POST /api/mcp/skill/unassign`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `skill_name` | string | Yes | Skill name |
+| `user_id` | number | Yes | User ID |
+| `project_id` | number | No | Project ID (required for project/ team-scope skills) |
+| `scope` | string | No | `project` or `team` (required when grouped; same as project_id for project-scoped skills) |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/skill/unassign \
+  -d '{"skill_name": "Design", "user_id": 42, "project_id": 15}'
+```
+
+**Example response:**
+
+```json
+{
+  "skill_name": "Design",
+  "user_id": 42,
+  "unassigned_at": "2025-01-17T14:35:00Z"
+}
+```
+
+---
+
+### `hypertask_skill_import`
+
+Import skills from a GitHub repository (comma-separated org/user and repo). This overwrites all existing skills for that GitHub org/repo on the project.
+
+**Endpoint:** `POST /api/mcp/skill/import`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `gh_org` | string | Yes | GitHub organization or username |
+| `gh_repo` | string | Yes | GitHub repository name |
+| `project_id` | number | No | Project ID or `0` for team scope |
+| `overwrite` | boolean | No | Overwrite existing skills (default: append) |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/skill/import \
+  -d '{"gh_org": "your-org", "gh_repo": "software-design-resources", "project_id": 15, "overwrite": false}'
+```
+
+**Example response:**
+
+```json
+{
+  "imported_count": 8,
+  "project_id": 15,
+  "scope": "project"
+}
+```
+
+---
+
+## Boards & Sections
+
+### `hypertask_create_board`
 
 Create a new board, including its sections, labels, and an initial set of tasks, in a single call.
 
@@ -156,7 +353,7 @@ The CLI wraps this same endpoint via `hypertask project create-board --file boar
 
 ---
 
-## hypertask_section (list)
+### `hypertask_section (list)`
 
 List sections on a project board.
 
@@ -197,7 +394,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_section (create)
+### `hypertask_section (create)`
 
 Create a new section on a project board.
 
@@ -236,7 +433,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_section (update)
+### `hypertask_section (update)`
 
 Rename a section or reorder it on the board.
 
@@ -277,7 +474,7 @@ curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_section (delete)
+### `hypertask_section (delete)`
 
 Delete a section from a project board. Tasks currently in the section are moved to the project's default section before deletion.
 
@@ -308,7 +505,9 @@ curl -s -X DELETE -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_views_list
+## Views
+
+### `hypertask_views_list`
 
 List all saved views in a project. Views are named filter/sort configurations created in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). Use this tool to discover available view IDs before calling `hypertask_view_get`.
 
@@ -352,7 +551,7 @@ Views are a powerful shortcut for AI agents: instead of scanning every task on a
 
 ---
 
-## hypertask_view_get
+### `hypertask_view_get`
 
 Get tasks from a specific saved view, with that view's filters already applied. This is the recommended way for agents to efficiently pull a relevant subset of tasks from a large project without scanning all tasks manually.
 
@@ -414,7 +613,9 @@ Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any age
 
 ---
 
-## hypertask_list_tasks / hypertask_get_tasks
+## Tasks
+
+### `hypertask_list_tasks / hypertask_get_tasks`
 
 List tasks with filtering, or retrieve specific tasks by ID.
 
@@ -489,7 +690,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_get_task_tree
+### `hypertask_get_task_tree`
 
 Retrieve a task and its full subtask hierarchy as a tree. Useful for understanding parent/child relationships without making multiple individual task lookups.
 
@@ -538,7 +739,7 @@ The CLI exposes the same data via `hypertask task tree <ticket>`.
 
 ---
 
-## hypertask_search_tasks
+### `hypertask_search_tasks`
 
 Full-text search across all accessible tasks. Powered by Typesense for fast, typo-tolerant results.
 
@@ -586,7 +787,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_create_task
+### `hypertask_create_task`
 
 Create a new task in a project.
 
@@ -638,7 +839,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_update_task
+### `hypertask_update_task`
 
 Update fields on an existing task. The task can be identified by `task_id`, `ticket_number`, or the combination of `project_id` + `unique_index`.
 
@@ -664,7 +865,7 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `status` | string | `Normal`, `Archive`, `Deleted` |
 | `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 | `labels` | string[] | Replace the task's labels. Pass an empty array to clear all labels. Creates any label that doesn't already exist on the project. |
-| `parent_task_id` | number \| null | Set or change the parent task. Pass `null` (explicit) to detach from current parent. |
+| `parent_task_id` | number | null | Set or change the parent task. Pass `null` (explicit) to detach from current parent. |
 
 <Aside type="caution">
 **Field name casing matters.** Most update fields use `snake_case`, but the section field is `sectionId` (camelCase). Passing `section_id` (snake_case) will be silently ignored — use `sectionId` to move a task between sections.
@@ -698,7 +899,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_move_task_between_boards
+### `hypertask_move_task_between_boards`
 
 Move a task from its current project to a different project.
 
@@ -745,7 +946,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_get_comments_for_task
+### `hypertask_get_comments_for_task`
 
 Retrieve comments on a task.
 
@@ -795,7 +996,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_add_comment_to_task
+### `hypertask_add_comment_to_task`
 
 Add a comment to a task. Comments use HTML formatting.
 
@@ -864,7 +1065,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_update_comment
+### `hypertask_update_comment`
 
 Update the text of an existing comment.
 
@@ -903,7 +1104,7 @@ curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_delete_comment
+### `hypertask_delete_comment`
 
 Delete a comment from a task.
 
@@ -933,7 +1134,7 @@ curl -s -X DELETE -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_create_label
+### `hypertask_create_label`
 
 Create a new label on a project. Labels created this way are immediately available to assign to tasks via `hypertask_update_task` or `hypertask_create_task`.
 
@@ -977,7 +1178,7 @@ You can also create labels on the fly by passing a new name in the `labels` arra
 
 ---
 
-## hypertask_assign_user
+### `hypertask_assign_user`
 
 Assign or unassign users on a task. Calling this with an already-assigned user will **toggle** them off (unassign).
 
@@ -1056,7 +1257,7 @@ curl -s -X POST -H "Authorization: Bearer $AGENT_TOKEN" \
 
 ---
 
-## hypertask_list_project_members
+### `hypertask_list_project_members`
 
 List all members of a project with their user IDs.
 
@@ -1098,7 +1299,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_inbox_list
+### `hypertask_inbox_list`
 
 Get inbox notifications for the current user. Notifications are generated when you are assigned to a task, mentioned in a comment, or a task you are watching is updated.
 
@@ -1134,7 +1335,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_inbox_archive
+### `hypertask_inbox_archive`
 
 Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted — they can be restored with `hypertask_inbox_unarchive`.
 
@@ -1165,7 +1366,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ---
 
-## hypertask_inbox_unarchive
+### `hypertask_inbox_unarchive`
 
 Restore previously archived inbox notifications back to the active inbox. The notifications reappear as unread, with their `archivedAt` timestamp cleared.
 
