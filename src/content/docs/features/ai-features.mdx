@@ -181,19 +181,19 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✓ | ✓ |
-| Assignees & followers | ✓ | ✓ |
-| Comments (read, add, update, delete) | ✓ | ✓ |
-| Labels (read, create, assign) | ✓ | ✓ |
-| Sections / board columns (CRUD) | ✓ | ✓ |
-| Subtask hierarchy / task tree | ✓ | ✓ |
-| **Due dates** | ✓ | ✓ |
-| Archived / completed tasks | ✓ | ✓ |
-| Saved views (create, delete, edit) | ✓ | ✓ |
-| Move tasks between boards | ✓ | ✓ |
-| Inbox (list, archive, unarchive) | ✓ | ✓ |
-| Tags (read, create, assign) by name and ID | ✓ | ✓ |
-| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
+| Tasks (title, description, status, priority, size) | ✅ | ✅ |
+| Assignees & followers | ✅ | ✅ |
+| Comments (read, add, update, delete) | ✅ | ✅ |
+| Labels (read, create, assign) | ✅ | ✅ |
+| Sections / board columns (CRUD) | ✅ | ✅ |
+| Subtask hierarchy / task tree | ✅ | ✅ |
+| **Due dates** | ✅ | ✅ |
+| Archived / completed tasks | ✅ | ✅ |
+| Saved views (create, delete, edit) | ✅ | ✅ |
+| Move tasks between boards | ✅ | ✅ |
+| Inbox (list, archive, unarchive) | ✅ | ✅ |
+| Tags (read, create, assign) by name and ID | ✅ | ✅ |
+| Time tracking (start/stop, per-inference metering) | ✅ | ✅ |
 
 <Aside type="note">
 When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
@@ -231,6 +231,17 @@ The AI Usage report breaks down usage across three dimensions:
 | **Top Users** | Usage grouped by team member, showing who consumed the most AI resources |
 | **By Inference** | Each individual AI inference call is tracked in the first-party `AiUsage` table, including the feature that triggered it, the model used, and the token count |
 | **Instant reports** | Per-inference data is available immediately after each deployment, as verified in staging and production |
+
+### Current allowance display
+The allowance progress bar and cost breakdown in Settings show:
+
+- **Reset date** — When your monthly AI allowance resets (e.g., "Resets on Aug 1")
+- **Tracking projection** — What portion of your allowance you're expected to use this month (e.g., "on track to use ~45% this month")
+- **Model-level breakdown** — Per-inference usage by AI model
+- **Feature-level breakdown** — Usage by AI feature
+- **Board-level breakdown** — Usage scoped to individual boards
+
+The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date.
 
 ### Access
 The AI Usage report is visible to **project owners and admins**. If the underlying usage data is unavailable, the breakdown section is hidden gracefully.
