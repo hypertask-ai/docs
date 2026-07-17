@@ -118,7 +118,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 - **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, create and delete saved views, and edit sent messages — all directly from the chat sidebar. Just tell it what you need and it handles the rest. Per-inference usage is tracked automatically and reported in the AI Usage breakdown.
 - **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
 - **Consistent house-style output** — All responses follow the BLUF-first, scannable house style for clarity and brevity, with 120-word limits and non-violent phrasing.
-- **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks.
+- **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks (too, per [HTPR-4247](https://app.hypertask.ai/detail/project-15/4247)).
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
 - **Chat sessions with history** — conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off. For a task, threads from the question list on the welcome screen now appear when you open AI chat for that task (in addition to earlier-created preview threads) ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311)).
 - **Side-by-side by default** — AI chat now opens in a side-by-side view by default whenever you're actively working on a task, keeping context visible without requiring manual opening.
@@ -133,6 +133,10 @@ You can @mention board agents in AI Chat to have them help answer questions. Whe
 <Aside type="tip">
 Board agents have access to your project through the Board Membership gate, so you can safely share project-specific context without exposing other team workspaces.
 </Aside>
+
+### Embed URLs in task menus
+
+The app automatically extracts embed URLs from task descriptions (Figma, Loom, and iframe links). These URLs appear as clickable rows in the task Ctrl+O menu, making it easy to access design mockups, video feedback, and embedded content directly from your task context without leaving the menu.
 
 ### Keyboard shortcuts
 
@@ -241,7 +245,7 @@ The allowance progress bar and cost breakdown in Settings show:
 - **Feature-level breakdown** — Usage by AI feature
 - **Board-level breakdown** — Usage scoped to individual boards
 
-The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date.
+The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date ([HTPR-4292](https://app.hypertask.ai/detail/project-15/4292)).
 
 ### Access
 The AI Usage report is visible to **project owners and admins**. If the underlying usage data is unavailable, the breakdown section is hidden gracefully.
