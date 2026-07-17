@@ -17,6 +17,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 * Improved AI usage tracking — hypertask.app page now reflects real gateway spend with timeline filters (7d, today) and data starts July 6 ([HTPR-4312](https://app.hypertask.ai/detail/project-15/4312))
 * Improved all AI writing outputs with house style — scannable, BLUF-first, bolded, and non-violent across Improve, Task Writer, AI chat, and generative comments. Write with AI Lengthen requests respect scannability but are not bound by brevity caps. Fix grammar remains minimal. ([HTPR-4313](https://app.hypertask.ai/detail/project-15/4313))
 * Fixed task detail header overlapping body on small viewports when AI chat is open — the title row height is unified on tiled half-screen panes. Fixed in two files: TaskDetailComp (updates offset on chat toggle), int-obs (useAutosizeTextArea height calculation on small viewports). Verified live in production. ([HTPR-4321](https://app.hypertask.ai/detail/project-15/4321))
+* Added ability to continue previous threads for a specific ticket from the welcome screen — AI chat now shows threads from the question list associated with that task, in addition to earlier-created preview threads ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311))
+* Fixed AI chat drafts replies from the wrong person's perspective — when asked to write the next logical reply, chat now drafts from the user's own perspective for reaction-based messages ([HTPR-4309](https://app.hypertask.ai/detail/project-15/4309))
 </Update>
 
 <Update label="July 16, 2026">
