@@ -89,6 +89,25 @@ Select any text in a task description or comment and click **Improve Readability
 
 This is intentionally lightweight. It's not a rewrite — it's a polish.
 
+## House Style
+
+All AI-powered writing surfaces now share a consistent, scannable house style focused on clarity and brevity:
+
+- **BLUF-first opening** — The first line is a clear Bottom Line Up Front statement
+- **Numbered bullets** — Rationale points use numbered bullets (1., 2., 3.)
+- **Bolded content** — Key terms and headings are bolded for quick scanning
+- **Non-violent** — No accusatory phrasing; constructive and neutral
+- **120-word cap** — Responses are concise, ending early before hitting the limit
+- **No "In summary" closure** — Brevity takes priority over explicit wrap-up
+- **Simplified grammar fixes** — Fix Grammar stays minimal on all surfaces
+
+This style applies across:
+- AI chat responses
+- AI Task Writer output
+- Task Writer "Write with AI" suggestions (Lengthen respects scannability but is not brevity-bounded)
+- Text Enhancement polish
+- @HyperAI comments
+
 ## HyperAI Co-worker
 
 HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: it knows your project, your tasks, and your team structure.
@@ -98,6 +117,7 @@ HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: 
 - **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
 - **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, create and delete saved views, and edit sent messages — all directly from the chat sidebar. Just tell it what you need and it handles the rest. Per-inference usage is tracked automatically and reported in the AI Usage breakdown.
 - **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
+- **Consistent house-style output** — All responses follow the BLUF-first, scannable house style for clarity and brevity, with 120-word limits and non-violent phrasing.
 - **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks.
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
 - **Ask AI from comments** — see a comment or description you want to dig into? Click the "Ask AI" button on any comment or task description to send it directly into an AI chat, where you can ask follow-up questions or get analysis.
@@ -124,17 +144,6 @@ Board agents have access to your project through the Board Membership gate, so y
 ### Full-screen chat mode
 
 AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Chat is unscoped: you can reference tasks, boards, and project context across all boards in your project without selecting a specific board.
-
-### House style and brevity
-
-All chat responses now follow a consistent house style:
-
-- The first line is a BLUF (bottom line up front).
-- Body consists of numbered bullets with key points in bold.
-- Responses are capped at approximately 120 words. An end-of-prompt reminder with the style instruction is added if the response exceeds this limit.
-- The older "In summary" closure rule is removed, leading to more concise answers.
-
-This brevity policy applies to all models used for chat.
 
 ### MCP tools automatically available
 
@@ -260,6 +269,7 @@ Different models have different strengths. Use a more capable model (Opus, GPT-5
 </Aside>
 
 ## Theme: AMOLED
+
 AMOLED is a specialized dark theme that displays true-black backgrounds for maximum contrast on devices with OLED or AMOLED displays. The theme applies automatic color adjustments to elements that were previously rendered with dark grays.
 
 ### Key visual changes
