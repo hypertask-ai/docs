@@ -226,13 +226,13 @@ Use the **AI Triage** button in your inbox to automatically categorize, prioriti
 Hypertask tracks AI usage across your workspace through the built-in AI Gateway and provides a **cost-attribution breakdown** in **Settings → AI Usage**.
 
 ### What's shown
-The AI Usage report breaks down usage across three dimensions:
+The AI Usage report breaks down usage across five dimensions:
 
 | Dimension | Description |
 |-----------|-------------|
 | **By Feature** | Usage grouped by AI feature (AI Chat, Task Writer, Text Enhancement, etc.) |
 | **By Model** | Usage grouped by AI model (e.g., Claude Sonnet 5, GPT-5.5) |
-| **Top Users** | Usage grouped by team member, showing who consumed the most AI resources |
+| **Top Users** | Usage grouped by team member, showing who consumed the most AI resources. Auto-generated autoSummaries appear as one "AI Summary Generation — automatic" row, not attributed to a specific user. |
 | **By Inference** | Each individual AI inference call is tracked in the first-party `AiUsage` table, including the feature that triggered it, the model used, and the token count |
 | **Instant reports** | Per-inference data is available immediately after each deployment, as verified in staging and production |
 
