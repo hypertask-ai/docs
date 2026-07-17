@@ -14,17 +14,19 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 ---
 
 <Update label="July 17, 2026">
-* Improved Calendar week view week header — tasks now label each day column as "Tue 4 tasks", "Thu 1 task" (e.g.) (HTPR-4301)
 * Improved navigation — back button removed from Inbox, Calendar, and Search views; kept only on task detail page (HTPR-4300)
 * Improved time tracking — click the time total in task detail to expand per-task time log with date, duration, and user info (HTPR-4227)
-* Added: AI chat floating window can now be minimized to a bottom tab in narrow viewports (HTPR-4297)
-* Fixed: AI chat floating window composer no longer clips in narrow viewport (955px+) (HTPR-4297)
+* Improved Calendar week view week header — tasks now label each day column as "Tue 4 tasks", "Thu 1 task" (e.g.) (HTPR-4301)
+* Fixed: AI chat HTML sanitization prevents XSS — All AI chat responses are now sanitized with an isomorphic DOM cleanup library before rendering via `dangerouslySetInnerHTML`. This prevents unsanitized LLM HTML from being injected into the chat interface (HTPR-4247)
+* Fixed: priority changes in task view now reflect immediately on the board — When you change a task's priority in the task detail panel, the new value appears on the card immediately instead of waiting for a refresh cycle (HTPR-4139)
+* Improved AI usage page visuals — Settings AI Usage now omits "no cost" lines and improves allowance contrast and feature labels for clearer reading (HTPR-4295)
+* Added: Settings billing displays full list price for discounted teams — Non-BYOK teams with discounted plans now see a breakdown of base price, discount amount, and amount due in Settings > Team (HTPR-4296)
 </Update>
 
 ### New Features
 
 - **Settings navigation: team nav shows members, AI usage, billing** — In non-BYOK teams, the Settings Team navigation now displays Members, AI Usage, and Billing sections. API Keys entry is hidden from this section, keeping the UI focused on core team settings. Verified on production (HTPR-4149)
-- **AI per-inference metering in first-party data** — Every AI inference call is now tracked in the first-party AiUsage table, with real token counts documented after each deployment. The AI Usage report in Settings now reflects per-inference cost breakdown by feature, model, and user. Verified live in production (HTPR-4131)
+- **AI per-inference metering in first-party data** — Every AI inference call is now tracked in the first-party `AiUsage` table, with real token counts documented after each deployment. The AI Usage report in Settings now reflects per-inference cost breakdown by feature, model, and user. Verified live in production (HTPR-4131)
 - **Auth improvements: Better Auth + BYOK-aware team nav** — Login now uses Better Auth for all email flows with server-led cookies. Non-BYOK teams see team navigation without API Keys entry. Enhanced session handling across sign-ins. Verified deployed (HTPR-4146) — see <a href="https://docs.hypertask.ai/features/collaboration/">Collaboration docs</a> and <a href="https://docs.hypertask.ai/features/ai-features/">AI Features docs</a>. Please review and reply with corrections.
 
 - **Settings and Calendar sidebars use fixed widths at half-screen viewports** — At 1024px width, the Settings sidebar renders at 480px and Calendar boards and filter sidebars at 384px. This provides consistent, predictable layout behavior and prevents truncation of column names and calendar dates. Verified on production across all major screen sizes. ([HTPR-4155](https://app.hypertask.ai/detail/project-15/4155))
@@ -35,19 +37,15 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Search keyboard navigation** — You can navigate the search results using <kbd>Arrow Down</kbd> and <kbd>Arrow Up</kbd> keys. Pressing <kbd>Arrow Down</kbd> from the search input jumps to the Ask AI row, and <kbd>Arrow Up</kbd> returns focus to the input. The Ask AI row is visually distinguished with a purple accent (`#C668FF`) and bold label. ([HTPR-4121](https://app.hypertask.ai/detail/project-15/4121))
 
-- **Fixed: priority changes in task view now reflect immediately on the board** — When you change a task's priority in the task detail panel, the new value appears on the card immediately instead of waiting for a refresh cycle. Previously, the change took up to 10 seconds to appear on the board. Verified live on production. ([HTPR-4139](https://app.hypertask.ai/detail/project-15/4139))
+- **Fixed: comment display when pinned and saved** — Pinning a comment now suppresses the saved/starred indicator, so a pinned+saved comment displays only the orange pinned dot. Previously, both orange and yellow dots appeared simultaneously. Verified live on production. ([HTPR-3876](https://app.hypertask.ai/detail/project-15/3876))
 
 ### Bug Fixes
 
-- **Fixed: comment display when pinned and saved** — Pinning a comment now suppresses the saved/starred indicator, so a pinned+saved comment displays only the orange pinned dot. Previously, both orange and yellow dots appeared simultaneously. Verified live on production. ([HTPR-3876](https://app.hypertask.ai/detail/project-15/3876))
-
-- **Fixed: AI chat HTML sanitization prevents XSS** — All AI chat responses are now sanitized with an isomorphic DOM cleanup library before rendering via `dangerouslySetInnerHTML`. This prevents unsanitized LLM HTML from being injected into the chat interface. Verified deployed in production with PR #1354. ([HTPR-4247](https://app.hypertask.ai/detail/project-15/4247))
-
-- **Post-login toast behavior** — The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
+- **Fixed: email sign-in restored after daily quota exceeded** — Resend plan upgraded; daily quota block lifted. POST /api/auth/send-email-link now returns 200 "Sign-in email sent". Email sign-in is back up. ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
 
 - **HTML hydration warning in dev overlay** — The false `<html>` hydration warning from the Next.js dev overlay script has been suppressed. This resolves the developer overlay warning that appeared during development, keeping the dev experience clean. Verified deployed on staging and ready for prod rollout. ([HTPR-4154](https://app.hypertask.ai/detail/project-15/4154))
 
-- **Fixed: email sign-in restored after daily quota exceeded** — Resend plan upgraded; daily quota block lifted. POST /api/auth/send-email-link now returns 200 "Sign-in email sent". Email sign-in is back up. ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
+- **Post-login toast behavior** — The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
 
 ### Infrastructure
 
