@@ -179,6 +179,10 @@ Displays tasks on a calendar based on their due dates. Useful for deadline-drive
 
 In the new app shell layout, the calendar toolbar sits on the dark shell background with the date range and navigation chevrons left-aligned next to the sidebar hamburger and back arrow. The week grid renders inside a single grey rounded bordered card, giving the calendar a clean, contained appearance that matches the rest of the shell.
 
+#### Week column header format
+
+Each weekday column displays the day name followed by a task count, for example: **Tue 5 tasks**, **Thu 2 tasks**. The centered day number row has been removed to reduce visual noise — day numbers are now left-aligned inside each column, consistent with the Kanban layout.
+
 #### Real-time updates in Calendar view
 
 The Calendar view updates **live via Pusher**. When a task's due date or schedule is changed — by a teammate, an agent, or a CLI command — the event moves to the new date instantly on every open Calendar view, without a page refresh. This keeps the calendar accurate even when multiple people are adjusting schedules simultaneously.
