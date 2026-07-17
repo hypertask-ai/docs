@@ -1,0 +1,98 @@
+---
+title: Skills
+description: Create, manage, and import skills to organize your team's expertise and filter by them in queries and saved views.
+---
+
+import { Aside, Card, CardGrid, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+Skills let you cluster related tasks, projects, and workflows around shared expertise. A skill can be anything: a domain, a technology, or a role. You can assign skills to people, filter any task list by skill, or use skills as metadata in saved views.
+
+<Aside type="tip">
+Use skills to surface specialized work: "React", "Schema Design", "Customer Research", or "Onboarding". Assign a skill to a person, and watch it surface in searches, assignments, and saved views.
+</Aside>
+
+## Create & assign skills
+
+Skills are scoped to: personal (for you), project (for a board), or team (for all members of that team). When you assign a skill to a person, the assignment is also scoped to the skill’s.scope, so a team-level skill appears in each project’s skill list.
+
+<Steps>
+
+1. **Open Skill management**
+   - Use the **Ctrl+K** command palette and search for **"Skills"**, or go to the **Settings > Skills** page.
+
+2. **Create a skill**
+   - Click **New Skill**.
+   - Give it a name (e.g., "Python" or "Design System").
+   - Optionally add a description.
+   - Choose the scope:
+     - **Personal** — skill available only to you.
+     - **Project** — skill available on a specific board/project.
+     - **Team** — skill available to all members of your team, regardless of project.
+
+3. **Assign a person**
+   - On the skill card, click **Assign People**.
+   - Search for a team member and add them.
+   - Assignments are scoped: a personal skill assignment is only visible to you; a project assignment is only visible on that project’s board.
+
+4. **Backlog/assign tasks by skill**
+   - Filter a task list by skill using the skill picker.
+   - Or assign a skill to a task to tag it for later filtering or reporting.
+   - Saved views can also explicitly filter by skill.
+
+</Steps>
+
+## Manage skills in workflows
+
+Skills shine in agent workflows and saved views. Use them as metadata tags that don’t crowd your task cards.
+
+<Aside type="tip">
+Only tasks with an assigned skill or a matching person+skill combination will show up when you filter by that skill on a board or in a saved view.
+</Aside>
+
+### Example agent task filter
+
+An agent that handles "Frontend bugs" might:
+
+- Ask: "List 5 tasks with the 'React' or 'Frontend' skill and assigned to me."
+- Use a saved view that filters by skill "React" and priority "High".
+
+### Saved view example
+
+Create a saved view named "React on deck":
+
+- Filter by **Skill** = "React"
+- Filter by **Priority** = "High"
+- Sort by **Due Date** ascending
+
+Result: a view that always surfaces the most urgent React work.
+
+## Keyboard workflow
+
+Quickly assign or filter by skill using your keyboard:
+
+- **Ctrl+K** — Command palette; start typing **"Skill"** to find:
+  - **Skills** — Open Skill management.
+  - **Filter tasks by skill** — Pop up the skill selector.
+
+- Use the skill picker in a board or task detail to click or navigate with arrow keys to select skills.
+
+## Data model (for integrators)
+
+- **Scope** — `personal` | `project` | `team`.
+- A skill on a board applies only when that board is opened.
+- A project skill applies across all boards in that project.
+- A team skill applies automatically to all boards that your team owns.
+
+<FooterLinks />
+
+<CardGrid>
+  <Card title="Keyboard Shortcuts" href="/features/keyboard-shortcuts/">
+    Use keyboard workflows to surf tasks and filter by skill.
+  </Card>
+  <Card title="CLI Reference" href="/cli/reference/">
+    Manage skills from the terminal with full CRUD and import.
+  </Card>
+  <Card title="Agent Workflows" href="/mcp/workflows/">
+    Patterned ways agents can pick up and complete work scoped by skill.
+  </Card>
+</CardGrid>
