@@ -24,11 +24,15 @@ The inbox icon in the navigation bar shows a **live blue dot and unread count** 
 
 This means you never need to refresh the page to know whether new work has landed in your inbox.
 
+### Unread indicator behavior
+
+Inmost cases the unread indicator behaves as you’d expect: it appears when there are unarchived notifications and hides once everything in your inbox is read. A specific behavior worth noting is the indicator’s relationship to the task’s read state. When viewing an in-inbox task and removing its associated notification, the blue unread indicator now respects that action and hides accordingly, preventing a stale indicator when the task is fully viewed ([HTPR-4286](https://app.hypertask.ai/detail/project-15/4286)).
+
+If a notification shows as unread despite having been viewed, try refreshing the page. If the issue persists, check that your browser has an active network connection, as read-status updates are delivered over the same real-time Pusher channel as incoming notifications.
+
 ## Read status
 
 Notifications are automatically marked as **seen** (read) when you open and view them in the inbox. The unread indicator clears in real time as you read through your notifications — you do not need to manually mark items as read or refresh the page for the status to update.
-
-If a notification shows as unread despite having been viewed, try refreshing the page. If the issue persists, check that your browser has an active network connection, as read-status updates are delivered over the same real-time Pusher channel as incoming notifications.
 
 ## Notification display priority
 
@@ -44,6 +48,15 @@ This ensures that @mentions you receive take precedence over status updates or c
 <Aside type="tip">
 If a notification appears to be misclassified (e.g., a @mention is hidden behind an Update), try refreshing your inbox or reopening the task to refresh the notification state.
 </Aside>
+
+## Row indicators: @Mention and Important
+
+Inbox rows in certain views (such as the All split) show two badge-like indicators that surface key annotations about the underlying task:
+
+- **@Mention badge** — denotes that you were mentioned in a comment or task description.
+- **Important badge** — surfaces a task flagged for immediate attention.
+
+Both badges render as filled square shapes and are visually distinct from label pills. Hovering over a badge displays a tooltip clarifying whether the badge indicates a mention or the important flag, helping you distinguish quickly between the two without relying on labels alone ([HTPR-4285](https://app.hypertask.ai/detail/project-15/4285)).
 
 ## Email notifications
 
