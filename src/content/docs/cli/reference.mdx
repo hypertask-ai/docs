@@ -139,16 +139,13 @@ Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the r
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  Update available: 1.3.3 → 1.3.4         Run: npm install -g @hypertask/hypertask_cli
-└────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+┃  Update available: 1.3.3 → 1.3.4         Run: npm install -g @hypertask/hypertask_cli
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
 
 ---
-
-## Capability Discovery
 
 ### `capabilities` / `commands`
 
@@ -402,7 +399,7 @@ hypertask task assign HTPR-2992 --user 42
 | `--user <id>` | User ID to assign |
 
 <Aside type="tip">
-To find user IDs, use `hypertask project members &lt;project-id&gt;`.
+To find user IDs, use `hypertask project members <project-id>`.
 </Aside>
 
 ### `task move`
@@ -435,6 +432,99 @@ hypertask task move-board HTPR-2992 --target-project 20 --target-section 5010
 |------|-------------|
 | `--target-project <id>` | Target project ID |
 | `--target-section <id>` | Target section ID |
+
+---
+
+## Skills
+
+The `skill` command provides full read/write access to skills — create, list, assign/unassign to people, filter by project, and import via GitHub.
+
+### `skill list`
+
+List your personal skills.
+
+```bash
+hypertask skill list
+```
+
+<Aside type="tip">
+Use `--project 15` (or any project ID) to filter to skills available on a specific project.
+</Aside>
+
+### `skill project`
+
+List skills on a specific project.
+
+```bash
+hypertask skill list --project 15
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | Filter by project ID |
+
+### `skill create`
+
+Create a new skill.
+
+```bash
+hypertask skill create --name "Python"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--name <text>` | Skill name (required) |
+
+### `skill assign`
+
+Assign a person to a skill.
+
+```bash
+hypertask skill assign --skill "Python" --user 42
+```
+
+| Flag | Description |
+|------|-------------|
+| `--skill <name>` | Skill name |
+| `--user <id>` | User ID |
+| `--project <id>` | Project ID (required unless the skill is personal) |
+
+<Aside type="tip">
+Use `hypertask skill list --project 15` before assigning to see the available project skills.
+</Aside>
+
+### `skill unassign`
+
+Unassign a person from a skill.
+
+```bash
+hypertask skill unassign --skill "Python" --user 42
+```
+
+| Flag | Description |
+|------|-------------|
+| `--skill <name>` | Skill name |
+| `--user <id>` | User ID |
+| `--project <id>` | Project ID (required unless the skill is personal) |
+
+### `skill import`
+
+Import skills from a GitHub repository (comma-separated organization/user and repository). This overwrites all existing skills for that GitHub org/repo with the imported list.
+
+```bash
+hypertask skill import --gh-org "your-org" --gh-repo "software-design-resources"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--gh-org <org>` | GitHub organization or username |
+| `--gh-repo <repo>` | GitHub repository name |
+| `--project <id>` | Project ID to assign imported skills to |
+| `--overwrite` | Overwrite existing skills (default: append) |
+
+<Aside type="tip">
+Use `--overwrite=true` to replace all project skills with the imported list instead of appending.
+</Aside>
 
 ---
 
