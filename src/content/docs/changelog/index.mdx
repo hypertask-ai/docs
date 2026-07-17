@@ -14,27 +14,17 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 ---
 
 <Update label="July 17, 2026">
+* Improved AI chat defaults — AI chat now opens by default on every task in a side-by-side view, enabling continuous context ([HTPR-4304](https://app.hypertask.ai/detail/project-15/4304))
+* Improved Settings navigation — Task scroll options now appear inline without requiring a modal step ([HTPR-4306](https://app.hypertask.ai/detail/project-15/4306))
+* Fixed email sign-in outage — Resend plan upgraded and daily quota lifted; magic-link email sign-in restored ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
+</Update>
+
+<Update label="July 16, 2026">
 * Improved AI usage tracking — hypertask.app page now reflects real gateway spend with timeline filters (7d, today) and data starts July 6 ([HTPR-4312](https://app.hypertask.ai/detail/project-15/4312))
 * Improved all AI writing outputs with house style — scannable, BLUF-first, bolded, and non-violent across Improve, Task Writer, AI chat, and generative comments. Write with AI Lengthen requests respect scannability but are not bound by brevity caps. Fix grammar remains minimal. ([HTPR-4313](https://app.hypertask.ai/detail/project-15/4313))
 * Fixed task detail header overlapping body on small viewports when AI chat is open — the title row height is unified on tiled half-screen panes. Fixed in two files: TaskDetailComp (updates offset on chat toggle), int-obs (useAutosizeTextArea height calculation on small viewports). Verified live in production. ([HTPR-4321](https://app.hypertask.ai/detail/project-15/4321))
 * Added ability to continue previous threads for a specific ticket from the welcome screen — AI chat now shows threads from the question list associated with that task, in addition to earlier-created preview threads ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311))
 * Fixed AI chat drafts replies from the wrong person's perspective — when asked to write the next logical reply, chat now drafts from the user's own perspective for reaction-based messages ([HTPR-4309](https://app.hypertask.ai/detail/project-15/4309))
-</Update>
-
-<Update label="July 16, 2026">
-* Improved AI chat welcome — removed logo and heading, showing only suggestion list ([HTPR-4320](https://app.hypertask.ai/detail/project-15/4320))
-* Improved timer tracking on boards — live count badge, timer toggle in header, Ctrl+K accessibility, per-board persistence ([HTPR-4332](https://app.hypertask.ai/detail/project-15/4332))
-* Added full-screen AI chat mode via Ctrl+K — unscoped chat with time-grouped session rail and search ([HTPR-4336](https://app.hypertask.ai/detail/project-15/4336))
-* Improved AI chat responses with house style and 120-word cap — BLUF first line, numbered bullets, bolded content, no summarization (`In summary` rule removed) ([HTPR-4342](https://app.hypertask.ai/detail/project-15/4342))
-* Added running-timer filter to Kanban — toggle shows live count badge, filters board to only tasks with active timers ([HTPR-4332](https://app.hypertask.ai/detail/project-15/4332))
-* Fixed semantic search to include due dates ([HTPR-4323](https://app.hypertask.ai/detail/project-15/4323))
-* Improved CLI search table to include a Due column ([HTPR-4323](https://app.hypertask.ai/detail/project-15/4323))
-* Improved notification email previews to show truncated comments with a "Read full comment" link ([HTPR-4161](https://app.hypertask.ai/detail/project-15/4161))
-* Fixed AI chat task retrieval dropdowns — tasks with due dates now appear correctly when requesting tasks with comments ([HTPR-4326](https://app.hypertask.ai/detail/project-15/4326))
-* Improved /time view — redesigned reports interface with prompt-saved states, 'quiet' rows, filtered views by task/board/user/running timer ([HTPR-4324](https://app.hypertask.ai/detail/project-15/4324))
-* Added /time team reports surface — Team/Board/User/Range/Group filters, manual entry, CSV export ([HTPR-4328](https://app.hypertask.ai/detail/project-15/4328))
-* Fixed announcement endpoints missing auth — gate in-app announcements to Bearer ADMIN_SECRET, closing live admin endpoints from unauthorized access ([HTPR-4316](https://app.hypertask.ai/detail/project-15/4316))
-* Fixed duplicate comment creation after real-time refetch caused by virtualizer remounts, now enforced by server-side idempotency ([HTPR-4084](https://app.hypertask.ai/detail/project-15/4084))
 </Update>
 
 ### New Features
@@ -53,14 +43,6 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 - **Fixed: priority changes in task view now reflect immediately on the board** — When you change a task's priority in the task detail panel, the new value appears on the card immediately instead of waiting for a refresh cycle. Previously, the change took up to 10 seconds to appear on the board. Verified live on production. ([HTPR-4139](https://app.hypertask.ai/detail/project-15/4139))
 
-- **Fixed: unsigned identity cookie no longer forgable** — The `nookies_user` cookie is now properly signed and authenticated before being accepted as user identity. Previously, forging an unsigned cookie could load any authenticated page; now such requests return 401. Verified live on production. ([HTPR-3944](https://app.hypertask.ai/detail/project-15/3944))
-
-- **Fixed: section update ownership check** — The `/api/section/update` endpoint now validates ownership permissions by scoping the section lookup to the user's accessible project before allowing updates. Previously, an IDOR allowed unauthorized section modifications. Verified deployed (HTPR-3974)
-
-- **Fixed: task previously appeared twice** — Tasks in the In Progress column now render uniquely without duplication. The issue affecting HTPR-4140 was caused by an in-memory list displaying the same task back-to-back due to move hooks and board caching. Verified on production. ([HTPR-4142](https://app.hypertask.ai/detail/project-15/4142))
-
-- **Fixed: displayName rendered unescaped into mention HTML (stored XSS)** — Mentioned usernames are now properly escaped when rendering mention elements in comments, preventing stored cross-site scripting (XSS) via malicious username payloads. Verified deployed with API security hardening batch PR #1293. ([HTPR-3965](https://app.hypertask.ai/detail/project-15/3965))
-
 ### Bug Fixes
 
 - **Fixed: comment display when pinned and saved** — Pinning a comment now suppresses the saved/starred indicator, so a pinned+saved comment displays only the orange pinned dot. Previously, both orange and yellow dots appeared simultaneously. Verified live on production. ([HTPR-3876](https://app.hypertask.ai/detail/project-15/3876))
@@ -70,6 +52,8 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 - **Post-login toast behavior** — The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
 
 - **HTML hydration warning in dev overlay** — The false `<html>` hydration warning from the Next.js dev overlay script has been suppressed. This resolves the developer overlay warning that appeared during development, keeping the dev experience clean. Verified deployed on staging and ready for prod rollout. ([HTPR-4154](https://app.hypertask.ai/detail/project-15/4154))
+
+- **Fixed: email sign-in restored after daily quota exceeded** — Resend plan upgraded; daily quota block lifted. POST /api/auth/send-email-link now returns 200 "Sign-in email sent". Email sign-in is back up. ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
 
 ### Infrastructure
 
