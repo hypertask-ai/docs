@@ -89,6 +89,7 @@ The task detail panel opens when you click a task card on the board. It shows al
 - Properties that have no value display as plain muted text rather than empty boxes, keeping the layout uncluttered.
 - **Title values** now render without the input styling they previously had, making them clearly distinguishable from editable fields.
 - Both the title and the hint ("CTRL+J to ask a question") are aligned with the card body rather than separate rows.
+- On half-screen viewports, the task header height is unified with tiled panes (Settings sidebar + task panel, AI chat + main view) when the AI chat is open, preventing the title text from overlapping with the body content.
 
 This layout applies to all properties in the panel: status, priority, estimate, assignee, due date, labels, and related tasks.
 
@@ -148,7 +149,7 @@ Open the **Manage Tags** panel from the board to view all labels in your project
 
 - **Search with autofocus** — the search input automatically focuses when the panel opens, so you can start typing immediately to filter labels by name.
 - **Per-tag ticket counts** — each label displays a live count of tasks using it, broken down by status (e.g., "12 tickets · 5 archived"). Counts reflect only active (Normal-status) tasks and archived tasks separately, giving you a quick sense of how widely each label is used.
-- **Filter icon** — click the funnel icon next to any tag to instantly apply that label's filter to the board. The command palette closes and the board switches to a filtered view showing all columns with tasks matching that label.
+- **Filter icon** — click the funnel icon next to any label to instantly apply that label's filter to the board. The command palette closes and the board switches to a filtered view showing all columns with tasks matching that label.
 
 From here you can also:
 
