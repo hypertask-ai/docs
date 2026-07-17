@@ -1,0 +1,68 @@
+---
+title: Sidebar & Modal Visual Standard
+description: Controlled icon strokes, modal typography, and modal-level tokens for modals, pull-overs, and transient surfaces.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This page defines the visual standard for modals and transient surfaces in Hypertask. It ensures matching icon strokes, sizing, and typography scale across Sheet modals, switches, select triggers, and floating panels.
+
+## Overview
+
+Modals and transient surfaces should use the controlled icon scale (uniform `strokeWidth: 1.75` across all icons) and modal-level typography tokens. By applying these rules consistently, the app remains cohesive whether users open a modal for settings, a quick filter, or an inline find.
+
+<Aside type="tip">
+These rules were introduced via PR #1549 and confirmed live on production on 2026-07-13. Icons throughout Manage Views and Settings General now follow the normalized scale.
+</Aside>
+
+## Icon stroke width
+
+All icons in modals, transient surfaces, and full-screen pull-downs use:
+
+
+```text
+Typeface        Size      Weight      Opacity
+────────────────────────────────────────────
+Title           16px      600         normal
+Label           14px      500         normal
+Destructive    14px      600         normal
+```
+
+<Aside type="note">
+Icons outside modals use the Sidebar & Modal Visual Standard scale.
+</Aside>
+
+## Modal typography scale
+
+Use these tokens for title, labels, primary actions, and destructive actions:
+
+
+```text
+Font          Size      Weight      Opacity
+────────────────────────────────────────────
+Title         16px      600         normal
+Label         14px      500         normal
+Primary      14px      600         normal (default)
+Destructive  14px      600         normal
+```
+
+## Corner rounding
+
+Corner rounding is defined in the design token. Values are:
+
++ Base (e.g., cornerRadiusSmall): `–`
+
+## Preserved term list
+
+These terms (with punctuation, spacing, capitalization, etc.) must not be altered, even when displayed in different UI surfaces:
+
+- Sections, timelines, statuses
+
+<Aside type="tip">
+When a surface deviates from this standard, it’s considered a future improvement candidate.
+</Aside>
+
+## Navigation to related
+
+- [Typography & Sidebar Visuals](/design-system/typography/) — sidebars (Navigation, Settings, Announcements)
+- [Core Concepts](/getting-started/concepts/) — general style guidelines and scope
