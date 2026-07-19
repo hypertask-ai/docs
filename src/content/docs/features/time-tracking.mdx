@@ -1,6 +1,6 @@
 ---
 title: Time Tracking
-description: "Track hours on tasks with the /time command: reports, timers, and CSV exports."
+description: Track hours on tasks with the /time command: reports, timers, and CSV exports.
 ---
 
 import { Aside, Card, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
@@ -93,8 +93,8 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 - The `/time` interface includes an integrated header with no floating back button (consistent with settings-style pages)
 - Report API supports query parameters: `?board=<id>&task=<id>&user=me&running`
-- Manual entries use integer and decimal hours for duration (e.g., <code>2h 30m = 2.5h</code>)
-- Timer state is stored as <code>startTime</code> and <code>endTime</code> timestamps relative to the board scope
+- Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or Xh Ym format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
+- Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
 
 </details>
 </Aside>
