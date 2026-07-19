@@ -509,7 +509,7 @@ curl -s -X DELETE -H "Authorization: Bearer $TOKEN" \
 
 ### `hypertask_views_list`
 
-List all saved views in a project. Views are named filter/sort configurations created in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). Use this tool to discover available view IDs before calling `hypertask_view_get`.
+List all saved views in a project. Views are named filter/sort configurations created in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). Use this tool to discover available view IDs before calling `hypertask_views_list` + `hypertask_view_get`.
 
 **Endpoint:** `GET /api/mcp/projects/{projectId}/views`
 
@@ -1397,4 +1397,202 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 <Aside type="tip">
 Use `hypertask_inbox_unarchive` to recover notifications that were archived by mistake, or to resurface items you want to act on again. Combine with `hypertask_inbox_archive` to build agent workflows that move notifications in and out of the active inbox as needed.
+</Aside>
+
+---
+
+## Features
+
+### `hypertask_time_status`
+
+Get the current timer status for a task or general system status.
+
+**Endpoint:** `GET /api/mcp/time/status`
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `task_id` | number | No | -- | Get status for a specific task |
+| `ticket_number` | string | No | -- | Get status for a specific task by ticket number |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/time/status?ticket_number=HTPR-2992"
+```
+
+**Example response:**
+
+```json
+{
+  "task_id": 1234,
+  "ticket_number": "HTPR-2992",
+  "status": "running",
+  "started_at": "2026-07-19T09:30:00Z",
+  "total_duration_minutes": 45
+}
+```
+
+<Aside type="tip">
+If no timer is running, `status` will be `"stopped"` or `"not_started"`.
+</Aside>
+
+---
+
+### `hypertask_time_stop`
+
+Stop a running timer on a task.
+
+**Endpoint:** `POST /api/mcp/time/stop`
+
+**Body parameters (provide one):**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `task_id` | number | Internal task ID |
+| `ticket_number` | string | Ticket number |
+| `unique_index` | number | Project-scoped index |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/time/stop \
+  -d '{"ticket_number": "HTPR-2992"}'
+```
+
+**Example response:**
+
+```json
+{
+  "task_id": 1234,
+  "ticket_number": "HTPR-2992",
+  "stopped_at": "2026-07-19T10:15:00Z",
+  "duration_minutes": 75
+}
+```
+
+---
+
+### `hypertask_time_log`
+
+Get the time log for a task.
+
+**Endpoint:** `GET /api/mcp/time/log`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `task_id` | number | Yes | Internal task ID |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `ticket_number` | string | No | -- | Task identifier (friendly alternative to task_id) |
+| `unique_index` | number | No | -- | Project-scoped index |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/time/log?ticket_number=HTPR-2992"
+```
+
+**Example response:**
+
+```json
+{
+  "task_id": 1234,
+  "ticket_number": "HTPR-2992",
+  "entries": [
+    {
+      "entry_id": 501,
+      "started_at": "2026-07-19T08:00:00Z",
+      "stopped_at": "2026-07-19T09:30:00Z",
+      "duration_minutes": 90,
+      "billing_notes": "feature development"
+    },
+    {
+      "entry_id": 502,
+      "started_at": "2026-07-19T10:00:00Z",
+      "stopped_at": "2026-07-19T10:15:00Z",
+      "duration_minutes": 15,
+      "billing_notes": "code review"
+    }
+  ],
+  "total_minutes": 105
+}
+```
+
+---
+
+### `hypertask_time_report`
+
+Get a detailed time report for a task, including billing information if applicable.
+
+**Endpoint:** `GET /api/mcp/time/report`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `task_id` | number | Yes | Internal task ID |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `ticket_number` | string | No | -- | Task identifier (friendly alternative to task_id) |
+| `unique_index` | number | No | -- | Project-scoped index |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/time/report?ticket_number=HTPR-2992"
+```
+
+**Example response:**
+
+```json
+{
+  "task_id": 1234,
+  "ticket_number": "HTPR-2992",
+  "title": "Implement dark mode toggle",
+  "total_duration_minutes": 330,
+  "billable_minutes": 315,
+  "rate_per_hour": 85.0,
+  "billable_amount": 267.75,
+  "entries": [
+    {
+      "entry_id": 501,
+      "started_at": "2026-07-19T08:00:00Z",
+      "stopped_at": "2026-07-19T12:00:00Z",
+      "duration_minutes": 240,
+      "billable_minutes": 225,
+      "billable_rate_per_hour": 85.0,
+      "notes": "feature development"
+    },
+    {
+      "entry_id": 502,
+      "started_at": "2026-07-19T14:00:00Z",
+      "stopped_at": "2026-07-19T15:30:00Z",
+      "duration_minutes": 90,
+      "billable_minutes": 90,
+      "billable_rate_per_hour": 85.0,
+      "notes": "testing and bug fixes"
+    }
+  ],
+  "period_start": "2026-07-01T00:00:00Z",
+  "period_end": "2026-07-31T23:59:59Z"
+}
+```
+
+<Aside type="tip">
+The detailed report integrates with the web UI reporting and supports billing planning; billing fields apply if the associated project has a configured rate.
 </Aside>
