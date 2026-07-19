@@ -129,46 +129,30 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 </TabItem>
 </Tabs>
 
-## Available tools
+## Available tools (draft; adds time tracking focus)
 
-Once connected, your agent has access to 16 tools:
-
-| Tool | Description |
-|------|-------------|
-| `hypertask_get_user_context` | Get current user info (id, email, display name) |
-| `hypertask_list_projects` | List all accessible projects |
-| `hypertask_create_board` | Create a new board with sections, labels, and starter tasks |
-| `hypertask_section` | List or create sections on a board |
-| `hypertask_list_tasks` | List tasks with filtering |
-| `hypertask_get_tasks` | Get specific tasks by ID or ticket number |
-| `hypertask_search_tasks` | Full-text search across all tasks |
-| `hypertask_create_task` | Create a new task |
-| `hypertask_update_task` | Update task fields |
-| `hypertask_move_task_between_boards` | Move a task to another project |
-| `hypertask_assign_user` | Assign or unassign users |
-| `hypertask_add_comment_to_task` | Add a comment (HTML) |
-| `hypertask_get_comments_for_task` | Read task comments |
-| `hypertask_list_project_members` | List team members |
-| `hypertask_inbox_list` | Check inbox notifications |
-| `hypertask_inbox_archive` | Archive inbox items |
+Once connected, your agent has access to tools listed across MCP tools-reference. Timers are manageable via CLI/prod endpoints; MCP server monitoring tools are merged but deployment remains pending pending resolution of mcp.hypertask.ai hosting. For now, time-control workflows are fully available via CLI and the /api/mcp/time endpoints plus AI-chat tools (start/stop/status/running/log).
 
 ### AI Chat integration
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-## Known limitations
+AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
 
-The following features are not yet available via MCP:
+## Known limitations (time-control WF)
 
-| Feature | Status | Details |
-|---------|--------|---------|
+The following time-control-related features are not yet available via MCP:
+
+| Feature / Endpoint Note | Status | Details |
+|--------------------------|--------|---------|
+| **Time-control MCP tools deployment** | Pending | The `/api/mcp/time/start|stop|status|running|log|report` endpoints are live; the MCP server tools are merged into the server's top-level tool list and should auto-appear once mcp.hypertask.ai is redeployed via the correct hosting path. |
 | **Create labels** | Not supported | You can assign existing labels to tasks, but cannot create new labels via MCP. Create labels in the Hypertask UI first, then reference them. |
 | **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` is available, but mentions may appear as plain text and not trigger notifications. Use structured mention objects (`user_id` + `display_name`) for best results. |
 | **Related task linking** | Not supported | Ticket references (e.g. `HTPR-1234`) in comments added via MCP are not automatically parsed into "related tasks" links like they are in the UI. |
 | **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
 
 <Aside type="tip">
-For features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports labels, due dates, and description updates.
+For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
 </Aside>
 
 ## Troubleshooting
@@ -196,5 +180,5 @@ Hypertask MCP works with any client that supports the MCP standard, and ChatGPT 
 <CardGrid>
   <LinkCard title="CLI Reference" description="Install the terminal CLI and manage tasks from your shell." href="/cli/reference/" />
   <LinkCard title="Agent Workflows" description="Patterns for how AI agents should pick up and complete work." href="/mcp/workflows/" />
-  <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all 16 tools." href="/api/tools-reference/" />
+  <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all tools, including time tools." href="/api/tools-reference/" />
 </CardGrid>
