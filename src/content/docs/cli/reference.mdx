@@ -24,7 +24,7 @@ hypertask --version
 </Aside>
 
 <Aside type="caution">
-The CLI package has moved to <code>@hypertask/hypertask_cli</code>. If you previously installed <code>hypertask_cli</code> (without the scope), uninstall it first: <code>npm uninstall -g hypertask_cli</code>
+The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you previously installed `<code>hypertask_cli</code>` (without the scope), uninstall it first: `<code>npm uninstall -g hypertask_cli</code>`
 </Aside>
 
 ## Authentication
@@ -60,7 +60,7 @@ The CLI package has moved to <code>@hypertask/hypertask_cli</code>. If you previ
 </Steps>
 
 <Aside type="tip">
-For legacy setups, <code>hypertask auth:login --token &lt;jwt&gt;</code> also works to save a token directly. You can also pass <code>--api-url</code> to point at a custom API endpoint.
+For legacy setups, `<code>hypertask auth:login --token &lt;jwt&gt;</code>` also works to save a token directly. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
 ## Global Options
@@ -139,8 +139,7 @@ Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the r
 From v1.3.4 onwards, the CLI checks for newer versions on every command and prints a nudge when an update is available:
 
 ```
-┃  Update available: 1.3.3 → 1.3.4         Run: npm install -g @hypertask/hypertask_cli
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚡  Update available: 1.3.3 → 1.3.4         Run: npm install -g @hypertask/hypertask_cli
 ```
 
 To suppress the notifier in CI or automated scripts, set the environment variable `NO_UPDATE_NOTIFIER=1`.
@@ -986,6 +985,83 @@ This is useful to verify your identity, see which projects you belong to, and ch
 
 ---
 
+## Time Tracking (CLI)
+
+Manage time tracking for a task directly from your terminal.
+
+```bash
+hypertask time start <task>      # Start a timer for a task
+hypertask time stop <task>       # Stop the running timer
+hypertask time status <task>     # Show timer status
+hypertask time running <task>    # Show running tasks with their timers
+hypertask time log <task>        # Show time log entries for a task
+hypertask time report <task>     # Show detailed time report for a task
+```
+
+All time-tracking commands let you identify a task with ticket number (`HTPR-2992`), numeric task ID, or via a task slug.
+
+### `<task>` identification
+
+| Identifier | Description |
+|------------|-------------|
+| `<ticket>` | Ticket number in PREFIX-NNN format (e.g., `HTPR-2992`) |
+| `<task-id>` | Numeric task ID |
+| `<slug>` | Task slug (e.g., `htpr-time-tracking-cli-2026-07-19`) |
+
+### Start
+
+Start a time tracker for a task.
+
+```bash
+hypertask time start HTPR-2992
+```
+
+### Stop
+
+Stop the running timer for a task.
+
+```bash
+hypertask time stop HTPR-2992
+```
+
+### Status
+
+Show the current timer status. If no timer is running, the response indicates it is not started.
+
+```bash
+hypertask time status HTPR-2992
+```
+
+### Running
+
+List tasks that have an active timer running.
+
+```bash
+hypertask time running
+```
+
+### Log
+
+Show time log entries for a task. Each entry shows the time range and duration.
+
+```bash
+hypertask time log HTPR-2992
+```
+
+### Report
+
+Return a detailed time report for a task, including billing information if applicable.
+
+```bash
+hypertask time report HTPR-2992
+```
+
+<Aside type="tip">
+Time tracking data integrates with the Hypertask web UI and MCP tools, so you can view logs and reports anywhere.
+</Aside>
+
+---
+
 ## Common Workflows
 
 ### Pick up a task from your inbox
@@ -1158,4 +1234,26 @@ hypertask search "dark mode" --project 15 --json | jq '.[].ticketNumber'
 # For simple reads, plain output is sufficient — no --json needed
 hypertask task get HTPR-2992
 hypertask comment list HTPR-2992
+```
+
+### Start, stop, and track time from the terminal
+
+```bash
+# Start a timer for a task
+hypertask time start HTPR-2992
+
+# View timer status
+hypertask time status HTPR-2992
+
+# Stop the timer
+hypertask time stop HTPR-2992
+
+# List all running tasks
+hypertask time running
+
+# View time log entries
+hypertask time log HTPR-2992
+
+# Get a detailed time report
+hypertask time report HTPR-2992
 ```
