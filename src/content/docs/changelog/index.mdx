@@ -5,7 +5,7 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 
 import { Aside } from '@astrojs/starlight/components';
 
-What's new in Hypertask Ã¢\x80\x94 updated daily.
+What's new in Hypertask — updated daily.
 
 <Aside type="tip">
 Subscribe to this page's RSS feed or check back daily for the latest updates. Each entry links to the relevant ticket on the Hypertask product board.
@@ -13,56 +13,61 @@ Subscribe to this page's RSS feed or check back daily for the latest updates. Ea
 
 ---
 
+<Update label="July 19, 2026">
+* Added full CLI / MCP / AI-chat / API time-control coverage — hypertask time start|stop|status|running|log|report; /api/mcp/time status|log|report endpoints; AI-chat timer tools ([HTPR-4423](https://app.hypertask.ai/detail/project-15/4423))
+* Fixed time tracking report to resolve ticket id / unique index / task id ([HTPR-4423](https://app.hypertask.ai/detail/project-15/4423))
+</Update>
+
 <Update label="July 17, 2026">
-* Added skills to / menu in comment composer and AI chat Ã¢\x80\x94 select a skill to insert its slug and continue typing your prompt; Enter keeps the message unsent until you press Enter again ([HTPR-4263](https://app.hypertask.ai/detail/project-15/4263))
-* Added dedicated machine-traffic host for CLI/agents Ã¢\x80\x94 api.hypertask.ai routes/404s for non-MCP paths; upgrades fix bot challenge issues and CLI users do not need configuration changes ([HTPR-4266](https://app.hypertask.ai/detail/project-15/4266))
-* Make the new app shell the default for all users Ã¢\x80\x94 users without a saved preference now land on the rail shell, with Ctrl+K offering Old Hypertask Design as the way back. Verified on production. ([HTPR-4276](https://app.hypertask.ai/detail/project-15/4276))
-* AI usage: background summaries billed to task creator, ex-members show as Top Users Ã¢\x80\x94 AI Summary Generation usage now appears as a single team cost row in Top Users, and autoSummaries are distinguished from triggered feature usage ([HTPR-4249](https://app.hypertask.ai/detail/project-15/4249))
-* Added percentage breakdowns to AI Usage progress bar Ã¢\x80\x94 see model, feature, and board-level usage divides ([HTPR-4275](https://app.hypertask.ai/detail/project-15/4275))
-* Added Superhuman-style Snippets page Ã¢\x80\x94 fast text insertions and commands without cluttering your board ([HTPR-4270](https://app.hypertask.ai/detail/project-15/4270))
-* Improved AI Usage display Ã¢\x80\x94 allowance shows reset date and monthly projection instead of confusing "112 days left" copy ([HTPR-4292](https://app.hypertask.ai/detail/project-15/4292))
-* GIF picker: full keyboard navigation Ã¢\x80\x94 open via /giphy, arrows + Enter to insert and close tabs, focus stays in the search box. Verified end-to-end by keyboard alone. ([HTPR-4268](https://app.hypertask.ai/detail/project-15/4268))
-* Fixed Shift+O to correctly collapse the newest comment Ã¢\x80\x94 tasks now collapse as expected when using the shortcut ([HTPR-4278](https://app.hypertask.ai/detail/project-15/4278))
-* Fixed emoji reaction picker theme behavior Ã¢\x80\x94 picker now follows your app theme instead of using OS colours ([HTPR-4280](https://app.hypertask.ai/detail/project-15/4280))
-* Fixed theme-specific borders Ã¢\x80\x94 description field and comment composer are now borderless in Paper and AMOLED themes ([HTPR-4282](https://app.hypertask.ai/detail/project-15/4282))
-* Fixed board tab titles Ã¢\x80\x94 now display board name first with bullet separator, no confusing prefix or repetition ([HTPR-4289](https://app.hypertask.ai/detail/project-15/4289))
-* Fixed embed URLs in task Ctrl+O menu Ã¢\x80\x94 Figma, Loom, and iframe links now appear as clickable rows ([HTPR-2453](https://app.hypertask.ai/detail/project-15/2453))
-* Fixed inbox unread indicator after clearing a notification Ã¢\x80\x94 indicator now hides for in-inbox tasks when the notification is removed. ([HTPR-4286](https://app.hypertask.ai/detail/project-15/4286))
-* Fixed inbox @ and ! badge display Ã¢\x80\x94 mention and important indicators render as filled square badges with tooltips on the All split. ([HTPR-4285](https://app.hypertask.ai/detail/project-15/4285))
-* Fixed extra theme box on AI Task Writer in dark modes Ã¢\x80\x94 only the purple accent border now appears in AMOLED and Paper themes. ([HTPR-4281](https://app.hypertask.ai/detail/project-15/4281))
-* Left-aligned task summary with ticket text Ã¢\x80\x94 title and summary text now share the same left edge, with bullets hanging 18px inside the aligned column ([HTPR-4277](https://app.hypertask.ai/detail/project-15/4277))
+* Added skills to / menu in comment composer and AI chat — select a skill to insert its slug and continue typing your prompt; Enter keeps the message unsent until you press Enter again ([HTPR-4263](https://app.hypertask.ai/detail/project-15/4263))
+* Added dedicated machine-traffic host for CLI/agents — api.hypertask.ai routes/404s for non-MCP paths; upgrades fix bot challenge issues and CLI users do not need configuration changes ([HTPR-4266](https://app.hypertask.ai/detail/project-15/4266))
+* Make the new app shell the default for all users — users without a saved preference now land on the rail shell, with Ctrl+K offering Old Hypertask Design as the way back. Verified on production. ([HTPR-4276](https://app.hypertask.ai/detail/project-15/4276))
+* AI usage: background summaries billed to task creator, ex-members show as Top Users — AI Summary Generation usage now appears as a single team cost row in Top Users, and autoSummaries are distinguished from triggered feature usage ([HTPR-4249](https://app.hypertask.ai/detail/project-15/4249))
+* Added percentage breakdowns to AI Usage progress bar — see model, feature, and board-level usage divides ([HTPR-4275](https://app.hypertask.ai/detail/project-15/4275))
+* Added Superhuman-style Snippets page — fast text insertions and commands without cluttering your board ([HTPR-4270](https://app.hypertask.ai/detail/project-15/4270))
+* Improved AI Usage display — allowance shows reset date and monthly projection instead of confusing "112 days left" copy ([HTPR-4292](https://app.hypertask.ai/detail/project-15/4292))
+* GIF picker: full keyboard navigation — open via /giphy, arrows + Enter to insert and close tabs, focus stays in the search box. Verified end-to-end by keyboard alone. ([HTPR-4268](https://app.hypertask.ai/detail/project-15/4268))
+* Fixed Shift+O to correctly collapse the newest comment — tasks now collapse as expected when using the shortcut ([HTPR-4278](https://app.hypertask.ai/detail/project-15/4278))
+* Fixed emoji reaction picker theme behavior — picker now follows your app theme instead of using OS colours ([HTPR-4280](https://app.hypertask.ai/detail/project-15/4280))
+* Fixed theme-specific borders — description field and comment composer are now borderless in Paper and AMOLED themes ([HTPR-4282](https://app.hypertask.ai/detail/project-15/4282))
+* Fixed board tab titles — now display board name first with bullet separator, no confusing prefix or repetition ([HTPR-4289](https://app.hypertask.ai/detail/project-15/4289))
+* Fixed embed URLs in task Ctrl+O menu — Figma, Loom, and iframe links now appear as clickable rows ([HTPR-2453](https://app.hypertask.ai/detail/project-15/2453))
+* Fixed inbox unread indicator after clearing a notification — indicator now hides for in-inbox tasks when the notification is removed. ([HTPR-4286](https://app.hypertask.ai/detail/project-15/4286))
+* Fixed inbox @ and ! badge display — mention and important indicators render as filled square badges with tooltips on the All split. ([HTPR-4285](https://app.hypertask.ai/detail/project-15/4285))
+* Fixed extra theme box on AI Task Writer in dark modes — only the purple accent border now appears in AMOLED and Paper themes. ([HTPR-4281](https://app.hypertask.ai/detail/project-15/4281))
+* Left-aligned task summary with ticket text — title and summary text now share the same left edge, with bullets hanging 18px inside the aligned column ([HTPR-4277](https://app.hypertask.ai/detail/project-15/4277))
 * Fixed agent @mention inbox notifications not delivered ([HTPR-4245](https://app.hypertask.ai/detail/project-15/4245))
 </Update>
 
 ### New Features
 
-- **Settings navigation: team nav shows members, AI usage, billing** Ã¢\x80\x94 In non-BYOK teams, the Settings Team navigation now displays Members, AI Usage, and Billing sections. API Keys entry is hidden from this section, keeping the UI focused on core team settings. Verified on production (HTPR-4149)
+- **Settings navigation: team nav shows members, AI usage, billing** — In non-BYOK teams, the Settings Team navigation now displays Members, AI Usage, and Billing sections. API Keys entry is hidden from this section, keeping the UI focused on core team settings. Verified on production (HTPR-4149)
 
-- **AI per-inference metering in first-party data** Ã¢\x80\x94 Every AI inference call is now tracked in the first-party `AiUsage` table, with real token counts documented after each deployment. The AI Usage report in Settings now reflects per-inference cost breakdown by feature, model, and user. Verified live in production (HTPR-4131)
+- **AI per-inference metering in first-party data** — Every AI inference call is now tracked in the first-party `AiUsage` table, with real token counts documented after each deployment. The AI Usage report in Settings now reflects per-inference cost breakdown by feature, model, and user. Verified live in production (HTPR-4131)
 
-- **Auth improvements: Better Auth + BYOK-aware team nav** Ã¢\x80\x94 Login now uses Better Auth for all email flows with server-led cookies. Non-BYOK teams see team navigation without API Keys entry. Enhanced session handling across sign-ins. Verified deployed (HTPR-4146) Ã¢\x80\x94 see <a href="https://docs.hypertask.ai/features/collaboration/">Collaboration docs</a> and <a href="https://docs.hypertask.ai/features/ai-features/">AI Features docs</a>. Please review and reply with corrections.
+- **Auth improvements: Better Auth + BYOK-aware team nav** — Login now uses Better Auth for all email flows with server-led cookies. Non-BYOK teams see team navigation without API Keys entry. Enhanced session handling across sign-ins. Verified deployed (HTPR-4146) — see <a href="https://docs.hypertask.ai/features/collaboration/">Collaboration docs</a> and <a href="https://docs.hypertask.ai/features/ai-features/">AI Features docs</a>. Please review and reply with corrections.
 
-- **Settings and Calendar sidebars use fixed widths at half-screen viewports** Ã¢\x80\x94 At 1024px width, the Settings sidebar renders at 480px and Calendar boards and filter sidebars at 384px. This provides consistent, predictable layout behavior and prevents truncation of column names and calendar dates. Verified on production across all major screen sizes. ([HTPR-4155](https://app.hypertask.ai/detail/project-15/4155))
+- **Settings and Calendar sidebars use fixed widths at half-screen viewports** — At 1024px width, the Settings sidebar renders at 480px and Calendar boards and filter sidebars at 384px. This provides consistent, predictable layout behavior and prevents truncation of column names and calendar dates. Verified on production across all major screen sizes. ([HTPR-4155](https://app.hypertask.ai/detail/project-15/4155))
 
-- **Direct board archive/delete** Ã¢\x80\x94 You can archive or delete boards directly from the <strong>Ctrl+K</strong> command palette. Archive removes a board from your active view but preserves it in the Archive section, while Delete permanently removes the board (including all tasks, comments, and customizations). Both actions require confirmation through palette-styled modals (delete requires typing the board name for safety). A first-board redirect takes you directly to newly created boards for immediate use. Verified on production. ([HTPR-4097](https://app.hypertask.ai/detail/project-15/4097))
+- **Direct board archive/delete** — You can archive or delete boards directly from the <strong>Ctrl+K</strong> command palette. Archive removes a board from your active view but preserves it in the Archive section, while Delete permanently removes the board (including all tasks, comments, and customizations). Both actions require confirmation through palette-styled modals (delete requires typing the board name for safety). A first-board redirect takes you directly to newly created boards for immediate use. Verified on production. ([HTPR-4097](https://app.hypertask.ai/detail/project-15/4097))
 
-- **Email authentication fully separated from Firebase** Ã¢\x80\x94 Email-based sign-in no longer uses Firebase Auth; the new flow returns the full cookie set and redirects directly to the userâ\x80\x99s board. Magic-link and sign-out remain functional. All authentication flows are now server-led, with Firebase retained exclusively for FCM push notifications. ([HTPR-4172](https://app.hypertask.ai/detail/project-15/4172))
+- **Email authentication fully separated from Firebase** — Email-based sign-in no longer uses Firebase Auth; the new flow returns the full cookie set and redirects directly to the user’s board. Magic-link and sign-out remain functional. All authentication flows are now server-led, with Firebase retained exclusively for FCM push notifications. ([HTPR-4172](https://app.hypertask.ai/detail/project-15/4172))
 
-- **Search keyboard navigation** Ã¢\x80\x94 You can navigate the search results using <kbd>Arrow Down</kbd> and <kbd>Arrow Up</kbd> keys. Pressing <kbd>Arrow Down</kbd> from the search input jumps to the Ask AI row, and <kbd>Arrow Up</kbd> returns focus to the input. The Ask AI row is visually distinguished with a purple accent (`#C668FF`) and bold label. ([HTPR-4121](https://app.hypertask.ai/detail/project-15/4121))
+- **Search keyboard navigation** — You can navigate the search results using <kbd>Arrow Down</kbd> and <kbd>Arrow Up</kbd> keys. Pressing <kbd>Arrow Down</kbd> from the search input jumps to the Ask AI row, and <kbd>Arrow Up</kbd> returns focus to the input. The Ask AI row is visually distinguished with a purple accent (`#C668FF`) and bold label. ([HTPR-4121](https://app.hypertask.ai/detail/project-15/4121))
 
-- **Fixed: comment display when pinned and saved** Ã¢\x80\x94 Pinning a comment now suppresses the saved/starred indicator, so a pinned+saved comment displays only the orange pinned dot. Previously, both orange and yellow dots appeared simultaneously. Verified live on production. ([HTPR-3876](https://app.hypertask.ai/detail/project-15/3876))
+- **Fixed: comment display when pinned and saved** — Pinning a comment now suppresses the saved/starred indicator, so a pinned+saved comment displays only the orange pinned dot. Previously, both orange and yellow dots appeared simultaneously. Verified live on production. ([HTPR-3876](https://app.hypertask.ai/detail/project-15/3876))
 
 ### Bug Fixes
 
-- **Fixed: email sign-in restored after daily quota exceeded** Ã¢\x80\x94 Resend plan upgraded; daily quota block lifted. POST /api/auth/send-email-link now returns 200 "Sign-in email sent". Email sign-in is back up. ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
+- **Fixed: email sign-in restored after daily quota exceeded** — Resend plan upgraded; daily quota block lifted. POST /api/auth/send-email-link now returns 200 "Sign-in email sent". Email sign-in is back up. ([HTPR-4302](https://app.hypertask.ai/detail/project-15/4302))
 
-- **HTML hydration warning in dev overlay** Ã¢\x80\x94 The false `<html>` hydration warning from the Next.js dev overlay script has been suppressed. This resolves the developer overlay warning that appeared during development, keeping the dev experience clean. Verified deployed on staging and ready for prod rollout. ([HTPR-4154](https://app.hypertask.ai/detail/project-15/4154))
+- **HTML hydration warning in dev overlay** — The false `<html>` hydration warning from the Next.js dev overlay script has been suppressed. This resolves the developer overlay warning that appeared during development, keeping the dev experience clean. Verified deployed on staging and ready for prod rollout. ([HTPR-4154](https://app.hypertask.ai/detail/project-15/4154))
 
-- **Post-login toast behavior** Ã¢\x80\x94 The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
+- **Post-login toast behavior** — The MCP token toast no longer appears automatically when logging in. The back-end token auto-generation no longer toasts, so you only see the toast when using the explicit Generate button in the MCP modal. Previously, the background auto-generation would trigger an unwanted success message immediately after signing in. ([HTPR-4165](https://app.hypertask.ai/detail/project-15/4165))
 
 ### Infrastructure
 
-- **Auth route cleanup** Ã¢\x80\x94 Deleted the dead wordpress-signup and password-reset routes. These routes now return 404. The CORS carve-out for the proxy has been removed to simplify the codebase. Firebase Admin is now retained solely for FCM push functionality. ([HTPR-4174](https://app.hypertask.ai/detail/project-15/4174))
+- **Auth route cleanup** — Deleted the dead wordpress-signup and password-reset routes. These routes now return 404. The CORS carve-out for the proxy has been removed to simplify the codebase. Firebase Admin is now retained solely for FCM push functionality. ([HTPR-4174](https://app.hypertask.ai/detail/project-15/4174))
 
 ---
 
