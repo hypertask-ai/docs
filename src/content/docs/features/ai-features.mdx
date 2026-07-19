@@ -135,6 +135,7 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 - **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks (too, per [HTPR-4247](https://app.hypertask.ai/detail/project-15/4247)).
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
 - **Chat sessions with history** — conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off. For a task, threads from the question list on the welcome screen now appear when you open AI chat for that task (in addition to earlier-created preview threads) ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311)).
+- **Conversations follow the board** — the docked chat remembers which conversation you used on each board. Switch boards and the chat swaps to that board's last conversation; boards you haven't chatted on get a clean chat. The Inbox and full-screen chat are unaffected ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412)).
 - **Side-by-side by default** — AI chat now opens in a side-by-side view by default whenever you're actively working on a task, keeping context visible without requiring manual opening.
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
@@ -156,12 +157,19 @@ The app automatically extracts embed URLs from task descriptions (Figma, Loom, a
 
 | Shortcut | Action |
 |----------|--------|
+| `Ctrl + Q` | Focus the chat input — opens the docked chat first if it's closed |
 | `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
 | `Cmd/Ctrl + Shift + O` | Start a new chat |
 
+You can also **pin the AI chat open** from **Ctrl+K** ("Pin AI chat open") or the chat's ⋯ menu — a pinned chat stays open across pages. Closing the chat manually keeps it closed until you reopen it, even if the "Open AI chat by default" setting is on.
+
 ### Full-screen chat mode
 
-AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Chat is unscoped: you can reference tasks, boards, and project context across all boards in your project without selecting a specific board.
+AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>, or use <strong>Open full screen</strong> in the docked chat's ⋯ menu. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Drag the sidebar's right edge to resize it (200–480px, remembered across visits) so full chat titles stay readable ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418)).
+
+By default the chat is unscoped: you can reference tasks, boards, and project context across all boards. To focus on one board, use the **All boards** dropdown next to the model picker in the composer — it scopes both the AI's context and @ mention suggestions to the selected board ([HTPR-4379](https://app.hypertask.ai/detail/project-15/4379)).
+
+To switch back to the docked sidebar chat, click the panel icon in the top-right corner — the same conversation carries over ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
 
 ### MCP tools automatically available
 
