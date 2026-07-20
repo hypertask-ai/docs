@@ -160,7 +160,7 @@ The GIF picker is a picker component you navigate with keyboard. Type <kbd>/</kb
 
 | Action | Windows/Linux | Mac |
 |--------|---------------|-----|
-| Toggle AI chat | ↕ (when rail is enabled) | ↕ |
+| Toggle AI chat | ↓ (when rail is enabled) | ↓ |
 | Focus chat input | <kbd>Ctrl</kbd> + <kbd>Q</kbd> | <kbd>Ctrl</kbd> + <kbd>Q</kbd> |
 | Send message | <kbd>Enter</kbd> | <kbd>Enter</kbd> |
 
@@ -232,3 +232,35 @@ Focus chat input via <kbd>Ctrl+Q</kbd> now works on <strong>/chat</strong> and o
 |--------|---------------|-----|
 | Unarchive task | <kbd>Ctrl</kbd> + <kbd>E</kbd> | <kbd>Cmd</kbd> + <kbd>E</kbd> |
 | Delete task | <kbd>#</kbd> | <kbd>#</kbd> |
+
+## Command Palette
+
+| Action | Windows/Linux | Mac |
+|--------|---------------|-----|
+| Open Command Palette | <kbd>Ctrl</kbd> + <kbd>K</kbd> | <kbd>Cmd</kbd> + <kbd>K</kbd> |
+| Search commands | Type to filter | Type to filter |
+| Execute command | <kbd>Enter</kbd> | <kbd>Enter</kbd> |
+| Navigate through filtered commands | <kbd>Arrow keys</kbd> | <kbd>Arrow keys</kbd> |
+
+<Aside type="tip">
+The Command Palette lists board and section actions, including "Hide column", "Show columns", "Archive board", "Delete board", and more. Use <kbd>Ctrl</kbd>+<kbd>K</kbd> and type keywords like "hide", "show", "archive", or "delete" to quickly access relevant actions.
+</Aside>
+
+## Hiding and Showing Columns
+
+To hide a column using the Command Palette:
+
+1. Open the Command Palette: <kbd>Ctrl</kbd> + <kbd>K</kbd>
+2. Type "hide" to find the "Hide column" action
+3. Press <kbd>Enter</kbd> to hide the active (hovered/last-clicked) column directly
+4. The Command Palette closes automatically after execution
+
+To show previously hidden columns:
+
+1. Open the Command Palette: <kbd>Ctrl</kbd> + <kbd>K</kbd>
+2. Type "show" to find the "Show columns" action
+3. Press <kbd>Enter</kbd> to reveal all hidden sections
+
+<Aside type="note">
+"Hide column" now targets the last clicked or currently hovered section rather than cycling through sections, making it easier to hide the specific column you're working with.
+</Aside>
