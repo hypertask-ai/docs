@@ -3,12 +3,9 @@ title: AI Features
 description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
 ---
 
-
 import { Aside, Tabs, TabItem, Card, CardGrid } from '@astrojs/starlight/components';
 
-
 Hypertask is built from the ground up as an AI-native project management platform. AI isn't bolted on as an afterthought — it's woven into every part of the workflow, from creating tasks to communicating with your team.
-
 
 <CardGrid>
   <Card title="AI Task Writer" icon="pencil">
@@ -27,7 +24,6 @@ Hypertask is built from the ground up as an AI-native project management platfor
     Improve grammar and readability of any text with one click.
   </Card>
 </CardGrid>
-
 
 ## AI Task Writer
 
@@ -48,7 +44,6 @@ The Task Writer maintains a **history of responses**, so you can revisit previou
 The more context your project has — existing tasks, custom instructions, attached documents — the better the AI Task Writer performs. It learns from your project's patterns.
 </Aside>
 
-
 ### Properties during task creation
 When creating tasks via the AI Task Writer, you can set the following properties directly without needing a follow-up edit:
 
@@ -66,7 +61,6 @@ When using the AI Task Writer, you can review the task before adding it to your 
 
 Discard and confirm dialogs manage your draft state; they're treated as preview steps before commit.
 
-
 ## Voice Dictation
 
 Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it anywhere you can type — task titles, descriptions, comments.
@@ -75,6 +69,7 @@ Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it any
 |---------|---------|
 | **Keyboard shortcut** | `Shift + Cmd/Ctrl + D` |
 | **Continuous mode** | Keep talking without pressing buttons repeatedly |
+| **Voice input in chat** | Use voice dictation in AI Chat via `Shift + Cmd/Ctrl + D` or the microphone icon |
 | **Echo cancellation** | Works in noisy environments and during calls |
 | **Noise suppression** | Filters out background noise for cleaner transcription |
 | **Multilingual** | Supports all languages that Whisper recognizes |
@@ -82,7 +77,6 @@ Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it any
 Speak naturally. The transcription handles punctuation, formatting, and language detection automatically.
 
 For even faster composition, use **Superhuman-style snippets** to insert predefined templates and commands with just `.` followed by a keyword (e.g., `.ack`, `.oro`, `.contact`). Pin your most-used snippets to the top of the menu for one-tap insertion.
-
 
 ## Text Enhancement
 
@@ -93,7 +87,6 @@ Select any text in a task description or comment and click **Improve Readability
 - **Undo support** — revert to the original text if you prefer it
 
 This is intentionally lightweight. It's not a rewrite — it's a polish.
-
 
 ## House Style
 
@@ -115,11 +108,9 @@ This style applies across:
 - Text Enhancement polish
 - @HyperAI comments
 
-
 ## HyperAI Co-worker
 
 HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: it knows your project, your tasks, and your team structure.
-
 
 ### Use AI models in task comments
 
@@ -134,7 +125,6 @@ To generate an image:
 Image generation requires a paid plan and an enabled model provider. If the selected model is unavailable, HyperAI posts a short availability message instead of dropping the request.
 
 You can set your default image model (Nano Banana or GPT Image) under **Settings → Profile → Default models → Image generation**. The default applies when image generation runs without an explicit model mention; mentioning a model directly always wins.
-
 
 ### What makes it useful
 
@@ -151,8 +141,7 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
-- **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's ℹ️ menu, then return to docked via the same top-right icon.
-
+- **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's menu, then return to docked via the same top-right icon.
 
 ### Board agents
 
@@ -162,11 +151,9 @@ You can @mention board agents in AI Chat to have them help answer questions. Whe
 Board agents have access to your project through the Board Membership gate, so you can safely share project-specific context without exposing other team workspaces.
 </Aside>
 
-
 ### Embed URLs in task menus
 
 The app automatically extracts embed URLs from task descriptions (Figma, Loom, and iframe links). These URLs appear as clickable rows in the task Ctrl+O menu, making it easy to access design mockups, video feedback, and embedded content directly from your task context without leaving the menu.
-
 
 ### Keyboard shortcuts
 
@@ -176,29 +163,25 @@ The app automatically extracts embed URLs from task descriptions (Figma, Loom, a
 | `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
 | `Cmd/Ctrl + Shift + O` | Start a new chat |
 
-You can also **pin the AI chat open** from **Ctrl+K** ("Pin AI chat open") or the chat's ℹ️ menu — a pinned chat stays open across pages. Closing the chat manually keeps it closed until you reopen it, even if the "Open AI chat by default" setting is on.
-
+You can also **pin the AI chat open** from **Ctrl+K** ("Pin AI chat open") or the chat's menu — a pinned chat stays open across pages. Closing the chat manually keeps it closed until you reopen it, even if the "Open AI chat by default" setting is on.
 
 ### Full-screen chat mode
 
-AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>, or use <strong>Open full screen</strong> in the docked chat's ℹ️ menu. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Drag the sidebar's right edge to resize it (200—480px, remembered across visits) so full chat titles stay readable.
+AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select **Open AI chat full screen**, or use **Open full screen** in the docked chat's menu. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Drag the sidebar's right edge to resize it (200–480px, remembered across visits) so full chat titles stay readable.
 
 By default the chat is unscoped: you can reference tasks, boards, and project context across all boards. To focus on one board, use the **All boards** dropdown directly under "New chat" in the sidebar. It does two things at once: the session list narrows to that board's chats, and the AI's context plus @ mention suggestions scope to it. There is one control for both, so they can never disagree.
 
 The menu lists your boards grouped by team, ordered by how much you chat on each one, with a session count per board. Pick **All boards** to clear the selection, or **No board** to find chats that predate board tagging (a list-only view — the AI stays unscoped). Sessions are tagged with their board automatically when you send the first message.
 
-
 ### Switching to docked sidebar
 
 Click the chat icon in the top-right corner to return to the docked chat, carrying over the same conversation from full-screen mode.
-
 
 ### MCP tools automatically available
 
 AI Chat is powered by the same MCP tools available to external AI agents. When new MCP tools or parameters are added to the Hypertask MCP server, they **automatically become available in AI Chat** — no separate integration step or redeployment is needed. AI Chat always checks for existing MCP tools in the session and makes them accessible to the AI model.
 
 AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
-
 
 ### Attaching files to AI Chat
 
@@ -216,16 +199,9 @@ You can attach files and images directly to messages in AI Chat, giving the AI c
 3. Select your file. It appears as a preview alongside your message.
 4. Type your prompt and send — the AI receives both the file and your text.
 
-
 <Aside type="tip">
 Attachments are great for asking the AI to analyse a screenshot of a bug, review a spec document, extract action items from a PDF, or get feedback on a design mockup — all without leaving your project context.
 </Aside>
-
-
-### Voice input in AI Chat
-
-AI Chat supports voice dictation, allowing you to speak your messages instead of typing. Use `Shift + Cmd/Ctrl + D` to start recording, or tap the microphone icon in the chat composer.
-
 
 ### Using AI Chat
 
@@ -233,24 +209,23 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✅ | ✅ |
-| Assignees & followers | ✅ | ✅ |
-| Comments (read, add, update, delete) | ✅ | ✅ |
-| Labels (read, create, assign) | ✅ | ✅ |
-| Sections / board columns (CRUD) | ✅ | ✅ |
-| Subtask hierarchy / task tree | ✅ | ✅ |
-| **Due dates** | ✅ | ✅ |
-| Archived / completed tasks | ✅ | ✅ |
-| Saved views (create, delete, edit) | ✅ | ✅ |
-| Move tasks between boards | ✅ | ✅ |
-| Inbox (list, archive, unarchive) | ✅ | ✅ |
-| Tags (read, create, assign) by name and ID | ✅ | ✅ |
-| Time tracking (start/stop, per-inference metering) | ✅ | ✅ |
+| Tasks (title, description, status, priority, size) | ✓ | ✓ |
+| Assignees & followers | ✓ | ✓ |
+| Comments (read, add, update, delete) | ✓ | ✓ |
+| Labels (read, create, assign) | ✓ | ✓ |
+| Sections / board columns (CRUD) | ✓ | ✓ |
+| Subtask hierarchy / task tree | ✓ | ✓ |
+| Due dates | ✓ | ✓ |
+| Archived / completed tasks | ✓ | ✓ |
+| Saved views (create, delete, edit) | ✓ | ✓ |
+| Move tasks between boards | ✓ | ✓ |
+| Inbox (list, archive, unarchive) | ✓ | ✓ |
+| Tags (read, create, assign) by name and ID | ✓ | ✓ |
+| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
 
 <Aside type="note">
 When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
 </Aside>
-
 
 ## Auto-Summary
 
@@ -262,11 +237,9 @@ Auto-summaries highlight:
 - Current status and blockers
 - Action items that emerged from the discussion
 
-
 <Aside>
 Auto-summaries update as new comments are added, so they always reflect the latest state of the conversation.
 </Aside>
-
 
 ## Summary Format
 
@@ -279,16 +252,45 @@ Task auto-summaries now use **Gemini 3.1 Flash-Lite** and a **two-fold BLUF form
 
 This format makes long comment threads scannable and reduces dopamine friction when deciding whether to read a full thread.
 
+## Provider Fallback Ladder
+
+AI features like **summaries** and **question suggestions** now use a per-role fallback ladder across all enabled providers. This ensures consistent behavior when multiple providers are configured.
+
+### How it works
+
+1. When a feature requests an AI response (summary, suggestion, etc.), it walks through your **enabled providers** in order.
+2. The first provider that returns a valid response is used.
+3. If a provider is disabled or returns an error, the ladder continues to the next enabled provider until a response is retrieved.
+
+### What this means
+
+- **Disabled providers are never touched** — no requests are sent to providers you've turned off.
+- **Fastest available model wins** — if you have multiple models from the same provider enabled, the first one that responds is used; this gives priority to faster models for summaries and suggestions.
+- **No silent failures** — instead of stopping, the system automatically tries the next available provider.
+
+### Example
+
+If your settings include:
+
+- Google: Disabled
+- Anthropic: Claude Haiku 4.5
+- OpenAI: GPT-5.4 mini
+
+Then:
+
+- Summaries use Claude Haiku 4.5
+- Question suggestions also use Claude Haiku 4.5
+- If Claude becomes unavailable, the system would fallback to GPT-5.4 mini (but not Google, since it's disabled)
+
+This allows you to tune provider availability without affecting behavior—simply disable plug-and-play providers as needed.
 
 ## AI Triage
 
 Use the **AI Triage** button in your inbox to automatically categorize, prioritize, and suggest actions for incoming notifications and tasks. The AI analyses your inbox items and provides recommendations for how to handle them efficiently.
 
-
 ## AI Usage & Cost Attribution
 
 Hypertask tracks AI usage across your workspace through the built-in AI Gateway and provides a **cost-attribution breakdown** in **Settings → AI Usage**.
-
 
 ### What's shown
 The AI Usage report breaks down usage across five dimensions:
@@ -301,10 +303,8 @@ The AI Usage report breaks down usage across five dimensions:
 | **By Inference** | Each individual AI inference call is tracked in the first-party `AiUsage` table, including the feature that triggered it, the model used, and the token count |
 | **Personal breakdown** | Per-user spend and allowance usage, so you can see your individual cost and how close you are to your limit |
 
-
 ### Per-user spend tracking
 Every gateway request now carries a `user:<id>` tag. Per-user spend accrues from today and feeds the personal usage bars in **Settings → AI Usage**. This lets you see your own cost and consumption (owners and admins only), plan your monthly AI allowance, and adjust your AI-heavy workflows if needed.
-
 
 ### Current allowance display
 The allowance progress bar and cost breakdown in Settings show:
@@ -317,22 +317,18 @@ The allowance progress bar and cost breakdown in Settings show:
 
 The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date.
 
-
 ### Access
 The AI Usage report is visible to **project owners and admins**. If the underlying usage data is unavailable, the breakdown section is hidden gracefully.
-
 
 ## Custom AI Instructions
 
 Tailor how AI features behave on a per-project basis.
-
 
 ### Project-level configuration
 - **Custom instructions** — write free-text instructions that guide AI behavior. For example: "Always include acceptance criteria in generated tasks" or "Use British English."
 - **Attached documents** — upload files that give the AI domain-specific knowledge (RAG). Product specs, API docs, style guides — anything that helps the AI understand your project's context.
 - **Model selection** — choose which AI model powers your project's AI features.
 - **Visibility** — set instructions as public (visible to all members) or private (visible only to you).
-
 
 ### Supported models
 
@@ -353,11 +349,9 @@ Tailor how AI features behave on a per-project basis.
   </TabItem>
 </Tabs>
 
-
 <Aside type="tip">
 Different models have different strengths. Use a more capable model (Opus, GPT-5.5, Gemini 3.1 Pro Preview) for complex task generation and a faster model (Haiku, GPT-5.4 mini, Gemini 3.5 Flash) for quick text improvements and summaries.
 </Aside>
-
 
 ## Admin model configuration
 
@@ -374,43 +368,37 @@ As an owner or admin, you can select default AI models per system feature. This 
 2. Find the **Task summaries** and **Question suggestions** sections.
 3. Select a model for each feature:
    - **Auto** — Hypertask automatically picks the recommended model based on your plan and enabled providers.
-   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with 💰 badges indicating cost-effectiveness.
+   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with ⭐ badges indicating cost-effectiveness.
 4. Changes apply immediately — your team will use the selected model for the configured features unless the project has custom instructions that specify otherwise.
-
 
 ### Available models
 
 System-wide available models include models from all enabled providers. The **Auto** option automatically selects the optimal model for each feature:
-- **Fast-tier models** marked with 💰 are recommended for performance-sensitive workflows.
-- **Recommended** models appear with a ✨ badge when selected in Auto mode.
+- **Fast-tier models** marked with ⭐ are recommended for performance-sensitive workflows.
+- **Recommended** models appear with ✓ badges when selected in Auto mode.
 
 <Aside type="tip">
 Projects with custom instructions retain the right to use a different model than the system default. Administrative model configuration is the fallback when no project-specific setting is applied.
 </Aside>
 
-
 ## Theme: AMOLED
 
 AMOLED is a specialized dark theme that displays true-black backgrounds for maximum contrast on devices with OLED or AMOLED displays. The theme applies automatic color adjustments to elements that were previously rendered with dark grays.
-
 
 ### Key visual changes
 - **True-black base** — backgrounds and surfaces now render as pure black (0,0,0) instead of dark gray
 - **Terminal-style colors** — comment inputs, form fields, and other interactive surfaces use terminal-friendly color palettes optimized for OLED screens
 - **Enhanced contrast** — lighter elements pop more clearly against the pure-black background
 
-
 ### Activating AMOLED theme
 - **Ctrl+K command palette** — press `<kbd>Ctrl+K</kbd>`, search for **"Theme"**, and select **AMOLED** from the theme list
 - **Settings** — navigate to the account section of the sidebar and select AMOLED from the theme picker
 - **Available in** — Light, Dark, System, AMOLED, and Paper theme options
 
-
 ### When to use AMOLED
 - When using a device with OLED or AMOLED display technology
 - For low-light environments where a pure-black display reduces eye strain
 - When you want maximum contrast and a distinctive, high-tech aesthetic
-
 
 <Aside type="tip">
 AMOLED is automatically selected by default when your OS is set to "Dark mode" so that badge text remains readable on OLED screens. You can override this via the theme picker if you prefer a dark gray appearance on hybrid-display devices.
