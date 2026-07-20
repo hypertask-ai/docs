@@ -1,0 +1,94 @@
+---
+title: Bring Your Own Key (BYOK)
+description: Add and manage your own API keys and providers directly in Hypertask.
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+BYOK lets you bring your own API keys and providers directly into Hypertask. Add keys from providers like Vercel, add custom endpoints, and manage provider keys across your workspace.
+
+## Add a Provider Key
+
+Add a key from any supported provider directly in your workspace:
+
+1. Open the **Board** menu (**ØK** or click the board icon)
+2. Select **Board settings** or go to **Settings > Keys & providers**
+3. Click **Add provider** and choose from the available options, or paste a provider URL for custom endpoints
+
+## Supported Providers
+
+Hypertask supports the following provider types:
+
+- **Vercel** — Gateway keys for deployments and integrations
+- **GitHub** — Token-based authentication for repository access
+- **Custom endpoints** — Self-hosted or third-party services via HTTPS
+
+<Aside type="info">
+Provider access is tied to your project-level permissions. Only owners and admins can add or remove keys for a project.
+</Aside>
+
+## Managing Your Keys
+
+After adding a key, each provider row displays:
+
+| Control | Description |
+|---------|-------------|
+| **Test button** | Verify the key works with the provider before saving |
+| **Edit** | Update key details or change provider configuration |
+| **Remove** | Delete the key (requires confirmation) |
+
+### Test Provider Keys
+
+Use the **Test button** next to any provider key to verify connectivity and authentication:
+
+1. Click **Test** on the provider row
+2. The system sends a quick validation request to confirm access
+3. View the result—**success** confirms the key works, **error** shows configuration issues
+
+Re-test after changing keys, switching domains, or updating provider credentials.
+
+## Vercel Gateway Keys
+
+Add Vercel gateway keys for deployments, edge functions, and related services:
+
+1. Select **Vercel** from the provider list in Settings
+2. Paste your Vercel **Personal Access Token** or specific project token
+3. Click **Test** to verify the key's scopes
+4. Save to add the key to your provider configuration
+
+Vercel keys function similar to other provider keys—they're used for API access and integration with Vercel-powered features.
+
+## Custom Endpoints
+
+Bring key-based providers or self-hosted services into Hypertask by adding a custom endpoint:
+
+1. Choose **Custom endpoint** as the provider type
+2. Enter the endpoint URL (HTTPS only)
+3. Provide any required headers, API keys, or bearer tokens
+4. Click **Test** to confirm the endpoint is accessible
+5. Save the configuration for reuse across your projects
+
+Custom endpoints are stored securely and tied to your account and project access levels.
+
+## Key Security and Access
+
+BYOK keys in Hypertask are managed with these principles:
+
+- **Server-side storage** — Keys are stored on Hypertask infrastructure and never exposed to third-party providers beyond what's needed for authentication
+- **Per-project scoping** — Providers and keys are tied to specific projects, limiting cross-project key sharing
+- **Access controls** — Only owners and admins can view, add, or remove provider keys
+- **No cross-board leakage** — Keys from one project/board are not visible or accessible from another
+
+<Aside type="warning">
+Never share keys between projects. If a team needs access to a provider key, have an admin add it directly rather than copying the token across accounts.
+</Aside>
+
+## Using Provider Keys
+
+Once configured, provider keys are used automatically:
+
+- **AI agents** — Available when making provider-specific API calls
+- **Workflows** — Integrated into agent runs that require provider authentication
+- **CLI tools** — References provider keys from your account when making authenticated requests
+
+You don't need to manually invoke provider keys. They're selected automatically based on your current context and permissions.
