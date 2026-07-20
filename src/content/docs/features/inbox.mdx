@@ -7,9 +7,72 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 The Hypertask inbox is a single feed of everything that needs your attention — assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what’s new.
 
-## How it works
+## Mobile Linear-style shell
+
+Hypertask is now fully usable on mobile with a Linear-style shell. Navigation follows the web app: when you open Inbox, Calendar, or Search from a task detail, you’re redirected to the mobile version of that view without losing context.
+
+The mobile tab bar gives you quick access to three core views:
+
+- **Inbox** — unread and archived notifications triage
+- **Board** — Kanban board and task lists
+- **Calendar** — week strip and scheduled items
+
+Set up via the profile (Hypertask app) and controlled by full Sync Express integration. All tabs restore their last state when you return.
+
+### Navigation patterns
+
+- Opening Inbox from a task detail redirects to the mobile Inbox view, preserving the task context.
+- Opening Calendar from a task detail redirects to the mobile Calendar view.
+- Opening Search when there's active search content trips a "Show me results" prompt; otherwise it shallow-loads the Search page.
+- Back and gear shortcuts from the bottom sheet open lenses or settings accordingly.
+- The monochrome FAB hides on root views (Inbox, Board, Calendar) and appears only to run Markdown boilerplate actions.
+
+### Task detail accessibility
+
+When you tap a task from the mobile inbox or board, the page opens a slide front with three tabs: Info, Comments, Files. Back options are fully wired: "Back to inbox" and local-edge navigation. Functionality is consistent across layouts and uses the same rendering path as the web app.
+
+## Per-task follow and mute
+
+Hypertask now supports per-task follow and mute at the task level via Ctrl+K:
+
+1. Open the Command Palette with `Ctrl+K` on desktop and `Cmd+K` on iOS.
+2. Navigate to your task and select **Open task menu** (placeholder command).
+3. Select **Toggle mute** to silence that task permanently until you enable it again.
+
+Per-task mute silences the task’s inbox item, push, and email notifications together. This gives you a simple kill-switch for high-volume task feeds without affecting notifications from other tasks.
+
+To re-enable notifications after muting:
+
+1. Open the Command Palette (`Ctrl+K`).
+2. Navigate to your task and select **Open task menu**.
+3. Select **Toggle mute**.
+
+## Granular event controls
+
+Hypertask provides per-task event controls to fine-tune which notification types you receive. Event categories include:
+
+| Category | Description |
+|----------|-------------|
+| **Mentions** | Incoming @mentions in comments and descriptions |
+| **Comments** | New comments on tasks you follow |
+| **Assignments** | Being assigned to a task |
+| **Status changes** | Status changes on tasks you follow |
+| **Due date changes** | Due date edits or moves on tasks you follow |
+| **Followers** | Being added as a follower on a task |
+
+Within each category, you can independently toggle notifications for each delivery channel:
+
+- **Email**
+- **Push**
+- **Chime** (in-app notifications)
+
+This gives you fine-grained control so you only receive high-value updates without being bombarded by noise.
+
+## Notifications overview
 
 Every action that involves you generates a notification in your inbox. Notifications stay in your inbox until you explicitly archive them, so nothing slips through the cracks.
+
+### Viewing notifications
 
 <Steps>
 1. **Receive** — a notification appears when something relevant happens.
@@ -18,59 +81,9 @@ Every action that involves you generates a notification in your inbox. Notificat
 4. **Archive** — mark the notification as handled to clear it from your inbox.
 </Steps>
 
-## Live unread indicator
+Live unread indicators in the navigation bar show a blue dot and count; they update in real time via Pusher.
 
-The inbox icon in the navigation bar shows a **live blue dot and unread count** that updates in real time via Pusher. As new notifications arrive — from a teammate’s comment, an assignment, or an agent posting results — the count increments immediately without a page refresh. When you open the inbox and read the notifications, the dot clears automatically.
-
-This means you never need to refresh the page to know whether new work has landed in your inbox.
-
-### Unread indicator behavior
-
-In most cases the unread indicator behaves as you’d expect: it appears when there are unarchived notifications and hides once everything in your inbox is read. A specific behavior worth noting is the indicator’s relationship to the task’s read state. When viewing an in-inbox task and removing its associated notification, the blue unread indicator now respects that action and hides accordingly, preventing a stale indicator when the task is fully viewed ([HTPR-4286](https://app.hypertask.ai/detail/project-15/4286)).
-
-If a notification shows as unread despite having been viewed, try refreshing the page. If the issue persists, check that your browser has an active network connection, as read-status updates are delivered over the same real-time Pusher channel as incoming notifications.
-
-## Read status
-
-Notifications are automatically marked as **seen** (read) when you open and view them in the inbox. The unread indicator clears in real time as you read through your notifications — you do not need to manually mark items as read or refresh the page for the status to update.
-
-## Notification display priority
-
-Each inbox row shows the strongest active notification on the task as its headline, while still displaying the latest event in the body. Hypertask uses a priority system to determine which notification type to surface as the dominant item:
-
-1. **@Mentions** — highest priority
-2. **Important** — next priority
-3. **Reactions** — next priority
-4. **Updates** — lowest priority
-
-This ensures that @mentions you receive take precedence over status updates or comments, so you don’t miss critical context. Older cached payloads retain a single-type fallback for backwards compatibility.
-
-<Aside type="tip">
-If a notification appears to be misclassified (e.g., a @mention is hidden behind an Update), try refreshing your inbox or reopening the task to refresh the notification state.
-</Aside>
-
-## Row indicators: @Mention and Important
-
-Inbox rows in certain views (such as the All split) show two badge-like indicators that surface key annotations about the underlying task:
-
-- **@Mention badge** — denotes that you were mentioned in a comment or task description.
-- **Important badge** — surfaces a task flagged for immediate attention.
-
-Both badges render as filled square shapes and are visually distinct from label pills. Hovering over a badge displays a tooltip clarifying whether the badge indicates a mention or the important flag, helping you distinguish quickly between the two without relying on labels alone ([HTPR-4285](https://app.hypertask.ai/detail/project-15/4285)).
-
-## Email notifications
-
-When you receive a notification email (such as a comment reply or mention), the email shows a concise 280-character preview followed by a **Read full comment** link instead of the entire comment text. This keeps your inbox focused on action items while preserving access to the full context when needed.
-
-The preview includes:
-
-- **Character limit:** Up to 280 characters in total
-- **Relevant content:** The first part of the comment, prioritizing the actual ask
-- **One clickable link:** "Read full comment" on hypertask.app that opens the task
-
-After reading, the task’s notification is cleared from your inbox, keeping your email and inbox synchronized.
-
-## Notification types
+### Notification types
 
 | Type | Triggered when... |
 |------|-------------------|
@@ -88,7 +101,7 @@ After reading, the task’s notification is cleared from your inbox, keeping you
 | **AddedToFollowerInTask** | You are added as a follower on a task |
 | **TaskMovedToInbox** | A task is explicitly sent to your inbox |
 
-## Who gets notified
+### Who gets notified
 
 Hypertask delivers notifications to all users who have a stake in a task — not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
 
@@ -114,31 +127,29 @@ Archiving a notification removes it from your active inbox without deleting it. 
 
 You can archive notifications one at a time or in bulk. If you archive something by mistake or want to resurface a notification to act on it again, you can **unarchive** it: the notification is restored to your active inbox as unread, as if it had just arrived.
 
+### Archiving actions
+
 - **Web UI:** Archive with the dismiss button on any notification. Unarchive from the archived notifications view.
 - **Task detail panel:** When you open an inbox task, the task detail header shows both a **remove-notification icon** (to dismiss the notification) and an **archive checkmark** (to archive the task’s notification). Both icons appear side by side so you can clear or archive the notification without leaving the task detail view.
 - **Keyboard shortcut:** Press `<kbd>Ctrl+E</kbd>` while viewing a task from the inbox to archive its notification and automatically advance to the next task in your inbox. This lets you triage quickly without reaching for the mouse.
 - **CLI:** `hypertask inbox archive <ids...>` / `hypertask inbox unarchive <ids...>`
 - **MCP:** `hypertask_inbox_archive` / `hypertask_inbox_unarchive` (see [MCP Tools Reference](/api/tools-reference/))
 
-## Archive View
+### Archive view
 
 The Archive section shows notifications that have been archived so you can restore or clear them. By default, the Archive view includes tasks from boards you own, are a member of, or can otherwise see when using the owner-or-member filter.
 
-### Archived Notifications
+**Archived Notifications:**
 
 - By default, only notifications from boards you own, are a member of, or can otherwise see appear in the Archive view — this matches the Tasks archive filter to reduce visual noise.
 - Archived notifications can be unarchived at any time through the appropriate interface or CLI/MCP commands.
 - The view is optimized to focus on content you can still act on, hiding stale noise from boards you no longer have access to.
 
-### Viewing Archived Tasks
+**Viewing Archived Tasks:**
 
 - Notifications are listed with their associated board and section when applicable.
 - Archive status is clearly indicated on each item.
 - You can unarchive items to restore them to your active inbox.
-
-## Two-name sender display
-
-On narrow viewports (less than 1024px width), two-name sender columns use an ellipsis character (...) instead of truncating sender names, keeping the subject fully visible.
 
 ## Saved content
 
@@ -153,10 +164,6 @@ To save content, select the **Star** icon on task cards or comments in the web U
 <Aside type="tip">
 Saved content is stored per-user, so no one else on your team can see your bookmarks. This is useful for personal notes and references that don’t need to be shared at the board level.
 </Aside>
-
-## Navigation changes
-
-The back button removed from Inbox, Calendar, and Search views to reduce navigation redundancy. The back button is kept only on task detail pages where it’s needed to return to the board or list view.
 
 ## Agent mention deliverer page
 
