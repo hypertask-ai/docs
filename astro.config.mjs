@@ -71,7 +71,6 @@ export default defineConfig({
             { label: "Collaboration", slug: "features/collaboration" },
             { label: "Superhuman-Style Snippets", slug: "features/superhuman-snippets" },
             { label: "Skills", slug: "features/skills" },
-            { label: "Appearance & AI Models", slug: "features/appearance" },
           ],
         },
         {
