@@ -63,6 +63,7 @@ export default defineConfig({
           items: [
             { label: "AI Features", slug: "features/ai-features" },
             { label: "Boards & Sections", slug: "features/boards" },
+            { label: "Bring Your Own Key", slug: "features/byok" },
             { label: "Keyboard Shortcuts", slug: "features/keyboard-shortcuts" },
             { label: "Tasks", slug: "features/tasks" },
             { label: "Time Tracking", slug: "features/time-tracking" },
