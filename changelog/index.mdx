@@ -8,16 +8,20 @@ import { Update } from '@astrojs/starlight/components';
 ## July 2026
 
 <Update label="July 20, 2026">
-* Added per-feature model configuration in Settings → AI → AI features for task summaries and question suggestions ([HTPR-4400](https://app.hypertask.ai/detail/project-15/4400))
-* Made agents and membership team-scoped with server-side access gates ([HTPR-4397](https://app.hypertask.ai/detail/project-15/4397))
-* Added API key management for BYOK teams in Settings → Team ([HTPR-1902](https://app.hypertask.ai/detail/project-15/1902))
-* Improved workspace access control with sticky settings footer and persistent sign-in ([HTPR-3922](https://app.hypertask.ai/detail/project-15/3922))
-* Fixed CLI so failed commands now exit non-zero with a clear error message ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
-* Improved transient bot-challenge handling by retrying 403/429/5xx with exponential backoff instead of silent failure ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
+* Added per-user AI spend tracking via `user:<id>` tags and Personal breakdown, with owners and admins only ([HTPR-4246](https://app.hypertask.ai/detail/project-15/4246))
+* Added mobile Linear-style shell with 5-tab navigation (Inbox, Board, Calendar), task-detail slide front, and per-task follow/mute via Ctrl+K ([HTPR-4404](https://app.hypertask.ai/detail/project-15/4404))
+* Added granular event controls per-task: 6 categories + channel toggles for Email, Push, Chime ([HTPR-4404](https://app.hypertask.ai/detail/project-15/4404))
+* Improved AI chat conversations follow the board per-board sessions ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412))
+* Fixed Firebase-related deployment and push services ([HTPR-4381](https://app.hypertask.ai/detail/project-15/4381))
+* Added per-user-per-team default AI models ≈ select defaults per team; existing choices serve as global fallback ([HTPR-4392](https://app.hypertask.ai/detail/project-15/4392))
+* Improved AI features to respect provider toggles via per-role fallback ladder ≈ summaries and question suggestions now skip disabled providers and use the fastest available model ([HTPR-4398](https://app.hypertask.ai/detail/project-15/4398))
+* Fixed BYOK pricing display so paying teams correctly see the live seat plan ([HTPR-4395](https://app.hypertask.ai/detail/project-15/4395))
+* Added `--clear-due` option to `hypertask task update` to remove a task's due date ([HTPR-4076](https://app.hypertask.ai/detail/project-15/4076))
 </Update>
 
 <Update label="July 19, 2026">
-* Fixed Firebase-related deployment and push services ([HTPR-4381](https://app.hypertask.ai/detail/project-15/4381))
+* Fixed CLI so failed commands now exit non-zero with a clear error message ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
+* Improved transient bot-challenge handling by retrying 403/429/5xx with exponential backoff instead of silent failure ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
 </Update>
 
 <Update label="July 18, 2026">
