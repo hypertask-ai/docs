@@ -102,6 +102,7 @@ All AI-powered writing surfaces now share a consistent, scannable house style fo
 - **Simplified grammar fixes** — Fix Grammar stays minimal on all surfaces
 
 This style applies across:
+
 - AI chat responses
 - AI Task Writer output
 - Task Writer "Write with AI" suggestions (Lengthen respects scannability but is not brevity-bounded)
@@ -129,19 +130,19 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 ### What makes it useful
 
 - **Project context** — HyperAI can see your boards, tasks, and project configuration. Ask it questions like "What are the highest priority tasks this week?" or "Summarize what happened on the API project yesterday." It also understands archived tasks, so you can query completed or archived work.
-- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, create and delete saved views, and edit sent messages — all directly from the chat sidebar. Just tell it what you need and it handles the rest. Per-inference usage is tracked automatically and reported in the AI Usage breakdown.
+- **Take action** — HyperAI can create tasks, update and delete them, assign or unassign team members, set priorities, manage labels, move tasks between boards, manage sections, update and delete comments, handle inbox notifications, create and delete saved views, and edit sent messages — all directly from the chat sidebar. Just tell it what you need and it handles the rest.
 - **Smart query analysis** — HyperAI and AI Chat use advanced query analysis to understand your intent and surface more relevant, accurate responses. The AI interprets what you're asking and applies intelligent filtering to match your project context.
 - **Consistent house-style output** — All responses follow the BLUF-first, scannable house style for clarity and brevity, with 120-word limits and non-violent phrasing.
-- **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks (too, per [HTPR-4247](https://app.hypertask.ai/detail/project-15/4247)).
+- **Consistent HTML output** — Both AI Chat and HyperAI always return responses in HTML, so output renders correctly in the app regardless of the model or prompt used. HTML is sanitized using an isomorphic DOM cleanup library before rendering to prevent XSS attacks.
 - **@mentions** — reference specific tasks, people, or projects in your messages to give the AI precise context.
-- **Chat sessions with history** — conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off. For a task, threads from the question list on the welcome screen now appear when you open AI chat for that task (in addition to earlier-created preview threads) ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311)).
-- **Conversations follow the board** — the docked chat remembers which conversation you used on each board. Switch boards and the chat swaps to that board's last conversation; boards you haven't chatted on get a clean chat. The Inbox and full-screen chat are unaffected ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412)).
-- **Board scope pill** — the docked composer has a scope dropdown next to the model picker: **Current board** (default, follows your navigation), a specific pinned board, or **All boards**. Pinning a board locks the AI's context and @ mention suggestions to it and keeps your conversation in place while you navigate; starting a new chat resets to Current board. Boards are listed by how much you chat on each ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426)). In full-screen chat the sidebar selector plays this role instead, so the composer shows no scope pill there.
+- **Chat sessions with history** — conversations are saved as named sessions. The AI automatically gives each chat a descriptive name, and you can browse your full chat history to pick up where you left off.
+- **Conversations follow the board** — the docked chat remembers which conversation you used on each board. Switch boards and the chat swaps to that board's last conversation; boards you haven't chatted on get a clean chat. The Inbox and full-screen chat are unaffected.
+- **Board scope pill** — the docked composer has a scope dropdown next to the model picker: **Current board** (default, follows your navigation), a specific pinned board, or **All boards**. Pinning a board locks the AI's context and @ mention suggestions to it and keeps your conversation in place while you navigate; starting a new chat resets to Current board. Boards are listed by how much you chat on each. In full-screen chat the sidebar selector plays this role instead, so the composer shows no scope pill there.
 - **Side-by-side by default** — AI chat now opens in a side-by-side view by default whenever you're actively working on a task, keeping context visible without requiring manual opening.
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
-- **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's ⋯ menu, then return to docked via the same top-right icon ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
+- **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's ⋮ menu, then return to docked via the same top-right icon.
 
 ### Board agents
 
@@ -163,19 +164,19 @@ The app automatically extracts embed URLs from task descriptions (Figma, Loom, a
 | `Cmd/Ctrl + Shift + ?` | Minimize / restore the chat sidebar |
 | `Cmd/Ctrl + Shift + O` | Start a new chat |
 
-You can also **pin the AI chat open** from **Ctrl+K** ("Pin AI chat open") or the chat's ⋯ menu — a pinned chat stays open across pages. Closing the chat manually keeps it closed until you reopen it, even if the "Open AI chat by default" setting is on.
+You can also **pin the AI chat open** from **Ctrl+K** ("Pin AI chat open") or the chat's ⋮ menu — a pinned chat stays open across pages. Closing the chat manually keeps it closed until you reopen it, even if the "Open AI chat by default" setting is on.
 
 ### Full-screen chat mode
 
-AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>, or use <strong>Open full screen</strong> in the docked chat's ⋯ menu. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Drag the sidebar's right edge to resize it (200–480px, remembered across visits) so full chat titles stay readable ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418)).
+AI Chat can be opened in full-screen mode for an immersive experience. From **Ctrl+K**, select <strong>Open AI chat full screen</strong>, or use <strong>Open full screen</strong> in the docked chat's ⋮ menu. Once open, chat sessions are organized by time with a sidebar showing recent sessions; empty sessions are hidden. Drag the sidebar's right edge to resize it (200–480px, remembered across visits) so full chat titles stay readable.
 
-By default the chat is unscoped: you can reference tasks, boards, and project context across all boards. To focus on one board, use the **All boards** dropdown directly under "New chat" in the sidebar. It does two things at once: the session list narrows to that board's chats, and the AI's context plus @ mention suggestions scope to it. There is one control for both, so they can never disagree ([HTPR-4454](https://app.hypertask.ai/detail/project-15/4454)).
+By default the chat is unscoped: you can reference tasks, boards, and project context across all boards. To focus on one board, use the **All boards** dropdown directly under "New chat" in the sidebar. It does two things at once: the session list narrows to that board's chats, and the AI's context plus @ mention suggestions scope to it. There is one control for both, so they can never disagree.
 
-The menu lists your boards grouped by team, ordered by how much you chat on each one, with a session count per board. Pick **All boards** to clear the selection, or **No board** to find chats that predate board tagging (a list-only view — the AI stays unscoped). Sessions are tagged with their board automatically when you send the first message ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418)).
+The menu lists your boards grouped by team, ordered by how much you chat on each one, with a session count per board. Pick **All boards** to clear the selection, or **No board** to find chats that predate board tagging (a list-only view — the AI stays unscoped). Sessions are tagged with their board automatically when you send the first message.
 
 ### Switching to docked sidebar
 
-Click the chat icon in the top-right corner to return to the docked chat, carrying over the same conversation from full-screen mode ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
+Click the chat icon in the top-right corner to return to the docked chat, carrying over the same conversation from full-screen mode.
 
 ### MCP tools automatically available
 
@@ -213,19 +214,19 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✅ | ✅ |
-| Assignees & followers | ✅ | ✅ |
-| Comments (read, add, update, delete) | ✅ | ✅ |
-| Labels (read, create, assign) | ✅ | ✅ |
-| Sections / board columns (CRUD) | ✅ | ✅ |
-| Subtask hierarchy / task tree | ✅ | ✅ |
-| **Due dates** | ✅ | ✅ |
-| Archived / completed tasks | ✅ | ✅ |
-| Saved views (create, delete, edit) | ✅ | ✅ |
-| Move tasks between boards | ✅ | ✅ |
-| Inbox (list, archive, unarchive) | ✅ | ✅ |
-| Tags (read, create, assign) by name and ID | ✅ | ✅ |
-| Time tracking (start/stop, per-inference metering) | ✅ | ✅ |
+| Tasks (title, description, status, priority, size) | ✓ | ✓ |
+| Assignees & followers | ✓ | ✓ |
+| Comments (read, add, update, delete) | ✓ | ✓ |
+| Labels (read, create, assign) | ✓ | ✓ |
+| Sections / board columns (CRUD) | ✓ | ✓ |
+| Subtask hierarchy / task tree | ✓ | ✓ |
+| **Due dates** | ✓ | ✓ |
+| Archived / completed tasks | ✓ | ✓ |
+| Saved views (create, delete, edit) | ✓ | ✓ |
+| Move tasks between boards | ✓ | ✓ |
+| Inbox (list, archive, unarchive) | ✓ | ✓ |
+| Tags (read, create, assign) by name and ID | ✓ | ✓ |
+| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
 
 <Aside type="note">
 When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
@@ -254,7 +255,7 @@ Task auto-summaries now use **Gemini 3.1 Flash-Lite** and a **two-fold BLUF form
 - **Noise removal** — repetitive phrases, scheduling details, and routine comments are filtered out
 - **Sub-headlines** — clearly demarcated sections for easy scanning in task dropdowns
 
-This format makes long comment threads scannable and reduces dopamine friction when deciding whether to read a full thread ([HTPR-4271](https://app.hypertask.ai/detail/project-15/4271)).
+This format makes long comment threads scannable and reduces dopamine friction when deciding whether to read a full thread.
 
 ## AI Triage
 
@@ -273,7 +274,10 @@ The AI Usage report breaks down usage across five dimensions:
 | **By Model** | Usage grouped by AI model (e.g., Claude Sonnet 5, GPT-5.5) |
 | **Top Users** | Usage grouped by team member, showing who consumed the most AI resources. Auto-generated autoSummaries appear as one "AI Summary Generation — automatic" row, not attributed to a specific user. |
 | **By Inference** | Each individual AI inference call is tracked in the first-party `AiUsage` table, including the feature that triggered it, the model used, and the token count |
-| **Instant reports** | Per-inference data is available immediately after each deployment, as verified in staging and production |
+| **Personal breakdown** | Per-user spend and allowance usage, so you can see your individual cost and how close you are to your limit |
+
+### Per-user spend tracking
+Every gateway request now carries a `user:<id>` tag. Per-user spend accrues from today and feeds the personal usage bars in **Settings → AI Usage**. This lets you see your own cost and consumption (owners and admins only), plan your monthly AI allowance, and adjust your AI-heavy workflows if needed.
 
 ### Current allowance display
 The allowance progress bar and cost breakdown in Settings show:
@@ -284,7 +288,7 @@ The allowance progress bar and cost breakdown in Settings show:
 - **Feature-level breakdown** — Usage by AI feature
 - **Board-level breakdown** — Usage scoped to individual boards
 
-The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date ([HTPR-4292](https://app.hypertask.ai/detail/project-15/4292)).
+The "112 days left" copy has been removed to improve clarity; the display now focuses on your current month's projection and reset date.
 
 ### Access
 The AI Usage report is visible to **project owners and admins**. If the underlying usage data is unavailable, the breakdown section is hidden gracefully.
