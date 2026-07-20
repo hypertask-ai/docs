@@ -1,103 +1,56 @@
-import starlight from "@astrojs/starlight";
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
 
-const renderLegacyMdxComponents = {
-  name: "render-legacy-mdx-components",
-  enforce: "pre",
-  transform(code, id) {
-    const filePath = id.split("?", 1)[0];
-    if (!filePath.includes("/src/content/docs/") || !filePath.endsWith(".mdx")) return;
-
-    const compatibleCode = code
-      .replaceAll('<Aside type="warning"', '<Aside type="caution"')
-      .replaceAll('<Aside type="info"', '<Aside type="note"')
-      .replaceAll('<Aside type="example"', '<Aside type="note"');
-
-    return filePath.endsWith("/src/content/docs/changelog/index.mdx")
-      ? compatibleCode
-          .replace(/<Update label="([^"]+)">/g, "## $1")
-          .replaceAll("</Update>", "")
-      : compatibleCode;
-  },
-};
-
+// https://astro.build/config
 export default defineConfig({
-  site: "https://docs.hypertask.ai",
-  vite: {
-    plugins: [renderLegacyMdxComponents],
-    define: {
-      "globalThis.Astro": "undefined",
-    },
-    optimizeDeps: {
-      exclude: ["mermaid"],
-    },
-  },
   integrations: [
     starlight({
-      title: "Hypertask",
-      favicon: "/favicon.ico",
-      lastUpdated: true,
-      social: [
-        {
-          icon: "x.com",
-          label: "X",
-          href: "https://x.com/hypertasks",
-        },
-        {
-          icon: "youtube",
-          label: "YouTube",
-          href: "https://www.youtube.com/@hypertasks",
-        },
-      ],
-      sidebar: [
-        {
-          label: "Getting Started",
-          items: [
-            { label: "What is Hypertask?", slug: "getting-started/introduction" },
-            { label: "Core Concepts", slug: "getting-started/concepts" },
-            { label: "Quick Start", slug: "getting-started/quickstart" },
-          ],
-        },
-        {
-          label: "Features",
-          items: [
-            { label: "AI Features", slug: "features/ai-features" },
-            { label: "Boards & Sections", slug: "features/boards" },
-            { label: "Bring Your Own Key", slug: "features/byok" },
-            { label: "Keyboard Shortcuts", slug: "features/keyboard-shortcuts" },
-            { label: "Tasks", slug: "features/tasks" },
-            { label: "Time Tracking", slug: "features/time-tracking" },
-            { label: "Inbox & Notifications", slug: "features/inbox" },
-            { label: "Collaboration", slug: "features/collaboration" },
-            { label: "Superhuman-Style Snippets", slug: "features/superhuman-snippets" },
-            { label: "Skills", slug: "features/skills" },
-          ],
-        },
-        {
-          label: "API",
-          items: [
-            { label: "REST API", slug: "api/rest-api" },
-            { label: "MCP Tools Reference", slug: "api/tools-reference" },
-          ],
-        },
-        {
-          label: "MCP",
-          items: [
-            { label: "MCP Integration", slug: "mcp/overview" },
-            { label: "Creating Agents", slug: "mcp/agents" },
-            { label: "Agent Workflows", slug: "mcp/workflows" },
-            { label: "Scheduling Agents", slug: "mcp/scheduling" },
-          ],
-        },
-        {
-          label: "CLI",
-          items: [{ label: "CLI Reference", slug: "cli/reference" }],
-        },
-        {
-          label: "Docs",
-          items: [{ label: "Changelog", slug: "changelog" }],
-        },
-      ],
-    }),
+      sidebar: {
+        'Guide': [
+           { 
+             categories: [
+               {
+                 label: 'Core',
+                 items: [
+                   { uid: 'getting-started/introduction', label: "What is Hypertask?" },
+                   { uid: 'getting-started/quickstart', label: 'Quick Start' },
+                   { uid: 'getting-started/concepts', label: 'Core Concepts' }
+                 ]
+               },
+               {
+                 label: 'Features',
+                 items: [
+                   { uid: 'features/ai-features', label: 'AI Features' },
+                   { uid: 'features/appearance', label: 'Appearance & AI Models' },
+                   { uid: 'features/boards', label: 'Boards & Sections' },
+                   { uid: 'features/byok', label: 'Bring Your Own Key (BYOK)' },
+                   { uid: 'features/collaboration', label: 'Collaboration' },
+                   { uid: 'features/favorites', label: 'Favorites' },
+                   { uid: 'features/inbox', label: 'Inbox & Notifications' },
+                   { uid: 'features/keyboard-shortcuts', label: 'Keyboard Shortcuts' },
+                   { uid: 'features/skills', label: 'Skills' },
+                   { uid: 'features/superhuman-snippets', label: 'Superhuman-Style Snippets' },
+                   { uid: 'features/tasks', label: 'Tasks' },
+                   { uid: 'features/time-tracking', label: 'Time Tracking' },
+                   { uid: 'features/tasks', label: 'Tasks' }
+                 ]
+               },
+               {
+                 label: 'MCP',
+                 items: [
+                   { uid: 'mcp/overview', label: 'MCP Integration' },
+                   { uid: 'mcp/agents', label: 'Creating Agents' },
+                   { uid: 'mcp/workflows', label: 'Agent Workflows' },
+                   { uid: 'mcp/scheduling', label: 'Scheduling Agents' }
+                 ]
+               }
+             ]
+           }
+        ]
+      }
+    })
   ],
+  vite: {
+    clearScreen: false
+  }
 });
