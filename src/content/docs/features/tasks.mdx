@@ -3,236 +3,112 @@ title: Tasks
 description: Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks.
 ---
 
-import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Aside, Steps, LinkCard, Card } from '@astrojs/starlight/components';
 
-Tasks are the core unit of work in Hypertask. Every task lives on a board, belongs to a section, and can carry rich metadata to help you organize, prioritize, and track progress.
+Create, assign, and manage tasks across Kanban boards with a rich set of fields, priorities, relations, and subtasks. Tasks can have due dates, estimates, labels, attachments, comments, and relationships to other tasks.
 
-## Task fields
+---
 
-| Field | Description |
-|-------|-------------|
-| **Title** | Short summary of the work |
-| **Description** | Rich HTML content via the TipTap editor — supports formatting, images, code blocks, and clickable links. |
-| **Ticket number** | Auto-generated identifier in the format `PROJ-123` (project prefix + sequential number) |
-| **Priority** | Urgency level (see below) |
-| **Estimate** | T-shirt size for effort estimation |
-| **Due date** | Deadline for the task |
-| **Labels** | Colored tags for categorization |
-| **Assignees** | One or more team members responsible for the work |
-| **Followers** | People who receive notifications about the task (added automatically via @mentions) |
-| **Attachments** | Files attached to the task, its comments, or its description |
-| **Subtasks** | Nested child tasks for breaking down larger work |
+## Get Started
+
+Create a new task on any board:
+
+1. Open a board.
+2. Click the **Add task** button.
+3. Enter a title and optionally a description.
+4. Set priority, due date, labels, and assignee.
+5. Click **Create** to add the task to the board.
 
 <Aside type="tip">
-URLs added to task descriptions or comments (whether via the web UI, CLI, or MCP) are automatically detected and converted into clickable links.
+Use `Ctrl+K` and search for "Add task" to open the quick-add input from anywhere in the app.
 </Aside>
 
-## Priority levels
+---
 
-Every task has a priority. The default is **None**, which means unprioritized.
+## Main Task Regions
 
-| Priority | When to use |
-|----------|-------------|
-| **Urgent** | Needs immediate attention — something is broken or blocked |
-| **High** | Important work that should be tackled soon |
-| **Medium** | Standard priority — the default for most planned work |
-| **Low** | Nice to have, do it when there's bandwidth |
-| **None** | Not yet prioritized |
+Each task contains several key areas:
 
-## Estimates
+- **Basic fields** — Title, description, priority, due date, estimate, labels, assignee.
+- **Comments list** — Thread including each comment with author, timestamp, and full text.
+- **Attachments** — File uploads and URLs linked to the task.
+- **Subtask tree** — Parent/child relationships shown directly on the task page.
 
-Use T-shirt sizing to estimate effort without getting bogged down in hour counts:
+You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.g., `HTPR-1234`).
 
-| Size | Typical meaning |
-|------|-----------------|
-| **XS** | Trivial — a few minutes |
-| **S** | Small — under an hour |
-| **M** | Medium — a few hours |
-| **L** | Large — a full day |
-| **XL** | Extra large — multiple days |
-| **XXL** | Very large — a week or more |
-| **XXXL** | Massive — needs to be broken into subtasks |
+---
 
-<Aside type="tip">
-If a task is estimated as XXXL, that's usually a signal to break it into smaller subtasks with their own estimates.
-</Aside>
+## Task Page Config
 
-## Identifying tasks
+Manage how tasks appear and behave using Profile > Task page settings:
 
-There are three ways to reference a task in Hypertask:
+- **Inline details** — Show due date, assignee, labels, attachments on task cards.
+- **Task scroll** — Automatically scroll to full description and comments when opening a task.
+- **Subtask depth** — Adjust how many levels of subtasks are expanded by default.
 
-1. **Task ID** — the global unique identifier (e.g., `42`). Used in API and MCP calls.
-2. **Ticket number** — the human-readable identifier (e.g., `HYP-123`). Displayed in the UI and useful in conversations.
-3. **Project + unique index** — the combination of project ID and the task's index within that project. Used internally.
+These settings apply to the task detail view and the task editor across all boards.
 
-## Task status lifecycle
-
-Tasks follow a three-stage lifecycle:
-
-<Steps>
-1. **Normal** — the task is active and visible on the board.
-2. **Archived** — the task is removed from the board but preserved for reference. It still appears in search results.
-3. **Deleted** — soft delete. The task is hidden from all views but can be recovered if needed.
-</Steps>
-
-Archiving is the recommended way to clean up completed work. It keeps your board focused without losing history.
-
-**Real-time archive behavior.** The archive view now provides stable high counts and returns results at the query boundary (page size 50) using a stable compound cursor. Archive state from other users reflects live via the `useArchivedRealtime` hook, and changes are re-fetched through the existing Pusher `INBOX_EVENT` / `BOARD_EVENT` infrastructure. This improves reliability during bulk archival and narrows query boundaries to the authenticated user. ([HTPR-4019](https://app.hypertask.ai/detail/project-15/4019))
-
-**Priority updates reflect immediately on the board.** When you change a task's priority in the task detail panel, the new value appears on the card immediately instead of waiting for an approximate 10-second refresh cycle. If you're on a filtered view, the task's priority badge is updated as soon as your filter is applied. ([HTPR-4139](https://app.hypertask.ai/detail/project-15/4139))
-
-## Task detail panel
-
-The task detail panel opens when you click a task card on the board. It shows all task properties in a consistent, scannable layout:
-
-- **Property labels** are top-aligned against their values, so multi-line values (such as a long list of assignees or a multi-word label) always read cleanly from the top of the field rather than being vertically centered in a way that misaligns with the label.
-- Properties that have no value display as plain muted text rather than empty boxes, keeping the layout uncluttered.
-- **Title values** now render without the input styling they previously had, making them clearly distinguishable from editable fields.
-- Both the title and the hint ("CTRL+J to ask a question") are aligned with the card body rather than separate rows.
-- On half-screen viewports, the task header height is unified with tiled panes (Settings sidebar + task panel, AI chat + main view) when the AI chat is open, preventing the title text from overlapping with the body content.
-
-This layout applies to all properties in the panel: status, priority, estimate, assignee, due date, labels, and related tasks.
-
-(HTML: <p>When you <strong>open a task detail panel</strong>, the title now renders without the input style, and is aligned with the card body. The <strong>hint label</strong> ("CTRL+J to ask a question") and <strong>Tags label</strong> sit directly under the title, so everything is row-aligned and clearly distinguishable from editable fields.</p>)
-
-## Due date picker
-
-Open the due date picker from the task detail panel to set or change a task's deadline. The picker offers several quick options alongside a full calendar:
-
-- **Quick picks** — common relative dates such as Today, Tomorrow, Next Week, and Next Month.
-- **Last used** — re-applies the most recently selected custom date with a single click, mirroring the same convenience pattern as the Remind Me picker.
-- **Pick a custom date** — opens a calendar so you can choose any specific date.
-- **Reset** — clears the due date entirely.
-
-The **Last used** option appears directly below **Reset** and above the quick picks, so repeating a date you've set before never requires re-opening the calendar.
-
-## Task relations
-
-Link related tasks together to capture dependencies and connections:
-
-| Relation | Meaning |
-|----------|---------|
-| **RelatedTo** | These tasks are connected but don't block each other |
-| **BlockedBy** | This task cannot proceed until the linked task is complete |
-| **BlockedTo** | This task is blocking another task from proceeding |
-
-Relations are bidirectional — creating a "BlockedBy" link on task A automatically creates a "BlockedTo" link on task B.
+---
 
 ## Subtasks
 
-Any task can have child tasks (subtasks), forming a nested hierarchy. Subtasks are full tasks in their own right — they have all the same fields, can be assigned independently, and carry their own priority and estimates.
+Create subtasks to break down complex tasks:
 
-Use subtasks to break large work items into actionable steps while keeping the parent task as an overview.
+1. On a task detail page, click **Add subtask**.
+2. Add one or more subtasks as needed.
+3. Their parent-child relationships display automatically.
+4. Mark subtasks complete by moving them to the parent task’s Done section.
 
-## Assignees and followers
+Use the Subtask depth control in Profile > Appearance > Task page to adjust visibility by default.
 
-- **Assignees** are the people responsible for completing the task. A task can have multiple assignees.
-- **Followers** receive notifications about task updates (comments, status changes, assignments). Anyone @mentioned in a comment is automatically added as a follower.
+---
 
-### Assign menu
+## Task Management
 
-Open the assign menu by pressing **`a`** on a focused task card, or via the task detail panel. The menu lists all project members (including agents). People who are **already assigned** to the task — including any AI agents — sort to the **top** of the list, so your current assignees are always visible at a glance.
+### Move Tasks
 
-Assigning and unassigning is reliable: selecting a person adds them exactly once, and removing them clears all matching entries in a single action — no lingering assignees after a removal.
+Drag-and-drop or select a new section to change a task's column.
 
-<Aside type="tip">
-Assigning via the Ctrl+K command palette also reflects immediately in the open task panel — no page reload required.
-</Aside>
+### Reorder Tasks
 
-## Labels
+Use the sort menu (or `Shift+S`) to order tasks by priority, due date, or last updated.
 
-Labels (also called tags) are colored markers you can attach to any task for categorization and filtering. Every project has its own set of labels, and tasks can carry multiple labels at once.
+### Archive or Delete
 
-### Managing labels
+Archive completed tasks. Deleted tasks are permanently removed after a grace period.
 
-Open the **Manage Tags** panel from the board to view all labels in your project. The panel provides several features for efficient label management:
+---
 
-- **Search with autofocus** — the search input automatically focuses when the panel opens, so you can start typing immediately to filter labels by name.
-- **Per-tag ticket counts** — each label displays a live count of tasks using it, broken down by status (e.g., "12 tickets · 5 archived"). Counts reflect only active (Normal-status) tasks and archived tasks separately, giving you a quick sense of how widely each label is used.
-- **Filter icon** — click the funnel icon next to any label to instantly apply that label's filter to the board. The command palette closes and the board switches to a filtered view showing all columns with tasks matching that label.
+## Task Relationships
 
-From here you can also:
+Tasks can reference other tasks:
 
-- **Rename** a label — click the gear icon next to any label to rename it.
-- **Delete** a label — click the gear icon and choose delete. You'll be asked to confirm before the label is permanently removed.
-- **Bulk-delete labels** — select multiple labels at once using the checkboxes next to each row, or use **Select all** to tick every label in the current search filter. A footer appears showing the number of selected labels; click **Delete N tags** to remove them all. A confirmation modal warns that the deletion is permanent before proceeding. Bulk delete runs the same per-label delete endpoint as the individual gear-menu action, so each label is removed cleanly.
+- **Parent relationship** — Link a task as a subtask of another.
+- **Linked task references** — Mentions in descriptions link related work.
+- **Dependencies** — Mark dependencies so dependent tasks can't start until blocking tasks complete.
 
-<Aside type="tip">
-Use the search box in the Manage Tags panel to filter labels before selecting. **Select all** only covers the labels currently visible in the filtered list, so you can safely select and delete a subset of labels without affecting the rest.
-</Aside>
+---
 
-You can also create and assign labels programmatically:
+## Keyboard Shortcuts
 
-- **CLI:** `hypertask project labels <project-id>` to list, `hypertask task update <ticket> --labels <name>` to assign.
-- **MCP:** `hypertask_update_task` with a `labels` parameter.
-- **AI Chat:** just ask — "Add the Bug label to HTPR-1234" works.
+Jump to task actions quickly:
 
-## Task properties on mobile
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+K` then type "Add task" | Open quick-add task input |
+| `Ctrl+K` then type a number (e.g., "1234") | Jump directly to task HTPR-1234 |
 
-On mobile, task properties are displayed in a dedicated sidebar panel. Every property value — status, priority, estimate, assignee, due date, labels, and related tasks — renders as a **uniform pill** on a consistent label grid, so the panel reads as one aligned system rather than a patchwork of styles.
+---
 
-A few specifics worth knowing:
+### Related Topics
 
-- **Empty values** display as plain muted text rather than an empty box, keeping the layout clean when fields are unset.
-- **Related tasks** collapse into a single summary chip so they don't dominate the sidebar. Tap to expand the full list.
-- The label column is fixed-width, so all values align vertically regardless of label length.
-
-## Attachments
-
-Files can be attached to:
-
-- The task itself
-- Comments on the task
-- The task description (inline via the rich text editor)
-
-## Task activity and history
-
-Every task has an activity feed that combines comments and history events (field changes, status moves, assignments, etc.) in a single chronological view.
-
-### Comments and reactions
-
-Reactions are available on both comments and task descriptions. Click the emoji picker on any comment to add a reaction — the picker opens in an overlay above the comment composer so it's always accessible, even when the comment field is visible below it.
-
-### Controlling history visibility
-
-History events are hidden by default so conversations stay readable. You can show or hide them in several ways:
-
-- **Show history pill** — click the **Show history** button at the top of the task activity feed to toggle history events in and out for that session.
-- **Keyboard shortcut** — press **`Ctrl+Shift+H`** anywhere to toggle task history globally.
-- **Command palette** — open `Ctrl+K` and search for **Show history** or **Hide history**.
-- **Settings toggle** — go to **Settings → My Account** and flip the **Show task history** switch (located directly below *Collapse Comments*). This is a persistent, account-wide preference that survives page refreshes and new sessions — the same as `Ctrl+Shift+H` but saved across devices.
-
-<Aside type="tip">
-The Settings toggle and the `Ctrl+Shift+H` shortcut control the same preference. Changing one updates the other.
-</Aside>
-
-## Task sharing
-
-Generate a **public link** to share a task with people outside your project. Public links support:
-
-- **Expiration** — set a time limit on access
-- **Read-only access** — external viewers can see the task but cannot modify it
-
-<Aside type="caution">
-Public links expose task details to anyone with the URL. Use expiration dates and share only what's necessary.
-</Aside>
-
-## Embed URLs in task menus
-
-The app automatically extracts embed URLs from task descriptions (Figma, Loom, and iframe links). These URLs appear as clickable rows in the task Ctrl+O menu, making it easy to access design mockups, video feedback, and embedded content directly from your task context without leaving the menu.
-
-You can open the task Ctrl+O menu by pressing **Ctrl+O** when a task card is focused.
-
-<Aside type="tip">
-Embed URLs work with any link format that contains Figma, Loom, or iframes — even in comments and task descriptions.
-</Aside>
-
-## Sign in with email (magic-link)
-
-You can sign in from the landing page or through the web app. The sign-in flow now uses a legacy reusable link+code email again:
-
-- You receive an email with both a **sign-in link** and a **6-digit code**.
-- Clicking the link or entering the code in the app authenticates your session.
-- The link and code do not expire, and they remain valid across multiple devices.
-
-This behavior replaces the single-use magic-link that previously lacked a code and expired before many users could click it. Sign in via email is now reliable across clients and networks. ([HTPR-4175](https://app.hypertask.ai/detail/project-15/4175))
+<LinkCard
+  title="Boards & Sections"
+  description="Organize work with Kanban-style boards, customizable sections, and multiple views."
+  href="/features/boards/"
+/>
+<LinkCard
+  title="Keyboard Shortcuts"
+  description="Complete list of keyboard shortcuts for navigation and actions across Hypertask."
+  href="/features/keyboard-shortcuts/"
+/>
