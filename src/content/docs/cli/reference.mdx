@@ -63,6 +63,36 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
 For legacy setups, `<code>hypertask auth:login --token &lt;jwt&gt;</code>` also works to save a token directly. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
+## Exit Codes and Error Behavior
+
+The CLI uses exit codes so scripts and CI pipelines can reliably detect failures. Up to v1.8.0, some write commands exited with code 0 even when the write did not succeed, making errors invisible to callers. Starting from CLI 1.8.0, the CLI always fails loudly: every subcommand that encounters an error exits non-zero with an accompanying message.
+
+<Aside type="caution">
+Use `hypertask capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
+</Aside>
+
+### Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| `0` | Success |
+| `1` | General runtime or API error (non-auth) |
+| `4` | Authentication or authorization failure |
+| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
+
+All subcommands that produce errors now exit with a dedicated code and either print to stdout or stderr. The CLI also monitors unhandled promise rejections and ensures they surface as non-zero exits.
+
+### Transient Failures
+
+Bot-challenge 403s, rate limits, and certain gateway errors are now retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
+
+- **Retried cases:** 403 (bot challenge), 408 (Request Timeout), 429 (Rate Limit), 500 (Internal Server Error), 502 (Bad Gateway), 503 (Service Unavailable), 504 (Gateway Timeout)
+- **Backoff sequence:** retry attempts are spaced approximately 2 seconds, 10 seconds, and 30 seconds, then fail with a clear message
+- **Error message phrasing:** "<code>transient challenge/rate limit — retry in a minute</code>" clarifies that the failure is temporary and not due to a bad token
+- **Safe failures:** Writes are rejected before the mutation occurs, so retry cannot result in double-creation
+
+**Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
+
 ## Global Options
 
 These flags can be used with any command:
@@ -70,7 +100,7 @@ These flags can be used with any command:
 | Flag | Description |
 |------|-------------|
 | `--token <jwt>` | Override the saved JWT token for this invocation |
-| `--api-url <url>` | Override the API URL (default: `https://app.hypertask.ai/api`) |
+| `--api-url <url>` | Override the API URL (default: <code>https://app.hypertask.ai/api</code>) |
 | `--json` | Output raw JSON instead of formatted text |
 | `-V, --version` | Print the CLI version |
 | `-h, --help` | Show help for any command |
@@ -112,27 +142,6 @@ Error: Invalid ticket number, expected PREFIX-NNN (e.g. HTPR-2992)
 ```
 
 This validation prevents a bare number from silently resolving to an unintended task.
-
-## Exit Codes
-
-The CLI uses standard exit codes so scripts and CI pipelines can reliably detect failures:
-
-| Code | Meaning |
-|------|---------|
-| `0` | Success |
-| `1` | General runtime error (e.g. API error, authentication failure) |
-| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
-
-Unknown subcommands fail loudly with a descriptive error instead of silently printing root help:
-
-```
-$ hypertask tasks frobnicate
-Error: 'task frobnicate' is not a valid subcommand
-```
-
-<Aside type="tip">
-Before v1.3.4, an unrecognised subcommand exited with code `0` and printed the root help page, making it invisible to shell scripts checking `$?`. Since v1.3.4 these exits use code `2` (the POSIX convention for command-line usage errors) and print a clear error message. Update to ≥ 1.3.4 if your scripts rely on exit codes.
-</Aside>
 
 ## Update Notifications
 
