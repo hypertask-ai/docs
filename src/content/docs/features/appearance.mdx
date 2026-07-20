@@ -3,9 +3,9 @@ title: Appearance & AI Models
 description: Customize themes and select AI models for Hypertask.
 ---
 
-import { Aside, Tabs, TabItem, Steps, LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside, Steps, LinkCard, Card } from '@astrojs/starlight/components';
 
-Your Appearance settings let you control the visual look of Hypertask and choose which AI models power built-in features like Task Writer and HyperAI.
+Your Appearance settings in Hypertask are now on a dedicated page, accessible from your main navigation or `Ctrl+K`. This page lets you control the visual look of the platform and configure default AI behaviors.
 
 ---
 
@@ -15,7 +15,7 @@ Hypertask offers three theme options:
 
 - **Light** — Clean, light interface for environments with ample natural light.
 - **Dark** — Easy on the eyes in low-light or evening sessions.
-- **System** — Automatically follows your device’s night mode preferences.
+- **System** — Automatically follows your device's night mode preferences.
 
 To change your theme:
 
@@ -29,71 +29,40 @@ Dark mode is the default for new users and reduces eye strain during long work s
 
 ---
 
-## AI Model Selection
+## Task Page Preferences
 
-You can configure which AI model to use for Hypertask’s automation features:
+From the Appearance tab, you can configure how tasks display:
 
-### Available Models
+- **Show task scroll** — When enabled, Hypertask automatically scrolls to fit the entire task description and comments when opening a task.
+- **Subtask depth** — Adjust how many levels of subtasks are drawn as expanded by default.
+- **Expand inline details** — Show fields like due date, assignee, labels, and attachments directly on task cards for quick scanning. Toggle off for a cleaner card view.
 
-| Model | Best for |
-|-------|----------|
-| **Default** | Balanced performance with low latency for general-purpose tasks. |
-| **Fast** (GPT‑5.5 Fast) | Quick responses when speed matters, at the cost of slightly less detailed output. |
-| **GPT‑5.5** | Balanced intelligence with strong reasoning—ideal for complex tasks. |
-| **Claude 4** | Higher-quality creative and narrative tasks. |
-| **Claude Haiku** | Low-latency drafting and summarization. |
-| **Claude Opus** | Deep reasoning and complex planning—best for large projects with many steps. |
-
-### Select a Default Model
-
-1. Open Profile → Appearance.
-2. Under AI Model, choose from the list of available models.
-3. This model will power Task Writer and HyperAI by default.
-
-<Aside type="tip">
-You can still override the model per task in the Task Writer (e.g., "Write with Fast model") if needed.
-</Aside>
-
----
-
-## Preferences & Shortcuts
-
-### Show Task Scroll
-
-Enable this to have Hypertask automatically scroll to the full task description and comments when opening a task. Use it for long-form descriptions or detailed comment threads.
-
-### Subtask Depth
-
-Adjust how many levels of subtasks are drawn as parents by default. Guides the visibility of parent/child relationships at a glance.
-
-### Expand Inline Details
-
-Show rich fields like due date, assignee, labels, and more directly on task cards for quick scanning. Toggle off for a cleaner card view.
+These settings apply to the task detail view and task editor across all boards.
 
 ---
 
 ## Keyboard Shortcuts
 
-Directly jump to these settings from anywhere in the app:
+Jump directly to these settings from anywhere in the app:
 
 | Shortcut | Action |
 |----------|--------|
-| Ctrl+K → type "Appearance" | Open Appearance settings tab |
-| Ctrl+K → type "Model" | Jump to AI model selection |
-| Ctrl+K → type "Themes" | Jump to Theme dropdown |
+| `Ctrl+K` then type "Appearance" | Open Appearance settings page |
+| `Ctrl+K` then type "Themes" | Jump to Theme dropdown |
+| `Ctrl+K` then type "Settings" | Jump to task page preferences |
 
 ---
 
-## Related Topics
+### Why These Settings Go on the Task Page
+
+Task-related preferences like scroll behavior, subtask display, and inline details are now grouped on the **Task page** section of your Profile. This separates them from your personal identity information (General tab) and makes them easier to discover and configure.
+
+---
+
+### Related Topics
 
 <LinkCard
   title="Keyboard Shortcuts"
   description="Full reference of keyboard shortcuts for navigation and actions across Hypertask."
   href="/features/keyboard-shortcuts/"
-/>
-
-<LinkCard
-  title="AI Features"
-  description="Explore AI-powered task creation, chat, and automation capabilities."
-  href="/features/ai-features/"
 />
