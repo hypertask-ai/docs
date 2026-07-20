@@ -141,6 +141,7 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 - **Available on mobile** — AI Chat is accessible full-screen on mobile. Tap the chat icon on any mobile view to get the same context-aware assistant you have on desktop.
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
+- **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's ⋯ menu, then return to docked via the same top-right icon ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
 
 ### Board agents
 
@@ -172,7 +173,9 @@ By default the chat is unscoped: you can reference tasks, boards, and project co
 
 The session sidebar also has a **board filter** above the search input: pick a board to see only that board's chats (with per-board counts), or "No board" for chats that predate board tagging. The filter only narrows the list you're browsing — it never changes what the AI can see. Sessions are tagged with their board automatically when you send the first message ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418)).
 
-To switch back to the docked sidebar chat, click the panel icon in the top-right corner — the same conversation carries over ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
+### Switching to docked sidebar
+
+Click the chat icon in the top-right corner to return to the docked chat, carrying over the same conversation from full-screen mode ([HTPR-4422](https://app.hypertask.ai/detail/project-15/4422)).
 
 ### MCP tools automatically available
 
@@ -241,6 +244,17 @@ Auto-summaries highlight:
 <Aside>
 Auto-summaries update as new comments are added, so they always reflect the latest state of the conversation.
 </Aside>
+
+## Summary Format
+
+Task auto-summaries now use **Gemini 3.1 Flash-Lite** and a **two-fold BLUF format** for clarity and brevity:
+
+- **What this is** — one-line executive summary that answers the question "What am I looking at?"
+- **Recent activity** — bullet list of recent updates and state changes
+- **Noise removal** — repetitive phrases, scheduling details, and routine comments are filtered out
+- **Sub-headlines** — clearly demarcated sections for easy scanning in task dropdowns
+
+This format makes long comment threads scannable and reduces dopamine friction when deciding whether to read a full thread ([HTPR-4271](https://app.hypertask.ai/detail/project-15/4271)).
 
 ## AI Triage
 
