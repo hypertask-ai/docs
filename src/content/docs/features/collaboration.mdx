@@ -5,7 +5,7 @@ description: Work together with team workspaces, real-time editing, mentions, re
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Hypertask is built for teams â\x80\x94 whether thatâ\x80\x99s two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
+Hypertask is built for teams — whether that’s two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
 ## Team workspaces
 
@@ -55,13 +55,13 @@ Hypertask uses **Better Auth** for server-led authentication. When you log in vi
 
 ### Login flow
 
-1. **Initiate login** â\x80\x94 Click email code or magic-link in the login modal.
-2. **Server processes** â\x80\x94 Better Auth verifies your identity on the server.
-3. **Response includes cookies** â\x80\x94 The login response sets:
-   - **Better Auth session** â\x80\x94 Server-side session for your authentication.
-   - **nookies_user** â\x80\x94 Client-side user identity token.
-   - **ht_session** â\x80\x94 Server-validated signature for cookie integrity.
-4. **Redirect to board** â\x80\x94 Youâ\x80\x99re redirected to a board in the app.
+1. **Initiate login** — Click email code or magic-link in the login modal.
+2. **Server processes** — Better Auth verifies your identity on the server.
+3. **Response includes cookies** — The login response sets:
+   - **Better Auth session** — Server-side session for your authentication.
+   - **nookies_user** — Client-side user identity token.
+   - **ht_session** — Server-validated signature for cookie integrity.
+4. **Redirect to board** — You’re redirected to a board in the app.
 
 <Aside type="note">
 All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
@@ -69,36 +69,53 @@ All authentication flows are server-led. Firebase is retained exclusively for FC
 
 ### BYOK and API keys
 
-API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings â\x86\x92 Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
+API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
 
 ---
 
 ### Settings navigation
 
-The **Settings â\x86\x92 Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
+The **Settings → Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
 
-- **Base price** â\x80\x94 The full list price of your plan, shown with the expected period
-- **Discount** â\x80\x94 The discount amount applied if your team is eligible (e.g., for long-term commitments or enterprise pricing)
-- **Amount due** â\x80\x94 The final amount you pay after applying the discount
+- **Base price** — The full list price of your plan, shown with the expected period
+- **Discount** — The discount amount applied if your team is eligible (e.g., for long-term commitments or enterprise pricing)
+- **Amount due** — The final amount you pay after applying the discount
 
 <Aside type="tip">
 This billing view makes the effective cost of your plan more transparent, especially for discounted enterprise or long-term pricing tiers.
 </Aside>
 
+### Settings footer
+
+On every settings page, the viewport is now terminated by a **sticky footer** with quick access links and a labeled Sign out button:
+
+- **Feedback** — icons for general feedback and contact page opening
+- **Sign out** — prominent red button that updates to indicate action on hover
+
+The previously misleading **Profile > Account** section is no longer displayed. Links previously reachable under "Profile → Account" now redirect to their correct locations.
+
+- **Navigation footer** persists across navigation throughout settings pages
+- **Sign out behavior** is updated with visual feedback when hovered
+- **Last-visible anchor details** appear only when the user intentionally scrolls into view
+
+<Aside type="tip">
+The sticky settings footer ensures you can quickly reach feedback tools and sign out, no matter which settings panel you’re in.
+</Aside>
+
 ### Switching accounts without logout
 
-When youâ\x80\x99re already logged in and want to switch to a different account (for example, on the same browser):
+When you’re already logged in and want to switch to a different account (for example, on the same browser):
 
-1. **Initiate new login** â\x80\x94 Start logging in via email code or magic-link for the target account.
-2. **Previous session cleared** â\x80\x94 The login response now properly clears the previous userâ\x80\x99s Better Auth session cookies (Max-Age=0). This prevents the old userâ\x80\x99s session from persisting.
-3. **Fresh cookies set** â\x80\x94 Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
-4. **Redirect to board** â\x80\x94 Youâ\x80\x99re now logged in as the intended user.
+1. **Initiate new login** — Start logging in via email code or magic-link for the target account.
+2. **Previous session cleared** — The login response now properly clears the previous user’s Better Auth session cookies (Max-Age=0). This prevents the old user’s session from persisting.
+3. **Fresh cookies set** — Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
+4. **Redirect to board** — You’re now logged in as the intended user.
 
 This ensures that account switching works correctly and you always see the correct user in the app.
 
 ### Persistent sign-in state
 
-After login, your session persists until you explicitly sign out. Hiding or closing the browser doesnâ\x80\x99t automatically log you out.
+After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn’t automatically log you out.
 
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
@@ -108,15 +125,15 @@ If you persist LocalStorage across sign-ins or sessions (e.g. in test environmen
 
 ## AI Agents
 
-AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that boardâ\x80\x99s tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
+AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board’s tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
 
 ### Adding agents to boards
 
 <Steps>
-1. Open the boardâ\x80\x99s settings or invite panel.
-2. Look for the **invite modal** â\x80\x94 it now shows both team members and any agents youâ\x80\x99ve created.
+1. Open the board’s settings or invite panel.
+2. Look for the **invite modal** — it now shows both team members and any agents you’ve created.
 3. Select the agent you want to add to the board.
-4. The agent appears in the boardâ\x80\x99s member list and can now be assigned tasks.
+4. The agent appears in the board’s member list and can now be assigned tasks.
 </Steps>
 
 Agents added to a board are treated as members of that board. This means:
@@ -131,11 +148,11 @@ Agents do not count as team seats toward your subscription limit. You can add as
 
 ### Agent access scope
 
-When you create an agent, it inherits access to all boards in projects where youâ\x80\x99re a member. Use the board-level invite modal to **restrict which boards an agent can access** â\x80\x94 boards not on the list treat the agent as if it doesnâ\x80\x99t exist.
+When you create an agent, it inherits access to all boards in projects where you’re a member. Use the board-level invite modal to **restrict which boards an agent can access** — boards not on the list treat the agent as if it doesn’t exist.
 
 This is useful when:
 
-- You work across multiple clients or teams and donâ\x80\x99t want a given agent active everywhere
+- You work across multiple clients or teams and don’t want a given agent active everywhere
 - You want to limit an agent to only the boards where it has relevant context
 - You have specialized agents for different workflows and need to keep them scoped
 
@@ -143,8 +160,8 @@ This is useful when:
 
 Type `@` in any comment to mention a team member. Mentions do two things:
 
-1. **Send a notification** â\x80\x94 the mentioned person receives an inbox notification immediately.
-2. **Add as follower** â\x80\x94 the mentioned person is automatically added as a follower on the task, so they receive future updates.
+1. **Send a notification** — the mentioned person receives an inbox notification immediately.
+2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
 
 Mentions work in comments and task descriptions, and support native and external agents:
 
@@ -155,24 +172,24 @@ If you receive a mention that looks suspicious, report it to your workspace owne
 ### Agent @mentions
 
 <Aside type="note">
-Agent owners are not notified of their own agentâ\x80\x99s comments.
+Agent owners are not notified of their own agent’s comments.
 </Aside>
 
-@mentioning an agent (native or external) triggers a **Mentioned notification** in that agentâ\x80\x99s inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
+@mentioning an agent (native or external) triggers a **Mentioned notification** in that agent’s inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
 
-This means you can @mention external agents in comments and task descriptions to trigger automation; the agentâ\x80\x99s inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
+This means you can @mention external agents in comments and task descriptions to trigger automation; the agent’s inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
 
-If an external agent isnâ\x80\x99t receiving @mentions, verify that it has board-level access.
+If an external agent isn’t receiving @mentions, verify that it has board-level access.
 
 ## Emoji reactions
 
-React to tasks and comments with emoji. Reactions serve as lightweight feedback â\x80\x94 a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
+React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
 
 Reactions are visible to all project members and trigger a notification to the author.
 
 ### Fast like button
 
-For the most common reaction â\x80\x94 a simple thumbs-up â\x80\x94 Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
+For the most common reaction — a simple thumbs-up — Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
 
 - **Mouse users:** hover over a task card or comment to reveal the like button, then click it to toggle your reaction on or off.
 - **Mobile users:** tap the like button that appears inline alongside the comment or task actions.
@@ -183,17 +200,17 @@ The like button is a shortcut for the thumbs-up reaction. It appears in the full
 
 Comments can be starred (saved) or pinned, and the visual indicators update based on comment state:
 
-1. **Pinned + saved** â\x80\x94 only the orange pinned dot displays (saved state is suppressed)
-2. **Pinned only** â\x80\x94 only the orange pinned dot displays
-3. **Saved only** â\x80\x94 only the yellow saved/starred dot displays
+1. **Pinned + saved** — only the orange pinned dot displays (saved state is suppressed)
+2. **Pinned only** — only the orange pinned dot displays
+3. **Saved only** — only the yellow saved/starred dot displays
 
 ### All reactions icon
 
-Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether itâ\x80\x99s a like or another emoji expression.
+Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether it’s a like or another emoji expression.
 
 ## Real-time sync
 
-Hypertask keeps every connected client live â\x80\x94 no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
+Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
 **What updates in real time:**
 - Tasks appearing, disappearing, or moving between sections when created, archived, or moved
@@ -201,7 +218,7 @@ Hypertask keeps every connected client live â\x80\x94 no manual refreshes neede
 - New comments and reactions
 - Board and section changes
 
-This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow â\x80\x94 useful for monitoring agents running in your terminal or CI pipeline.
+This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow — useful for monitoring agents running in your terminal or CI pipeline.
 
 ### Real-time collaborative text editing
 
@@ -212,24 +229,24 @@ This applies to:
 - Comments (while drafting)
 - Any rich text field in the app
 
-There are no save buttons â\x80\x94 changes persist as you type.
+There are no save buttons — changes persist as you type.
 
 <Aside>
-Real-time sync means AI agents editing task descriptions via MCP wonâ\x80\x99t overwrite human edits. Changes are merged automatically.
+Real-time sync means AI agents editing task descriptions via MCP won’t overwrite human edits. Changes are merged automatically.
 </Aside>
 
 ## Managing comments
 
-You can manage comments on any task â\x80\x94 including comments left by other team members or agents. This is useful when:
+You can manage comments on any task — including comments left by other team members or agents. This is useful when:
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
 - Tidying up task threads for better readability
 
-To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members â\x80\x94 trust within the team is assumed for collaborative housekeeping.
+To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
 
 ### URL auto-linkification
 
-Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client â\x80\x94 so a deploy URL pasted by a CLI script or an agentâ\x80\x99s status update with a link will always be clickable for your teammates.
+Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent’s status update with a link will always be clickable for your teammates.
 
 Links open in a new tab. URLs that are already formatted as hyperlinks or embedded inside images are left unchanged.
 
@@ -257,10 +274,10 @@ Browse and search a full emoji library. Click any emoji to insert it into your c
 #### GIFs tab
 
 The GIFs tab is powered by **Giphy** and offers two modes:
-- **Trending** â\x80\x94 shows popular GIFs by default when you open the tab.
-- **Search** â\x80\x94 type any query to find a GIF that fits the moment.
+- **Trending** — shows popular GIFs by default when you open the tab.
+- **Search** — type any query to find a GIF that fits the moment.
 
-Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** â\x80\x94 drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
+Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** — drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
 
 <Aside type="note">
 GIF search requires a Giphy API key configured on the Hypertask deployment. If GIFs are not loading, contact your workspace admin.
@@ -268,7 +285,7 @@ GIF search requires a Giphy API key configured on the Hypertask deployment. If G
 
 ## Activity logs
 
-Every change in Hypertask is recorded in the activity log â\x80\x94 a full audit trail of who did what, and when.
+Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
 - Task creation, updates, and deletion
@@ -282,7 +299,7 @@ Activity logs are available at the task level (see what happened to a specific t
 
 ### Comments-only view (default)
 
-The task feed defaults to **comments only** â\x80\x94 history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
+The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
 - Click the **Show history** pill at the top of the feed, or
