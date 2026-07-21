@@ -20,7 +20,7 @@ Create a new task on any board:
 5. Click **Create** to add the task to the board.
 
 <Aside type="tip">
-Use `Ctrl+K` and search for "Add task" to open the quick-add input from anywhere in the app.
+Use `Ctrl+K` and search for "Add task" to open the quick-add task input from anywhere in the app.
 </Aside>
 
 ---
@@ -29,10 +29,10 @@ Use `Ctrl+K` and search for "Add task" to open the quick-add input from anywhere
 
 Each task contains several key areas:
 
-- **Basic fields** — Title, description, priority, due date, estimate, labels, assignee.
-- **Comments list** — Thread including each comment with author, timestamp, and full text.
-- **Attachments** — File uploads and URLs linked to the task.
-- **Subtask tree** — Parent/child relationships shown directly on the task page.
+- **Basic fields** â\x80\x94 Title, description, priority, due date, estimate, labels, assignee.
+- **Comments list** â\x80\x94 Thread including each comment with author, timestamp, and full text.
+- **Attachments** â\x80\x94 File uploads and URLs linked to the task.
+- **Subtask tree** â\x80\x94 Parent/child relationships shown directly on the task page.
 
 You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.g., `HTPR-1234`).
 
@@ -42,11 +42,33 @@ You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.
 
 Manage how tasks appear and behave using Profile > Task page settings:
 
-- **Inline details** — Show due date, assignee, labels, attachments on task cards.
-- **Task scroll** — Automatically scroll to full description and comments when opening a task.
-- **Subtask depth** — Adjust how many levels of subtasks are expanded by default.
+- **Inline details** â\x80\x94 Show due date, assignee, labels, attachments on task cards.
+- **Task scroll** â\x80\x94 Automatically scroll to full description and comments when opening a task.
+- **Subtask depth** â\x80\x94 Adjust how many levels of subtasks are expanded by default.
 
 These settings apply to the task detail view and the task editor across all boards.
+
+---
+
+## Table View
+
+Table view displays tasks in a spreadsheet-like layout with columns for title, priority, assignee, due date, and more.
+
+### View options
+
+- **Row height** â\x80\x94 Adjust how compact each row appears to fit more or less information on screen.
+- **Inline expansion** â\x80\x94 Expand task cards to show a preview of the description and comments directly in the row.
+- **Smart truncation toggle** â\x80\x94 Control whether long titles truncate or wrap:
+  - **Word wrap** (enabled by default): Titles break onto multiple lines so the full text remains readable at smaller screen sizes.
+  - **Truncate instead**: Long titles are cut off with ellipses (â„•) and revealed by clicking or expanding.
+
+Use the **Ctrl+K** command palette to quickly toggle title wrap mode from any board:
+
+1. Press `Ctrl+K` to open the command palette.
+2. Search for **"Toggle title wrap"**.
+3. Select **Table view** and choose **Wrap** or **Truncate**.
+
+The toggle is persisted per user, so your preference automatically applies whenever you open Table view.
 
 ---
 
@@ -57,7 +79,7 @@ Create subtasks to break down complex tasks:
 1. On a task detail page, click **Add subtask**.
 2. Add one or more subtasks as needed.
 3. Their parent-child relationships display automatically.
-4. Mark subtasks complete by moving them to the parent task’s Done section.
+4. Mark subtasks complete by moving them to the parent taskâ\x80\x99s Done section.
 
 Use the Subtask depth control in Profile > Appearance > Task page to adjust visibility by default.
 
@@ -83,9 +105,9 @@ Archive completed tasks. Deleted tasks are permanently removed after a grace per
 
 Tasks can reference other tasks:
 
-- **Parent relationship** — Link a task as a subtask of another.
-- **Linked task references** — Mentions in descriptions link related work.
-- **Dependencies** — Mark dependencies so dependent tasks can't start until blocking tasks complete.
+- **Parent relationship** â\x80\x94 Link a task as a subtask of another.
+- **Linked task references** â\x80\x94 Mentions in descriptions link related work.
+- **Dependencies** â\x80\x94 Mark dependencies so dependent tasks can't start until blocking tasks complete.
 
 ---
 
@@ -97,8 +119,6 @@ Jump to task actions quickly:
 |----------|--------|
 | `Ctrl+K` then type "Add task" | Open quick-add task input |
 | `Ctrl+K` then type a number (e.g., "1234") | Jump directly to task HTPR-1234 |
-
----
 
 ### Related Topics
 
