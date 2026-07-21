@@ -3,74 +3,126 @@ title: Appearance & AI Models
 description: Customize themes and select AI models for Hypertask.
 ---
 
-import { Aside, Steps, LinkCard, Card } from '@astrojs/starlight/components';
+import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Your Appearance settings in Hypertask are now on a dedicated page, accessible from your main navigation or `Ctrl+K`. This page lets you control the visual look of the platform and configure default AI behaviors.
+Your workspace can feel like home. Adjust themes, toggle periodic chart views, pick your preferred chart widgets, and choose AI models for tasks, summaries, and suggestions.
 
----
+<CardGrid>
+  <Card title="Themes" icon="palette">
+    Light, Dark, System, AMOLED, and the warm Paper theme
+  </Card>
+  <Card title="Chart toggles" icon="chart-bar">
+    Periodic charts appear as augmented view pills
+  </Card>
+  <Card title="Chart widgets" icon="sliders">
+    Select Chart view toggles when Chart is available
+  </Card>
+  <Card title="Glide & CSM scan" icon="scan">
+    Scan waypoints via GLIDE or CSM, or both
+  </Card>
+</CardGrid>
 
 ## Themes
 
-Hypertask offers three theme options:
+Choose from a range of visual themes to match your environment and preferences. All themes support light and dark modes, with a system default that follows your OS preferences.
 
-- **Light** — Clean, light interface for environments with ample natural light.
-- **Dark** — Easy on the eyes in low-light or evening sessions.
-- **System** — Automatically follows your device's night mode preferences.
+### Available themes
 
-To change your theme:
+| Theme | Best for |
+|-------|----------|
+| **Light** | Daytime work, clean aesthetic |
+| **Dark** | Low-light environments, eye comfort |
+| **System** | Follow your OS theme automatically |
+| **AMOLED** | OLED/AMOLED displays, maximum contrast, true-black base |
+| **Paper** | Warm editorial light aesthetic, paper-like feel |
 
-1. Open Profile → Appearance.
-2. Select the desired theme from the Theme dropdown.
-3. Refresh your view for full consistency across all boards.
+### Activating a theme
 
-<Aside type="info">
-Dark mode is the default for new users and reduces eye strain during long work sessions.
+Use the theme picker in the sidebar to switch themes, or search via the command palette:
+
+- **Ctrl+K** Command palette (type **"Theme"**, select the theme)
+- **Sidebar** - Go to Account settings, choose from the theme dropdown
+
+AMOLED applies automatic color adjustments to surfaces previously rendered with dark grays, giving you a pure-black base and terminal-friendly input colors that pop on OLED screens. Paper is a warm, not-too-bright light theme suited for editorial workflows and reduced eye strain during extended sessions.
+
+### Theme behavior
+
+- Changes apply immediately across all boards and UI surfaces
+- Theme preference is saved per user and synced across devices
+- No configuration changes are lost when switching themes
+- Common surfaces affected: card backgrounds, comment inputs, dropdowns, and modal overlays
+
+<Aside type="tip">
+AMOLED is automatically selected by default when your OS is set to "Dark mode" so that badge text remains readable on OLED screens. You can override this via the theme picker if you prefer a dark gray appearance on hybrid-display devices.
 </Aside>
 
----
+## Charts
 
-## Task Page Preferences
+Periodic charts (velocity, progress, and burnup) augment your boards as view-type pills and view-widgets. Chart view is not yet globally available everywhere, but you can toggle Charts on when Chart view is offered by your project or board context.
 
-From the Appearance tab, you can configure how tasks display:
+### Quick view-tabs pill bar
 
-- **Show task scroll** — When enabled, Hypertask automatically scrolls to fit the entire task description and comments when opening a task.
-- **Subtask depth** — Adjust how many levels of subtasks are drawn as expanded by default.
-- **Expand inline details** — Show fields like due date, assignee, labels, and attachments directly on task cards for quick scanning. Toggle off for a cleaner card view.
+When Chart view is available, periodic charts appear as augmented pills in the view-tabs pill bar at the top of the board, alongside your Saved Views and standard views (Board, Calendar, Timeline). Clicking a chart pill opens Chart view for that period and chart type.
 
-These settings apply to the task detail view and task editor across all boards.
+### Saved Views pill bar
 
----
+For any Saved View that supports Chart view, the Chart pill appears in the saved-views pill bar. This gives you a persistent one-click path to Chart view after you open the board to that Saved View.
 
-## Keyboard Shortcuts
+### Chart widget toggles
 
-Jump directly to these settings from anywhere in the app:
+In boards or views where Chart view is offered, the Chart pill includes a small toggle icon inside it (e.g., <span style="font-size: 0.85em;">🚫</span> or <span style="font-size: 0.85em;">🚫</span>). Click the toggle to change between two chart styles:
 
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl+K` then type "Appearance" | Open Appearance settings page |
-| `Ctrl+K` then type "Themes" | Jump to Theme dropdown |
-| `Ctrl+K` then type "Settings" | Jump to task page preferences |
+| Toggle state | Available chart styles |
+|--------------|------------------------|
+| First (default) | Velocity chart — estimate-weighted completion per week |
+| Second | Burnup chart — total completed vs total remaining over time |
 
-### Why These Settings Go on the Task Page
+For boards where Chart view is not offered, this toggle is not shown. Chart view options are surfaced by active boards in your workspace — contact your workspace owner to add Chart view to more areas.
 
-Task-related preferences like scroll behavior, subtask display, and inline details are now grouped on the **Task page** section of your Profile. This separates them from your personal identity information (General tab) and makes them easier to discover and configure.
+<Aside type="tip">
+When Chart view is available, you can use the Chart pill in either the view-tabs or saved-views pill bar to quickly jump to the chart view relevant to your current context.
+</Aside>
 
-### Related Topics
+## AI Models
 
-<LinkCard
-  title="Keyboard Shortcuts"
-  description="Full reference of keyboard shortcuts for navigation and actions across Hypertask."
-  href="/features/keyboard-shortcuts/"
-/>
+Select AI models for specific features. Your choices show up as badges in the UI to make expectations clear.
 
----
+<Tabs>
+  <TabItem label="Per-feature" default>
+    Assign models to specific AI capabilities:
 
-## Team Default Models
+    - **Task Writer** — model for generating task descriptions from prompts
+    - **Summaries** — model for auto-summaries of comment threads
+    - **Suggestions** — model for AI triage suggestions in the inbox
 
-You can select default AI models per team. Each team gets its own set of defaults, and the page shows "Defaults for <team>" to make the selection clear. Changes apply only to that team's context and do not affect others.
+    Use per-feature settings when you want fine-grained control over where each provider excels. For example, use a quicker model for summaries and a more capable model for complex task generation.
+  </TabItem>
+  <TabItem label="Project-level" default>
+    Projects can override the system-wide defaults with custom instructions and model choices that apply to all AI features in that project.
+  </TabItem>
+</Tabs>
 
-When no team-specific settings exist, options from an existing global default are used as the fallback. Once you define per-team defaults, they become the effective choice for that team's members.
+### Default model selection
 
-This ensures customization without requiring global configuration changes.
+When you select **Auto**, Hypertask recommends a model based on your plan and enabled providers, prioritizing speed for summaries and suggestions, and capability for task generation. If you have multiple providers and models enabled, the fastest available model across them wins for performance-sensitive workflows.
 
----
+### Bindings and overrides
+
+- **Provider disables** — providers you turn off are never consulted, even if they're configured in your AI features settings
+- **Model-tier badges** — some features highlight cost-effective or speed-optimized models with badges
+- **Fine-grained overrides** — some features (e.g., task summary templates) can still pick faster models while others stick to more capable ones
+
+<Aside type="tip">
+If you're unsure, rely on the Auto assignment: it adapts to your plan's capabilities and provider setup without manual tuning.
+</Aside>
+
+## Admin configuration
+
+Project owners and admins can configure default AI models at the system level. These settings appear in **Settings → AI → AI features**, where you can configure model mappings for key features that operate at the system level:
+
+| Feature | Description |
+|---------|-------------|
+| **Task summaries** | Default model for auto-summaries of task comment threads |
+| **Question suggestions** | Default model for intelligent suggestions in task triage and assignment |
+
+Admin settings serve as a fallback for any project that doesn't have custom instructions. If a project has instructions or specific model preferences, those take precedence.
