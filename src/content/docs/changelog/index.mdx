@@ -14,6 +14,7 @@ import { Update } from '@astrojs/starlight/components';
   * Improved table view readability: Task titles now wrap by default on smaller screens with a Ctrl+K toggle to switch to truncation mode ([HTPR-4233](https://app.hypertask.ai/detail/project-15/4233))
   * Added CLI view management commands: <code>views create/update/switch/delete</code> to manage saved views across projects directly from the terminal ([HTPR-4502](https://app.hypertask.ai/detail/project-15/4502))
   * Fixed mobile Ctrl+K keyboard focus: Ctrl+K now reliably opens the search keyboard and focuses the input field on mobile sessions ([HTPR-4506](https://app.hypertask.ai/detail/project-15/4506))
+  * Added MCP dry-run mode for task creation: Requests now return a simulation with <code>success</code>, <code>error</code> (if validation fails), and structured validation details including field names and allowed formats, without persisting changes ([HTPR-4432](https://app.hypertask.ai/detail/project-15/4432))
 </Update>
 
 <Update label="July 20, 2026" features={[<u/>]}>
