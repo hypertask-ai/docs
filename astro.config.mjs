@@ -29,8 +29,7 @@ export default defineConfig({
                 { link: '/features/superhuman-snippets/', label: 'Superhuman-Style Snippets' },
                 {
                   label: 'AI Chat',
-                  link: '/features/.
-AI-chat/',
+                  link: '/features/.\nAI-chat/',
                   items: [
                     { link: '/features/appearance/', label: 'Appearance & AI Models' },
                     { link: '/features/ai-features/', label: 'AI Features' },
@@ -57,6 +56,10 @@ AI-chat/',
                 { link: '/mcp/workflows/', label: 'Agent Workflows' },
                 { link: '/mcp/scheduling/', label: 'Scheduling Agents' },
               ],
+            },
+            {
+              label: 'Table View',
+              link: '/features/table-view/',
             },
           ],
         },
