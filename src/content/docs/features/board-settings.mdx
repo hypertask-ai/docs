@@ -83,7 +83,20 @@ Staleness only accounts for updates to the task record. Activities like commenti
 
 Define rules that automatically assign or re-assign tasks to specific members. This is useful for ensuring that new pull requests, backlog items, or triage items land with the right people without manual overhead.
 
-### How to configure
+### Per-column auto-assign on column move
+
+In addition to setting a default for the entire board when a task is created or is unassigned, you can configure a per-column auto-assign rule: whenever a task is moved into this column, it will be assigned to the specified person or group. Ctrl+K “Auto-assign for this column” opens the per-column configuration.
+
+To configure per-column auto-assign:
+
+1. From the board or section header, open the context menu (or use Ctrl+K “Auto-assign for this column”) and select the section where you want the rule.
+2. Pick an assignee (group or individual) to apply as tasks are moved into that column. The assignment is additive and idempotent—moving a task back into another column and then into this column again respects the rule.
+3. When the rule applies, all tenants receive a notification and the assignee is messaged in the source channel if notifications are set up for the board.
+
+<Aside type="tip">
+Use per-column auto-assign for specialized workflows—for example, “On-call” rotations, triage columns that should always go to the reviewer on duty, or QA columns where incoming issues are handled by dedicated testers.</Aside>
+
+### How to configure (defaults)
 
 - **Target columns** — Specify which columns should apply auto-assign triggers:
   - Any column that can receive tasks (e.g., In Progress, Review).
@@ -94,7 +107,7 @@ Define rules that automatically assign or re-assign tasks to specific members. T
 
 ### Scenarios
 
-- **Backlog channel** — Assign new sto, backlog items to reviewers or maintainers.
+- **Backlog channel** — Assign new backlog items to reviewers or maintainers.
 - **Review overload** — Auto-assign completed items to QA reviewers when they become “In Review”.
 - **Slack alerts** — Combine with board notifications to alert assignees when auto-assign runs.
 
