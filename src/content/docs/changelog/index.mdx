@@ -6,9 +6,10 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 21, 2026" features={[<u/>]}>
+  * Added Pages for task-bound notepads (markdown, versioned, RAG-indexed) with CLI/MCP/REST/AI Chat surfaces and version history + restore ([HTPR-4514](https://app.hypertask.ai/detail/project-15/4514))
   * Fixed CLI bug: <code>tasks create --json</code> now emits exactly one JSON document, and <code>tasks list --json</code> includes <code>uniqueIndex</code> on each task ([HTPR-4318](https://app.hypertask.ai/detail/project-15/4318))
   * Fixed comment emails for agents: Comments created by agents, MCP tools, and CLI now send email notifications to followers and owners, matching web-UI behavior ([HTPR-4158](https://app.hypertask.ai/detail/project-15/4158))
-  * Fixed /chat board filter: choose "All boards" to see chats from every board or filter to a single board’s chats ([HTPR-4483](https://app.hypertask.ai/detail/project-15/4483))
+  * Fixed /chat board filter: choose "All boards" to see chats from every board or filter to a single board\u2019s chats ([HTPR-4483](https://app.hypertask.ai/detail/project-15/4483))
   * Improved session length: Choose login sessions of 7 or 30 days instead of the previous 7-day default ([HTPR-4489](https://app.hypertask.ai/detail/project-15/4489))
   * Added per-chat URLs: Each conversation in AI Chat gets its own shareable link that deep-loads that specific conversation when visited ([HTPR-4485](https://app.hypertask.ai/detail/project-15/4485))
   * Improved table view readability: Task titles now wrap by default on smaller screens with a Ctrl+K toggle to switch to truncation mode ([HTPR-4233](https://app.hypertask.ai/detail/project-15/4233))
@@ -24,5 +25,5 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 14, 2026" features={[<u/>]}>
-  * Improved AI chat context: AI now knows which View you're on and can switch between Views via chat, CLI, API, and MCP ([HTPR-4294](https://app.hypertask.ai/detail/project-15/4294))
+  * Improved AI chat context: AI now knows which View you\u2019re on and can switch between Views via chat, CLI, API, and MCP ([HTPR-4294](https://app.hypertask.ai/detail/project-15/4294))
 </Update>
