@@ -1,56 +1,80 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
-// https://astro.build/config
 export default defineConfig({
-  integrations: [
+  plugins: [
     starlight({
-      sidebar: {
-        'Guide': [
-           { 
-             categories: [
-               {
-                 label: 'Core',
-                 items: [
-                   { uid: 'getting-started/introduction', label: "What is Hypertask?" },
-                   { uid: 'getting-started/quickstart', label: 'Quick Start' },
-                   { uid: 'getting-started/concepts', label: 'Core Concepts' }
-                 ]
-               },
-               {
-                 label: 'Features',
-                 items: [
-                   { uid: 'features/ai-features', label: 'AI Features' },
-                   { uid: 'features/appearance', label: 'Appearance & AI Models' },
-                   { uid: 'features/boards', label: 'Boards & Sections' },
-                   { uid: 'features/byok', label: 'Bring Your Own Key (BYOK)' },
-                   { uid: 'features/collaboration', label: 'Collaboration' },
-                   { uid: 'features/favorites', label: 'Favorites' },
-                   { uid: 'features/inbox', label: 'Inbox & Notifications' },
-                   { uid: 'features/keyboard-shortcuts', label: 'Keyboard Shortcuts' },
-                   { uid: 'features/skills', label: 'Skills' },
-                   { uid: 'features/superhuman-snippets', label: 'Superhuman-Style Snippets' },
-                   { uid: 'features/tasks', label: 'Tasks' },
-                   { uid: 'features/time-tracking', label: 'Time Tracking' },
-                   { uid: 'features/tasks', label: 'Tasks' }
-                 ]
-               },
-               {
-                 label: 'MCP',
-                 items: [
-                   { uid: 'mcp/overview', label: 'MCP Integration' },
-                   { uid: 'mcp/agents', label: 'Creating Agents' },
-                   { uid: 'mcp/workflows', label: 'Agent Workflows' },
-                   { uid: 'mcp/scheduling', label: 'Scheduling Agents' }
-                 ]
-               }
-             ]
-           }
-        ]
-      }
-    })
+      sidebar: [
+        {
+          label: 'Getting Started',
+          items: [
+            { link: '/getting-started/introduction/', label: 'What is Hypertask?' },
+            { link: '/getting-started/quickstart/', label: 'Quick Start' },
+            { link: '/getting-started/concepts/', label: 'Core Concepts' },
+            { link: '/getting-started/settings-profile/', label: 'Profile & Settings' },
+          ],
+        },
+        {
+          label: 'Features',
+          items: [
+            {
+              label: 'Boards & Sections',
+              link: '/features/boards/',
+              items: [
+                { link: '/features/comments/', label: 'Comments' },
+                { link: '/features/collaboration/', label: 'Collaboration' },
+                { link: '/features/favorites/', label: 'Favorites' },
+                { link: '/features/sections/', label: 'Sections' },
+                { link: '/features/skills/', label: 'Skills' },
+                { link: '/features/superhuman-snippets/', label: 'Superhuman-Style Snippets' },
+                {
+                  label: 'AI Chat',
+                  link: '/features/.
+AI-chat/',
+                  items: [
+                    { link: '/features/appearance/', label: 'Appearance & AI Models' },
+                    { link: '/features/ai-features/', label: 'AI Features' },
+                    { link: '/features/chat-board-filter/', label: 'Board Filter' },
+                  ],
+                },
+                { link: '/features/tasks/', label: 'Tasks' },
+                { link: '/features/time-tracking/', label: 'Time Tracking' },
+              ],
+            },
+            {
+              label: 'CLI & API',
+              link: '/cli/reference/',
+              items: [
+                { link: '/api/tools-reference/', label: 'MCP Tools Reference' },
+                { link: '/api/rest-api/', label: 'REST API' },
+              ],
+            },
+            {
+              label: 'MCP Integration',
+              link: '/mcp/overview/',
+              items: [
+                { link: '/mcp/agents/', label: 'Creating Agents' },
+                { link: '/mcp/workflows/', label: 'Agent Workflows' },
+                { link: '/mcp/scheduling/', label: 'Scheduling Agents' },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Design System',
+          link: '/design-system/',
+          items: [
+            { link: '/design-system/typography/', label: 'Typography & Sidebar Visuals' },
+            { link: '/design-system/visual-standard/', label: 'Sidebar & Modal Visual Standard' },
+          ],
+        },
+        {
+          label: 'Misc',
+          items: [
+            { link: '/changelog/', label: 'Changelog' },
+          ],
+        },
+      ],
+    }),
   ],
-  vite: {
-    clearScreen: false
-  }
 });
