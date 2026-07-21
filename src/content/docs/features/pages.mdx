@@ -1,0 +1,271 @@
+---
+title: Pages
+description: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
+---
+
+import { Aside, Steps, LinkCard, Card, CardGrid } from '@astrojs/starlight/components';
+
+Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface — CLI, MCP, REST, or AI Chat.
+
+## What is a Page?
+
+Think of a Page as a full-screen notepad for thinking, planning, and research that lives on top of a task. Every page is tied to a specific task, so it stays in context of the work you're on. Pages are:
+
+- **Task-bound:** Live inside a task detail and accessible from the task row.
+- **Markdown-first:** Write in markdown; the editor renders rich HTML with TipTap.
+- **Agent-friendly:** Created, appended, updated, and archived programmatically via CLI, MCP, REST, and AI Chat.
+- **RAG-indexed:** Every write is indexed so the AI can search, summarize, and reason over page content.
+- **Versioned:** Every change is captured with history and restore capabilities.
+- **Conflict-safe:** Optimistic-lock guards return a 409 conflict if multiple agents try to write at once.
+
+---
+
+## Getting Started
+
+This feature is now live on production, so you can start using it right away from the web UI and from the command line.
+
+### In the Web UI
+
+1. Open any task detail.
+2. Look for the **Pages** row under the main task fields (below subtasks).
+3. Click the **Pages** header to expand and see all pages for that task.
+4. Click **New page** to create an empty page, or open an existing page.
+5. The editor opens full-screen; create, edit, and save normally.
+
+<Aside type="tip">
+Use <kbd>Ctrl+K</kbd> from any task and type **"Pages"** to open the command palette entry for that task's pages.
+</Aside>
+
+<Aside type="note">
+Legacy explorations on hypertask.app are not migrated; new writing uses the Pages system.
+</Aside>
+
+---
+
+## Types of Pages
+
+You can create three kinds of pages on a task. They differ only in how you create them and, for humans, where in the editor you start typing:
+
+| Type | How to create | Where to write | When to use |
+|------|---------------|----------------|-------------|
+| **Page** | Click **New page** on the task detail → choose a name | In a new, untitled page | General thinking, notes, and exploration |
+| **Description page** | Type a blank title and choose **Description** mode from the command palette | In an auto-renamed page with prefix `#` (e.g., `#TaskNewPage`) | You want the page to act like an extended description for the task |
+| **Exploration page** | Type a title containing the word **Exploration** or choose the **Exploration** preset from the command palette | Will show `#Exploration` in the title | You want explicit context that this is a formal exploration / research page |
+
+---
+
+## Creating and editing pages
+
+Use the full-screen editor attached to the task:
+
+- **Start typing** on a blank page or in a title to create it.
+- **Markdown works:** Use headings, lists, code blocks, and links.
+- **Slash commands:** Type `/` at the beginning of a line for formatting options (e.g., `/bold`, `/checklist`, `/image`, `/code`).
+- **@mentions:** Resolve team members within the page to notify them of your writing.
+
+---
+
+## Append, prepend, replace
+
+Pages support an append/prepend/replace model for agent workflows. When creating or updating a page programmatically, you can choose mode:
+
+- **overwrite:** Replaces the entire current page content.
+- **append:** Adds content after the existing text (RFC 2046-style).
+- **prepend:** Adds content before the existing text.
+
+This is especially useful for agents that progressively build a page over time without risking accidental clobbering of previous work.
+
+---
+
+## Versioning and history
+
+Every page has a version history. Restrict updates to safe versions and restore previous versions when needed.
+
+### In the editor
+
+- Click **History** in the editor header to view all versions of the page.
+- Each version shows the timestamp, author, and a copy of the content at that point.
+- Click a version to view what the page looked like at that time.
+
+### Via MCP and CLI
+
+MCP tools and CLI commands expose the page's version list and restore options:
+
+- `hypertask pages list-versions <ticket> <page-id>` — lists all versions with timestamps and editorial info.
+- `hypertask pages restore <ticket> <page-id> --version <version-id>` — restores a page to a selected historical state.
+
+---
+
+## Task-description versioning
+
+Task descriptions also gain version history to help you track contributions, revert edits, and keep a clean changelog of what changed.
+
+### In the web UI
+
+- Open any task.
+- Click **Description** in the top area to open the description editor.
+- Click **History** in the description header to view revisions.
+
+### Via MCP and CLI
+
+Use dedicated endpoints to list and restore description history:
+
+- **MCP:** `taskDescriptionVersions` (GET) to list task-description versions.
+- **MCP:** `taskDescriptionRestore` (POST) to restore a task description to a specific snapshot.
+- **CLI:** `hypertask task description-versions <ticket>` and `hypertask task description-restore <ticket> --version <version-id>`.
+
+### Conflict safety for task descriptions
+
+If two agents or users edit the same task description at the same time, Hypertask uses optimistic locking to detect the conflict:
+
+- First write wins, second write returns a **409 conflict**.
+- View the current text in the conflict response and retry your update with the updated content.
+
+<Aside type="caution">
+Do not retry blindly after a 409 without inspecting the returned current content, or you risk overwriting concurrent changes.
+</Aside>
+
+---
+
+## Agent work patterns
+
+For agents and AI workflows, the Pages system provides a reliable, tracked surface to experiment and plan:
+
+- **Exploration depth:** Agents can maintain multi-page explorations for complex tasks without relying on external, untracked tools.
+- **Incremental building:** Use `append` or `prepend` modes to grow pages over time.
+- **Conflict handling:** Use the version semantics to implement safe concurrent writes for agents that work on the same pages.
+- **AI context:** Since pages are RAG-indexed, the AI can always see your latest exploration content in chats, summaries, and task planning.
+
+---
+
+## CLI reference
+
+Pages commands live under the new `pages` command group (CLI & MCP tools). They are fully available from the terminal to manage pages programmatically.
+
+### Commands
+
+| Command | Description |
+|--------|-------------|
+| `hypertask pages create <ticket> --title "title" [--page-type <type>] [--mode <mode>]` | Create a new page on a task. |
+| `hypertask pages get <ticket> <page-id> [--mode <mode>]` | Get full markdown content of a page. |
+| `hypertask pages append <ticket> <page-id> --text "content"` | Append text to a page. |
+| `hypertask pages prepend <ticket> <page-id> --text "content"` | Prepend text to a page. |
+| `hypertask pages update <ticket> <page-id> --text "content"` | Overwrite a page entirely. |
+| `hypertask pages list <ticket>` | List all pages on a task. |
+| `hypertask pages search <ticket> --query "text"` | Search page content on a task. |
+| `hypertask pages list-versions <ticket> <page-id>` | List historical versions of a page. |
+| `hypertask pages restore <ticket> <page-id> --version <version-id>` | Restore a page to a previous version. |
+
+### Flags
+
+Most commands support the following flags:
+
+| Flag | Description |
+|------|-------------|
+| `--mode <mode>` | Write mode: `overwrite`, `append`, or `prepend`. Defaults to `overwrite`. |
+| `--text <text>` | Markdown text for the body (required for create/update/append/prepend). |
+| `--limit <n>` | Limit results (for list/search). Default is 10. |
+| `--offset <n>` | Pagination offset for list operations. |
+
+### Examples
+
+Create a basic page:
+
+```bash
+hypertask pages create HTPR-2992 --title "Research competitor pricing" --text "# Competitor pricing\n\nStart by listing key competitors and their pricing tiers."
+```
+
+Append a paragraph incrementally:
+
+```bash
+hypertask pages append HTPR-2992 --page-id 4521 --text "Each tier includes X; Y is extra."
+```
+
+Get full content:
+
+```bash
+hypertask pages get HTPR-2992 --page-id 4521
+```
+
+List all pages on a task:
+
+```bash
+hypertask pages list HTPR-2992
+```
+
+Search page content:
+
+```bash
+hypertask pages search HTPR-2992 --query "competitor"
+```
+
+---
+
+## MCP tools reference
+
+Below are the MCP tool definitions for pages (see [`/api/tools-reference.mdx`](/api/tools-reference.mdx) for the complete tool list).
+
+- `hypertask_create_page` — Create a new page on a task.
+- `hypertask_get_page` — Get full markdown content of a page.
+- `hypertask_append_to_page` — Append text to a page.
+- `hypertask_prepend_to_page` — Prepend text to a page.
+- `hypertask_update_page` — Overwrite a page entirely.
+- `hypertask_list_pages` — List all pages on a task.
+- `hypertask_search_pages` — Search page content on a task.
+- `hypertask_list_page_versions` — List historical versions of a page.
+- `hypertask_restore_page` — Restore a page to a previous version.
+- `hypertask_task_description_versions` — List task-description versions for concurrency.
+- `hypertask_task_description_restore` — Restore a task description to a previous version.
+
+<Aside type="tip">
+All pages-associated tools reuse the task routes' authentication and project-membership checks, returning matching 401/403 errors relative to access to the parent task.
+</Aside>
+
+---
+
+## AI Chat integration
+
+You can now create, read, append, and update pages directly inside AI Chat without leaving the conversation. AI Chat has parity with CLI and MCP: open a task context through a message like "Open HTPR-2992 for editing" and then proceed to "Create a page for a competitor analysis" or "Append a note about pricing tiers."
+
+---
+
+## Version conflict semantics
+
+Pages and task descriptions both support optimistic-concurrency conflict safety using `ifVersion`-style checks:
+
+- **Server returns 409 Conflict** if the agent's `ifVersion` header mismatch the current version of the content.
+- **Client can retry** by fetching the current version, re-reading content, and resubmitting the write with the latest version.
+- **Never silently clobber:** The server validates the version before persisting to prevent lost updates.
+
+### CLI conflict handling example
+
+```bash
+# 1. Fetch current page content
+CURRENT=$(hypertask pages get HTPR-2992 --page-id 4521)
+
+# 2. Append to current content (not the original)
+NEW_TEXT="$CURRENT\n\n---\nAdditional note appended by agent."
+
+# 3. Write back with ifVersion to detect conflict
+hypertask pages append HTPR-2992 --page-id 4521 --text "$NEW_TEXT" --ifVersion 3
+# If 409, retry with the latest version.
+```
+
+---
+
+## Migration considerations
+
+- **Legacy browsing:** Old explorations embedded on hypertask.app remain visible as read-only HTML; they are not migrated to the Pages system.
+- **New writing:** All new pages must be attached to a task. No task-less wiki pages exist yet.
+- **Co-editing:** Live Yjs/websocket co-editing is parked. Page editing is currently human-only or agent-only, not both simultaneously.
+
+---
+
+## Related topics
+
+<CardGrid>
+  <LinkCard title="Tasks" description="Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks." href="/features/tasks/" />
+  <LinkCard title="MCP Integration" description="Connect AI agents to Hypertask via the Model Context Protocol." href="/mcp/overview/" />
+  <LinkCard title="CLI Reference" description="Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal." href="/cli/reference/" />
+  <LinkCard title="AI Features" description="AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow." href="/features/ai-features/" />
+</CardGrid>
