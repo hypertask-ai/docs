@@ -243,15 +243,32 @@ hypertask task create \
 |------|-------------|
 | `--project <id>` | Project ID (required) |
 | `--title <text>` | Task title (required) |
-| `--description <text>` | Task description (HTML preferred; see note below) |
+| `--description <text>` | Description (HTML preferred; see note below) |
 | `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
-| `--estimate <n>` | Story points |
+| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
 | `--parent-task <id>` | Parent task ID — creates this task as a subtask |
 | `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
+
+<Aside type="note">
+**Description format:** HTML is the canonical format — wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
+</Aside>
+
+<Aside type="caution">
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a non-numeric value or a value that doesn’t correspond to an existing task results in a clear error before the API call. The task is not created if parent validation fails.
+</Aside>
+
+<Aside type="note">
+**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code — so you always know the task exists and can re-attach without creating a duplicate. Example:
+```
+Created task HTPR-3102: Review mockups
+Attachment failed: unsupported content type text/html
+  Retry: hypertask task update HTPR-3102 --attach ./mockup.png
+```
+</Aside>
 
 ```bash
 # Create a subtask under an existing task
@@ -269,19 +286,6 @@ hypertask task create \
   --attach https://example.com/spec.pdf
 ```
 
-<Aside type="note">
-**Description format:** HTML is the canonical format — wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
-</Aside>
-
-<Aside type="caution">
-**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code — so you always know the task exists and can re-attach without creating a duplicate. Example:
-```
-Created task HTPR-3102: Review mockups
-Attachment failed: unsupported content type text/html
-  Retry: hypertask task update HTPR-3102 --attach ./mockup.png
-```
-</Aside>
-
 ### `task update`
 
 Update an existing task's properties.
@@ -295,7 +299,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--title <text>` | New title |
 | `--description <text>` | New description (plain text or HTML; plain text is auto-wrapped in `<p>` tags) |
 | `--priority <p>` | New priority |
-| `--estimate <n>` | New story points |
+| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
 | `--due <date>` | New due date (ISO 8601) |
 | `--clear-due` | Remove the due date (e.g., to clear a past due date) |
 | `--status <s>` | Lifecycle status: `Normal`, `Archive`, or `Deleted` |
@@ -309,6 +313,10 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 
 <Aside type="note">
 **Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
+</Aside>
+
+<Aside type="note">
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a value that doesn’t correspond to an existing task results in a clear error before the API call. If `--parent-task` is zero or negative, or not a valid integer, the task is not updated.
 </Aside>
 
 ```bash
@@ -335,7 +343,7 @@ hypertask task update HTPR-2992 --clear-due
 **Detaching subtasks:** Use `--clear-parent` to remove a task's parent and promote it to a standalone top-level task. This is distinct from `--parent-task`, which sets or changes the parent. The `--clear-parent` flag works both from the CLI and via the MCP `hypertask_update_task` tool (pass `parent_task_id: null`).
 </Aside>
 
-### `task assign`
+### `task assign` / `task unassign`
 
 Assign a user to a task.
 
@@ -346,6 +354,16 @@ hypertask task assign HTPR-2992 --user 42
 | Flag | Description |
 |------|-------------|
 | `--user <id>` | User ID to assign |
+
+Unassign a user from a task.
+
+```bash
+hypertask task unassign HTPR-2992 --assignee 42
+```
+
+| Flag | Description |
+|------|-------------|
+| `--assignee <id>` | User ID to unassign |
 
 <Aside type="tip">
 To find user IDs, use `hypertask project members <project-id>`.
@@ -369,12 +387,13 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | `--to <id>` | Target project ID — move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
-### `task move-board`
+### `task move-board` / `task move-project`
 
-Move a task to a different project/board entirely. Alias: `task move-project`.
+Move a task to a different project/board entirely. Alias: `task move-board` (preferred) and `task move-project` (legacy).
 
 ```bash
 hypertask task move-board HTPR-2992 --target-project 20 --target-section 5010
+hypertask task move-project HTPR-2992 --target-project 20 --target-section 5010
 ```
 
 | Flag | Description |
