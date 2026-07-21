@@ -134,6 +134,20 @@ This style applies across:
 
 HyperAI is an AI chat sidebar built into the Hypertask app. It's context-aware: it knows your project, your tasks, and your team structure.
 
+### Agent sessions on tickets
+
+Agent sessions are now attached to tickets as structured objects, enabling deeper workflow integration. Each session includes:
+
+- **Ticket association** — Links the session directly to its parent task
+- **Session metadata** — Timestamps for start/end, agent identity, and workflow context
+- **Activity history** — Minutes and actions taken within the session
+
+This structured linkage makes it easiest for agents to reference past interactions and for humans to review agent activity within a specific task's lifetime.
+
+<Aside type="tip">
+Use agent session history alongside task comments and pages to build a complete picture of how and why a task was handled at a given point in time.
+</Aside>
+
 ### Use AI models in task comments
 
 Type `@` in a task comment to address a specific AI model. Select a text model to receive a model-specific reply, or select an image model to generate an attached image.
@@ -164,6 +178,22 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 - **Fast, responsive streaming** — AI chat uses optimized streaming for low-latency responses, with a smooth conversation flow that keeps up with your thinking.
 - **Animated thinking indicator** — the moment you send a message, animated thinking dots appear in a new assistant bubble so you always know the AI is processing your request. The dots clear automatically as soon as the first token of the response arrives, giving you immediate visual feedback that your message was received and work is underway.
 - **Docked and full-screen modes** — switch between docked and full-screen AI chat via the top-right chat icon. Open AI chat full screen from **Ctrl+K** or the docked chat's menu, then return to docked via the same top-right icon.
+
+### Board playbooks and definition-of-done checklists
+
+Boards can now define playbooks and definition-of-done checklists that agents follow when processing tasks. This feature captures what "finished" means specific to your workflow and ensures consistency across agent and human work:
+
+- **Playbooks** — Named guidelines or steps that agents use as templates when creating or modifying tasks. For example, a "Bug Fix" playbook might require a title prefix, priority assignment, and specific labels for bugs.
+- **Definition-of-done checklists** — Optional checklists of conditions agents validate before marking a task as complete. Examples: "linked to an incident ticket," "approved by a maintainer," "changes merged."
+
+When a board has a playbook and DoD:
+
+- Agents use the playbook as a reference when creating or updating tasks.
+- The DoD checklist is surfaced to agents working on the task, prompting them to verify and check off items before moving to Done.
+
+<Aside type="tip">
+Define clear playbooks and DoD checklists in your board settings to give agents structured guidance and ensure tasks meet your team's quality bar.
+</Aside>
 
 ### Board agents
 
@@ -390,14 +420,15 @@ As an owner or admin, you can select default AI models per system feature. This 
 2. Find the **Task summaries** and **Question suggestions** sections.
 3. Select a model for each feature:
    - **Auto** — Hypertask automatically picks the recommended model based on your plan and enabled providers.
-   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with 🔥 badges indicating cost-effectiveness.
+   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with 🎯 badges indicating cost-effectiveness.
 4. Changes apply immediately — your team will use the selected model for the configured features unless the project has custom instructions that specify otherwise.
 
 ### Available models
 
 System-wide available models include models from all enabled providers. The **Auto** option automatically selects the optimal model for each feature:
-- **Fast-tier models** marked with 🔥 are recommended for performance-sensitive workflows.
-- **Recommended** models appear with 🌟 badges when selected in Auto mode.
+
+- **Fast-tier models** marked with 🎯 are recommended for performance-sensitive workflows.
+- **Recommended** models appear with ⭐ badges when selected in Auto mode.
 
 <Aside type="tip">
 Projects with custom instructions retain the right to use a different model than the system default. Administrative model configuration is the fallback when no project-specific setting is applied.
