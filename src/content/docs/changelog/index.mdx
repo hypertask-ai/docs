@@ -6,8 +6,9 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 21, 2026" features={[<u/>]}>
-  * Added Board velocity chart with estimate-weighted completion bars over the last 8 weeks, accessible from the board's Chart pill ([HTPR-4364](https://app.hypertask.ai/detail/project-15/4364))
-  * Improved AI chat session defaults: the session list now shows all chats regardless of board filter, and board scopes in dropdowns sort by most recently used ([HTPR-4473](https://app.hypertask.ai/detail/project-15/4473))
+  * Added per-section auto-assign on column move: configure via Ctrl+K "Auto-assign for this column" so tasks moved into that section auto-add the chosen assignee (additive, idempotent, notifications fire) ([HTPR-4363](https://app.hypertask.ai/detail/project-15/4363))
+  * Improved task relations: add block/blocked-by/duplicate with dedicated Ctrl+K commands on task detail and viewable in Task Relationships ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
+  * Fixed text handling for CLI/MCP/auto-writers: bare descriptions and comments are auto-wrapped in &lt;p&gt; blocks with blank lines becoming paragraphs ([HTPR-4100](https://app.hypertask.ai/detail/project-15/4100))
 </Update>
 
 <Update label="July 20, 2026" features={[<u/>]}>
