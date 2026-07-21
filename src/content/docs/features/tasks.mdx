@@ -29,10 +29,10 @@ Use `Ctrl+K` and search for "Add task" to open the quick-add task input from any
 
 Each task contains several key areas:
 
-- **Basic fields** â\x80\x94 Title, description, priority, due date, estimate, labels, assignee.
-- **Comments list** â\x80\x94 Thread including each comment with author, timestamp, and full text.
-- **Attachments** â\x80\x94 File uploads and URLs linked to the task.
-- **Subtask tree** â\x80\x94 Parent/child relationships shown directly on the task page.
+- **Basic fields** — Title, description, priority, due date, estimate, labels, assignee.
+- **Comments list** — Thread including each comment with author, timestamp, and full text.
+- **Attachments** — File uploads and URLs linked to the task.
+- **Subtask tree** — Parent/child relationships shown directly on the task page.
 
 You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.g., `HTPR-1234`).
 
@@ -42,9 +42,9 @@ You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.
 
 Manage how tasks appear and behave using Profile > Task page settings:
 
-- **Inline details** â\x80\x94 Show due date, assignee, labels, attachments on task cards.
-- **Task scroll** â\x80\x94 Automatically scroll to full description and comments when opening a task.
-- **Subtask depth** â\x80\x94 Adjust how many levels of subtasks are expanded by default.
+- **Inline details** — Show due date, assignee, labels, attachments on task cards.
+- **Task scroll** — Automatically scroll to full description and comments when opening a task.
+- **Subtask depth** — Adjust how many levels of subtasks are expanded by default.
 
 These settings apply to the task detail view and the task editor across all boards.
 
@@ -56,11 +56,11 @@ Table view displays tasks in a spreadsheet-like layout with columns for title, p
 
 ### View options
 
-- **Row height** â\x80\x94 Adjust how compact each row appears to fit more or less information on screen.
-- **Inline expansion** â\x80\x94 Expand task cards to show a preview of the description and comments directly in the row.
-- **Smart truncation toggle** â\x80\x94 Control whether long titles truncate or wrap:
+- **Row height** — Adjust how compact each row appears to fit more or less information on screen.
+- **Inline expansion** — Expand task cards to show a preview of the description and comments directly in the row.
+- **Smart truncation toggle** — Control whether long titles truncate or wrap:
   - **Word wrap** (enabled by default): Titles break onto multiple lines so the full text remains readable at smaller screen sizes.
-  - **Truncate instead**: Long titles are cut off with ellipses (â„•) and revealed by clicking or expanding.
+  - **Truncate instead**: Long titles are cut off with ellipses (…) and revealed by clicking or expanding.
 
 Use the **Ctrl+K** command palette to quickly toggle title wrap mode from any board:
 
@@ -79,7 +79,7 @@ Create subtasks to break down complex tasks:
 1. On a task detail page, click **Add subtask**.
 2. Add one or more subtasks as needed.
 3. Their parent-child relationships display automatically.
-4. Mark subtasks complete by moving them to the parent taskâ\x80\x99s Done section.
+4. Mark subtasks complete by moving them to the parent task’s Done section.
 
 Use the Subtask depth control in Profile > Appearance > Task page to adjust visibility by default.
 
@@ -105,9 +105,22 @@ Archive completed tasks. Deleted tasks are permanently removed after a grace per
 
 Tasks can reference other tasks:
 
-- **Parent relationship** â\x80\x94 Link a task as a subtask of another.
-- **Linked task references** â\x80\x94 Mentions in descriptions link related work.
-- **Dependencies** â\x80\x94 Mark dependencies so dependent tasks can't start until blocking tasks complete.
+- **Parent relationship** — Link a task as a subtask of another.
+- **Linked task references** — Mentions in descriptions link related work.
+- **Dependencies** — Mark dependencies so dependent tasks can't start until blocking tasks complete.
+- **Block/blocked-by relations** — Mark tasks as blocking others or blocked by another task.
+- **Duplicate relations** — Mark a task as a duplicate of another task (Linear parity).
+
+### Block, blocked-by, and duplicate
+
+Use the task detail page or `Ctrl+K` commands to set relationships:
+
+- **Add related task** — Open a conversation to link this task to another.
+- **Mark blocked by** — Set another task as the blocker for this task.
+- **Mark as blocking** — Mark this task as a blocker for another.
+- **Mark duplicate of** — Mark this task as a duplicate of another task.
+
+These relations are visible from the task detail page in the Task Relationships section, and they help you visualize dependencies, blockers, and duplicates within your workflow.
 
 ---
 
