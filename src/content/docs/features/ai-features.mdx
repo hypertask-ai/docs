@@ -68,13 +68,35 @@ Capture ideas hands-free with OpenAI Whisper-powered voice dictation. Use it any
 | Feature | Details |
 |---------|---------|
 | **Keyboard shortcut** | `Shift + Cmd/Ctrl + D` |
-| **Continuous mode** | Keep talking without pressing buttons repeatedly |
+| **Continous mode** | Keep talking without pressing buttons repeatedly |
 | **Voice input in chat** | Use voice dictation in AI Chat via `Shift + Cmd/Ctrl + D` or the microphone icon |
 | **Echo cancellation** | Works in noisy environments and during calls |
 | **Noise suppression** | Filters out background noise for cleaner transcription |
 | **Multilingual** | Supports all languages that Whisper recognizes |
 
 Speak naturally. The transcription handles punctuation, formatting, and language detection automatically.
+
+### Consolidated dictation control
+
+A **single unified dictation waveform** is now available across all AI-powered text surfaces:
+
+- **AI Chat** — Start dictation in the chat input or via the waveform control
+- **Task descriptions** — Dictate directly in the task writer
+- **Comments** — Record audio comments on any task
+- **Write with AI** — Dictate text enhancements or drafts
+
+**Features of the unified dictation:**
+
+- **Reactive waveform** — Visual feedback shows your recording; tap to edit, X to cancel, check to confirm
+- **Mic selector** — Tap the waveform to open a quick mic selector with options:
+  - "Microphone: <primary device>"
+  - "Microphone: <secondary device>"
+  - "End recording"
+- **No toasts** — Feedback appears in the waveform UI or inline, no pop-up notifications
+- **Single finalized recording** — Record continuously; the waveform captures the full utterance until you confirm
+- **Android capture fix** — Captures full utterances on Android devices (no more 200ms timeslice glitches)
+
+This consolidated controls surface eliminates duplicated components and ensures consistent behavior across chat, comments, task writing, and Write-with-AI.
 
 For even faster composition, use **Superhuman-style snippets** to insert predefined templates and commands with just `.` followed by a keyword (e.g., `.ack`, `.oro`, `.contact`). Pin your most-used snippets to the top of the menu for one-tap insertion.
 
@@ -145,7 +167,7 @@ You can set your default image model (Nano Banana or GPT Image) under **Settings
 
 ### Board agents
 
-You can @mention board agents in AI Chat to have them help answer questions. When you @mention an agent, the chat stream shows "Asking the board agent..." and the agent's specialized knowledge (e.g., a wiki or database) informs the response.
+You can @mention board agents in AI Chat to have them help answer questions. When you @mention an agent, the chat stream shows "Asking the board agent..." and the agent's specialized knowledge (e.g. a wiki or database) informs the response.
 
 <Aside type="tip">
 Board agents have access to your project through the Board Membership gate, so you can safely share project-specific context without exposing other team workspaces.
@@ -209,19 +231,19 @@ AI Chat's access to your workspace matches what the CLI and MCP tools can read a
 
 | Workspace data | AI Chat | CLI / MCP |
 |---|---|---|
-| Tasks (title, description, status, priority, size) | ✓ | ✓ |
-| Assignees & followers | ✓ | ✓ |
-| Comments (read, add, update, delete) | ✓ | ✓ |
-| Labels (read, create, assign) | ✓ | ✓ |
-| Sections / board columns (CRUD) | ✓ | ✓ |
-| Subtask hierarchy / task tree | ✓ | ✓ |
-| Due dates | ✓ | ✓ |
-| Archived / completed tasks | ✓ | ✓ |
-| Saved views (create, delete, edit) | ✓ | ✓ |
-| Move tasks between boards | ✓ | ✓ |
-| Inbox (list, archive, unarchive) | ✓ | ✓ |
-| Tags (read, create, assign) by name and ID | ✓ | ✓ |
-| Time tracking (start/stop, per-inference metering) | ✓ | ✓ |
+| Tasks (title, description, status, priority, size) | ✅ | ✅ |
+| Assignees & followers | ✅ | ✅ |
+| Comments (read, add, update, delete) | ✅ | ✅ |
+| Labels (read, create, assign) | ✅ | ✅ |
+| Sections / board columns (CRUD) | ✅ | ✅ |
+| Subtask hierarchy / task tree | ✅ | ✅ |
+| Due dates | ✅ | ✅ |
+| Archived / completed tasks | ✅ | ✅ |
+| Saved views (create, delete, edit) | ✅ | ✅ |
+| Move tasks between boards | ✅ | ✅ |
+| Inbox (list, archive, unarchive) | ✅ | ✅ |
+| Tags (read, create, assign) by name and ID | ✅ | ✅ |
+| Time tracking (start/stop, per-inference metering) | ✅ | ✅ |
 
 <Aside type="note">
 When asking the AI chat to enumerate or search for due dates, it now uses `hypertask_list_tasks(has_due_date:true)` instead of semantic search for more reliable results.
@@ -282,7 +304,7 @@ Then:
 - Question suggestions also use Claude Haiku 4.5
 - If Claude becomes unavailable, the system would fallback to GPT-5.4 mini (but not Google, since it's disabled)
 
-This allows you to tune provider availability without affecting behavior—simply disable plug-and-play providers as needed.
+This allows you to tune provider availability without affecting behavior — simply disable plug-and-play providers as needed.
 
 ## AI Triage
 
@@ -368,14 +390,14 @@ As an owner or admin, you can select default AI models per system feature. This 
 2. Find the **Task summaries** and **Question suggestions** sections.
 3. Select a model for each feature:
    - **Auto** — Hypertask automatically picks the recommended model based on your plan and enabled providers.
-   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with ⭐ badges indicating cost-effectiveness.
+   - **Specific model** — Choose a fast-tier model from your enabled providers. Available models are shown with 🔥 badges indicating cost-effectiveness.
 4. Changes apply immediately — your team will use the selected model for the configured features unless the project has custom instructions that specify otherwise.
 
 ### Available models
 
 System-wide available models include models from all enabled providers. The **Auto** option automatically selects the optimal model for each feature:
-- **Fast-tier models** marked with ⭐ are recommended for performance-sensitive workflows.
-- **Recommended** models appear with ✓ badges when selected in Auto mode.
+- **Fast-tier models** marked with 🔥 are recommended for performance-sensitive workflows.
+- **Recommended** models appear with 🌟 badges when selected in Auto mode.
 
 <Aside type="tip">
 Projects with custom instructions retain the right to use a different model than the system default. Administrative model configuration is the fallback when no project-specific setting is applied.
