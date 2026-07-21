@@ -92,6 +92,103 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ---
 
+## Tasks
+
+### `hypertask_create_task`
+
+Create a new task in a project. This tool supports a `dry_run` body parameter for simulating task creation without persisting it.
+
+**Endpoint:** `POST /api/mcp/tasks/create`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | number | Yes | Project to create the task in |
+| `title` | string | Yes | Task title |
+| `description` | string | No | HTML description |
+| `section_id` | number | No | Place in a specific section |
+| `priority` | string | No | `urgent`, `high`, `medium`, `low` |
+| `estimate` | number | No | Time estimate (in minutes) |
+| `labels` | string[] | No | Array of label names to apply. Creates the label if it doesn't exist on the project. |
+| `images` | string[] | No | Array of image URLs to attach |
+| `attachments` | string[] | No | Array of file URLs to attach |
+| `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
+| `dry_run` | boolean | No | `true` to return a simulation of the task without creating it (`false` to persist; default: `false`) |
+
+**Example request — create and persist a task:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/tasks/create \
+  -d '{
+    "project_id": 15,
+    "title": "Add error handling to upload endpoint",
+    "description": "<p>Return 400 with descriptive error for invalid file types.</p>",
+    "priority": "high",
+    "labels": ["Backend", "Bug"]
+  }'
+```
+
+**Example response — persisted task:**
+
+```json
+{
+  "id": 1235,
+  "ticket_number": "HYP-43",
+  "title": "Add error handling to upload endpoint",
+  "priority": "high",
+  "section": "Backlog",
+  "labels": ["Backend", "Bug"],
+  "createdAt": "2025-01-17T10:00:00Z"
+}
+```
+
+**Example request — dry run (no task created):**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/tasks/create \
+  -d '{
+    "project_id": 15,
+    "title": "Review PR #1778",
+    "description": "<p>Check for validation issues before merging.</p>",
+    "priority": "high",
+    "labels": ["AI", "Review"],
+    "dry_run": true
+  }'
+```
+
+**Example response — dry run with validation error:**
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_FIELD_VALUE",
+    "message": "Field validation failed",
+    "details": {
+      "field": "description",
+      "reason": "description must use HTML, not Markdown",
+      "allowed_formats": ["HTML"]
+    }
+  },
+  "warning": "This would create a task but validation failed. Fix the issue above and try again, or remove `dry_run` to proceed."
+}
+```
+
+<Aside type="tip">
+Use `dry_run: true` to validate input schema, field constraints, and any validation rules before committing changes. Set `dry_run: false` (or omit) to persist the task to the project.
+</Aside>
+
+<Aside type="note">
+For projects configured to use HTML-only content, the API will return structured validation errors when you pass Markdown in `description` or other text fields. The error contains the field name, reason, and allowed formats for quick correction.
+</Aside>
+
+---
+
 ## Skills
 
 ### `hypertask_skill_list`
@@ -782,58 +879,6 @@ curl -s -H "Authorization: Bearer $TOKEN" \
     }
   ],
   "total": 1
-}
-```
-
----
-
-### `hypertask_create_task`
-
-Create a new task in a project.
-
-**Endpoint:** `POST /api/mcp/tasks/create`
-
-**Body parameters:**
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `project_id` | number | Yes | Project to create the task in |
-| `title` | string | Yes | Task title |
-| `description` | string | No | HTML description |
-| `section_id` | number | No | Place in a specific section |
-| `priority` | string | No | `urgent`, `high`, `medium`, `low` |
-| `estimate` | number | No | Time estimate (in minutes) |
-| `labels` | string[] | No | Array of label names to apply. Creates the label if it doesn't exist on the project. |
-| `images` | string[] | No | Array of image URLs to attach |
-| `attachments` | string[] | No | Array of file URLs to attach |
-| `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
-
-**Example request:**
-
-```bash
-curl -s -X POST -H "Authorization: Bearer $TOKEN" \
-  -H "Content-Type: application/json" \
-  https://mcp.hypertask.ai/api/mcp/tasks/create \
-  -d '{
-    "project_id": 15,
-    "title": "Add error handling to upload endpoint",
-    "description": "<p>Return 400 with descriptive error for invalid file types.</p>",
-    "priority": "high",
-    "labels": ["Backend", "Bug"]
-  }'
-```
-
-**Example response:**
-
-```json
-{
-  "id": 1235,
-  "ticket_number": "HYP-43",
-  "title": "Add error handling to upload endpoint",
-  "priority": "high",
-  "section": "Backlog",
-  "labels": ["Backend", "Bug"],
-  "createdAt": "2025-01-17T10:00:00Z"
 }
 ```
 
