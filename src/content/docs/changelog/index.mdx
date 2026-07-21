@@ -6,8 +6,9 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 21, 2026" features={[<u/>]}>
-  * Fixed CLI tasks search alias now works under tasks group (HTPR-3992)
-  * Fixed unknown /api/mcp/* path returns clean JSON 404 instead of 200 HTML (HTPR-4487)
+  * Improved session length: Choose login sessions of 7 or 30 days instead of the previous 7-day default ([HTPR-4489](https://app.hypertask.ai/detail/project-15/4489))
+  * Added per-chat URLs: Each conversation in AI Chat gets its own shareable link that deep-loads that specific conversation when visited ([HTPR-4485](https://app.hypertask.ai/detail/project-15/4485))
+  * Improved table view readability: Task titles now wrap by default on smaller screens with a Ctrl+K toggle to switch to truncation mode ([HTPR-4233](https://app.hypertask.ai/detail/project-15/4233))
 </Update>
 
 <Update label="July 20, 2026" features={[<u/>]}>
