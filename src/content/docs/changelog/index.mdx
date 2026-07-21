@@ -6,13 +6,14 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 21, 2026" features={[<u/>]}>
-  * Improved voice dictation: consolidated waveform across AI chat, task descriptions, comments, and Write-with-AI with instant cancel/confirm (HTPR-4488)
+  * Fixed CLI tasks search alias now works under tasks group (HTPR-3992)
+  * Fixed unknown /api/mcp/* path returns clean JSON 404 instead of 200 HTML (HTPR-4487)
 </Update>
 
 <Update label="July 20, 2026" features={[<u/>]}>
-  * Fixed no boards empty state: Boardless accounts now show a clear "No boards yet" screen instead of dead-ending on a blank screen ([HTPR-4206](https://app.hypertask.ai/detail/project-15/4206))
+  * Fixed no boards empty state: Boardless accounts now show a clear "No boards yet" screen instead of dead-ending on a blank screen (HTPR-4206)
 </Update>
 
 <Update label="July 14, 2026" features={[<u/>]}>
-  * Improved AI chat context: AI now knows which View you're on and can switch between Views via chat, CLI, API, and MCP ([HTPR-4294](https://app.hypertask.ai/detail/project-15/4294))
+  * Improved AI chat context: AI now knows which View you're on and can switch between Views via chat, CLI, API, and MCP (HTPR-4294)
 </Update>
