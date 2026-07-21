@@ -36,5 +36,128 @@ hypertask_assign_user({
 ```
 
 <Aside type="tip">
-Self-assignment uses the <code>assign_self: true</code> parameter on <code>hypertask_assign_user</code>. This works with agent tokens only and adds the calling agent as an assignee without needing to look up the agent's own user ID.
+Self-assignment uses the `assign_self: true` parameter on `hypertask_assign_user`. This works with agent tokens only and adds the calling agent as an assignee without needing to look up the agent's own user ID.
 </Aside>
+
+## Creating and extending Pages
+
+Agents can maintain long-lived, task-bound notes through the Pages system. Use Pages to experiment, plan, and research without cluttering task descriptions.
+
+### General Page workflow
+
+When an agent needs to explore or plan in depth:
+
+```
+// 1. Create a new page on a task
+hypertask_create_page({
+  ticket_number: "HYP-42",
+  title: "Competitor research",
+  ifVersion: currentVersion, // optional optimistic-lock header
+  mode: "overwrite", // create fresh, or "append" to an existing page
+  text: "# Competitor research\n\nStart by listing key competitors."
+})
+
+// 2. Append multiple times to grow the page
+hypertask_append_to_page({
+  ticket_number: "HYP-42",
+  page_id: 4521,
+  ifVersion: currentVersionHead,
+  text: "### Competitor A\n\n- Pricing tier X\n- Notable features..."
+})
+
+// 3. Search the page to surface relevant parts later
+hypertask_search_pages({
+  ticket_number: "HYP-42",
+  query: "pricing",
+  limit: 5
+})
+```
+
+### Appending vs prepending
+
+Use `append` to grow pages incrementally without risking accidental overwrites; use `prepend` to add context at the top of a page (e.g., updated policy notes or quick updates).
+
+- **Append:** Place new text after existing content (`RFC 2046` style).
+- **Prepend:** Place new text before existing content.
+- **Overwrite:** Replace the entire page.
+
+<Aside type="tip">
+Pages are automatically indexed for the AI. You can reference page snippets in task descriptions, comments, and agent workflows without needing to manually summarize.
+</Aside>
+
+## Handling version conflicts on pages
+
+If two agents or workflows try to update the same page at the same time, version conflict safety ensures neither silently loses work:
+
+- The server validates `ifVersion` before persisting; if it mismatches the current version, it returns `409 Conflict`.
+- Clients can retry after reading the latest version with `hypertask_get_page`.
+
+```
+// 1. Retrieve current page
+const page = await hypertask_get_page({
+  ticket_number: "HYP-42",
+  page_id: 4521
+})
+
+// 2. Append or prepend to current content
+const newContent = `${page.text}\n\n---\nAdditional context: ${timestamp}`
+
+// 3. Write back with ifVersion for conflict safety
+const result = await hypertask_append_to_page({
+  ticket_number: "HYP-42",
+  page_id: 4521,
+  ifVersion: page.version,
+  text: newContent
+})
+
+if (result.status === 409) {
+  // Conflict: fetch latest and retry
+  const newer = await hypertask_get_page({ ticket_number: page.ticket, page_id: page.id })
+  // ... retry with newer.version
+}
+```
+
+## Task description versioning
+
+Task descriptions also have versioning, useful for agents that need to review or revert changes over time.
+
+### Listing description versions
+
+```
+hypertask_task_description_versions({
+  ticket_number: "HYP-42"
+})
+```
+
+### Restoring a description
+
+```
+hypertask_task_description_restore({
+  ticket_number: "HYP-42",
+  ifVersion: currentVersion,
+  toVersion: "v2" // fetch from versions list to pick the right one
+})
+```
+
+### Conflict handling for descriptions
+
+- If the `ifVersion` header doesn’t match the current description version, the server returns `409 Conflict`.
+- Read the latest description and content, then retry without the header or with the latest version.
+
+## Page + task integration
+
+Pages should always align with the task they belong to. Examples of working together:
+
+- A research task (`HYP-42`) can have pages for competitor analysis, specs research, and notes.
+- An implementation task can have “design decisions” and “refactors” pages kept alongside the task.
+- Use `hypertask_list_pages` after picking a task to quickly scan attached explorations.
+
+<Aside type="tip">
+Agents are encouraged to use Pages for explorations rather than long inline descriptions; descriptions can act as summary / TL;DR and Pages can be deeper context.
+</Aside>
+
+## Related topics
+
+- [MCP Integration](/mcp/overview/) — how to connect your agent to the Hypertask MCP server.
+- [Pages](/features/pages/) — detailed reference for task-bound pages, history, and CLI/MCP tools.
+- [CLI Reference](/cli/reference/) — terminal commands for listing pages, searching, and managing versions.
