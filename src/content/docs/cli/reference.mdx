@@ -60,7 +60,7 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
 </Steps>
 
 <Aside type="tip">
-For legacy setups, `<code>hypertask auth:login --token &lt;jwt&gt;</code>` also works to save a token directly. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
+For legacy setups, `<code>hypertask auth:login --token <jwt></code>` also works to save a token directly. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
 ## Exit Codes and Error Behavior
@@ -118,7 +118,6 @@ Dump the full CLI command and option tree as machine-readable JSON. This is the 
 ```bash
 hypertask capabilities --json
 ```
-
 `commands` is an alias for `capabilities`; both are identical.
 
 | Flag | Description |
@@ -291,7 +290,7 @@ hypertask task create \
 ```
 
 <Aside type="note">
-**JSON output control:** When using `<code>--json</code>`, `<code>task create</code>` emits exactly one JSON document containing the created task. Human-readable success messages are hidden behind `<code>--json</code> (the success block is gated behind `<code>--json</code>` with an early return). The typical output pattern after a successful creation is: `<code>{"id":1234,"ticketNumber":"HTPR-3304","title":"...","status":"Normal"}</code>`.
+**JSON output control:** When using `<code>--json</code>`, `<code>task create</code>` emits exactly one JSON document containing the created task. Human-readable success messages are hidden behind `<code>--json</code>` (the success block is gated behind `<code>--json</code>` with an early return). The typical output pattern after a successful creation is: `<code>{"id":1234,"ticketNumber":"HTPR-3304","title":"...","status":"Normal"}</code>`.
 </Aside>
 
 ### `task update`
@@ -559,7 +558,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `<@Name>` mentions work.** Writing `<p>@Alice</p>` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
@@ -983,7 +982,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `@Name` mentions work.** Writing `@Alice` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `<@Name>` mentions work.** Writing `<p>@Alice</p>` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
