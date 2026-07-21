@@ -1,0 +1,121 @@
+---
+title: Board Settings
+description: Manage board-level rules including auto-archive, staleness detection, and per-column auto-assign rules.
+---
+
+import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
+
+Use the board settings panel to define automatic behaviors that act on your entire board. Configure rules that determine how tasks should be archived, how long tasks should stay in each column, and how columns might automatically assign work.
+
+## What this affects
+
+Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
+
+- **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
+- **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
+- **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
+
+<Aside type="note">
+Board settings are stored at the board level, so you can tailor behaviors per workflow. Changes here apply immediately; monitor the effect on your active tasks.
+</Aside>
+
+## Reach
+
+You can open board settings from:
+
+ - **Ctrl+K command palette** — Search for **"Board settings"** and select your board.
+ - **Board menu** — Open a board’s menu and choose **Settings**.
+
+CardGrid>
+<Card title="Auto-archive" icon="folder">
+Clear expired backlog and automate housekeeping.
+</Card>
+<Card title="Staleness detection" icon="timer">
+Identify tasks that haven't moved recently.
+</Card>
+<Card title="Auto-assign rules" icon="user">
+Propagate responsibilities to unassigned cards.
+</Card>
+</CardGrid>
+
+## Auto-archive
+
+Configure automatic archival of tasks that no longer require attention. Archive is different from deletion—it keeps history while removing items from the active view so you don’t have to manually clean up stale columns.
+
+### Available options
+
+Rules you can set per board:
+
+- **Enable auto-archive** — Turn the rule on/off.
+- **Archive after** — Choose how many days tasks remain before archival.
+  - Common presets: 90, 120, 180, 365.
+- **Archive unused** — Automatically archive tasks that have not been touched recently (see Staleness).
+
+### How it behaves
+
+When a task crosses your configured threshold:
+
+- The board removes the task from column counts.
+- Tasks are moved to the board’s Archive section.
+- History (comments, attachments, subtasks) remains intact.
+
+Tasks in any column are eligible: backlog, in-progress, review, and so on.
+
+<Aside type="tip">
+Use the **Archive after** setting on columns you keep as a long-running backlog. Combine with staleness for a two-layer cleanup rule.
+</Aside>
+
+## Staleness detection
+
+Staleness rules keep track of active tasks that have not been moved, updated, or interacted with in a defined window. This helps surface forgotten items that might need re-evaluation or removal.
+
+### Configuration
+
+- **Stale after** — Number of days since the last change/due date.
+  - Suggested ranges: 30, 60, 90.
+- **Auto-assign stale tasks** (Optional) — Toggle the rule that moves or re-assigns stale tasks to a specific column or assignee.
+
+<Aside type="warning">
+Staleness only accounts for updates to the task record. Activities like commenting or toggling status updates the last-touch date automatically.
+</Aside>
+
+## Auto-assign rules
+
+Define rules that automatically assign or re-assign tasks to specific members. This is useful for ensuring that new pull requests, backlog items, or triage items land with the right people without manual overhead.
+
+### How to configure
+
+- **Target columns** — Specify which columns should apply auto-assign triggers:
+  - Any column that can receive tasks (e.g., In Progress, Review).
+- **Assign to** — Select a project member or a role-based assignment:
+  - Individual users.
+  - Groups (e.g., "Testers," "Backend team").
+- **Optional priority filter** — Apply only to tasks with certain priority levels (e.g., Urgent, High).
+
+### Scenarios
+
+- **Backlog channel** — Assign new sto, backlog items to reviewers or maintainers.
+- **Review overload** — Auto-assign completed items to QA reviewers when they become “In Review”.
+- **Slack alerts** — Combine with board notifications to alert assignees when auto-assign runs.
+
+<Aside type="tip">
+Pair auto-assign rules with open notifications (e.g., open issue in Slack team) to ensure assignees know their attention is needed without just silently moving cards.
+</Aside>
+
+## Autosave drafts
+
+Changes to board settings are saved automatically. If you navigate away or refresh the page, your settings persist:
+
+- **No manual save needed** — All toggles, number inputs, and column mappings are applied instantly.
+- **Revert behavior** — If you make a mistake, the board defaults (detected from project/staleness rules) can be used as a backup; update the offending rule and save again.
+
+## Logging and history
+
+Hypertask tracks rule executions at the board level for review:
+
+- **Rule runs** — Historically, Hypertask logged rule runs to a log table (Admin role visible).
+- **Rule hygiene** — To keep logs manageable, Hypertask retains only recent rule executions (e.g., last 14–30 days) on the log table, while preserving a full backup in a more extensive repository for administrative use.
+
+<Aside type="note">
+Hygiene protects performance and schema stability over time. Project owners should rely on boards and historiques for governance rather than logs after a few days.
+</Aside>
