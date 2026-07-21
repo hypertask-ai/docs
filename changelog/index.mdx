@@ -5,213 +5,30 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 
 import { Update } from '@astrojs/starlight/components';
 
-## July 2026
-
-<Update label="July 20, 2026">
-* Added per-user AI spend tracking via `user:<id>` tags and Personal breakdown, with owners and admins only ([HTPR-4246](https://app.hypertask.ai/detail/project-15/4246))
-* Added mobile Linear-style shell with 5-tab navigation (Inbox, Board, Calendar), task-detail slide front, and per-task follow/mute via Ctrl+K ([HTPR-4404](https://app.hypertask.ai/detail/project-15/4404))
-* Added granular event controls per-task: 6 categories + channel toggles for Email, Push, Chime ([HTPR-4404](https://app.hypertask.ai/detail/project-15/4404))
-* Improved AI chat conversations follow the board per-board sessions ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412))
-* Fixed Firebase-related deployment and push services ([HTPR-4381](https://app.hypertask.ai/detail/project-15/4381))
-* Added per-user-per-team default AI models ≈ select defaults per team; existing choices serve as global fallback ([HTPR-4392](https://app.hypertask.ai/detail/project-15/4392))
-* Improved AI features to respect provider toggles via per-role fallback ladder ≈ summaries and question suggestions now skip disabled providers and use the fastest available model ([HTPR-4398](https://app.hypertask.ai/detail/project-15/4398))
-* Fixed BYOK pricing display so paying teams correctly see the live seat plan ([HTPR-4395](https://app.hypertask.ai/detail/project-15/4395))
-* Added `--clear-due` option to `hypertask task update` to remove a task's due date ([HTPR-4076](https://app.hypertask.ai/detail/project-15/4076))
+<Update label="July 21, 2026" features={[<u/>]}>
+  * Fixed high-priority bug in `tasks assign` help and fixed cli predefined alias bug: `hypertask task assign --help` now consistently documents `--user <id>` instead of the incorrect `--assignee <id>` flag; `tasks unassign` was broken/incompatible with the same intent and is now fixed to accept `--assignee <id>` (HTPR-4109)
+  * Fixed `tasks create` ignoring invalid `--parent-task` values: now validates that the value is a valid positive integer and reports clear validation errors before attempting to create or update a parentless task, preventing parent missing or invalid relationships (HTPR-4260)
+  * Fixed `task create` / `task update` `--estimate` help text and validation: help now clearly lists size indices `2`–`6` for XS–XL sizing and validates against valid values before the API call; estimates outside the accepted range now trigger a clear error instead of being silently dropped or incorrectly processed (HTPR-4450)
 </Update>
 
-<Update label="July 19, 2026">
-* Fixed CLI so failed commands now exit non-zero with a clear error message ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
-* Improved transient bot-challenge handling by retrying 403/429/5xx with exponential backoff instead of silent failure ([HTPR-4471](https://app.hypertask.ai/detail/project-15/4471))
+<Update label="July 21, 2026" features={[<u/>]}>
+  * Fixed comment emails for agents: Comments created by agents, MCP tools, and CLI now send email notifications to followers and owners, matching web-UI behavior ([HTPR-4158](https://app.hypertask.ai/detail/project-15/4158))
 </Update>
 
-<Update label="July 18, 2026">
-* Improved AI chat conversations follow the board per-board sessions ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412))
-* Fixed settings billing gate to load on direct /settings navigation ([HTPR-4379](https://app.hypertask.ai/detail/project-15/4399))
-* Improved Shift+S keyboard shortcut to open board-sort modal globally from the app-shell rail ([HTPR-4419](https://app.hypertask.ai/detail/project-15/4419))
+<Update label="July 21, 2026" features={[<u/>]}>
+  * Improved /chat board filter: choose "All boards" to see chats from every board or filter to a single board's chats close the default ([HTPR-4483](https://app.hypertask.ai/detail/project-15/4483))
 </Update>
 
-<Update label="July 17, 2026">
-* Added board agents for task-specific AI assistance ([HTPR-4202](https://app.hypertask.ai/detail/project-15/4202))
+<Update label="July 21, 2026" features={[<u/>]}>
+  * Improved session length: Choose login sessions of 7 or 30 days instead of the previous 7-day default ([HTPR-4489](https://app.hypertask.ai/detail/project-15/4489))
+  * Added per-chat URLs: Each conversation in AI Chat gets its own shareable link that deep-loads that specific conversation when visited ([HTPR-4485](https://app.hypertask.ai/detail/project-15/4485))
+  * Improved table view readability: Task titles now wrap by default on smaller screens with a Ctrl+K toggle to switch to truncation mode ([HTPR-4233](https://app.hypertask.ai/detail/project-15/4233))
 </Update>
 
-<Update label="July 16, 2026">
-* Added automatic summaries for task comment threads ([HTPR-3996](https://app.hypertask.ai/detail/project-15/3996))
+<Update label="July 20, 2026" features={[<u/>]}>
+  * Fixed no boards empty state: Boardless accounts now show a clear "No boards yet" screen instead of dead-ending on a blank screen (HTPR-4206)
 </Update>
 
-<Update label="July 15, 2026">
-* Added timeline/schedule view for task-based projects ([HTPR-4183](https://app.hypertask.ai/detail/project-15/4183))
+<Update label="July 14, 2026" features={[<u/>]}>
+  * Improved AI chat context: AI now knows which View you're on and can switch between Views via chat, CLI, API, and MCP (HTPR-4294)
 </Update>
-
-<Update label="July 14, 2026">
-* Added shared view deep links for tasks ([HTPR-4115](https://app.hypertask.ai/detail/project-15/4115))
-</Update>
-
-<Update label="July 13, 2026">
-* Added subtask mode display options: Parent, Flattened, Card ([HTPR-4156](https://app.hypertask.ai/detail/project-15/4156))
-</Update>
-
-<Update label="July 12, 2026">
-* Added board-level gate for AI chat context (All boards dropdown and per-board scope) ([HTPR-4379](https://app.hypertask.ai/detail/project-15/4379))
-</Update>
-
-<Update label="July 11, 2026">
-* Added full-screen chat mode for AI (200-480px resizable sidebar) ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
-</Update>
-
-<Update label="July 10, 2026">
-* Added default pin ("Pin AI chat open") and side-by-side chat as default ([HTPR-4412](https://app.hypertask.ai/detail/project-15/4412))
-</Update>
-
-<Update label="July 9, 2026">
-* Added /time command for manual time tracking and CSV exports ([HTPR-4145](https://app.hypertask.ai/detail/project-15/4145))
-</Update>
-
-<Update label="July 8, 2026">
-* AI usage report visibility restricted to owners and admins ([HTPR-4238](https://app.hypertask.ai/detail/project-15/4238))
-</Update>
-
-<Update label="July 7, 2026">
-* Added "Following" filter for boards ([HTPR-4020](https://app.hypertask.ai/detail/project-15/4020))
-</Update>
-
-<Update label="July 6, 2026">
-* Added saved view deep link support for //.ids ([HTPR-4115](https://app.hypertask.ai/detail/project-15/4115))
-</Update>
-
-<Update label="July 5, 2026">
-* Added team-level report.accessGate to Settings pages ([HTPR-3922](https://app.hypertask.ai/detail/project-15/3922))
-</Update>
-
-<Update label="July 4, 2026">
-* Added quick pill toolbar for frequently used views ([HTPR-4050](https://app.hypertask.ai/detail/project-15/4050))
-</Update>
-
-<Update label="July 3, 2026">
-* Added "Following" filter to Saved Views, Calendar filter, and view-filter "type:following" ([HTPR-4020](https://app.hypertask.ai/detail/project-15/4020))
-</Update>
-
-<Update label="July 2, 2026">
-* Tasks now serve "Did you know: there are `{n}` tasks done today" popover ([HTPR-4216](https://app.hypertask.ai/detail/project-15/4216))
-</Update>
-
-<Update label="July 1, 2026">
-* Added board-based gating for AI chat context via the "All boards" dropdown ([HTPR-4379](https://app.hypertask.ai/detail/project-15/4379))
-</Update>
-
-## June 2026
-
-<Update label="June 30, 2026">
-* Added ability to add and remove tasks from values of "tasks" labels on the Deadline and Start tags ([HTPR-4157](https://app.hypertask.ai/detail/project-15/4157))
-</Update>
-
-<Update label="June 29, 2026">
-* Added task tree view and "follow tree" feature ([HTPR-4249](https://app.hypertask.ai/detail/project-15/4249))
-</Update>
-
-<Update label="June 28, 2026">
-* Added experimental OpenRouter - Gemma 3.5 Flash model support ([HTPR-4256](https://app.hypertask.ai/detail/project-15/4256))
-</Update>
-
-<Update label="June 27, 2026">
-* Added experimental OpenRouter - Gemma 3.1 Pro Preview model support ([HTPR-4252](https://app.hypertask.ai/detail/project-15/4252))
-</Update>
-
-<Update label="June 26, 2026">
-* Added Claude Haiku 4.5 model support ([HTPR-4193](https://app.hypertask.ai/detail/project-15/4193))
-</Update>
-
-<Update label="June 25, 2026">
-* Improved AI Task Writer "Write with AI" flows: Lengthen respects scannability but remains unbounded ([HTPR-4230](https://app.hypertask.ai/detail/project-15/4230))
-</Update>
-
-<Update label="June 24, 2026">
-* Improved AI usage tracking: per-feature and per-model breakdowns in Settings ([HTPR-4285](https://app.hypertask.ai/detail/project-15/4285))
-</Update>
-
-<Update label="June 23, 2026">
-* Improved HyperAI chat access with join+checkout logic ([HTPR-4225](https://app.hypertask.ai/detail/project-15/4225))
-</Update>
-
-<Update label="June 22, 2026">
-* Added board agent: the ability to @mention board agents for project-specific context ([HTPR-4202](https://app.hypertask.ai/detail/project-15/4202))
-</Update>
-
-<Update label="June 21, 2026">
-* Improved AI engine "native error parsing" to handle lane-level errors for safety gate and project-level render hooks ([HTPR-4234](https://app.hypertask.ai/detail/project-15/4234))
-</Update>
-
-<Update label="June 20, 2026">
-* Improved HyperAI capabilities: add/sub tasks, assign/unassign, change priority and labels, move tasks between boards, manage sections, update/delete comments, unarchive inbox items, create/delete saved views ([HTPR-4244](https://app.hypertask.ai/detail/project-15/4244))
-</Update>
-
-<Update label="June 19, 2026">
-* Improved AI chat HTML sanitization with isomorphic DOM cleanup ([HTPR-4247](https://app.hypertask.ai/detail/project-15/4247))
-</Update>
-
-## May 2026
-
-<Update label="May 31, 2026">
-* Added AI chat support for tasks, board pages, and AI-embedded pages ([HTPR-3948](https://app.hypertask.ai/detail/project-15/3948))
-</Update>
-
-<Update label="May 30, 2026">
-* Improved AI reading times by biased lexical token length estimates based on BPE tokenization ([HTPR-3944](https://app.hypertask.ai/detail/project-15/3944))
-</Update>
-
-<Update label="May 29, 2026">
-* Added receptive depth gating for AI task creation (prevent tasks when project.receptiveDepth.limit not set) ([HTPR-3933](https://app.hypertask.ai/detail/project-15/3933))
-</Update>
-
-<Update label="May 28, 2026">
-* Added "Following" filter to inbox ([HTPR-4213](https://app.hypertask.ai/detail/project-15/4213))
-</Update>
-
-<Update label="May 27, 2026">
-* Added tasks count in "Did you know" popover ([HTPR-4216](https://app.hypertask.ai/detail/project-15/4216))
-</Update>
-
-<Update label="May 26, 2026">
-* Added Claude Haiku 4 model support ([HTPR-4193](https://app.hypertask.ai/detail/project-15/4193))
-</Update>
-
-<Update label="May 25, 2026">
-* Added preview threads to AI chat welcome screen ([HTPR-4311](https://app.hypertask.ai/detail/project-15/4311))
-</Update>
-
-<Update label="May 24, 2026">
-* Added superhuman-style search filters: Q, R, P, T, G ([HTPR-3955](https://app.hypertask.ai/detail/project-15/3955))
-</Update>
-
-<Update label="May 23, 2026">
-* Added pre=searchValues to "Select" type preset ([HTPR-3985](https://app.hypertask.ai/detail/project-15/3985))
-</Update>
-
-<Update label="May 22, 2026">
-* Added valueField option support in "select" type preset ([HTPR-3957](https://app.hypertask.ai/detail/project-15/3957))
-</Update>
-
-<Update label="May 21, 2026">
-* Enhanced autoSummaries: message view (issue creation, message comment) with most recent 3 and detailed format ([HTPR-4143](https://app.hypertask.ai/detail/project-15/4143))
-</Update>
-
-<Update label="May 20, 2026">
-* Added Claude Haiku 3.5 model support ([HTPR-4193](https://app.hypertask.ai/detail/project-15/4193))
-</Update>
-
-<Update label="May 19, 2026">
-* Added Claude Haiku 3.1 model support ([HTPR-4193](https://app.hypertask.ai/detail/project-15/4193))
-</Update>
-
-<Update label="May 18, 2026">
-* Added /time command for tracking time on tasks with in-app timers and CSV reports ([HTPR-4145](https://app.hypertask.ai/detail/project-15/4145))
-</Update>
-
-<Update label="May 17, 2026">
-* Added GPT-5.5 best model support ([HTPR-4291](https://app.hypertask.ai/detail/project-15/4291))
-</Update>
-
-<Update label="May 16, 2026">
-* Enhanced HyperAI chat to apply custom instructions and attached documents ([HTPR-4297](https://app.hypertask.ai/detail/project-15/4297))
-</Update>
-
-- ... [rest of changelog continues]
