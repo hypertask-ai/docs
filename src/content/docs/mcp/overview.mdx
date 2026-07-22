@@ -15,11 +15,24 @@ MCP uses a tool-based architecture: the server advertises available operations (
 
 ## Transport
 
-Hypertask's MCP server uses **SSE (Server-Sent Events)** transport. The server endpoint is:
+Hypertask's MCP server runs on Vercel and uses SSE (Server-Sent Events) transport. The endpoint is:
 
 ```
 https://mcp.hypertask.ai/sse
 ```
+
+### Endpoints
+
+Once connected, the following endpoints are available:
+
+| Endpoint | Type | Description |
+|----------|------|-------------|
+| `/mcp` | Streamable HTTP | Primary MCP communications via HTTP streaming |
+| `/sse` | SSE | Server-Sent Events endpoint connected to `/message` |
+| `/message` | SSE | Redis-backed event stream for real-time state updates |
+| `/openapi.json` | OpenAPI schema | Auto-generated OpenAPI spec for ChatGPT and other clients |
+| `/health` | HTTP | Health check endpoint |
+| `/` | HTTP | Root 307 redirect to the main app for OAuth flows |
 
 ## Authentication
 
@@ -43,7 +56,7 @@ Tokens expire after **30 days**. If your agent stops authenticating, generate a 
 
 ## Agent bearer tokens
 
-When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations — task creation, comment posting, assignments — are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
+When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations âˆ’ task creation, comment posting, assignments âˆ’ are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
 
 ## Client configuration
 
@@ -107,12 +120,12 @@ Open **Settings > MCP Servers** and add a new server:
 </TabItem>
 <TabItem label="ChatGPT">
 
-Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more — without needing native MCP support.
+Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more âˆ’ without needing native MCP support.
 
 <Steps>
 
 1. In ChatGPT, open **My GPTs** (or the GPT editor for a custom GPT you control).
-2. Go to **Actions → Add action**.
+2. Go to **Actions âˆš Add action**.
 3. Import the Hypertask OpenAPI schema from:
    ```
    https://mcp.hypertask.ai/openapi.json
@@ -129,35 +142,30 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 </TabItem>
 </Tabs>
 
-## Available tools (draft; adds time tracking focus)
-
-Once connected, your agent has access to tools listed across MCP tools-reference. Timers are manageable via CLI/prod endpoints; MCP server monitoring tools are merged but deployment remains pending pending resolution of mcp.hypertask.ai hosting. For now, time-control workflows are fully available via CLI and the /api/mcp/time endpoints plus AI-chat tools (start/stop/status/running/log).
-
-### AI Chat integration
+## AI Chat integration
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
+AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces âˆ’ including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views âˆ’ is also available from the chat sidebar.
 
-## Known limitations (time-control WF)
+## Known limitations
 
 The following time-control-related features are not yet available via MCP:
 
 | Feature / Endpoint Note | Status | Details |
 |--------------------------|--------|---------|
-| **Time-control MCP tools deployment** | Pending | The `/api/mcp/time/start|stop|status|running|log|report` endpoints are live; the MCP server tools are merged into the server's top-level tool list and should auto-appear once mcp.hypertask.ai is redeployed via the correct hosting path. |
 | **Create labels** | Not supported | You can assign existing labels to tasks, but cannot create new labels via MCP. Create labels in the Hypertask UI first, then reference them. |
 | **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` is available, but mentions may appear as plain text and not trigger notifications. Use structured mention objects (`user_id` + `display_name`) for best results. |
 | **Related task linking** | Not supported | Ticket references (e.g. `HTPR-1234`) in comments added via MCP are not automatically parsed into "related tasks" links like they are in the UI. |
 | **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
 
 <Aside type="tip">
-For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
+For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround âˆ’ it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
 </Aside>
 
 ## Troubleshooting
 
-**"Failed to Connect to MCP"** — If your client cannot connect:
+**"Failed to Connect to MCP"** âˆ’ If your client cannot connect:
 
 1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
 2. Confirm the URL is exactly `https://mcp.hypertask.ai/sse` (including `/sse`).
@@ -168,12 +176,12 @@ For time-control features not yet available via MCP, use the <a href="/cli/refer
 
 Hypertask MCP works with any client that supports the MCP standard, and ChatGPT via the OpenAPI adapter:
 
-- **Claude Code** — Anthropic's CLI agent
-- **Claude Desktop** — Anthropic's desktop app
-- **Cursor** — AI-powered code editor
-- **Windsurf** — Codeium's AI editor
-- **ChatGPT** — via the Hypertask OpenAPI schema (custom actions / GPTs)
-- **Any MCP-compatible agent** — anything that speaks the protocol
+- **Claude Code** âˆ’ Anthropic's CLI agent
+- **Claude Desktop** âˆ’ Anthropic's desktop app
+- **Cursor** âˆ’ AI-powered code editor
+- **Windsurf** âˆ’ Codeium's AI editor
+- **ChatGPT** âˆ’ via the Hypertask OpenAPI schema (custom actions / GPTs)
+- **Any MCP-compatible agent** âˆ’ anything that speaks the protocol
 
 ## Next steps
 
