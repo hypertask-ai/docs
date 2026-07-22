@@ -8,7 +8,7 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 This is the complete reference for all Hypertask MCP tools. Each tool maps to an HTTP API endpoint on `https://mcp.hypertask.ai`. All requests require a `Bearer` token in the `Authorization` header.
 
 <Aside type="note">
-All request and response bodies use JSON. Task descriptions and comments use **HTML**, not Markdown.
+All request and response bodies use JSON. Task descriptions and comments now accept Markdown as well as HTML; content_type is optional (HTML and Markdown both render correctly).
 </Aside>
 
 ---
@@ -106,7 +106,7 @@ Create a new task in a project. This tool supports a `dry_run` body parameter fo
 |-----------|------|----------|-------------|
 | `project_id` | number | Yes | Project to create the task in |
 | `title` | string | Yes | Task title |
-| `description` | string | No | HTML description |
+| `description` | string | No | Markdown or HTML description |
 | `section_id` | number | No | Place in a specific section |
 | `priority` | string | No | `urgent`, `high`, `medium`, `low` |
 | `estimate` | number | No | Time estimate (in minutes) |
@@ -125,7 +125,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   -d '{
     "project_id": 15,
     "title": "Add error handling to upload endpoint",
-    "description": "<p>Return 400 with descriptive error for invalid file types.</p>",
+    "description": "Handle invalid file types gracefully.",
     "priority": "high",
     "labels": ["Backend", "Bug"]
   }'
@@ -154,28 +154,25 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   -d '{
     "project_id": 15,
     "title": "Review PR #1778",
-    "description": "<p>Check for validation issues before merging.</p>",
+    "description": "**Check for validation issues** before merging:\n- Look for SQL injection\n- Verify endpoints are publicly accessible",
     "priority": "high",
     "labels": ["AI", "Review"],
     "dry_run": true
   }'
 ```
 
-**Example response — dry run with validation error:**
+**Example response — dry run:**
 
 ```json
 {
-  "success": false,
-  "error": {
-    "code": "INVALID_FIELD_VALUE",
-    "message": "Field validation failed",
-    "details": {
-      "field": "description",
-      "reason": "description must use HTML, not Markdown",
-      "allowed_formats": ["HTML"]
-    }
+  "success": true,
+  "validated_task": {
+    "title": "Review PR #1778",
+    "description": "**Check for validation issues** before merging:\n- Look for SQL injection\n- Verify endpoints are publicly accessible",
+    "priority": "high",
+    "labels": ["AI", "Review"]
   },
-  "warning": "This would create a task but validation failed. Fix the issue above and try again, or remove `dry_run` to proceed."
+  "warning": "This is a dry run and will not create a task."
 }
 ```
 
@@ -184,7 +181,7 @@ Use `dry_run: true` to validate input schema, field constraints, and any validat
 </Aside>
 
 <Aside type="note">
-For projects configured to use HTML-only content, the API will return structured validation errors when you pass Markdown in `description` or other text fields. The error contains the field name, reason, and allowed formats for quick correction.
+Markdown is accepted for task descriptions. The service renders Markdown for display; raw HTML is rendered as-is when supplied.
 </Aside>
 
 ---
@@ -305,7 +302,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 - Added `hypertask_prepare_ticket_context`: prepare token-budgeted ticket context for AI.
 - Added `hypertask_get_ticket_context`: get a prepared context packet for a ticket.
 - Added `hypertask_context_pack`: pull full ticket context in one run with token-budgeting.
-- Fixed PR-link extraction in `hypertask_get_ticket_context` to ignore comment section PR URLs ([HTPR-4439](https://app.hypertask.ai/detail/project-15/4439)).
+- MCP and REST endpoints now accept Markdown in comments and descriptions; HTML is still supported (content_type optional).
 
 ---
 
@@ -807,7 +804,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
       "id": 1234,
       "ticket_number": "HYP-42",
       "title": "Add file upload validation",
-      "description": "<p>Validate file types before upload.</p>",
+      "description": "Validate file types before upload.",
       "priority": "high",
       "section": "Review",
       "assignees": [
@@ -884,7 +881,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
       "id": 1234,
       "ticket_number": "HYP-42",
       "title": "Add file upload validation",
-      "description": "<p>Validate file types before upload.</p>",
+      "description": "Validate file types before upload.",
       "priority": "high",
       "section": "Todo",
       "assignees": [
@@ -935,7 +932,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
       "id": 1234,
       "ticket_number": "HYP-42",
       "title": "Add file upload validation",
-      "description": "<p>Validate file types before upload.</p>",
+      "description": "Validate file types before upload.",
       "priority": "high",
       "section": "Todo",
       "assignees": [
@@ -1068,7 +1065,7 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `title` | string | New title |
-| `description` | string | New HTML description |
+| `description` | string | Markdown or HTML description |
 | `estimate` | number | Time estimate in minutes |
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
 | `sectionId` | number | Move to a different section (camelCase — see note below) |
@@ -1191,7 +1188,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
   "comments": [
     {
       "id": 501,
-      "text": "<p>Implemented validation. Returns 400 for unsupported file types.</p>",
+      "text": "Implemented validation. Returns 400 for unsupported file types.",
       "author": {
         "id": 6,
         "displayName": "Valentin"
@@ -1207,7 +1204,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ### `hypertask_add_comment_to_task`
 
-Add a comment to a task. Comments use HTML formatting.
+Add a comment to a task. Comments now accept Markdown as input; Markdown is rendered by the server. HTML is still rendered as-is when provided.
 
 **Endpoint:** `POST /api/mcp/comments`
 
@@ -1225,7 +1222,7 @@ Add a comment to a task. Comments use HTML formatting.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `text` | string | Yes | Comment body in HTML |
+| `text` | string | Yes | Comment body in Markdown (or HTML) |
 | `images` | string[] | No | Array of image URLs to attach |
 | `mentions` | object[] | No | Structured mention objects: `{ "user_id": number, "display_name": string }` |
 
@@ -1234,10 +1231,10 @@ Add a comment to a task. Comments use HTML formatting.
 </Aside>
 
 <Aside type="note">
-**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution — use the structured `mentions` parameter or the web UI for those.
+**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions now also accept Markdown; mention resolution for them is available via the structured `mentions` parameter or the web UI.
 </Aside>
 
-**Example request — plain `@mention` in comment text:**
+**Example request — Markdown comment:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -1245,11 +1242,11 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   https://mcp.hypertask.ai/api/mcp/comments \
   -d '{
     "ticket_number": "HYP-42",
-    "text": "<p>@Alice this is ready for your review.</p>"
+    "text": "**Ready for review**: Changes are local and ready for UI testing.\n- Ensure the export handles edge cases\n- Verify internationalization strings"
   }'
 ```
 
-**Example request — structured mentions (when you have user IDs):**
+**Example request — Markdown with `@mention`:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -1257,8 +1254,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   https://mcp.hypertask.ai/api/mcp/comments \
   -d '{
     "ticket_number": "HYP-42",
-    "text": "<p>Done. Validated against a whitelist of MIME types.</p><ul><li>Added <code>validateFileType()</code> helper</li><li>Returns 400 with error details</li></ul>",
-    "mentions": [{ "user_id": 6, "display_name": "Valentin" }]
+    "text": "@Alice @Bob Please check the new routing\n\ncurrent shortlist:\n- 1ac80ad27 (krit-vm-cleanup)\n- 1ac80ad29 (tier-1 réplica)"
   }'
 ```
 
@@ -1267,7 +1263,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 ```json
 {
   "id": 502,
-  "text": "<p>Done. Validated against a whitelist of MIME types.</p>...",
+  "text": "**Ready for review**: Changes are local and ready for UI testing.\n- Ensure the export handles edge cases\n- Verify internationalization strings",
   "createdAt": "2025-01-17T14:00:00Z"
 }
 ```
@@ -1276,7 +1272,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 
 ### `hypertask_update_comment`
 
-Update the text of an existing comment.
+Update the text of an existing comment. markdown is accepted, and `@mentions` in Markdown work as they do on post.
 
 **Endpoint:** `PATCH /api/mcp/comments/{commentId}`
 
@@ -1290,7 +1286,7 @@ Update the text of an existing comment.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `text` | string | Yes | New comment body in HTML |
+| `text` | string | Yes | New comment body in Markdown (or HTML) |
 
 **Example request:**
 
@@ -1298,7 +1294,7 @@ Update the text of an existing comment.
 curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   https://mcp.hypertask.ai/api/mcp/comments/502 \
-  -d '{"text": "<p>Updated: validation now covers PDF and image MIME types as well.</p>"}'
+  -d '{"text": "**Updated**:\n- Switching to modular components\n- TBD: validation scenarios"}'
 ```
 
 **Example response:**
@@ -1306,7 +1302,7 @@ curl -s -X PATCH -H "Authorization: Bearer $TOKEN" \
 ```json
 {
   "id": 502,
-  "text": "<p>Updated: validation now covers PDF and image MIME types as well.</p>",
+  "text": "**Updated**:\n- Switching to modular components\n- TBD: validation scenarios",
   "updatedAt": "2025-01-17T15:00:00Z"
 }
 ```
