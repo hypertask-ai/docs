@@ -37,7 +37,7 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
    hypertask login
    ```
 
-   This opens your browser to authenticate and saves the token locally.
+   This opens your browser to authenticate and saves the token locally. After the <code>api.hypertask.ai</code> cutover, the CLI always routes login requests through the new API endpoint to avoid 404s and ensure reliable authentication.
 
 2. **Login with a token** (for CI/headless environments):
 
@@ -106,7 +106,7 @@ hypertask auth:status
 ```
 
 <Aside type="tip">
-If you need to use a custom API URL (for self-hosted instances), you can override it via <code>--api-url</code>. This overrides the default routing and should not be required for standard Hypertask.
+If you need to use a custom API URL (for self-hosted instances), you can override it via `<code>--api-url</code>`. This overrides the default routing and should not be required for standard Hypertask.
 </Aside>
 
 ---
@@ -248,7 +248,7 @@ hypertask task create \
 | `--title <text>` | Task title (required) |
 | `--description <text>` | Description (HTML preferred; see note below) |
 | `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
-| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
+| `--estimate <n>` | Size index: `0` = none, `2`—`6` = XS, S, M, L, XL |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
 | `--parent-task <id>` | Parent task ID — creates this task as a subtask |
@@ -261,7 +261,7 @@ hypertask task create \
 </Aside>
 
 <Aside type="caution">
-**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a non-numeric value or a value that doesn’t correspond to an existing task results in a clear error before the API call. The task is not created if parent validation fails.
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a non-numeric value or a value that doesn't correspond to an existing task results in a clear error before the API call. The task is not created if parent validation fails.
 </Aside>
 
 <Aside type="note">
@@ -295,7 +295,7 @@ hypertask task create \
 
 ### `task update`
 
-Update an existing task’s properties.
+Update an existing task's properties.
 
 ```bash
 hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
@@ -306,7 +306,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--title <text>` | New title |
 | `--description <text>` | New description (plain text or HTML; plain text is auto-wrapped in `<p>` tags) |
 | `--priority <p>` | New priority |
-| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
+| `--estimate <n>` | Size index: `0` = none, `2`—`6` = XS, S, M, L, XL |
 | `--due <date>` | New due date (ISO 8601) |
 | `--clear-due` | Remove the due date (e.g., to clear a past due date) |
 | `--status <s>` | Lifecycle status: `Normal`, `Archive`, or `Deleted` |
@@ -323,7 +323,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 </Aside>
 
 <Aside type="note">
-**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a value that doesn’t correspond to an existing task results in a clear error before the API call. If `--parent-task` is zero or negative, or not a valid integer, the task is not updated.
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a value that doesn't correspond to an existing task results in a clear error before the API call. If `--parent-task` is zero or negative, or not a valid integer, the task is not updated.
 </Aside>
 
 ```bash
@@ -342,12 +342,12 @@ hypertask task update HTPR-2992 --parent-task 1234
 # Detach a subtask from its parent (make it a top-level task)
 hypertask task update HTPR-2992 --clear-parent
 
-# Clear a task’s due date
+# Clear a task's due date
 hypertask task update HTPR-2992 --clear-due
 ```
 
 <Aside type="tip">
-**Detaching subtasks:** Use `--clear-parent` to remove a task’s parent and promote it to a standalone top-level task. This is distinct from `--parent-task`, which sets or changes the parent. The `--clear-parent` flag works both from the CLI and via the MCP `hypertask_update_task` tool (pass `parent_task_id: null`).
+**Detaching subtasks:** Use `--clear-parent` to remove a task's parent and promote it to a standalone top-level task. This is distinct from `--parent-task`, which sets or changes the parent. The `--clear-parent` flag works both from the CLI and via the MCP `hypertask_update_task` tool (pass `parent_task_id: null`).
 </Aside>
 
 ### `task assign` / `task unassign`
@@ -416,7 +416,7 @@ Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev 
 
 ### `view list`
 
-List all saved views for a project, including each view’s ID, title, and visibility.
+List all saved views for a project, including each view's ID, title, and visibility.
 
 ```bash
 hypertask view list --project 15
@@ -437,7 +437,7 @@ view_ghi789    My Open Tasks         private
 
 ### `view get`
 
-Fetch tasks from a specific saved view, with that view’s filters already applied.
+Fetch tasks from a specific saved view, with that view's filters already applied.
 
 ```bash
 hypertask view get view_abc123
