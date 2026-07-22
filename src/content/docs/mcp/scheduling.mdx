@@ -259,3 +259,61 @@ Fire Mondays at 09:00. Ask the agent to summarise last week's shipped tickets in
 ## What about a native cron UI in Hypertask?
 
 Not planned for now. Every workflow above is a few lines of config away, and the external-scheduler approach gives you logs, retries, alerts, and secret management for free. If you have a use case the external pattern does not cover, open an issue on the GitHub repo so we can see the gap.
+
+## Scheduling orientation: Agents and next-task queue
+
+In addition to general-purpose agent workflows, you can configure agents to pull from a priority-scored next-task queue and act on their assigned tickets. The priority score reflects task urgency and value, and the queue exposes only claimable rows to prevent conflicts.
+
+To schedule a dedicated next-task queue agent:
+
+- Set up an external scheduler (GitHub Actions, cron, Cloudflare Worker, Vercel cron, etc.).
+- Have the scheduler disable the agent’s ability to create unlimited tasks, and instead provide only a single-purpose command or endpoint for conditional next-task pulls (examples using the `hypertask` CLI or MCP are included in the other workflow patterns above).
+- On each run, the scheduler invokes an endpoint that:
+  - Pulls ranked candidate tasks from the next-task queue for this board,
+  - Checks that tasks are claimable by this agent (not already assigned),
+  - If one or more candidate tasks are available, the scheduler creates a conditional task or comment for the agent:
+    - With a conditional, the agent can pick up and claim one task from the queue on demand (default is the highest-priority available).
+- In the MCP or CLI flow, wrap the queue endpoint call to honor the scheduler’s condition. Use a Context (via `hypertask_get_user_context`) or an explicit owner ID to ensure the agent is authorized to claim the returned tasks. Treat the queue response as authoritative; update or close the created/conditional task as soon as the agent completes the work.
+
+**Recommended pattern on the MCP side**
+
+On every scheduled run, the scheduler calls a tool like `hypertask_next_task_pull` with filtering options that ensure the results are claimable by this agent, then applies the scheduler’s schema (e.g., `agent_id` or `team_id`). If the tool returns candidates, the routine for that agent creates a temporary task or comment to indicate it is ready to claim before it gets claimed; if the tool returns empty, the scheduler can sleep and retry on the next interval.
+
+When using code:
+
+- From the scheduler: call the endpoint; from an agent context: invoke the MCP tool.
+- After picking a task, the subsequent workflow should mark it as claimed (assign the agent owner) and transition the task to its normal workflow section; once the agent finishes, it can update the task, close the conditional slot, or delete the task as appropriate, then return to the queue endpoint for the next candidate.
+
+Example CLI flow (from a scheduler):
+
+```bash
+#!/bin/bash
+# /home/you/hypertask-cron/next-task-handler.sh
+export HYPERTASK_API_TOKEN="xxxx"
+
+hypertask next-task pull \
+  --board-id 15 \
+  --limit 3 \
+  --min-priority urgent,high \
+  --exclude-assigned-owners robotic-agent-foo,robotic-agent-bar \
+  | jq -r '.tasks[] | "Assign to robotic-agent-foo: " + .title' | while read line; do
+    hypertask tasks update \
+      --ticket-number "$line" \
+      --assign_self true \
+      --section "Doing" \
+      --description "<p>Next-task from queue (by scheduler).</p>"
+  done
+```
+
+This ensures:
+
+- Only tasks not already claimed are visible,
+- Priorities guide which tasks first,
+- The scheduler’s condition gates behavior,
+- Agents run from an explicit, manageable queue.
+
+---
+
+<Aside type="tip">
+Add an Author or Maintainer comment.
+</Aside>
