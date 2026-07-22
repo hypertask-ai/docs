@@ -5,6 +5,11 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 
 import { Update } from '@astrojs/starlight/components';
 
+<Update label="July 22, 2026" features={[<u/>]}>
+  * Added CLI command `hypertask task move-to-inbox <ticket> --user <id>` to push a task into another member's inbox ([HTPR-4553](https://app.hypertask.ai/detail/project-15/4553))
+  * Added MCP tool `hypertask_move_task_to_inbox` to route tasks into any member's inbox ([HTPR-4553](https://app.hypertask.ai/detail/project-15/4553))
+</Update>
+
 <Update label="July 21, 2026" features={[<u/>]}>
   * Fixed high-priority bug in `tasks assign` help and fixed cli predefined alias bug: `hypertask task assign --help` now consistently documents `--user <id>` instead of the incorrect `--assignee <id>` flag; `tasks unassign` was broken/incompatible with the same intent and is now fixed to accept `--assignee <id>` (HTPR-4109)
   * Fixed `tasks create` ignoring invalid `--parent-task` values: now validates that the value is a valid positive integer and reports clear validation errors before attempting to create or update a parentless task, preventing parent missing or invalid relationships (HTPR-4260)
