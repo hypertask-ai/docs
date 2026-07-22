@@ -116,7 +116,7 @@ Create a new task in a project. This tool supports a `dry_run` body parameter fo
 | `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 | `dry_run` | boolean | No | `true` to return a simulation of the task without creating it (`false` to persist; default: `false`) |
 
-**Example request â\x80\x94 create and persist a task:**
+**Example request — create and persist a task:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -131,7 +131,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   }'
 ```
 
-**Example response â\x80\x94 persisted task:**
+**Example response — persisted task:**
 
 ```json
 {
@@ -145,7 +145,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
 }
 ```
 
-**Example request â\x80\x94 dry run (no task created):**
+**Example request — dry run (no task created):**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -161,7 +161,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   }'
 ```
 
-**Example response â\x80\x94 dry run with validation error:**
+**Example response — dry run with validation error:**
 
 ```json
 {
@@ -186,6 +186,126 @@ Use `dry_run: true` to validate input schema, field constraints, and any validat
 <Aside type="note">
 For projects configured to use HTML-only content, the API will return structured validation errors when you pass Markdown in `description` or other text fields. The error contains the field name, reason, and allowed formats for quick correction.
 </Aside>
+
+---
+
+## Preparing and retrieving ticket context
+
+### `hypertask_prepare_ticket_context`
+
+Prepare ticket context for AI use while respecting a configured token budget. This helps agents avoid overloading models with information they don’t need.
+
+**Endpoint:** `POST /api/mcp/context/prepare`
+
+**Body parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `ticket_number` | string | Yes | Ticket to prepare context for, e.g. `HYP-42`. |
+| `token_budget` | number | Yes | Maximum tokens to include in the context. |
+
+**Example request:**
+
+```bash
+curl -s -X POST -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  https://mcp.hypertask.ai/api/mcp/context/prepare \
+  -d '{
+    "ticket_number": "HYP-42",
+    "token_budget": 3000
+  }'
+```
+
+**Example response:**
+
+```json
+{
+  "ticket_number": "HYP-42",
+  "context": "<p>Current ticket: Add error handling to upload endpoint. Description: Return 400 with descriptive error for invalid file types. Status: Backlog. Assigned to: Valentin (valentin@example.com). Due: 2025-03-01T00:00:00Z.</p>",
+  "tokens_used": 1240,
+  "tokens_remaining_in_budget": 1760,
+  "summary": "Full ticket context including description, assignee, status, and due date."
+}
+```
+
+---
+
+### `hypertask_get_ticket_context`
+
+Get a prepared, token-budgeted context packet for a ticket that can be used directly for AI prompts. This endpoint returns cached, pre-aggregated context when available.
+
+**Endpoint:** `GET /api/mcp/context/pack`
+
+**Path parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `ticket_number` | string | Yes | Ticket to pack context for, e.g. `HYP-42`. |
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `token_budget` | number | No | — | Maximum tokens to include. Inspect the response to see what was used. |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/mcp/context/pack?ticket_number=HYP-42&token_budget=3000"
+```
+
+**Example response:**
+
+```json
+{
+  "ticket_number": "HYP-42",
+  "context": "<p>Current ticket: Add error handling to upload endpoint. Description: Return 400 with descriptive error for invalid file types. Status: Backlog. Assigned to: Valentin (valentin@example.com). Due: 2025-03-01T00:00:00Z.</p>",
+  "tokens_used": 1240,
+  "tokens_in_budget": 3000
+}
+```
+
+---
+
+### `hypertask_context_pack`
+
+Pull full ticket context in one call with token-budgeted results. This endpoint is intended for AI agents to fetch concise, relevant tickets.
+
+**Endpoint:** `GET /api/context/pack`
+
+**Query parameters:**
+
+| Parameter | Type | Required | Default | Description |
+|-----------|------|----------|---------|-------------|
+| `ticket_number` | string | Yes | — | Ticket ID, e.g. `HYP-42`. |
+| `token_budget` | number | No | — | Maximum tokens to include. Inspect the response for tokens_used. |
+
+**Example request:**
+
+```bash
+curl -s -H "Authorization: Bearer $TOKEN" \
+  "https://mcp.hypertask.ai/api/context/pack?ticket_number=HYP-42&token_budget=3000"
+```
+
+**Example response:**
+
+```json
+{
+  "ticket_number": "HYP-42",
+  "context": "<p>Current ticket: Add error handling to upload endpoint. Description: Return 400 with descriptive error for invalid file types. Status: Backlog. Assigned to: Valentin (valentin@example.com). Due: 2025-03-01T00:00:00Z.</p>",
+  "tokens_used": 1240,
+  "tokens_in_budget": 3000
+}
+```
+
+---
+
+### CHANGES IN THIS RELEASE
+- Added `hypertask_prepare_ticket_context`: prepare token-budgeted ticket context for AI.
+- Added `hypertask_get_ticket_context`: get a prepared context packet for a ticket.
+- Added `hypertask_context_pack`: pull full ticket context in one run with token-budgeting.
+- Fixed PR-link extraction in `hypertask_get_ticket_context` to ignore comment section PR URLs ([HTPR-4439](https://app.hypertask.ai/detail/project-15/4439)).
 
 ---
 
@@ -705,7 +825,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 ```
 
 <Aside type="tip">
-Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any agent workflow on a large board. Loading a view typically returns a focused set of 5â\x80\x9330 tasks rather than scanning hundreds, which reduces token cost and improves response quality.
+Combine `hypertask_views_list` + `hypertask_view_get` as a first step in any agent workflow on a large board. Loading a view typically returns a focused set of 5–30 tasks rather than scanning hundreds, which reduces token cost and improves response quality.
 </Aside>
 
 ---
@@ -951,7 +1071,7 @@ Update fields on an existing task. The task can be identified by `task_id`, `tic
 | `description` | string | New HTML description |
 | `estimate` | number | Time estimate in minutes |
 | `priority` | string | `urgent`, `high`, `medium`, `low` |
-| `sectionId` | number | Move to a different section (camelCase â\x80\x94 see note below) |
+| `sectionId` | number | Move to a different section (camelCase — see note below) |
 | `status` | string | `Normal`, `Archive`, `Deleted` |
 | `due_date` | string | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
 | `labels` | string[] | Replace the task's labels. Pass an empty array to clear all labels. Creates any label that doesn't already exist on the project. |
@@ -1110,14 +1230,14 @@ Add a comment to a task. Comments use HTML formatting.
 | `mentions` | object[] | No | Structured mention objects: `{ "user_id": number, "display_name": string }` |
 
 <Aside type="tip">
-**Plain `@Name` mentions are supported.** Writing `@Alice` directly in the comment `text` string is resolved server-side â\x80\x94 the server looks up the matching project member by name and fires a notification automatically. No need to construct span markup by hand. The structured `mentions` parameter is also accepted if you already have user IDs available.
+**Plain `@Name` mentions are supported.** Writing `@Alice` directly in the comment `text` string is resolved server-side — the server looks up the matching project member by name and fires a notification automatically. No need to construct span markup by hand. The structured `mentions` parameter is also accepted if you already have user IDs available.
 </Aside>
 
 <Aside type="note">
-**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution â\x80\x94 use the structured `mentions` parameter or the web UI for those.
+**Scope:** Plain `@Name` resolution applies to comment add (this endpoint). Comment updates and task descriptions do not yet support server-side mention resolution — use the structured `mentions` parameter or the web UI for those.
 </Aside>
 
-**Example request â\x80\x94 plain `@mention` in comment text:**
+**Example request — plain `@mention` in comment text:**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -1129,7 +1249,7 @@ curl -s -X POST -H "Authorization: Bearer $TOKEN" \
   }'
 ```
 
-**Example request â\x80\x94 structured mentions (when you have user IDs):**
+**Example request — structured mentions (when you have user IDs):**
 
 ```bash
 curl -s -X POST -H "Authorization: Bearer $TOKEN" \
@@ -1426,7 +1546,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 
 ### `hypertask_inbox_archive`
 
-Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted â\x80\x94 they can be restored with `hypertask_inbox_unarchive`.
+Archive (dismiss) inbox notifications. Archived notifications are removed from the active inbox view but are not deleted — they can be restored with `hypertask_inbox_unarchive`.
 
 **Endpoint:** `POST /api/mcp/inbox/archive`
 
