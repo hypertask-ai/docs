@@ -5,7 +5,7 @@ description: Organize work with Kanban-style boards, customizable sections, and 
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** â\x80\x94 a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
 ## Authentication
 
@@ -15,7 +15,7 @@ Hypertask supports multiple authentication methods, all integrated through the s
 
 - Sign-in with a six-digit code delivered via email
 - Access a persistent sign-in link (doesn't expire until used)
-- No need to manage custom tokens â\x80\x94 the session is handled server-side
+- No need to manage custom tokens — the session is handled server-side
 - Reliable across mail scanners and email clients
 
 ### Sign-out
@@ -49,15 +49,15 @@ Deleted boards cannot be recovered. This action permanently deletes all tasks, c
 
 ### First-board redirect
 
-When you first create your first board using Ctrl+K, the command palette will redirect you directly to that new board for immediate use. After your first board, the redirect behavior applies when creating additional boards â\x80\x94 you'll be taken to the newly created board automatically.
+When you first create your first board using Ctrl+K, the command palette will redirect you directly to that new board for immediate use. After your first board, the redirect behavior applies when creating additional boards — you'll be taken to the newly created board automatically.
 
 ## Sidebar
 
 The sidebar groups your workspace navigation and project controls into a consistent layout. Use the account section in the sidebar to manage your config:
 
-- **Theme picker** â\x80\x94 switch between Light, Dark, System, AMOLED, and Paper theme (Light, Dark, System, AMOLED, and the new Paper warm editorial light theme)
-- **Team switcher** â\x80\x94 quickly switch between workspaces or projects
-- **Account chevron** â\x80\x94 manage your account settings and preferences
+- **Theme picker** — switch between Light, Dark, System, AMOLED, and Paper theme (Light, Dark, System, AMOLED, and the new Paper warm editorial light theme)
+- **Team switcher** — quickly switch between workspaces or projects
+- **Account chevron** — manage your account settings and preferences
 
 ### Favorites bar
 
@@ -99,27 +99,32 @@ These widths are applied via Tailwind's `sm:` breakpoint, providing consistent l
 
 The browser tab now displays your board name in a clear, scannable format:
 
-- **Board name first** â\x80\x94 Your board appears before the application name (e.g., "ine â\x80¢ Hypertask (board name)")
-- **Bullet separator** â\x80\x94 Uses a subtle bullet (â\x80¢) to separate board and app names
-- **No prefix or repetition** â\x80\x94 No Hypertask prefix or repeated name
-- **Dynamic on board switch** â\x80\x94 Updates automatically when you switch to a different board
+- **Board name first** — Your board appears before the application name (e.g., "ine • Hypertask (board name)")
+- **Bullet separator** — Uses a subtle bullet (•) to separate board and app names
+- **No prefix or repetition** — No Hypertask prefix or repeated name
+- **Dynamic on board switch** — Updates automatically when you switch to a different board
 
 This change improves clarity in tab managers and on task-switching workflows.
 
 ## Archive View
 
-The Archive section shows tasks and boards that have been archived. The Archive view defaults to showing only active boards to reduce visual noise. Hidden archived boards are not shown unless you invoke them explicitly.
+The Archive section shows tasks and boards that have been archived. By default, the Archive view includes only tasks from boards you own, are a member of, or can otherwise see when using the owner-or-member filter.
+
+The archive view maximizes your screen real estate:
+
+- **Compact rows** — Archive rows are 40px tall instead of 70px, letting you see 17 rows at once instead of 10
+- **Per-board filtering** — View archived items from your owned, member-or-owned, or all accessible boards
 
 To access archived boards:
 
-- **Ctrl+K command palette** â\x80\x94 search for "archived" to access archived board items
+- **Ctrl+K command palette** — search for "archived" to access archived board items
 - **Keyboard** press <kbd>Ctrl+K</kbd> and select the archived view option
 
 On narrow viewports (below `< 1024px`), the Archive section uses the full available width, giving you more space to read and interact with archived content.
 
 ### Archived Boards
 
-- By default, archived boards appear hidden in the Archive view â\x80\x94 only active boards are displayed initially
+- Archived boards appear hidden in the Archive view by default — only active boards are displayed initially
 - Archived boards can be accessed via the Ctrl+K command palette when you need to review or restore them
 - The view optimizes space so you focus on currently relevant boards
 
@@ -133,9 +138,9 @@ On narrow viewports (below `< 1024px`), the Archive section uses the full availa
 
 Sections are the columns on your board. New projects start with three defaults:
 
-- **Todo** â\x80\x94 work that needs to be done
-- **Doing** â\x80\x94 work in progress
-- **Done** â\x80\x94 completed work
+- **Todo** — work that needs to be done
+- **Doing** — work in progress
+- **Done** — completed work
 
 These defaults are just a starting point. You can rename them, reorder them, add new ones, or remove them entirely. Common setups include:
 
@@ -150,9 +155,9 @@ These defaults are just a starting point. You can rename them, reorder them, add
 
 Each section supports the following configuration:
 
-- **Name** â\x80\x94 the column label displayed on the board
-- **Visibility** â\x80\x94 show or hide sections without deleting them (hidden sections retain their tasks)
-- **Ranking** â\x80\x94 drag sections to reorder them, or set a rank value directly
+- **Name** — the column label displayed on the board
+- **Visibility** — show or hide sections without deleting them (hidden sections retain their tasks)
+- **Ranking** — drag sections to reorder them, or set a rank value directly
 
 <Aside type="tip">
 Hiding a section is useful when you want to temporarily declutter the board without losing any task data. Tasks in hidden sections still appear in search results and saved views.
@@ -160,25 +165,25 @@ Hiding a section is useful when you want to temporarily declutter the board with
 
 ### Hiding columns
 
-You can hide sections that currently contain no tasks to reduce visual noise. This applies to both empty columns and regular columns that you want to keep but donâ\x80\x99t need to see all the time.
+You can hide sections that currently contain no tasks to reduce visual noise. This applies to both empty columns and regular columns that you want to keep but don''t need to see all the time.
 
 To hide a column, use the **Ctrl+K** command palette:
 
 1. Press **Ctrl+K** to open the command palette
-2. Search for **"Hide"** to find column-hide actions (Ctrl+K â\x80\x9cHide columnâ\x80\x9d hides the current section and closes the palette)
+2. Search for **"Hide"** to find column-hide actions (Ctrl+K "Hide column" hides the current section and closes the palette)
 3. Select the column to hide it immediately
-4. Search for **"Show"** to re-enable hidden columns (Ctrl+K â\x80\x9cShow columnsâ\x80\x9d resurfacing hidden sections)
+4. Search for **"Show"** to re-enable hidden columns (Ctrl+K "Show columns" resurfacing hidden sections)
 
 <Aside type="tip">
-Hiding a column is a UI toggle that persists per user â\x80\x94 other team members will see the column as visible if their own filter/configuration differs.
+Hiding a column is a UI toggle that persists per user — other team members will see the column as visible if their own filter/configuration differs.
 </Aside>
 
 ### Hiding empty columns
 
 You can hide columns that currently contain no tasks to reduce visual noise. There are two ways to toggle this:
 
-- **Ctrl+K** â\x80\x94 open the command palette, search for "empty", and select **Show empty columns** or **Hide empty columns**. The command label updates to reflect the current state.
-- **Manage Columns modal** â\x80\x94 use the visibility toggle for each individual section.
+- **Ctrl+K** — open the command palette, search for "empty", and select **Show empty columns** or **Hide empty columns**. The command label updates to reflect the current state.
+- **Manage Columns modal** — use the visibility toggle for each individual section.
 
 Both controls flip the same board-level setting, so changes made in one place are immediately reflected in the other.
 
@@ -189,7 +194,7 @@ By default, sections appear in alphabetical order. Customize your board layout w
 | Control | Description |
 |---------|-------------|
 | **Segmented mouse-only toggle** | Choose between **Teams** and **Recent** sections with a mouse-optimized segmented toggle below the search bar |
-| **Keyboard shortcut** | <kbd>Ctrl+K</kbd> â\x80\x94 search for "sort" to open board sorting options |
+| **Keyboard shortcut** | <kbd>Ctrl+K</kbd> — search for "sort" to open board sorting options |
 | **Drag and drop** | Drag sections in the layout to manually reorder them. Your custom sort persists per user. |
 | **Manage Views panel** | Provides per-user sort toggles and the ability to toggle visibility without deleting them. |
 | **Admin default order** | Project owners and admins can define a default order for newly created boards globally. |
@@ -202,18 +207,18 @@ Per-section counts, visibility toggles, and manual sorting persist server-side f
 
 There are three ways to move a task to a different section:
 
-1. **Drag and drop** â\x80\x94 in the web UI, drag a task card from one column to another.
-2. **MCP** â\x80\x94 use the `hypertask_section` tool to move a task programmatically:
+1. **Drag and drop** — in the web UI, drag a task card from one column to another.
+2. **MCP** — use the `hypertask_section` tool to move a task programmatically:
 
    ```
    hypertask_section(taskId: 42, sectionId: 5)
    ```
 
-3. **API** â\x80\x94 call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
+3. **API** — call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
 
 ## Views
 
-Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data â\x80\x94 they're just different lenses on the same information.
+Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data — they're just different lenses on the same information.
 
 ### Board view
 
@@ -227,18 +232,18 @@ In the new app shell layout, the calendar toolbar sits on the dark shell backgro
 
 #### Week column header format
 
-Each weekday column displays the day name followed by a task count, for example: **Tue 5 tasks**, **Thu 2 tasks**. The centered day number row has been removed to reduce visual noise â\x80\x94 day numbers are now left-aligned inside each column, consistent with the Kanban layout.
+Each weekday column displays the day name followed by a task count, for example: **Tue 5 tasks**, **Thu 2 tasks**. The centered day number row has been removed to reduce visual noise — day numbers are now left-aligned inside each column, consistent with the Kanban layout.
 
 #### Real-time updates in Calendar view
 
-The Calendar view updates **live via Pusher**. When a task's due date or schedule is changed â\x80\x94 by a teammate, an agent, or a CLI command â\x80\x94 the event moves to the new date instantly on every open Calendar view, without a page refresh. This keeps the calendar accurate even when multiple people are adjusting schedules simultaneously.
+The Calendar view updates **live via Pusher**. When a task's due date or schedule is changed — by a teammate, an agent, or a CLI command — the event moves to the new date instantly on every open Calendar view, without a page refresh. This keeps the calendar accurate even when multiple people are adjusting schedules simultaneously.
 
 #### Filtering in Calendar view
 
 The Calendar view supports the same filter set as the Kanban board. You can open the filter modal in two ways:
 
-- **Filter icon** â\x80\x94 click the funnel icon in the calendar header (next to the **Today** button). The icon turns blue when any filters are active, so you can tell at a glance whether the calendar is filtered.
-- **Keyboard shortcut** â\x80\x94 press `<kbd>Shift+F</kbd>` to open the same modal without using the mouse.
+- **Filter icon** — click the funnel icon in the calendar header (next to the **Today** button). The icon turns blue when any filters are active, so you can tell at a glance whether the calendar is filtered.
+- **Keyboard shortcut** — press `<kbd>Shift+F</kbd>` to open the same modal without using the mouse.
 
 Both methods open the same filter panel. You can also filter by tasks you are **following** using the **Following** filter, matching the filter already available on the Kanban board.
 
@@ -269,12 +274,12 @@ Narrow down which tasks appear on the board:
 
 Control the order tasks appear within each section:
 
-- **Manual** â\x80\x94 custom drag-and-drop ordering
-- **Priority** â\x80\x94 highest priority first
-- **Due Date** â\x80\x94 earliest deadline first
-- **Size** â\x80\x94 smallest estimate first
-- **Created At** â\x80\x94 newest or oldest first
-- **Updated At** â\x80\x94 most recently changed first
+- **Manual** — custom drag-and-drop ordering
+- **Priority** — highest priority first
+- **Due Date** — earliest deadline first
+- **Size** — smallest estimate first
+- **Created At** — newest or oldest first
+- **Updated At** — most recently changed first
 
 #### Subtask display
 
@@ -293,7 +298,7 @@ Saved Views are per-project. Each team member can create their own views without
 
 #### Sharing a view via deep link
 
-Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately â\x80\x94 no manual navigation required.
+Every Saved View has a shareable URL that encodes the project and view name. When a team member opens the link, the board switches to that view immediately — no manual navigation required.
 
 The URL format is:
 
@@ -313,13 +318,13 @@ Copy the URL from your browser's address bar while the view is active, or share 
 
 You can customize the order of your views in the **Manage Views** panel:
 
-- **Drag and drop** â\x80\x94 click and drag view tabs to reorder them. Your custom sort persists server-side, so the order applies across all your devices.
-- **Per-user sort** â\x80\x94 different team members can drag and pin their preferred top views.
-- **Admin default order** â\x80\x94 project owners and admins can define a default order for views. Newly created boards use this centralized arrangement, while existing boards keep each user's custom order.
-- **Visibility toggle** â\x80\x94 hide views without deleting them (hidden views are restored when tasks are added).
-- **Reset** â\x80\x94 quickly restore the default view order for boards with centralized settings.
+- **Drag and drop** — click and drag view tabs to reorder them. Your custom sort persists server-side, so the order applies across all your devices.
+- **Per-user sort** — different team members can drag and pin their preferred top views.
+- **Admin default order** — project owners and admins can define a default order for views. Newly created boards use this centralized arrangement, while existing boards keep each user's custom order.
+- **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
+- **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon ð\x9f\x9b\xa0ï¸\x8f appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon 🔧 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
@@ -335,8 +340,8 @@ For frequent users, per-user sorting lets you prioritize the views you use most 
 
 #### Quick view-tabs pill bar
 
-You can switch between saved views without opening the Manage Views panel. At the top of the board surface is a pill bar that exposes a selection of your 8 most-used views. Click a pill to instantly switch the board to that view â\x80\x94 the URL updates (for example, `<code>?view=bugs</code>`) and the board content loads accordingly. This provides one-click access to your preferred views for day-to-day work.
+You can switch between saved views without opening the Manage Views panel. At the top of the board surface is a pill bar that exposes a selection of your 8 most-used views. Click a pill to instantly switch the board to that view — the URL updates (for example, `<code>?view=bugs</code>`) and the board content loads accordingly. This provides one-click access to your preferred views for day-to-day work.
 
 #### View tabs
 
-In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its `<code>?view=</code>` parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.
+In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its `<code>?view=</code>` parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.'
