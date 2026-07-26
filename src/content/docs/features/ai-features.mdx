@@ -3,158 +3,121 @@ title: AI Features
 description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
 ---
 
-import { Aside, Steps, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Steps, LinkCard } from '@astrojs/starlight/components';
 
-Hypertask brings AI directly into your project management workflow with tools that help you create, edit, and collaborate faster.
-
----
-
-## AI-powered task creation
-Let AI draft tasks for you:
-
-### Quick add with AI
-Open the **Command palette** (`Ctrl+K`) and type **"Add task"** to start a new task from anywhere in the app. You can describe what you need in plain language, and AI will generate a task with a title, description, priority, and tags.
-
-<Aside type="tip">
-Start your prompt with natural language like "Create a task to review the new backend API documentation and list TODOs."
-</Aside>
-
-### Describe, AI creates
-To create a task with more control:
-
-1. Open a board.
-2. Click **Add task**.
-3. In the title field, describe what you need AI to do.
-4. AI automatically fills in:
-   - **Title** — Clear, action-oriented task name
-   - **Description** — Expanded plan or requirements
-   - **Priority** — Urgent, high, medium, or low
-   - **Labels** — Relevant tags for better organization
+AI in Hypertask lives alongside your projects, not as a separate tool. Use natural language to create tasks, get suggestions across your work, and keep your information fresh and up-to-date.
 
 ---
 
-## Voice dictation
-Speak your ideas directly into boards and comments. The microphone icon in the composer opens the dictation panel.
+## Quick Start
 
-<Aside type="note">
-Voice dictation is currently available on mobile devices.
-</Aside>
+Use the AI assistant via:
 
-### How it works
-1. Tap the **microphone** icon in the comment composer.
-2. Tap **Start** and speak your content.
-3. Your speech is converted to text and inserted at the cursor position.
-4. Tap **Stop** to finish. The mic is released and the dictation panel closes automatically.
-
-### Mobile dictation fixes
-On mobile iOS, voice dictation now responds correctly after using other apps:
-
-- **Microphone release** — the green recording indicator no longer persists across app switches; dictation stops when you return to Hypertask or manually stop it
-- **Dictation on send** — when you send an AI-generated message or comment, dictation stops and releases the microphone
-
-<Aside type="tip">
-Dictation uses the system's native speech-to-text. Content is processed locally where possible to protect your privacy.
-</Aside>
+- **Keyboard shortcut:** <kbd>Ctrl+K</kbd> then search for "Ask AI" or type slash and "ask"
+- **In a comment:** Click the sparkle icon or use <kbd>Ctrl+J</kbd> to write with AI
+- **On mobile task detail:** "Ask AI" sparkles up in the thumb-zone button bar
 
 ---
 
-## AI comments and replies
-Let AI help you craft responses:
+## Asking AI in Comments
 
-### AI in comments
-In the comment composer, click **Ask AI** to generate a draft reply. AI drafts are grounded in the conversation history and can summarize discussions, suggest next steps, or adjust tone to match common team communication styles.
+Start a comment or a new message with a short prompt, e.g.:
 
-### Time command with AI
-Start a comment with **`/time`** to open the time tracking panel and log hours on the current task:
+- "Set priority high and assign to me"
+- "Add @Alice to the assignee list"
+- "Purge all tags"
 
-1. Open a task detail page.
-2. Click into the comment composer.
-3. Type **`/time`** followed by your notes (optional).
-4. AI opens the time panel with your description pre-filled.
+After your request, AI will update the task's properties accordingly.
 
----
+### Possible responses
 
-## AI chat
-The AI chat panel lets you query your project, generate content, and coordinate tasks without leaving the board.
+- Priority, assignee, and tags updates
+- Description edits — rewrite, summarize, or extend
+- Link mentions — AI adds @mentions to project members
+- Suggested next actions — AI proposes concrete follow-ups
 
-<Aside type="tip">
-Chat remains focused to the current board and tasks you have access to, with search for related content across all boards via the search icons.
-</Aside>
-
-### Chat scope
-Choose which tasks to include in your conversation:
-
-- **Current board** — chat conversation includes tasks and content only on the currently visible board
-- **Pinned board** — chat is scoped to a specific board you've pinned in the dock
-- **All boards** — show all chats and tasks across your projects
-
-### All boards search
-When in "All boards" scope, use the search icons on the left rail to find related content across boards:
-
-- **Tasks:** search across all task titles on your visible boards
-- **Chats:** find related history in AI conversations across all projects
-
-### Previews in action alerts
-Action alerts link to AI discussions with preview content showing the first sentence or key detail. This makes it quick to decide whether to open the review chat.
-
-<Aside type="note">
-Chat previews are limited to one message with a truncated body to keep notifications concise.
-</Aside>
+To start over, click the refresh icon to propose a different rewrite.
 
 ---
 
-## Task enhancement
-AI can help you refine tasks and descriptions:
+## Mobile AI Integration (HTPR-4603)
 
-### Polish descriptions
-When editing a task description, click **Ask AI** to improve clarity, fix grammar, or restructure content. AI honors your instruction and state, then inserts the improved text at the cursor.
+On mobile task pages, the "Ask AI" burst scrolls into the thumb zone after the page loads. From here:
 
-### Generate summaries
-For long task descriptions, AI can generate a concise summary you can copy to the task title or use as a quick reference.
+- Tap the sparkle to send the task ID + context to the AI assistant
+- Slide down to return to the board
+- Use Swipe-to-reveal actions to access further options
 
----
-
-## Periodic task reports
-The command palette includes built-in periodic reports for your tasks. Select a time range and let AI generate a readable summary:
-
-| Command | Description |
-|---------|-------------|
-| **Task report (today)** | Review everything you worked on today |
-| **Task report (this week)** | Check your priorities and progress this week |
-| **Task report (this sprint)** | Historic summary of your tracked work over a sprint |
-
-<Aside type="tip">
-Reports are generated from your actual tracked time. Untracked items are not included unless you manually flag them in the pasted text.
-</Aside>
+The setup keeps AI accessible without obscuring the task content and mirrors desktop interactions.
 
 ---
 
-## API and MCP
-Hypertask exposes AI-powered tooling through MCP and the REST API.
+## Task Creation
 
-<Aside type="note">
-See the [MCP Tools Reference](/api/tools-reference/) for complete parameter lists for each tool.
-</Aside>
+Use Ctrl+K "Ask AI" to generate a task title and description in one go. AI uses your conversation context and past board content to produce relevant, scoped suggestions.
+
+Example prompt:
+
+```
+Create a task for "Update the billing page footer" on project 15 with priority high
+```
+
+AI proposes a resulting task with title, description bundle (phase asks), priority, and due date. Author it if the proposal fits, or refine with follow-up.
 
 ---
 
-## Use AI wherever you work
-Link AI across CLI, MCP, and REST APIs:
+## Task Enhancement
+
+Ask AI to expand or prune descriptions:
+
+- "Make this task more detailed for a new hire"
+- "Summarize this task into a checklist" — produces checkboxes
+- "Turn this into a bug template" — adds reproduction steps
+- "Trim to the core deliverable" — shortens
+
+AI can turn any comment, task description, or stand-up update into a task and vice versa.
+
+---
+
+## Voice Dictation
+
+Start voice on any text field with <kbd>Ctrl+Shift+N</kbd> or the microphone icon in the compose bar.
+
+See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for Mac/Windows note.
+
+---
+
+## Keeping Content Fresh
+
+Use "AI rewrite" on comments or task descriptions to:
+
+- Improve readability
+- Shorten for mobile or notes
+- Write follow-ups or next steps
+- Surface action items with checkboxes
+
+"Next stuff" bullets in Tiptap editors suggest actions.
+
+---
+
+## Command Palette AI Panel
+
+Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
+
+- "/ai reorganize my inbox" — AI sorts entries by importance
+- "/ai generate a concise board summary" — AI overviews tasks and sections
+
+---
+
+## Related Topics
 
 <LinkCard
-  title="CLI Reference"
-  description="Manage tasks and workflows from the terminal with built-in AI assistance."
-  href="/cli/reference/"
+  title="AI Chat"
+  description="Chat with agents on your board, filter contexts, and export summaries."
+  href="/features/chat-board-filter/"
 />
-
 <LinkCard
-  title="MCP Integration"
-  description="Connect AI agents to Hypertask via the Model Context Protocol."
-  href="/mcp/overview/"
-/>
-
-<LinkCard
-  title="REST API"
-  description="Programmatically create and manage AI-assisted workflows."
-  href="/api/rest-api/"
+  title="Keyboard Shortcuts"
+  description="Tip: /ai now works directly in the command palette."
+  href="/features/keyboard-shortcuts/"
 />
