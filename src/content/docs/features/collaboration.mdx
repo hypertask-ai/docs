@@ -6,7 +6,7 @@ description: Work together with team workspaces, real-time editing, mentions, re
 import { Aside, Steps } from '@astrojs/starlight/components';
 
 
-Hypertask is built for teams — whether that’s two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
+Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
 
 ## Team workspaces
@@ -220,6 +220,13 @@ For the most common reaction — a simple thumbs-up — Hypertask provides a **f
 
 The like button is a shortcut for the thumbs-up reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
 
+### Mobile emoji picker
+On mobile devices, emoji reactions are organized into a docked picker that mimics popular messaging apps:
+
+- Picker appears docked at the bottom of the screen, aligned with the keyboard input area
+- A search bar on the Emoji tab lets you quickly find emojis by name
+- Selecting an emoji immediately applies it as a reaction, with the picker closing automatically
+
 ### Comment display
 Comments can be starred (saved) or pinned, and the visual indicators update based on comment state:
 
@@ -272,6 +279,14 @@ On mobile devices, you can swipe a comment to reveal its action menu:
 
 This makes it quick to delete, star, or otherwise manage comments directly from your mobile feed.
 
+### Mobile comment actions menu
+When you tap into a comment's action menu on mobile, you can find and manage several options:
+
+- **Edit** — tap to open the comment composer
+- **Delete** — remove the comment from the thread
+- **Star or turn off star** — save or unsave the comment
+- **Pin or turn off pin** — pin the comment to the top of the feed
+
 ### URL auto-linkification
 Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
 
@@ -314,6 +329,22 @@ Click a GIF to insert it into your comment. Inserted GIFs render as **resizable 
 <Aside type="note">
 GIF search requires a Giphy API key configured on the Hypertask deployment. If GIFs are not loading, contact your workspace admin.
 </Aside>
+
+## Comment edit mode
+Edit a comment to refine your thoughts or fix mistakes. The editor includes keyboard shortcuts to help you work efficiently:
+
+| Shortcut | Action |
+|----------|--------|
+| **ESC** | Leave edit mode without sending (clears unsaved edits) |
+| **Ctrl+Enter** | Send the edited comment |
+
+### Exiting edit mode
+When you're in edit mode and want to abandon your changes:
+
+- **Mouse:** click the trash can icon in the edit-mode footer
+- **Keyboard:** press **ESC**
+
+Both options exit edit mode without posting the comment and without polluting the conversation with draft text.
 
 ## Activity logs
 Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
