@@ -23,6 +23,12 @@ import { Update } from '@astrojs/starlight/components';
   * Added agent task leases: agents can safely claim, heartbeat, and release tasks via dedicated endpoints under /api/mcp/tasks/lease/ ([HTPR-4618](https://app.hypertask.ai/detail/project-15/4618))
 </Update>
 
+<Update label="July 26, 2026" features={[<u/>]}>
+  * Improved archive view: row height trimmed from 70px to 40px, showing 17 rows per viewport instead of 10 ([HTPR-4613](https://app.hypertask.ai/detail/project-15/4613))
+  * Improved table view sorting: Status column auto-shows with the board column name right after Title, hiding when sort clears; Updated header now right-aligned ([HTPR-4607](https://app.hypertask.ai/detail/project-15/4607))
+  * Improved comment hover panel: Reply and React kept in the hover bar; three-dot opens Ctrl+K with Edit, Summarize, and Fast like pinned at the top ([HTPR-4576](https://app.hypertask.ai/detail/project-15/4576))
+</Update>
+
 <Update label="July 22, 2026" features={[<u/>]}>
   * Fixed Ctrl+O to open links modal even when comment composer is focused ([HTPR-4457](https://app.hypertask.ai/detail/project-15/4457))
   * Fixed Alt+1/2 keyboard shortcuts to jump to favorite boards globally ([HTPR-4457](https://app.hypertask.ai/detail/project-15/4457))
