@@ -22,7 +22,7 @@ Customize your table view with the column picker:
 
 1. Press <kbd>Ctrl+K</kbd> and search for "Configure table" or "Column picker".
 2. Select which columns to display and hide.
-3. Click <strong>APPLY</strong> to persist your selection across sessions.
+3. Click **APPLY** to persist your selection across sessions.
 
 Your column choices are saved per user, so each team member can have their own table layout.
 
@@ -35,7 +35,7 @@ The column picker and table layout are per-user settings. You can show or hide a
 Open the Configure table modal for more control over your table setup:
 
 1. Press <kbd>Ctrl+K</kbd> and search for "Configure table".
-2. In the column picker, click the **⋮** or **edit** icon next to "Columns" to open advanced options.
+2. In the column picker, click the ® or **edit** icon next to "Columns" to open advanced options.
 3. Choose from additional columns:
 
 **Visibility options**
@@ -47,6 +47,7 @@ Open the Configure table modal for more control over your table setup:
 - **Created** — full timestamp of task creation (e.g., "Jul 26, 2026 at 10:42 AM"). Click to view original creation.
 - **Column** — which board section or column a task belongs to. Click to jump to that section on the board.
 - **Status** — copy of the board column name for card-based views (e.g., "Done", "In Progress", "Review").
+- **Stale** — indicator of task staleness when the board staleness toggle is enabled. Shows up to 7 days amber/red signal, empty when fresh, and hidden when the toggle is off. Click to sort by staleness (sorting column appears between Due and Updated).
 
 **Actions**
 - Drag columns by their grip handle to reorder them.
@@ -68,6 +69,7 @@ When you sort a table, the experience tightens to show you the most useful colum
 
 - **Status column auto-shows** — as soon as you sort, a Status column appears immediately after the Title column, matching the board column name (e.g., Done, AI Review, Bugs). The column hides again when you clear the sort.
 - **Updated header right-aligned** — the Updated header stays visibly right-aligned over the rest of the column headers.
+- **Stale column option** — when sorting by staleness, a Stale column appears between Due and Updated headers. It hides when staleness sorting is cleared or when the board staleness toggle is off.
 
 This pattern keeps the table focused on the sorted criteria without overwhelming you with every board field.
 
@@ -78,3 +80,4 @@ Table view is great for:
 - **Analyzing lots of tasks**: See many items at once in a compact grid without losing readability.
 - **Comparing priorities**: Side-by-side visibility of priority, size, and due dates.
 - **Quick filtering**: Combine visibility filters with your column choices to surface the exact set of tasks you need.
+- **Tracking staleness**: Use the Stale column to identify tasks that haven't been updated recently, especially on boards with staleness detection enabled.
