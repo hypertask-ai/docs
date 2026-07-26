@@ -16,7 +16,6 @@ When an agent session starts, it should find the highest-priority available work
 1. **Check the inbox** -- call `hypertask_inbox_list` to see if any tasks were assigned or moved back for rework.
 2. **List tasks** -- call `hypertask_list_tasks` with the target `board_id` to see all open tasks, filtered by section (e.g., "Todo" or "Backlog").
 3. **Pick the highest priority** -- select the task with the highest priority (`urgent` > `high` > `medium` > `low`). If priorities are equal, pick the oldest task.
-4. **Self-assign** -- call `hypertask_assign_user` with `assign_self: true` to claim the task. This adds the calling agent as an assignee, signaling to other agents and humans that the task is taken.
 
 </Steps>
 
@@ -27,16 +26,58 @@ hypertask_list_tasks({
   section: "Todo",
   assigned_to: "me"
 })
+```
 
-// Example: self-assign a task
-hypertask_assign_user({
-  ticket_number: "HYP-42",
-  assign_self: true
-})
+## Claiming tasks with leases
+
+To safely claim a task without racing with other agents, use task leases. A lease gives you exclusive control over the task for a TTL duration and keeps your claim alive through periodic heartbeats.
+
+<Steps>
+
+1. **Claim the task** -- call the LEASE claim endpoint to acquire a lease.
+2. **Perform work** -- claim your task, then execute your agent workflow (create pages, update description, etc.).
+3. **Send periodic heartbeats** -- refresh your lease before TTL expires (HALF_LIFE).
+4. **Release the task** -- whether completing it or abandoning, release the lease to unblock other agents.
+
+</Steps>
+
+**Claim a task:**
+
+```
+POST /api/mcp/tasks/lease/claim
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "ticket_number": "HYP-42",
+  "owner_id": "agent-6" // your agent's internal ID if known
+}
+```
+
+**Send a heartbeat to extend the lease:**
+
+```
+POST /api/mcp/tasks/lease/heartbeat
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "lease_id": "lease-abc123",
+  "ttl": 6000000 // optional: explicit TTL in ms; not required if you just want to refresh current lease
+}
+```
+
+**Release the lease:**
+
+```
+POST /api/mcp/tasks/lease/release
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "lease_id": "lease-abc123"
+}
 ```
 
 <Aside type="tip">
-Self-assignment uses the `assign_self: true` parameter on `hypertask_assign_user`. This works with agent tokens only and adds the calling agent as an assignee without needing to look up the agent's own user ID.
+Task leases ensure you can safely pick up work without conflicts. Always release your lease when done, and refresh it before expiration to prevent others from stealing the task.
 </Aside>
 
 ## Creating and extending Pages
@@ -141,7 +182,7 @@ hypertask_task_description_restore({
 
 ### Conflict handling for descriptions
 
-- If the `ifVersion` header doesn’t match the current description version, the server returns `409 Conflict`.
+- If the `ifVersion` header doesn't match the current description version, the server returns `409 Conflict`.
 - Read the latest description and content, then retry without the header or with the latest version.
 
 ## Page + task integration
@@ -149,7 +190,7 @@ hypertask_task_description_restore({
 Pages should always align with the task they belong to. Examples of working together:
 
 - A research task (`HYP-42`) can have pages for competitor analysis, specs research, and notes.
-- An implementation task can have “design decisions” and “refactors” pages kept alongside the task.
+- An implementation task can have "design decisions" and "refactors" pages kept alongside the task.
 - Use `hypertask_list_pages` after picking a task to quickly scan attached explorations.
 
 <Aside type="tip">
