@@ -34,7 +34,25 @@ Once connected, the following endpoints are available:
 | `/health` | HTTP | Health check endpoint |
 | `/` | HTTP | Root 307 redirect to the main app for OAuth flows |
 
-## Authentication
+## AI Assistant Self-Onboarding
+
+Memorystore apps and public marketing pages on hypertask.ai can automatically discover the MCP server address by opening the `llms.txt` file:
+
+```
+https://hypertask.ai/llms.txt
+https://app.hypertask.ai/llms.txt
+https://mcp.hypertask.ai/llms.txt
+```
+
+The file returns a human-readable instructions block that includes:
+
+- **Connect-An-AI-Assistant block** with instructions and steps for Claude, ChatGPT, Claude Code, and CLI environments
+- **MCP endpoint URL** (`https://mcp.hypertask.ai/sse`) for direct connection
+- **Authentication instructions** using JWT bearer tokens
+
+This enables AI assistants to self-discover and connect to Hypertask without manual configuration. For environments that support `llms.txt` parsing (such as Claude Desktop and ChatGPT's current and future releases), the protocol automatically applies the connection details.
+
+### Authentication
 
 MCP connections are authenticated with **JWT bearer tokens**. To get your token:
 
@@ -56,7 +74,7 @@ Tokens expire after **30 days**. If your agent stops authenticating, generate a 
 
 ## Agent bearer tokens
 
-When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations âˆ’ task creation, comment posting, assignments âˆ’ are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
+When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations — task creation, comment posting, assignments — are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
 
 ## Client configuration
 
@@ -120,12 +138,12 @@ Open **Settings > MCP Servers** and add a new server:
 </TabItem>
 <TabItem label="ChatGPT">
 
-Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more âˆ’ without needing native MCP support.
+Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more — without needing native MCP support.
 
 <Steps>
 
 1. In ChatGPT, open **My GPTs** (or the GPT editor for a custom GPT you control).
-2. Go to **Actions âˆš Add action**.
+2. Go to **Actions → Add action**.
 3. Import the Hypertask OpenAPI schema from:
    ```
    https://mcp.hypertask.ai/openapi.json
@@ -146,7 +164,7 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces âˆ’ including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views âˆ’ is also available from the chat sidebar.
+AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
 
 ## Known limitations
 
@@ -160,12 +178,12 @@ The following time-control-related features are not yet available via MCP:
 | **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
 
 <Aside type="tip">
-For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround âˆ’ it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
+For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
 </Aside>
 
 ## Troubleshooting
 
-**"Failed to Connect to MCP"** âˆ’ If your client cannot connect:
+**"Failed to Connect to MCP"** — If your client cannot connect:
 
 1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
 2. Confirm the URL is exactly `https://mcp.hypertask.ai/sse` (including `/sse`).
@@ -176,12 +194,12 @@ For time-control features not yet available via MCP, use the <a href="/cli/refer
 
 Hypertask MCP works with any client that supports the MCP standard, and ChatGPT via the OpenAPI adapter:
 
-- **Claude Code** âˆ’ Anthropic's CLI agent
-- **Claude Desktop** âˆ’ Anthropic's desktop app
-- **Cursor** âˆ’ AI-powered code editor
-- **Windsurf** âˆ’ Codeium's AI editor
-- **ChatGPT** âˆ’ via the Hypertask OpenAPI schema (custom actions / GPTs)
-- **Any MCP-compatible agent** âˆ’ anything that speaks the protocol
+- **Claude Code** — Anthropic's CLI agent
+- **Claude Desktop** — Anthropic's desktop app
+- **Cursor** — AI-powered code editor
+- **Windsurf** — Codeium's AI editor
+- **ChatGPT** — via the Hypertask OpenAPI schema (custom actions / GPTs)
+- **Any MCP-compatible agent** — anything that speaks the protocol
 
 ## Next steps
 
