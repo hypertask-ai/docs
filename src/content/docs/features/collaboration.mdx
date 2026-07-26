@@ -80,7 +80,7 @@ API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK tea
 The **Settings → Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
 
 - **Base price** — The full list price of your plan, shown with the expected period
-- **Discount** — The discount amount applied if your team is eligible (e.g., for long-term commitments or enterprise pricing)
+- **Discount** — The discount amount applied if your team is eligible (e.g. for long-term commitments or enterprise pricing)
 - **Amount due** — The final amount you pay after applying the discount
 
 <Aside type="tip">
@@ -118,7 +118,7 @@ After login, your session persists until you explicitly sign out. Hiding or clos
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
 <Aside type="warning">
-If you persist LocalStorage across sign-ins or sessions (e.g., in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
+If you persist LocalStorage across sign-ins or sessions (e.g. in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
 </Aside>
 
 ## Scope-aware agents and membership
@@ -264,11 +264,26 @@ Real-time sync means AI agents editing task descriptions via MCP won't overwrite
 
 ## Managing comments
 You can manage comments on any task — including comments left by other team members or agents. This is useful when:
+
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
 - Tidying up task threads for better readability
 
 To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
+
+### Comment hover panel
+The comment hover panel in table views and card lists is streamlined for faster access to actions:
+
+- **Reply** — standard reply action
+- **React** — add or remove a reaction (thumbs-up, favorite, flag, etc.)
+- **Three-dot menu** — click the three-dot to reveal remaining options
+
+Press and hold <kbd>Ctrl+K</kbd> (or the three-dot itself) to access the full menu with all comment commands pinned at the top:
+- **Edit** — modify the comment
+- **Summarize** — generate an AI summary of the comment thread
+- **Fast like** — quickly add a thumbs-up reaction
+
+For the most common reaction, just hover and click the like button directly on the comment row. No need to open the full emoji picker.
 
 ### Mobile swipe to actions
 On mobile devices, you can swipe a comment to reveal its action menu:
@@ -300,7 +315,7 @@ On mobile, the composer automatically adjusts its positioning: it offsets by `ma
 ### Quoted replies
 When you reply to a comment, Hypertask inserts a placeholder for the quoted message. If you were typing before you selected the comment, the system adds a space before the quoted text so your existing words don't run together:
 
-- **After existing text:** the reply includes `Your text [quotation start]` → `Your text "Original comment"` (space inserted automatically)
+- **After existing text:** the reply includes `Your text [quotation start]` — `Your text "Original comment"` (space inserted automatically)
 - **Already after whitespace:** the quoted text appears and you can keep typing without an extra space
 
 This spacing is handled invisibly in the background, so quoted replies flow naturally into your sentence structure.
