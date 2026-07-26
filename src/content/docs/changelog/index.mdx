@@ -5,6 +5,10 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 
 import { Update } from '@astrojs/starlight/components';
 
+<Update label="July 26, 2026" features={[<u/>]}>
+  * Added agent task leases: agents can safely claim, heartbeat, and release tasks via dedicated endpoints under /api/mcp/tasks/lease/ ([HTPR-4618](https://app.hypertask.ai/detail/project-15/4618))
+</Update>
+
 <Update label="July 22, 2026" features={[<u/>]}>
   * Fixed Ctrl+O to open links modal even when comment composer is focused ([HTPR-4457](https://app.hypertask.ai/detail/project-15/4457))
   * Fixed Alt+1/2 keyboard shortcuts to jump to favorite boards globally ([HTPR-4457](https://app.hypertask.ai/detail/project-15/4457))
@@ -12,7 +16,7 @@ import { Update } from '@astrojs/starlight/components';
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly ([HTPR-4455](https://app.hypertask.ai/detail/project-15/4455))
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426))
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Â· Team Â· Board Â· Connect Â· Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications ([HTPR-4403](https://app.hypertask.ai/detail/project-15/4403))
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits ([HTPR-4429](https://app.hypertask.ai/detail/project-15/4429))
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments ([HTPR-4428](https://app.hypertask.ai/detail/project-15/4428))
