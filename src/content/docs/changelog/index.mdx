@@ -9,15 +9,9 @@ import { Update } from '@astrojs/starlight/components';
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
   * Added CLI/MCP command to move tasks to your inbox ([HTPR-4553](https://app.hypertask.ai/detail/project-15/4553))
   * Exposed board AI custom instructions over MCP token ([HTPR-4556](https://app.hypertask.ai/detail/project-15/4556))
-</Update>
-
-<Update label="July 27, 2026" features={[<u/>]}>
   * Improved AI chat scope chip: displays concrete task/board names instead of "Current board" ([HTPR-4563](https://app.hypertask.ai/detail/project-15/4563))
   * Fixed push notifications respecting Email/Push matrix for assign, move, follower, and reaction updates ([HTPR-4562](https://app.hypertask.ai/detail/project-15/4562))
   * Fixed comment display: one dot when a comment is both new and pinned ([HTPR-4560](https://app.hypertask.ai/detail/project-15/4560))
-</Update>
-
-<Update label="July 27, 2026" features={[<u/>]}>
   * Fixed mobile AI chat composer being cut off by the keyboard (HTPR-4600)
   * Fixed task-detail title gap and command/confirm modals colliding with the status bar (HTPR-4599)
   * Fixed tasks opening at the first unread comment when available, otherwise at the bottom (HTPR-4597)
@@ -28,37 +22,37 @@ import { Update } from '@astrojs/starlight/components';
   * Added /skill invocation in AI Task Writer and Write with AI (HTPR-4567)
   * Fixed slash-command skills popup clipping when it should flip upward (HTPR-4568)
   * Added /skill autocomplete dropdown in AI Task Writer and Write with AI, with flip positioning (HTPR-4569)
+  * Copy comment to AI chat and Summarize focused comments via Ctrl+K ([HTPR-4564](https://app.hypertask.ai/detail/project-15/4564))
+  * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
+  * Added per-user dictation language setting (default English, multilingual options) and removed OpenAI from the provider picker ([HTPR-4544](https://app.hypertask.ai/detail/project-15/4544))
+  * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user's own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
+  * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190–232ms to ~110–177ms by collapsing deep includes into a single lookup (HTPR-4528)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Copy comment to AI chat and Summarize focused comments via Ctrl+K ([HTPR-4564](https://app.hypertask.ai/detail/project-15/4564))
-  * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
-</Update>
-
-<Update label="July 26, 2026" features={[<u/>]}>
   * Table view: optional sortable staleness columns (HTPR-4604)
   * Table view: full width on wide screens, spanning edge to edge (HTPR-4606)
 </Update>
 
-<Update label="July 26, 2026" features={[<u/>]}>
+<Update label="July 27, 2026" features={[<u/>]}>
   * Fixed mobile dictation mic release on app switching and dictation stop on send (HTPR-4591)
   * Improved mobile emoji picker with search-first docked design (HTPR-4589)
   * Added trash-can to exit comment edit mode without sending on mobile (HTPR-4611)
 </Update>
 
-<Update label="July 26, 2026" features={[<u/>]}>
+<Update label="July 27, 2026" features={[<u/>]}>
   * Added AI Assistant Self-Onboarding—locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
 </Update>
 
-<Update label="July 26, 2026" features={[<u/>]}>
+<Update label="July 27, 2026" features={[<u/>]}>
   * Added mobile swipe to reveal comment actions menu (HTPR-4640)
 </Update>
 
-<Update label="July 26, 2026" features={[<u/>]}>
+<Update label="July 27, 2026" features={[<u/>]}>
   * Added agent task leases: agents can safely claim, heartbeat, and release tasks via dedicated endpoints under /api/mcp/tasks/lease/ (HTPR-4618)
 </Update>
 
-<Update label="July 26, 2026" features={[<u/>]}>
+<Update label="July 27, 2026" features={[<u/>]}>
   * Improved archive view: row height trimmed from 70px to 40px, showing 17 rows per viewport instead of 10 (HTPR-4613)
   * Improved table view sorting: Status column auto-shows with the board column name right after Title, hiding when sort clears; Updated header now right-aligned (HTPR-4607)
   * Improved comment hover panel: Reply and React kept in the hover bar; three-dot opens Ctrl+K with Edit, Summarize, and Fast like pinned at the top (HTPR-4576)
