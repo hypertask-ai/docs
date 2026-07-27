@@ -79,6 +79,18 @@ import { Update } from '@astrojs/starlight/components';
   * Fixed Move modal moving the wrong task when navigating between tasks (HTPR-4543)
 </Update>
 
+<Update label="July 22, 2026" features={[<u/>]}>
+  * **Fixed AI slash commands now spare embedded HTML canvas blocks.** Previously, slash commands like "Fix Spelling & Grammar" would an existing canvas element as text to correct. Now, AI skips over canvas elements entirely, leaving your estimated time blocks and other rich media untouched. ([HTPR-4555](https://app.hypertask.ai/detail/project-15/4555))
+</Update>
+
+<Update label="July 22, 2026" features={[<u/>]}>
+  * **Mobile dictation composer:** The purple mic is now positioned on the right side of the action bar, aligned with the send arrow for one-handed thumb access. When you start dictating, the mic slides left and becomes a secondary gray circle while the send arrow remains visible. While AI transcribes, the editor is locked to prevent accidental edits. ([HTPR-4552](https://app.hypertask.ai/detail/project-15/4552))
+</Update>
+
+<Update label="July 22, 2026" features={[<u/>]}>
+  * **Inbox Zero:** One-click rule-based instant clearing replaces the AI sparkle. Keep toggles (unread/@mentions/assignments) always win, while you see a live count and Undo option. Use Ctrl+K or the new auto-clear button to instantly archive all matching notifications, then undo if anything should slip back. ([HTPR-4550](https://app.hypertask.ai/detail/project-15/4550))
+</Update>
+
 <Update label="July 21, 2026" features={[<u/>]}>
   * Added per-section auto-assign on column move: configure via Ctrl+K "Auto-assign for this column" so tasks moved into that section auto-add the chosen assignee (additive, idempotent, notifications fire) (HTPR-4363)
   * Improved task relations: add block/blocked-by/duplicate with dedicated Ctrl+K commands on task detail and viewable in Task Relationships (HTPR-4362)
