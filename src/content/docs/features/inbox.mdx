@@ -5,7 +5,27 @@ description: Stay on top of assignments, mentions, and task updates with a unifi
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-The Hypertask inbox is a single feed of everything that needs your attention â\x80\x94 assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
+The Hypertask inbox is a single feed of everything that needs your attention — assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
+
+## Email/Push matrix
+
+The Email/Push matrix controls how different notification types are delivered. When you configure invitation links or team notification settings, you set per-action delivery preferences:
+
+| Action | Default | Delivery options |
+|--------|---------|------------------|
+| Assign task | Push | Email → Push → Both |
+| Move task | Push | Email → Push → Both |
+| Add follower | Push | Email → Push → Both |
+| New comment | Push | Email → Push → Both |
+| Reaction | Push | Email → Push → Both |
+
+These actions now will always respect whichever setting you've configured for each action, instead of applying a system default across the board.
+
+<aside class="tip">
+All row default to Push so assign/move/follower/reaction updates typically arrive instantly. You can disable push and rely entirely on emails, or switch both delivery types on for redundancy.
+</aside>
+
+---
 
 ## Feedback from the app
 
@@ -17,18 +37,18 @@ Send feedback about your experience directly from the Hypertask app. Access it v
   - Footer hints point users to the available options
 - **Inbox delivery** — feedback sent via the feedback modal arrives in your inbox as an assigned task, complete with the Feedback board's auto-generated ticket number and assignment metadata (e.g., `DBAC-5`). This makes triage and aggregation straightforward.
 
-<Aside type="tip">
+<aside class="tip">
 Use the feedback modal instead of sending email or Slack messages for app issues. It surfaces as an inbox task with clear metadata, letting you track and resolve requests in one place.
-</Aside>
+</aside>
 
 ## Mobile Linear-style shell
 
 Hypertask is now fully usable on mobile with a Linear-style shell. Navigation follows the web app: when you open Inbox, Calendar, or Search from a task detail, you're redirected to the mobile version of that view without losing context.
 
 The mobile tab bar gives you quick access to three core views:
-- **Inbox** â\x80\x94 unread and archived notifications triage
-- **Board** â\x80\x94 Kanban board and task lists
-- **Calendar** â\x80\x94 week strip and scheduled items
+- **Inbox** — unread and archived notifications triage
+- **Board** — Kanban board and task lists
+- **Calendar** — week strip and scheduled items
 
 Set up via the profile (Hypertask app) and controlled by full Sync Express integration. All tabs restore their last state when you return.
 
@@ -87,10 +107,10 @@ Every action that involves you generates a notification in your inbox. Notificat
 ### Viewing notifications
 
 <Steps>
-1. **Receive** â\x80\x94 a notification appears when something relevant happens.
-2. **Review** â\x80\x94 open the notification to see the task and context.
-3. **Act** â\x80\x94 respond, update the task, or take whatever action is needed.
-4. **Archive** â\x80\x94 mark the notification as handled to clear it from your inbox.
+1. **Receive** — a notification appears when something relevant happens.
+2. **Review** — open the notification to see the task and context.
+3. **Act** — respond, update the task, or take whatever action is needed.
+4. **Archive** — mark the notification as handled to clear it from your inbox.
 </Steps>
 
 Live unread indicators in the navigation bar show a blue dot and count; they update in real time via Pusher.
@@ -115,7 +135,7 @@ Live unread indicators in the navigation bar show a blue dot and count; they upd
 
 ### Who gets notified
 
-Hypertask delivers notifications to all users who have a stake in a task â\x80\x94 not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
+Hypertask delivers notifications to all users who have a stake in a task — not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
 
 - The **task creator**
 - The **task owner / assignee(s)**
@@ -125,17 +145,17 @@ Hypertask delivers notifications to all users who have a stake in a task â\x80\
 
 This applies equally to comments posted by humans **and by AI agents**. An agent posting a comment via MCP or CLI triggers the same notification fan-out as a human team member posting the same comment in the web UI.
 
-<Aside type="note">
+<aside class="note">
 **Agent owners are not notified of their own agent's comments.** When an agent posts a comment, the notification fan-out deliberately excludes the agent owner's personal inbox. This prevents your inbox from filling up with activity your own agent generated. Other stakeholders on the task (assignees, followers, @mentioned users, etc.) are still notified as normal.
-</Aside>
+</aside>
 
-<Aside type="tip">
+<aside class="tip">
 To follow a task and receive all updates for it, open the task detail and click **Follow**. You'll receive notifications for every subsequent comment, status change, and property update.
-</Aside>
+</aside>
 
 ## Archiving and Unarchiving
 
-Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" â\x80\x94 you've seen it, handled it, and don't need it front and center anymore.
+Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" — you've seen it, handled it, and don't need it front and center anymore.
 
 You can archive notifications one at a time or in bulk. If you archive something by mistake or want to resurface a notification to act on it again, you can **unarchive** it: the notification is restored to your active inbox as unread, as if it had just arrived.
 
@@ -152,7 +172,7 @@ You can archive notifications one at a time or in bulk. If you archive something
 The Archive section shows notifications that have been archived so you can restore or clear them. By default, the Archive view includes tasks from boards you own, are a member of, or can otherwise see when using the owner-or-member filter.
 
 **Archived Notifications:**
-- By default, only notifications from boards you own, are a member of, or can otherwise see appear in the Archive view â\x80\x94 this matches the Tasks archive filter to reduce visual noise.
+- By default, only notifications from boards you own, are a member of, or can otherwise see appear in the Archive view — this matches the Tasks archive filter to reduce visual noise.
 - Archived notifications can be unarchived at any time through the appropriate interface or CLI/MCP commands.
 - The view is optimized to focus on content you can still act on, hiding stale noise from boards you no longer have access to.
 
@@ -163,16 +183,16 @@ The Archive section shows notifications that have been archived so you can resto
 
 ## Saved content
 
-Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal â\x80\x94 only you see your bookmarks. Use it to:
+Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal — only you see your bookmarks. Use it to:
 - Track tasks you're interested in but not assigned to
 - Build a reading list of important discussions
 - Note tasks or comments that reference a shared idea or decision
 
 To save content, select the **Star** icon on task cards or comments in the web UI, or use the appropriate parameter in the CLI or MCP tools.
 
-<Aside type="tip">
+<aside class="tip">
 Saved content is stored per-user, so no one else on your team can see your bookmarks. This is useful for personal notes and references that don't need to be shared at the board level.
-</Aside>
+</aside>
 
 ## Agent mention deliverer page
 
@@ -181,29 +201,29 @@ Agents you @mention run in contexts that may not be native to the same workspace
 This support is important because an external agent can be @mentioned in production via MCP comments with HTML markup:
 
 ```html
-<p>Hey <span data-type="mention" class="mention" data-id="external-agent-x" data-label="External Agent X">@External Agent X</span> â\x80\x94 summarize this ticket.</p>
+<p>Hey <span data-type="mention" class="mention" data-id="external-agent-x" data-label="External Agent X">@External Agent X</span> — summarize this ticket.</p>
 ```
 
 The target agent receives a Mentioned notification and can respond via MCP comments. The delivery works for both the API mentioned scope and the newer agent-identified scope, so remarks you post to native agents and external agents both land in the right inbox.
 
-<Aside type="note">
+<aside class="note">
 If an external agent isn't receiving @mentions, check that the agent has been added to the relevant board/team. Missing board-level rights means mentions won't land in its inbox.
-</Aside>
+</aside>
 
 ## AI agent workflow
 
 The inbox is particularly useful for AI agents working through Hypertask via MCP. A typical agent loop looks like this:
 
 <Steps>
-1. **Check inbox** â\x80\x94 call `hypertask_inbox_list` to see pending notifications.
-2. **Pick a task** â\x80\x94 select the highest-priority item.
-3. **Do the work** â\x80\x94 complete the task using whatever tools are available.
-4. **Comment** â\x80\x94 use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
-5. **Move** â\x80\x94 use `hypertask_section` to move the task to "Review" or "Done".
-6. **Archive** â\x80\x94 call `hypertask_inbox_archive` to clear the processed notification.
-7. **Repeat** â\x80\x94 go back to step 1.
+1. **Check inbox** — call `hypertask_inbox_list` to see pending notifications.
+2. **Pick a task** — select the highest-priority item.
+3. **Do the work** — complete the task using whatever tools are available.
+4. **Comment** — use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
+5. **Move** — use `hypertask_section` to move the task to "Review" or "Done".
+6. **Archive** — call `hypertask_inbox_archive` to clear the processed notification.
+7. **Repeat** — go back to step 1.
 </Steps>
 
-<Aside type="tip">
-AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back â\x80\x94 all through the same inbox and board system. Because agent comments (including @mention replies) trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work. The agent owner's own inbox is not included in that fan-out, keeping it signal-free.
-</Aside>
+<aside class="tip">
+AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back — all through the same inbox and board system. Because agent comments (including @mention replies) trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work. The agent owner's own inbox is not included in that fan-out, keeping it signal-free.
+</aside>
