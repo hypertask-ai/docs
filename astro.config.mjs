@@ -27,17 +27,16 @@ export default defineConfig({
                 { link: '/features/sections/', label: 'Sections' },
                 { link: '/features/skills/', label: 'Skills' },
                 { link: '/features/superhuman-snippets/', label: 'Superhuman-Style Snippets' },
-                {
-                  label: 'AI Chat',
-                  link: '/features/.\nAI-chat/',
-                  items: [
-                    { link: '/features/appearance/', label: 'Appearance & AI Models' },
-                    { link: '/features/ai-features/', label: 'AI Features' },
-                    { link: '/features/chat-board-filter/', label: 'Board Filter' },
-                  ],
-                },
-                { link: '/features/tasks/', label: 'Tasks' },
+                { link: '/features/table-view/', label: 'Table View' },
                 { link: '/features/time-tracking/', label: 'Time Tracking' },
+              ],
+            },
+            {
+              label: 'AI Chat',
+              items: [
+                { link: '/features/appearance/', label: 'Appearance & AI Models' },
+                { link: '/features/ai-features/', label: 'AI Features' },
+                { link: '/features/chat-board-filter/', label: 'Board Filter' },
               ],
             },
             {
@@ -56,10 +55,6 @@ export default defineConfig({
                 { link: '/mcp/workflows/', label: 'Agent Workflows' },
                 { link: '/mcp/scheduling/', label: 'Scheduling Agents' },
               ],
-            },
-            {
-              label: 'Table View',
-              link: '/features/table-view/',
             },
           ],
         },
