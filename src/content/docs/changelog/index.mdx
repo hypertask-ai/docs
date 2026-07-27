@@ -13,6 +13,9 @@ import { Update } from '@astrojs/starlight/components';
   * Fixed mobile task open landing: reliably scrolls to the bottom of the comments thread instead of landing mid-thread (HTPR-4594)
   * Improved auto-update: idle tabs left open for 30 minutes now refresh automatically (HTPR-4578)
   * Improved auto-update: tabs now refresh when a new version is deployed (HTPR-4574)
+  * Added /skill invocation in AI Task Writer and Write with AI (HTPR-4567)
+  * Fixed slash-command skills popup clipping when it should flip upward (HTPR-4568)
+  * Added /skill autocomplete dropdown in AI Task Writer and Write with AI, with flip positioning (HTPR-4569)
 </Update>
 
 <Update label="July 26, 2026" features={[<u/>]}>
@@ -61,13 +64,13 @@ import { Update } from '@astrojs/starlight/components';
 <Update label="July 21, 2026" features={[<u/>]}>
   * Added per-section auto-assign on column move: configure via Ctrl+K "Auto-assign for this column" so tasks moved into that section auto-add the chosen assignee (additive, idempotent, notifications fire) (HTPR-4363)
   * Improved task relations: add block/blocked-by/duplicate with dedicated Ctrl+K commands on task detail and viewable in Task Relationships (HTPR-4362)
-  * Fixed text handling for CLI/MCP/auto-writers: bare descriptions and comments are auto-wrapped in &lt;p&gt; blocks with blank lines becoming paragraphs (HTPR-4100)
+  * Fixed text handling for CLI/MCP/auto-writers: bare descriptions and comments are auto-wrapped in <p> blocks with blank lines becoming paragraphs (HTPR-4100)
 </Update>
 
 <Update label="July 20, 2026" features={[<u/>]}>
   * Fixed no boards empty state: Boardless accounts now show a clear "No boards yet" screen instead of dead-ending on a blank screen (HTPR-4206)
-  * Fixed CLI bug: &lt;code&gt;tasks list --json&lt;/code&gt; no longer omits &lt;code&gt;uniqueIndex&lt;/code&gt;, ensuring each task row carries a populated index derived from the ticket number (HTPR-4173)
-  * Fixed CLI bug: &lt;code&gt;tasks create --json&lt;/code&gt; now emits exactly one JSON document, making the output clean and parsable via &lt;code&gt;json.load&lt;/code&gt; (HTPR-4318)
+  * Fixed CLI bug: <code class="language-bash">tasks list --json</code> no longer omits <code class="language-bash">uniqueIndex</code>, ensuring each task row carries a populated index derived from the ticket number (HTPR-4173)
+  * Fixed CLI bug: <code class="language-bash">tasks create --json</code> now emits exactly one JSON document, making the output clean and parsable via <code class="language-bash">json.load</code> (HTPR-4318)
 </Update>
 
 <Update label="July 14, 2026" features={[<u/>]}>
