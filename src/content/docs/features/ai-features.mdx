@@ -69,9 +69,9 @@ After your request, AI will update the task's properties accordingly.
 
 ### Possible responses
 - Priority, assignee, and tags updates
-- Description edits — rewrite, summarize, or extend
-- Link mentions — AI adds @mentions to project members
-- Suggested next actions — AI proposes concrete follow-ups
+- Description edits â\x80\x94 rewrite, summarize, or extend
+- Link mentions â\x80\x94 AI adds @mentions to project members
+- Suggested next actions â\x80\x94 AI proposes concrete follow-ups
 
 To start over, click the refresh icon to propose a different rewrite.
 
@@ -100,14 +100,14 @@ The mobile AI chat completes the board experience when you have access to task d
 
 ---
 
-## Mobile Dictation Composer
+## Mobile Dictation Composer (HTPR-4552)
 
 On mobile devices, the comment composer includes a dedicated dictation mode aligned with modern messaging apps. Key behaviors:
 
 - **Prominent CTA:** The purple microphone button is positioned clearly in the action bar for one-handed thumb access.
 - **Live transcription state:** A spinner appears while AI transcribes speech, providing clear visual feedback.
 - **Smart @mentions:** When you speak mention targets, the composer detects and includes @mentions for teammates.
-- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—making it clear you can still add or change the draft—while the send arrow remains visible.
+- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circleâ\x80\x94making it clear you can still add or change the draftâ\x80\x94while the send arrow remains visible.
 - **Lock while transcribing:** When AI is actively transcribing, the editor is locked to prevent accidental edits. The mic shows the current state so you know whether the voice input is in progress.
 
 Dictate directly into task descriptions, comments, or any text field, and watch the text appear in real time as the AI processes your speech.
@@ -118,16 +118,41 @@ Dictate directly into task descriptions, comments, or any text field, and watch 
 
 Start voice on any text field with <kbd>Ctrl+Shift+N</kbd> or the microphone icon in the compose bar.
 
-### Per-user language & provider options
-
+### Per-user language & provider options (HTPR-4544)
 - Choose dictation language from supported options, including English as the default and additional multilingual choices. Your preferred language is saved per-user so it persists across sessions.
 - The dictation pickers no longer expose OpenAI as a selectable provider.
 
 See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for Mac/Windows note.
 
 ### Supported languages
+English (default) â\x80\x94 choose OpenAI for English-only dictation, or select language options for multilingual dictation.
 
-English (default) — choose OpenAI for English-only dictation, or select language options for multilingual dictation.
+---
+
+## AI Models & Summaries (HTPR-4534)
+
+Hypertask offers a variety of Gemini models for AI-powered text tasks. Select from the model picker in the command palette or chat header:
+
+- **Gemini 3.6 Flash** (cost level indicated by ¥¥) — ideal for fast responses while maintaining high-quality results
+- **Gemini 3.5 Flash Lite** (cost level indicated by $) — a lightweight option for quick-turn tasks and summaries
+
+### Model behavior & upgrades
+- When you add a model to the picker, existing saved summaries automatically re-run with the new model, and the cheaper option settles in for future summaries.
+- Old models (e.g. 3.5 Flash, 3.1 Flash Lite) are removed from the picker after a user replacement, ensuring current model options stay up-to-date without manual cleanup.
+
+### Complimentary access
+Hypertask team members are comped to all models via an allowlist, so no impact on personal limits or rates.
+
+---
+
+## Asking AI via Help-Center Search (HTPR-4532)
+
+Ask AI in the chat to answer product and how-to questions using the Help-Center search tool. For example:
+
+- "How do I unpin a board?"
+- "How do I change the default view?"
+
+AI queries the Help-Center catalog and surfaces contextual answers from product documentation, so you get accurate "how-to" guidance without leaving your workflow.
 
 ---
 
@@ -146,8 +171,8 @@ Use "AI rewrite" on comments or task descriptions to:
 ## Command Palette AI Panel
 
 Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
-- "/ai reorganize my inbox" — AI sorts entries by importance
-- "/ai generate a concise board summary" — AI overviews tasks and sections
+- "/ai reorganize my inbox" â\x80\x94 AI sorts entries by importance
+- "/ai generate a concise board summary" â\x80\x94 AI overviews tasks and sections
 
 ---
 
@@ -157,7 +182,7 @@ AI commands now preserve embedded rich media, including:
 - **HTML canvas blocks:** Slash commands and AI enhancements skip over HTML canvas elements, so AI won't insert, modify, or delete them during text operations
 - **Images and formatting:** Visual elements and custom styling remain untouched
 
-This ensures documents with mixed prose and rich components—such as estimated time canvases embedded in task descriptions—stay intact after AI rewrites or spell check operations.
+This ensures documents with mixed prose and rich componentsâ\x80\x94such as estimated time canvases embedded in task descriptionsâ\x80\x94stay intact after AI rewrites or spell check operations.
 
 ---
 
