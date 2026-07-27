@@ -32,6 +32,17 @@ The scope picker allows precise control:
 
 ---
 
+## Chat UI controls
+
+The AI chat header provides primary controls for the viewing experience. Key behaviors:
+
+- **Expand-to-fullscreen** is now the primary control. Tap the fullscreen icon to open the chat in a full-screen overlay that covers the entire viewport.
+- **Floating/Picture-in-Picture (PiP)** controls are available in the overflow menu (three-dots). Use these for in-place previews or to keep the chat available while you work on tasks in the same browser tab.
+
+Both modes share the same chat context and respond to back gestures, keyboard navigation, and mobile swipe interactions.
+
+---
+
 ## Skill invocations in AI chat
 
 In AI chat and in the AI Task Writer, start any message with `/skill <skill>` to invoke a skill. For example:
@@ -69,9 +80,9 @@ After your request, AI will update the task's properties accordingly.
 
 ### Possible responses
 - Priority, assignee, and tags updates
-- Description edits â\x80\x94 rewrite, summarize, or extend
-- Link mentions â\x80\x94 AI adds @mentions to project members
-- Suggested next actions â\x80\x94 AI proposes concrete follow-ups
+- Description edits — rewrite, summarize, or extend
+- Link mentions — AI adds @mentions to project members
+- Suggested next actions — AI proposes concrete follow-ups
 
 To start over, click the refresh icon to propose a different rewrite.
 
@@ -107,7 +118,7 @@ On mobile devices, the comment composer includes a dedicated dictation mode alig
 - **Prominent CTA:** The purple microphone button is positioned clearly in the action bar for one-handed thumb access.
 - **Live transcription state:** A spinner appears while AI transcribes speech, providing clear visual feedback.
 - **Smart @mentions:** When you speak mention targets, the composer detects and includes @mentions for teammates.
-- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circleâ\x80\x94making it clear you can still add or change the draftâ\x80\x94while the send arrow remains visible.
+- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—making it clear you can still add or change the draft—while the send arrow remains visible.
 - **Lock while transcribing:** When AI is actively transcribing, the editor is locked to prevent accidental edits. The mic shows the current state so you know whether the voice input is in progress.
 
 Dictate directly into task descriptions, comments, or any text field, and watch the text appear in real time as the AI processes your speech.
@@ -125,7 +136,7 @@ Start voice on any text field with <kbd>Ctrl+Shift+N</kbd> or the microphone ico
 See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for Mac/Windows note.
 
 ### Supported languages
-English (default) â\x80\x94 choose OpenAI for English-only dictation, or select language options for multilingual dictation.
+English (default) — choose OpenAI for English-only dictation, or select language options for multilingual dictation.
 
 ---
 
@@ -156,6 +167,12 @@ AI queries the Help-Center catalog and surfaces contextual answers from product 
 
 ---
 
+## Google/Gemini Model Fixes (HTPR-4525)
+
+Google and Gemini models now work reliably in Hypertask. Previously, numeric enums in the update_task estimate parameter caused schema errors that prevented all Google models from responding. The underlying tool schema uses string literals for estimate values, matching Google's expectations, so all Gemini variants now return clean, expected responses.
+
+---
+
 ## Keeping Content Fresh
 
 Use "AI rewrite" on comments or task descriptions to:
@@ -171,8 +188,8 @@ Use "AI rewrite" on comments or task descriptions to:
 ## Command Palette AI Panel
 
 Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
-- "/ai reorganize my inbox" â\x80\x94 AI sorts entries by importance
-- "/ai generate a concise board summary" â\x80\x94 AI overviews tasks and sections
+- "/ai reorganize my inbox" — AI sorts entries by importance
+- "/ai generate a concise board summary" — AI overviews tasks and sections
 
 ---
 
@@ -182,7 +199,7 @@ AI commands now preserve embedded rich media, including:
 - **HTML canvas blocks:** Slash commands and AI enhancements skip over HTML canvas elements, so AI won't insert, modify, or delete them during text operations
 - **Images and formatting:** Visual elements and custom styling remain untouched
 
-This ensures documents with mixed prose and rich componentsâ\x80\x94such as estimated time canvases embedded in task descriptionsâ\x80\x94stay intact after AI rewrites or spell check operations.
+This ensures documents with mixed prose and rich components—such as estimated time canvases embedded in task descriptions—stay intact after AI rewrites or spell check operations.
 
 ---
 
