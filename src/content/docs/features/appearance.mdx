@@ -20,6 +20,9 @@ Your workspace can feel like home. Adjust themes, toggle periodic chart views, p
   <Card title="Glide & CSM scan" icon="scan">
     Scan waypoints via GLIDE or CSM, or both
   </Card>
+  <Card title="Board AI models" icon="brain-circuit">
+    Grok-4.1 and other AI models for Board AI Task Writer
+  </Card>
 </CardGrid>
 
 ## Themes
@@ -70,14 +73,14 @@ For any Saved View that supports Chart view, the Chart pill appears in the saved
 
 ### Chart widget toggles
 
-In boards or views where Chart view is offered, the Chart pill includes a small toggle icon inside it (e.g., <span style="font-size: 0.85em;">🚫</span> or <span style="font-size: 0.85em;">🚫</span>). Click the toggle to change between two chart styles:
+In boards or views where Chart view is offered, the Chart pill includes a small toggle icon inside it (e.g., <span style="font-size: 0.85em;">ð\x9f\x9a«</span> or <span style="font-size: 0.85em;">ð\x9f\x9a«</span>). Click the toggle to change between two chart styles:
 
 | Toggle state | Available chart styles |
 |--------------|------------------------|
-| First (default) | Velocity chart — estimate-weighted completion per week |
-| Second | Burnup chart — total completed vs total remaining over time |
+| First (default) | Velocity chart â\x80\x94 estimate-weighted completion per week |
+| Second | Burnup chart â\x80\x94 total completed vs total remaining over time |
 
-For boards where Chart view is not offered, this toggle is not shown. Chart view options are surfaced by active boards in your workspace — contact your workspace owner to add Chart view to more areas.
+For boards where Chart view is not offered, this toggle is not shown. Chart view options are surfaced by active boards in your workspace â\x80\x94 contact your workspace owner to add Chart view to more areas.
 
 <Aside type="tip">
 When Chart view is available, you can use the Chart pill in either the view-tabs or saved-views pill bar to quickly jump to the chart view relevant to your current context.
@@ -91,14 +94,14 @@ Select AI models for specific features. Your choices show up as badges in the UI
   <TabItem label="Per-feature" default>
     Assign models to specific AI capabilities:
 
-    - **Task Writer** — model for generating task descriptions from prompts
-    - **Summaries** — model for auto-summaries of comment threads
-    - **Suggestions** — model for AI triage suggestions in the inbox
+    - **Task Writer** â\x80\x94 model for generating task descriptions from prompts
+    - **Summaries** â\x80\x94 model for auto-summaries of comment threads
+    - **Suggestions** â\x80\x94 model for AI triage suggestions in the inbox
 
     Use per-feature settings when you want fine-grained control over where each provider excels. For example, use a quicker model for summaries and a more capable model for complex task generation.
   </TabItem>
-  <TabItem label="Project-level" default>
-    Projects can override the system-wide defaults with custom instructions and model choices that apply to all AI features in that project.
+  <TabItem label="Board context" default>
+    Boards can use custom AI models for the Board AI Task Writer tool on the command palette and CLI. Your board owner or admin can configure a preferred model for the task writer (e.g., Grok-4.1 Flash for fast responses).
   </TabItem>
 </Tabs>
 
@@ -108,21 +111,38 @@ When you select **Auto**, Hypertask recommends a model based on your plan and en
 
 ### Bindings and overrides
 
-- **Provider disables** — providers you turn off are never consulted, even if they're configured in your AI features settings
-- **Model-tier badges** — some features highlight cost-effective or speed-optimized models with badges
-- **Fine-grained overrides** — some features (e.g., task summary templates) can still pick faster models while others stick to more capable ones
+- **Provider disables** â\x80\x94 providers you turn off are never consulted, even if they\'re configured in your AI features settings
+- **Model-tier badges** â\x80\x94 some features highlight cost-effective or speed-optimized models with badges
+- **Fine-grained overrides** â\x80\x94 some features (e.g., task summary templates) can still pick faster models while others stick to more capable ones
+- **Board Task Writer** â\x80\x94 boards can select their own model for the CLI task writer and command palette task write, with custom instructions applied
 
 <Aside type="tip">
-If you're unsure, rely on the Auto assignment: it adapts to your plan's capabilities and provider setup without manual tuning.
+If you\'re unsure, rely on the Auto assignment: it adapts to your plan\'s capabilities and provider setup without manual tuning.
 </Aside>
 
 ## Admin configuration
 
-Project owners and admins can configure default AI models at the system level. These settings appear in **Settings → AI → AI features**, where you can configure model mappings for key features that operate at the system level:
+Project owners and admins can configure default AI models at the system level. These settings appear in **Settings â\x86\x92 AI â\x86\x92 AI features**, where you can configure model mappings for key features that operate at the system level:
 
 | Feature | Description |
 |---------|-------------|
 | **Task summaries** | Default model for auto-summaries of task comment threads |
 | **Question suggestions** | Default model for intelligent suggestions in task triage and assignment |
 
-Admin settings serve as a fallback for any project that doesn't have custom instructions. If a project has instructions or specific model preferences, those take precedence.
+Admin settings serve as a fallback for any project that doesn\'t have custom instructions. If a project has instructions or specific model preferences, those take precedence.
+
+### Board AI Task Writer settings
+
+Board owners and admins can configure the board\'s AI Task Writer model, including:
+
+- **Preferred model** â\x80\x94 choose Grok-4.1 Flash, Gemini 3.6 Flash, or Gemini 3.5 Flash Lite
+- **Custom instructions** â\x80\x94 define the style, tone, and guidance for task descriptions generated by the task writer
+
+These settings apply to:
+- The HTPR-4673 CLI task writer (`hypertask task write --board-input`)
+- The Board AI Task Writer in the command palette
+- Automated task creation workflows that use the board\'s AI configuration
+
+<Aside type="tip">
+For example, teams using Claude or other LLMs can delegate to Grok-4.1 via the task writer for fast responses, while still relying on Gemini 3.6 Flash for chat-based interactions. Configure per-board model preferences in AI Settings to match your organizational AI strategy.
+</Aside>
