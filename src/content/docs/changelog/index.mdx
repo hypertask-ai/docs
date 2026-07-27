@@ -28,7 +28,7 @@ import { Update } from '@astrojs/starlight/components';
   * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
   * Added per-user dictation language setting (default English, multilingual options) and removed OpenAI from the provider picker ([HTPR-4544](https://app.hypertask.ai/detail/project-15/4544))
   * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user's own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
-  * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190–232ms to ~110–177ms by collapsing deep includes into a single lookup (HTPR-4528)
+  * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190-232ms to ~110-177ms by collapsing deep includes into a single lookup (HTPR-4528)
   * Added AI chat expand-to-fullscreen as primary control; floating/PiP moved to three-dots menu ([HTPR-4523](https://app.hypertask.ai/detail/project-15/4523))
   * Fixed Google/Gemini models in chat and task writers by ensuring tool schema uses string enum instead of numeric enum ([HTPR-4525](https://app.hypertask.ai/detail/project-15/4525))
   * Improved settings layout: Custom instructions text box now fills the page width, not collapsed to a few lines ([HTPR-4526](https://app.hypertask.ai/detail/project-15/4526))
@@ -51,6 +51,13 @@ import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 27, 2026" features={[<u/>]}>
   * Added mobile swipe to reveal comment actions menu (HTPR-4640)
+</Update>
+
+<Update label="July 27, 2026" features={[<u/>]}>
+  * Fixed comment hover pin/delete actions: long-press or hover for operating context regardless of Ctrl+K state ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
+  * Added pinned group at top of chat thread ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
+  * Added AI cost attribution: token + dollar cost per ticket, agent, and board ([HTPR-4446](https://app.hypertask.ai/detail/project-15/4446))
+  * Added per-chat AI actions menu via three-dots and Ctrl+K ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
