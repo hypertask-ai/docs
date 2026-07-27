@@ -6,6 +6,12 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 27, 2026" features={[<u/>]}>
+  * Improved AI chat scope chip: displays concrete task/board names instead of "Current board" ([HTPR-4563](https://app.hypertask.ai/detail/project-15/4563))
+  * Fixed push notifications respecting Email/Push matrix for assign, move, follower, and reaction updates ([HTPR-4562](https://app.hypertask.ai/detail/project-15/4562))
+  * Fixed comment display: one dot when a comment is both new and pinned ([HTPR-4560](https://app.hypertask.ai/detail/project-15/4560))
+</Update>
+
+<Update label="July 27, 2026" features={[<u/>]}>
   * Fixed mobile AI chat composer being cut off by the keyboard (HTPR-4600)
   * Fixed task-detail title gap and command/confirm modals colliding with the status bar (HTPR-4599)
   * Fixed tasks opening at the first unread comment when available, otherwise at the bottom (HTPR-4597)
