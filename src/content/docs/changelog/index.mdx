@@ -18,6 +18,11 @@ import { Update } from '@astrojs/starlight/components';
   * Added /skill autocomplete dropdown in AI Task Writer and Write with AI, with flip positioning (HTPR-4569)
 </Update>
 
+<Update label="July 27, 2026" features={[<u/>]}>
+  * Copy comment to AI chat and Summarize focused comments via Ctrl+K ([HTPR-4564](https://app.hypertask.ai/detail/project-15/4564))
+  * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
+</Update>
+
 <Update label="July 26, 2026" features={[<u/>]}>
   * Table view: optional sortable staleness columns (HTPR-4604)
   * Table view: full width on wide screens, spanning edge to edge (HTPR-4606)
@@ -59,6 +64,7 @@ import { Update } from '@astrojs/starlight/components';
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits (HTPR-4429)
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments (HTPR-4428)
   * Improved AI chat rail display: selector chips in the docked rail now truncate cleanly and drop the "effort" word on the model chip, preventing overlap (HTPR-4548)
+  * Fixed Move modal moving the wrong task when navigating between tasks (HTPR-4543)
 </Update>
 
 <Update label="July 21, 2026" features={[<u/>]}>
