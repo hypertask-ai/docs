@@ -11,9 +11,11 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
 1. **Sign up** at [hypertask.ai](https://hypertask.ai) using email or Google. Provide your email address to create an account; the service will send you a sign-in link and a shorter 6-digit code for quick access. ([HTPR-4166](https://app.hypertask.ai/detail/project-15/4166)) This also provisions you as a Stripe customer if you opt into billing.
 
-2. **Create a project** from the dashboard. Give it a name and a short prefix (e.g., `HT` for "Hypertask") â\x80\x94 this prefix is used for ticket numbers like `HT-1`, `HT-2`.
+2. **First board generation.** New accounts get a fresh starter board in the UI (AI-first, with a static fallback). The board arrives with a default set of sections (typically Todo, Doing, Done), and the board's tasks and sections are immediately visible before any human action.
 
-3. **Set up sections.** Every new project starts with default sections. A typical workflow uses:
+3. **Create a project** from the dashboard. Give it a name and a short prefix (e.g., `HT` for "Hypertask") — this prefix is used for ticket numbers like `HT-1`, `HT-2`.
+
+4. **Set up sections.** Every new project starts with default sections. A typical workflow uses:
 
    | Section | Purpose |
    |---------|---------|
@@ -24,13 +26,13 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
    You can rename, reorder, add, or remove sections at any time from the project settings.
 
-4. **Create your first task.** Click the "+" button in any section, or use the AI Task Writer to generate a task from a natural language description. Fill in:
-   - **Title** â\x80\x94 Keep it short and actionable (e.g., "Add password reset flow")
-   - **Description** â\x80\x94 Rich HTML content with context, acceptance criteria, links
-   - **Priority** â\x80\x94 Urgent, High, Medium, Low, or None
-   - **Estimate** â\x80\x94 XS, S, M, L, XL, XXL, XXXL
+5. **Create your first task.** Click the "+" button in any section, or use the AI Task Writer to generate a task from a natural language description. Fill in:
+   - **Title** — Keep it short and actionable (e.g., "Add password reset flow")
+   - **Description** — Rich HTML content with context, acceptance criteria, links
+   - **Priority** — Urgent, High, Medium, Low, or None
+   - **Estimate** — XS, S, M, L, XL, XXL, XXXL
 
-5. **Invite your team.** Go to project settings and add members by email. Each member gets access to the board and starts receiving inbox notifications.
+6. **Invite your team.** Go to project settings and add members by email. Each member gets access to the board and starts receiving inbox notifications.
 
 </Steps>
 
@@ -124,9 +126,9 @@ Replace `YOUR_API_KEY` with the token from the previous step.
 
 You can connect in two ways:
 
-1. **From the onboarding flow** â\x80\x94 as a new agent, you'll see a question-screen with 6 cards offering connection options. Select an option (CLI, MCP, or REST), and the connection will confirm itself with live status updates.
+1. **From the onboarding flow** — as a new agent, you'll see a question-screen with 6 cards offering connection options. Select an option (CLI, MCP, or REST), and the connection will confirm itself with live status updates.
 
-2. **From any MCP client** â\x80\x94 use the existing `hypertask_connect` tool. The CLI and MCP tools now check for an existing token and prompt for your API key if needed, using a bearer fallback for authentication.
+2. **From any MCP client** — use the existing `hypertask_connect` tool. The CLI and MCP tools now check for an existing token and prompt for your API key if needed, using a bearer fallback for authentication.
 
 Once connected, your AI agent can list your projects:
 
@@ -138,7 +140,7 @@ The agent will call `hypertask_list_projects` and return your projects with thei
 
 ## Your first task workflow
 
-Here's a typical task lifecycle â\x80\x94 whether you're working through the UI or via an AI agent:
+Here's a typical task lifecycle — whether you're working through the UI or via an AI agent:
 
 <Steps>
 
@@ -157,7 +159,7 @@ Here's a typical task lifecycle â\x80\x94 whether you're working through the UI
 </Steps>
 
 <Aside>
-AI agents follow this same workflow. A well-configured agent will check its inbox, pick up assigned tasks, move them to Doing, do the work, post a summary comment, and move the task to Review â\x80\x94 all without human intervention.
+AI agents follow this same workflow. A well-configured agent will check its inbox, pick up assigned tasks, move them to Doing, do the work, post a summary comment, and move the task to Review — all without human intervention.
 </Aside>
 
 ## Next steps
