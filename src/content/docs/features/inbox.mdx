@@ -111,6 +111,12 @@ Quickly clear out accumulated notifications with one click. The Inbox Zero featu
 
 This provides a fast, rule-based way to clear your inbox without manually archiving each item, while preserving the inbox items you explicitly want to keep.
 
+## Performance improvement (HTPR-4528)
+
+Collecting all notification details for display used to trigger a fan-out with multiple database round-trips, adding latency (baseline ~190–232ms). The inbox query now uses a collapsed, multi-row lookup via Prisma join, reducing the number of database round-trips and cutting overall latency in production to roughly 110–177ms across test runs.
+
+This change improves responsiveness without breaking existing behavior: tasks, projects, priorities, estimates, labels, saved content, and users still appear as expected after a notification is fetched.
+
 ## Notifications overview
 
 Every action that involves you generates a notification in your inbox. Notifications stay in your inbox until you explicitly archive them, so nothing slips through the cracks.
