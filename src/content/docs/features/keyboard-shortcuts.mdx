@@ -68,6 +68,7 @@ On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> opens the command palette in addition to 
 | Cycle focus backward | <kbd>Shift</kbd> + <kbd>Tab</kbd> | <kbd>Shift</kbd> + <kbd>Tab</kbd> |
 | Switch boards | <kbd>Alt</kbd> + <kbd>0-9</kbd> | <kbd>Ctrl</kbd> + <kbd>0-9</kbd> |
 | Switch Kanban boards | <kbd>Ctrl</kbd> + <kbd>B</kbd> | <kbd>Cmd</kbd> + <kbd>B</kbd> |
+| Show board palette | <kbd>Ctrl</kbd> + <kbd>B</kbd> | <kbd>Cmd</kbd> + <kbd>B</kbd> |
 | Set due date | <kbd>Shift</kbd> + <kbd>D</kbd> | <kbd>Shift</kbd> + <kbd>D</kbd> |
 | Move task to a different board | <kbd>Shift</kbd> + <kbd>M</kbd> | <kbd>Shift</kbd> + <kbd>M</kbd> |
 | Toggle voice dictation | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> |
@@ -145,7 +146,7 @@ Keyboard controls for media insertions and pickers in comments and task descript
 | Insert GIF into comment | <kbd>Enter</kbd> | <kbd>Enter</kbd> |
 
 <Aside type="tip">
-The GIF picker is a picker component you navigate with keyboard. Type <kbd>/</kbd> in the comment or description compose box, search for "giphy", then use arrow keys to move the highlight, Tab to switch 10×10 tabs, and Enter to insert the selected GIF.
+The GIF picker is a picker component you navigate with keyboard. Type <kbd>/</kbd> in the comment or description compose box, search for "giphy", then use arrow keys to move the highlight, Tab to switch 10x10 tabs, and Enter to insert the selected GIF.
 </Aside>
 
 ## Saving new task
@@ -263,4 +264,17 @@ To show previously hidden columns:
 
 <Aside type="note">
 "Hide column" now targets the last clicked or currently hovered section rather than cycling through sections, making it easier to hide the specific column you're working with. The "Empty columns" command also reads the current state and filters both the Kanban view groups and the table view groups, showing "Show empty columns" when they're hidden and "Hide empty columns" when they're visible.
+</Aside>
+
+## Board palette (HTPR-4522)
+
+Press <kbd>Ctrl</kbd> + <kbd>B</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>B</kbd> (Mac) to show the board palette overlay. On the left rail, the board palette displays your user account row with:
+
+- **Email or handle** — Click to open the account switcher dialog
+- **Avatar** — Click to open Account & Profile settings
+
+This provides quick access to switching workspaces or reviewing your account configuration without leaving the current board.
+
+<Aside type="tip">
+The board palette joins <kbd>Ctrl+K</kbd> as a non-intrusive way to access workspace settings while staying in context.
 </Aside>
