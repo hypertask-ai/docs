@@ -28,7 +28,10 @@ import { Update } from '@astrojs/starlight/components';
   * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
   * Added per-user dictation language setting (default English, multilingual options) and removed OpenAI from the provider picker ([HTPR-4544](https://app.hypertask.ai/detail/project-15/4544))
   * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user's own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
-  * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190â\x80\x93232ms to ~110â\x80\x93177ms by collapsing deep includes into a single lookup (HTPR-4528)
+  * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190–232ms to ~110–177ms by collapsing deep includes into a single lookup (HTPR-4528)
+  * Added AI chat expand-to-fullscreen as primary control; floating/PiP moved to three-dots menu ([HTPR-4523](https://app.hypertask.ai/detail/project-15/4523))
+  * Fixed Google/Gemini models in chat and task writers by ensuring tool schema uses string enum instead of numeric enum ([HTPR-4525](https://app.hypertask.ai/detail/project-15/4525))
+  * Improved settings layout: Custom instructions text box now fills the page width, not collapsed to a few lines ([HTPR-4526](https://app.hypertask.ai/detail/project-15/4526))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -43,7 +46,7 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Added AI Assistant Self-Onboardingâ\x80\x94locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
+  * Added AI Assistant Self-Onboarding—locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -67,7 +70,7 @@ import { Update } from '@astrojs/starlight/components';
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly (HTPR-4455)
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats (HTPR-4418)
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board (HTPR-4426)
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Â· Team Â· Board Â· Connect Â· Help; deep links preserved (HTPR-4424)
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved (HTPR-4424)
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications (HTPR-4403)
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits (HTPR-4429)
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments (HTPR-4428)
@@ -76,7 +79,7 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 22, 2026" features={[<u/>]}>
-  * **Fixed AI slash commands now spare embedded HTML canvas blocks.** Previously, slash commands like "Fix Spelling & Grammar" would an existing canvas element as text to correct. Now, AI skips over canvas elements entirely, leaving your estimated time blocks and other rich media untouched. ([HTPR-4555](https://app.hypertask.ai/detail/project-15/4555))
+  * **Fixed AI slash commands now spare embedded HTML canvas blocks.** Previously, slash commands like "Fix Spelling & Grammar" would consider an existing canvas element as text to correct. Now, AI skips over canvas elements entirely, leaving your estimated time blocks and other rich media untouched. ([HTPR-4555](https://app.hypertask.ai/detail/project-15/4555))
 </Update>
 
 <Update label="July 22, 2026" features={[<u/>]}>
