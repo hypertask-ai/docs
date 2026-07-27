@@ -19,6 +19,23 @@ Use the AI assistant via:
 
 ---
 
+## Skill invocations in AI chat
+
+In AI chat and in the AI Task Writer, start any message with `/skill <skill>` to invoke a skill. For example:
+
+- `/minimalist-review` previews a task in Minimalist style
+- `/wit-review` adjusts tone and framing
+
+After the skill executes, you can compose or refine the prompt. The invocation always produces board-aware outputs that respect your column, section, and current filter context.
+
+---
+
+## Popup positioning
+
+Skill popups and slash-command menus anchor at the caret glyph, follow your text flow, and flip upward when near the viewport bottom so text never gets clipped. Keyboard navigation (Tab, Enter, Arrow keys, Escape) controls the popup; selecting a skill never submits the prompt.
+
+---
+
 ## Asking AI in Comments
 
 Start a comment or a new message with a short prompt, e.g.:
@@ -60,6 +77,8 @@ The mobile AI chat completes the board experience when you have access to task d
 
 **Header visibility** — The chat header shows the close (X) button and back affordance, ensuring mobile users can always exit the chat screen. Tapping outside the chat or using the back gesture closes the chat and returns you to the board.
 
+**Popup positioning** — Slash-command menus and skill popups anchor at the caret and flip upward when text is near the bottom so they never clip.
+
 ---
 
 ## Task Creation
@@ -73,6 +92,10 @@ Create a task for "Update the billing page footer" on project 15 with priority h
 ```
 
 AI proposes a resulting task with title, description bundle (phase asks), priority, and due date. Author it if the proposal fits, or refine with follow-up.
+
+**Slash commands in Task Writer**
+
+In the AI Task Writer you can also invoke skills directly. Start your message with `/skill` followed by the skill name, then let the skill draft the content before you edit.
 
 ---
 
@@ -122,12 +145,17 @@ Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
 ## Related Topics
 
 <LinkCard
-  title="AI Chat"
-  description="Chat with agents on your board, filter contexts, and export summaries."
+  title="AI Chat Board Filter"
+  description="Use a board filter in AI Chat to show all chats or limit to a specific board's chats."
   href="/features/chat-board-filter/"
 />
 <LinkCard
+  title="Skills"
+  description="Create, manage, and import skills to organize your team's expertise and filter by them in queries and saved views."
+  href="/features/skills/"
+/>
+<LinkCard
   title="Keyboard Shortcuts"
-  description="Tip: /ai now works directly in the command palette."
+  description="Tip: /ai now works directly in the command palette and slash commands are supported in AI Task Writer."
   href="/features/keyboard-shortcuts/"
 />
