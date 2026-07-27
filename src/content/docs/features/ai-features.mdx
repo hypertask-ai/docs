@@ -96,7 +96,7 @@ The setup keeps AI accessible without obscuring the task content and mirrors des
 
 ---
 
-## Mobile Chat Behavior (HTPR-4601, HTPR-4602)
+## Mobile Chat Behavior (HTPR-4601, HT-4602)
 
 The mobile AI chat completes the board experience when you have access to task details from anywhere. Key behaviors:
 
@@ -105,6 +105,16 @@ The mobile AI chat completes the board experience when you have access to task d
 **Header visibility** — The chat header shows the close (X) button and back affordance, ensuring mobile users can always exit the chat screen. Tapping outside the chat or using the back gesture closes the chat and returns you to the board.
 
 **Popup positioning** — Slash-command menus and skill popups anchor at the caret and flip upward when text is near the bottom so they never clip.
+
+---
+
+## Mobile Dictation Composer
+
+On mobile devices, the comment composer includes a dedicated dictation mode aligned with modern messaging apps. Key behaviors:
+
+- **Mic on the right:** The purple microphone button is positioned in the action bar next to the send arrow for one-handed thumb access.
+- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—an affordance for adding more or changing the draft—while the send arrow remains visible.
+- **Lock while transcribing:** When AI is transcribing speech into text, the editor is locked to prevent accidental edits. The mic remains visible as feedback while you wait.
 
 ---
 
@@ -166,6 +176,17 @@ Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
 
 - "/ai reorganize my inbox" — AI sorts entries by importance
 - "/ai generate a concise board summary" — AI overviews tasks and sections
+
+---
+
+## Preserving Rich Content
+
+AI commands now preserve embedded rich media, including:
+
+- **HTML canvas blocks:** Slash commands and AI enhancements skip over HTML canvas elements, so AI won't insert, modify, or delete them during text operations
+- **Images and formatting:** Visual elements and custom styling remain untouched
+
+This ensures documents with mixed prose and rich components—such as estimated time canvases embedded in task descriptions—stay intact after AI rewrites or spell check operations.
 
 ---
 
