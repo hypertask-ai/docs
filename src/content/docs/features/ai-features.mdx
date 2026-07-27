@@ -19,6 +19,22 @@ Use the AI assistant via:
 
 ---
 
+## Scope-aware chat context
+
+AI chat maintains context-aware scope that adapts as you move between tasks and boards. The scope chip in the chat header displays the current context, including:
+
+- **On a task:** Shows the ticket number (e.g. INNE-1491) with a task icon and the full task title on hover
+- **On a board:** Shows the board name and icon
+- **Scroll and board awareness:** Changing views or scrolling between sections doesn't reset the chat context; the AI thread follows your work seamlessly across the board
+
+The scope picker allows precise control:
+
+- **Current board (default):** Automatically adapts to navigation, with per-board tagging
+- **Pinned board:** Locks context to a specific board and prevents scope auto-swap
+- **All boards:** Applies to everything with per-board counts, plus a "No" bucket for legacy chats
+
+---
+
 ## Skill invocations in AI chat
 
 In AI chat and in the AI Task Writer, start any message with `/skill <skill>` to invoke a skill. For example:
@@ -40,7 +56,7 @@ Skill popups and slash-command menus anchor at the caret glyph, follow your text
 
 In comments, use <kbd>Ctrl+J</kbd> (keyboard) or the Sparkles icon (mouse) to write with AI. In AI chat, you can also take focused comments into the chat:
 
-- **Copy comment to AI chat:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Copy comment to AI chat. The comment text flows into the chat draft as if you’d typed it.
+- **Copy comment to AI chat:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Copy comment to AI chat. The comment text flows into the chat draft as if you'd typed it.
 - **Summarize comment:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Summarize comment. AI drafts a concise summary in the chat.
 
 Hover over a comment to reveal the Sparkles cue for mouse users, making these commands available from any input device.
