@@ -12,7 +12,6 @@ AI in Hypertask lives alongside your projects, not as a separate tool. Use natur
 ## Quick Start
 
 Use the AI assistant via:
-
 - **Keyboard shortcut:** <kbd>Ctrl+K</kbd> then search for "Ask AI" or type slash and "ask"
 - **In a comment:** Click the sparkle icon or use <kbd>Ctrl+J</kbd> to write with AI
 - **On mobile task detail:** "Ask AI" sparkles up in the thumb-zone button bar
@@ -22,13 +21,11 @@ Use the AI assistant via:
 ## Scope-aware chat context
 
 AI chat maintains context-aware scope that adapts as you move between tasks and boards. The scope chip in the chat header displays the current context, including:
-
 - **On a task:** Shows the ticket number (e.g. INNE-1491) with a task icon and the full task title on hover
 - **On a board:** Shows the board name and icon
 - **Scroll and board awareness:** Changing views or scrolling between sections doesn't reset the chat context; the AI thread follows your work seamlessly across the board
 
 The scope picker allows precise control:
-
 - **Current board (default):** Automatically adapts to navigation, with per-board tagging
 - **Pinned board:** Locks context to a specific board and prevents scope auto-swap
 - **All boards:** Applies to everything with per-board counts, plus a "No" bucket for legacy chats
@@ -38,7 +35,6 @@ The scope picker allows precise control:
 ## Skill invocations in AI chat
 
 In AI chat and in the AI Task Writer, start any message with `/skill <skill>` to invoke a skill. For example:
-
 - `/minimalist-review` previews a task in Minimalist style
 - `/wit-review` adjusts tone and framing
 
@@ -55,7 +51,6 @@ Skill popups and slash-command menus anchor at the caret glyph, follow your text
 ## Skill invocations in comments
 
 In comments, use <kbd>Ctrl+J</kbd> (keyboard) or the Sparkles icon (mouse) to write with AI. In AI chat, you can also take focused comments into the chat:
-
 - **Copy comment to AI chat:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Copy comment to AI chat. The comment text flows into the chat draft as if you'd typed it.
 - **Summarize comment:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Summarize comment. AI drafts a concise summary in the chat.
 
@@ -66,7 +61,6 @@ Hover over a comment to reveal the Sparkles cue for mouse users, making these co
 ## Asking AI in Comments
 
 Start a comment or a new message with a short prompt, e.g.:
-
 - "Set priority high and assign to me"
 - "Add @Alice to the assignee list"
 - "Purge all tags"
@@ -74,7 +68,6 @@ Start a comment or a new message with a short prompt, e.g.:
 After your request, AI will update the task's properties accordingly.
 
 ### Possible responses
-
 - Priority, assignee, and tags updates
 - Description edits — rewrite, summarize, or extend
 - Link mentions — AI adds @mentions to project members
@@ -87,7 +80,6 @@ To start over, click the refresh icon to propose a different rewrite.
 ## Mobile AI Integration (HTPR-4603)
 
 On mobile task pages, the "Ask AI" burst scrolls into the thumb zone after the page loads. From here:
-
 - Tap the sparkle to send the task ID + context to the AI assistant
 - Slide down to return to the board
 - Use Swipe-to-reveal actions to access further options
@@ -100,11 +92,11 @@ The setup keeps AI accessible without obscuring the task content and mirrors des
 
 The mobile AI chat completes the board experience when you have access to task details from anywhere. Key behaviors:
 
-**Exit and navigate** — The mobile chat closes when you tap a task link, follow a link in a comment, or use the back gesture. This keeps the chat surface unobtrusive while letting you jump to task details without losing context.
+**Exit and navigate:** The mobile chat closes when you tap a task link, follow a link in a comment, or use the back gesture. This keeps the chat surface unobtrusive while letting you jump to task details without losing context.
 
-**Header visibility** — The chat header shows the close (X) button and back affordance, ensuring mobile users can always exit the chat screen. Tapping outside the chat or using the back gesture closes the chat and returns you to the board.
+**Header visibility:** The chat header shows the close (X) button and back affordance, ensuring mobile users can always exit the chat screen. Tapping outside the chat or using the back gesture closes the chat and returns you to the board.
 
-**Popup positioning** — Slash-command menus and skill popups anchor at the caret and flip upward when text is near the bottom so they never clip.
+**Popup positioning:** Slash-command menus and skill popups anchor at the caret and flip upward when text is near the bottom so they never clip.
 
 ---
 
@@ -112,9 +104,13 @@ The mobile AI chat completes the board experience when you have access to task d
 
 On mobile devices, the comment composer includes a dedicated dictation mode aligned with modern messaging apps. Key behaviors:
 
-- **Mic on the right:** The purple microphone button is positioned in the action bar next to the send arrow for one-handed thumb access.
-- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—an affordance for adding more or changing the draft—while the send arrow remains visible.
-- **Lock while transcribing:** When AI is transcribing speech into text, the editor is locked to prevent accidental edits. The mic remains visible as feedback while you wait.
+- **Prominent CTA:** The purple microphone button is positioned clearly in the action bar for one-handed thumb access.
+- **Live transcription state:** A spinner appears while AI transcribes speech, providing clear visual feedback.
+- **Smart @mentions:** When you speak mention targets, the composer detects and includes @mentions for teammates.
+- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—making it clear you can still add or change the draft—while the send arrow remains visible.
+- **Lock while transcribing:** When AI is actively transcribing, the editor is locked to prevent accidental edits. The mic shows the current state so you know whether the voice input is in progress.
+
+Dictate directly into task descriptions, comments, or any text field, and watch the text appear in real time as the AI processes your speech.
 
 ---
 
@@ -139,7 +135,6 @@ In the AI Task Writer you can also invoke skills directly. Start your message wi
 ## Task Enhancement
 
 Ask AI to expand or prune descriptions:
-
 - "Make this task more detailed for a new hire"
 - "Summarize this task into a checklist" — produces checkboxes
 - "Turn this into a bug template" — adds reproduction steps
@@ -160,7 +155,6 @@ See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for Mac/Windows note.
 ## Keeping Content Fresh
 
 Use "AI rewrite" on comments or task descriptions to:
-
 - Improve readability
 - Shorten for mobile or notes
 - Write follow-ups or next steps
@@ -173,7 +167,6 @@ Use "AI rewrite" on comments or task descriptions to:
 ## Command Palette AI Panel
 
 Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
-
 - "/ai reorganize my inbox" — AI sorts entries by importance
 - "/ai generate a concise board summary" — AI overviews tasks and sections
 
@@ -182,7 +175,6 @@ Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
 ## Preserving Rich Content
 
 AI commands now preserve embedded rich media, including:
-
 - **HTML canvas blocks:** Slash commands and AI enhancements skip over HTML canvas elements, so AI won't insert, modify, or delete them during text operations
 - **Images and formatting:** Visual elements and custom styling remain untouched
 
