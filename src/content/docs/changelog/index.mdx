@@ -6,6 +6,12 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 27, 2026" features={[<u/>]}>
+  * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
+  * Added CLI/MCP command to move tasks to your inbox ([HTPR-4553](https://app.hypertask.ai/detail/project-15/4553))
+  * Exposed board AI custom instructions over MCP token ([HTPR-4556](https://app.hypertask.ai/detail/project-15/4556))
+</Update>
+
+<Update label="July 27, 2026" features={[<u/>]}>
   * Improved AI chat scope chip: displays concrete task/board names instead of "Current board" ([HTPR-4563](https://app.hypertask.ai/detail/project-15/4563))
   * Fixed push notifications respecting Email/Push matrix for assign, move, follower, and reaction updates ([HTPR-4562](https://app.hypertask.ai/detail/project-15/4562))
   * Fixed comment display: one dot when a comment is both new and pinned ([HTPR-4560](https://app.hypertask.ai/detail/project-15/4560))
