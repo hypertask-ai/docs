@@ -13,11 +13,11 @@ The Email/Push matrix controls how different notification types are delivered. W
 
 | Action | Default | Delivery options |
 |--------|---------|------------------|
-| Assign task | Push | Email → Push → Both |
-| Move task | Push | Email → Push → Both |
-| Add follower | Push | Email → Push → Both |
-| New comment | Push | Email → Push → Both |
-| Reaction | Push | Email → Push → Both |
+| Assign task | Push | Email · Push · Both |
+| Move task | Push | Email · Push · Both |
+| Add follower | Push | Email · Push · Both |
+| New comment | Push | Email · Push · Both |
+| Reaction | Push | Email · Push · Both |
 
 These actions now will always respect whichever setting you've configured for each action, instead of applying a system default across the board.
 
@@ -99,6 +99,17 @@ To re-enable notifications after muting:
 1. Open the Command Palette (`Ctrl+K`).
 2. Navigate to your task and select **Open task menu**.
 3. Select **Toggle mute**.
+
+## Inbox Zero
+
+Quickly clear out accumulated notifications with one click. The Inbox Zero feature replaces the AI sparkle with a rule-based, automatic clearing sheet:
+
+- **One-click action:** Tap the newly added auto-clear button to apply rules and immediately archive all relevant inbox items.
+- **Keep toggles always win:** Toggles for Unread, @mentions, and Assignments maintain their stacks even after Auto-clear runs.
+- **Live count:** Shows the number of notifications being cleared.
+- **Undo:** Archive clears, but you can Undo to restore notifications for follow-up.
+
+This provides a fast, rule-based way to clear your inbox without manually archiving each item, while preserving the inbox items you explicitly want to keep.
 
 ## Notifications overview
 
@@ -184,6 +195,7 @@ The Archive section shows notifications that have been archived so you can resto
 ## Saved content
 
 Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal — only you see your bookmarks. Use it to:
+
 - Track tasks you're interested in but not assigned to
 - Build a reading list of important discussions
 - Note tasks or comments that reference a shared idea or decision
