@@ -3,222 +3,170 @@ title: AI Features
 description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
 ---
 
-import { Aside, Steps, LinkCard } from '@astrojs/starlight/components';
+import { Aside, CardGrid, LinkCard, Steps, Tabs, TabItem, Badge } from '@astrojs/starlight/components';
 
-AI in Hypertask lives alongside your projects, not as a separate tool. Use natural language to create tasks, get suggestions across your work, and keep your information fresh and up-to-date.
+## Creating Tasks with AI
 
----
+AI can create tasks from scratch or build on existing ideas. Use the Task Writer to transform notes into structured tasks, complete with descriptions, priorities, and assignees.
 
-## Quick Start
+<Tabs>
+<TabItem label="Task Writer" value="task-writer">
 
-Use the AI assistant via:
-- **Keyboard shortcut:** <kbd>Ctrl+K</kbd> then search for "Ask AI" or type slash and "ask"
-- **In a comment:** Click the sparkle icon or use <kbd>Ctrl+J</kbd> to write with AI
-- **On mobile task detail:** "Ask AI" sparkles up in the thumb-zone button bar
+1. Open a task in your project.
+2. Type <code class="language-bash">/task</code> to open the Task Writer.
+3. Describe your task in natural language, or paste an unstructured note.
+4. Add details like priority, labels, and assignees in the **Draft** section.
 
----
+The AI refines your input, suggests an appropriate title, and prepares a description with Markdown. You can edit the draft before confirming.
 
-## Scope-aware chat context
+<TabItem label="Write with AI" value="write-ai">
 
-AI chat maintains context-aware scope that adapts as you move between tasks and boards. The scope chip in the chat header displays the current context, including:
-- **On a task:** Shows the ticket number (e.g. INNE-1491) with a task icon and the full task title on hover
-- **On a board:** Shows the board name and icon
-- **Scroll and board awareness:** Changing views or scrolling between sections doesn't reset the chat context; the AI thread follows your work seamlessly across the board
+Use <code class="language-bash">/ai</code> or the **Write with AI** button in the task composer to generate content:
 
-The scope picker allows precise control:
-- **Current board (default):** Automatically adapts to navigation, with per-board tagging
-- **Pinned board:** Locks context to a specific board and prevents scope auto-swap
-- **All boards:** Applies to everything with per-board counts, plus a "No" bucket for legacy chats
+- **Title** — auto-generates from your prompt and context.
+- **Description** — creates rich, formatted content including lists, tables, and inline links.
+- **Draft** — shows the full AI-generated text for review and editing.
 
----
+<TabItem label="Voice Dictation" value="voice">
 
-## Chat UI controls
+Click the purple dictation mic in the task composer to start speaking. The AI transcribes your words into text in real time. You can continue editing the transcribed text after the mic is released.
 
-The AI chat header provides primary controls for the viewing experience. Key behaviors:
-- **Expand-to-fullscreen** is now the primary control. Tap the fullscreen icon to open the chat in a full-screen overlay that covers the entire viewport.
-- **Floating/Picture-in-Picture (PiP)** controls are available in the overflow menu (three-dots). Use these for in-place previews or to keep the chat available while you work on tasks in the same browser tab.
+<Aside type="tip">
+Voice dictation works on desktop and mobile. On mobile, the mic slides to the left for one-handed use.
+</Aside>
 
-Both modes share the same chat context and respond to back gestures, keyboard navigation, and mobile swipe interactions.
+<TabItem label="Task Suggestions" value="suggestions">
 
----
+When creating a task, AI suggests titles and descriptions based on your previous tasks, board context, and project tags. Accepting a suggestion populates the task form, giving you a scaffold to edit and refine.
 
-## AI Draft Cursor Position (HTPR-4519)
+</Tabs>
 
-The cursor now stays at your click position when editing AI-drafted messages. Previously, opening a draft would relocate the cursor to the end of the text, making it difficult to edit in the middle of a sentence. Now you can click freely while typing, preserving your natural flow.
+## Editing AI-Generated Content
 
----
+AI can enhance or summarize your existing content. Use the **AI Editor** to:
 
-## Skill invocations in AI chat
+- Fix spelling and grammar
+- Rewrite for clarity or tone
+- Apply Markdown formatting
+- Summarize long descriptions or comment threads
 
-In AI chat and in the AI Task Writer, start any message with `/skill <skill>` to invoke a skill. For example:
-- `/minimalist-review` previews a task in Minimalist style
-- `/wit-review` adjusts tone and framing
+To invoke AI Editing:
 
-After the skill executes, you can compose or refine the prompt. The invocation always produces board-aware outputs that respect your column, section, and current filter context.
+1. Select the text you want to edit.
+2. Open the **AI Options** or use a shortcut to open the context menu.
+3. Choose **Rewrite**, **Summarize**, or **Fix Spelling & Grammar**.
 
----
+AI respects embedded blocks like estimated time blocks (canvas elements) and preserves them intact.
 
-## Popup positioning
+## AI Chat
 
-Skill popups and slash-command menus anchor at the caret glyph, follow your text flow, and flip upward when near the viewport bottom so text never gets clipped. Keyboard navigation (Tab, Enter, Arrow keys, Escape) controls the popup; selecting a skill never submits the prompt.
+The AI Chat panel gives you an intelligent assistant integrated with your workspace:
 
----
+- **Ask questions** — retrieve ticket details, project context, or board information.
+- **Generate content** — create descriptions, tasks, or notes on-the-fly.
+- **Draft replies** — compose comments for your assigned tasks.
 
-## Skill invocations in comments
+<Aside type="tip">
+Use Ctrl+K to open the prompt composer and access Shortcuts (e.g., "Copy in a friendly tone," "Summarize with a bulleted list").
+</Aside>
 
-In comments, use <kbd>Ctrl+J</kbd> (keyboard) or the Sparkles icon (mouse) to write with AI. In AI chat, you can also take focused comments into the chat:
-- **Copy comment to AI chat:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Copy comment to AI chat. The comment text flows into the chat draft as if you'd typed it.
-- **Summarize comment:** Focus a comment, press <kbd>Ctrl+K</kbd>, then select Summarize comment. AI drafts a concise summary in the chat.
+### AI Chat Scope
 
-Hover over a comment to reveal the Sparkles cue for mouse users, making these commands available from any input device.
+The docked scope picker lets you limit conversations to a specific board or explore all boards:
 
----
+- **Current board** — defaults to the board you're actively viewing; follows navigation.
+- **Pinned board** — locks conversation context; @mentions work and auto-swap is disabled.
+- **All boards** — explores the full workspace.
 
-## Asking AI in Comments
+<Aside type="tip">
+A **with vector search** indicator shows when the system is searching across multiple boards using contextual relevance.
+</Aside>
 
-Start a comment or a new message with a short prompt, e.g.:
-- "Set priority high and assign to me"
-- "Add @Alice to the assignee list"
-- "Purge all tags"
+### Chat Features
 
-After your request, AI will update the task's properties accordingly.
+**Shortcuts** — Access common prompts like "Summarize this task," "Rewrite this comment," and "Create a task from this." Shortcuts appear as a dropdown when the composer has focus or you use Ctrl+K.
 
-### Possible responses
-- Priority, assignee, and tags updates
-- Description edits — rewrite, summarize, or extend
-- Link mentions — AI adds @mentions to project members
-- Suggested next actions — AI proposes concrete follow-ups
+**Copy to AI Chat** — Highlight any comment and select <code class="language-bash">Ctrl+K</code> (or use the three-dot menu) to copy it into the chat for rewriting, summarizing, or context expansion.
 
-To start over, click the refresh icon to propose a different rewrite.
+**Fullscreen Mode** — Expand the chat to fill the screen by clicking the fullscreen icon in the top-right corner. The floating/PIP controls move to the three-dot menu.
 
----
+**Pause & Resume** — Use the pause button in the composer to stop AI generation mid-stream and resume when you're ready.
 
-## Mobile AI Integration (HTPR-4603)
+## Generating Views
 
-On mobile task pages, the "Ask AI" burst scrolls into the thumb zone after the page loads. From here:
-- Tap the sparkle to send the task ID + context to the AI assistant
-- Slide down to return to the board
-- Use Swipe-to-reveal actions to access further options
+AI can now create filtered views on your boards. Ask the AI to "Create a view called Outdated that shows tickets older than 3 months" and it will generate a view with the appropriate filters.
 
-The setup keeps AI accessible without obscuring the task content and mirrors desktop interactions.
+<Aside type="tip">
+The system uses existing saved views to apply filters. Use <code class="language-bash">/views</code> in task detail or context picker to see what views are available on a board.
+</Aside>
 
----
+## Skills
 
-## Mobile Chat Behavior (HTPR-4601, HTPR-4602)
+Skills let you cluster related tasks, projects, and workflows around shared expertise. AI agents can use skills to:
 
-The mobile AI chat completes the board experience when you have access to task details from anywhere. Key behaviors:
+- **Find relevant tasks** — automatically select projects and boards where a skill applies.
+- **Generate context-aware descriptions** — incorporate skill-specific terminology and patterns.
+- **Suggest skill-adjacent actions** — propose follow-up tasks that align with team strengths.
 
-**Exit and navigate:** The mobile chat closes when you tap a task link, follow a link in a comment, or use the back gesture. This keeps the chat surface unobtrusive while letting you jump to task details without losing context.
+To use AI with skills:
 
-**Header visibility:** The chat header shows the close (X) button and back affordance, ensuring mobile users can always exit the chat screen. Tapping outside the chat or using the back gesture closes the chat and returns you to the board.
+1. Create skills for key expertise areas (e.g., "Frontend," "Backend," "UX Research").
+2. Assign team members to skills so AI knows who specializes in what.
+3. Reference skills in AI prompts or descriptions. For example, "Summarize the frontend tickets on this board."
 
-**Popup positioning:** Slash-command menus and skill popups anchor at the caret and flip upward when text is near the bottom so they never clip.
+## Integration with Other Features
 
----
+AI features connect with the rest of Hypertask:
 
-## Mobile Dictation Composer (HTPR-4552)
+- **Boards & Sections** — AI understands your board structure and can create views or reorganize tasks into sections.
+- **Inbox & Notifications** — AI can briefly summarize unread notifications in your inbox.
+- **Keyboard Shortcuts** — Use <code class="language-bash">Ctrl+K</code> in the AI composer for instant shortcuts.
+- **Pages** — AI can draft content for pages attached to tasks using the page editor.
 
-On mobile devices, the comment composer includes a dedicated dictation mode aligned with modern messaging apps. Key behaviors:
-- **Prominent CTA:** The purple microphone button is positioned clearly in the action bar for one-handed thumb access.
-- **Live transcription state:** A spinner appears while AI transcribes speech, providing clear visual feedback.
-- **Smart @mentions:** When you speak mention targets, the composer detects and includes @mentions for teammates.
-- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—which makes it clear you can still add or change the draft—while the send arrow remains visible.
-- **Lock while transcribing:** When AI is actively transcribing, the editor is locked to prevent accidental edits. The mic shows the current state so you know whether the voice input is in progress.
+<Aside type="tip">
+AI always respects privacy settings: it operates only within the boards and projects your account has access to.
+</Aside>
 
-Dictate directly into task descriptions, comments, or any text field, and watch the text appear in real time as the AI processes your speech.
+## Advanced AI Capabilities
 
----
+### Help-Center Search
 
-## Voice Dictation
+<code class="language-bash">HyperAI</code> now uses the Help-Center search to answer product and how-to questions. Ask "How do I view my monthly time report?" and it will surface relevant articles and documentation.
 
-Start voice on any text field with <kbd>Ctrl+Shift+N</kbd> or the microphone icon in the compose bar.
+### AI Assistants for Self-Onboarding
 
-### Per-user language & provider options (HTPR-4544)
-- Choose dictation language from supported options, including English as the default and additional multilingual choices. Your preferred language is saved per-user so it persists across sessions.
-- The dictation pickers no longer expose OpenAI as a selectable provider.
+New <strong>AI Assistants</strong> automatically locate AI connection hooks across domains:
 
-See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for Mac/Windows note.
+- App: <code class="language-bash">https://app.hypertask.ai/llms.txt</code>
+- Public: <code class="language-bash">https://hypertask.ai/llms.txt</code>
+- MCP: <code class="language-bash">https://mcp.hypertask.ai/llms.txt</code>
 
-### Supported languages
-English (default) — choose OpenAI for English-only dictation, or select language options for multilingual dictation.
+This enables agents and integrations to discover available endpoints and endpoints (LLMs, tools) for maximum compatibility.
 
----
+### Multi-Language Dictation
 
-## AI Models & Summaries (HTPR-4534)
+Dictation language settings are now per-user and defaults to English. Additional languages are available in Settings. OpenAI was removed from the provider picker; use local or custom providers instead.
 
-Hypertask offers a variety of Gemini models for AI-powered text tasks. Select from the model picker in the command palette or chat header:
-- **Gemini 3.6 Flash** (cost level indicated by ¥¥) — ideal for fast responses while maintaining high-quality results
-- **Gemini 3.5 Flash Lite** (cost level indicated by $) — a lightweight option for quick-turn tasks and summaries
+<Aside type="tip">
+To configure your dictation language, go to <strong>Profile & Settings</strong> → <strong>Appearance</strong> → <strong>Dictation</strong>.
+</Aside>
 
-### Model behavior & upgrades
-- When you add a new model to the picker, existing saved summaries automatically re-run with the new model, and the cheaper option settles in for future summaries.
-- Old models (e.g. 3.5 Flash, 3.1 Flash Lite) are removed from the picker after a user replacement, ensuring current model options stay up-to-date without manual cleanup.
+## FAQ
 
-### Complimentary access
-Hypertask team members are comped to all models via an allowlist, so no impact on personal limits or rates.
+<details>
+<summary>Can AI read the content of pages attached to tasks?</summary>
 
----
+Yes. Pages attached to tasks are RAG-fed, so AI can reference their content in chat and workflow suggestions. Pages maintain version history and are editable by both humans and agents.
+</details>
 
-## Asking AI via Help-Center Search (HTPR-4532)
+<details>
+<summary>Does AI have access to private boards?</summary>
 
-Ask AI in the chat to answer product and how-to questions using the Help-Center search tool. For example:
-- "How do I unpin a board?"
-- "How do I change the default view?"
+AI operates only within the boards and projects you have access to. It respects privacy boundaries and never accesses content from unauthorized projects.
+</details>
 
-AI queries the Help-Center catalog and surfaces contextual answers from product documentation, so you get accurate "how-to" guidance without leaving your workflow.
+<details>
+<summary>Can AI edit existing content without my approval?</summary>
 
----
-
-## Google/Gemini Model Fixes (HTPR-4525)
-
-Google and Gemini models now work reliably in Hypertask. Previously, numeric enums in the `estimate` parameter for task updates caused schema errors that prevented all Google models from responding. The underlying tool schema now uses string literals for estimate values, matching Google's expectations, so all Gemini variants return clean, expected responses.
-
----
-
-## Keeping Content Fresh
-
-Use "AI rewrite" on comments or task descriptions to:
-- Improve readability
-- Shorten for mobile or notes
-- Write follow-ups or next steps
-- Surface action items with checkboxes
-
-"Next stuff" bullets in Tiptap editors suggest actions.
-
----
-
-## Command Palette AI Panel
-
-Ctrl+K opens the panel. Adding `/ai` to a query means "respond using AI":
-- "/ai reorganize my inbox" — AI sorts entries by importance
-- "/ai generate a concise board summary" — AI overviews tasks and sections
-
----
-
-## Preserving Rich Content
-
-AI commands now preserve embedded rich media, including:
-- **HTML canvas blocks:** Slash commands and AI enhancements skip over HTML canvas elements, so AI won't insert, modify, or delete them during text operations
-- **Images and formatting:** Visual elements and custom styling remain untouched
-
-This ensures documents with mixed prose and rich components—such as estimated time canvases embedded in task descriptions—stay intact after AI rewrites or spell check operations.
-
----
-
-## Related Topics
-
-<LinkCard
-  title="AI Chat Board Filter"
-  description="Use a board filter in AI Chat to show all chats or limit to a specific board's chats."
-  href="/features/chat-board-filter/"
-/>
-<LinkCard
-  title="Skills"
-  description="Create, manage, and import skills to organize your team's expertise and filter by them in queries and saved views."
-  href="/features/skills/"
-/>
-<LinkCard
-  title="Keyboard Shortcuts"
-  description="Complete list of keyboard shortcuts for navigation and actions across Hypertask."
-  href="/features/keyboard-shortcuts/"
-/>
+No. AI always requires explicit confirmation before applying changes. You can review and edit AI-generated content before sending or publishing.
+</details>
