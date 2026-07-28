@@ -111,6 +111,18 @@ Quickly clear out accumulated notifications with one click. The Inbox Zero featu
 
 This provides a fast, rule-based way to clear your inbox without manually archiving each item, while preserving the inbox items you explicitly want to keep.
 
+## Full board/regional search from Inbox
+
+Use `<kbd>Ctrl+F</kbd>` from Inbox or search surfaces to open a larger board-agnostic search panel. The search includes tasks from multiple boards and lets you:
+
+- Filter by board, section, priority, labels, assignee, and due date
+- Preview results with a quick tooltip or expanded card
+- Jump directly into a board and task by clicking a result
+
+<Aside type="tip">
+Press `<kbd>Ctrl+F</kbd>` from any inbox page to scan across your workspace without losing context.
+</Aside>
+
 ## Performance improvement (HTPR-4528)
 
 Collecting all notification details for display used to trigger a fan-out with multiple database round-trips, adding latency (baseline ~190–232ms). The inbox query now uses a collapsed, multi-row lookup via Prisma join, reducing the number of database round-trips and cutting overall latency in production to roughly 110–177ms across test runs.
