@@ -48,7 +48,7 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
 3. **Check your auth status:**
 
    ```bash
-   hypertask auth:status
+   hypertask status
    ```
 
 4. **Logout:**
@@ -60,7 +60,7 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
 </Steps>
 
 <Aside type="tip">
-For legacy setups, `<code>hypertask auth:login --token <jwt></code>` also works to save a token directly. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
+Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
 ## Exit Codes and Error Behavior
@@ -102,7 +102,7 @@ The CLI connects to the Hypertask API using a dedicated endpoint that is exempt 
 ```bash
 # CLI automatically connects to the exempt API endpoint
 hypertask task get HTPR-2992
-hypertask auth:status
+hypertask status
 ```
 
 <Aside type="tip">
@@ -174,7 +174,7 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 | `--created-by <id>` | Filter by creator user ID (numeric) | — |
 | `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
 | `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
-| `--sort-order <asc|desc>` | Sort direction — use together with `--sort-by` | — |
+| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
@@ -425,7 +425,6 @@ Use this when an agent or external service needs to funnel a task into a specifi
 </Aside>
 
 **Why not self-assign?**  Self-assignment and self-mention do not trigger notifications, because Hypertask never notifies you about your own actions. With `--user`, the task is moved into the recipient's inbox as a separate notification, ensuring the human notices the new task.
-</>
 
 <Aside type="caution">
 The recipient must be a member of the task's project. Attempting to move a task into another user's inbox will fail with a 400 if they lack project access.
@@ -721,7 +720,7 @@ hypertask section reorder --project 15 --section 4012 --after 4005
 ```
 
 <Aside type="tip">
-Use `hypertask project sections 15` to list all section IDs and names before reordering, so you can reference them exactly.
+Use `hypertask section list --project 15` to list all section IDs and names before reordering, so you can reference them exactly.
 </Aside>
 
 ---
@@ -741,12 +740,12 @@ hypertask project list
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
-### `project sections`
+### `section list`
 
 List all sections (columns) in a project.
 
 ```bash
-hypertask project sections 15
+hypertask section list --project 15
 ```
 
 | Argument | Description |
@@ -1145,7 +1144,7 @@ hypertask section reorder --project 15 --section 4012 --after 4005
 ```
 
 <Aside type="tip">
-Use `hypertask project sections 15` to list all section IDs and names before reordering, so you can reference them exactly.
+Use `hypertask section list --project 15` to list all section IDs and names before reordering, so you can reference them exactly.
 </Aside>
 
 ---
@@ -1165,12 +1164,12 @@ hypertask project list
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
-### `project sections`
+### `section list`
 
 List all sections (columns) in a project.
 
 ```bash
-hypertask project sections 15
+hypertask section list --project 15
 ```
 
 | Argument | Description |
@@ -1278,16 +1277,81 @@ Example `board.json`:
 
 ---
 
+## Drafts
+
+A draft is unsent text parked on a task: a comment you have not posted yet, or a replacement description you have not applied yet. Each user gets **one comment draft and one description draft per task**.
+
+<Aside type="tip">
+**Drafts you create here show up in the web app.** Open the task in Hypertask and the comment draft is already sitting in the composer, ready for the person to read, edit, and send. This is how you hand a human something to approve instead of posting on their behalf.
+</Aside>
+
+### `draft create`
+
+Create a draft on a task. Without `--comment` you are drafting the **description**.
+
+```bash
+# Comment draft — lands in the task's comment composer
+hypertask draft create HTPR-2992 --comment --text "Ready for review, tests are green."
+
+# Description draft — replaces the description when published
+hypertask draft create HTPR-2992 --text "Rewrite the importer to stream rows."
+```
+
+| Argument / Flag | Description |
+|-----------------|-------------|
+| `<ticket>` | Ticket identifier in PREFIX-NNN format |
+| `--text <text>` | Draft text (plain text or markdown, converted to HTML) |
+| `--comment` | Draft a comment; omit to draft the description |
+
+Creating a draft when one already exists **overwrites it** rather than adding a second one. The command still prints "Created".
+
+### `draft list`
+
+Show the drafts on a task, with their IDs.
+
+```bash
+hypertask draft list HTPR-2992
+```
+
+Empty drafts are not returned — a draft whose content is blank reads as no draft at all.
+
+### `draft update`
+
+Replace a draft's text, by draft ID.
+
+```bash
+hypertask draft update 98711 --text "Ready for review. One follow-up filed."
+```
+
+### `draft publish`
+
+Turn the draft into the real thing: a comment draft is posted as a comment, a description draft replaces the task description. The draft is consumed.
+
+```bash
+hypertask draft publish 98711
+```
+
+### `draft delete`
+
+Discard a draft without publishing it.
+
+```bash
+hypertask draft delete 98711
+```
+
+---
+
 ## Utility Commands
 
 | Command | Description |
 |---------|-------------|
 | `hypertask capabilities` | Dump the full command + option tree as JSON (alias: `commands`) |
 | `hypertask update` | Update the CLI to the latest version |
-| `hypertask auth:status` | Check current authentication status |
-| `hypertask auth:login --token <jwt>` | Save a JWT token directly |
-| `hypertask auth:logout` | Clear saved authentication |
+| `hypertask status` | Check current authentication status |
+| `hypertask login --token <jwt>` | Save a JWT token directly |
 | `hypertask logout` | Logout from Hypertask |
+| `hypertask token refresh` | Refresh the saved token |
+| `hypertask user update` | Update your own profile |
 
 ---
 
@@ -1421,7 +1485,7 @@ hypertask project members 15
 
 ```bash
 # List existing sections and their IDs
-hypertask project sections 15
+hypertask section list --project 15
 
 # Add a new section
 hypertask section create --project 15 --title "In Review"

@@ -180,7 +180,7 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-AI Chat now has **full read/write parity with the REST API, MCP, and CLI**. Every action available through those interfaces — including label management, section CRUD, comment updates and deletes, moving tasks between boards, inbox unarchive, task trees, and saved views — is also available from the chat sidebar.
+**AI Chat is read-only today.** It reads your context, boards, tasks, comments, sections and inbox, searches, and pulls in help-centre and web results. It cannot create, edit, move, assign, comment, or archive anything — writes go through the CLI, MCP, or REST API. The chat sidebar exposes 11 tools; the MCP server exposes 39.
 
 ## Known limitations
 
