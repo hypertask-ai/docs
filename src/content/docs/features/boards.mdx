@@ -71,7 +71,7 @@ Press <kbd>Ctrl+K</kbd> to open the command palette and quickly access board sor
 Pin your core boards to the favorites bar. Drag to reorder, and pin more boards as needed.
 </Aside>
 
-**Pin a board** — open a board's menu (**⌘ K** or click the board icon), then toggle *Pin to favorites*. The favorites bar appears under the rail in the left sidebar.
+**Pin a board** — open a board's menu (⌘K or click the board icon), then toggle *Pin to favorites*. The favorites bar appears under the rail in the left sidebar.
 
 **Reorder favorites** — grab a card's drag handle (⋮⋮) and drag it to a new position.
 
@@ -165,7 +165,7 @@ Hiding a section is useful when you want to temporarily declutter the board with
 
 ### Hiding columns
 
-You can hide sections that currently contain no tasks to reduce visual noise. This applies to both empty columns and regular columns that you want to keep but don''t need to see all the time.
+You can hide sections that currently contain no tasks to reduce visual noise. This applies to both empty columns and regular columns that you want to keep but don't need to see all the time.
 
 To hide a column, use the **Ctrl+K** command palette:
 
@@ -324,7 +324,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon 🔧 appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon ⚙ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
@@ -344,4 +344,41 @@ You can switch between saved views without opening the Manage Views panel. At th
 
 #### View tabs
 
-In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its `<code>?view=</code>` parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.'
+In Manage Views, each saved view appears as a tab. Like other tabs, switching to a view tab also updates the URL with its `<code>?view=</code>` parameter. This keeps your desired view fresh and lets you easily return to it later using the URL alone or by clicking the pill again. Changes to view order (including per-user drag resor or admin defaults) apply to both the Manage Views panel and the quick-pill bar.
+
+## Board Ctrl+F search
+
+<Aside type="tip">
+Use <kbd>Ctrl+F</kbd> (or <kbd>Shift+F</kbd> to toggle full vs. reduced search) from any board view to quickly scan tasks without leaving the context.
+</Aside>
+
+Hypertask provides a single, unified search experience across boards and the inbox. The search is controlled from the board surface (Kanban, Calendar, Timeline) and can also be accessed directly from the Inbox.
+
+### Keyboard shortcuts
+
+- `<kbd>Ctrl+F</kbd>` — open focused search on the current board (Kanban, Calendar, Timeline)
+- `<kbd>Shift+F</kbd>` — toggle between reduced (title filters) and full search
+- `<kbd>Escape</kbd>` — close search and return to the board
+
+<Aside type="tip">
+Search works across your open board — filtered to tasks in the current board and sections, and aware of priority, labels, assignee, and due date when in full mode.
+</Aside>
+
+### Using Ctrl+F on boards
+
+When you press `<kbd>Ctrl+F</kbd>` on a board:
+
+1. A search input appears in the app shell's bottom bar, scoped to the current board
+2. The list updates in real time to match your query
+3. The search result exposes a small preview with the matched task title and related context
+4. You can select a result with the keyboard or click it to jump directly to that task
+
+Reduced mode shows only a small tooltip that tells you which task matched, keeping the board context visible. Full mode shows rich results with board overlay, enabling quick previewing and targeted navigation.
+
+<Aside type="note">
+Search history is scoped per board; the same task may display differently depending on which board you’re searching from.
+</Aside>
+
+### Expanded access from Inbox
+
+Pressing `<kbd>Ctrl+F</kbd>` from the Inbox pages (Inbox Zero, search, or notifications list) opens a board-agnostic search with a larger results panel, suitable for filtering across boards. The app shell manages the state, so clicking a result automatically navigates you into the relevant board view.
