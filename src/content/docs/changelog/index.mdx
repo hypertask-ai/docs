@@ -7,11 +7,10 @@ import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 28, 2026" features={[<u/>]}>
   * Added: pinned row in the inbox that invites enable push or email-only notifications when both are disabled (HTPR-4676)
-</Update>
-
-<Update label="July 28, 2026" features={[<u/>]}>
   * Fixed MCP tasks/create now validates assignee_ids are project members (HTPR-3964)
   * Fixed GET /api/mcp/tasks now honors the projectId filter regardless of casing (HTPR-4077)
+  * Fixed mobile sort modal clears Android status bar (HTPR-4647)
+  * Fixed API invite endpoint requires authentication and project membership (HTPR-4651)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
