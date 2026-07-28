@@ -8,18 +8,21 @@ import { Update } from '@astrojs/starlight/components';
 <Update label="July 28, 2026" features={[<u/>]}>
   * Added: due date picker predictive typing with partial weekdays, phrases, and relative periods (e.g. "tomorrow", "w", "2 weeks", "next month") ([HTPR-4284](https://app.hypertask.ai/detail/project-15/4284))
   * Added: user-configurable active-filter bar toggle under calendar/board toolbar (off by default) ([HTPR-4684](https://app.hypertask.ai/detail/project-15/4684))
-  * Added: Claude Opus-5 replaces Opus-4.8 in AI model pickers and chat/task writers ([HTPR-4686](https://app.hypertask.ai/detail/project-15/4686))
   * Added: pinned row in the inbox that invites enable push or email-only notifications when both are disabled (HTPR-4676)
+  * Added: Claude Opus-5 replaces Opus-4.8 in AI model pickers and chat/task writers ([HTPR-4686](https://app.hypertask.ai/detail/project-15/4686))
   * Fixed MCP tasks/create now validates assignee_ids are project members (HTPR-3964)
   * Fixed GET /api/mcp/tasks now honors the projectId filter regardless of casing (HTPR-4077)
   * Fixed mobile sort modal clears Android status bar (HTPR-4647)
-  * Fixed API invite endpoint requires authentication and project membership (HTPR-4651)
+  * Added CLI: hypertask task writer and write with AI CLI commands ([HTPR-4653](https://app.hypertask.ai/detail/project-15/4653))
+  * Fixed: comment edit now opens on double-click / Ctrl+Enter instead of a single click ([HTPR-4659](https://app.hypertask.ai/detail/project-15/4659))
+  * Fixed: /api/notifications/getCount now requires verified session authorization instead of returning any user's count ([HTPR-4650](https://app.hypertask.ai/detail/project-15/4650))
+  * Fixed: /api/invites/post now requires verified session and project membership for invitations ([HTPR-4651](https://app.hypertask.ai/detail/project-15/4651))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Fixed search latency — instant-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Fixed search latency â\x80\x94 instant-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
   * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
-  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Added Ctrl+B board palette â\x80\x94 click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
   * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
   * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
@@ -57,7 +60,7 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Added AI Assistant Self-Onboarding—locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
+  * Added AI Assistant Self-Onboardingâ\x80\x94locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -88,7 +91,7 @@ import { Update } from '@astrojs/starlight/components';
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly (HTPR-4455)
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats (HTPR-4418)
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board (HTPR-4426)
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved (HTPR-4424)
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Â· Team Â· Board Â· Connect Â· Help; deep links preserved (HTPR-4424)
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications (HTPR-4403)
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits (HTPR-4429)
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments (HTPR-4428)
