@@ -6,9 +6,12 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 28, 2026" features={[<u/>]}>
+  * Added: pinned row in the inbox that invites enable push or email-only notifications when both are disabled (HTPR-4676)
+</Update>
+
+<Update label="July 28, 2026" features={[<u/>]}>
   * Fixed MCP tasks/create now validates assignee_ids are project members (HTPR-3964)
   * Fixed GET /api/mcp/tasks now honors the projectId filter regardless of casing (HTPR-4077)
-  * Fixed clicking into an AI draft now keeps the cursor at your click position (HTPR-4519)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -52,7 +55,7 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Added AI Assistant Self-Onboardingâ€”locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
+  * Added AI Assistant Self-Onboarding—locates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) (HTPR-4635)
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -83,7 +86,7 @@ import { Update } from '@astrojs/starlight/components';
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly (HTPR-4455)
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats (HTPR-4418)
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board (HTPR-4426)
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Â· Team Â· Board Â· Connect Â· Help; deep links preserved (HTPR-4424)
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved (HTPR-4424)
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications (HTPR-4403)
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits (HTPR-4429)
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments (HTPR-4428)
@@ -111,8 +114,8 @@ import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 20, 2026" features={[<u/>]}>
   * Fixed no boards empty state: Boardless accounts now show a clear "No boards yet" screen instead of dead-ending on a blank screen (HTPR-4206)
-  * Fixed CLI bug: <code class="language-bash">tasks list --json</code> no longer omits <code class="language-bash">uniqueIndex</code>, ensuring each task row carries a populated index derived from the ticket number (HTPR-4173)
-  * Fixed CLI bug: <code class="language-bash">tasks create --json</code> now emits exactly one JSON document, making the output clean and parsable via <code class="language-bash">json.load</code> (HTPR-4318)
+  * Fixed CLI bug: `tasks list --json` no longer omits `uniqueIndex`, ensuring each task row carries a populated index derived from the ticket number (HTPR-4173)
+  * Fixed CLI bug: `tasks create --json` now emits exactly one JSON document, making the output clean and parsable via `json.load` (HTPR-4318)
 </Update>
 
 <Update label="July 14, 2026" features={[<u/>]}>
