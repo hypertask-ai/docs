@@ -35,11 +35,16 @@ The scope picker allows precise control:
 ## Chat UI controls
 
 The AI chat header provides primary controls for the viewing experience. Key behaviors:
-
 - **Expand-to-fullscreen** is now the primary control. Tap the fullscreen icon to open the chat in a full-screen overlay that covers the entire viewport.
 - **Floating/Picture-in-Picture (PiP)** controls are available in the overflow menu (three-dots). Use these for in-place previews or to keep the chat available while you work on tasks in the same browser tab.
 
 Both modes share the same chat context and respond to back gestures, keyboard navigation, and mobile swipe interactions.
+
+---
+
+## AI Draft Cursor Position (HTPR-4519)
+
+The cursor now stays at your click position when editing AI-drafted messages. Previously, opening a draft would relocate the cursor to the end of the text, making it difficult to edit in the middle of a sentence. Now you can click freely while typing, preserving your natural flow.
 
 ---
 
@@ -114,11 +119,10 @@ The mobile AI chat completes the board experience when you have access to task d
 ## Mobile Dictation Composer (HTPR-4552)
 
 On mobile devices, the comment composer includes a dedicated dictation mode aligned with modern messaging apps. Key behaviors:
-
 - **Prominent CTA:** The purple microphone button is positioned clearly in the action bar for one-handed thumb access.
 - **Live transcription state:** A spinner appears while AI transcribes speech, providing clear visual feedback.
 - **Smart @mentions:** When you speak mention targets, the composer detects and includes @mentions for teammates.
-- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—making it clear you can still add or change the draft—while the send arrow remains visible.
+- **Send-on-text:** The send arrow appears only when you've typed text. When you start dictating, the mic slides left to become a secondary gray circle—which makes it clear you can still add or change the draft—while the send arrow remains visible.
 - **Lock while transcribing:** When AI is actively transcribing, the editor is locked to prevent accidental edits. The mic shows the current state so you know whether the voice input is in progress.
 
 Dictate directly into task descriptions, comments, or any text field, and watch the text appear in real time as the AI processes your speech.
@@ -143,12 +147,11 @@ English (default) — choose OpenAI for English-only dictation, or select langua
 ## AI Models & Summaries (HTPR-4534)
 
 Hypertask offers a variety of Gemini models for AI-powered text tasks. Select from the model picker in the command palette or chat header:
-
 - **Gemini 3.6 Flash** (cost level indicated by ¥¥) — ideal for fast responses while maintaining high-quality results
 - **Gemini 3.5 Flash Lite** (cost level indicated by $) — a lightweight option for quick-turn tasks and summaries
 
 ### Model behavior & upgrades
-- When you add a model to the picker, existing saved summaries automatically re-run with the new model, and the cheaper option settles in for future summaries.
+- When you add a new model to the picker, existing saved summaries automatically re-run with the new model, and the cheaper option settles in for future summaries.
 - Old models (e.g. 3.5 Flash, 3.1 Flash Lite) are removed from the picker after a user replacement, ensuring current model options stay up-to-date without manual cleanup.
 
 ### Complimentary access
@@ -159,7 +162,6 @@ Hypertask team members are comped to all models via an allowlist, so no impact o
 ## Asking AI via Help-Center Search (HTPR-4532)
 
 Ask AI in the chat to answer product and how-to questions using the Help-Center search tool. For example:
-
 - "How do I unpin a board?"
 - "How do I change the default view?"
 
@@ -169,7 +171,7 @@ AI queries the Help-Center catalog and surfaces contextual answers from product 
 
 ## Google/Gemini Model Fixes (HTPR-4525)
 
-Google and Gemini models now work reliably in Hypertask. Previously, numeric enums in the update_task estimate parameter caused schema errors that prevented all Google models from responding. The underlying tool schema uses string literals for estimate values, matching Google's expectations, so all Gemini variants now return clean, expected responses.
+Google and Gemini models now work reliably in Hypertask. Previously, numeric enums in the `estimate` parameter for task updates caused schema errors that prevented all Google models from responding. The underlying tool schema now uses string literals for estimate values, matching Google's expectations, so all Gemini variants return clean, expected responses.
 
 ---
 
@@ -217,6 +219,6 @@ This ensures documents with mixed prose and rich components—such as estimated 
 />
 <LinkCard
   title="Keyboard Shortcuts"
-  description="Tip: /ai now works directly in the command palette and slash commands are supported in AI Task Writer."
+  description="Complete list of keyboard shortcuts for navigation and actions across Hypertask."
   href="/features/keyboard-shortcuts/"
 />
