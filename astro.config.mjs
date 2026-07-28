@@ -1,133 +1,76 @@
-import starlight from "@astrojs/starlight";
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
 
-const renderLegacyMdxComponents = {
-  name: "render-legacy-mdx-components",
-  enforce: "pre",
-  transform(code, id) {
-    const filePath = id.split("?", 1)[0];
-    if (!filePath.includes("/src/content/docs/") || !filePath.endsWith(".mdx")) return;
-
-    // Starlight only accepts note/tip/caution/danger, and an unknown type throws at
-    // render time — which takes the whole site build down. Writers keep reaching for
-    // Mintlify types (info, warning, example, detail), so map anything else to note
-    // rather than enumerating types we have to keep chasing.
-    const asideTypes = new Set(["note", "tip", "caution", "danger"]);
-    const compatibleCode = code.replace(
-      /<Aside type="([a-z]+)"/g,
-      (match, type) =>
-        asideTypes.has(type)
-          ? match
-          : `<Aside type="${type === "warning" ? "caution" : "note"}"`
-    );
-
-    return filePath.endsWith("/src/content/docs/changelog/index.mdx")
-      ? compatibleCode
-          // The changelog writer emits extra attributes (features={[<u/>]}), so match
-          // anything up to the closing bracket — a stricter pattern leaves the opening
-          // tags in place while the closers below are stripped, and MDX then fails.
-          .replace(/<Update\s+label="([^"]+)"[^>]*>/g, "## $1")
-          .replaceAll("</Update>", "")
-      : compatibleCode;
-  },
+const sidebars = {
+  docs: [
+    {
+      label: 'Getting Started',
+      items: [
+        { link: '/getting-started/introduction/', text: 'What is Hypertask?' },
+        { link: '/getting-started/quickstart/', text: 'Quick Start' },
+        { link: '/getting-started/concepts/', text: 'Core Concepts' },
+      ],
+    },
+    {
+      label: 'Features',
+      items: [
+        { link: '/features/ai-features/', text: 'AI Features' },
+        { link: '/features/appearance/', text: 'Appearance & AI Models' },
+        { link: '/features/board-settings/', text: 'Board Settings' },
+        { link: '/features/boards/', text: 'Boards & Sections' },
+        { link: '/features/favorites/', text: 'Favorites' },
+        { link: '/features/inbox/', text: 'Inbox & Notifications' },
+        { link: '/features/keyboard-shortcuts/', text: 'Keyboard Shortcuts' },
+        { link: '/features/pages/', text: 'Pages' },
+        { link: '/features/skills/', text: 'Skills' },
+        { link: '/features/superhuman-snippets/', text: 'Superhuman-Style Snippets' },
+        { link: '/features/table-view/', text: 'Table View' },
+        { link: '/features/tasks/', text: 'Tasks' },
+        { link: '/features/time-tracking/', text: 'Time Tracking' },
+        { link: '/features/collaboration/', text: 'Collaboration' },
+      ],
+    },
+    {
+      label: 'API Reference',
+      items: [
+        { link: '/api/tools-reference/', text: 'MCP Tools Reference' },
+        { link: '/api/rest-api/', text: 'REST API' },
+      ],
+    },
+    {
+      label: 'Model Context Protocol',
+      items: [
+        { link: '/mcp/overview/', text: 'MCP Integration' },
+        { link: '/mcp/agents/', text: 'Creating Agents' },
+        { link: '/mcp/workflows/', text: 'Agent Workflows' },
+        { link: '/mcp/scheduling/', text: 'Scheduling Agents' },
+      ],
+    },
+    {
+      label: 'Design System',
+      items: [
+        { link: '/design-system/typography/', text: 'Typography & Sidebar Visuals' },
+        { link: '/design-system/visual-standard/', text: 'Sidebar & Modal Visual Standard' },
+      ],
+    },
+    {
+      label: 'Changelog',
+      items: [{ link: '/changelog/', text: 'Changelog' }],
+    },
+  ],
 };
 
 export default defineConfig({
-  site: "https://docs.hypertask.ai",
-  vite: {
-    plugins: [renderLegacyMdxComponents],
-    define: {
-      "globalThis.Astro": "undefined",
-    },
-    optimizeDeps: {
-      exclude: ["mermaid"],
-    },
+  site: 'https://docs.hypertask.ai',
+  social: {
+    twitter: 'https://twitter.com/hypertaskai',
   },
-  integrations: [
+  plugins: [
     starlight({
-      title: "Hypertask",
-      favicon: "/favicon.ico",
-      lastUpdated: true,
-      social: [
-        {
-          icon: "x.com",
-          label: "X",
-          href: "https://x.com/hypertasks",
-        },
-        {
-          icon: "youtube",
-          label: "YouTube",
-          href: "https://www.youtube.com/@hypertasks",
-        },
-      ],
-      sidebar: [
-        {
-          label: "Getting Started",
-          items: [
-            { label: "What is Hypertask?", slug: "getting-started/introduction" },
-            { label: "Core Concepts", slug: "getting-started/concepts" },
-            { label: "Quick Start", slug: "getting-started/quickstart" },
-          ],
-        },
-        {
-          label: "Features",
-          items: [
-            { label: "AI Features", slug: "features/ai-features" },
-            { label: "Boards & Sections", slug: "features/boards" },
-            { label: "Board Settings", slug: "features/board-settings" },
-            { label: "Bring Your Own Key", slug: "features/byok" },
-            { label: "Chat Board Filter", slug: "features/chat-board-filter" },
-            { label: "Keyboard Shortcuts", slug: "features/keyboard-shortcuts" },
-            { label: "Tasks", slug: "features/tasks" },
-            { label: "Pages", slug: "features/pages" },
-            { label: "Table View", slug: "features/table-view" },
-            { label: "Favorites", slug: "features/favorites" },
-            { label: "Time Tracking", slug: "features/time-tracking" },
-            { label: "Inbox & Notifications", slug: "features/inbox" },
-            { label: "Collaboration", slug: "features/collaboration" },
-            { label: "Superhuman-Style Snippets", slug: "features/superhuman-snippets" },
-            { label: "Skills", slug: "features/skills" },
-            { label: "Appearance", slug: "features/appearance" },
-          ],
-        },
-        {
-          label: "Account",
-          items: [
-            { label: "Profile & Settings", slug: "getting-started/settings-profile" },
-          ],
-        },
-        {
-          label: "Design System",
-          items: [
-            { label: "Visual Standard", slug: "design-system/visual-standard" },
-            { label: "Typography", slug: "design-system/typography" },
-          ],
-        },
-        {
-          label: "API",
-          items: [
-            { label: "REST API", slug: "api/rest-api" },
-            { label: "MCP Tools Reference", slug: "api/tools-reference" },
-          ],
-        },
-        {
-          label: "MCP",
-          items: [
-            { label: "MCP Integration", slug: "mcp/overview" },
-            { label: "Creating Agents", slug: "mcp/agents" },
-            { label: "Agent Workflows", slug: "mcp/workflows" },
-            { label: "Scheduling Agents", slug: "mcp/scheduling" },
-          ],
-        },
-        {
-          label: "CLI",
-          items: [{ label: "CLI Reference", slug: "cli/reference" }],
-        },
-        {
-          label: "Docs",
-          items: [{ label: "Changelog", slug: "changelog" }],
-        },
-      ],
+      sidebar,
+      // Other config...
+      format: {
+        metadata: 'leading_title_doc_title',
+      },
     }),
   ],
 });
