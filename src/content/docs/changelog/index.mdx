@@ -6,6 +6,9 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 28, 2026" features={[<u/>]}>
+  * Added: due date picker predictive typing with partial weekdays, phrases, and relative periods (e.g. "tomorrow", "w", "2 weeks", "next month") ([HTPR-4284](https://app.hypertask.ai/detail/project-15/4284))
+  * Added: user-configurable active-filter bar toggle under calendar/board toolbar (off by default) ([HTPR-4684](https://app.hypertask.ai/detail/project-15/4684))
+  * Added: Claude Opus-5 replaces Opus-4.8 in AI model pickers and chat/task writers ([HTPR-4686](https://app.hypertask.ai/detail/project-15/4686))
   * Added: pinned row in the inbox that invites enable push or email-only notifications when both are disabled (HTPR-4676)
   * Fixed MCP tasks/create now validates assignee_ids are project members (HTPR-3964)
   * Fixed GET /api/mcp/tasks now honors the projectId filter regardless of casing (HTPR-4077)
@@ -14,8 +17,11 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Fixed: Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
-  * Added: HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
+  * Fixed search latency — instant-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
+  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
+  * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
   * Added CLI/MCP command to move tasks to your inbox ([HTPR-4553](https://app.hypertask.ai/detail/project-15/4553))
   * Exposed board AI custom instructions over MCP token ([HTPR-4556](https://app.hypertask.ai/detail/project-15/4556))
@@ -37,9 +43,6 @@ import { Update } from '@astrojs/starlight/components';
   * Added per-user dictation language setting (default English, multilingual options) and removed OpenAI from the provider picker ([HTPR-4544](https://app.hypertask.ai/detail/project-15/4544))
   * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user's own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
   * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190-232ms to ~110-177ms by collapsing deep includes into a single lookup (HTPR-4528)
-  * Added AI chat expand-to-fullscreen as primary control; floating/PiP moved to three-dots menu ([HTPR-4523](https://app.hypertask.ai/detail/project-15/4523))
-  * Fixed Google/Gemini models in chat and task writers by ensuring tool schema uses string enum instead of numeric enum ([HTPR-4525](https://app.hypertask.ai/detail/project-15/4525))
-  * Improved settings layout: Custom instructions text box now fills the page width, not collapsed to a few lines ([HTPR-4526](https://app.hypertask.ai/detail/project-15/4526))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
