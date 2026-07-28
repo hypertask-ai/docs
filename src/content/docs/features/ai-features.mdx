@@ -46,7 +46,6 @@ Voice dictation works on desktop and mobile. On mobile, the mic slides to the le
 When creating a task, AI suggests titles and descriptions based on your previous tasks, board context, and project tags. Accepting a suggestion populates the task form, giving you a scaffold to edit and refine.
 
 </TabItem>
-
 </Tabs>
 
 ## Editing AI-Generated Content
@@ -100,6 +99,16 @@ A **with vector search** indicator shows when the system is searching across mul
 
 **Pause & Resume** — Use the pause button in the composer to stop AI generation mid-stream and resume when you're ready.
 
+## High-Risk PR Review Routing
+
+When a GitHub Pull Request is opened for a ticket with High risk, the PR is automatically routed to Valentin Review instead of AI Review. Medium, Low, or unset risk levels continue to use the AI lane.
+
+This behavior keeps high-risk merges under human sign-off while allowing AI to handle routine PRs.
+
+<Aside type="tip">
+Valentin Review is a dedicated human reviewer lane separate from AI triage, ensuring security-critical and logic-sensitive changes get thorough validation before merging.
+</Aside>
+
 ## Generating Views
 
 AI can now create filtered views on your boards. Ask the AI to "Create a view called Outdated that shows tickets older than 3 months" and it will generate a view with the appropriate filters.
@@ -143,7 +152,7 @@ AI always respects privacy settings: it operates only within the boards and proj
 
 ### AI Assistants for Self-Onboarding
 
-New <strong>AI Assistants</strong> automatically locate AI connection hooks across domains:
+New **AI Assistants** automatically locate AI connection hooks across domains:
 
 - App: <code class="language-bash">https://app.hypertask.ai/llms.txt</code>
 - Public: <code class="language-bash">https://hypertask.ai/llms.txt</code>
