@@ -25,7 +25,17 @@ These actions now will always respect whichever setting you've configured for ea
 All row default to Push so assign/move/follower/reaction updates typically arrive instantly. You can disable push and rely entirely on emails, or switch both delivery types on for redundancy.
 </aside>
 
----
+## Turn on notifications nudge
+
+If both push notifications and email are turned off, a nudge appears at the top of your inbox to invite you back with friendly options:
+
+- **Pinned row** – Rendered below the Inbox tabs and above the Today section, no overlay blocking your view
+- **Actions**: Enable push notifications, turn on email-only notifications, or dismiss the nudge
+- This nudge is shown only when both delivery channels are off, encouraging you to re-enable notifications without interrupting your workflow
+
+<Aside type="tip">
+The nudge floats without occluding content and respects your existing Inbox Zero and filter settings.
+</Aside>
 
 ## Feedback from the app
 
@@ -125,7 +135,7 @@ Press `<kbd>Ctrl+F</kbd>` from any inbox page to scan across your workspace with
 
 ## Performance improvement (HTPR-4528)
 
-Collecting all notification details for display used to trigger a fan-out with multiple database round-trips, adding latency (baseline ~190–232ms). The inbox query now uses a collapsed, multi-row lookup via Prisma join, reducing the number of database round-trips and cutting overall latency in production to roughly 110–177ms across test runs.
+Collecting all notification details for display used to trigger a fan-out with multiple database round-trips, adding latency (baseline ~190-232ms). The inbox query now uses a collapsed, multi-row lookup via Prisma join, reducing the number of database round-trips and cutting overall latency in production to roughly 110-177ms across test runs.
 
 This change improves responsiveness without breaking existing behavior: tasks, projects, priorities, estimates, labels, saved content, and users still appear as expected after a notification is fetched.
 
