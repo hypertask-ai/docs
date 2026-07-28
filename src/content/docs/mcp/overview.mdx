@@ -85,6 +85,16 @@ In addition to skills and playbooks, you can now manage board AI custom instruct
 
 This complements the MCP-exposed skills and playbooks, giving agents full control over board-level AI behavior without needing to navigate to the UI.
 
+## Provide agent task leasing endpoints for safe claim&heartbeat
+
+Agents can now safely claim, heartbeat, and release tasks via dedicated endpoints under `/api/mcp/tasks/lease/`:
+
+- **POST /api/mcp/tasks/lease/claim** — Claim an available task for handling.
+- **POST /api/mcp/tasks/lease/heartbeat** — Broadcast ongoing work (heartbeats) to keep the lease alive.
+- **POST /api/mcp/tasks/lease/release** — Release a claimed task so others can pick it up.
+
+These endpoints allow agents to coordinate worker pools without races, supporting multi-agent workflows and shared task queues.
+
 ## Move tasks to inbox via MCP
 
 You can now trigger tasks to move to your inbox programmatically:
