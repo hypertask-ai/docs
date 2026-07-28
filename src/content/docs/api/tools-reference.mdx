@@ -114,6 +114,7 @@ Create a new task in a project. This tool supports a `dry_run` body parameter fo
 | `images` | string[] | No | Array of image URLs to attach |
 | `attachments` | string[] | No | Array of file URLs to attach |
 | `due_date` | string | No | Due date in ISO 8601 format (e.g. `2025-03-01T00:00:00Z`) |
+| `assignee_ids` | number[] | No | Array of user IDs to assign when creating the task. Only user IDs that are members of the project are accepted. |
 | `dry_run` | boolean | No | `true` to return a simulation of the task without creating it (`false` to persist; default: `false`) |
 
 **Example request — create and persist a task:**
@@ -182,6 +183,10 @@ Use `dry_run: true` to validate input schema, field constraints, and any validat
 
 <Aside type="note">
 Markdown is accepted for task descriptions. The service renders Markdown for display; raw HTML is rendered as-is when supplied.
+</Aside>
+
+<Aside type="note">
+Passing valid project member IDs in `assignee_ids` is required when assigning users during task creation. Providing non-member IDs will result in a validation error.
 </Aside>
 
 ---
