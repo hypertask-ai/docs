@@ -1,76 +1,48 @@
 import { defineConfig } from 'astro/config';
-
-const sidebars = {
-  docs: [
-    {
-      label: 'Getting Started',
-      items: [
-        { link: '/getting-started/introduction/', text: 'What is Hypertask?' },
-        { link: '/getting-started/quickstart/', text: 'Quick Start' },
-        { link: '/getting-started/concepts/', text: 'Core Concepts' },
-      ],
-    },
-    {
-      label: 'Features',
-      items: [
-        { link: '/features/ai-features/', text: 'AI Features' },
-        { link: '/features/appearance/', text: 'Appearance & AI Models' },
-        { link: '/features/board-settings/', text: 'Board Settings' },
-        { link: '/features/boards/', text: 'Boards & Sections' },
-        { link: '/features/favorites/', text: 'Favorites' },
-        { link: '/features/inbox/', text: 'Inbox & Notifications' },
-        { link: '/features/keyboard-shortcuts/', text: 'Keyboard Shortcuts' },
-        { link: '/features/pages/', text: 'Pages' },
-        { link: '/features/skills/', text: 'Skills' },
-        { link: '/features/superhuman-snippets/', text: 'Superhuman-Style Snippets' },
-        { link: '/features/table-view/', text: 'Table View' },
-        { link: '/features/tasks/', text: 'Tasks' },
-        { link: '/features/time-tracking/', text: 'Time Tracking' },
-        { link: '/features/collaboration/', text: 'Collaboration' },
-      ],
-    },
-    {
-      label: 'API Reference',
-      items: [
-        { link: '/api/tools-reference/', text: 'MCP Tools Reference' },
-        { link: '/api/rest-api/', text: 'REST API' },
-      ],
-    },
-    {
-      label: 'Model Context Protocol',
-      items: [
-        { link: '/mcp/overview/', text: 'MCP Integration' },
-        { link: '/mcp/agents/', text: 'Creating Agents' },
-        { link: '/mcp/workflows/', text: 'Agent Workflows' },
-        { link: '/mcp/scheduling/', text: 'Scheduling Agents' },
-      ],
-    },
-    {
-      label: 'Design System',
-      items: [
-        { link: '/design-system/typography/', text: 'Typography & Sidebar Visuals' },
-        { link: '/design-system/visual-standard/', text: 'Sidebar & Modal Visual Standard' },
-      ],
-    },
-    {
-      label: 'Changelog',
-      items: [{ link: '/changelog/', text: 'Changelog' }],
-    },
-  ],
-};
+// run `npx astro add starlight` to install and add this file
+import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://docs.hypertask.ai',
-  social: {
-    twitter: 'https://twitter.com/hypertaskai',
-  },
-  plugins: [
+  integrations: [
     starlight({
-      sidebar,
-      // Other config...
-      format: {
-        metadata: 'leading_title_doc_title',
-      },
+      lastUpdated: true,
+      sidebar: [
+        { label: 'Introduction', link: '/getting-started/introduction/' },
+        { label: 'Quick Start', link: '/getting-started/quickstart/' },
+        { label: 'Concepts', link: '/getting-started/concepts/' },
+        { label: 'Guides', items: [
+            { label: 'AI Features', link: '/features/ai-features/' },
+            { label: 'Appearance & AI Models', link: '/features/appearance/' },
+            { label: 'Boards & Sections', link: '/features/boards/' },
+            { label: 'Tasks', link: '/features/tasks/' },
+            { label: 'Inbox & Notifications', link: '/features/inbox/' },
+            { label: 'Collaboration', link: '/features/collaboration/' },
+            { label: 'Time Tracking', link: '/features/time-tracking/' },
+            { label: 'Keyboard Shortcuts', link: '/features/keyboard-shortcuts/' },
+            { label: 'Pages', link: '/features/pages/' },
+            { label: 'Skills', link: '/features/skills/' },
+            { label: 'Superhuman-Style Snippets', link: '/features/superhuman-snippets/' },
+            { label: 'Table View', link: '/features/table-view/' },
+            { label: 'Board Settings', link: '/features/board-settings/' },
+            { label: 'Bring Your Own Key (BYOK)', link: '/features/byok/' },
+            { label: 'Favorites', link: '/features/favorites/' },
+            { label: 'AI Chat Board Filter', link: '/features/chat-board-filter/' },
+        ]},
+        { label: 'MCP Integration', items: [
+            { label: 'Overview', link: '/mcp/overview/' },
+            { label: 'Creating Agents', link: '/mcp/agents/' },
+            { label: 'Agent Workflows', link: '/mcp/workflows/' },
+            { label: 'Scheduling Agents', link: '/mcp/scheduling/' },
+        ]},
+        { label: 'CLI', link: '/cli/reference/' },
+        { label: 'REST API', link: '/api/rest-api/' },
+        { label: 'MCP Tools Reference', link: '/api/tools-reference/' },
+        { label: 'Design System', items: [
+            { label: 'Sidebar & Modal Visual Standard', link: '/design-system/visual-standard/' },
+            { label: 'Typography & Sidebar Visuals', link: '/design-system/typography/' },
+        ]},
+        { label: 'Changelog', link: '/changelog/' },
+      ],
     }),
   ],
 });
