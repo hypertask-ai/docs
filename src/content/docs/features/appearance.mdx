@@ -37,6 +37,21 @@ Themes persist per user and apply globally across the app (board views, inbox, c
 Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
 </Aside>
 
+## Mobile UI
+
+On mobile devices (~390x844 viewport), the app displays a notification indicator called the **rocket** in the rail.
+
+### Rocket visibility
+
+- The rocket appears when there are new updates to display
+- On mobile, the rocket group clears the bottom tab bar to ensure visibility
+- Users can open **Settings** to see the full list of updates when the rocket is hidden
+- If there are no new updates, the rocket hides entirely and the X row in Settings shows additional options
+
+### Settings behavior
+
+Press <strong class="highlight">Settings</strong> to view your recent activity. When updates are pending, a rocket icon in the rail allows quick access. Once you've reviewed updates, settings shows a compact list and the rocket clears from the rail.
+
 ## Dictation Language Setting
 
 Dictation language is now per-user. This lets you choose the language you prefer for voice-to-text input.
@@ -94,5 +109,6 @@ AI models are configured globally in the team settings. The current model choice
 | **Theme** | Profile & Settings → Appearance → Theme | Per-user, global |
 | **Dictation language** | Profile & Settings → Appearance → Dictation | Per-user, global |
 | **AI model** | Teams → AI Models picker | Team-wide, global |
+| **Mobile rocket** | Rail (signals new updates) | Per-user activity stream |
 
 These settings are saved server-side and apply across devices logged into the same account. You can change them at any time without losing your preferences.
