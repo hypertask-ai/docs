@@ -1,0 +1,22 @@
+---
+title: Cost Forecast Page
+description: View a live cost forecast for GitHub repositories in Hypertask.
+---
+
+The `/forecast` page on hypertask.app shows a projected cost forecast for your GitHub repositories, using current usage data from GitHub.
+
+## Using the Cost Forecast
+
+Navigate to <a href="https://hypertask.ai/forecast" target="_blank" rel="noopener">hypertask.ai/forecast</a> to see your projected GitHub costs. The forecast is calculated based on live data and updated regularly.
+
+## Behind the Scenes
+
+The cost forecast relies on a fine-grained personal access token with read-only permissions. This token is handled securely within the Hypertask application and does not expose write access or expiration dates.
+
+Setup details:
+
+- Token name: `hypertask-forecast-billing`
+- Permissions: Read-only
+- Scopes: No repo write, no expiration
+
+This token is stored as a worker environment secret (`GITHUB_BILLING_TOKEN`) to provide us with current repository usage statistics for accurate forecasting.
