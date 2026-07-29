@@ -80,6 +80,19 @@ Authorization: Bearer YOUR_AGENT_TOKEN
 Task leases ensure you can safely pick up work without conflicts. Always release your lease when done, and refresh it before expiration to prevent others from stealing the task.
 </Aside>
 
+## Rate limiting for agents
+
+Authenticated agent tokens that carry valid `htk_` API keys receive a higher rate-limit tier:
+
+- **Base tier:** 120 requests/minute for unauthenticated or invalid keys
+- **Agent tier:** 600 requests/minute for authenticated agents with valid `htk_` keys
+
+Agent-tier rate limits apply specifically to agent traffic. Non-agent requests (e.g., from human users or other clients) remain subject to the base limits.
+
+<Aside type="caution">
+Make sure your agent implementation always includes a valid API key when performing write operations. This ensures you get the higher rate tier and proper attribution in activity logs.
+</Aside>
+
 ## Creating and extending Pages
 
 Agents can maintain long-lived, task-bound notes through the Pages system. Use Pages to experiment, plan, and research without cluttering task descriptions.
