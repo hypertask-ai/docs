@@ -9,14 +9,14 @@ import { Aside, CardGrid, Steps } from '@astrojs/starlight/components';
 
 Table view gives you a grid-based way to organize and manage tasks, similar to Notion or Linear. It adapts to the columns you need and keeps your layout preferences saved across sessions.
 
-**Horizontal scrollbar on narrow windows:** When the table columns exceed the available width (e.g., on half-screen viewports), a thin horizontal scrollbar appears at the bottom edge of the table. The vertical scrollbar stays hidden. This lets you scroll columns laterally without obscuring the rest of the interface.
+**Horizontal scrollbar on narrow windows:** When the table columns exceed the available width (e.g., on half-screen viewports), a visible horizontal scrollbar appears at the bottom edge of the table. The vertical scrollbar stays hidden. This lets you scroll columns laterally without obscuring the rest of the interface.
 
 ## Adaptive layout
 
 Table view automatically adjusts to the columns you're using:
 
-- **Full titles**: Task titles now take up all available width — columns you don't need are compressed or hidden, so critical information is always visible.
-- **Flexible columns**: The table layout derives from your visible sections and columns, so you see the most relevant information without cramped spacing.
+- **Full titles:** Task titles now take up all available width — columns you don't need are compressed or hidden, so critical information is always visible.
+- **Flexible columns:** The table layout derives from your visible sections and columns, so you see the most relevant information without cramped spacing.
 
 ## Column picker
 
@@ -29,7 +29,9 @@ Customize your table view with the column picker:
 Your column choices are saved per user, so each team member can have their own table layout.
 
 <Aside type="tip">
+
 The column picker and table layout are per-user settings. You can show or hide any column without deleting it, and changes apply immediately to your view.
+
 </Aside>
 
 ## Advanced column configuration
@@ -37,7 +39,7 @@ The column picker and table layout are per-user settings. You can show or hide a
 Open the Configure table modal for more control over your table setup:
 
 1. Press <kbd>Ctrl+K</kbd> and search for "Configure table".
-2. In the column picker, click the ® or **edit** icon next to "Columns" to open advanced options.
+2. In the column picker, click the ¯ or **edit** icon next to "Columns" to open advanced options.
 3. Choose from additional columns:
 
 **Visibility options**
@@ -56,7 +58,9 @@ Open the Configure table modal for more control over your table setup:
 - Click **Reset to default** to restore the original order and visibility.
 
 <Aside type="detail">
+
 "Reset to default" places the Status column immediately after Title and moves Updated header to the right.
+
 </Aside>
 
 ## Keyboard shortcuts
@@ -79,7 +83,7 @@ This pattern keeps the table focused on the sorted criteria without overwhelming
 
 Table view is great for:
 
-- **Analyzing lots of tasks**: See many items at once in a compact grid without losing readability.
-- **Comparing priorities**: Side-by-side visibility of priority, size, and due dates.
-- **Quick filtering**: Combine visibility filters with your column choices to surface the exact set of tasks you need.
-- **Tracking staleness**: Use the Stale column to identify tasks that haven't been updated recently, especially on boards with staleness detection enabled.
+- **Analyzing lots of tasks:** See many items at once in a compact grid without losing readability.
+- **Comparing priorities:** Side-by-side visibility of priority, size, and due dates.
+- **Quick filtering:** Combine visibility filters with your column choices to surface the exact set of tasks you need.
+- **Tracking staleness:** Use the Stale column to identify tasks that haven't been updated recently, especially on boards with staleness detection enabled.
