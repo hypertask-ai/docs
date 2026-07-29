@@ -6,10 +6,11 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 import { Update } from '@astrojs/starlight/components';
 
 <Update label="July 29, 2026" features={[<u/>]}>
+  * Fixed: comment draft created via 'draft create' now appears in the web UI composer (HTPR-4654)
+  * Fixed: comment updateSeen now uses debounce-and-batch to prevent multiple Prisma calls (HTPR-4033)
   * Added: cost forecast page at /forecast on hypertask.app, live GitHub pricing data ([HTPR-4524](https://app.hypertask.ai/detail/project-15/4524))
   * Added: improved homepage design at hypertask.ai/new-home ([HTPR-4223](https://app.hypertask.ai/detail/project-15/4223))
   * Fixed: rocket panel text-only announcements no longer appear clickable ([HTPR-4644](https://app.hypertask.ai/detail/project-15/4644))
-  * Fixed: comment draft created via 'draft create' now appears in the web UI composer (HTPR-4654)
   * Fixed: Table view scrollbar stays pinned at bottom in full container (HTPR-4649)
   * Added: visible horizontal scrollbar in Table view when columns overflow the window (HTPR-4642)
   * Added: Table sort marks view as unsaved and supports Save view, persisted per view (HTPR-4639)
