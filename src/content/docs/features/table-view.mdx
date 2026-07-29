@@ -9,13 +9,13 @@ import { Aside, CardGrid, Steps } from '@astrojs/starlight/components';
 
 Table view gives you a grid-based way to organize and manage tasks, similar to Notion or Linear. It adapts to the columns you need and keeps your layout preferences saved across sessions.
 
-**Horizontal scrollbar on narrow windows:** When the table columns exceed the available width (e.g., on half-screen viewports), a visible horizontal scrollbar appears at the bottom edge of the table. The vertical scrollbar stays hidden. This lets you scroll columns laterally without obscuring the rest of the interface.
+**Horizontal scrolling across all columns:** When a table's columns exceed the available width on your device (for example on narrow windows or very wide column sets), a visible horizontal scrollbar appears. This lets you scroll to see remaining columns in the grid without obscured headers or black space, ensuring you can reach every column in the row set.
 
 ## Adaptive layout
 
 Table view automatically adjusts to the columns you're using:
 
-- **Full titles:** Task titles now take up all available width — columns you don't need are compressed or hidden, so critical information is always visible.
+- **Full titles:** Task titles now take up all available width â\x80\x94 columns you don't need are compressed or hidden, so critical information is always visible.
 - **Flexible columns:** The table layout derives from your visible sections and columns, so you see the most relevant information without cramped spacing.
 
 ## Column picker
@@ -39,19 +39,19 @@ The column picker and table layout are per-user settings. You can show or hide a
 Open the Configure table modal for more control over your table setup:
 
 1. Press <kbd>Ctrl+K</kbd> and search for "Configure table".
-2. In the column picker, click the ¯ or **edit** icon next to "Columns" to open advanced options.
+2. In the column picker, click the Â¯ or **edit** icon next to "Columns" to open advanced options.
 3. Choose from additional columns:
 
 **Visibility options**
-- **Visible columns** — toggle columns on and off without permanently deleting them. The table updates instantly.
+- **Visible columns** â\x80\x94 toggle columns on and off without permanently deleting them. The table updates instantly.
 
 **Additional columns**
-- **Tags** — render label pills from your tags/column. Shows up to 3 pills, with "+N" expanding the rest. Pill clicks jump to other tasks with the same tag.
-- **Comments** — count of comments per task with hover preview (up to 3 lines). Click to open the task.
-- **Created** — full timestamp of task creation (e.g., "Jul 26, 2026 at 10:42 AM"). Click to view original creation.
-- **Column** — which board section or column a task belongs to. Click to jump to that section on the board.
-- **Status** — copy of the board column name for card-based views (e.g., "Done", "In Progress", "Review").
-- **Stale** — indicator of task staleness when the board staleness toggle is enabled. Shows up to 7 days amber/red signal, empty when fresh, and hidden when the toggle is off. Click to sort by staleness (sorting column appears between Due and Updated).
+- **Tags** â\x80\x94 render label pills from your tags/column. Shows up to 3 pills, with "+N" expanding the rest. Pill clicks jump to other tasks with the same tag.
+- **Comments** â\x80\x94 count of comments per task with hover preview (up to 3 lines). Click to open the task.
+- **Created** â\x80\x94 full timestamp of task creation (e.g., "Jul 26, 2026 at 10:42 AM"). Click to view original creation.
+- **Column** â\x80\x94 which board section or column a task belongs to. Click to jump to that section on the board.
+- **Status** â\x80\x94 copy of the board column name for card-based views (e.g., "Done", "In Progress", "Review").
+- **Stale** â\x80\x94 indicator of task staleness when the board staleness toggle is enabled. Shows up to 7 days amber/red signal, empty when fresh, and hidden when the toggle is off. Click to sort by staleness (sorting column appears between Due and Updated).
 
 **Actions**
 - Drag columns by their grip handle to reorder them.
@@ -73,9 +73,9 @@ Open the Configure table modal for more control over your table setup:
 
 When you sort a table, the experience tightens to show you the most useful columns at once:
 
-- **Status column auto-shows** — as soon as you sort, a Status column appears immediately after the Title column, matching the board column name (e.g., Done, AI Review, Bugs). The column hides again when you clear the sort.
-- **Updated header right-aligned** — the Updated header stays visibly right-aligned over the rest of the column headers.
-- **Stale column option** — when sorting by staleness, a Stale column appears between Due and Updated headers. It hides when staleness sorting is cleared or when the board staleness toggle is off.
+- **Status column auto-shows** â\x80\x94 as soon as you sort, a Status column appears immediately after the Title column, matching the board column name (e.g., Done, AI Review, Bugs). The column hides again when you clear the sort.
+- **Updated header right-aligned** â\x80\x94 the Updated header stays visibly right-aligned over the rest of the column headers.
+- **Stale column option** â\x80\x94 when sorting by staleness, a Stale column appears between Due and Updated headers. It hides when staleness sorting is cleared or when the board staleness toggle is off.
 
 This pattern keeps the table focused on the sorted criteria without overwhelming you with every board field.
 
