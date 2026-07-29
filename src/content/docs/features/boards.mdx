@@ -47,6 +47,17 @@ To permanently remove a board:
 
 Deleted boards cannot be recovered. This action permanently deletes all tasks, comments, labels, and customizations on the board, so use it with caution.
 
+### View board velocity report
+
+Press **Ctrl+K** and search for **"Velocity"** or **"Report"** to quickly access the board velocity report. The report shows key metrics across your board:
+
+- **Flow** — velocity and throughput metrics
+- **Speed** — review and cycle times
+- **Now** — tasks in progress and upcoming
+- **People** — contribution patterns by assignee
+
+The report is available as a dedicated view linked from command palette results ([HTPR-4614](https://app.hypertask.ai/detail/project-15/4614)).
+
 ### First-board redirect
 
 When you first create your first board using Ctrl+K, the command palette will redirect you directly to that new board for immediate use. After your first board, the redirect behavior applies when creating additional boards — you'll be taken to the newly created board automatically.
@@ -65,15 +76,15 @@ Keep important boards within arm's reach by pinning them to the favorites bar in
 
 <Aside type="tip">
 Press <kbd>Ctrl+K</kbd> to open the command palette and quickly access board sorting toggles, view management, and favorites actions.
-</Aside>
+</ Aside>
 
 <Aside>
 Pin your core boards to the favorites bar. Drag to reorder, and pin more boards as needed.
-</Aside>
+</ Aside>
 
-**Pin a board** — open a board's menu (⌘K or click the board icon), then toggle *Pin to favorites*. The favorites bar appears under the rail in the left sidebar.
+**Pin a board** — open a board's menu (Right-click or click the board icon), then toggle *Pin to favorites*. The favorites bar appears under the rail in the left sidebar.
 
-**Reorder favorites** — grab a card's drag handle (⋮⋮) and drag it to a new position.
+**Reorder favorites** — grab a card's drag handle (☰) and drag it to a new position.
 
 **Remove a favorite** — click the three dots on a pinned card and choose *Remove*.
 
@@ -99,8 +110,8 @@ These widths are applied via Tailwind's `sm:` breakpoint, providing consistent l
 
 The browser tab now displays your board name in a clear, scannable format:
 
-- **Board name first** — Your board appears before the application name (e.g., "ine • Hypertask (board name)")
-- **Bullet separator** — Uses a subtle bullet (•) to separate board and app names
+- **Board name first** — Your board appears before the application name (e.g., "ine · Hypertask (board name)")
+- **Bullet separator** — Uses a subtle bullet (·) to separate board and app names
 - **No prefix or repetition** — No Hypertask prefix or repeated name
 - **Dynamic on board switch** — Updates automatically when you switch to a different board
 
@@ -161,7 +172,7 @@ Each section supports the following configuration:
 
 <Aside type="tip">
 Hiding a section is useful when you want to temporarily declutter the board without losing any task data. Tasks in hidden sections still appear in search results and saved views.
-</Aside>
+</ Aside>
 
 ### Hiding columns
 
@@ -176,7 +187,7 @@ To hide a column, use the **Ctrl+K** command palette:
 
 <Aside type="tip">
 Hiding a column is a UI toggle that persists per user — other team members will see the column as visible if their own filter/configuration differs.
-</Aside>
+</ Aside>
 
 ### Hiding empty columns
 
@@ -201,7 +212,7 @@ By default, sections appear in alphabetical order. Customize your board layout w
 
 <Aside type="tip">
 Per-section counts, visibility toggles, and manual sorting persist server-side for each user, so different team members can organize the same board in the way that makes most sense for their workflow.
-</Aside>
+</ Aside>
 
 ### Moving tasks between sections
 
@@ -294,7 +305,7 @@ Control how subtasks appear on the board:
 
 <Aside>
 Saved Views are per-project. Each team member can create their own views without affecting others.
-</Aside>
+</ Aside>
 
 #### Sharing a view via deep link
 
@@ -336,7 +347,7 @@ Each view displays a count of active tasks (Normal status) and archived tasks se
 
 <Aside type="tip">
 For frequent users, per-user sorting lets you prioritize the views you use most often, while admins can maintain a predictable organization for new users.
-</Aside>
+</ Aside>
 
 #### Quick view-tabs pill bar
 
@@ -350,7 +361,7 @@ In Manage Views, each saved view appears as a tab. Like other tabs, switching to
 
 <Aside type="tip">
 Use <kbd>Ctrl+F</kbd> (or <kbd>Shift+F</kbd> to toggle full vs. reduced search) from any board view to quickly scan tasks without leaving the context.
-</Aside>
+</ Aside>
 
 Hypertask provides a single, unified search experience across boards and the inbox. The search is controlled from the board surface (Kanban, Calendar, Timeline) and can also be accessed directly from the Inbox.
 
@@ -362,7 +373,7 @@ Hypertask provides a single, unified search experience across boards and the inb
 
 <Aside type="tip">
 Search works across your open board — filtered to tasks in the current board and sections, and aware of priority, labels, assignee, and due date when in full mode.
-</Aside>
+</ Aside>
 
 ### Using Ctrl+F on boards
 
@@ -376,8 +387,8 @@ When you press `<kbd>Ctrl+F</kbd>` on a board:
 Reduced mode shows only a small tooltip that tells you which task matched, keeping the board context visible. Full mode shows rich results with board overlay, enabling quick previewing and targeted navigation.
 
 <Aside type="note">
-Search history is scoped per board; the same task may display differently depending on which board you’re searching from.
-</Aside>
+Search history is scoped per board; the same task may display differently depending on which board you're searching from.
+</ Aside>
 
 ### Expanded access from Inbox
 
