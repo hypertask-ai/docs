@@ -3,160 +3,96 @@ title: Appearance & AI Models
 description: Customize themes and select AI models for Hypertask.
 ---
 
-import { Aside, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-Your workspace can feel like home. Adjust themes, toggle periodic chart views, pick your preferred chart widgets, and choose AI models for tasks, summaries, and suggestions.
+This page covers personalization options at a glance: theme selection, dictation language settings, and AI model choices.
 
-<CardGrid>
-  <Card title="Themes" icon="palette">
-    Light, Dark, System, AMOLED, and the warm Paper theme
-  </Card>
-  <Card title="Chart toggles" icon="chart-bar">
-    Periodic charts appear as augmented view pills
-  </Card>
-  <Card title="Chart widgets" icon="sliders">
-    Select Chart view toggles when Chart is available
-  </Card>
-  <Card title="Glide & CSM scan" icon="scan">
-    Scan waypoints via GLIDE or CSM, or both
-  </Card>
-  <Card title="AI models" icon="brain-circuit">
-    Claude Opus-5, Grok-4.1, and other AI models for tasks, chat, and summaries
-  </Card>
-</CardGrid>
+## Theme Selection
 
-## Themes
-
-Choose from a range of visual themes to match your environment and preferences. All themes support light and dark modes, with a system default that follows your OS preferences.
+Hypertask provides a comprehensive theme system. Choose from five built-in themes or let the system match your operating system default.
 
 ### Available themes
 
-| Theme | Best for |
+| Theme | Description |
+|-------|-------------|
+| **Light** | Clean, minimal workspace with light backgrounds and subtle shadows |
+| **Dark** | High-contrast dark mode for reduced eye strain in low-light environments |
+| **System** | Automatically follows your operating system's preference (Light ↔ Dark) |
+| **AMOLED** | Pure black backgrounds for OLED and AMOLED displays to conserve battery |
+| **Paper** | Warm editorial light theme with soft paper-like backgrounds for a cozy writing feel |
+| **Mobile** | Mobile-specific dark theme with touch-optimized controls (390x844+ viewport) |
+
+### Viewing theme options
+
+To see current theme and switch:
+
+1. Open the **Teams** section
+2. Click the gear icon next to the team name (then click **Users** or select a user)
+3. Under **Appearance**, click the theme picker
+4. Select a theme from the dropdown
+
+Themes persist per user and apply globally across the app (board views, inbox, calendar, etc.).
+
+<Aside type="tip">
+Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
+</Aside>
+
+## Dictation Language Setting
+
+Dictation language is now per-user. This lets you choose the language you prefer for voice-to-text input.
+
+### Setting dictation language
+
+1. Go to **Profile & Settings** (gear icon on user account row in sidebar)
+2. Navigate to **Appearance** → **Dictation**
+3. Select your preferred language (default is English)
+4. Additional languages appear in the dropdown once configured
+
+### Subsequent use
+
+From then on, dictation uses the language you've selected. The setting is saved server-side and applies whenever you activate voice dictation in the task composer, reply box, or comment composer.
+
+### Visibility notes
+
+- The dictation language setting is **global** (per user) and affects dictation everywhere in the app
+- Language packages and models are optimized for the selected language to improve accuracy
+- You can change this setting at any time in settings
+
+## AI Model Selection
+
+AI models are configured globally in the team settings. The current model choice affects:
+- Task Writer (`/task` command)
+- Write with AI (`/ai` command and Write with AI button)
+- Chat responses
+
+### Available models
+
+| Model | Best for |
 |-------|----------|
-| **Light** | Daytime work, clean aesthetic |
-| **Dark** | Low-light environments, eye comfort |
-| **System** | Follow your OS theme automatically |
-| **AMOLED** | OLED/AMOLED displays, maximum contrast, true-black base |
-| **Paper** | Warm editorial light aesthetic, paper-like feel |
+| **Grok-4.1** | Fast responses, casual tone (RTX 5090 pricing model) |
+| **Claude Opus-5** | High-accuracy reasoning and structured outputs |
+| **Claude Opus-4.8** — legacy | Older model, deprecated (replaced by Opus-5) |
+| **OpenAI** — removed | No longer supported; use local or custom providers |
 
-### Activating a theme
+### Changing AI models
 
-Use the theme picker in the sidebar to switch themes, or search via the command palette:
+1. Open **Teams** section
+2. Click the gear icon next to the team name (then click **AI Models** or **General**)
+3. Under **AI Models**, use the model picker dropdown
+4. Select the model you want to use
 
-- **Ctrl+K** Command palette (type **"Theme"**, select the theme)
-- **Sidebar** - Go to Account settings, choose from the theme dropdown
+### Model-specific notes
 
-AMOLED applies automatic color adjustments to surfaces previously rendered with dark grays, giving you a pure-black base and terminal-friendly input colors that pop on OLED screens. Paper is a warm, not-too-bright light theme suited for editorial workflows and reduced eye strain during extended sessions.
+- **Grok-4.1**: Uses a new pricing model (RTX 5090) and offers faster response times
+- **Opus-5**: Next-generation model with improved reasoning and structured output handling
+- Legacy models continue to work for existing projects but are not shown in the picker
 
-### Theme behavior
+## Personalization Summary
 
-- Changes apply immediately across all boards and UI surfaces
-- Theme preference is saved per user and synced across devices
-- No configuration changes are lost when switching themes
-- Common surfaces affected: card backgrounds, comment inputs, dropdowns, and modal overlays
+| Setting | Location | Scope |
+|---------|----------|-------|
+| **Theme** | Profile & Settings → Appearance → Theme | Per-user, global |
+| **Dictation language** | Profile & Settings → Appearance → Dictation | Per-user, global |
+| **AI model** | Teams → AI Models picker | Team-wide, global |
 
-<Aside type="tip">
-AMOLED is automatically selected by default when your OS is set to "Dark mode" so that badge text remains readable on OLED screens. You can override this via the theme picker if you prefer a dark gray appearance on hybrid-display devices.
-</Aside>
-
-## Charts
-
-Periodic charts (velocity, progress, and burnup) augment your boards as view-type pills and view-widgets. Chart view is not yet globally available everywhere, but you can toggle Charts on when Chart view is offered by your project or board context.
-
-### Quick view-tabs pill bar
-
-When Chart view is available, periodic charts appear as augmented pills in the view-tabs pill bar at the top of the board, alongside your Saved Views and standard views (Board, Calendar, Timeline). Clicking a chart pill opens Chart view for that period and chart type.
-
-### Saved Views pill bar
-
-For any Saved View that supports Chart view, the Chart pill appears in the saved-views pill bar. This gives you a persistent one-click path to Chart view after you open the board to that Saved View.
-
-### Chart widget toggles
-
-In boards or views where Chart view is offered, the Chart pill includes a small toggle icon inside it (e.g., 🔺). Click the toggle to change between two chart styles:
-
-| Toggle state | Available chart styles |
-|--------------|------------------------|
-| First (default) | Velocity chart — estimate-weighted completion per week |
-| Second | Burnup chart — total completed vs total remaining over time |
-
-For boards where Chart view is not offered, this toggle is not shown. Chart view options are surfaced by active boards in your workspace — contact your workspace owner to add Chart view to more areas.
-
-<Aside type="tip">
-When Chart view is available, you can use the Chart pill in either the view-tabs or saved-views pill bar to quickly jump to the chart view relevant to your current context.
-</Aside>
-
-## AI Models
-
-Select AI models for specific features. Your choices show up as badges in the UI to make expectations clear.
-
-<Tabs>
-  <TabItem label="Per-feature" default>
-    Assign models to specific AI capabilities:
-
-    - **Task Writer** — model for generating task descriptions from prompts
-    - **Summaries** — model for auto-summaries of comment threads
-    - **Suggestions** — model for AI triage suggestions in the inbox
-    - **Chat** — model for AI chat responses across the workspace
-
-    Use per-feature settings when you want fine-grained control over where each provider excels. For example, use a quicker model for summaries and a more capable model for complex task generation.
-  </TabItem>
-  <TabItem label="Board context" default>
-    Boards can use custom AI models for the Board AI Task Writer tool on the command palette and CLI. Your board owner or admin can configure a preferred model for the task writer (e.g., Grok-4.1 Flash for fast responses).
-  </TabItem>
-</Tabs>
-
-### Default model selection
-
-When you select **Auto**, Hypertask recommends a model based on your plan and enabled providers, prioritizing speed for summaries and suggestions, and capability for task generation. If you have multiple providers and models enabled, the fastest available model across them wins for performance-sensitive workflows.
-
-### Bindings and overrides
-
-- **Model replacements** — the Opus-4.8 model has been replaced with Opus-5 across board AI chat and task writers; saved preferences using the old ID are upgraded in place
-- **Model-tier badges** — some features highlight cost-effective or speed-optimized models with badges
-- **Fine-grained overrides** — some features (e.g., task summary templates) can still pick faster models while others stick to more capable ones
-- **Board Task Writer** — boards can select their own model for the CLI task writer and command palette task write, with custom instructions applied
-
-<Aside type="tip">
-If you're unsure, rely on the Auto assignment: it adapts to your plan's capabilities and provider setup without manual tuning.
-</Aside>
-
-## Claude Opus-5 (HTPR-4686)
-
-Opus-5 is now the default model for the Claude family in board AI chat, task writers, and summaries. The upgrade replaces Opus-4.8 while preserving user preferences—saved models using the old ID map forward so your existing choices remain active.
-
-Chat responses with Claude models render using standard markdown formatting.
-
-## Grok model support (HTPR-4520)
-
-Hypertask now includes **Grok-4.1** from xAI as an available model for the Board AI Task Writer. Search for "Grok" in the model picker or command palette to select a Grok model. Grok is integrated via the same gateway path as all models and supports per-team billing automatically.
-
-Chat responses with Grok render using standard markdown formatting for readability.
-
-## Admin configuration
-
-Project owners and admins can configure default AI models at the system level. These settings appear in **Settings → AI → AI features**, where you can configure model mappings for key features that operate at the system level:
-
-| Feature | Description |
-|---------|-------------|
-| **Task summaries** | Default model for auto-summaries of task comment threads |
-| **Question suggestions** | Default model for intelligent suggestions in task triage and assignment |
-
-Admin settings serve as a fallback for any project that doesn't have custom instructions. If a project has instructions or specific model preferences, those take precedence.
-
-### Board AI Task Writer settings
-
-Board owners and admins can configure the board's AI Task Writer model, including:
-
-- **Preferred model** — choose Claude Opus-5, Grok-4.1 Flash, Grok-4.1 Other, Gemini 3.6 Flash, or Gemini 3.5 Flash Lite
-- **Custom instructions** — define the style, tone, and guidance for task descriptions generated by the task writer
-
-These settings apply to:
-
-- The CLI task writer (`hypertask task write --board-input`)
-- The Board AI Task Writer in the command palette
-- Automated task creation workflows that use the board's AI configuration
-
-<Aside type="tip">
-For example, teams using Grok can delegate fast task creation via the task writer, while still relying on Claude for chat-based interactions. Configure per-board model preferences in AI Settings to match your organizational AI strategy.
-</Aside>
+These settings are saved server-side and apply across devices logged into the same account. You can change them at any time without losing your preferences.
