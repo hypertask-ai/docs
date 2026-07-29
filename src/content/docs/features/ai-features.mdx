@@ -79,8 +79,7 @@ Use Ctrl+K to open the prompt composer and access Shortcuts (e.g., "Copy in a fr
 
 ### Past Sessions List
 
-The AI chat includes a **past-sessions dropdown** showing your recent conversations. This list can contain many sessions (e.g., hundreds), so native scrollbars would be intrusive.  
-Instead, the dropdown uses CSS to hide native scrollbars while preserving scrolling functionality, providing a clean container view.
+The AI chat includes a **past-sessions dropdown** showing your recent conversations. This list can contain many sessions (e.g., hundreds), so native scrollbars would be intrusive.  Instead, the dropdown uses CSS to hide native scrollbars while preserving scrolling functionality, providing a clean container view.
 
 ### AI Chat Scope
 
@@ -136,6 +135,78 @@ To use AI with skills:
 2. Assign team members to skills so AI knows who specializes in what.
 3. Reference skills in AI prompts or descriptions. For example, "Summarize the frontend tickets on this board."
 
+## AI-Powered Pentesting with Strix
+
+Strix is an AI-powered pentest agent that can analyze your application and surface potential vulnerabilities.
+
+<cardgrid>
+  <Card title="Automated security checks" icon="🛡️">
+    Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
+  </Card>
+  <Card title="Fast retrospectives" icon="⚡">
+    Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early."
+  </Card>
+  <Card title="Defined Scope Inspection" icon="🎯">
+    Configure which apps, routes, and paths Strix should target. Runs respect favicon and robots.txt signals to respect what Google can see, making results realistic and useful."
+  </Card>
+</cardgrid>
+
+To use Strix:
+
+<Tabs>
+<TabItem label="From task detail" value="detail">
+
+1. Open the task you want to scope for security review.
+2. Press <kbd>Ctrl+K</kbd> and type <strong>"Enable Pentesting"</strong> to confirm the enabled agent.
+3. Strix will cyclically review static checks on your exposed routes and surface findings as comments or tasks—no manual script changelog needed.
+
+<Aside type="tip">
+ Strix is available on every board with defined Scope; enable it via Ctrl+K once per project, then keep it on board-level defaults.
+</Aside>
+
+</TabItem>
+
+<TabItem label="Automated recurring runs" value="scheduling">
+
+1. Set a recurring schedule in your DevOps pipeline that invokes <code class="language-bash">hypertask mcp pentest Strix</code> or equivalent MCP endpoint.
+2. Strix scans the configured scope and surfaces findings to your project's trackers (GitHub PR checks, Jira status changes, etc.).
+3. Automate remediation flows—mark security tickets as blockers and route to your incident workflow.
+
+<Aside type="tip">
+ Runs respect existing privacy controls. You can add Strix to your board-level agents or create a dedicated "Security" agent board for PCI/DSS handling scenarios.
+</Aside>
+
+</TabItem>
+</Tabs>
+
+<cardgrid>
+  <Card title="Cost-effective" icon="💰">
+    Keep both local and production runs. A $4 run found 3 previously-unreported real vulnerabilities all confirmed live on production. Configure Strix runs per board with budget guards if needed.
+  </Card>
+</cardgrid>
+
+Strix integration is part of your AI toolkit and integrates with your existing Pentesting workflow. Refer to the [Safety & Quality Guidelines](#) for onboarding and prompt security best practices.
+
+<cardgrid>
+  <Card title="Scan definitions" icon="📋">
+    You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
+  </Card>
+  <Card title="Results interpretation" icon="📊">
+    Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
+  </Card>
+  <Card title="Ingenta + Strix synergy" icon="🔍">
+    For advanced threat modeling, pair Strix with Ingenta or similar agent stacks; use Strix for the low-cost first pass and escalate to Ingenta for top-severity findings requiring deeper investigation tools.
+  </Card>
+</cardgrid>
+
+### Strix Integration with Boards & Views
+
+You can explore Strix findings in real time using board filters and views. For example, open a "Security Findings" view and show items where <strong>Strix_Note</strong> contains "vulnerability" or configure "vulnerability/critical/high" tags on your board to group results by severity.
+
+<Aside type="tip">
+ Keep Strix on a board-level default schedule for weekly/fortnightly review patterns. Archive stale tickets as they close to keep findings current.
+</Aside>
+
 ## Integration with Other Features
 
 AI features connect with the rest of Hypertask:
@@ -149,46 +220,22 @@ AI features connect with the rest of Hypertask:
 AI always respects privacy settings: it operates only within the boards and projects your account has access to.
 </Aside>
 
-## Advanced AI Capabilities
-
-### Help-Center Search
-
-<code class="language-bash">HyperAI</code> now uses the Help-Center search to answer product and how-to questions. Ask "How do I view my monthly time report?" and it will surface relevant articles and documentation.
-
-### AI Assistants for Self-Onboarding
-
-New **AI Assistants** automatically locate AI connection hooks across domains:
-
-- App: <code class="language-bash">https://app.hypertask.ai/llms.txt</code>
-- Public: <code class="language-bash">https://hypertask.ai/llms.txt</code>
-- MCP: <code class="language-bash">https://mcp.hypertask.ai/llms.txt</code>
-
-This enables agents and integrations to discover available endpoints and endpoints (LLMs, tools) for maximum compatibility.
-
-### Multi-Language Dictation
-
-Dictation language settings are now per-user and defaults to English. Additional languages are available in Settings. OpenAI was removed from the provider picker; use local or custom providers instead.
-
-<Aside type="tip">
-To configure your dictation language, go to <strong>Profile & Settings</strong> → <strong>Appearance</strong> → <strong>Dictation</strong>.
-</Aside>
-
 ## FAQ
 
 <details>
-<summary>Can AI read the content of pages attached to tasks?</summary>
+<summary>Can I use Strix on private apps or locally?</summary>
 
-Yes. Pages attached to tasks are RAG-fed, so AI can reference their content in chat and workflow suggestions. Pages maintain version history and are editable by both humans and agents.
+Strix focuses on publicly exposed routes; you can optionally include localhost or staging previews depending on your DevOps setup. For deeply private stacks, consider root-level Pentest tools or PyLink/PSI integrations.
 </details>
 
 <details>
-<summary>Does AI have access to private boards?</summary>
+<summary>How do I triage Strix findings?</summary>
 
-AI operates only within the boards and projects you have access to. It respects privacy boundaries and never accesses content from unauthorized projects.
+Triage items as tasks on your project board. Tag them with "security" and assign remediation to your appropriate discipline. Archive false positives after manual verification.
 </details>
 
 <details>
-<summary>Can AI edit existing content without my approval?</summary>
+<summary>Does Strix replace pentesters from an agency?</summary>
 
-No. AI always requires explicit confirmation before applying changes. You can review and edit AI-generated content before sending or publishing.
+No. Strix is an automation layer and complement to human pentesters. Use it for low-risk surfaces and continuous monitoring; escalate suspicious findings to your agency or external pentesting firm.
 </details>
