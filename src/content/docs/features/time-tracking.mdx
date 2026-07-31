@@ -1,20 +1,20 @@
 ---
 title: Time Tracking
-description: "Track hours on tasks with the /time command: reports, timers, and CSV exports."
+description: "Track hours on tasks with /time command: per-ticket time log modal, timer, L shortcut via Cmd+K, manual entry per-day rows, and CSV exports."
 ---
 
-import { Aside, Card, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/components';
 
-#### Start a timer or log time manually
+### Start a timer or log time manually
 
 Use **`/time`** from the command palette to open the time tracking interface:
 
 - **Timer mode**: Press <kbd>T</kbd> to start tracking time on the selected task (or press <kbd>Tab</kbd> to choose a target)
-- **Manual entry**: Add a time entry by selecting a date, entering a duration (e.g., `2h 30m`), and optional note
+- **Per-ticket time log modal**: Press <kbd>L</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day‑grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
-#### Use filters to view reports
+### Use filters to view reports
 
 The **`/time`** view aggregates time across your workspace and lets you filter by:
 
@@ -23,14 +23,14 @@ The **`/time`** view aggregates time across your workspace and lets you filter b
 | **Team** | All users in your team |
 | **Board** | Specific board or project scope |
 | **User** | Individual user (use `?user=me` to see your own entries) |
-| **Range** | Last 7 days, month-to-date, or custom date picker |
+| **Range** | Last 7 days, month‑to‑date, or custom date picker |
 | **Group** | By task, board, user, or date |
 
-Filters are saved per prompt so you can quickly re-apply the same view.
+Filters are saved per prompt so you can quickly re‑apply the same view.
 
-#### View and export CSV reports
+### View and export CSV reports
 
-After applying filters, click **Export** to download a comma-separated values (CSV) file:
+After applying filters, click **Export** to download a comma‑separated values (CSV) file:
 
 - Formatted for Excel and Google Sheets with decimal hours
 - No injected formulas or formatting artifacts
@@ -56,14 +56,16 @@ Use these prompt patterns when entering `!` time tracking mode:
 </dl>
 </Aside>
 
+
 ### Quiet rows mode
 
 Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose views. This keeps the table compact while preserving edit/delete access to each entry.
 
+
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
-- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn't affect timers on other boards
+- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn’t affect timers on other boards
 
 
 #### Start a timer
@@ -72,13 +74,24 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 2. Press <kbd>T</kbd> — the timer starts automatically
 3. Press <kbd>T</kbd> again to pause and save the entry
 
+
+#### Log time on an open ticket
+
+1. Open a ticket detail or use <kbd>Cmd+K</kbd> → "Log time" when browsing the board or a task list
+2. Day‑grouped time entries appear with rows for each calendar day and a total at the top
+3. Click **Add row** to create a new entry for any date; type a duration in `Xh Ym` or integer (e.g., `2h 30m` or `2.5`)
+4. Adjust the date, duration, and optional note per row
+5. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
+
+
 #### Refine filter views
 
 1. Open `/time` from the command palette
 2. Select filters from the Dropdown panel:
    - **Team**, **Board**, **User**, **Range**, **Group**
-3. Click **Save filters** to prompt-saved states
-4. Quickly re-open saved filters from the left panel
+3. Click **Save filters** to prompt‑saved states
+4. Quickly re‑open saved filters from the left panel
+
 
 #### Export data
 
@@ -86,15 +99,32 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 2. Click **Export CSV**
 3. Open in Excel or Google Sheets — times display as decimal hours ready for calculations
 
+
+### Keyboard shortcut summary
+
 <Aside>
+<dl>
+<dt><kbd>T</kbd> on board (timer mode)</dt>
+<dd>Starts/stops a timer on the selected task</dd>
+<dt><kbd>L</kbd> on a ticket (open ticket only)</dt>
+<dd>Opens the per‑ticket time log modal (in‑place dialog; fires only outside text inputs)</dd>
+<dt><kbd>Cmd+K</kbd> → "Log time"</dt>
+<dd>Time log modal on any open ticket via the command palette</dd>
+</dl>
+</Aside>
+
+
+<Aside>
+
 <details>
 
 <summary>Technical notes</summary>
 
-- The `/time` interface includes an integrated header with no floating back button (consistent with settings-style pages)
+- The `/time` interface includes an integrated header with no floating back button (consistent with settings‑style pages)
 - Report API supports query parameters: `?board=<id>&task=<id>&user=me&running`
 - Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or Xh Ym format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
+- Per‑ticket time log entries live under the ticket’s time tracking row and are grouped by day with a running total
 
 </details>
 </Aside>
