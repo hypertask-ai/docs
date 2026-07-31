@@ -1,6 +1,6 @@
 ---
-title: AI Features
-description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
+title: "AI Features"
+description: "AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow."
 ---
 
 import { Aside, CardGrid, LinkCard, Steps, Tabs, TabItem, Badge } from '@astrojs/starlight/components';
@@ -85,7 +85,17 @@ To minimize title overlap with messages, the interface now truncates very long s
 
 ### Past Sessions List
 
-The AI chat includes a **past-sessions dropdown** showing your recent conversations. This list can contain many sessions (e.g., hundreds), so native scrollbars would be intrusive.  Instead, the dropdown uses CSS to hide native scrollbars while preserving scrolling functionality, providing a clean container view.
+The AI chat includes a **past-sessions dropdown** showing your recent conversations. This list can contain many sessions (e.g., hundreds), so native scrollbars would be intrusive. Instead, the dropdown uses CSS to hide native scrollbars while preserving scrolling functionality, providing a clean container view.
+
+### Suggested Questions
+
+AI generates concise, action-oriented suggested questions based on your current context (task, board, or whole workspace). Suggestions are:
+- **Verb-first** with a clear intended action
+- **Max 7 words** for brevity and quick reading
+- **Free of hedging phrases** like "Should I" or "Can you"
+- **Contextually aware** to match the work at hand
+
+This makes it easier to jump straight into actionable prompts.
 
 ### AI Chat Scope
 
@@ -107,6 +117,10 @@ A **with vector search** indicator shows when the system is searching across mul
 **Fullscreen Mode** — Expand the chat to fill the screen by clicking the fullscreen icon in the top-right corner. The floating/PIP controls move to the three-dot menu.
 
 **Pause & Resume** — Use the pause button in the composer to stop AI generation mid-stream and resume when you're ready.
+
+### HTML Formatting
+
+AI-chat comments and task descriptions are rendered as HTML with Markdown shortcuts supported where appropriate. This prevents stray Markdown markup from leaking into rendered content and ensures consistent display across view modes.
 
 ## High-Risk PR Review Routing
 
@@ -143,13 +157,13 @@ To use AI with skills:
 Strix is an AI-powered pentest agent that can analyze your application and surface potential vulnerabilities.
 
 <cardgrid>
-  <Card title="Automated security checks" icon="🔒">
+  <Card title="Automated security checks" icon="🔍">
     Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
   </Card>
-  <Card title="Fast retrospectives" icon="🎯">
-    Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early."
+  <Card title="Fast retrospectives" icon="⚡">
+    Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early.
   </Card>
-  <Card title="Defined Scope Inspection" icon="🔍">
+  <Card title="Defined Scope Inspection" icon="📐">
     Configure which apps, routes, and paths Strix should target. Runs respect favicon and robots.txt signals to respect what Google can see, making results realistic and useful.
   </Card>
 </cardgrid>
@@ -190,10 +204,10 @@ To use Strix:
 Strix integration is part of your AI toolkit and integrates with your existing Pentesting workflow. Refer to the [Safety & Quality Guidelines](#) for onboarding and prompt security best practices.
 
 <cardgrid>
-  <Card title="Scan definitions" icon="📄">
+  <Card title="Scan definitions" icon="📝">
     You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
   </Card>
-  <Card title="Results interpretation" icon="📊">
+  <Card title="Results interpretation" icon="📖">
     Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
   </Card>
   <Card title="Ingenta + Strix synergy" icon="🔗">
