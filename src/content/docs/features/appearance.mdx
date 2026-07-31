@@ -7,6 +7,14 @@ import { Aside } from '@astrojs/starlight/components';
 
 This page covers personalization options at a glance: theme selection, dictation language settings, and AI model choices.
 
+## Current Views
+
+| View | URL | Description |
+|------|-----|-------------|
+| **Tasks & Board** | app.hypertask.ai | Main workspace for tasks and boards. |
+| **Inbox** | app.hypertask.ai | Unified inbox for assignments, mentions, and notifications. |
+| **Errors (current view)** | hypertask.app/errors | Launch the current view to review errors, auto-filed pipeline tickets, and history. |
+
 ## Theme Selection
 
 Hypertask provides a comprehensive theme system. Choose from five built-in themes or let the system match your operating system default.
@@ -17,7 +25,7 @@ Hypertask provides a comprehensive theme system. Choose from five built-in theme
 |-------|-------------|
 | **Light** | Clean, minimal workspace with light backgrounds and subtle shadows |
 | **Dark** | High-contrast dark mode for reduced eye strain in low-light environments |
-| **System** | Automatically follows your operating system's preference (Light ↔ Dark) |
+| **System** | Automatically follows your operating system's preference (Light → Dark) |
 | **AMOLED** | Pure black backgrounds for OLED and AMOLED displays to conserve battery |
 | **Paper** | Warm editorial light theme with soft paper-like backgrounds for a cozy writing feel |
 | **Mobile** | Mobile-specific dark theme with touch-optimized controls (390x844+ viewport) |
@@ -37,9 +45,13 @@ Themes persist per user and apply globally across the app (board views, inbox, c
 Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
 </Aside>
 
-## Mobile UI
+## Mobile UI & Status Bar
 
-On mobile devices (~390x844 viewport), the app displays a notification indicator called the **rocket** in the rail.
+On mobile devices (~390x844 viewport), the app uses a true edge-to-edge layout on Android with shell v1.17 and web insets:
+
+- The status bar uses the same color as the app background, creating a unified bar.
+- There is no double top gap; the browser's safe-area insets are fully respected.
+- Content areas adjust to provide consistent touch targets while leveraging the full screen.
 
 ### Rocket visibility
 
