@@ -1,6 +1,6 @@
 ---
 title: Time Tracking
-description: "Track hours on tasks with /time command: per-ticket time log modal, timer, L shortcut via Cmd+K, manual entry per-day rows, and CSV exports."
+description: Track hours on tasks with /time command: per-ticket time log modal, timer, L shortcut via Cmd+K, manual entry per-day rows, and CSV exports.
 ---
 
 import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/components';
@@ -10,7 +10,7 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 Use **`/time`** from the command palette to open the time tracking interface:
 
 - **Timer mode**: Press <kbd>T</kbd> to start tracking time on the selected task (or press <kbd>Tab</kbd> to choose a target)
-- **Per-ticket time log modal**: Press <kbd>L</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day‑grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
+- **Per-ticket time log modal**: Press <kbd>L</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
@@ -23,21 +23,20 @@ The **`/time`** view aggregates time across your workspace and lets you filter b
 | **Team** | All users in your team |
 | **Board** | Specific board or project scope |
 | **User** | Individual user (use `?user=me` to see your own entries) |
-| **Range** | Last 7 days, month‑to‑date, or custom date picker |
+| **Range** | Last 7 days, month-to-date, or custom date picker |
 | **Group** | By task, board, user, or date |
 
-Filters are saved per prompt so you can quickly re‑apply the same view.
+Filters are saved per prompt so you can quickly reapply the same view.
 
 ### View and export CSV reports
 
-After applying filters, click **Export** to download a comma‑separated values (CSV) file:
+After applying filters, click **Export** to download a comma-separated values (CSV) file:
 
 - Formatted for Excel and Google Sheets with decimal hours
 - No injected formulas or formatting artifacts
 - Includes task number, description, user, duration, date, and note
 
 CSV export supports the same range and group filters as the table view.
-
 
 ### Prompt shortcuts
 
@@ -56,17 +55,14 @@ Use these prompt patterns when entering `!` time tracking mode:
 </dl>
 </Aside>
 
-
 ### Quiet rows mode
 
 Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose views. This keeps the table compact while preserving edit/delete access to each entry.
-
 
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
 - **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn’t affect timers on other boards
-
 
 #### Start a timer
 
@@ -74,24 +70,21 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 2. Press <kbd>T</kbd> — the timer starts automatically
 3. Press <kbd>T</kbd> again to pause and save the entry
 
-
 #### Log time on an open ticket
 
 1. Open a ticket detail or use <kbd>Cmd+K</kbd> → "Log time" when browsing the board or a task list
-2. Day‑grouped time entries appear with rows for each calendar day and a total at the top
-3. Click **Add row** to create a new entry for any date; type a duration in `Xh Ym` or integer (e.g., `2h 30m` or `2.5`)
-4. Adjust the date, duration, and optional note per row
+2. Day-grouped time entries appear with rows for each calendar day and a total at the top
+3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m
+4. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
 5. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
-
 
 #### Refine filter views
 
 1. Open `/time` from the command palette
 2. Select filters from the Dropdown panel:
    - **Team**, **Board**, **User**, **Range**, **Group**
-3. Click **Save filters** to prompt‑saved states
-4. Quickly re‑open saved filters from the left panel
-
+3. Click **Save filters** to prompt-saved states
+4. Quickly re-open saved filters from the left panel
 
 #### Export data
 
@@ -99,6 +92,16 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 2. Click **Export CSV**
 3. Open in Excel or Google Sheets — times display as decimal hours ready for calculations
 
+### Time reports entry form UX
+
+When adding or editing time entries, the time reporting entry form includes:
+
+- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5
+- **Date picker field**: The entire date field is fully clickable and opens Hypertask’s calendar popover for quick date selection
+- **Multi-select filters per entry**: Board and User are presented as checkboxes you can toggle per entry; rows can be bulk selected with checkboxes, deleted in bulk, or exported to CSV
+- **Entry-level local timestamps**: Each manual entry is stored as local-noon timestamps so logs are correctly associated with the logged day, even across time zones
+
+This UX appears in both the per-ticket time log modal and the broader time view when adding rows.
 
 ### Keyboard shortcut summary
 
@@ -107,12 +110,11 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 <dt><kbd>T</kbd> on board (timer mode)</dt>
 <dd>Starts/stops a timer on the selected task</dd>
 <dt><kbd>L</kbd> on a ticket (open ticket only)</dt>
-<dd>Opens the per‑ticket time log modal (in‑place dialog; fires only outside text inputs)</dd>
+<dd>Opens the per-ticket time log modal (in-place dialog; fires only outside text inputs)</dd>
 <dt><kbd>Cmd+K</kbd> → "Log time"</dt>
 <dd>Time log modal on any open ticket via the command palette</dd>
 </dl>
 </Aside>
-
 
 <Aside>
 
@@ -120,11 +122,17 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 <summary>Technical notes</summary>
 
-- The `/time` interface includes an integrated header with no floating back button (consistent with settings‑style pages)
+- The `/time` interface includes an integrated header with no floating back button (consistent with settings-style pages)
 - Report API supports query parameters: `?board=<id>&task=<id>&user=me&running`
-- Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or Xh Ym format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
+- Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or HH:MM format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
-- Per‑ticket time log entries live under the ticket’s time tracking row and are grouped by day with a running total
+- Per-ticket time log entries live under the ticket’s time tracking row and are grouped by day with a running total
 
 </details>
 </Aside>
+
+<LinkCard
+  title="Inbox & Notifications"
+  description="Stay on top of assignments, mentions, and task updates with a unified inbox."
+  href="/features/inbox/"
+/>
