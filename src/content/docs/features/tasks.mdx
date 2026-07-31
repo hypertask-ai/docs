@@ -46,7 +46,7 @@ Open a task to see:
 - Header with title, status section, assignees, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
-- Top bar with quick actions like Move, Duplicate, or Delete.
+- Top bar with quick actions like Move, Duplicate, Archive, or Delete.
 
 ### Actions
 
@@ -86,6 +86,8 @@ See the [Time Tracking](./time-tracking.mdx) guide for full details.
 Tasks can belong to one section on a board. Changing a task's section moves it to the new column. Some sections have special behaviors:
 
 - **Auto-filing**: Certain pipeline tasks are auto-filed from CI or monitoring systems as new tickets. These appear fresh on the board as soon as they're created.
+
+**Note:** Temporary typecast changes for webhook status handling (e.g., internal Stripe SDK version bumps) do not surface as user-visible settings or toggles; they are infrastructure-level fixes and apply silently under the hood.
 
 ## Export and integration
 
