@@ -3,190 +3,99 @@ title: Tasks
 description: Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks.
 ---
 
-import { Aside, Steps, LinkCard, Card } from '@astrojs/starlight/components';
+# Tasks
 
-Create, assign, and manage tasks across Kanban boards with a rich set of fields, priorities, relations, and subtasks. Tasks can have due dates, estimates, labels, attachments, comments, and relationships to other tasks.
+A task represents a unit of work that can be assigned, progressed, and tracked. It supports rich fields, priority levels, relationships, and subtasks.
 
----
+## Creating a task
 
-## Get Started
+From a board or inbox, click **New task** (or use the keyboard shortcut <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>). This opens the task creator with the following top-level sections:
 
-Create a new task on any board:
+- **Title**: The name or headline of the work.
+- **Description**: Optional text explaining what to do.
+- **Assignees**: One or more members to get notified and held accountable.
+- **Sections & Columns**: Drag the task to a section or use the section picker dropdown.
+- **Due date**: Pick a date or use predictive phrases like "tomorrow," "next week," or relative periods.
+- **Priority**: Choose Low, Medium, or High.
+- **Estimated time**: Optionally specify hours or a low-high range if needed.
 
-1. Open a board.
-2. Click the **Add task** button.
-3. Enter a title and optionally a description.
-4. Set priority, due date, labels, and assignee.
-5. Click **Create** to add the task to the board.
+Use **Write with AI** (<kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
 
-<Aside type="tip">
-Use `Ctrl+K` and search for "Add task" to open the quick-add task input from anywhere in the app.
-</Aside>
+## Editing a task
 
----
+Open a task to view and edit all its fields. Unsupported columns or fields may be hidden based on your team's board configuration.
 
-## Main Task Regions
+### Related fields
 
-Each task contains several key areas:
+- **Assignees**: Current assignees with ability to add or remove. Added assignees trigger notifications.
+- **Sections**: Drag tasks between sections to change their column. This can trigger auto-assign rules if configured.
+- **Due date**: Click a date to pick another date or remove it. The date affects due date pickers and filter views.
+- **Priority**: Change priority to reflect updated urgency.
+- **Estimated time**: Type hours or a low-high range for time-tracking integration.
 
-- **Basic fields** — Title, description, priority, due date, estimate, labels, assignee.
-- **Comments list** — Thread including each comment with author, timestamp, and full text.
-- **Attachments** — File uploads and URLs linked to the task.
-- **Subtask tree** — Parent/child relationships shown directly on the task page.
+### Keyboard shortcuts
 
-You can navigate to any task by `Ctrl+K` and searching for its ticket number (e.g. `HTPR-1234`).
+- **Ctrl+K** / **Cmd+K**: Open the command palette with AI-assisted task editing and Quick Actions.
+- **Ctrl+N** / **Cmd+N**: Create a new task from anywhere on a board.
+- <kbd>Ctrl+O</kbd> / <kbd>Cmd+O</kbd>: Open the link picker when in a task detail view or comment.
 
----
+## Task detail view
 
-## Task Page Config
+Open a task to see:
 
-Manage how tasks appear and behave using Profile > Task page settings:
+- Header with title, status section, assignees, priority, and due date.
+- Description area with optional attachments.
+- Sections: Comments, Relations, Subtasks, Times, and Pages.
+- Top bar with quick actions like Move, Duplicate, or Delete.
 
-- **Inline details** — Show due date, assignee, labels, attachments on task cards.
-- **Task scroll** — Automatically scroll to full description and comments when opening a task.
-- **Subtask depth** — Adjust how many levels of subtasks are expanded by default.
+### Actions
 
-These settings apply to the task detail view and the task editor across all boards.
+Common actions include:
 
----
+- **Move**: Relocate the task to a different section, board, or project.
+- **Duplicate**: Create a copy with the same fields.
+- **Archive**: Hide the task from current views while keeping it in the archive.
+- **Delete**: Permanently remove the task.
 
-## Snooze and Navigation
+## Relations between tasks
 
-Use the pushpin icon on any task to snooze it. When you snooze a task, the system automatically navigates your flow intelligently:
+Create relationships between tasks to surface context without leaving tasks:
 
-- **Next task in the current flow** — If you're browsing tasks in a continuous flow (for example, moving from one board to another), snoozing jumps to the next task in that sequence.
-- **Back to previous context** — If there's no following task, snooze returns you to where you came from (such as the board or inbox that brought you to the task).
+- **Block**: Mark a task as blocking another task.
+- **Blocked by**: Identify what indirectly holds a task back.
+- **Duplicate**: Link to other tasks that represent the same work item.
 
-This behavior works consistently across desktop and mobile, including when you open a task directly from a browser or via shortcuts.
-
----
-
-## Related Tasks
-
-Hypertask can automatically suggest related tasks based on embedding similarity. When you create or edit a task, the system compares your task's description with other tasks across the board and suggests relevant matches.
-
-These recommendations are powered by Turbopuffer embeddings and updated incrementally, so adding new work surfaces related context over time.
-
-<Aside type="tip">
-Related tasks help you discover dependencies, overlapping work, and similar issues without manually searching. They're especially useful for spotting blockers or connected tasks when drafting updates.
-</Aside>
-
----
-
-## Table View
-
-Table view displays tasks in a spreadsheet-like layout with columns for title, priority, assignee, due date, and more.
-
-### View options
-
-- **Row height** — Adjust how compact each row appears to fit more or less information on screen.
-- **Inline expansion** — Expand task cards to show a preview of the description and comments directly in the row.
-- **Smart truncation toggle** — Control whether long titles truncate or wrap:
-  - **Word wrap** (enabled by default): Titles break onto multiple lines so the full text remains readable at smaller screen sizes.
-  - **Truncate instead**: Long titles are cut off with ellipses (...) and revealed by clicking or expanding.
-
-Use the **Ctrl+K** command palette to quickly toggle title wrap mode from any board:
-
-1. Press `Ctrl+K` to open the command palette.
-2. Search for **"Toggle title wrap"**.
-3. Select **Table view** and choose **Wrap** or **Truncate**.
-
-The toggle is persisted per user, so your preference automatically applies whenever you open Table view.
-
----
-
-## Task Row Indicators
-
-Task rows display unread and pinned indicators. The display is simplified to avoid visual clutter:
-
-- **Single dot** — When a task is both unread and pinned, only one dot appears. The blue unread indicator takes precedence over the yellow pinned indicator, placing the dot on the left side of the row (Standard) or right side (Compact) depending on your view settings.
-- **Two dots** — A task that is unread **or** pinned shows two separate dots: blue for unread, yellow for pinned.
-- **No dots** — A task's status is read and not pinned.
-
----
-
-## Move Tasks to Inbox
-
-You can move tasks directly to your inbox from the task detail page or via command palette:
-
-- Open a task and use the **Move to inbox** action (or `Ctrl+K` then type "move task to inbox").
-- From the list and Kanban views, drag the task to the Inbox section or use the **Move to inbox** command.
-- The task is marked as unread and appears in your Inbox & Notifications page as a high-priority item.
-
----
+See a task's relations in the **Relations** section of the task detail view.
 
 ## Subtasks
 
-Create subtasks to break down complex tasks:
+Break down a task into smaller units. Subtasks appear in the task detail under the **Subtasks** section. Mark them complete to show progress toward the parent task.
 
-1. On a task detail page, click **Add subtask**.
-2. Add one or more subtasks as needed.
-3. Their parent-child relationships display automatically.
-4. Mark subtasks complete by moving them to the parent task's Done section.
+## Time tracking
 
-Use the Subtask depth control in Profile > Appearance > Task page to adjust visibility by default.
+Track work hours on tasks via the **Times** section:
 
----
+- <kbd>L</kbd> shortcut opens the time entry modal from the task or via the command palette.
+- Manual per-day rows let you log time for any calendar day without a timer.
+- Export time logs as CSV for payroll or reporting.
 
-## Task Management
+See the [Time Tracking](./time-tracking.mdx) guide for full details.
 
-### Move Tasks
+## Status and sections
 
-Drag-and-drop or select a new section to change a task's column.
+Tasks can belong to one section on a board. Changing a task's section moves it to the new column. Some sections have special behaviors:
 
-### Reorder Tasks
+- **Auto-filing**: Certain pipeline tasks are auto-filed from CI or monitoring systems as new tickets. These appear fresh on the board as soon as they're created.
 
-Use the sort menu (or `Shift+S`) to order tasks by priority, due date, or last updated.
+## Export and integration
 
-### Archive or Delete
+Administrators can configure repository integrations that auto-create tasks or sync status changes.
 
-Archive completed tasks. Deleted tasks are permanently removed after a grace period.
+## Keyboard shortcuts summary
 
----
+Shortcuts are global by default, but some vary by context:
 
-## Task Relationships
-
-Tasks can reference other tasks:
-
-- **Parent relationship** — Link a task as a subtask of another.
-- **Linked task references** — Mentions in descriptions link related work.
-- **Dependencies** — Mark dependencies so dependent tasks can't start until blocking tasks complete.
-- **Block/blocked-by relations** — Mark tasks as blocking others or blocked by another task.
-- **Duplicate relations** — Mark a task as a duplicate of another task (Linear parity).
-
-### Block, blocked-by, and duplicate
-
-Use the task detail page or `Ctrl+K` commands to set relationships:
-
-- **Add related task** — Open a conversation to link this task to another.
-- **Mark blocked by** — Set another task as the blocker for this task.
-- **Mark as blocking** — Mark this task as a blocker for another.
-- **Mark duplicate of** — Mark this task as a duplicate of another task.
-
-These relations are visible from the task detail page in the Task Relationships section, and they help you visualize dependencies, blockers, and duplicates within your workflow.
-
----
-
-## Keyboard Shortcuts
-
-Jump to task actions quickly:
-
-| Shortcut | Action |
-|----------|--------|
-| `Ctrl+K` then type "Add task" | Open quick-add task input |
-| `Ctrl+K` then type number | Jump directly to task HTPR-1234 |
-| `Ctrl+O` | View all links in comments (even when comment composer is focused) |
-| `Alt+1/2` (or other digit) | Jump to favorite board (global, including on board pages) |
-
-### Related Topics
-
-<LinkCard
-  title="Boards & Sections"
-  description="Organize work with Kanban-style boards, customizable sections, and multiple views."
-  href="/features/boards/"
-/>
-<LinkCard
-  title="Keyboard Shortcuts"
-  description="Complete list of keyboard shortcuts for navigation and actions across Hypertask."
-  href="/features/keyboard-shortcuts/"
-/>
+- <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>: Create a new task.
+- <kbd>Ctrl+O</kbd> / <kbd>Cmd+O</kbd>: Open the link or auto-save picker.
+- <kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>: Open the board palette (account switcher).
+- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>: Command palette with AI-assisted actions.
