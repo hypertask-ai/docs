@@ -8,7 +8,6 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 ### Start a timer or log time manually
 
 Use **`/time`** from the command palette to open the time tracking interface:
-
 - **Timer mode**: Press <kbd>T</kbd> to start tracking time on the selected task (or press <kbd>Tab</kbd> to choose a target)
 - **Per-ticket time log modal**: Press <kbd>L</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
@@ -17,7 +16,6 @@ Both modes support saving the entry directly from the form.
 ### Use filters to view reports
 
 The **`/time`** view aggregates time across your workspace and lets you filter by:
-
 | Filter | Description |
 |--------|-------------|
 | **Team** | All users in your team |
@@ -31,7 +29,6 @@ Filters are saved per prompt so you can quickly reapply the same view.
 ### View and export CSV reports
 
 After applying filters, click **Export** to download a comma-separated values (CSV) file:
-
 - Formatted for Excel and Google Sheets with decimal hours
 - No injected formulas or formatting artifacts
 - Includes task number, description, user, duration, date, and note
@@ -62,7 +59,7 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
-- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn’t affect timers on other boards
+- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn't affect timers on other boards
 
 #### Start a timer
 
@@ -74,7 +71,7 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 1. Open a ticket detail or use <kbd>Cmd+K</kbd> → "Log time" when browsing the board or a task list
 2. Day-grouped time entries appear with rows for each calendar day and a total at the top
-3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m
+3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m`)
 4. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
 5. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
 
@@ -95,13 +92,12 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 ### Time reports entry form UX
 
 When adding or editing time entries, the time reporting entry form includes:
-
-- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5
-- **Date picker field**: The entire date field is fully clickable and opens Hypertask’s calendar popover for quick date selection
+- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5` or `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
+- **Date picker field**: The entire date field is fully clickable and opens Hypertask's calendar popover for quick date selection
 - **Multi-select filters per entry**: Board and User are presented as checkboxes you can toggle per entry; rows can be bulk selected with checkboxes, deleted in bulk, or exported to CSV
 - **Entry-level local timestamps**: Each manual entry is stored as local-noon timestamps so logs are correctly associated with the logged day, even across time zones
 
-This UX appears in both the per-ticket time log modal and the broader time view when adding rows.
+This UX appears in both the per-ticket time log modal and the broader time view when adding rows. Each entry now stays on a single line; the person’s name truncates instead of every field wrapping on its own row. Running among the static fields is now positioned ahead of the name, so the green marker can never be clipped even when a row is short. Full text remains on hover if it exceeds the display.
 
 ### Keyboard shortcut summary
 
@@ -126,7 +122,7 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 - Report API supports query parameters: `?board=<id>&task=<id>&user=me&running`
 - Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or HH:MM format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
-- Per-ticket time log entries live under the ticket’s time tracking row and are grouped by day with a running total
+- Per-ticket time log entries live under the ticket's time tracking row and are grouped by day with a running total
 
 </details>
 </Aside>
