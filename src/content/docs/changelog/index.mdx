@@ -8,24 +8,25 @@ import { Update } from '@astrojs/starlight/components';
 <Update label="July 31, 2026" features={[<u/>]}>
   * Added: Post-deploy smoke test verifies key pages and AI chat on production, auto-files tickets on failures ([HTPR-4704](https://app.hypertask.ai/detail/project-15/4704))
   * Improved: Inbox Important now surfaces primarily items currently waiting on you, routine agent outputs go to Updates ([HTPR-4712](https://app.hypertask.ai/detail/project-15/4712))
-</Update>
-
-<Update label="July 31, 2026" features={[<u/>]}>
   * Added: visible error influx at https://hypertask.app/errors with auto-filed pipeline errors and smoke test history ([HTPR-4707](https://app.hypertask.ai/detail/project-15/4707))
   * Fixed: mobile status bar edge-to-edge with no double top gap on Android ([HTPR-4733](https://app.hypertask.ai/detail/project-15/4733))
-</Update>
-
-<Update label="July 31, 2026" features={[<u/>]}>
   * Added: self-healing error pipeline that auto-catches, dedupes, and files production errors to board tickets with PostHog EU telemetry ([HTPR-4703](https://app.hypertask.ai/detail/project-15/4703))
   * Improved: AI chat panel now shows non-overlapping session title and wider panel floor for comfortable reading on all devices ([HTPR-4720](https://app.hypertask.ai/detail/project-15/4720))
   * Fixed: time-log entries stay on a single line with truncated names instead of row-shifting wrapping ([HTPR-4710](https://app.hypertask.ai/detail/project-15/4710))
   * Added: per-ticket time log modal with keyboard shortcut L and inline day-grouped time entry rows ([HTPR-4741](https://app.hypertask.ai/detail/project-15/4741))
+  * Added: shorter, context-aware suggested questions in AI chat (verb-first, max 7 words, no hedging) ([HTPR-4658](https://app.hypertask.ai/detail/project-15/4658))
+  * Improved: AI-chat comments and descriptions now render as HTML with Markdown shortcuts supported to prevent stray markup leaks ([HTPR-4687](https://app.hypertask.ai/detail/project-15/4687))
+  * Improved: chat session恢复了 after reload, keeping context available across page refreshes ([HTPR-4687](https://app.hypertask.ai/detail/project-15/4687))
+</Update>
+
+<Update label="July 31, 2026" features={[<u/>]}>
+  * Added: agent presence — live status per agent visible on the board showing what they're currently working on ([HTPR-4438](https://app.hypertask.ai/detail/project-15/4438))
 </Update>
 
 <Update label="July 29, 2026" features={[<u/>]}>
   * Fixed: description emoji picker no longer opens edit mode + scrolls off-screen (HTPR-4663)
   * Added: revealed related-tasks via embeddings with semantic dedup (HTPR-4440)
-  * Added: agent-tier rate limitsÃ¢quired agents with valid API keys get 600/min vs 120/min base tier (HTPR-4431)
+  * Added: agent-tier rate limitsがあり required agents with valid API keys get 600/min vs 120/min base tier (HTPR-4431)
 </Update>
 
 <Update label="July 28, 2026" features={[<u/>]}>
@@ -38,14 +39,14 @@ import { Update } from '@astrojs/starlight/components';
   * Fixed mobile sort modal clears Android status bar ([HTPR-4647](https://app.hypertask.ai/detail/project-15/4647))
   * Added CLI: hypertask task writer and write with AI CLI commands ([HTPR-4653](https://app.hypertask.ai/detail/project-15/4653))
   * Fixed: comment edit now opens on double-click / Ctrl+Enter instead of a single click ([HTPR-4659](https://app.hypertask.ai/detail/project-15/4659))
-  * Fixed: /api/notifications/getCount now requires verified session authorization instead of returning any user\'s count ([HTPR-4650](https://app.hypertask.ai/detail/project-15/4650))
+  * Fixed: /api/notifications/getCount now requires verified session authorization instead of returning any user's count ([HTPR-4650](https://app.hypertask.ai/detail/project-15/4650))
   * Fixed: /api/invites/post now requires verified session and project membership for invitations ([HTPR-4651](https://app.hypertask.ai/detail/project-15/4651))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Fixed search latency Ã¢udden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Fixed search latency — sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
   * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
-  * Added Ctrl+B board palette Ã¢8; click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
   * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
   * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
@@ -67,7 +68,7 @@ import { Update } from '@astrojs/starlight/components';
   * Copy comment to AI chat and Summarize focused comments via Ctrl+K ([HTPR-4564](https://app.hypertask.ai/detail/project-15/4564))
   * Show promotion banner when push+email are both off in the inbox ([HTPR-4518](https://app.hypertask.ai/detail/project-15/4518))
   * Added per-user dictation language setting (default English, multilingual options) and removed OpenAI from the provider picker ([HTPR-4544](https://app.hypertask.ai/detail/project-15/4544))
-  * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user\'s own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
+  * New fresh starter board for new signups: AI-selects a board template first, with a static fallback board seeded in the user's own team ([HTPR-4546](https://app.hypertask.ai/detail/project-15/4546))
   * Improved inbox performance: collapsed notifications fan-out reduced latency from ~190-232ms to ~110-177ms by collapsing deep includes into a single lookup ([HTPR-4528](https://app.hypertask.ai/detail/project-15/4528))
 </Update>
 
@@ -83,7 +84,7 @@ import { Update } from '@astrojs/starlight/components';
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Added AI Assistant Self-OnboardingÃ¢queates AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) ([HTPR-4635](https://app.hypertask.ai/detail/project-15/4635))
+  * Added AI Assistant Self-Onboarding反映了 AI connection hooks via llms.txt on the App, Public, and MCP domains (https://hypertask.ai/llms.txt, app.hypertask.ai/llms.txt, mcp.hypertask.ai/llms.txt) ([HTPR-4635](https://app.hypertask.ai/detail/project-15/4635))
 </Update>
 
 <Update label="July 27, 2026" features={[<u/>]}>
@@ -114,7 +115,7 @@ import { Update } from '@astrojs/starlight/components';
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly ([HTPR-4455](https://app.hypertask.ai/detail/project-15/4455))
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426))
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Ã\x82Â· Team Ã\x82Â· Board Ã\x82Â· Connect Ã\x82Â· Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications ([HTPR-4403](https://app.hypertask.ai/detail/project-15/4403))
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits ([HTPR-4429](https://app.hypertask.ai/detail/project-15/4429))
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments ([HTPR-4428](https://app.hypertask.ai/detail/project-15/4428))
