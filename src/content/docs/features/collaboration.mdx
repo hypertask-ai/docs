@@ -5,18 +5,14 @@ description: Work together with team workspaces, real-time editing, mentions, re
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-
 Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
-
 
 ## Team workspaces
 Workspaces are the top-level container in Hypertask. Each workspace groups related projects together and manages team membership.
 
 A workspace might represent your company, a department, or a client engagement. You can belong to multiple workspaces.
 
-
 ## Project members
-
 
 ### Inviting people
 Invite team members to a project by generating an **invite link**. Invite links support several controls:
@@ -27,11 +23,9 @@ Invite team members to a project by generating an **invite link**. Invite links 
 | **Usage limit** | Cap how many people can join via this link |
 | **Domain restriction** | Limit invites to specific email domains (e.g. `@yourcompany.com`) |
 
-
 <Aside type="tip">
 Domain restrictions are useful when you want to share an invite link broadly (in Slack, for example) but limit access to people within your organization.
 </Aside>
-
 
 ### Roles and permissions
 Project members are assigned one of three roles, each with different privileges for managing the project:
@@ -55,7 +49,6 @@ To see who contributes which tasks:
 ### M and better Auth integration
 Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
 
-
 ### Login flow
 1. **Initiate login** — Click email code or magic-link in the login modal.
 2. **Server processes** — Better Auth verifies your identity on the server.
@@ -65,11 +58,9 @@ Hypertask uses **Better Auth** for server-led authentication. When you log in vi
    - **ht_session** — Server-validated signature for cookie integrity.
 4. **Redirect to board** — You're redirected to a board in the app.
 
-
 <Aside type="note">
 All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
 </Aside>
-
 
 ### BYOK and API keys
 API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
@@ -150,7 +141,7 @@ Membership visibility is scoped per section:
 - **Board tab** — Shows that board's Members and Agents alongside their roles and association checkboxes if applicable.
 
 <Aside type="tip">
- agents are scoped by team, so you can safely reuse agents across projects in the same client or department without exposing agents to unrelated teams.
+Agents are scoped by team, so you can safely reuse agents across projects in the same client or department without exposing agents to unrelated teams.
 </Aside>
 
 ## AI Agents
@@ -163,7 +154,6 @@ AI agents can be added to boards just like human team members. When you add an a
 3. Select the agent you want to add to the board.
 4. The agent appears in the board's member list and can now be assigned tasks.
 </Steps>
-
 
 Agents added to a board are treated as members of that board. This means:
 
@@ -191,7 +181,6 @@ Type `@` in any comment to mention a team member. Mentions do two things:
 2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
 
 Mentions work in comments and task descriptions, and support native and external agents:
-
 
 <Aside type="tip">
 If you receive a mention that looks suspicious, report it to your workspace owner. All mentions are sanitized to prevent potential injection attacks.
@@ -237,6 +226,25 @@ Comments can be starred (saved) or pinned, and the visual indicators update base
 ### All reactions icon
 Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether it's a like or another emoji expression.
 
+## Agent decision requests
+Agents can now ask you for decisive feedback on tickets. When an agent encounters a decision that impacts work (e.g., "Archive this task," "Move to inactive," etc.), it opens a **decision request** on the ticket with one-tap approve/answer buttons.
+
+### Triggering decision requests
+Decision requests appear as inline panels on the ticket:
+
+- **Approve** — Applies the agent's suggested action with one tap
+- **Reject / More options** — Opens a menu with detailed choices or alternative actions
+
+Agents only create decision requests when the suggested action clearly affects board state and benefits from human sign-off. Routine summaries, AI editor outputs, and informational messages do not trigger requests.
+
+### Agent aftermath
+Once you respond:
+
+- **Approved decisions** — The agent applies the action to the ticket immediately (e.g., archives the task and adds a reason comment)
+- **Rejected or alternative** — The agent stops iterating on that item and moves on, leaving the ticket in its current state
+
+You can review all pending decision requests anytime in the ticket feed — the panel stays visible until resolved.
+
 ## Real-time sync
 Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
@@ -279,6 +287,7 @@ The comment hover panel in table views and card lists is streamlined for faster 
 - **Three-dot menu** — click the three-dot to reveal remaining options
 
 Press and hold <kbd>Ctrl+K</kbd> (or the three-dot itself) to access the full menu with all comment commands pinned at the top:
+
 - **Edit** — modify the comment
 - **Summarize** — generate an AI summary of the comment thread
 - **Fast like** — quickly add a thumbs-up reaction
@@ -336,6 +345,7 @@ Browse and search a full emoji library. Click any emoji to insert it into your c
 
 #### GIFs tab
 The GIFs tab is powered by **Giphy** and offers two modes:
+
 - **Trending** — shows popular GIFs by default when you open the tab.
 - **Search** — type any query to find a GIF that fits the moment.
 
@@ -365,6 +375,7 @@ Both options exit edit mode without posting the comment and without polluting th
 Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
+
 - Task creation, updates, and deletion
 - Section moves
 - Assignment and priority changes
@@ -378,6 +389,7 @@ Activity logs are available at the task level (see what happened to a specific t
 The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
+
 - Click the **Show history** pill at the top of the feed, or
 - Press **`Ctrl+Shift+H`**
 
