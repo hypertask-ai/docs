@@ -19,6 +19,17 @@ Navigation works the same in every view: <kbd>U</kbd> and <kbd>I</kbd> go to the
 
 The selected day section no longer extends its background across the entire day view; only the hovered or focused row highlights. Each day row shows its own selection state.
 
+## Everything split
+
+The Everything split in the splits bar is removable and fully customizable. Change it from the default view to match how you work most often:
+
+- **Rename**: Click the split label to edit its name. The splits row updates to show your custom title.
+- **Save preferences**: Set your filters, sorting, and view type (Day, Week, Month).
+- **Restore defaults**: Reset a split to its original state to undo your override.
+- **Everything can never be deleted**: The split always remains available but can be hidden if you prefer.
+
+Load a custom split with plain `/calendar` navigation. Changing the view updates the split's state; a plain load restores that custom state.
+
 ## Shareable links
 
 The calendar URL always encodes what you are looking at:
@@ -30,6 +41,6 @@ https://app.hypertask.ai/calendar?view=day&date=2026-07-31
 - `view` is `day`, `week`, or `month`.
 - `date` is the anchor day in `YYYY-MM-DD`.
 
-The address bar updates as you navigate, so copying it always shares your current view. Opening a shared link shows that exact view and date regardless of the recipient's own last-used calendar state. Links with invalid dates fall back to the recipient's own calendar.
+Copy a link at any time to share exactly the same view and date. Open a shared link to land on that day's specific view, regardless of the recipient's own last-used calendar state. Links with invalid dates fall back to the recipient's own calendar.
 
 For agents: construct these URLs directly when pointing a person at a specific day or week, e.g. `https://app.hypertask.ai/calendar?view=week&date=2026-08-03`.
