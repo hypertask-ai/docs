@@ -1,6 +1,6 @@
 ---
 title: Time Tracking
-description: "Track hours on tasks with /time command: per-ticket time log modal, timer, L shortcut via Cmd+K, manual entry per-day rows, and CSV exports."
+description: "Track time on tasks with W, log time manually with B, review reports, and export CSV."
 ---
 
 import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/components';
@@ -8,8 +8,8 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 ### Start a timer or log time manually
 
 Use **`/time`** from the command palette to open the time tracking interface:
-- **Timer mode**: Press <kbd>T</kbd> to start tracking time on the selected task (or press <kbd>Tab</kbd> to choose a target)
-- **Per-ticket time log modal**: Press <kbd>L</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
+- **Timer mode**: Select a task on a board or table, or open its detail page, then press <kbd>W</kbd> to start or stop its timer
+- **Per-ticket time log modal**: Press <kbd>B</kbd> or run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
@@ -63,9 +63,9 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 #### Start a timer
 
-1. Select a task on the board (or use <kbd>Tab</kbd> to pick one)
-2. Press <kbd>T</kbd> — the timer starts automatically
-3. Press <kbd>T</kbd> again to pause and save the entry
+1. Select a task on the board or table, or open its detail page
+2. Press <kbd>W</kbd> — the timer starts automatically
+3. Press <kbd>W</kbd> again to stop and save the entry
 
 #### Log time on an open ticket
 
@@ -103,9 +103,9 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 
 <Aside>
 <dl>
-<dt><kbd>T</kbd> on board (timer mode)</dt>
+<dt><kbd>W</kbd> on a board, table, or task detail page</dt>
 <dd>Starts/stops a timer on the selected task</dd>
-<dt><kbd>L</kbd> on a ticket (open ticket only)</dt>
+<dt><kbd>B</kbd> on a ticket (open ticket only)</dt>
 <dd>Opens the per-ticket time log modal (in-place dialog; fires only outside text inputs)</dd>
 <dt><kbd>Cmd+K</kbd> → "Log time"</dt>
 <dd>Time log modal on any open ticket via the command palette</dd>
