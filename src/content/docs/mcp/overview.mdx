@@ -215,7 +215,11 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-**AI Chat is read-only today.** It reads your context, boards, tasks, comments, sections and inbox, searches, and pulls in help-centre and web results. It cannot create, edit, move, assign, comment, or archive anything — writes go through the CLI, MCP, or REST API. The chat sidebar exposes 11 tools; the MCP server exposes 39.
+AI Chat reads and writes: it creates and updates tasks, comments, drafts, pages, labels, views and timers, assigns people, moves tasks between boards, and archives from the inbox. It exposes 44 tools against the MCP server's 48, so the two are close but not identical.
+
+Not in AI Chat today: skills (`hypertask_list_skills` and friends), task relations (`hypertask_link_tasks`, `hypertask_find_related_tasks`, `hypertask_next_tasks`), `hypertask_move_task_to_inbox`, and the agent-coordination tools (`hypertask_hello`, `hypertask_agent_presence`, `hypertask_board_manifest`, `hypertask_get_board_playbook`, `hypertask_decision_request`, `hypertask_task_context`).
+
+Some capabilities are shared but named differently: MCP folds comment edits into `hypertask_add_comment_to_task`, unassign into `hypertask_assign_user`, and every timer action into `hypertask_time`, where AI Chat gives each its own tool.
 
 ## Known limitations
 
