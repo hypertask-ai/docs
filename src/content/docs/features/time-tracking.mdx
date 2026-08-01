@@ -7,7 +7,7 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 
 ### Start a timer or log time manually
 
-Use **`/time`** from the command palette to open the time tracking interface:
+Use **/time** from the command palette to open the time tracking interface:
 - **Timer mode**: Select a task on a board or table, or open its detail page, then press <kbd>W</kbd> to start or stop its timer
 - **Per-ticket time log modal**: Run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
@@ -15,7 +15,7 @@ Both modes support saving the entry directly from the form.
 
 ### Use filters to view reports
 
-The **`/time`** view aggregates time across your workspace and lets you filter by:
+The **/time** view aggregates time across your workspace and lets you filter by:
 | Filter | Description |
 |--------|-------------|
 | **Team** | All users in your team |
@@ -25,6 +25,16 @@ The **`/time`** view aggregates time across your workspace and lets you filter b
 | **Group** | By task, board, user, or date |
 
 Filters are saved per prompt so you can quickly reapply the same view.
+
+### Time log filters
+
+The time log modal also supports quick filters:
+
+| Filter | Description |
+|--------|-------------|
+| **Assignee** | Filter entries by who logged them; real assignee filter helps surface who actually worked on a task rather than who merely received it |
+| **All dates** | Show all time entries regardless of date |
+| **Today / This week** | Quick-finishing filters for common work periods |
 
 ### View and export CSV reports
 
@@ -38,7 +48,7 @@ CSV export supports the same range and group filters as the table view.
 ### Prompt shortcuts
 
 <Aside>
-Use these prompt patterns when entering `!` time tracking mode:
+Use these prompt patterns when entering ! time tracking mode:
 
 <dl>
 <dt><code>!time today</code></dt>
@@ -92,12 +102,13 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 ### Time reports entry form UX
 
 When adding or editing time entries, the time reporting entry form includes:
-- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5` or `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
+- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5` or `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`). Split hours and minutes yourself via the modal for unambiguous durations.
+- **High-precision duration support**: Use h:mm:ss format for exact precision (e.g., `0:45:30` for 45 minutes and 30 seconds). The system stores durations at the second level for accurate reporting.
 - **Date picker field**: The entire date field is fully clickable and opens Hypertask's calendar popover for quick date selection
 - **Multi-select filters per entry**: Board and User are presented as checkboxes you can toggle per entry; rows can be bulk selected with checkboxes, deleted in bulk, or exported to CSV
 - **Entry-level local timestamps**: Each manual entry is stored as local-noon timestamps so logs are correctly associated with the logged day, even across time zones
 
-This UX appears in both the per-ticket time log modal and the broader time view when adding rows. Each entry now stays on a single line; the person’s name truncates instead of every field wrapping on its own row. Running among the static fields is now positioned ahead of the name, so the green marker can never be clipped even when a row is short. Full text remains on hover if it exceeds the display.
+This UX appears in both the per-ticket time log modal and the broader time view when adding rows. Each entry now stays on a single line; the person's name truncates instead of every field wrapping on its own row. Running among the static fields is now positioned ahead of the name, so the green marker can never be clipped even when a row is short. Full text remains on hover if it exceeds the display.
 
 ### Keyboard shortcut summary
 
@@ -123,6 +134,7 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 - Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or HH:MM format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
 - Per-ticket time log entries live under the ticket's time tracking row and are grouped by day with a running total
+- Time log v3 includes real assignee filtering, h:mm:ss duration support, and split hours/minutes input for clearer tracking
 
 </details>
 </Aside>
