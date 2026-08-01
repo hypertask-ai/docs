@@ -30,6 +30,7 @@ export default defineConfig({
           'features/cost-forecast',
           'features/superhuman-snippets',
           'features/observability',
+          'features/slack',
         ],
         },
         {

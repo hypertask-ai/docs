@@ -1,0 +1,89 @@
+---
+title: Slack
+description: Connect Slack so ticket discussions are summarized onto tickets, and create or manage tickets without leaving a channel.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+The Slack integration closes the gap between where decisions happen and where work is tracked. It works in both directions: Hypertask reads channel discussion that references your tickets and writes summaries back onto them, and you can drive Hypertask from Slack with `/ht` commands or plain language.
+
+## What it does
+
+**Thread summaries onto tickets.** When someone mentions a ticket in a watched channel, either by its number (`HTPR-123`) or by pasting its URL, Hypertask starts watching that thread. Once the thread has been quiet for 30 minutes, it posts one comment on the ticket: a one-line outcome, the decisions and open asks as bullets, who took part, and a link back to the Slack thread. If the thread comes back to life later, a follow-up comment is added.
+
+**Tickets created from a thread.** Write `@Hypertask create a task for this` in any thread. The bot reads the whole conversation, writes a ticket with a plain-English summary of the ask plus the relevant context, files it on your team's default project, and replies in the thread with the link. That thread is then watched, so later discussion is summarized onto the new ticket automatically.
+
+**Commands and chat.** `/ht` runs slash commands, and mentioning or DMing the bot works in plain language.
+
+<Aside type="note">
+Hypertask only sees channels the bot has been invited to. Run `/invite @Hypertask` in each channel you want watched. Private channels work the same way.
+</Aside>
+
+## Setting it up
+
+<Steps>
+
+1. **Connect the workspace.** Open Settings, go to Slack, and choose Connect. Slack asks you to approve the permissions, then returns you to Hypertask. One Slack workspace connects to one Hypertask team.
+
+2. **Pick a default project.** This is where tickets created from Slack are filed. Until it is set, the bot replies asking an admin to choose one instead of guessing.
+
+3. **Invite the bot.** In each channel you want covered, run `/invite @Hypertask`.
+
+4. **Link your account.** Most people are linked automatically: if your Slack email matches your Hypertask account on that team, the connection is made the first time you use the bot. If it cannot match you, run `/ht connect` and confirm in the browser.
+
+</Steps>
+
+## Why account linking matters
+
+Everything you do through Slack runs as **you**, not as a shared robot account. Tickets you create are authored by you, comments are attributed to you, and you can only see and change what your Hypertask permissions already allow. Someone who has not linked an account gets a prompt to run `/ht connect`, and nothing is executed for them.
+
+Automatic thread summaries are the one exception: they are posted by the integration itself, because they belong to the conversation rather than to any single person.
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `/ht help` | List every command |
+| `/ht connect` | Link your Slack account to your Hypertask account |
+| `/ht disconnect` | Remove that link |
+| `/ht create <title> --project <name>` | Create a ticket. Optional `--priority`, `--description` |
+| `/ht search <text>` | Search tickets |
+| `/ht list --project <name>` | List tickets. Optional `--status`, `--assignee` |
+| `/ht view <TICKET>` | Show one ticket |
+| `/ht comment <TICKET> <text>` | Comment on a ticket |
+| `/ht assign <TICKET> <@user>` | Assign someone |
+| `/ht move <TICKET> <column>` | Move a ticket to another column |
+| `/ht update <TICKET> --title/--priority/--status` | Edit a ticket |
+| `/ht inbox` | Show your notifications |
+| `/ht projects` | List your boards |
+
+## Talking to the bot
+
+Mention the bot in a channel or send it a direct message and describe what you want. It understands requests like:
+
+- *Show me my open tickets*
+- *Create a high priority task in Product about the login redirect*
+- *Search for anything about billing*
+- *Move HTPR-123 to In Progress*
+- *Comment on HTPR-123 that the fix is deployed*
+
+Slack messages are treated as untrusted input, so instructions written inside a conversation cannot make the bot act outside your permissions.
+
+## Costs
+
+Summaries and language understanding use your team's AI allowance, the same budget as AI features inside the app. Summarizing runs on a low-cost model, and only threads that actually reference a ticket are ever summarized.
+
+## Permissions requested
+
+| Scope | Why |
+| --- | --- |
+| `channels:history`, `groups:history` | Read discussion in channels the bot was invited to, to spot ticket references |
+| `chat:write` | Post replies in threads |
+| `commands` | Provide `/ht` |
+| `app_mentions:read`, `im:history` | Respond to mentions and direct messages |
+| `users:read`, `users:read.email` | Match Slack people to Hypertask accounts and show names in summaries |
+| `team:read` | Identify the workspace during install |
+
+## Disconnecting
+
+Settings, Slack, Disconnect removes the stored workspace token and stops all watching immediately. Comments already posted stay on their tickets. Removing the app from Slack has the same effect.
