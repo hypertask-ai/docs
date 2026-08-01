@@ -1,0 +1,30 @@
+name: Build Check
+
+# The docs are written by agents editing MDX by hand, and a single malformed tag
+# takes the whole site build down. Run the build wherever we can see it fail
+# before it reaches the deploy job.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build the site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build

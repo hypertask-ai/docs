@@ -12,6 +12,9 @@ jobs:
   deploy:
     name: Build and deploy to Cloudflare Pages
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
 
     steps:
       - name: Checkout
@@ -56,3 +59,28 @@ jobs:
                 "https://docs.hypertask.ai/changelog.md"
               ]
             }'
+
+      # Everything here pushes straight to main, so a failed deploy is the only
+      # signal the site has stopped updating — and nobody watches the runs tab.
+      # In July 2026 every deploy failed for eleven days before anyone noticed.
+      # Raise one issue, and keep raising it until the build is green again.
+      - name: Report a failed deploy
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT: ${{ github.sha }}
+        run: |
+          TITLE="docs.hypertask.ai is not deploying"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number -q '.[0].number')
+          BODY="The docs site stopped updating. Until this is green, docs.hypertask.ai serves whatever was published last.
+
+          Failed run: ${RUN_URL}
+          Commit: ${COMMIT}
+
+          Almost always malformed MDX: an unbalanced or bare JSX tag, an unescaped \`|\` inside a table cell, or an \`<Aside type=\"...\">\` that is not note/tip/caution/danger. Run \`npm run build\` locally to see the file and line."
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi

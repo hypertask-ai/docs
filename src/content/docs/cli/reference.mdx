@@ -9,6 +9,7 @@ The Hypertask CLI (`hypertask`) lets you manage tasks, projects, comments, and n
 
 ## Installation
 
+
 ```bash
 npm install -g @hypertask/hypertask_cli
 ```
@@ -28,6 +29,7 @@ The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you pre
 </Aside>
 
 ## Authentication
+
 
 <Steps>
 
@@ -64,6 +66,7 @@ Pass `<code>--token <jwt></code>` on any command to override the saved token for
 </Aside>
 
 ## Exit Codes and Error Behavior
+
 
 The CLI uses exit codes so scripts and CI pipelines can reliably detect failures. Up to v1.8.0, some write commands exited with code 0 even when the write did not succeed, making errors invisible to callers. Starting from CLI 1.8.0, the CLI always fails loudly: every subcommand that encounters an error exits non-zero with an accompanying message.
 
@@ -113,6 +116,7 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 
 ## `capabilities` / `commands`
 
+
 Dump the full CLI command and option tree as machine-readable JSON. This is the fastest way for an agent or script to enumerate every command, flag, and description in one call — no recursive `--help` grepping needed.
 
 ```bash
@@ -157,6 +161,7 @@ hypertask capabilities --json
 ---
 
 ## Tasks
+
 
 ### `task list`
 
@@ -450,14 +455,15 @@ hypertask task move-to-inbox HTPR-XXXXX --user 42
 This ensures the task appears in the recipient's inbox regardless of whether they are a member of the board or project, and without triggering a self-assignment notification that would skip.
 
 
-
 ---
 
 ## Views
 
+
 Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks — especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
 
 ### `view list`
+
 
 List all saved views for a project, including each view's ID, title, and visibility.
 
@@ -479,6 +485,7 @@ view_ghi789    My Open Tasks         private
 ```
 
 ### `view get`
+
 
 Fetch tasks from a specific saved view, with that view's filters already applied.
 
@@ -510,354 +517,8 @@ hypertask view get view_abc123 --json | jq '.[].title'
 
 ---
 
-## Search
-
-### `search`
-
-Search for tasks by keyword. Results display full ticket titles (wrapping long titles across multiple lines in the table so nothing is cut off), links to each task, and include a **Due** column showing due dates where available.
-
-```bash
-hypertask search "dark mode" --project 15 --limit 5
-```
-
-| Argument / Flag | Description | Default |
-|-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
-| `--limit <n>` | Maximum results | `10` |
-| `--json` | Output raw JSON instead of the formatted table | — |
-
-<Aside type="tip">
-This command is an alias under `tasks search` as of CLI 1.9.1. Using `tasks search` for convenience works the same as the top-level `search` command.
-</Aside>
-
-### `tasks search`
-
-Alias for `search`, useful to keep all task-accessible commands under a single topical group.
-
-```bash
-hypertask tasks search "firebase" --project 15
-```
-
-| Argument / Flag | Description | Default |
-|-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
-| `--limit <n>` | Maximum results | `10` |
-
----
-
-## Comments
-
-### `comment list`
-
-List all comments on a task, including the full body of each comment.
-
-```bash
-hypertask comment list HTPR-2992
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
-
-<Aside type="tip">
-**Plain output is complete.** The default (non-`--json`) output of `comment list` is tab-separated and contains every comment field — author, timestamp, and full text. You do not need `--json` to get all the data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured data for downstream tools.
-</Aside>
-
-### `comment add`
-
-Add a comment to a task. The comment is persisted immediately and a real comment URL is returned — use `comment list` to confirm the comment appears.
-
-```bash
-hypertask comment add HTPR-2992 --text "<p>Looks good, merging now.</p>"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--text <text>` | Comment text (HTML format) |
-| `--attach <path-or-url>` | Attach a local file or URL to the comment (repeatable for multiple attachments) |
-
-<Aside type="note">
-**`tasks search` provides a convenient alias under a task-aggregated command group.** If you prefer to cluster subcommands relating to tasks, `tasks search` works the same as the top-level `search` command.
-
-```
-hypertask tasks search "dark mode" --project 15
-```
-
-Both forms are valid and documented for clarity in task-accessible commands.
-</Aside>
-
-```bash
-# Attach a file alongside a comment
-hypertask comment add HTPR-2992 \
-  --text "<p>Screenshot of the issue attached.</p>" \
-  --attach ./screenshot.png
-
-# Attach a remote URL
-hypertask comment add HTPR-2992 \
-  --text "<p>See the Loom recording for full context.</p>" \
-  --attach https://www.loom.com/share/abc123
-```
-
-<Aside type="tip">
-**Plain `<@Name>` mentions work.** Writing `<p>@Alice</p>` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
-
-```bash
-hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
-```
-</Aside>
-
-<Aside type="note">
-**`--json` output control:** When using `--json`, `comment add` emits exactly one JSON document containing the full comment details. Human-readable confirmation is hidden through a controlled early return, and the typical output structure is accessible for programmatic parsing.
-</Aside>
-
-### `comment update`
-
-Update an existing comment.
-
-```bash
-hypertask comment update 8450 --text "<p>Updated: shipped in v2.1.0</p>"
-```
-
-| Argument / Flag | Description |
-|-----------------|-------------|
-| `<id>` | Comment ID |
-| `--text <text>` | New comment text (HTML format) |
-
-### `comment delete`
-
-Delete a comment.
-
-```bash
-hypertask comment delete 8450
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<id>` | Comment ID |
-
----
-
-## Sections
-
-Section management lives under the top-level `section` command (not `project section`). Use these commands to create, rename, delete, and reorder board columns from the terminal.
-
-### `section create`
-
-Create a new section (column) on a board.
-
-```bash
-hypertask section create --project 15 --title "In Review"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--title <text>` | Section title (required) |
-| `--after <id\|name>` | Insert after this existing section (optional) |
-
-```bash
-# Create a section and place it after an existing one
-hypertask section create --project 15 --title "In Review" --after "Doing"
-```
-
-<Aside type="caution">
-Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed — use `hypertask section create` instead.
-</Aside>
-
-### `section rename`
-
-Rename an existing section.
-
-```bash
-hypertask section rename --project 15 --section "In Review" --title "Code Review"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to rename, by ID or current name (required) |
-| `--title <text>` | New title for the section (required) |
-
-### `section delete`
-
-Delete a section from a board.
-
-```bash
-hypertask section delete --project 15 --section "In Review"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to delete, by ID or name (required) |
-
-<Aside type="caution">
-Deleting a section removes the column from the board. Tasks inside the section are not deleted — they are left without a section and may need to be moved manually. Verify section contents before deleting.
-</Aside>
-
-### `section reorder`
-
-Move a section to a new position on the board by specifying which section it should appear after.
-
-```bash
-hypertask section reorder --project 15 --section "In Review" --after "Doing"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to move, by ID or name (required) |
-| `--after <id\|name>` | The section it should appear after, by ID or name (required) |
-
-```bash
-# Move "QA" to appear after "In Review"
-hypertask section reorder --project 15 --section "QA" --after "In Review"
-
-# Use section IDs for precision
-hypertask section reorder --project 15 --section 4012 --after 4005
-```
-
-<Aside type="tip">
-Use `hypertask section list --project 15` to list all section IDs and names before reordering, so you can reference them exactly.
-</Aside>
-
----
-
-## Projects
-
-### `project list`
-
-List all projects you have access to.
-
-```bash
-hypertask project list
-```
-
-| Flag | Description | Default |
-|------|-------------|---------|
-| `--limit <n>` | Results per page | `10` |
-| `--offset <n>` | Pagination offset | `0` |
-
-### `section list`
-
-List all sections (columns) in a project.
-
-```bash
-hypertask section list --project 15
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<project-id>` | The project ID |
-
-### `project members`
-
-List all members of a project.
-
-```bash
-hypertask project members 15
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<project-id>` | The project ID |
-
-### `project invite`
-
-Invite a user to a project by email address. The invited user receives an email invitation and gains access once they accept.
-
-```bash
-hypertask project invite 15 --email teammate@example.com
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<project-id>` | The project ID (required) |
-
-| Flag | Description |
-|------|-------------|
-| `--email <address>` | Email address of the person to invite (required) |
-
-<Aside type="tip">
-If the invitee already has a Hypertask account, they are added to the project immediately. New users receive an email to complete sign-up before accessing the project.
-</Aside>
-
-### `project labels`
-
-List available labels for a project.
-
-```bash
-hypertask project labels 15
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<project-id>` | The project ID |
-
-### `project label create`
-
-Create a new label in a project.
-
-```bash
-hypertask project label create --project 15 --name "CLI"
-```
-
-| Flag | Description |
-|------|-------------|
-| `--project <id>` | Project ID (required) |
-| `--name <text>` | Label name (required) |
-
-### `project create-board`
-
-Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
-
-```bash
-hypertask project create-board --file board.json
-```
-
-Example `board.json`:
-
-```json
-{
-  "team_id": 3,
-  "title": "Website Redesign",
-  "sections": [
-    { "title": "Backlog" },
-    { "title": "Doing" },
-    { "title": "Done" }
-  ],
-  "labels": [
-    { "name": "Design" },
-    { "name": "Frontend" }
-  ],
-  "tasks": [
-    {
-      "title": "Wireframe the homepage",
-      "section": "Backlog",
-      "labels": ["Design"],
-      "priority": "high"
-    }
-  ]
-}
-```
-
-| Flag | Description |
-|------|-------------|
-| `--file <path>` | Path to a JSON manifest (required) |
-
-<Aside type="tip">
-`team_id` is required. To find yours, run `hypertask context --json` and look for the `teams` array.
-</Aside>
-
----
-
-## Views
-
-Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). As of CLI 1.10.0, views support lifecycle management directly from the terminal. Use these commands to create, update, switch between, or delete views.
-
 ### `view create`
+
 
 Create a new named view from your current board or a project you have access to. The CLI reads the current view state from your last interacted project and its active view, or you can specify a project to target.
 
@@ -884,6 +545,7 @@ hypertask view create \
 
 ### `view update`
 
+
 Update an existing saved view. You can modify which fields are included, filters, or sort order without losing the view configuration.
 
 ```bash
@@ -906,6 +568,7 @@ hypertask view update view_abc123 \
 
 ### `view switch`
 
+
 Switch the active UI view to your recent view or a specific view by ID.
 
 ```bash
@@ -917,6 +580,7 @@ hypertask view switch view_abc123
 | `<view-id>` | The view ID to switch to |
 
 ### `view delete`
+
 
 Delete a saved view by its ID:
 
@@ -936,7 +600,9 @@ Only your own views and shared views you have write access to can be deleted. At
 
 ## Search
 
+
 ### `search`
+
 
 Search for tasks by keyword. Results display full ticket titles (wrapping long titles across multiple lines in the table so nothing is cut off), links to each task, and include a **Due** column showing due dates where available.
 
@@ -957,6 +623,7 @@ This command is an alias under `tasks search` as of CLI 1.9.1. Using `tasks sear
 
 ### `tasks search`
 
+
 Alias for `search`, useful to keep all task-accessible commands under a single topical group.
 
 ```bash
@@ -973,7 +640,9 @@ hypertask tasks search "firebase" --project 15
 
 ## Comments
 
+
 ### `comment list`
+
 
 List all comments on a task, including the full body of each comment.
 
@@ -990,6 +659,7 @@ hypertask comment list HTPR-2992
 </Aside>
 
 ### `comment add`
+
 
 Add a comment to a task. The comment is persisted immediately and a real comment URL is returned — use `comment list` to confirm the comment appears.
 
@@ -1038,6 +708,7 @@ hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.
 
 ### `comment update`
 
+
 Update an existing comment.
 
 ```bash
@@ -1050,6 +721,7 @@ hypertask comment update 8450 --text "<p>Updated: shipped in v2.1.0</p>"
 | `--text <text>` | New comment text (HTML format) |
 
 ### `comment delete`
+
 
 Delete a comment.
 
@@ -1065,9 +737,23 @@ hypertask comment delete 8450
 
 ## Sections
 
+
 Section management lives under the top-level `section` command (not `project section`). Use these commands to create, rename, delete, and reorder board columns from the terminal.
 
+### `section list`
+
+List all sections (columns) in a project, with a task count for each.
+
+```bash
+hypertask section list --project 15
+```
+
+| Flag | Description |
+|------|-------------|
+| `--project <id>` | The project ID |
+
 ### `section create`
+
 
 Create a new section (column) on a board.
 
@@ -1092,6 +778,7 @@ Earlier CLI versions exposed section creation under `hypertask project section c
 
 ### `section rename`
 
+
 Rename an existing section.
 
 ```bash
@@ -1105,6 +792,7 @@ hypertask section rename --project 15 --section "In Review" --title "Code Review
 | `--title <text>` | New title for the section (required) |
 
 ### `section delete`
+
 
 Delete a section from a board.
 
@@ -1122,6 +810,7 @@ Deleting a section removes the column from the board. Tasks inside the section a
 </Aside>
 
 ### `section reorder`
+
 
 Move a section to a new position on the board by specifying which section it should appear after.
 
@@ -1151,7 +840,9 @@ Use `hypertask section list --project 15` to list all section IDs and names befo
 
 ## Projects
 
+
 ### `project list`
+
 
 List all projects you have access to.
 
@@ -1164,19 +855,8 @@ hypertask project list
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
-### `section list`
-
-List all sections (columns) in a project.
-
-```bash
-hypertask section list --project 15
-```
-
-| Argument | Description |
-|----------|-------------|
-| `<project-id>` | The project ID |
-
 ### `project members`
+
 
 List all members of a project.
 
@@ -1189,6 +869,7 @@ hypertask project members 15
 | `<project-id>` | The project ID |
 
 ### `project invite`
+
 
 Invite a user to a project by email address. The invited user receives an email invitation and gains access once they accept.
 
@@ -1210,6 +891,7 @@ If the invitee already has a Hypertask account, they are added to the project im
 
 ### `project labels`
 
+
 List available labels for a project.
 
 ```bash
@@ -1221,6 +903,7 @@ hypertask project labels 15
 | `<project-id>` | The project ID |
 
 ### `project label create`
+
 
 Create a new label in a project.
 
@@ -1234,6 +917,7 @@ hypertask project label create --project 15 --name "CLI"
 | `--name <text>` | Label name (required) |
 
 ### `project create-board`
+
 
 Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
@@ -1278,6 +962,7 @@ Example `board.json`:
 ---
 
 ## Drafts
+
 
 A draft is unsent text parked on a task: a comment you have not posted yet, or a replacement description you have not applied yet. Each user gets **one comment draft and one description draft per task**.
 
@@ -1341,7 +1026,147 @@ hypertask draft delete 98711
 
 ---
 
+## Pages
+
+Pages are rich documents attached to a task — longer than a description, versioned, and editable in pieces. Content is markdown unless you pass `--html`.
+
+### `pages create`
+
+```bash
+hypertask pages create --task 24554 --title "Migration plan" --markdown-file ./plan.md
+```
+
+| Flag | Description |
+|------|-------------|
+| `--task <id>` | Task ID the page belongs to |
+| `--title <title>` | Page title |
+| `--content <content>` | Page content inline |
+| `--markdown-file <path>` | Read the content from a file instead |
+| `--parent <id>` | Nest under an existing page |
+| `--html` | Treat the content as HTML |
+
+### `pages get`
+
+```bash
+hypertask pages get 812 --format markdown
+```
+
+| Argument / Flag | Description |
+|-----------------|-------------|
+| `<id>` | Page ID |
+| `--format <markdown\|html>` | Content format, markdown by default |
+
+### `pages append`
+
+Add to the end of a page without rewriting it — the safe way for an agent to add a finding to a shared document.
+
+```bash
+hypertask pages append 812 --content "## Rollback\n\nPromote the previous deployment."
+```
+
+### `pages update`
+
+```bash
+hypertask pages update 812 --markdown-file ./plan.md --mode replace --note "post-review rewrite"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--content <content>` / `--markdown-file <path>` | The new content |
+| `--mode <replace\|append\|prepend>` | How to apply it, replace by default |
+| `--if-version <n>` | Only write if the page is still at this version |
+| `--note <text>` | Why you changed it |
+| `--html` | Treat the content as HTML |
+
+Use `--if-version` when several agents may touch the same page: the write fails instead of silently overwriting someone else's edit.
+
+### `pages list` / `pages search`
+
+```bash
+hypertask pages list --task 24554
+hypertask pages list --project 15
+hypertask pages search "rollback"
+```
+
+---
+
+## Skills
+
+Skills are reusable instruction blocks invoked with `/slug` in AI chat and the task writers. They are personal (`--scope user`) or shared with a board (`--scope project --project <id>`).
+
+### `skills list` / `skills get`
+
+```bash
+hypertask skills list                # personal skills
+hypertask skills list --project 15   # skills shared with a board
+hypertask skills get 42
+```
+
+### `skills create`
+
+```bash
+hypertask skills create --markdown ./SKILL.md --scope project --project 15
+```
+
+| Flag | Description |
+|------|-------------|
+| `--name <name>` | Skill name |
+| `--slug <slug>` | Invocation slug, used as `/slug` |
+| `--body <body>` | Instruction body |
+| `--description <description>` | What the skill is for |
+| `--argument-hint <hint>` | Hint shown after the slug in the picker |
+| `--scope <user\|project>` | `user` by default |
+| `--project <id>` | Required for project scope |
+| `--markdown <path>` | Read name, slug, description and body from a `SKILL.md` |
+| `--disabled` | Create it switched off |
+
+### `skills update` / `skills delete`
+
+```bash
+hypertask skills update 42 --body "Updated instructions."
+hypertask skills delete 42
+```
+
+### `skills import`
+
+Import skills straight from a GitHub repository.
+
+```bash
+hypertask skills import https://github.com/user/repo --dry-run
+hypertask skills import https://github.com/user/repo --scope project --project 15 --slugs review,ship
+```
+
+`--dry-run` lists what would be imported without writing anything.
+
+---
+
+## AI
+
+### `ai write`
+
+Run the AI Task Writer from the terminal. Without `--apply` it prints the draft and changes nothing.
+
+```bash
+# See what it would write
+hypertask ai write "Explain the rollback plan" --task HTPR-4650
+
+# Write the result back to the task description
+hypertask ai write "Tighten this description" --task HTPR-4650 --apply
+```
+
+| Argument / Flag | Description |
+|-----------------|-------------|
+| `<prompt>` | What you want written |
+| `--task <ticket>` | Ticket used as context, e.g. `HTPR-4650` |
+| `--project <id>` | Board to use, defaults to the task's board |
+| `--mode <task-writer\|write-with-ai>` | `task-writer` drafts a description, `write-with-ai` drafts a comment |
+| `--instructions <text>` | Extra instructions for this run |
+| `--apply` | Write the result back to the task, requires `--task` |
+
+---
+
 ## Utility Commands
+
 
 | Command | Description |
 |---------|-------------|
@@ -1356,6 +1181,7 @@ hypertask draft delete 98711
 ---
 
 ## Time Tracking (CLI)
+
 
 Manage time tracking for a task directly from your terminal.
 
@@ -1433,6 +1259,7 @@ Time tracking data integrates with the Hypertask web UI and MCP tools, so you ca
 ---
 
 ## Common Workflows
+
 
 ### Pick up a task from your inbox
 
