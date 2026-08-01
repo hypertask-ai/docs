@@ -7,6 +7,57 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
+## Slack integration
+
+Connect Slack directly to Hypertask so decisions about tickets live where your team already collaborates.
+
+### Create tickets from Slack
+
+If your team minds decisions live in Slack instead of wandering into a separate tool:
+
+1. **Invite the Hypertask bot** to the Slack channel where you want to capture ticket candidates (e.g., `@Hypertask invite`).
+
+2. **Create a task from a thread** — in any thread, type:
+
+   ```
+   @Hypertask create a task for this
+   ```
+
+The bot reads the entire thread, extracts a title and description using AI, creates the ticket on your default board, and replies in the same Slack thread with the ticket link. That thread is auto-watched, so follow-up summary comments appear directly on the ticket.
+
+### Auto-summarize idle threads on tickets
+
+When a Slack thread mentions a ticket (by ID like `HTPR-123` or URL), Hypertask watches for quiet cycles:
+
+- The bot monitors tabs and channels you’ve connected.
+- When a thread goes idle for more than 30 minutes after receiving a ticket mention, it generates an AI summary and posts it as a comment on that ticket.
+- The summary includes the key points and a Slack permalink so you can continue the discussion there.
+
+This way, conversations that started in Slack don’t die there — they live permanently on the right ticket for your team and agents.
+
+### Requirements and setup
+
+- **Slack app permissions:** Ensure your Slack app has:
+  - `chat:write` — to reply with ticket links
+  - `chat:write.public` — to post in channels you don’t own
+  - `channels:history` and `groups:history` — to read thread context
+  - `app_mentions:read` — to detect ticket mentions
+- **Channel watching:** You control which channels to watch (e.g., direct invite or workspace-wide discovery).
+- **Workspace scope:** Slack integrations are team-scoped, so your connection is tied to your Hypertask team and limited to boards and tasks you have access to.
+
+### Comparison with existing Slack integrations
+
+Hypertask natively integrates Slack with thread-aware sync, unlike the older workers:
+
+| Feature | `ht-slack` Worker | `inne-slack-scout` Agent | Hypertask Slack Integration |
+|---------|-------------------|--------------------------|------------------------------|
+| Can read channel messages | No (mention/DM only) | No (mentions only) | Yes (full thread history) |
+| Links to existing tickets | No | No (drafts only) | Yes — auto-watches threads |
+| Team-scoped | No (workspace fallback token) | Single-tenant | Team-scoped accounts |
+| AI-driven summaries | No | No | Yes — auto-summaries on idle cycles |
+
+---
+
 ## Team workspaces
 Workspaces are the top-level container in Hypertask. Each workspace groups related projects together and manages team membership.
 
@@ -41,7 +92,6 @@ To see who contributes which tasks:
 1. Open the project board.
 2. Check the board header for member avatars and counts.
 3. Hover over an avatar to see their role (Owner, Admin, or Member).
-
 
 ---
 
@@ -301,7 +351,7 @@ On mobile devices, you can swipe a comment to reveal its action menu:
 - Available actions appear inline alongside the comment content
 - The menu provides fast access to common comment actions without opening the full detail view
 
-This makes it quick to delete, star, or otherwise manage comments directly from your mobile feed.
+This makes quick to delete, star, or otherwise manage comments directly from your mobile feed.
 
 ### Mobile comment actions menu
 When you tap into a comment's action menu on mobile, you can find and manage several options:
