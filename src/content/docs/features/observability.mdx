@@ -21,7 +21,7 @@ Accessed from the URL or through integrations; no auth token is required for ing
 
 Hypertask tracks real-world user performance through PostHog Core Web Vitals—First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, and Time to Interactive—to understand how fast the app feels.
 
-<Aside type="info">
+<Aside type="note">
 This data is logged anonymously via PostHog EU and never tied to your projects or tasks. Metrics reflect aggregate app performance for all users.
 </Aside>
 
@@ -45,15 +45,10 @@ The exposed <code class="language-bash">/api/errors</code> endpoint respects a s
 
 ## Using Error Telemetry
 
-<Steps>
-<Step>The error influx endpoint is monitored proactively. Sentinel agents review new entries and triage tickets automatically.</Step>
-<TabItem label="From Sentry/Log Shipping" value="sentry">
-If you ship errors to Sentry, Datadog, or similar, forward error JSON to <code class="language-bash">https://hypertask.app/errors</code> with the same field shape and the system will match against existing tickets for deduplication.
-</TabItem>
-<TabItem label="From Application Logs" value="logs">
-For custom logging integrations, POST JSON with consistent keys such as <code class="language-bash">message, stackTrace, context, userAgent, projectId</code>.
-</TabItem>
-</Steps>
+The error influx endpoint is monitored proactively. Sentinel agents review new entries and triage tickets automatically.
+
+- **From Sentry / log shipping**: If you ship errors to Sentry, Datadog, or similar, forward error JSON to `https://hypertask.app/errors` with the same field shape and the system will match against existing tickets for deduplication.
+- **From application logs**: For custom logging integrations, POST JSON with consistent keys such as `message, stackTrace, context, userAgent, projectId`.
 
 ## FAQ
 
