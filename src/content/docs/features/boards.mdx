@@ -1,6 +1,6 @@
 ---
-title: Boards & Sections
-description: Organize work with Kanban-style boards, customizable sections, and multiple views.
+title: "Boards & Sections"
+description: "Organize work with Kanban-style boards, customizable sections, and multiple views."
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -84,7 +84,7 @@ Pin your core boards to the favorites bar. Drag to reorder, and pin more boards 
 
 **Pin a board** — open a board's menu (Right-click or click the board icon), then toggle *Pin to favorites*. The favorites bar appears under the rail in the left sidebar.
 
-**Reorder favorites** — grab a card's drag handle (☰) and drag it to a new position.
+**Reorder favorites** — grab a card's drag handle (⋮) and drag it to a new position.
 
 **Remove a favorite** — click the three dots on a pinned card and choose *Remove*.
 
@@ -227,6 +227,18 @@ There are three ways to move a task to a different section:
 
 3. **API** — call `hypertask_move_task_between_boards` to move a task to a section on a different board entirely.
 
+### 3-column layout behavior
+
+When you create a board with exactly three sections, Hypertask applies safe-center constraints to prevent the leftmost column from being cut off the viewport. The layout automatically switches to left-aligned scrolling when the combined width of all three columns exceeds the available viewport width. This change ensures that:
+
+- The first column is always fully visible even on wide boards
+- Scroll behavior is smooth and predictable
+- The leftmost column content remains accessible without requiring additional navigation adjustments
+
+<Aside type="tip">
+If you add a fourth section to a 3-column board, the board reverts to standard left-to-right scrolling with no viewport constraints.
+</ Aside>
+
 ## Views
 
 Boards support multiple ways to visualize the same set of tasks. Switch between views without losing any data — they're just different lenses on the same information.
@@ -335,7 +347,7 @@ You can customize the order of your views in the **Manage Views** panel:
 - **Visibility toggle** — hide views without deleting them (hidden views are restored when tasks are added).
 - **Reset** — quickly restore the default view order for boards with centralized settings.
 
-When you hover over a view tab, a gear icon ⚙ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
+When you hover over a view tab, a gear icon ≙ appears in the header, revealing quick access to view options: visibility, pinned status, edit, and delete.
 
 ### View counts
 
