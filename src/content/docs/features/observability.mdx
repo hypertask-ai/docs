@@ -1,9 +1,6 @@
 ---
 title: Observability & Error Tracking
 description: Monitor application health and auto-file production errors with built-in error endpoint and self-healing pipeline.
-# Draft: broken component structure (bare <Step>, TabItem without Tabs) breaks
-# the build. Fix the markup before publishing.
-draft: true
 ---
 
 import { Aside, Card, Steps, Tabs } from '@astrojs/starlight/components';
@@ -11,6 +8,7 @@ import { Aside, Card, Steps, Tabs } from '@astrojs/starlight/components';
 ## Visible Error Influx
 
 Hypertask provides a public error-influx endpoint at <code class="language-bash">https://hypertask.app/errors</code> where application errors, including those during AI-chat interactions, are reported and processed. The endpoint surfaces:
+
 - Error details (stack traces, context)
 - Auto-filed tickets via the existing MCP task service
 - Deduplication and rate limiting for stability
@@ -19,20 +17,30 @@ Hypertask provides a public error-influx endpoint at <code class="language-bash"
 Accessed from the URL or through integrations; no auth token is required for ingestion.
 </Aside>
 
+## Web Performance Telemetry
+
+Hypertask tracks real-world user performance through PostHog Core Web Vitals—First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, and Time to Interactive—to understand how fast the app feels.
+
+<Aside type="info">
+This data is logged anonymously via PostHog EU and never tied to your projects or tasks. Metrics reflect aggregate app performance for all users.
+</Aside>
+
 ## Self-Healing Error Pipeline
 
 When production or client-side errors occur in Hypertask, the self-healing error pipeline automatically catches, dedupes, and:
+
 - Files bug tickets to a dedicated board or project
 - Sends telemetry via PostHog EU
 - Reports through <code class="language-bash">/api/errors</code> for downstream processing
 
 The pipeline operates on both server and browser-level catchers, ensuring coverage of:
+
 - Server crashes and backend errors
 - Client-side exceptions (especially during AI-chat interactions)
 - Application errors originating from external integrations
 
 <Aside type="caution">
-The exposed <code class="language-bash">/api/errors</code> endpoint respects a server-side allowlist. Public access is restricted to whitelipped requests; rate-capping prevents abuse.
+The exposed <code class="language-bash">/api/errors</code> endpoint respects a server-side allowlist. Public access is restricted to whitelisted requests; rate-capping prevents abuse.
 </Aside>
 
 ## Using Error Telemetry
