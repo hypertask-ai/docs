@@ -122,6 +122,15 @@ A **with vector search** indicator shows when the system is searching across mul
 
 AI-chat comments and task descriptions are rendered as HTML with Markdown shortcuts supported where appropriate. This prevents stray Markdown markup from leaking into rendered content and ensures consistent display across view modes.
 
+## Comment TL;DR Summaries
+
+Comments with **120 or more words** automatically get a short AI summary, shown as a dimmed **TL;DR row above the comment**. The full comment always stays visible; nothing collapses.
+
+- The row shows the first summary line clamped to one line. Click it to expand the full summary as bullets (a chevron appears on hover), exactly like the task summary at the top of a ticket.
+- Summary length grows with the comment: roughly **one line per 120 words**, capped at 6 lines.
+- Summaries generate a few minutes after a comment is saved or edited, using the same AI models configured for task summaries. Teams with AI disabled get no summaries and no AI spend.
+- Activity events (like pull request notifications) and comments shorter than the threshold are skipped. Editing a comment below 120 words removes its summary.
+
 ## High-Risk PR Review Routing
 
 When a GitHub Pull Request is opened for a ticket with High risk, the PR is automatically routed to Valentin Review instead of AI Review. Medium, Low, or unset risk levels continue to use the AI lane.
