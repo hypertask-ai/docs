@@ -4,8 +4,7 @@ description: Daily log of new features, bug fixes, and improvements shipped to H
 ---
 
 {/* Starlight has no Update component; local shim so the entries render as
-    labeled sections without rewriting them. */}
-export const Update = ({ label, children }) => (
+    labeled sections without rewriting them. */}export const Update = ({ label, children }) => (
   <section>
     <h3>{label}</h3>
     {children}
@@ -17,6 +16,10 @@ export const Update = ({ label, children }) => (
   * Added: Bookmarks customization for the Everything split in Calendar: rename it, save your filters, sorting and view type, and restore them with plain calendar load ([HTPR-4766](https://app.hypertask.ai/detail/project-15/4766))
   * Improved: Staleness detection in board settings now has configurable thresholds and per-board stale-task reminders, plus a "Not stale" view filter ([HTPR-4756](https://app.hypertask.ai/detail/project-15/4756))
   * Improved: Calendar URLs now encode view and date parameters for shareable deep links that show the exact view for anyone ([HTPR-4759](https://app.hypertask.ai/detail/project-15/4759))
+  * Fixed CLI draft and comment rendering: CLI no longer wraps draft writes in a full HTML document ([HTPR-4669](https://app.hypertask.ai/detail/project-15/4669))
+  * Fixed: PostHog analytics now route through first-party proxy at e.hypertask.ai ([HTPR-4788](https://app.hypertask.ai/detail/project-15/4788))
+  * Fixed: Ctrl+K Summarize includes and badge contrast and palette centering; stream now completes correctly ([HTPR-4790](https://app.hypertask.ai/detail/project-15/4790))
+  * Added: Configurable weekly automated Strix security scan cron job ([HTPR-4785](https://app.hypertask.ai/detail/project-15/4785))
 </Update>
 <Update label="July 31, 2026">
   * Added: signed ht_session cookies to share visitor identity between hypertask.ai and app.hypertask.ai for signup attribution ([HTPR-4801](https://app.hypertask.ai/detail/project-15/4801))
@@ -44,9 +47,9 @@ export const Update = ({ label, children }) => (
   * Fixed: /api/invites/post now requires verified session and project membership for invitations ([HTPR-4651](https://app.hypertask.ai/detail/project-15/4651))
 </Update>
 <Update label="July 27, 2026">
-  * Fixed search latency Ã¢\\x80\x94 sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Fixed search latency — sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
   * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
-  * Added Ctrl+B board palette Ã¢\\x80\x94 click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
   * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
   * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
@@ -107,7 +110,7 @@ export const Update = ({ label, children }) => (
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly ([HTPR-4455](https://app.hypertask.ai/detail/project-15/4455))
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426))
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile · Team · Board · Connect · Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile Â· Team Â· Board Â· Connect Â· Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications ([HTPR-4403](https://app.hypertask.ai/detail/project-15/4403))
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits ([HTPR-4429](https://app.hypertask.ai/detail/project-15/4429))
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments ([HTPR-4428](https://app.hypertask.ai/detail/project-15/4428))
