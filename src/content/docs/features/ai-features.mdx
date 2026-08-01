@@ -60,6 +60,16 @@ To invoke AI Editing:
 
 AI respects embedded blocks like estimated time blocks (canvas elements) and preserves them intact.
 
+### Summarize Ticket Dialog
+
+Use the **Summarize** action in the AI Options menu (three dots or Ctrl+K) to summarize the current task. AI generates a concise summary of the ticket description and comments, with a focused view on the task context. After submitting:
+
+- The AI writes the summary as a new comment on the task.
+- The original comment text is preserved — nothing is replaced or collapsed.
+- You can continue interacting with the task in the same thread.
+
+The summary restores successfully streaming responses without cancellation mid-flight.
+
 ## AI Chat
 
 The AI Chat panel gives you an intelligent assistant integrated with your workspace:
@@ -91,9 +101,9 @@ The AI chat includes a **past-sessions dropdown** showing your recent conversati
 
 AI generates concise, action-oriented suggested questions based on your current context (task, board, or whole workspace). Suggestions are:
 - **Verb-first** with a clear intended action
-- **Max 7 words** for brevity and quick reading
-- **Free of hedging phrases** like "Should I" or "Can you"
-- **Contextually aware** to match the work at hand
+- Max 7 words for brevity and quick reading
+- Free of hedging phrases like "Should I" or "Can you"
+- Contextually aware to match the work at hand
 
 This makes it easier to jump straight into actionable prompts.
 
@@ -168,13 +178,13 @@ To use AI with skills:
 Strix is an AI-powered pentest agent that can analyze your application and surface potential vulnerabilities.
 
 <cardgrid>
-  <Card title="Automated security checks" icon="🔒">
+  <Card title="Automated security checks" icon="🛡️">
     Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
   </Card>
-  <Card title="Fast retrospectives" icon="⚡️">
+  <Card title="Fast retrospectives" icon="⚡">
     Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early.
   </Card>
-  <Card title="Defined Scope Inspection" icon="🎯">
+  <Card title="Defined Scope Inspection" icon="📋">
     Configure which apps, routes, and paths Strix should target. Runs respect favicon and robots.txt signals to respect what Google can see, making results realistic and useful.
   </Card>
 </cardgrid>
@@ -215,13 +225,13 @@ To use Strix:
 Strix integration is part of your AI toolkit and integrates with your existing Pentesting workflow. Refer to the [Safety & Quality Guidelines](#) for onboarding and prompt security best practices.
 
 <cardgrid>
-  <Card title="Scan definitions" icon="📄">
+  <Card title="Scan definitions" icon="📝">
     You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
   </Card>
   <Card title="Results interpretation" icon="🔍">
     Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
   </Card>
-  <Card title="Ingenta + Strix synergy" icon="🤝">
+  <Card title="Ingenta + Strix synergy" icon="🧠">
     For advanced threat modeling, pair Strix with Ingenta or similar agent stacks; use Strix for the low-cost first pass and escalate to Ingenta for top-severity findings requiring deeper investigation tools.
   </Card>
 </cardgrid>
