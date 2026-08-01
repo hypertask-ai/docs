@@ -3,10 +3,14 @@ import starlight from '@astrojs/starlight';
 
 // https://docs.astro.dev/en/reference/configuration/#configuration-reference
 export default defineConfig({
+  site: 'https://docs.hypertask.ai',
   integrations: [
     starlight({
-      sidebar: {
-        'Features': [
+      title: 'Hypertask Docs',
+      sidebar: [
+        {
+          label: 'Features',
+          items: [
           'features/ai-features',
           'features/boards',
           'features/tasks',
@@ -27,27 +31,40 @@ export default defineConfig({
           'features/superhuman-snippets',
           'features/observability',
         ],
-        'Getting started': [
+        },
+        {
+          label: 'Getting started',
+          items: [
           'getting-started/introduction',
           'getting-started/quickstart',
           'getting-started/concepts',
           'getting-started/settings-profile',
         ],
-        'MCP': [
+        },
+        {
+          label: 'MCP',
+          items: [
           'mcp/overview',
           'mcp/workflows',
           'mcp/scheduling',
           'mcp/agents',
         ],
-        'API': [
+        },
+        {
+          label: 'API',
+          items: [
           'api/rest-api',
           'api/tools-reference',
         ],
-        'Design system': [
+        },
+        {
+          label: 'Design system',
+          items: [
           'design-system/visual-standard',
           'design-system/typography',
         ],
-      },
+        },
+      ],
     }),
   ],
 });
