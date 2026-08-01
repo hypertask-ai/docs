@@ -1,6 +1,9 @@
 ---
 title: Observability & Error Tracking
 description: Monitor application health and auto-file production errors with built-in error endpoint and self-healing pipeline.
+# Draft: broken component structure (bare <Step>, TabItem without Tabs) breaks
+# the build. Fix the markup before publishing.
+draft: true
 ---
 
 import { Aside, Card, Steps, Tabs } from '@astrojs/starlight/components';
@@ -28,7 +31,7 @@ The pipeline operates on both server and browser-level catchers, ensuring covera
 - Client-side exceptions (especially during AI-chat interactions)
 - Application errors originating from external integrations
 
-<Aside type="warning">
+<Aside type="caution">
 The exposed <code class="language-bash">/api/errors</code> endpoint respects a server-side allowlist. Public access is restricted to whitelipped requests; rate-capping prevents abuse.
 </Aside>
 

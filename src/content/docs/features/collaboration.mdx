@@ -108,7 +108,7 @@ After login, your session persists until you explicitly sign out. Hiding or clos
 
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
-<Aside type="warning">
+<Aside type="caution">
 If you persist LocalStorage across sign-ins or sessions (e.g. in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
 </Aside>
 

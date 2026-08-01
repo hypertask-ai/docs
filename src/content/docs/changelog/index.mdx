@@ -3,7 +3,14 @@ title: Changelog
 description: Daily log of new features, bug fixes, and improvements shipped to Hypertask.
 ---
 
-import { Update } from '@astrojs/starlight/components';
+{/* Starlight has no Update component; local shim so the entries render as
+    labeled sections without rewriting them. */}
+export const Update = ({ label, children }) => (
+  <section>
+    <h3>{label}</h3>
+    {children}
+  </section>
+);
 
 <Update label="July 31, 2026" features={[<u/>]}>
   * Added: visible border and shadow on the AI writer panel in Paper/AMOLED themes ([HTPR-4689](https://app.hypertask.ai/detail/project-15/4689))

@@ -1,0 +1,33 @@
+---
+title: Calendar
+description: Day, week, and month views, keyboard navigation, and shareable calendar links.
+---
+
+The calendar at `/calendar` shows every task with a due date across your boards. Filter which boards and people are included from the boards panel, and save any combination as a reusable view.
+
+## Views
+
+Switch views from the dropdown at the top left (or press <kbd>W</kbd> for week, <kbd>M</kbd> for month):
+
+- **Day**: one full-width column for a single day. A week strip above it shows each day's task load as dots; click a day to jump to it, use the chevrons to move a week, or pull the handle down for a full month grid.
+- **Week**: seven columns (or five with weekends hidden in calendar settings).
+- **Month**: the classic grid.
+
+Day view has no single-key shortcut on purpose: <kbd>D</kbd> updates the focused task's due date. Use the dropdown or a shared link.
+
+Navigation works the same in every view: <kbd>U</kbd> and <kbd>I</kbd> go to the previous/next day, week, or month; <kbd>T</kbd> jumps to today; <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> move the focus day; <kbd>Shift</kbd>+arrows reschedule the focused task.
+
+## Shareable links
+
+The calendar URL always encodes what you are looking at:
+
+```
+https://app.hypertask.ai/calendar?view=day&date=2026-07-31
+```
+
+- `view` is `day`, `week`, or `month`.
+- `date` is the anchor day in `YYYY-MM-DD`.
+
+The address bar updates as you navigate, so copying it always shares your current view. Opening a shared link shows that exact view and date regardless of the recipient's own last-used calendar state. Links with invalid dates fall back to the recipient's own calendar.
+
+For agents: construct these URLs directly when pointing a person at a specific day or week, e.g. `https://app.hypertask.ai/calendar?view=week&date=2026-08-03`.
