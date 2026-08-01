@@ -1,305 +1,77 @@
 ---
 title: Inbox & Notifications
-description: Stay on top of assignments, mentions, and task updates with a unified inbox.
+description: Manage your incoming notifications, Snooze, and Important section.
 ---
 
-import { Aside, Steps } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-The Hypertask inbox is a single feed of everything that needs your attention Ã¢\\x80\\x94 assignments, mentions, comments, and status changes. Instead of checking multiple boards and projects, open your inbox and see what's new.
+The **Inbox** gathers all notifications (mentions, assignments, and more) into a single feed, letting you process them efficiently. Use keyboard shortcuts for quick actions and keep important work at the top of your queue.
 
-## Email/Push matrix
+## Viewing the inbox
 
-The Email/Push matrix controls how different notification types are delivered. When you configure invitation links or team notification settings, you set per-action delivery preferences:
+Press <kbd>Ctrl+K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 
-| Action | Default | Delivery options |
-|--------|---------|------------------|
-| Assign task | Push | Email Ã\x82Â· Push Ã\x82Â· Both |
-| Move task | Push | Email Ã\x82Â· Push Ã\x82Â· Both |
-| Add follower | Push | Email Ã\x82Â· Push Ã\x82Â· Both |
-| New comment | Push | Email Ã\x82Â· Push Ã\x82Â· Both |
-| Reaction | Push | Email Ã\x82Â· Push Ã\x82Â· Both |
+- **Unread notifications** from mentions, assignments, reactions, and follow updates
+- **Actionable items** like lines, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
+- **Important tasks** — rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
 
-These actions now will always respect whichever setting you've configured for each action, instead of applying a system default across the board.
+The inbox can be grouped into three main views:
 
-<aside class="tip">
-All row default to Push so assign/move/follower/reaction updates typically arrive instantly. You can disable push and rely entirely on emails, or switch both delivery types on for redundancy.
-</aside>
+<Aside type="tip">Use <kbd>Ctrl+F</kbd> from the Inbox to search across all notifications. This is scoped across boards for board-agnostic filtering.</Aside>
 
-## Turn on notifications nudge
+### Inbox views
 
-If both push notifications and email are turned off, a nudge appears at the top of your inbox to invite you back with friendly options:
+| View | Shortcut | Purpose |
+|------|----------|---------|
+| **Inbox** | Default | All notifications |
+| **Search** | Search icon | Text-based search across all boards |
+| **Notifications** | Notification icon | List of all notification types |
 
-- **Pinned row** Ã¢\\x93 Rendered below the Inbox tabs and above the Today section, no overlay blocking your view
-- **Actions**: Enable push notifications, turn on email-only notifications, or dismiss the nudge
-- This nudge is shown only when both delivery channels are off, encouraging you to re-enable notifications without interrupting your workflow
+## Snooze
 
-<Aside type="tip">
-The nudge floats without occluding content and respects your existing Inbox Zero and filter settings.
-</Aside>
+Temporarily hide notifications from appearing in your feed. Snoozed items are resurfaced after the specified duration on a specified date.
 
-## Post-deploy smoke test
+Use **Snooze** in two ways:
 
-A production smoke test periodically probes key pages and AI chat to catch regressions early:
+1. **Notification actions** — click the S button on a notification and choose a future time
+2. **Task Snooze** — within a task detail, use <kbd>Ctrl+K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
 
-- **Script**: `hypertask-smoke.sh` runs on the VPS.
-- **Cron**: Executes every 10 minutes.
-- **Checks**:
-  - Clean hetzner egress; page health on each run.
-  - Real login + message to AI chat; asserts a real reply.
-- **On failure**: Auto-files a task linked to the monitor board.
-- **Confirmation**: Live and green; coverage includes AI chat and primary navigation.
+When a snoozed notification resurfaces, it re-enters your inbox at the top of the list.
 
-<Aside type="tip">
-The smoke test guards production and ensures critical user paths stay healthy after any deploy cycle.
-</Aside>
+## Awaiting Delete notifications
 
-## Important items only waiting on you
+Notifications that trigger a follow-up action (such as undo or dismiss) include an **Awaiting Delete** badge and show action buttons:
 
-The Inbox Important view now focuses on items you are currently waiting on:
+- **Undo** — Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
+- **Dismiss** — Hide the notification and block it from returning (e.g., clear invites that were rejected)
+- **Undo all** or **Dismiss all** — Apply the action to all matching rows in the filtered list
 
-- **Agent-generated changes**: Routine output and routine completions from agents (including Automation agents) go to the **Updates** tab instead of the inbox.
-- **Agent chores**: Agent actions reported as separate Agent events.
-- **You**: Only tasks where you explicitly need to take action (no self-triggers) appear here.
-- **Manual actions**: Anything you did yourself no longer enters the inbox at all.
+These notifications appear at the top of the list because they require your decision.
 
-This keeps Important focused on pending work for you rather than accumulating every agent action.
+## Important
 
-## Feedback from the app
+**Important** represents tasks and notifications that matter specifically to you, filtering the inbox to show only rows relevant to your work. Tasks in Importance qualify based on:
 
-Send feedback about your experience directly from the Hypertask app. Access it via **Settings > Help > Send feedback** and share your thoughts safely:
+- Addressed to you (mentions, assignments, your own reminders, returned snoozes)
+- Live context (the task itself, comments on your tasks, overdue status for tasks you're personally assigned)
+- Your involvement (description edits for tasks you're personally assigned)
 
-- **Feedback modal** Ã¢\\x94 opens a clean, neutral feedback form with keyboard shortcuts:
-  - **Send** with `<kbd>Ctrl</kbd>` + `<kbd>Enter</kbd>` or submit button
-  - **Cancel** with `<kbd>Esc</kbd>` or the Cancel button
-  - Footer hints point users to the available options
-- **Inbox delivery** Ã¢\\x94 feedback sent via the feedback modal arrives in your inbox as an assigned task, complete with the Feedback board's auto-generated ticket number and assignment metadata (e.g., `DBAC-5`). This makes triage and aggregation straightforward.
+Rows in Important are shown in priority order and timeline-sorted (oldest first when they became Important; updated rows bubble to the top). Use the <strong>Important</strong> filter in the inbox to focus only on your most relevant activity.
 
-<aside class="tip">
-Use the feedback modal instead of sending email or Slack messages for app issues. It surfaces as an inbox task with clear metadata, letting you track and resolve requests in one place.
-</aside>
+<Aside type="note">Important is applied to all workspaces where you have permissions. Tasks marked Important in one board are visible in the Important view of that board.</Aside>
 
-## Mobile Linear-style shell
+## Bookmarking
 
-Hypertask is now fully usable on mobile with a Linear-style shell. Navigation follows the web app: when you open Inbox, Calendar, or Search from a task detail, you're redirected to the mobile version of that view without losing context.
+Mark notifications and comments with the star icon to pin them as favorites. Bookmarked items appear at the top of the list, helping you quickly access key updates or important threads.
 
-The mobile tab bar gives you quick access to three core views:
-- **Inbox** Ã¢\\x94 unread and archived notifications triage
-- **Board** Ã¢\\x94 Kanban board and task lists
-- **Calendar** Ã¢\\x94 week strip and scheduled items
+## Fallback for no notifications
 
-Set up via the profile (Hypertask app) and controlled by full Sync Express integration. All tabs restore their last state when you return.
+If your team hasn't sent you any notifications, the Inbox shows a friendly empty state encouraging you to enable notifications or check your alerts on the board.
 
-### Navigation patterns
+## Keyboard shortcuts
 
-- Opening Inbox from a task detail redirects to the mobile Inbox view, preserving the task context.
-- Opening Calendar from a task detail redirects to the mobile Calendar view.
-- Opening Search when there's active search content trips a "Show me results" prompt; otherwise it shallow-loads the Search page.
-- Back and gear shortcuts from the bottom sheet open lenses or settings accordingly.
-- The monochrome FAB hides on root views (Inbox, Board, Calendar) and appears only to run Markdown boilerplate actions.
-
-### Task detail accessibility
-
-When you tap a task from the mobile inbox or board, the page opens a slide front with three tabs: Info, Comments, Files. Back options are fully wired: "Back to inbox" and local-edge navigation. Functionality is consistent across layouts and uses the same rendering path as the web app.
-
-## Granular event controls
-
-Hypertask provides per-task event controls to fine-tune which notification types you receive. Event categories include:
-
-| Category | Description |
-|----------|-------------|
-| **Mentions** | Incoming @mentions in comments and descriptions |
-| **Comments** | New comments on tasks you follow |
-| **Assignments** | Being assigned to a task |
-| **Status changes** | Status changes on tasks you follow |
-| **Due date changes** | Due date edits or moves on tasks you follow |
-| **Followers** | Being added as a follower on a task |
-
-Within each category, you can independently toggle notifications for each delivery channel:
-- **Email**
-- **Push**
-- **Chime** (in-app notifications)
-
-This gives you fine-grained control so you only receive high-value updates without being bombarded by noise.
-
-## Per-task follow and mute
-
-Hypertask now supports per-task follow and mute at the task level via Ctrl+K:
-
-1. Open the Command Palette with `Ctrl+K` on desktop and `Cmd+K` on iOS.
-2. Navigate to your task and select **Open task menu** (placeholder command).
-3. Select **Toggle mute** to silence that task permanently until you enable it again.
-
-Per-task mute silences the task's inbox item, push, and email notifications together. This gives you a simple kill-switch for high-volume task feeds without affecting notifications from other tasks.
-
-To re-enable notifications after muting:
-
-1. Open the Command Palette (`Ctrl+K`).
-2. Navigate to your task and select **Open task menu**.
-3. Select **Toggle mute**.
-
-## Inbox Zero
-
-Quickly clear out accumulated notifications with one click. The Inbox Zero feature replaces the AI sparkle with a rule-based, automatic clearing sheet:
-
-- **One-click action:** Tap the newly added auto-clear button to apply rules and immediately archive all relevant inbox items.
-- **Keep toggles always win:** Toggles for Unread, @mentions, and Assignments maintain their stacks even after Auto-clear runs.
-- **Live count:** Shows the number of notifications being cleared.
-- **Undo:** Archive clears, but you can Undo to restore notifications for follow-up.
-
-This provides a fast, rule-based way to clear your inbox without manually archiving each item, while preserving the inbox items you explicitly want to keep.
-
-## Full board/regional search from Inbox
-
-Use `<kbd>Ctrl+F</kbd>` from Inbox or search surfaces to open a larger board-agnostic search panel. The search includes tasks from multiple boards and lets you:
-
-- Filter by board, section, priority, labels, assignee, and due date
-- Preview results with a quick tooltip or expanded card
-- Jump directly into a board and task by clicking a result
-
-<Aside type="tip">
-Press `<kbd>Ctrl+F</kbd>` from any inbox page to scan across your workspace without losing context.
-</Aside>
-
-## Performance improvement (HTPR-4528)
-
-Collecting all notification details for display used to trigger a fan-out with multiple database round-trips, adding latency (baseline ~190-232ms). The inbox query now uses a collapsed, multi-row lookup via Prisma join, reducing the number of database round-trips and cutting overall latency in production to roughly 110-177ms across test runs.
-
-This change improves responsiveness without breaking existing behavior: tasks, projects, priorities, estimates, labels, saved content, and users still appear as expected after a notification is fetched.
-
-## Security: endpoint authorization (HTPR-4650, HTPR-4651)
-
-These two notifications endpoints no longer permit arbitrary user IDs and now enforce verified-session authorization:
-
-- **Notifications count** (`/api/notifications/getCount`): Returns only your own notification count (no longer leaks counts for other user IDs).
-- **Invite** (`/api/invites/post`): Requires authenticated project membership and uses a verified session token.
-
-Requests without a valid session receive a 401 with a clear message instead of succeeding with unintended data.
-
-## Notifications overview
-
-Every action that involves you generates a notification in your inbox. Notifications stay in your inbox until you explicitly archive them, so nothing slips through the cracks.
-
-### Viewing notifications
-
-<Steps>
-1. **Receive** Ã¢\\x80\\x94 a notification appears when something relevant happens.
-2. **Review** Ã¢\\x80\\x94 open the notification to see the task and context.
-3. **Act** Ã¢\\x80\\x94 respond, update the task, or take whatever action is needed.
-4. **Archive** Ã¢\\x80\\x94 mark the notification as handled to clear it from your inbox.
-</Steps>
-
-Live unread indicators in the navigation bar show a blue dot and count; they update in real time via Pusher.
-
-### Notification types
-
-| Type | Triggered when... |
-|------|-------------------|
-| **Assigned** | You are assigned to a task |
-| **Comment** | Someone comments on a task you follow |
-| **Mentioned** | Someone @mentions you in a comment or description |
-| **Invited** | You are invited to a project |
-| **Reacted** | Someone reacts to your comment or task |
-| **TaskArchived** | A task you follow is archived |
-| **TaskMoved** | A task you follow is moved to a different section |
-| **TaskDueDate** | A due date is set or changed on a task you follow |
-| **TaskOverdue** | A task you're assigned to is past its due date |
-| **TaskReminder** | A scheduledreminder fires for a task |
-| **TaskUpdateDescription** | The description of a task you follow is edited |
-| **AddedToFollowerInTask** | You are added as a follower on a task |
-| **TaskMovedToInbox** | A task is explicitly sent to your inbox |
-
-### Who gets notified
-
-Hypertask delivers notifications to all users who have a stake in a task Ã¢\\x80\\x94 not just the person directly addressed. When any action occurs on a task (a comment is posted, a status changes, a due date is updated), the notification fan-out covers:
-
-- The **task creator**
-- The **task owner / assignee(s)**
-- All **followers** of the task
-- Any user **@mentioned** in the triggeringcomment or description
-- Any user who has **previously contributed** a comment to the task
-
-This applies equally to comments posted by humans **and by AI agents**. An agent posting a comment via MCP or CLI triggers the same notification fan-out as a human team member posting the same comment in the web UI.
-
-<aside class="note">
-**Agent owners are not notified of their own agent's comments.** When an agent posts a comment, the notification fan-out deliberately excludes the agent owner's personal inbox. This prevents your inbox from filling up with activity your own agent generated. Other stakeholders on the task (assignees, followers, @mentioned users, etc.) are still notified as normal.
-</aside>
-
-<aside class="tip">
-To follow a task and receive all updates for it, open the task detail and click **Follow**. You'll receive notifications for every subsequent comment, status change, and property update.
-</aside>
-
-## Archiving and Unarchiving
-
-Archiving a notification removes it from your active inbox without deleting it. Think of it as marking an email as "done" Ã¢\\x94 you've seen it, handled it, and don't need it front and center anymore.
-
-You can archive notifications one at a time or in bulk. If you archive something by mistake or want to resurface a notification to act on it again, you can **unarchive** it: the notification is restored to your active inbox as unread, as if it had just arrived.
-
-### Archiving actions
-
-- **Web UI:** Archive with the dismiss button on any notification. Unarchive from the archived notifications view.
-- **Task detail panel:** When you open an inbox task, the task detail header shows both a **remove-notification icon** (to dismiss the notification) and an **archive checkmark** (to archive the task's notification). Both icons appear side by side so you can clear or archive the notification without leaving the task detail view.
-- **Keyboard shortcut:** Press `<kbd>Ctrl+E</kbd>` while viewing a task from the inbox to archive its notification and automatically advance to the next task in your inbox. This lets you triage quickly without reaching for the mouse.
-- **CLI:** `hypertask inbox archive <ids...>` / `hypertask inbox unarchive <ids...>`
-- **MCP:** `hypertask_inbox_archive` / `hypertask_inbox_unarchive` (see [MCP Tools Reference](/api/tools-reference/))
-
-### Archive view
-
-The Archive section shows notifications that have been archived so you can restore or clear them. By default, the Archive view includes tasks from boards you own, are a member of, or can otherwise see when using the owner-or-member filter.
-
-**Archived Notifications:**
-- By default, only notifications from boards you own, are a member of, or can otherwise see appear in the Archive view Ã¢\\x94 this matches the Tasks archive filter to reduce visual noise.
-- Archived notifications can be unarchived at any time through the appropriate interface or CLI/MCP commands.
-- The view is optimized to focus on content you can still act on, hiding stale noise from boards you no longer have access to.
-
-**Viewing Archived Tasks:**
-- Notifications are listed with their associated board and section when applicable.
-- Archive status is clearly indicated on each item.
-- You can unarchive items to restore them to your active inbox.
-
-## Saved content
-
-Bookmark tasks, comments, or any content you want to find quickly later. Saved content is personal Ã¢\\x94 only you see your bookmarks. Use it to:
-
-- Track tasks you're interested in but not assigned to
-- Build a reading list of important discussions
-- Note tasks or comments that reference a shared idea or decision
-
-To save content, select the **Star** icon on task cards or comments in the web UI, or use the appropriate parameter in the CLI or MCP tools.
-
-<aside class="tip">
-Saved content is stored per-user, so no one else on your team can see your bookmarks. This is useful for personal notes and references that don't need to be shared at the board level.
-</aside>
-
-## Agent mention deliverer page
-
-Agents you @mention run in contexts that may not be native to the same workspace (e.g., external agents with a scoped token). Support for @mention delivering to external agents means Hypertask creates a Mentioned notification in the agent's `agent_notifications` array. External agents read their inbox via `hypertask_inbox_list` to pick up these notifications and act on task context.
-
-This support is important because an external agent can be @mentioned in production via MCP comments with HTML markup:
-
-```html
-<p>Hey <span data-type="mention" class="mention" data-id="external-agent-x" data-label="External Agent X">@External Agent X</span> Ã¢\\x80\\x94 summarize this ticket.</p>
-```
-
-The target agent receives a Mentioned notification and can respond via MCP comments. The delivery works for both the API mentioned scope and the newer agent-identified scope, so remarks you post to native agents and external agents both land in the right inbox.
-
-<aside class="note">
-If an external agent isn't receiving @mentions, check that the agent has been added to the relevant board/team. Missing board-level rights means mentions won't land in its inbox.
-</aside>
-
-## AI agent workflow
-
-The inbox is particularly useful for AI agents working through Hypertask via MCP. A typical agent loop looks like this:
-
-<Steps>
-1. **Check inbox** Ã¢\\x80\\x94 call `hypertask_inbox_list` to see pending notifications.
-2. **Pick a task** Ã¢\\x80\\x94 select the highest-priority item.
-3. **Do the work** Ã¢\\x80\\x94 complete the task using whatever tools are available.
-4. **Comment** Ã¢\\x80\\x94 use `hypertask_add_comment_to_task` to document what was done. This notifies the task creator, owner, followers, and all previous contributors.
-5. **Move** Ã¢\\x80\\x94 use `hypertask_section` to move the task to "Review" or "Done".
-6. **Archive** Ã¢\\x80\\x94 call `hypertask_inbox_archive` to clear the processed notification.
-7. **Repeat** Ã¢\\x80\\x94 go back to step 1.
-</Steps>
-
-<aside class="tip">
-AI agents that follow this inbox-driven workflow integrate naturally with human team members. Humans assign work and review results; agents pick up tasks, execute, and report back Ã¢\\x80\\x94 all through the same inbox and board system. Because agent comments (including @mention replies) trigger the same notification fan-out as human comments, reviewers are automatically alerted the moment an agent finishes its work. The agent owner's own inbox is not included in that fan-out, keeping it signal-free.
-</aside>
+- <kbd>Ctrl+K</kbd> — Open command palette with inbox options (Snooze, Undo, Mark Read)
+- <kbd>Ctrl+F</kbd> — Search across all notifications
+- <kbd>N</kbd> — Create a new task from the active board
+- <kbd>Space</kbd> — Mark current item as read/unread
+- <kbd>Escape</kbd> — Close modal, draft error, or focused search
