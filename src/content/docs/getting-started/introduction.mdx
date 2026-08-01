@@ -8,10 +8,10 @@ import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/
 # What is Hypertask?
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card title="AI-native collaboration" icon="🤖">
+  <Card title="AI-native collaboration" icon="🧠">
     Built with agents first. Hypertask comes with an intelligent co-worker that can read your board, create tasks, and respond to comments—all via Chat, CLI, MCP, or REST.
   </Card>
-  <Card title="Full control, no lock-in" icon="🔒">
+  <Card title="Full control, no lock-in" icon="🔓">
     Use the built-in email login, or integrate programmatically. The CLI, MCP and REST APIs cover every piece of your workflow, so you own the experience.
   </Card>
   <Card title="Workspace-ready" icon="🏢">
@@ -102,7 +102,7 @@ It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and yo
 Hypertask has a rich set of keyboard shortcuts across surfaces. Press <kbd>Ctrl+K</kbd> to open the command palette and search for shortcuts by name.
 
 <Aside>
-Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and <code>⌘</code> on macOS.
+Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and `⌘` on macOS.
 </Aside>
 
 <code>Ctrl+K</code> — Open command palette for shortcuts and actions.
@@ -132,7 +132,8 @@ Hypertask uses server-side authentication and ensures that other users' data nev
 - <strong>Email sign-in & Better Auth</strong>: Sign in is handled server-side. Email login takes you directly to your board; magic-links and sign-out remain functional.
 - <strong>Firebase for push only</strong>: Firebase Auth is not used for login or signup. Firebase is strictly for FCM push notifications.
 - <strong>Route cleanup</strong>: Dead authentication routes that no longer exist (e.g. old signup or password reset paths) return 404, and CORS carve-outs are removed for production security.
-- <strong>Session integrity</strong>: API routes validate signed <code>ht_session</code> cookies alongside <code>nookies_user</code>. This prevents cookie forging and account takeovers.
+- <strong>Session integrity via signed ht_session cookies</strong>: API routes validate signed <code>ht_session</code> cookies alongside <code>nookies_user</code>, ensuring that forging cookies cannot be used for cookie spoofing.
+- <strong>PostHog cross-domain visitor identity</strong>: Signin and load attribution between <code>hypertask.ai</code> and <code>app.hypertask.ai</code> use signed ht_session cookies, avoiding client-side cookie dependency.
 - <strong>Strict account linking</strong>: Linking a Google login to an unverified local account is blocked, ensuring verified local accounts are not orphaned.
 - <strong>Multi-tenant isolation</strong>: By design, boards, views, and tasks belong to the user. Archive and other features show only your data unless explicitly shared.
 
