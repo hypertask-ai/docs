@@ -1,0 +1,115 @@
+---
+title: Scheduling
+description: Start dates, repeating tasks, task templates, and the My tasks planning view.
+---
+
+# Scheduling
+
+Four related capabilities for planning work over time: **start dates**, **repeating tasks**, **task templates**, and the **My tasks** view that ties them together.
+
+Every one of them is reached through the command palette (<kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>). None of them adds a button or panel to the interface, and none of them has a dedicated keyboard shortcut — search for the command by name.
+
+## Start dates
+
+A start date records when work is *meant to begin*, separately from the due date that records when it must be *finished*.
+
+**To set one:** open a task, press <kbd>Ctrl+K</kbd>, run **Set start date**. The field accepts natural language — `today`, `tomorrow`, `next week monday`, `in 3 days` — or pick from the presets. Choose **Reset** to clear it.
+
+The task detail shows a **Start date** row only once the field is set; a task without one looks exactly as it did before.
+
+A start date on its own never makes a task overdue. Only a missed *due date* does that. A task that started last week but has no deadline is current work, not late work, and **My tasks** files it accordingly.
+
+### API
+
+```http
+POST /api/tasks/setStartDate
+Content-Type: application/json
+
+{ "taskId": 1234, "startDate": "2026-08-10T09:00:00.000Z" }
+```
+
+Pass `"startDate": null` to clear it. Returns the updated task. Requires membership of the task's board.
+
+## Repeating tasks
+
+A repeating task recreates itself when you finish it.
+
+**To set a repeat:** open a task, press <kbd>Ctrl+K</kbd>, run **Repeat task**, and choose a cadence:
+
+| Cadence | Meaning |
+|---|---|
+| `Daily` | Every day |
+| `Weekdays` | Every weekday, Monday to Friday |
+| `Weekly` | Every 7 days |
+| `Biweekly` | Every 14 days |
+| `Monthly` | Same day each month, clamped to the last day of shorter months (31 Jan → 28 Feb) |
+
+Choose **Don't repeat** to stop a task repeating. The option only appears when a rule is already set. A repeating task shows a **Repeats** row in the task detail.
+
+### What "finishing" means
+
+The next occurrence is created when you **move the task into a done column**, or **archive it yourself**. It carries over the title, description, priority, size, labels and assignees, with the date advanced by one period.
+
+Two cases deliberately do *not* create a new occurrence:
+
+- **Auto-archive.** A board's auto-archive sweep fires because nobody touched a task, which is abandonment rather than completion. Repeating there would regenerate neglected tasks indefinitely.
+- **Moving the task to another board**, including into that board's done column. Relocating work is not completing it.
+
+Finishing a repeating task late never produces an already-overdue copy: the next date is rolled forward until it is genuinely in the future, keeping the original time of day and, for weekly rules, the original weekday.
+
+If a board has no column that counts as "not done", the task does not repeat — the new occurrence would otherwise be created directly into a done column, where it would read as finished work the moment it appeared.
+
+### API
+
+```http
+POST /api/tasks/setRecurrence
+Content-Type: application/json
+
+{ "taskId": 1234, "recurrence": "Weekly" }
+```
+
+Valid values: `Daily`, `Weekdays`, `Weekly`, `Biweekly`, `Monthly`, or `null` to stop repeating. Requires membership of the task's board.
+
+## Task templates
+
+A template stores the shape of a task so you can create the same kind of work repeatedly without retyping it. Templates are per board, and capture the **title**, **description**, **priority**, **size** and **labels**.
+
+**To save one:** open a task you want to reuse, press <kbd>Ctrl+K</kbd>, run **Save task as template**. The template is named after the task title.
+
+**To use one:** from the board, press <kbd>Ctrl+K</kbd>, run **New task from template**, and pick from the list. The new task is created in the board's first non-done column and opens immediately.
+
+Labels that were deleted after the template was saved are skipped rather than failing the creation.
+
+### API
+
+```http
+GET    /api/task-templates?projectId=15      # list a board's templates
+POST   /api/task-templates                   # { "taskId": 1234, "name": "Weekly review" }
+DELETE /api/task-templates                   # { "templateId": 7 }
+POST   /api/task-templates/apply             # { "templateId": 7 }
+```
+
+`name` is optional on create and defaults to the task's title. All four require membership of the board.
+
+## My tasks
+
+**My tasks** answers "what am I working on today" across every board you belong to. The inbox remains the place to triage what arrived; this is the place to plan.
+
+**To open it:** <kbd>Ctrl+K</kbd> → **Go to my tasks**, or visit `/my-tasks`.
+
+It lists every open task assigned to you, grouped by when it needs attention:
+
+| Group | Contains |
+|---|---|
+| **Overdue** | A due date that has passed |
+| **Today** | Due today — plus work whose start date has arrived, which is never counted as overdue |
+| **Tomorrow** | Due or starting tomorrow |
+| **This week** | Due or starting before the end of the current week (weeks end Sunday) |
+| **Later** | Anything further out |
+| **No date** | No due date and no start date |
+
+A task is filed against its **start date while that is still in the future**, and its **due date** otherwise. So work that cannot begin until Friday sits under Friday, rather than under a deadline you cannot act on yet.
+
+Navigation matches the inbox and scheduled views: <kbd>J</kbd> and <kbd>K</kbd> (or the arrow keys) to move, <kbd>Enter</kbd> to open, <kbd>Esc</kbd> to go back.
+
+The view shows up to 200 tasks, ordered by date. When there are more, it says so at the foot of the list rather than truncating silently.

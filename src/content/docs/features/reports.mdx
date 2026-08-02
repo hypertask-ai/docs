@@ -82,6 +82,33 @@ Use reports as a basis for:
 - Release retrospectives
 - Resource planning and overcommitment checks
 
+## Status updates
+
+A **status update** is an AI-written summary of what has happened on a board, saved as a report.
+
+**To generate one:** from the board, press <kbd>Ctrl+K</kbd> and run **Generate status update**. It opens when ready.
+
+The update has four parts:
+
+- **Headline** — one sentence on where the board stands
+- **Shipped** — work that reached a done column or was archived
+- **In flight** — work moving through the other columns
+- **Risks and blockers** — tickets sitting still or otherwise worth attention
+
+It is written from the same board data the velocity report uses — ticket movement over the window, per-column counts, staleness thresholds — so the figures it quotes are computed rather than generated. Ticket titles are passed to the model as data, not instructions, so a task title cannot steer what the summary claims.
+
+Each board keeps **one** status update, at a fixed address:
+
+```
+/report/<board-slug>/status-update
+```
+
+Regenerating rewrites that page rather than creating a new one, so a link to it always shows the current state. The default window is the last 7 days.
+
+<Aside type="caution">
+The slug `status-update` is reserved for this feature on every board. A report you create manually with that slug will be overwritten the next time an update is generated.
+</Aside>
+
 ## Best practices
 
 - **Name consistently**: use pattern `Board/Project – Report Type – Period` for easy navigation.
