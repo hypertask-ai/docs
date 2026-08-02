@@ -3,14 +3,29 @@ title: Calendar
 description: Day, week, and month views, keyboard navigation, and shareable calendar links.
 ---
 
+import { Aside } from '@astrojs/starlight/components';
+
 The calendar at `/calendar` shows every task with a due date across your boards. Filter which boards and people are included from the boards panel, and save any combination as a reusable view.
+
+<Aside type="tip">
+You can enshrine your preferred weekday start and weekend visibility by saving a preset, or rely on the default behavior for a fresh calendar.
+</Aside>
+
+## Default behavior
+
+When you open a calendar without a saved preference:
+
+- **Week starts on Monday** (Day and Week views show Monday through Friday; weekends are not shown). If you prefer Sunday as the starting day or want to show weekend rows, change your preference in Settings.
+- **Weekend days are hidden in Week view** (you still see Monday through Friday). If you prefer to see the full week including Saturday and Sunday, adjust your preference in Settings.
+
+To change your default weekday start or weekend visibility, go to Settings and set your preferred options. Controls are surfaced via <kbd>Ctrl+K</kbd> commands (if configured).
 
 ## Views
 
 Switch views from the dropdown at the top left (or press <kbd>W</kbd> for week, <kbd>M</kbd> for month):
 
 - **Day**: full-width table layout with tasks as rows. Use <kbd>Shift</kbd> + <kbd>D</kbd> to switch to day view. On desktop, Day view now includes a weekday-selector strip above the calendar. To jump to a specific weekday, click any weekday label in the strip. Keyboards actions <kbd>U</kbd> and <kbd>I</kbd> move to previous/next day; <kbd>T</kbd> jumps to today; <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> move focus; <kbd>Shift</kbd>+arrows reschedule the focused task.
-- **Week**: seven columns (or five with weekends hidden in calendar settings).
+- **Week**: five columns with hidden weekends (by default), or seven columns if you show weekends.
 - **Month**: the classic grid.
 
 ## Shareable links
