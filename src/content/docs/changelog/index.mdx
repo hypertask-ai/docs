@@ -23,6 +23,8 @@ export const Update = ({ label, children }) => (
   * Fixed: CLI fallback behavior when the API endpoint blocks the client, including automatic retries and fallback to app.hypertask.ai ([HTPR-4784](https://app.hypertask.ai/detail/project-15/4784))
   * Fixed: CLI JSON output now streams cleanly without log pollution, making it fully parsable by standard JSON tools ([HTPR-4633](https://app.hypertask.ai/detail/project-15/4633))
   * Fixed: Follower and @mention email notifications now use the correct recipient key, so emails are delivered reliably from the task detail page ([HTPR-4670](https://app.hypertask.ai/detail/project-15/4670))
+  * Fixed: Comped teams now properly preserve paid subscription handling instead of being treated as free ([HTPR-4831](https://app.hypertask.ai/detail/project-15/4831))
+  * Fixed: CLI tasks create now reports unknown labels as "Label &quot;x&quot; not found in project N" and exits non-zero (status 4), preventing silent success ([HTPR-4691](https://app.hypertask.ai/detail/project-15/4691))
 </Update>
 <Update label="August 1, 2026">
   * Fixed CLI draft and comment rendering: CLI no longer wraps draft writes in a full HTML document ([HTPR-4669](https://app.hypertask.ai/detail/project-15/4669))
@@ -103,13 +105,13 @@ export const Update = ({ label, children }) => (
   * Added mobile swipe to reveal comment actions menu ([HTPR-4640](https://app.hypertask.ai/detail/project-15/4640))
 </Update>
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Fixed comment hover pin/delete actions: long-press or hover for operating context regardless of Ctrl+K state ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
+  * Fixed Comment hover pin/delete actions: long-press or hover for operating context regardless of Ctrl+K state ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
   * Added pinned group at top of chat thread ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
   * Added AI cost attribution: token + dollar cost per ticket, agent, and board ([HTPR-4446](https://app.hypertask.ai/detail/project-15/4446))
   * Added per-chat AI actions menu via three-dots and Ctrl+K ([HTPR-4486](https://app.hypertask.ai/detail/project-15/4486))
 </Update>
 <Update label="July 27, 2026" features={[<u/>]}>
-  * Added agent task leases: agents can safely claim, heartbeat, and release tasks via dedicated endpoints under /api/mcp/tasks/lease/ ([HTPR-4618](https://app.hypertask.ai/detail/project-15/4618))
+  * Added Agent task leases: agents can safely claim, heartbeat, and release tasks via dedicated endpoints under /api/mcp/tasks/lease/ ([HTPR-4618](https://app.hypertask.ai/detail/project-15/4618))
 </Update>
 <Update label="July 27, 2026" features={[<u/>]}>
   * Improved archive view: row height trimmed from 70px to 40px, showing 17 rows per viewport instead of 10 ([HTPR-4613](https://app.hypertask.ai/detail/project-15/4613))
