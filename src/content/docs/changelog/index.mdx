@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 2, 2026">
+  * Added: New calendar default shows week starting Monday with weekend days hidden ([HTPR-4867](https://app.hypertask.ai/detail/project-15/4867))
+  * Fixed: Emptying one inbox split no longer shows INBOX ZERO over other splits ([HTPR-4872](https://app.hypertask.ai/detail/project-15/4872))
   * Added: Calendar Desktop Day View includes a weekday-selector strip above the calendar to jump to specific weekdays ([HTPR-4758](https://app.hypertask.ai/detail/project-15/4758))
   * Improved: Calendar URLs now encode view and date parameters for shareable deep links that show the exact view for anyone ([HTPR-4759](https://app.hypertask.ai/detail/project-15/4759))
   * Improved: Calendar settings now live in the Settings page with granular toggle visibility and clear labels. Ctrl+K commands now surface "Calendar settings", "Hide weekends", and "Show weekends" menu items, with weekend toggles and week start choices (e.g., Sunday/Monday) properly categorized ([HTPR-4855](https://app.hypertask.ai/detail/project-15/4855))
@@ -64,9 +66,9 @@ export const Update = ({ label, children }) => (
   * Fixed: /api/invites/post now requires verified session and project membership for invitations ([HTPR-4651](https://app.hypertask.ai/detail/project-15/4651))
 </Update>
 <Update label="July 27, 2026">
-  * Fixed search latency â\x83Ã\x82Â¢\\\\\\\\x80Ã\x83\\x83Ã\x82Â¢Ã\x83\\x82x94 sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Fixed search latency — sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
   * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
-  * Added Ctrl+B board palette â\x83Ã\x83Ã\x82Â¢\\\\\\\\x80Ã\x83\\x83Ã\x82Â¢Ã\x83\\x82x94 click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
   * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
   * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
@@ -127,7 +129,7 @@ export const Update = ({ label, children }) => (
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly ([HTPR-4455](https://app.hypertask.ai/detail/project-15/4455))
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426))
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile â¢ Team â¢ Board â¢ Connect â¢ Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile • Team • Board • Connect • Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications ([HTPR-4403](https://app.hypertask.ai/detail/project-15/4403))
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits ([HTPR-4429](https://app.hypertask.ai/detail/project-15/4429))
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments ([HTPR-4428](https://app.hypertask.ai/detail/project-15/4428))
