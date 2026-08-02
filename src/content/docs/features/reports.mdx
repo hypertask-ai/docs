@@ -1,0 +1,94 @@
+---
+title: Reports
+description: Create, explore, and manage reports for your projects, plus agent-created reports from AI and MCP tools.
+---
+
+import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+
+The **Reports hub** (`/report`) gives you a dedicated place to view and create summaries of your work. Reports include:
+- Board velocity metrics (flow, speed, people patterns)
+- Time reporting and resource use
+- Filtered and scoped views for cross‑board analysis
+- AI‑generated summaries supported by agent tools
+
+Agents can create reports via Conductor (AI chat), CLI, or MCP. This page covers using the hub, controlling reports, and agent authoring.
+
+## Create a report
+
+1. Go to **Reports** (`/report`). A default report is pre-created; copy it or create from scratch.
+2. Click **Create report**. The modal lists available report types:
+   - **Velocity** — tasks, cycles, throughput, and bottlenecks
+   - **Schedule** — task dates, dependencies, and slack
+   - **Filter summary** — based on a board filter (section, priority, assignee)
+3. Choose a type, customize filters (time range, sources, sections), and click **Create**.
+4. Reports save as named items in the hub. Click a saved report to reopen its shared state.
+
+## Open specific report types
+
+From the **Ctrl+K** command palette:
+
+| Command | Opens |
+|---------|-------|
+| **Report: Velocity** | Velocity report |
+| **Report: Schedule** | Schedule report |
+| **Report: Filtered summary** | Modal to pick board, section, and filters |
+
+Agents invoked via `Conductor: Create report` combine these patterns.
+
+## Customize shared reports
+
+Each report becomes a shareable object with:
+- Name and description
+- Filters (board, section, date range, priority, assignee)
+- View mode (velocity, schedule, or custom)
+
+Copy a report link from the hub to share it with teammates. Opening the link loads the same report view without repeating configuration.
+
+## Agent-authored reports
+
+Agents can author reports by:
+1. Using the **Conductor: Create report** tool on a board, with a prompt defining structure and filters.
+2. Calling **Report authoring** via CLI (`hypertask report create --agent`).
+3. Using MCP `hypertask_report_create` to build programmatic reports.
+
+Report templates often include:
+- Board and section selection
+- Required pivot fields (status, assignee, due date)
+- Optional dimension (size,.priority, tags)
+
+Example: hourly team velocity snapshots collected by an agent.
+
+Usage example with the CLI:
+
+```bash
+hypertask report create \
+  --name "Weekly Velocity" \
+  --type velocity \
+  --board-id 15 \
+  --start "2026-08-01" \
+  --end "2026-08-31"
+```
+
+The hub loads the report at `/report` with the associated filters.
+
+## Integration with boards
+
+Reports combine data across your projects:
+- You can scope reports to a single board or multiple boards.
+- Shared filters sync across tools: board search, saved views, and report filters map to the same underlying rules.
+
+Use reports as a basis for:
+- Weekly standup summaries
+- Release retrospectives
+- Resource planning and overcommitment checks
+
+## Best practices
+
+- **Name consistently**: use pattern `Board/Project – Report Type – Period` for easy navigation.
+- **Re-use filters**: pin board filters to quick-access wells and reference those wells when generating reports.
+- **Refresh timely**: set agents to update reports daily or on board changes, depending on cadence needs.
+- **Lock stable templates**: freeze stable filters in saved report templates so agents can invoke them reliably.
+
+Related:
+- [Board Settings](./board-settings.mdx) — auto‑assign, staleness, etc.
+- [Calendar view](./calendar.mdx) — task dates, dates, scheduling
