@@ -11,7 +11,7 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
 1. **Sign up** at [hypertask.ai](https://hypertask.ai) using email or Google. Provide your email address to create an account; the service will send you a sign-in link and a shorter 6-digit code for quick access. ([HTPR-4166](https://app.hypertask.ai/detail/project-15/4166)) This also provisions you as a Stripe customer if you opt into billing.
 
-2. **First board generation.** New accounts get a fresh starter board in the UI (AI-first, with a static fallback). The board arrives with a default set of sections (typically Todo, Doing, Done), and the board's tasks and sections are immediately visible before any human action.
+2. **First board generation.** New free-tier accounts start with an empty board. A default section is seeded, and the AI chat is open by default on desktop; your manual chat state persists until you close the chat manually. No static fallback board appears by default. ([HTPR-4866](https://app.hypertask.ai/detail/project-15/4866))
 
 3. **Create a project** from the dashboard. Give it a name and a short prefix (e.g., `HT` for "Hypertask") — this prefix is used for ticket numbers like `HT-1`, `HT-2`.
 
