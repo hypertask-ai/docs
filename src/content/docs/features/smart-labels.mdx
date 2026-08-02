@@ -1,0 +1,42 @@
+---
+title: "Smart Labels"
+description: "Labels with an AI prompt that automatically stay assigned to matching tasks — soft, prompt-defined views."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+A **smart label** is a label with an AI prompt attached. The AI reads each task and keeps the label assigned to the ones that match your prompt — so a filter or saved view on that label becomes a **prompt-defined view** ("show me small quick wins", "everything touching billing") instead of a hard filter.
+
+## Creating a smart label
+
+<Steps>
+
+1. Open the label modal on a task (or the Manage Tags screen) and type a new label name.
+
+2. Fill the **"Smart label — AI keeps this label on matching tasks"** field with a plain-language description of which tasks belong, e.g. `Small, low-risk changes shippable in under an hour`.
+
+3. Save. The AI immediately classifies the board's existing tasks (up to 500) and labels the matches. Smart labels show a sparkle icon in label lists.
+
+</Steps>
+
+## How it stays current
+
+- **New tasks** are classified when created.
+- **Edited tasks** are re-classified when their title or description changes.
+- **Prompt changes** re-run classification for the whole board.
+
+Label changes made by the AI appear in the task's activity feed as HyperAI.
+
+<Aside type="note">
+The latest AI verdict wins: if you manually add or remove a smart label on a task, the AI may reverse it the next time that task is re-classified. Describe exceptions in the prompt instead ("NOT: schema changes").
+</Aside>
+
+## Using it as a view
+
+Filter the board by the smart label (or save that filter as a view) and you have a Kanban/table that only shows AI-matched tasks.
+
+## Details
+
+- Prompts are capped at 1000 characters; setting one requires project membership.
+- Classification runs on a fast, low-cost model; usage is logged like other AI features.
+- Backfill covers the 500 oldest tasks per run; newer activity is always classified.
