@@ -87,12 +87,12 @@ Every page has a version history. Restrict updates to safe versions and restore 
 - Each version shows the timestamp, author, and a copy of the content at that point.
 - Click a version to view what the page looked like at that time.
 
-### Via MCP and CLI
+### Via the REST API
 
-MCP tools and CLI commands expose the page's version list and restore options:
+Version history and restore are REST-only today. There is no MCP tool and no CLI command for them yet:
 
-- `hypertask pages list-versions <ticket> <page-id>` — lists all versions with timestamps and editorial info.
-- `hypertask pages restore <ticket> <page-id> --version <version-id>` — restores a page to a selected historical state.
+- `GET /api/mcp/pages/versions` — lists all versions with timestamps and author.
+- `POST /api/mcp/pages/restore` — restores a page to a chosen version.
 
 ---
 
@@ -106,13 +106,12 @@ Task descriptions also gain version history to help you track contributions, rev
 - Click **Description** in the top area to open the description editor.
 - Click **History** in the description header to view revisions.
 
-### Via MCP and CLI
+### Via the REST API
 
-Use dedicated endpoints to list and restore description history:
+As with page history, this is REST-only for now:
 
-- **MCP:** `taskDescriptionVersions` (GET) to list task-description versions.
-- **MCP:** `taskDescriptionRestore` (POST) to restore a task description to a specific snapshot.
-- **CLI:** `hypertask task description-versions <ticket>` and `hypertask task description-restore <ticket> --version <version-id>`.
+- `GET /api/mcp/tasks/description-versions` — list the snapshots of a task description.
+- `POST /api/mcp/tasks/description-restore` — restore one of them.
 
 ### Conflict safety for task descriptions
 
@@ -142,80 +141,70 @@ For agents and AI workflows, the Pages system provides a reliable, tracked surfa
 
 Pages commands live under the new `pages` command group (CLI & MCP tools). They are fully available from the terminal to manage pages programmatically.
 
+Pages are addressed by **numeric page id**, and created against a **numeric task id** — not a ticket number. Get a task id with `hypertask task list --json`.
+
 ### Commands
 
 | Command | Description |
 |--------|-------------|
-| `hypertask pages create <ticket> --title "title" [--page-type <type>] [--mode <mode>]` | Create a new page on a task. |
-| `hypertask pages get <ticket> <page-id> [--mode <mode>]` | Get full markdown content of a page. |
-| `hypertask pages append <ticket> <page-id> --text "content"` | Append text to a page. |
-| `hypertask pages prepend <ticket> <page-id> --text "content"` | Prepend text to a page. |
-| `hypertask pages update <ticket> <page-id> --text "content"` | Overwrite a page entirely. |
-| `hypertask pages list <ticket>` | List all pages on a task. |
-| `hypertask pages search <ticket> --query "text"` | Search page content on a task. |
-| `hypertask pages list-versions <ticket> <page-id>` | List historical versions of a page. |
-| `hypertask pages restore <ticket> <page-id> --version <version-id>` | Restore a page to a previous version. |
+| `hypertask pages create --task <task-id> --title "title" --content "..."` | Create a page on a task. |
+| `hypertask pages get <page-id>` | Read a page. |
+| `hypertask pages append <page-id> --content "..."` | Append to a page. |
+| `hypertask pages update <page-id> --content "..." [--mode replace\|append\|prepend]` | Rewrite a page, or append/prepend. |
+| `hypertask pages list [--task <id>] [--project <id>]` | List pages on a task or across a board. |
+| `hypertask pages search <query>` | Search page content. |
+| `hypertask pages archive <page-id>` | Archive a page (soft delete; alias `delete`). |
 
 ### Flags
 
-Most commands support the following flags:
-
-| Flag | Description |
-|------|-------------|
-| `--mode <mode>` | Write mode: `overwrite`, `append`, or `prepend`. Defaults to `overwrite`. |
-| `--text <text>` | Markdown text for the body (required for create/update/append/prepend). |
-| `--limit <n>` | Limit results (for list/search). Default is 10. |
-| `--offset <n>` | Pagination offset for list operations. |
+| Flag | Applies to | Description |
+|------|-----------|-------------|
+| `--content <text>` | create, append, update | The body text. |
+| `--markdown-file <path>` | create, append, update | Read the body from a file instead. |
+| `--mode <replace\|append\|prepend>` | update | How to apply the content. `replace` by default. |
+| `--if-version <n>` | update | Only write if the page is still at this version. Returns a conflict otherwise. |
+| `--note <text>` | update | A note attached to this revision. |
+| `--html` / `--canvas` | create, append, update | Treat the content as HTML, or as an HTML canvas page. |
+| `--parent <id>` | create | Nest under another page. |
 
 ### Examples
 
-Create a basic page:
+Create a page (note `--task` takes the numeric task id):
 
 ```bash
-hypertask pages create HTPR-2992 --title "Research competitor pricing" --text "# Competitor pricing\n\nStart by listing key competitors and their pricing tiers."
+hypertask pages create --task 2992 --title "Research competitor pricing" \
+  --content "# Competitor pricing
+
+Start by listing key competitors and their pricing tiers."
 ```
 
 Append a paragraph incrementally:
 
 ```bash
-hypertask pages append HTPR-2992 --page-id 4521 --text "Each tier includes X; Y is extra."
+hypertask pages append 4521 --content "Each tier includes X; Y is extra."
 ```
 
-Get full content:
+Read it back, list a task's pages, or search:
 
 ```bash
-hypertask pages get HTPR-2992 --page-id 4521
-```
-
-List all pages on a task:
-
-```bash
-hypertask pages list HTPR-2992
-```
-
-Search page content:
-
-```bash
-hypertask pages search HTPR-2992 --query "competitor"
+hypertask pages get 4521
+hypertask pages list --task 2992
+hypertask pages search "competitor"
 ```
 
 ---
 
 ## MCP tools reference
 
-Below are the MCP tool definitions for pages (see [`/api/tools-reference.mdx`](/api/tools-reference.mdx) for the complete tool list).
+Five MCP tools cover pages. Full parameters are in the [MCP Tools Reference](/api/tools-reference/), which is generated from the server itself.
 
-- `hypertask_create_page` — Create a new page on a task.
-- `hypertask_get_page` — Get full markdown content of a page.
-- `hypertask_append_to_page` — Append text to a page.
-- `hypertask_prepend_to_page` — Prepend text to a page.
-- `hypertask_update_page` — Overwrite a page entirely.
-- `hypertask_list_pages` — List all pages on a task.
-- `hypertask_search_pages` — Search page content on a task.
-- `hypertask_list_page_versions` — List historical versions of a page.
-- `hypertask_restore_page` — Restore a page to a previous version.
-- `hypertask_task_description_versions` — List task-description versions for concurrency.
-- `hypertask_task_description_restore` — Restore a task description to a previous version.
+- `hypertask_create_page` — Create a page on a task.
+- `hypertask_get_page` — Read a page.
+- `hypertask_update_page` — Write to a page. Its `mode` parameter (`replace`, `append`, `prepend`) covers all three write shapes, so there is no separate append or prepend tool.
+- `hypertask_list_pages` — List the pages on a task.
+- `hypertask_search_pages` — Search page content.
+
+Archiving, version history and restore have no MCP tool yet; use the REST endpoints listed above.
 
 <Aside type="tip">
 All pages-associated tools reuse the task routes' authentication and project-membership checks, returning matching 401/403 errors relative to access to the parent task.
@@ -240,15 +229,14 @@ Pages and task descriptions both support optimistic-concurrency conflict safety 
 ### CLI conflict handling example
 
 ```bash
-# 1. Fetch current page content
-CURRENT=$(hypertask pages get HTPR-2992 --page-id 4521)
+# 1. Read the page as JSON so you get its current version number
+hypertask pages get 4521 --json
 
-# 2. Append to current content (not the original)
-NEW_TEXT="$CURRENT\n\n---\nAdditional note appended by agent."
+# 2. Write back, but only if nobody else has written since
+hypertask pages update 4521 --mode append \
+  --content "Additional note appended by agent." --if-version 3
 
-# 3. Write back with ifVersion to detect conflict
-hypertask pages append HTPR-2992 --page-id 4521 --text "$NEW_TEXT" --ifVersion 3
-# If 409, retry with the latest version.
+# On a conflict, re-read and decide what to keep before retrying.
 ```
 
 ---

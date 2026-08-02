@@ -176,7 +176,7 @@ This page is generated from the server's own \`tools/list\` response, so it cann
 </Aside>
 
 <Aside type="note">
-AI Chat inside the app exposes its own, mostly overlapping set of tools. It can write too, but it does not have the skills, task-relation or agent-coordination tools, and it splits some of these into separate tools. See [MCP Integration](/mcp/overview/) for the differences.
+AI Chat inside the app exposes its own, larger set of tools covering the same ground, plus help-doc search and web search. It splits some of these tools apart (one per timer action, a separate unassign) and is missing only \`hypertask_hello\`. See [MCP Integration](/mcp/overview/) for the differences.
 </Aside>
 
 **${tools.length} tools.**

@@ -215,26 +215,26 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
 
-AI Chat reads and writes: it creates and updates tasks, comments, drafts, pages, labels, views and timers, assigns people, moves tasks between boards, and archives from the inbox. It exposes 44 tools against the MCP server's 48, so the two are close but not identical.
+AI Chat reads and writes, and it is not a reduced version of MCP. It manages tasks, comments, drafts, pages, labels, views, skills, sections, timers and task relations, assigns people, moves tasks between boards and to the inbox, reads board manifests and playbooks, checks agent presence, and raises decision requests. Its `hypertask_update_task` is the richest of any surface: it alone adds or removes a single label without replacing the rest, and writes to several tasks in one call.
 
-Not in AI Chat today: skills (`hypertask_list_skills` and friends), task relations (`hypertask_link_tasks`, `hypertask_find_related_tasks`, `hypertask_next_tasks`), `hypertask_move_task_to_inbox`, and the agent-coordination tools (`hypertask_hello`, `hypertask_agent_presence`, `hypertask_board_manifest`, `hypertask_get_board_playbook`, `hypertask_decision_request`, `hypertask_task_context`).
+Only two MCP tools have no AI Chat equivalent, and neither is a capability gap: `hypertask_hello` (the connection-time onboarding map, which the chat gets from its system prompt) and the `report` action of `hypertask_time`.
 
-Some capabilities are shared but named differently: MCP folds comment edits into `hypertask_add_comment_to_task`, unassign into `hypertask_assign_user`, and every timer action into `hypertask_time`, where AI Chat gives each its own tool.
+Some capabilities are shared but named differently. MCP folds comment edits into `hypertask_add_comment_to_task`, unassign into `hypertask_assign_user`, and every timer action into `hypertask_time`, where AI Chat gives each its own tool.
+
+AI Chat also has three tools no other surface has: `search_help_docs`, `rag_retrieval` over indexed board content, and `web_search`.
 
 ## Known limitations
 
-The following time-control-related features are not yet available via MCP:
+| Feature | Status | Details |
+|---------|--------|---------|
+| **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` works, but mentions can render as plain text without firing a notification. Pass structured mention objects (`user_id` + `display_name`) for reliable results. |
+| **Auto-linking ticket references** | Not supported | A ticket reference such as `HTPR-1234` inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_link_tasks` to create the relation explicitly. |
+| **Page and description history** | REST only | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, but have no MCP tool yet. |
+| **Agent infrastructure** | REST only, by design | Task leases, evidence, escalation, work sessions, service-account management, API keys and webhooks are REST endpoints only. They are plumbing for autonomous workers rather than things an assistant should call mid-conversation. |
 
-| Feature / Endpoint Note | Status | Details |
-|--------------------------|--------|---------|
-| **Create labels** | Not supported | You can assign existing labels to tasks, but cannot create new labels via MCP. Create labels in the Hypertask UI first, then reference them. |
-| **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` is available, but mentions may appear as plain text and not trigger notifications. Use structured mention objects (`user_id` + `display_name`) for best results. |
-| **Related task linking** | Not supported | Ticket references (e.g. `HTPR-1234`) in comments added via MCP are not automatically parsed into "related tasks" links like they are in the UI. |
-| **Saved views** | Not supported | Saved views are accessible only from the web UI. MCP tools, CLI, and AI Chat do not currently support saved views. |
+<Aside type="note">
 
-<Aside type="tip">
-
-For time-control features not yet available via MCP, use the <a href="/cli/reference/">Hypertask CLI</a> as a workaround — it supports the full `hypertask time start|stop|status|running|log|report` command set against prod. The report tool resolves ticket id / unique index / task id any of which you can use as identifiers.
+Creating labels and managing saved views used to be listed here as unsupported. Both work now, from every surface: `hypertask_create_label`, and the full `hypertask_create_view` / `update_view` / `delete_view` / `switch_view` set.
 
 </Aside>
 
