@@ -71,10 +71,10 @@ See a task's relations in the **Relations** section of the task detail view.
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
 
-- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> → "Blocked by person…", then pick the person. One blocker per ticket.
+- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> â\x86\x92 "Blocked by personâ\x80¦", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the ✕ in the sidebar row or by picking "Nobody" in the picker.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the â\x9c\x95 in the sidebar row or by picking "Nobody" in the picker.
 
 ## Subtasks
 
@@ -97,6 +97,16 @@ Tasks can belong to one section on a board. Changing a task's section moves it t
 - **Auto-filing**: Certain pipeline tasks are auto-filed from CI or monitoring systems as new tickets. These appear fresh on the board as soon as they're created.
 
 **Note:** Temporary typecast changes for webhook status handling (e.g., internal Stripe SDK version bumps) do not surface as user-visible settings or toggles; they are infrastructure-level fixes and apply silently under the hood.
+
+## Attachments
+
+Upload files to tasks to enrich them with context:
+
+- **From web UI**: Drag and drop files or use the attachment picker in the task description.
+- **From CLI**: Use <code>hypertask comment add &lt;ticket&gt; --attach &lt;file&gt;</code> to attach.
+- **From MCP**: Use the <code>hypertask_attachments_add</code> tool with file upload support.
+
+The system accepts a wide range of file types including APK, ZIP, gzip, tar, CSV, JSON, and generic octet-stream files. Uploads are validated using a combination of file extension checking and magic-byte signatures where applicable. Non-image, non-text files are processed and stored for download via a shared URL.
 
 ## Export and integration
 
