@@ -9,7 +9,7 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 
 Use **/time** from the command palette to open the time tracking interface:
 - **Timer mode**: Select a task on a board or table, or open its detail page, then press <kbd>W</kbd> to start or stop its timer
-- **Per-ticket time log modal**: Run <kbd>Cmd+K</kbd> → "Log time" on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
+- **Per-ticket time log modal**: Press <kbd>L</kbd> (or <kbd>Cmd+K</kbd> → "Log time") on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
@@ -79,7 +79,7 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 #### Log time on an open ticket
 
-1. Open a ticket detail or use <kbd>Cmd+K</kbd> → "Log time" when browsing the board or a task list
+1. On an open ticket, press <kbd>L</kbd> (or <kbd>Cmd+K</kbd> → "Log time")
 2. Day-grouped time entries appear with rows for each calendar day and a total at the top
 3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m`)
 4. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
@@ -116,7 +116,7 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 <dl>
 <dt><kbd>W</kbd> on a board, table, or task detail page</dt>
 <dd>Starts/stops a timer on the selected task</dd>
-<dt><kbd>Cmd+K</kbd> → "Log time" on a ticket (open ticket only)</dt>
+<dt><kbd>L</kbd> on a ticket (open ticket only)</dt>
 <dd>Opens the per-ticket time log modal (in-place dialog; fires only outside text inputs)</dd>
 <dt><kbd>Cmd+K</kbd> → "Log time"</dt>
 <dd>Time log modal on any open ticket via the command palette</dd>
