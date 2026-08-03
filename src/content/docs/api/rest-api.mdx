@@ -48,7 +48,6 @@ Previously, several public API routes accepted an unsigned `nookies_user` cookie
 
 - Routes that set `nookies_user.id` now require a valid, matching signed `ht_session` cookie with the same `id` value to succeed.
 - The following route families are affected:
-
   - Auth routes (e.g., `/api/auth/*`)
   - MCP routes (`/api/mcp/*`)
   - Other 64 public sub-paths previously relying on unsigned nookies_user
@@ -64,6 +63,25 @@ Compatibility: The consensus across the auth, MCP, public, webhook, logged-out, 
 - Work that previously shipped `nookies_user` directly (e.g., via server-to-server calls) should now explicitly sign or add `ht_session` with the same `id`, but it is a rare pattern in practice.
 
 If your pattern relies on unsigned `nookies_user` outside these call sites, see [`/api/session/verify`](https://app.hypertask.ai/api/session/verify) to validate the signed session instead.
+
+### createMention API
+
+The `createMention` API endpoint now requires a verified authentication session. Mentions are no longer an open push channel that trusts caller-supplied identifiers:
+
+- All requests to `POST /api/v1/comments` with a `mentions` array now require verification against the signed `ht_session`.
+- The `mentionedBy` field in the request is ignored; it is derived automatically from the authenticated user's session.
+- The endpoint validates that the task, the initiator, and the recipient all belong to the same board before creating the mention.
+- Attempting to forge mentions or cross-board mentions returns an `401 Unauthorized` response.
+
+### Deprecated and removed endpoints
+
+The following endpoints have been removed as they were not actively used by any client:
+
+- `GET /api/comments/getAll` — use `GET /api/v1/comments` instead.
+- `GET /api/comments/single` — use `GET /api/v1/comments` with a specific `ticket_number` or `task_id`.
+- `POST /api/notifications/oneOffUpdateScript` — use the standard notification management endpoints under `/api/v1/notifications/` or the app's ability to schedule notification preferences.
+
+Knowing these endpoints were already unused, this change does not affect integrations.
 
 ---
 
@@ -1060,7 +1078,11 @@ Add a comment to a task. Comment text is HTML.
 | `project_id` | number | Conditional | Required with `unique_index`; optional scope for `ticket_number` |
 | `text` | string | Yes | HTML comment text, max 5000 characters |
 | `images` | string[] | No | HTTP or HTTPS image URLs |
-| `mentions` | object[] | No | Optional mention metadata. Each item: `{ "user_id": number, "display_name": string }` |
+| `mentions` | object[] | No | Optional mention metadata. Each item: `{ "user_id": number, "display_name": string }`. |
+
+<Aside type="note">
+Mentions are now authenticated. Provide valid `ht_session` cookies attached to the request for successful mention creation. The `mentionedBy` field is ignored; the authenticated user's session is used automatically.
+</Aside>
 
 **Example request:**
 
@@ -1103,7 +1125,7 @@ Update your own comment.
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `text` | string | Yes | HTML comment text, max 5000 characters |
-| `mentions` | object[] | No | Optional mention metadata. Each item: `{ "user_id": number, "display_name": string }` |
+| `mentions` | object[] | No | Optional mention metadata. Each item: `{ "user_id": number, "display_name": string }`. |
 
 **Example request:**
 
