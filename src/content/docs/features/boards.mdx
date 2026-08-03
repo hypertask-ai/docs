@@ -32,3 +32,17 @@ All authentication flows support clean sign-out that immediately invalidates the
 
 - Cookie consent banner appears on guest boards to capture consent for analytics and personalization (opt-out and edgy).
 - Header includes "Log in" or "Sign up" depending on session state under the board title, with links to app.hypertask.ai app pages ([HTPR-4883](https://app.hypertask.ai/detail/project-15/4883)).
+
+## Project pages safety
+
+Secure and reliable project page navigation is critical for boards. Hypertask ensures `/project` page loads correctly by:
+
+```text
+GET /project?{boardId|*|<shareId|?>}
+─────────────────────────────────────────
+200 OK (no crash; no NEXT_REDIRECT body injected in buffers)
+```
+
+- Valid board IDs blend into the URL so the correct board opens directly.
+- Minimizing redirects and avoiding middleware that rewrites responses reduces round-trips.
+- Bad or unexpected parameters are handled gracefully, preserving a clean UI rather than crashing or exposing errors in the rendered payload.
