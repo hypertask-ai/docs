@@ -18,8 +18,10 @@ export const Update = ({ label, children }) => (
   * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
 </Update>
 <Update label="August 2, 2026">
-  * Added: New calendar default shows week starting Monday with weekend days hidden ([HTPR-4867](https://app.hypertask.ai/detail/project-15/4867))
   * Fixed: Emptying one inbox split no longer shows INBOX ZERO over other splits ([HTPR-4872](https://app.hypertask.ai/detail/project-15/4872))
+  * Fixed: Legacy comment API endpoints now require signed session authorization and validate task/board membership before allowing mentions ([HTPR-4667](https://app.hypertask.ai/detail/project-15/4667))
+  * Fixed: Legacy comment and notification endpoints that previously accepted unsigned requests have been removed from the API surface ([HTPR-4772](https://app.hypertask.ai/detail/project-15/4772))
+  * Added: New calendar default shows week starting Monday with weekend days hidden ([HTPR-4867](https://app.hypertask.ai/detail/project-15/4867))
   * Added: Calendar Desktop Day View includes a weekday-selector strip above the calendar to jump to specific weekdays ([HTPR-4758](https://app.hypertask.ai/detail/project-15/4758))
   * Improved: Calendar URLs now encode view and date parameters for shareable deep links that show the exact view for anyone ([HTPR-4759](https://app.hypertask.ai/detail/project-15/4759))
   * Improved: Calendar settings now live in the Settings page with granular toggle visibility and clear labels. Ctrl+K commands now surface "Calendar settings", "Hide weekends", and "Show weekends" menu items, with weekend toggles and week start choices (e.g. Sunday/Monday) properly categorized ([HTPR-4855](https://app.hypertask.ai/detail/project-15/4855))
@@ -73,9 +75,9 @@ export const Update = ({ label, children }) => (
   * Fixed: /api/invites/post now requires verified session and project membership for invitations ([HTPR-4651](https://app.hypertask.ai/detail/project-15/4651))
 </Update>
 <Update label="July 27, 2026">
-  * Fixed search latency — sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
+  * Fixed search latency − sudden-search dropped from 315ms to ~130ms (-58%) by removing per-row full-text parsing and switching to a per-board substring scan ([HTPR-4527](https://app.hypertask.ai/detail/project-15/4527))
   * Added Grok-4.1 to AI model picker for fast responses via the board-level task writer ([HTPR-4520](https://app.hypertask.ai/detail/project-15/4520))
-  * Added Ctrl+B board palette — click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
+  * Added Ctrl+B board palette − click email to open account switcher ([HTPR-4522](https://app.hypertask.ai/detail/project-15/4522))
   * Fixed Grok chat responses now render formatted markdown instead of raw text ([HTPR-4533](https://app.hypertask.ai/detail/project-15/4533))
   * Added HyperAI uses Help-Center search to answer product and how-to questions via chat ([HTPR-4532](https://app.hypertask.ai/detail/project-15/4532))
   * Fixed task row shows one dot instead of two when both new and pinned (Blue new/unread takes precedence over Yellow pinned) ([HTPR-4557](https://app.hypertask.ai/detail/project-15/4557))
