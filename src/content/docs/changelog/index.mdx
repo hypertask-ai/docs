@@ -13,12 +13,16 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 3, 2026">
+  * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
+  * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
+</Update>
 <Update label="August 2, 2026">
   * Added: New calendar default shows week starting Monday with weekend days hidden ([HTPR-4867](https://app.hypertask.ai/detail/project-15/4867))
   * Fixed: Emptying one inbox split no longer shows INBOX ZERO over other splits ([HTPR-4872](https://app.hypertask.ai/detail/project-15/4872))
   * Added: Calendar Desktop Day View includes a weekday-selector strip above the calendar to jump to specific weekdays ([HTPR-4758](https://app.hypertask.ai/detail/project-15/4758))
   * Improved: Calendar URLs now encode view and date parameters for shareable deep links that show the exact view for anyone ([HTPR-4759](https://app.hypertask.ai/detail/project-15/4759))
-  * Improved: Calendar settings now live in the Settings page with granular toggle visibility and clear labels. Ctrl+K commands now surface "Calendar settings", "Hide weekends", and "Show weekends" menu items, with weekend toggles and week start choices (e.g., Sunday/Monday) properly categorized ([HTPR-4855](https://app.hypertask.ai/detail/project-15/4855))
+  * Improved: Calendar settings now live in the Settings page with granular toggle visibility and clear labels. Ctrl+K commands now surface "Calendar settings", "Hide weekends", and "Show weekends" menu items, with weekend toggles and week start choices (e.g. Sunday/Monday) properly categorized ([HTPR-4855](https://app.hypertask.ai/detail/project-15/4855))
   * Added: Reports hub at /report with AI-first report creation and shared report templates; Ctrl+K "Go to reports" navigates to the hub, and agents can create reports via Conductor, CLI, and MCP ([HTPR-4778](https://app.hypertask.ai/detail/project-15/4778))
   * Fixed: Fallback behavior when the API endpoint blocks the client, including automatic retries and fallback to app.hypertask.ai ([HTPR-4784](https://app.hypertask.ai/detail/project-15/4784))
   * Fixed: CLI JSON output now streams cleanly without log pollution, making it fully parsable by standard JSON tools ([HTPR-4633](https://app.hypertask.ai/detail/project-15/4633))
