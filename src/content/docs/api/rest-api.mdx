@@ -73,6 +73,16 @@ The `createMention` API endpoint now requires a verified authentication session.
 - The endpoint validates that the task, the initiator, and the recipient all belong to the same board before creating the mention.
 - Attempting to forge mentions or cross-board mentions returns an `401 Unauthorized` response.
 
+### API user routes require authentication
+
+The following API routes have been secured to require authentication:
+
+- `POST /api/resetUser` — admin tool for resetting user state. Takes the same `x-admin-password` header check as the `reset-trial` endpoint.
+- `GET /api/users/search` — searches available users by name or email. Requires a signed `ht_session` cookie.
+- `GET /api/users/getByEmails` — returns users matching one or more email addresses. Requires a signed `ht_session` cookie.
+
+These routes were previously accessible without an authenticated session. Requests made without valid authentication now receive `401 Unauthorized`.
+
 ### Deprecated and removed endpoints
 
 The following endpoints have been removed as they were not actively used by any client:
