@@ -13,7 +13,7 @@ AI can create tasks from scratch or build on existing ideas. Use the Task Writer
 <TabItem label="Task Writer" value="task-writer">
 
 1. Open a task in your project.
-2. Type `<code class="language-bash">/task</code>` to open the Task Writer.
+2. Type `</task>` to open the Task Writer.
 3. Describe your task in natural language, or paste an unstructured note.
 4. Add details like priority, labels, and assignees in the **Draft** section.
 
@@ -22,19 +22,10 @@ The AI refines your input, suggests an appropriate title, and prepares a descrip
 </TabItem>
 <TabItem label="Write with AI" value="write-ai">
 
-Use `<code class="language-bash">/ai</code>` or the **Write with AI** button in the task composer to generate content:
+Use `</ai>` or the **Write with AI** button in the task composer to generate content:
 - **Title** — auto-generates from your prompt and context.
 - **Description** — creates rich, formatted content including lists, tables, and inline links.
 - **Draft** — shows the full AI-generated text for review and editing.
-
-</TabItem>
-<TabItem label=" Voice Dictation" value="voice">
-
-Click the purple dictation mic in the task composer to start speaking. The AI transcribes your words into text in real time. You can continue editing the transcribed text after the mic is released.
-
-<Aside type="tip">
-Voice dictation works on desktop and mobile. On mobile, the mic slides to the left for one-handed use.
-</Aside>
 
 </TabItem>
 <TabItem label="Task Suggestions" value="suggestions">
@@ -122,7 +113,7 @@ A **with vector search** indicator shows when the system is searching across mul
 
 **Shortcuts** — Access common prompts like "Summarize this task," "Rewrite this comment," and "Create a task from this." Shortcuts appear as a dropdown when the composer has focus or you use Ctrl+K.
 
-**Copy to AI Chat** — Highlight any comment and select `<code class="language-bash">Ctrl+K</code>` (or use the three-dot menu) to copy it into the chat for rewriting, summarizing, or context expansion.
+**Copy to AI Chat** — Highlight any comment and select `Ctrl+K` (or use the three-dot menu) to copy it into the chat for rewriting, summarizing, or context expansion.
 
 **Summarize focused comments via Ctrl+K** — After selecting comment text or using the three-dot menu, choose Summarize. This opens the AI chat with an AI-generated summary of the selected text and automatically sets the current task context for follow-on dialogue. You can keep chatting in the same thread.
 
@@ -158,7 +149,7 @@ Valentin Review is a dedicated human reviewer lane separate from AI triage, ensu
 AI can now create filtered views on your boards. Ask the AI to "Create a view called Outdated that shows tickets older than 3 months" and it will generate a view with the appropriate filters.
 
 <Aside type="tip">
-The system uses existing saved views to apply filters. Use `<code class="language-bash">/views</code>` in task detail or context picker to see what views are available on a board.
+The system uses existing saved views to apply filters. Use `</views>` in task detail or context picker to see what views are available on a board.
 </Aside>
 
 ## Skills
@@ -178,13 +169,13 @@ To use AI with skills:
 Strix is an AI-powered pentest agent that can analyze your application and surface potential vulnerabilities.
 
 <cardgrid>
-  <Card title="Automated security checks" icon="🛡️">
+  <Card title="Automated security checks" icon="🔒">
     Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
   </Card>
   <Card title="Fast retrospectives" icon="⚡">
     Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early.
   </Card>
-  <Card title="Defined Scope Inspection" icon="📋">
+  <Card title="Defined Scope Inspection" icon="🔍">
     Configure which apps, routes, and paths Strix should target. Runs respect favicon and robots.txt signals to respect what Google can see, making results realistic and useful.
   </Card>
 </cardgrid>
@@ -205,7 +196,7 @@ To use Strix:
 </TabItem>
 <TabItem label="Automated recurring runs" value="scheduling">
 
-1. Set a recurring schedule in your DevOps pipeline that invokes `<code class="language-bash">hypertask mcp pentest Strix</code>` or equivalent MCP endpoint.
+1. Set a recurring schedule in your DevOps pipeline that invokes `hypertask mcp pentest Strix` or equivalent MCP endpoint.
 2. Strix scans the configured scope and surfaces findings to your project's trackers (GitHub PR checks, Jira status changes, etc.).
 3. Automate remediation flows—mark security tickets as blockers and route to your incident workflow.
 
@@ -228,10 +219,10 @@ Strix integration is part of your AI toolkit and integrates with your existing P
   <Card title="Scan definitions" icon="📝">
     You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
   </Card>
-  <Card title="Results interpretation" icon="🔍">
+  <Card title="Results interpretation" icon="📊">
     Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
   </Card>
-  <Card title="Ingenta + Strix synergy" icon="🧠">
+  <Card title="Ingenta + Strix synergy" icon="🛡️">
     For advanced threat modeling, pair Strix with Ingenta or similar agent stacks; use Strix for the low-cost first pass and escalate to Ingenta for top-severity findings requiring deeper investigation tools.
   </Card>
 </cardgrid>
@@ -249,7 +240,7 @@ You can explore Strix findings in real time using board filters and views. For e
 AI features connect with the rest of Hypertask:
 - **Boards & Sections** — AI understands your board structure and can create views or reorganize tasks into sections.
 - **Inbox & Notifications** — AI can briefly summarize unread notifications in your inbox.
-- **Keyboard Shortcuts** — Use `<code class="language-bash">Ctrl+K</code>` in the AI composer for instant shortcuts.
+- **Keyboard Shortcuts** — Use `Ctrl+K` in the AI composer for instant shortcuts.
 - **Pages** — AI can draft content for pages attached to tasks using the page editor.
 
 <Aside type="tip">
