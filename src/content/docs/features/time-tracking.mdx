@@ -1,5 +1,5 @@
 ---
-title: Time Tracking
+title: "Time Tracking"
 description: "Track time on tasks with W, log time manually from the command palette, review reports, and export CSV."
 ---
 
@@ -9,7 +9,7 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 
 Use **/time** from the command palette to open the time tracking interface:
 - **Timer mode**: Select a task on a board or table, or open its detail page, then press <kbd>W</kbd> to start or stop its timer
-- **Per-ticket time log modal**: Press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> â\x86\x92 "Log time") on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
+- **Per-ticket time log modal**: Press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> — "Log time") on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
@@ -34,6 +34,33 @@ The **/time** view aggregates time across your workspace and lets you filter by:
 
 Filters are saved per prompt so you can quickly reapply the same view.
 
+### Time report date presets
+
+Select a date range from the start of the report:
+| Preset | Description |
+|--------|-------------|
+| **Yesterday** | Entries from the previous calendar day |
+| **Last week** | Entries from the last full 7-day period |
+| **Last month** | Entries from the previous full month |
+| **Custom** | Open a date picker with <strong>From</strong> and <strong>To</strong> fields |
+
+### Time report time log interaction
+
+For any filter view that shows a duration:
+- **Click a duration** to open an in-depth time log modal for that row, with the full entry history and ability to add or edit entries
+- This modal matches the per-ticket time log opened with <kbd>B</kbd> on an open ticket
+
+### Time report entry form UI
+
+When adding or editing time entries, the time report entry form includes:
+- **Duration input**: Accept HH:MM format, integer minutes, or split hours/minutes. A dedicated <strong>Hours</strong> and <strong>Minutes</strong> field makes selecting exact durations easier than combining them.
+- **High-precision duration support**: Use h:mm:ss format for exact precision (e.g., `0:45:30` for 45 minutes and 30 seconds). The system stores durations at the second level for accurate reporting.
+- **Date picker field**: Fully clickable date field that opens the calendar popover for quick selection
+- **Multi-select filters per entry**: Board and User checkboxes toggle per entry; rows can be bulk selected with checkboxes, deleted in bulk, or exported to CSV
+- **Entry-level local timestamps**: Each manual entry is stored as local-noon timestamps so logs are correctly associated with the logged day, even across time zones
+
+This UX appears in both the per-ticket time log modal and the broader time report when adding rows. Each entry stays on a single line; the person's name truncates instead of every field wrapping on its own row.
+
 ### Time log filters
 
 The time log modal also supports quick filters:
@@ -51,12 +78,12 @@ After applying filters, click **Export** to download a comma-separated values (C
 - No injected formulas or formatting artifacts
 - Includes task number, description, user, duration, date, and note
 
-CSV export supports the same range and group filters as the table view.
+CSV export supports the same range and group filters as the time report.
 
 ### Prompt shortcuts
 
 <Aside>
-Use these prompt patterns when entering ! time tracking mode:
+Use these prompt patterns when entering time tracking queries:
 
 <dl>
 <dt><code>!time today</code></dt>
@@ -77,21 +104,22 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
-- **Per-board persistence**: Timer state is scoped per board â\x80\x94 starting a timer on one board doesn't affect timers on other boards
+- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn't affect timers on other boards
 
 #### Start a timer
 
 1. Select a task on the board or table, or open its detail page
-2. Press <kbd>W</kbd> â\x80\x94 the timer starts automatically
+2. Press <kbd>W</kbd> — the timer starts automatically
 3. Press <kbd>W</kbd> again to stop and save the entry
 
 #### Log time on an open ticket
 
-1. On an open ticket, press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> â\x86\x92 "Log time")
+1. On an open ticket, press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> — "Log time")
 2. Day-grouped time entries appear with rows for each calendar day and a total at the top
 3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m`)
-4. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
-5. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
+4. Enter separate **Hours** and **Minutes** values for precise durations (e.g., 1 hour 30 minutes)
+5. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
+6. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
 
 #### Refine filter views
 
@@ -105,18 +133,7 @@ Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose
 
 1. Apply filters you want to export
 2. Click **Export CSV**
-3. Open in Excel or Google Sheets â\x80\x94 times display as decimal hours ready for calculations
-
-### Time reports entry form UX
-
-When adding or editing time entries, the time reporting entry form includes:
-- **Duration input**: Accept HH:MM formats (e.g., `1:30`) or simple minutes (e.g., `90m`). Support integer and decimal inputs (e.g., `2.5` or `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`). Split hours and minutes yourself via the modal for unambiguous durations.
-- **High-precision duration support**: Use h:mm:ss format for exact precision (e.g., `0:45:30` for 45 minutes and 30 seconds). The system stores durations at the second level for accurate reporting.
-- **Date picker field**: The entire date field is fully clickable and opens Hypertask's calendar popover for quick date selection
-- **Multi-select filters per entry**: Board and User are presented as checkboxes you can toggle per entry; rows can be bulk selected with checkboxes, deleted in bulk, or exported to CSV
-- **Entry-level local timestamps**: Each manual entry is stored as local-noon timestamps so logs are correctly associated with the logged day, even across time zones
-
-This UX appears in both the per-ticket time log modal and the broader time view when adding rows. Each entry now stays on a single line; the person's name truncates instead of every field wrapping on its own row. Running among the static fields is now positioned ahead of the name, so the green marker can never be clipped even when a row is short. Full text remains on hover if it exceeds the display.
+3. Open in Excel or Google Sheets — times display as decimal hours ready for calculations
 
 ### Keyboard shortcut summary
 
@@ -126,7 +143,7 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 <dd>Starts/stops a timer on the selected task</dd>
 <dt><kbd>B</kbd> on a ticket (open ticket only)</dt>
 <dd>Opens the per-ticket time log modal (in-place dialog; fires only outside text inputs)</dd>
-<dt><kbd>Cmd+K</kbd> â\x86\x92 "Log time"</dt>
+<dt><kbd>Cmd+K</kbd> — "Log time"</dt>
 <dd>Time log modal on any open ticket via the command palette</dd>
 </dl>
 </Aside>
@@ -142,7 +159,7 @@ This UX appears in both the per-ticket time log modal and the broader time view 
 - Manual entries use integer and decimal hours for duration (you can enter an integer like `3` or HH:MM format like `2h 30m`), then the system converts to decimal hours (e.g., `2h 30m = 2.5h`)
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
 - Per-ticket time log entries live under the ticket's time tracking row and are grouped by day with a running total
-- Time log v3 includes real assignee filtering, h:mm:ss duration support, and split hours/minutes input for clearer tracking
+- Time report now includes date presets (Yesterday, Last week, Last month, Custom), clickable durations, and split Hours/Minutes fields
 
 </details>
 </Aside>
