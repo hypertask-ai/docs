@@ -29,7 +29,8 @@ Hypertask provides a comprehensive theme system. Choose from five built-in theme
 | **AMOLED** | Pure black backgrounds for OLED and AMOLED displays to conserve battery |
 | **Paper** | Warm editorial light theme with soft paper-like backgrounds for a cozy writing feel |
 | **Mobile** | Mobile-specific dark theme with touch-optimized controls (390x844+ viewport) |
-| **Jakarta** | Dark palette with Plus Jakarta Sans alternative on Dark (by opt-in thanks to HTPR-4895, currently rolled back per Mark) |
+| **Dark Grey (New)** | Refined dark theme with subtle grey-neutral accents |
+| **Light (New)** | Refined light theme with refined typography and interaction styles |
 
 ### Viewing theme options
 
@@ -46,14 +47,13 @@ Themes persist per user and apply globally across the app (board views, inbox, c
 Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
 </Aside>
 
-## AI Writer Panel Borders
+## Table View Hairlines
 
-In **Paper** and **AMOLED** themes, the AI writer panel (comments, AI chat, task writer, etc.) now displays a visible border: `border-hypertasks-ai-purple/70` combined with a subtle paper-weight shadow. This makes the panel pop against the theme background and prevents it from blending into the surrounding UI.
+Table view elements now render with subtle hairlines to improve visual distinction between rows and sections.
 
-### Threshold behavior
-
-- Agents and AI writers only apply the border when the theme has low contrast (Paper, AMOLED, Mobile), so Light/Dark retain a clean minimal look.
-- The transparent-border rule does not affect the comment-input container; it targets the panel as a whole.
+- Row borders and section separators use refined 1px borders
+- Hairlines apply consistently across Light, Dark, and Dark Grey themes
+- The styling maintains readability while keeping layout uncluttered
 
 ## Mobile UI & Status Bar
 
