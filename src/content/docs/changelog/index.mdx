@@ -29,6 +29,9 @@ export const Update = ({ label, children }) => (
   * Fixed: Task detail authentication tests now pass for authenticated endpoints used in tests by adding missing stub entries for the gated PUT endpoint ([HTPR-4840](https://app.hypertask.ai/detail/project-15/4840))
   * Fixed: Expired-session 401 errors and headless QA crashes no longer create tickets automatically, and every ticket now includes the browser name ([HTPR-4853](https://app.hypertask.ai/detail/project-15/4853))
   * Fixed: Push tokens now belong to a single account after login, preventing cross-account notification leaks ([HTPR-4865](https://app.hypertask.ai/detail/project-15/4865))
+  * Fixed: CLI draft and comment rendering: CLI no longer wraps draft writes in a full HTML document ([HTPR-4669](https://app.hypertask.ai/detail/project-15/4669))
+  * Added: Board item-level read receipts; toggle per board and receive receipts as soon as others read your comments ([HTPR-4871](https://app.hypertask.ai/detail/project-15/4871))
+  * Improved: Task detail loads with a single request that includes priority, estimate, labels, and followers instead of per-field fetches ([HTPR-3708](https://app.hypertask.ai/detail/project-15/3708))
 </Update>
 <Update label="August 1, 2026">
   * Fixed CLI draft and comment rendering: CLI no longer wraps draft writes in a full HTML document ([HTPR-4669](https://app.hypertask.ai/detail/project-15/4669))
@@ -129,7 +132,7 @@ export const Update = ({ label, children }) => (
   * Added pasted image URL unfurling: paste a bare image link in a comment to insert the image directly ([HTPR-4455](https://app.hypertask.ai/detail/project-15/4455))
   * Improved AI chat session rail: rail resizes 200-480px, persisted across visits; sessions tagged with their board on first message; All boards pill in search with per-board counts and No bucket for legacy chats ([HTPR-4418](https://app.hypertask.ai/detail/project-15/4418))
   * Added docked AI chat scope picker: Current board (default, follows navigation), pinned board, or All boards; pinning locks context and @ mentions and stops auto-swap; new chat resets to Current board ([HTPR-4426](https://app.hypertask.ai/detail/project-15/4426))
-  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile • Team • Board • Connect • Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
+  * Improved settings: Account tab merged into Team (common Team scope renamed "Team (merged from Account)"), tab bar updated to Profile — Team — Board — Connect — Help; deep links preserved ([HTPR-4424](https://app.hypertask.ai/detail/project-15/4424))
   * Improved feedback UI: Cancel (ESC) + Send (Ctrl+Enter) buttons in the feedback modal with hint chips; feedback now auto-assigns the Feedback board owner + members and arrives as assigned notifications ([HTPR-4403](https://app.hypertask.ai/detail/project-15/4403))
   * Improved Agent API pagination: opt-in cursor bookmark support on the Tasks list to walk long lists efficiently without blowing up payload size or hitting edge offsets/limits ([HTPR-4429](https://app.hypertask.ai/detail/project-15/4429))
   * Improved Agent API idempotency: optional idempotency keys on all write endpoints to prevent duplicate task updates and comments ([HTPR-4428](https://app.hypertask.ai/detail/project-15/4428))
@@ -147,7 +150,7 @@ export const Update = ({ label, children }) => (
 </Update>
 <Update label="July 21, 2026">
   * Added per-section auto-assign on column move: configure via Ctrl+K "Auto-assign for this column" so tasks moved into that section auto-add the chosen assignee (additive, idempotent, notifications fire) ([HTPR-4363](https://app.hypertask.ai/detail/project-15/4363))
-  * Improved task relations: add block/blocked-by/duplicate with dedicated Ctrl+K commands on task detail and viewable in Task Relationships ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
+  * Improved task relations: add block/blocked-by/duplicate with dedicated Ctrl+K commands on task detail and viewable in Task Relationships ([HTPR-4362](https://app.hypertask.ai/deta-15/4362))
   * Fixed text handling for CLI/MCP/auto-writers: bare descriptions and comments are auto-wrapped in `<p>` blocks with blank lines becoming paragraphs ([HTPR-4100](https://app.hypertask.ai/detail/project-15/4100))
 </Update>
 <Update label="July 20, 2026">
