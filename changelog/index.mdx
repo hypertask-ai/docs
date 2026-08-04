@@ -14,17 +14,17 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 4, 2026">
-  * Added: AMOLED theme now provides true-black terminal color scheme and supports Ctrl+K shortcut for quick theme switching ([HTPR-4178](https://app.hypertask.ai/detail/project-15/4178))
+  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
   * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
   * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
   * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
   * Improved: Expanded sidebar no longer overlaps task-detail up/down navigation buttons and other fixed controls ([HTPR-4908](https://app.hypertask.ai/detail/project-15/4908))
   * Added: Inbox notifications now update in real-time via WebSockets, so changes appear instantly across app, CLI, MCP, manifest, and AI chat ([HTPR-3312](https://app.hypertask.ai/detail/project-15/3312))
+  * Added: AMOLED theme v2 now uses IBM Plex as the system typeface, with a true-black elevation ladder and compact card styling; ticket IDs are muted on cards but inherit property fonts in details; iris accent is replaced by theme-tinted greys ([HTPR-4899](https://app.hypertask.ai/detail/project-15/4899))
+  * Added: MCP and CLI can now update existing time entries via POST /api/mcp/time/update (HTTP 400 if neither minutes nor date is provided), and POST /api/mcp/time/delete via entry_id; no separate /api/mcp/time/log delete action exists, and hypertask_time log remains CLI-only for manual entry ([HTPR-4725](https://app.hypertask.ai/detail/project-15/4725))
   * Added: Free users on web are capped at 3 owned boards across all creation surfaces (app, CLI, MCP, manifest, AI chat) and receive upgrade prompts when the limit is reached ([HTPR-4894](https://app.hypertask.ai/detail/project-15/4894))
   * Added: Free setup now provides 100 credit-machines (web/desktop) + 30 credit-machines (mobile) per user, matching the engine's paid tier defaults when proven via adoption or contact ([HTPR-4993](https://app.hypertask.ai/detail/project-15/4993))
-  * Added: Default production environment variables now block normal signup in hosted environments, requiring contractual or contact approval before new accounts can be created ([HTPR-4902](https://app.hypertask.ai/detail/project-15/4902))
   * Added: Free users now get 3 machine credits per platform (web 100, desktop 100, mobile 30) at signup, scaling with verified use or contact for higher tiers ([HTPR-1067](https://app.hypertask.ai/detail/project-15/1067))
-  * Added: Boardless accounts now show a real empty state instead of a blank screen when landing on a project with no boards ([HTPR-4205](https://app.hypertask.ai/detail/project-15/4205))
 </Update>
 
 <Update label="August 3, 2026">
@@ -34,7 +34,7 @@ export const Update = ({ label, children }) => (
   * Improved: Inactive tab labels in the view cluster now render at 90% opacity; on AMOLED, the icon rail and inbox container sit on pure #000 with their hairline edges kept ([HTPR-4943](https://app.hypertask.ai/detail/project-15/4943))
   * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
   * Fixed: App no longer crashes in headless Chrome due to dictation MicVAD errors ([HTPR-4085](https://app.hypertask.ai/detail/project-15/4085))
-  * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
+  * Added: Board switcher now tops the left rail with ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
   * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
   * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
   * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>\</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
