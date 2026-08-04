@@ -25,7 +25,7 @@ Hypertask provides a comprehensive theme system. Choose from five built-in theme
 |-------|-------------|
 | **Light** | Clean, minimal workspace with light backgrounds and subtle shadows |
 | **Dark** | High-contrast dark mode for reduced eye strain in low-light environments |
-| **System** | Automatically follows your operating system's preference (Light — Dark) |
+| **System** | Automatically follows your operating system's preference (Light → Dark) |
 | **AMOLED** | Pure black backgrounds for OLED and AMOLED displays to conserve battery |
 | **Paper** | Warm editorial light theme with soft paper-like backgrounds for a cozy writing feel |
 | **Mobile** | Mobile-specific dark theme with touch-optimized controls (390x844+ viewport) |
@@ -46,6 +46,26 @@ Themes persist per user and apply globally across the app (board views, inbox, c
 <Aside type="tip">
 Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
 </Aside>
+
+### AMOLED theme details
+
+The AMOLED theme is tuned for OLED and AMOLED displays with true-black backgrounds that conserve battery:
+
+- **Pure black backgrounds**: Elements render directly on pure #000 for maximum power savings on OLED/AMOLED screens.
+- **Hairline refinement**: Icons, borders, and separators use barely-visible hairlines on AMOLED so they don’t overwhelm the display when the backgrounds are black.
+- **True-color distinction**: Row highlights, hover states, and active elements rely on cleaner grey-chrome accent colors instead of bright borders, keeping visual clarity strong even on AMOLED.
+
+Activate this theme on supported devices via <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd> on Mac) and select **AMOLED** from the theme picker.
+
+### Keyboard theme activation
+
+Quickly change themes at the keyboard:
+
+| Command | Theme |
+|---------|-------|
+| <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> | Cycle through themes (Light → Dark → System → AMOLED → Paper) |
+
+Use the command palette (default <kbd>Ctrl+P</kbd> / <kbd>Cmd+P</kbd>) to see all theme options and shortcuts if you prefer a visual picker.
 
 ## Theme Accent Finishes
 
@@ -108,6 +128,7 @@ From then on, dictation uses the language you've selected. The setting is saved 
 ## AI Model Selection
 
 AI models are configured globally in the team settings. The current model choice affects:
+
 - Task Writer (`/task` command)
 - Write with AI (`/ai` command and Write with AI button)
 - Chat responses
