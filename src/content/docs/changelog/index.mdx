@@ -34,6 +34,9 @@ export const Update = ({ label, children }) => (
   * Added: Today / Upcoming / Later surface across My tasks boards with date grouping and consistent keyboard navigation ([HTPR-4887](https://app.hypertask.ai/detail/project-15/4887))
   * Added: Swipe-through-unread card stack for mobile inbox via Ctrl+K with right/left swipe or arrow keys, undo, and bulk archive on exit ([HTPR-4969](https://app.hypertask.ai/detail/project-15/4969))
   * Added: Ctrl+K Get started group for first-time users: Create task, AI Task Writer, Invite people, Create board, Add column, plus CLI/MCP seeding for guest boards ([HTPR-4959](https://app.hypertask.ai/detail/project-15/4959))
+  * Fixed: Build process no longer hangs prematurely; deployments now complete within a stable window (htn/hypertask#2288) ([HTPR-4974](https://app.hypertask.ai/detail/project-15/4974))
+  * Added: Custom fields page and in-app help are live (creating fields, rail values, table sorting + columns picker, ICE-ranking recipe, agent/API section with curl examples) ([HTPR-4979](https://app.hypertask.ai/detail/project-15/4979))
+  * Improved: Vercel production builds no longer hang; median deployment time is ~4.4 min, slowest ~4.8 min, with no timeout behavior (agent sessions no longer interfere) ([HTPR-4031](https://app.hypertask.ai/detail/project-15/4031))
 </Update>
 
 <Update label="August 3, 2026">
@@ -48,7 +51,7 @@ export const Update = ({ label, children }) => (
   * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
   * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>\</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
   * Added: Signing in with a guest session now transfers the guest team, its boards, and memberships to the new account, with guest UIDs re-prefixed so that cleanup cron can still find them ([HTPR-4893](https://app.hypertask.ai/detail/project-15/4893))
-  * Added: Two new themes — Dark Grey (New) and Light (New) — with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
+  * Added: Two new themes â\x80\x94 Dark Grey (New) and Light (New) â\x80\x94 with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
   * Improved: Sidebar elements now render with subtle hairlines for better visual distinction, and table view row borders use refined styling ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
   * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
   * Added: Graphite/Porcelain become the system-theme defaults and the graphite left-sidebar outline is dropped ([HTPR-4909](https://app.hypertask.ai/detail/project-15/4909))
