@@ -14,7 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 4, 2026">
-  * Added Agents now show a "Last posted X ago" line in the Manage agents modal and the API /api/agents endpoint returns a lastPostedAt timestamp per agent ([HTPR-4923](https://app.hypertask.ai/detail/project-15/4923))
+  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
+  * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
+  * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
   * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
   * Improved: Expanded sidebar no longer overlaps task-detail up/down navigation buttons and other fixed controls ([HTPR-4908](https://app.hypertask.ai/detail/project-15/4908))
 </Update>
