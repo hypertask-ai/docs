@@ -19,6 +19,7 @@ export default defineConfig({
           'features/collaboration',
           'features/calendar',
           'features/table-view',
+          'features/custom-fields',
           'features/time-tracking',
           'features/appearance',
           'features/keyboard-shortcuts',
