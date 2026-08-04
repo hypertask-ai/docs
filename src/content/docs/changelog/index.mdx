@@ -13,6 +13,12 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 4, 2026">
+  * Added Agents now show a "Last posted X ago" line in the Manage agents modal and the API /api/agents endpoint returns a lastPostedAt timestamp per agent ([HTPR-4923](https://app.hypertask.ai/detail/project-15/4923))
+  * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
+  * Improved: Expanded sidebar no longer overlaps task-detail up/down navigation buttons and other fixed controls ([HTPR-4908](https://app.hypertask.ai/detail/project-15/4908))
+</Update>
+
 <Update label="August 3, 2026">
   * Added: Time reports now support date presets (Yesterday, Last week, Last month, Custom with From/To fields) and clickable durations that open the time log modal ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
   * Added: Time reports entry form has separate Hours and Minutes fields for clear duration entry, and supports split hours/minutes input ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
