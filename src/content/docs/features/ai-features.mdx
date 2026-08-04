@@ -1,279 +1,75 @@
 ---
-title: "AI Features"
-description: "AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow."
+title: AI Features
+description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
 ---
 
-import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem, Badge } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-## Creating Tasks with AI
+The **Hypertask AI assistant** lives at your fingertips. Use it to create tasks, enhance descriptions, draft code, summarize threads, or prescribe actions throughout your workflow.
 
-AI can create tasks from scratch or build on existing ideas. Use the Task Writer to transform notes into structured tasks, complete with descriptions, priorities, and assignees.
+## AI Task Writer and Write with AI
 
-<Tabs>
-<TabItem label="Task Writer" value="task-writer">
+### Create tasks from prompts
 
-1. Open a task in your project.
-2. Type `</task>` to open the Task Writer.
-3. Describe your task in natural language, or paste an unstructured note.
-4. Add details like priority, labels, and assignees in the **Draft** section.
+The AI Task Writer instantly turns text into structured tasks. Just ask in natural language, and the assistant fills in title, description, due date, and assignee if you include that context.
 
-The AI refines your input, suggests an appropriate title, and prepares a description with Markdown. You can edit the draft before confirming.
+```bash
+# CLI: Create a task with a rich description
+ht task create "Design the upcoming Q3 marketing campaign. Include three concepts: social-first carousel posts, short-form video ideas for TikTok and Instagram Reels, and a longer-form blog about Q2 performance. Target HQ team. Due next Friday from HQ."
+```
 
-</TabItem>
-<TabItem label="Write with AI" value="write-ai">
+In the UI, use the AI Task Writer from the New Task flow. The editor is context-aware: it respects the board, team, and board-level AI instructions you've configured.
 
-Use `</ai>` or the **Write with AI** button in the task composer to generate content:
-- **Title** — auto-generates from your prompt and context.
-- **Description** — creates rich, formatted content including lists, tables, and inline links.
-- **Draft** — shows the full AI-generated text for review and editing.
+### Write with AI in comments and descriptions
 
-</TabItem>
-<TabItem label="Task Suggestions" value="suggestions">
+Start a comment or task description with **/ai** to open the AI Task Writer.
 
-When creating a task, AI suggests titles and descriptions based on your previous tasks, board context, and project tags. Accepting a suggestion populates the task form, giving you a scaffold to edit and refine.
+- **/ai** — Generate a draft for the active text field.
+- **/ai rewrite** — Improve or rethink what you typed.
+- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
 
-</TabItem>
-</Tabs>
+The assistant drafts directly into the field, ready for your review.
 
-## Guest onboarding
+### Skills invoked from AI Task Writer
 
-New guest users see an AI-powered onboarding flow that automatically creates a sample board. After the board is built, the AI Task Writer opens with a demo prompt pre-filled, guiding users to add their first task. This demo board and prompt make it easy for guests to experience AI task creation without manual setup.
+Use slash commands to invoke registered skills:
 
-<Aside type="tip">
-Guest onboarding combines board creation with an integrated AI task-writing experience, so new users can jump straight into hands-on demonstration of AI features.
-</Aside>
+- **/skill** — Open the skills menu to tap a skill by name or first letter.
+- **/skill {name}** — Run a specific skill if you know its name.
 
-## Editing AI-Generated Content
+Known skills include:
 
-AI can enhance or summarize your existing content. Use the **AI Editor** to:
-- Fix spelling and grammar
-- Rewrite for clarity or tone
-- Apply Markdown formatting
-- Summarize long descriptions or comment threads
+- **Defer** — Suggest a deferral with a new due date and optional sub-task.
+- **Duplicate** — Mirror the current task into a draft that you can rename and refine.
+- **Subtask** — Generate a new subtask rooted from the current one.
 
-To invoke AI Editing:
+Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
-1. Select the text you want to edit.
-2. Open the **AI Options** or use a shortcut to open the context menu.
-3. Choose **Rewrite**, **Summarize**, or **Fix Spelling & Grammar**.
+## OpenWiki integration
 
-AI respects embedded blocks like estimated time blocks (canvas elements) and preserves them intact.
+OpenWiki runs as an agent-connected tool within Hypertask. It generates a public knowledge base and is refreshed asynchronously by agents when new knowledge exists.
 
-### Summarize Ticket Dialog
+OpenWiki refresh reliability was affected by gateway configuration. With the gateway switched from Vercel AI Gateway to Cloudflare AI Gateway, refresh runs now complete without errors and properly respond to prompts. This ensures OpenWiki stays current without failures from gateway side conditions.
 
-Use the **Summarize** action in the AI Options menu (three dots or Ctrl+K) to summarize the current task. AI generates a concise summary of the ticket description and comments, with a focused view on the task context. After submitting:
+**Example (in commands):**
 
-- The AI writes the summary as a new comment on the task.
-- The original comment text is preserved — nothing is replaced or collapsed.
-- You can continue interacting with the task in the same thread.
+```bash
+# Verify refresh works
+openwiki -p "Reply with the single word OK."
+# > OK (prompted by Cloudflare gateway, no 400 rejections)
+```
 
-The summary restores successfully streaming responses without cancellation mid-flight.
+After this update, OpenWiki refresh completes reliably, and the gateway is stable for ongoing runs.
 
-## AI Chat
+## Other AI context and tools
 
-The AI Chat panel gives you an intelligent assistant integrated with your workspace:
-- **Ask questions** — retrieve ticket details, project context, or board information.
-- **Generate content** — create descriptions, tasks, or notes on-the-fly.
-- **Draft replies** — compose comments for your assigned tasks.
+- **/summarize** — Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
+- **Context scope** — AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
+- **Share chat sessions** — Start a chat session on any board and pin context so future prompts stay scoped.
+- **Personal dictation language** — Choose your preferred dictation language (default English; multilingual options supported).
+
+---
 
 <Aside type="tip">
-Use Ctrl+K to open the prompt composer and access Shortcuts (e.g., "Copy in a friendly tone," "Summarize with a bulleted list").
+You can override per-board and team AI settings from board-level custom instructions, the CLI, or MCP tool configuration. Shared prompts and agents benefit from unified secure prompts that live outside your team's files.
 </Aside>
-
-### Chat Interface
-
-The AI Chat panel displays your current session with:
-- A clean title that never spills into the message area
-- A wider panel floor for comfortable reading across device sizes
-- Past-sessions dropdown with scrollable, scrollbar-hidden layout
-- Docked scope picker (Current board, Pinned board, or All boards)
-
-<Aside type="tip">
-To minimize title overlap with messages, the interface now truncates very long session titles and reserves dedicated title-height space. The panel expands vertically to prevent text from being dangerously close to the header edges.
-</Aside>
-
-### Past Sessions List
-
-The AI chat includes a **past-sessions dropdown** showing your recent conversations. This list can contain many sessions (e.g., hundreds), so native scrollbars would be intrusive. Instead, the dropdown uses CSS to hide native scrollbars while preserving scrolling functionality, providing a clean container view.
-
-### Suggested Questions
-
-AI generates concise, action-oriented suggested questions based on your current context (task, board, or whole workspace). Suggestions are:
-- **Verb-first** with a clear intended action
-- Max 7 words for brevity and quick reading
-- Free of hedging phrases like "Should I" or "Can you"
-- Contextually aware to match the work at hand
-
-This makes it easier to jump straight into actionable prompts.
-
-### AI Chat Scope
-
-The docked scope picker lets you limit conversations to a specific board or explore all boards:
-- **Current board** — defaults to the board you're actively viewing; follows navigation.
-- **Pinned board** — locks conversation context; @mentions work and auto-swap is disabled.
-- **All boards** — explores the full workspace.
-
-<Aside type="tip">
-A **with vector search** indicator shows when the system is searching across multiple boards using contextual relevance.
-</Aside>
-
-### Chat Features
-
-**Shortcuts** — Access common prompts like "Summarize this task," "Rewrite this comment," and "Create a task from this." Shortcuts appear as a dropdown when the composer has focus or you use Ctrl+K.
-
-**Copy to AI Chat** — Highlight any comment and select `Ctrl+K` (or use the three-dot menu) to copy it into the chat for rewriting, summarizing, or context expansion.
-
-**Summarize focused comments via Ctrl+K** — After selecting comment text or using the three-dot menu, choose Summarize. This opens the AI chat with an AI-generated summary of the selected text and automatically sets the current task context for follow-on dialogue. You can keep chatting in the same thread.
-
-**Fullscreen Mode** — Expand the chat to fill the screen by clicking the fullscreen icon in the top-right corner. The floating/PIP controls move to the three-dot menu.
-
-**Pause & Resume** — Use the pause button in the composer to stop AI generation mid-stream and resume when you're ready.
-
-### HTML Formatting
-
-AI-chat comments and task descriptions are rendered as HTML with Markdown shortcuts supported where appropriate. This prevents stray Markdown markup from leaking into rendered content and ensures consistent display across view modes.
-
-## Comment TL;DR Summaries
-
-Comments with **120 or more words** automatically get a short AI summary, shown as a dimmed **TL;DR row above the comment**. The full comment always stays visible; nothing collapses.
-
-- The row shows the first summary line clamped to one line. Click it to expand the full summary as bullets (a chevron appears on hover), exactly like the task summary at the top of a ticket.
-- Summary length grows with the comment: roughly **one line per 120 words**, capped at 6 lines.
-- Summaries generate a few minutes after a comment is saved or edited, using the same AI models configured for task summaries. Teams with AI disabled get no summaries and no AI spend.
-- Activity events (like pull request notifications) and comments shorter than the threshold are skipped. Editing a comment below 120 words removes its summary.
-
-## High-Risk PR Review Routing
-
-When a GitHub Pull Request is opened for a ticket with High risk, the PR is automatically routed to Valentin Review instead of AI Review. Medium, Low, or unset risk levels continue to use the AI lane.
-
-This behavior keeps high-risk merges under human sign-off while allowing AI to handle routine PRs.
-
-<Aside type="tip">
-Valentin Review is a dedicated human reviewer lane separate from AI triage, ensuring security-critical and logic-sensitive changes get thorough validation before merging.
-</Aside>
-
-## Generating Views
-
-AI can now create filtered views on your boards. Ask the AI to "Create a view called Outdated that shows tickets older than 3 months" and it will generate a view with the appropriate filters.
-
-<Aside type="tip">
-The system uses existing saved views to apply filters. Use `</views>` in task detail or context picker to see what views are available on a board.
-</Aside>
-
-## AI Model Pricing
-
-When AI selects or falls back to alternative models, the system prioritizes cost efficiency. Fallback candidates are filtered to the same price tier or cheaper, preventing expensive model switches that increase spend unexpectedly.
-
-If you're tracking costs, this guard rate-limiting helps keep model selection aligned with configured budgets and tiers.
-
-## Skills
-
-Skills let you cluster related tasks, projects, and workflows around shared expertise. AI agents can use skills to:
-- **Find relevant tasks** — automatically select projects and boards where a skill applies.
-- **Generate context-aware descriptions** — incorporate skill-specific terminology and patterns.
-- **Suggest skill-adjacent actions** — propose follow-up tasks that align with team strengths.
-
-To use AI with skills:
-1. Create skills for key expertise areas (e.g., "Frontend," "Backend," "UX Research").
-2. Assign team members to skills so AI knows who specializes in what.
-3. Reference skills in AI prompts or descriptions. For example, "Summarize the frontend tickets on this board."
-
-## AI-Powered Pentesting with Strix
-
-Strix is an AI-powered pentest agent that can analyze your application and surface potential vulnerabilities.
-
-<cardgrid>
-  <Card title="Automated security checks" icon="🛡️">
-    Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
-  </Card>
-  <Card title="Fast retrospectives" icon="📊">
-    Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early.
-  </Card>
-  <Card title="Defined Scope Inspection" icon="🔍">
-    Configure which apps, routes, and paths Strix should target. Runs respect favicon and robots.txt signals to respect what Google can see, making results realistic and useful.
-  </Card>
-</cardgrid>
-
-To use Strix:
-
-<Tabs>
-<TabItem label="From task detail" value="detail">
-
-1. Open the task you want to scope for security review.
-2. Press `<kbd>Ctrl+K</kbd>` and type **"Enable Pentesting"** to confirm the enabled agent.
-3. Strix will cyclically review static checks on your exposed routes and surface findings as comments or tasks—no manual script changelog needed.
-
-<Aside type="tip">
- Strix is available on every board with defined Scope; enable it via Ctrl+K once per project, then keep it on board-level defaults.
-</Aside>
-
-</TabItem>
-<TabItem label="Automated recurring runs" value="scheduling">
-
-1. Set a recurring schedule in your DevOps pipeline that invokes `hypertask mcp pentest Strix` or equivalent MCP endpoint.
-2. Strix scans the configured scope and surfaces findings to your project's trackers (GitHub PR checks, Jira status changes, etc.).
-3. Automate remediation flows—mark security tickets as blockers and route to your incident workflow.
-
-<Aside type="tip">
- Runs respect existing privacy controls. You can add Strix to your board-level agents or create a dedicated "Security" agent board for PCI/DSS handling scenarios.
-</Aside>
-
-</TabItem>
-</Tabs>
-
-<cardgrid>
-  <Card title="Cost-effective" icon="💰">
-    Keep both local and production runs. A $4 run found 3 previously-unreported real vulnerabilities all confirmed live on production. Configure Strix runs per board with budget guards if needed.
-  </Card>
-</cardgrid>
-
-Strix integration is part of your AI toolkit and integrates with your existing Pentesting workflow. Refer to the [Safety & Quality Guidelines](#) for onboarding and prompt security best practices.
-
-<cardgrid>
-  <Card title="Scan definitions" icon="📄">
-    You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
-  </Card>
-  <Card title="Results interpretation" icon="🔎">
-    Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
-  </Card>
-  <Card title="Ingenta + Strix synergy" icon="🔗">
-    For advanced threat modeling, pair Strix with Ingenta or similar agent stacks; use Strix for the low-cost first pass and escalate to Ingenta for top-severity findings requiring deeper investigation tools.
-  </Card>
-</cardgrid>
-
-### Strix Integration with Boards & Views
-
-You can explore Strix findings in real time using board filters and views. For example, open a "Security Findings" view and show items where **Strix_Note** contains "vulnerability" or configure "vulnerability/critical/high" tags on your board to group results by severity.
-
-<Aside type="tip">
- Keep Strix on a board-level default schedule for weekly/fortnightly review patterns. Archive stale tickets as they close to keep findings current.
-</Aside>
-
-## Integration with Other Features
-
-AI features connect with the rest of Hypertask:
-- **Boards & Sections** — AI understands your board structure and can create views or reorganize tasks into sections.
-- **Inbox & Notifications** — AI can briefly summarize unread notifications in your inbox.
-- **Keyboard Shortcuts** — Use `Ctrl+K` in the AI composer for instant shortcuts.
-- **Pages** — AI can draft content for pages attached to tasks using the page editor.
-
-<Aside type="tip">
-AI always respects privacy settings: it operates only within the boards and projects your account has access to.
-</Aside>
-
-## FAQ
-
-<details>
-<summary>Can I use Strix on private apps or locally?</summary>
-Strix focuses on publicly exposed routes; you can optionally include localhost or staging previews depending on your DevOps setup. For deeply private stacks, consider root-level Pentest tools or PyLink/PSI integrations.
-</details>
-
-<details>
-<summary>How do I triage Strix findings?</summary>
-Triage items as tasks on your project board. Tag them with "security" and assign remediation to your appropriate discipline. Archive false positives after manual verification.
-</details>
-
-<details>
-<summary>Does Strix replace pentesters from an agency?</summary>
-No. Strix is an automation layer and complement to human pentesters. Use it for low-risk surfaces and continuous monitoring; escalate suspicious findings to your agency or external pentesting firm.
-</details>
