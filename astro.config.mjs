@@ -8,6 +8,9 @@ export default defineConfig({
     starlight({
       title: 'Hypertask Docs',
       favicon: '/glyph-white.png',
+      components: {
+        SiteTitle: './src/components/SiteTitle.astro',
+      },
       customCss: ['./src/styles/custom.css'],
       head: [
         {
@@ -22,7 +25,7 @@ export default defineConfig({
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Newsreader:wght@500&display=swap',
+            href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@700&family=Newsreader:wght@500&display=swap',
           },
         },
       ],
