@@ -75,3 +75,13 @@ Layout notes:
 - No onboarding is required; modals respect the current theme and compact palette by default.
 
 Includes the modal sizing changes that ship with the updated modal scale and palette alignment.
+
+## Cards and selection
+
+On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
+
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
+
+Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive shortcuts.
+
+This behavior matches the expectations you’re used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
