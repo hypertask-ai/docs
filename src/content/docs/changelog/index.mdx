@@ -25,6 +25,9 @@ export const Update = ({ label, children }) => (
   * Added: Free setup now provides 100 credit-machines (web/desktop) + 30 credit-machines (mobile) per user, matching the engine's paid tier defaults when proven via adoption or contact ([HTPR-4993](https://app.hypertask.ai/detail/project-15/4993))
   * Added: Default production environment variables now block normal signup in hosted environments, requiring contractual or contact approval before new accounts can be created ([HTPR-4902](https://app.hypertask.ai/detail/project-15/4902))
   * Added: Free users now get 3 machine credits per platform (web 100, desktop 100, mobile 30) at signup, scaling with verified use or contact for higher tiers ([HTPR-1067](https://app.hypertask.ai/detail/project-15/1067))
+  * Fixed: When you snooze a reminder on a task, agent mentions are no longer born Archived ([HTPR-4094](https://app.hypertask.ai/detail/project-15/4094))
+  * Fixed: AI model fallback now refuses to cost more than the model it replaces ([HTPR-4688](https://app.hypertask.ai/detail/project-15/4688))
+  * Fixed: Archive now hides rows and delete now clears them from the inbox ([HTPR-4724](https://app.hypertask.ai/detail/project-15/4724))
 </Update>
 
 <Update label="August 3, 2026">
