@@ -13,6 +13,15 @@ Every project in Hypertask has a **board** — a visual workspace where tasks fl
 - Enter the guest board directly from the root URL logged out (no redirect hop) ([HTPR-4845](https://app.hypertask.ai/detail/project-15/4845)). The guest board is seeded once and persists until you log in or sign up.
 - The cookie consent banner and "Log in" and "Sign up" buttons appear in the header for logged-out visitors ([HTPR-4883](https://app.hypertask.ai/detail/project-15/4883)).
 
+## Boardless accounts
+
+If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
+
+The empty state:
+- Explains what boards are and how to create one
+- Offers quick actions to create a board or invite a teammate
+- Matches your theme and is consistent with other empty states in the app
+
 ## Authentication
 
 Hypertask supports multiple authentication methods, all integrated through the server-side session layer:
@@ -62,7 +71,7 @@ Secure and reliable project page navigation is critical for boards. Hypertask en
 
 ```text
 GET /project?{boardId|*|<shareId|?>}
-────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────────────────────────────────────
 200 OK (no crash; no NEXT_REDIRECT body injected in buffers)
 ```
 
