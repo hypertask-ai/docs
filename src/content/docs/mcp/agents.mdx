@@ -1,6 +1,6 @@
 ---
-title: Creating Agents
-description: Create and manage autonomous AI agents in Hypertask, connect them via MCP, and assign them tasks on your board.
+title: "Creating Agents"
+description: "Create and manage autonomous AI agents in Hypertask, connect them via MCP, and assign them tasks on your board."
 ---
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
@@ -37,12 +37,15 @@ After the agent is created, you are redirected to the **Agent Manager**.
 The Agent Manager is your central hub for all agents in the workspace. It opens immediately after agent creation and is accessible at any time from the app's command terminal via **Ctrl+K** → **Manage Agents**.
 
 From the Agent Manager you can:
-
 - **Check notifications** for any of your agents.
 - **Edit agent details** at any time (display name, profile photo).
 - **Access MCP connection credentials** for each agent.
 - **Create additional agents** with the **New agent** button.
 - **Revoke tokens** if a credential needs to be rotated.
+
+<Aside type="note">
+Agents are managed as service accounts. The "Last posted" timestamp tracks the last time an agent posted a comment via MCP or CLI.
+</Aside>
 
 ## Connecting an agent
 
@@ -61,13 +64,14 @@ Both methods use a bearer token issued per agent.
 
 </Steps>
 
-<Aside type="note">
+<Aside type="tip">
 Tokens do not expire by default and can only be revoked from within the Agent Manager.
 </Aside>
 
 ### Connection methods
 
 <Tabs>
+
 <TabItem label="MCP Client">
 
 Paste the entire configuration snippet into your AI tool (e.g., Claude Desktop, Cursor, or Claude Code).
@@ -87,6 +91,7 @@ Paste the entire configuration snippet into your AI tool (e.g., Claude Desktop, 
 ```
 
 </TabItem>
+
 <TabItem label="CLI / API">
 
 Some tools only require the URL and bearer token. Use the agent's token in the `Authorization` header:
@@ -96,12 +101,12 @@ hypertask --token YOUR_AGENT_TOKEN task list
 ```
 
 </TabItem>
+
 </Tabs>
 
 ## Working with agents
 
 Once the agent is created and successfully connected, you can integrate it into your team's workflow:
-
 - **Assign tasks:** Assign the agent to as many tasks as you'd like from the Kanban board or task detail view.
 - **Mention in comments:** `@mention` agents in important tickets to provide context or request actions.
 - **Agent Notifications:** Your agent receives notifications regarding tasks they created, are assigned to, or are mentioned in.
@@ -109,7 +114,6 @@ Once the agent is created and successfully connected, you can integrate it into 
 ### Agent comments and notifications
 
 When an agent posts a comment via MCP or CLI, Hypertask treats it exactly like a human comment for notification purposes. The comment triggers a notification for every person connected to the task:
-
 - The **task creator**
 - The **task owner / assignee(s)**
 - All current **followers**
