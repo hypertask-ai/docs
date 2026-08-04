@@ -20,6 +20,77 @@ Built-in splits need no setup and cannot be edited or deleted; they don't appear
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
+## Saved views
+
+Saved views are named filter/sort configurations stored on a project. They make it easy to quickly jump to a common view of specific tasks.
+
+### Create a saved view
+
+From the app:
+1. Open any board
+2. Use **Ctrl+K** to open the command palette
+3. Search for "Save view as..."
+4. Enter a name for your view
+
+Or use the CLI:
+
+```bash
+hypertask view create \
+  --name "Epic checks" \
+  --project 15 \
+  --section "Doing" \
+  --priority "high,urgent" \
+  --sort-by "dueDate" \
+  --sort-order "asc"
+```
+
+The view is saved once created. You cannot create a saved view without a name ([HTPR-4960](https://app.hypertask.ai/detail/project-15/4960)).
+
+### List saved views
+
+```bash
+hypertask view list --project 15
+```
+
+Output:
+
+```
+ID             NAME                  VISIBILITY
+view_abc123    Dev Review & QA       shared
+view_def456    My Open Tasks         shared
+view_ghi789    High Priority        private
+```
+
+### Switch to a saved view
+
+```bash
+hypertask view switch view_abc123
+```
+
+Or from the app: use **Ctrl+K**, search for the view name, and select it from the dropdown.
+
+### View options
+
+You can customize each view with filters and sorting:
+
+**Filters**
+- **Section** (or multiple sections): tasks to include
+- **Priority**: `urgent`, `high`, `medium`, `low`
+- **Assignee**: `me`, `unassigned`, or a user ID
+- **Labels**: comma-separated label names or IDs
+
+**Sorting**
+- **Sort by**: `createdAt`, `updatedAt`, or `dueDate`
+- **Sort order**: `asc` (ascending) or `desc` (descending)
+
+### Delete a saved view
+
+```bash
+hypertask view delete view_abc123
+```
+
+Only your own views and shared views you have write access to can be deleted.
+
 ## Guest boards
 
 - Anonymously visit an empty guest board for the app.hypertask.ai host (hypertask.ai in production).
