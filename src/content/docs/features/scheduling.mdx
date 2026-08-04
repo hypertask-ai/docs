@@ -11,7 +11,7 @@ Every one of them is reached through the command palette (<kbd>Ctrl+K</kbd> / <k
 
 ## Start dates
 
-A start date records when work is *meant to begin*, separately from the due date that records when it must be *finished*.
+A start date records when work is *meant to begin*, separately from the due date that records when it must *finished*.
 
 **To set one:** open a task, press <kbd>Ctrl+K</kbd>, run **Set start date**. The field accepts natural language — `today`, `tomorrow`, `next week monday`, `in 3 days` — or pick from the presets. Choose **Reset** to clear it.
 
@@ -68,7 +68,7 @@ Content-Type: application/json
 { "taskId": 1234, "recurrence": "Weekly" }
 ```
 
-Valid values: `Daily`, `Weekdays`, `Weekly`, `Biweekly`, `Monthly`, or `null` to stop repeating. Requires membership of the task's board.
+Valid values: `Daily`, `Weekdays`, `Weekly`, `Biweekly`, `Monthly`, or `null` to stop repeating. Requires membership of the board.
 
 ## Task templates
 
@@ -95,7 +95,7 @@ POST   /api/task-templates/apply             # { "templateId": 7 }
 
 **My tasks** answers "what am I working on today" across every board you belong to. The inbox remains the place to triage what arrived; this is the place to plan.
 
-**To open it:** <kbd>Ctrl+K</kbd> → **Go to my tasks**, or visit `/my-tasks`.
+**To open it:** <kbd>Ctrl+K</kbd> — **Go to my tasks**, or visit `/my-tasks`.
 
 It lists every open task assigned to you, grouped by when it needs attention:
 
