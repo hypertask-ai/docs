@@ -52,10 +52,14 @@ Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly swit
 The AMOLED theme is tuned for OLED and AMOLED displays with true-black backgrounds that conserve battery:
 
 - **Pure black backgrounds**: Elements render directly on pure #000 for maximum power savings on OLED/AMOLED screens.
-- **Hairline refinement**: Icons, borders, and separators use barely-visible hairlines on AMOLED so they don’t overwhelm the display when the backgrounds are black.
-- **True-color distinction**: Row highlights, hover states, and active elements rely on cleaner grey-chrome accent colors instead of bright borders, keeping visual clarity strong even on AMOLED.
+- **Elevation ladder**: Lighter shades (#101010, #343434) for hairlines, #1d1d1d for cards and elevated panels.
+- **Accent wash**: The iris accent is replaced by theme-tinted greys across core themes, maintaining hints of blue for interaction states.
+- **Compact card type**: Card content is more tightly spaced; ticket IDs are muted and distinct from property values.
+- **Typography**: IBM Plex serves as the system typeface for labels, property values, and card titles.
 
-Activate this theme on supported devices via <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd> on Mac) and select **AMOLED** from the theme picker.
+<Aside type="note">
+AMOLED v2 is live on production at app.hypertask.ai and applies to colored text, labels, and active elements. It does not alter functional Layout tokens.
+</Aside>
 
 ### Keyboard theme activation
 
