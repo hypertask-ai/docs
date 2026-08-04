@@ -41,21 +41,7 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 3, 2026">
-  * Added: Time reports now support date presets (Yesterday, Last week, Last month, Custom with From/To fields) and clickable durations that open the time log modal ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
-  * Added: Time reports entry form has separate Hours and Minutes fields for clear duration entry, and supports split hours/minutes input ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
-  * Added: Guest onboarding creates a demo board and opens the AI Task Writer with a prompt so new users can immediately experience AI task creation ([HTPR-4937](https://app.hypertask.ai/detail/project-15/4937))
-  * Improved: Inactive tab labels in the view cluster now render at 90% opacity; on AMOLED, the icon rail and inbox container sit on pure #000 with their hairline edges kept ([HTPR-4943](https://app.hypertask.ai/detail/project-15/4943))
-  * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
-  * Fixed: App no longer crashes in headless Chrome due to dictation MicVAD errors ([HTPR-4085](https://app.hypertask.ai/detail/project-15/4085))
-  * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
-  * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
-  * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
-  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>\</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
-  * Added: Signing in with a guest session now transfers the guest team, its boards, and memberships to the new account, with guest UIDs re-prefixed so that cleanup cron can still find them ([HTPR-4893](https://app.hypertask.ai/detail/project-15/4893))
-  * Added: Two new themes â¢¬ Dark Grey (New) and Light (New) â¢¬ with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
-  * Improved: Sidebar elements now render with subtle hairlines for better visual distinction, and table view row borders use refined styling ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
-  * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
-  * Added: Graphite/Porcelain become the system-theme defaults and the graphite left-sidebar outline is dropped ([HTPR-4909](https://app.hypertask.ai/detail/project-15/4909))
+  * Fixed: Time reports now properly calculate duration based on the separate Hours and Minutes fields ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
 </Update>
 
 <Update label="August 2, 2026">
@@ -63,7 +49,7 @@ export const Update = ({ label, children }) => (
   * Added: Left sidebar rail now expands to 130px for logged-in users, with user labels, accordion accordions, and Favorites section at the bottom; collapsed by default with chevron toggle and persistent state ([HTPR-4738](https://app.hypertask.ai/detail/project-15/4738))
   * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g., "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
   * Fixed: Container picker now correctly selects multiple values and respects the `aria-invalid` attribute when there are errors during submission ([HTPR-4373](https://app.hypertask.ai/detail/project-15/4373))
-  * Fixed: Kanban switcherå¿«æ-å¯¶é¥ <kbd>Ctrl+B</kbd> now consistently opens the board palette from any route ([HTPR-4696](https://app.hypertask.ai/detail/project-15/4696))
+  * Fixed: Kanban switcher<span class="line-through">—</span> shortcut <kbd>Ctrl+B</kbd> now consistently opens the board palette from any route ([HTPR-4696](https://app.hypertask.ai/detail/project-15/4696))
   * Added: User AV2 temporarily disabled while investigating playback issues; a full migration over ATSP to ATAP is in progress ([HTPR-4744](https://app.hypertask.ai/detail/project-15/4744))
   * Fixed: Time tracking tooltip now correctly shows the last tracked duration even if the user is currently editing another timer ([HTPR-4758](https://app.hypertask.ai/detail/project-15/4758))
   * Added: Accepts `timers` path for legacy links; /timers now redirects to /time with `running=1` query param (HTPR-4774) ([HTPR-4774](https://app.hypertask.ai/detail/project-15/4774))
