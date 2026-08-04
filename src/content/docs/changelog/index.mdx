@@ -14,12 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 4, 2026">
-  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
-  * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
-  * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
-  * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
-  * Fixed: In Week view, the month picker no longer retains a stale month after changing days or weeks; it now follows your navigation instead of the month it mounted with ([HTPR-4761](https://app.hypertask.ai/detail/project-15/4761))
-  * Fixed: OpenWiki refresh now works reliably after moving the gateway configuration away from the Vercel AI Gateway to the Cloudflare AI Gateway ([HTPR-4261](https://app.hypertask.ai/detail/project-15/4261))
+  * Added: kanban card shortcuts now work on the selected card, not just the focused one after navigation out of detail or closing modals ([HTPR-4961](https://app.hypertask.ai/detail/project-15/4961))
   * Improved: Expanded sidebar no longer overlaps task-detail up/down navigation buttons and other fixed controls ([HTPR-4908](https://app.hypertask.ai/detail/project-15/4908))
   * Added: Inbox notifications now update in real-time via WebSockets, so changes appear instantly across app, CLI, MCP, manifest, and AI chat ([HTPR-3312](https://app.hypertask.ai/detail/project-15/3312))
   * Added: Free users on web are capped at 3 owned boards across all creation surfaces (app, CLI, MCP, manifest, AI chat) and receive upgrade prompts when the limit is reached ([HTPR-4894](https://app.hypertask.ai/detail/project-15/4894))
@@ -30,6 +25,11 @@ export const Update = ({ label, children }) => (
   * Fixed: When you snooze a reminder on a task, agent mentions are no longer born Archived ([HTPR-4094](https://app.hypertask.ai/detail/project-15/4094))
   * Fixed: AI model fallback now refuses to cost more than the model it replaces ([HTPR-4688](https://app.hypertask.ai/detail/project-15/4688))
   * Fixed: Archive now hides rows and delete now clears them from the inbox ([HTPR-4724](https://app.hypertask.ai/detail/project-15/4724))
+  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
+  * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
+  * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
+  * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
+  * Fixed: In Week view, the month picker no longer retains a stale month after changing days or weeks; it now follows your navigation instead of the month it mounted with ([HTPR-4761](https://app.hypertask.ai/detail/project-15/4761))
 </Update>
 
 <Update label="August 3, 2026">
@@ -42,9 +42,9 @@ export const Update = ({ label, children }) => (
   * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
   * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
   * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
-  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including `\` for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
+  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including `\\` for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
   * Added: Signing in with a guest session now transfers the guest team, its boards, and memberships to the new account, with guest UIDs re-prefixed so that cleanup cron can still find them ([HTPR-4893](https://app.hypertask.ai/detail/project-15/4893))
-  * Added: Two new themes â\x80\x94 Dark Grey (New) and Light (New) â\x80\x94 with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
+  * Added: Two new themes — Dark Grey (New) and Light (New) — with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
   * Improved: Sidebar elements now render with subtle hairlines for better visual distinction, and table view row borders use refined styling ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
   * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
   * Added: Graphite/Porcelain become the system-theme defaults and the graphite left-sidebar outline is dropped ([HTPR-4909](https://app.hypertask.ai/detail/project-15/4909))
