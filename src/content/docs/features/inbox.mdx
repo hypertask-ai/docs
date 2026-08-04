@@ -13,7 +13,7 @@ Press <kbd>Ctrl+K</kbd> to open the command palette and search for **"Inbox"**, 
 
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
-- **Important tasks** — rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
+- **Important tasks** â\x80\x94 rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
 
 The inbox can be grouped into multiple views:
 
@@ -26,6 +26,28 @@ The inbox can be grouped into multiple views:
 | **Inbox** | Default | All notifications |
 | **Search** | Search icon | Text-based search across all boards |
 | **Notifications** | Notification icon | List of all notification types |
+
+## OpenWiki
+
+OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
+
+OpenWiki notifications include an **OpenWiki** badge and action buttons:
+
+- **View** â\x80\x94 Open the OpenWiki page for the associated task
+- **Refresh** â\x80\x94 Pull the latest RAG content from connected documentation
+- **Dismiss** â\x80\x94 Remove the notification from your inbox without affecting the underlying task
+- **Undo** â\x80\x94 Re-add a dismissed OpenWiki notification
+
+To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
+
+## OpenWiki refresh
+
+OpenWiki refresh periodically pulls the latest RAG content from connected documentation sources. If OpenWiki operations are failing, check your gateway configuration in `~/.openwiki/.env`:
+
+```bash
+# Ensure you're pointing to the Cloudflare AI Gateway
+OPENWIKI_GATEWAY=https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT/YOUR_SERVICE
+```
 
 ## Split views and empty state
 
@@ -47,10 +69,10 @@ Use read receipts to track whether your messages were seen without sending a fol
 ## Mention-based notifications
 
 When someone @mentions you on a task or comment, the notification appears in your inbox with a personal touch. Mention email notifications now:
-- **Lead with your name** — The email greeting starts with "Hi [Your Name]," making it feel more direct and readable
-- **Signal 1:1 mentions** — A clear badge or visual indicator marks the mention as a direct tag, distinguishing it from channel-wide tags or other notifications
-- **Include personal CTAs** — Call-to-action buttons in the notification (or inbox view) are tailored to action on the mentioned task
-- **Show reply preview in snippet** — When someone replies below a mention, the reply preview strips blockquotes, empty headers (like "@name said"), and other quoted content before displaying the actual message in the inbox
+- **Lead with your name** â\x80\x94 The email greeting starts with "Hi [Your Name]," making it feel more direct and readable
+- **Signal 1:1 mentions** â\x80\x94 A clear badge or visual indicator marks the mention as a direct tag, distinguishing it from channel-wide tags or other notifications
+- **Include personal CTAs** â\x80\x94 Call-to-action buttons in the notification (or inbox view) are tailored to action on the mentioned task
+- **Show reply preview in snippet** â\x80\x94 When someone replies below a mention, the reply preview strips blockquotes, empty headers (like "@name said"), and other quoted content before displaying the actual message in the inbox
 
 For moderate mention volume, tasks appear directly in your inbox with the mention context attached. For high mention frequency, the inbox aggregates mentions you can review at a glance while still preserving the one-on-one nature of individual tags.
 
@@ -59,8 +81,8 @@ For moderate mention volume, tasks appear directly in your inbox with the mentio
 Temporarily hide notifications from appearing in your feed. Snoozed items are resurfaced after the specified duration on a specified date.
 
 Use **Snooze** in two ways:
-1. **Notification actions** — click the S button on a notification and choose a future time
-2. **Task Snooze** — within a task detail, use <kbd>Ctrl+K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
+1. **Notification actions** â\x80\x94 click the S button on a notification and choose a future time
+2. **Task Snooze** â\x80\x94 within a task detail, use <kbd>Ctrl+K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
 
 When a snoozed notification resurfaces, it re-enters your inbox at the top of the list.
 
@@ -72,13 +94,21 @@ Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bo
 
 Agent notifications now update in real-time using WebSocket connections. As agent mentions, assignments, or follow-ups occur, the server broadcasts updates instantly to all subscribed clients on app, CLI, MCP, and manifest surfaces. This works in parallel with general real-time inbox updates described in the next section.
 
+## User unsubscribe on notification emails
+
+Each notification email now includes one-click unsubscribe headers that work with Gmail, Yahoo, and other major mail clients. The unsubscribe flow is handled entirely server-side through a no-auth endpoint, requiring no login to opt out of future notification emails.
+
+If you frequently receive too many email notifications, you can unsubscribe from the list view using the action button on select notifications to permanently turn off email delivery for that category.
+
+<Aside type="note">Unsubscribing affects all notification deliveries across boards. To adjust per-board or per-type granularity, use board settings and notification controls.</Aside>
+
 ## Awaiting Delete notifications
 
 Notifications that trigger a follow-up action (such as undo or dismiss) include an **Awaiting Delete** badge and show action buttons:
 
-- **Undo** — Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
-- **Dismiss** — Hide the notification and block it from returning (e.g., clear invites that were rejected)
-- **Undo all** or **Dismiss all** — Apply the action to all matching rows in the filtered list
+- **Undo** â\x80\x94 Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
+- **Dismiss** â\x80\x94 Hide the notification and block it from returning (e.g., clear invites that were rejected)
+- **Undo all** or **Dismiss all** â\x80\x94 Apply the action to all matching rows in the filtered list
 
 These notifications appear at the top of the list because they require your decision.
 
@@ -123,8 +153,8 @@ All reads (inbox, badge count, agent inbox, MCP) now require the task to be norm
 
 ## Keyboard shortcuts
 
-- <kbd>Ctrl+K</kbd> — Open command palette with inbox options (Snooze, Read/Unread, Mark Read)
-- <kbd>Ctrl+F</kbd> — Search across all notifications
-- <kbd>N</kbd> — Create a new task from the active board
-- <kbd>Space</kbd> — Mark current item as read/unread
-- <kbd>Escape</kbd> — Close modal, draft error, or focused search
+- <kbd>Ctrl+K</kbd> â\x80\x94 Open command palette with inbox options (Snooze, Read/Unread, Mark Read)
+- <kbd>Ctrl+F</kbd> â\x80\x94 Search across all notifications
+- <kbd>N</kbd> â\x80\x94 Create a new task from the active board
+- <kbd>Space</kbd> â\x80\x94 Mark current item as read/unread
+- <kbd>Escape</kbd> â\x80\x94 Close modal, draft error, or focused search
