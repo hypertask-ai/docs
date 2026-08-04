@@ -24,6 +24,7 @@ export const Update = ({ label, children }) => (
   * Added: Free users on web are capped at 3 owned boards across all creation surfaces (app, CLI, MCP, manifest, AI chat) and receive upgrade prompts when the limit is reached ([HTPR-4894](https://app.hypertask.ai/detail/project-15/4894))
   * Added: Free setup now provides 100 credit-machines (web/desktop) + 30 credit-machines (mobile) per user, matching the engine's paid tier defaults when proven via adoption or contact ([HTPR-4993](https://app.hypertask.ai/detail/project-15/4993))
   * Added: Default production environment variables now block normal signup in hosted environments, requiring contractual or contact approval before new accounts can be created ([HTPR-4902](https://app.hypertask.ai/detail/project-15/4902))
+  * Fixed: removeMember now returns 200 on success instead of incorrectly returning 400 when the member has already been removed; the endpoint now safely handles undefined IDs ([HTPR-4162](https://app.hypertask.ai/detail/project-15/4162))
   * Added: Free users now get 3 machine credits per platform (web 100, desktop 100, mobile 30) at signup, scaling with verified use or contact for higher tiers ([HTPR-1067](https://app.hypertask.ai/detail/project-15/1067))
   * Fixed: When you snooze a reminder on a task, agent mentions are no longer born Archived ([HTPR-4094](https://app.hypertask.ai/detail/project-15/4094))
   * Fixed: AI model fallback now refuses to cost more than the model it replaces ([HTPR-4688](https://app.hypertask.ai/detail/project-15/4688))
