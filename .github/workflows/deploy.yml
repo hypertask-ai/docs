@@ -45,6 +45,9 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
+          # Pages promotion lags the upload; purging too early lets the edge
+          # re-cache the previous deployment. Purge twice with a gap.
+          sleep 60
           curl -fsS -X POST \
             "https://api.cloudflare.com/client/v4/zones/2a45a3125cda94f854e5b163392dc76e/purge_cache" \
             -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
