@@ -7,6 +7,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Hypertask Docs',
+      favicon: '/glyph-white.png',
       customCss: ['./src/styles/custom.css'],
       head: [
         {
