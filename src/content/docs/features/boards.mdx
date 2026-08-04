@@ -33,13 +33,36 @@ All authentication flows support clean sign-out that immediately invalidates the
 - Cookie consent banner appears on guest boards to capture consent for analytics and personalization (opt-out and edgy).
 - Header includes "Log in" or "Sign up" depending on session state under the board title, with links to app.hypertask.ai app pages ([HTPR-4883](https://app.hypertask.ai/detail/project-15/4883)).
 
+## Free tier limits
+
+Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
+
+- App web interface
+- CLI (`ht --create-board` / `ht board create`)
+- MCP tool (`boards.create`)
+- Manifest-based board creation
+- AI chat prompts that create boards
+
+When a free user reaches the board limit, the creation surfaces block board generation and prompt them to upgrade to a paid or team plan. On the web UI, this appears as an in-app toast with upgrade options.
+
+**Example:**
+
+```bash
+# This succeeds for free users with fewer than 3 boards
+ht --create-board marketing-campaign-2026
+
+# This fails when the limit has been reached
+ht --create-board secret-project
+# > Error: Board limit reached. Upgrade to add more boards.
+```
+
 ## Project pages safety
 
 Secure and reliable project page navigation is critical for boards. Hypertask ensures `/project` page loads correctly by:
 
 ```text
 GET /project?{boardId|*|<shareId|?>}
-─────────────────────────────────────────
+────────────────────────────────────────
 200 OK (no crash; no NEXT_REDIRECT body injected in buffers)
 ```
 
