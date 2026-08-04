@@ -45,21 +45,15 @@ Known skills include:
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
-## OpenWiki integration
+## AI status updates
 
-OpenWiki runs as an agent-connected tool within Hypertask. It generates a public knowledge base and is refreshed asynchronously by agents when new knowledge exists.
+An AI agent can update task metadata in a visible way—priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 
-OpenWiki refresh reliability was affected by gateway configuration. With the gateway switched from Vercel AI Gateway to Cloudflare AI Gateway, refresh runs now complete without errors and properly respond to prompts. This ensures OpenWiki stays current without failures from gateway side conditions.
+- The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
+- You see the updates on the task card, in the task detail panel, and inside notification contexts.
+- This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Example (in commands):**
-
-```bash
-# Verify refresh works
-openwiki -p "Reply with the single word OK."
-# > OK (prompted by Cloudflare gateway, no 400 rejections)
-```
-
-After this update, OpenWiki refresh completes reliably, and the gateway is stable for ongoing runs.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
 
 ## Other AI context and tools
 
