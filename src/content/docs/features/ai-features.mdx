@@ -160,6 +160,12 @@ AI can now create filtered views on your boards. Ask the AI to "Create a view ca
 The system uses existing saved views to apply filters. Use `</views>` in task detail or context picker to see what views are available on a board.
 </Aside>
 
+## AI Model Pricing
+
+When AI selects or falls back to alternative models, the system prioritizes cost efficiency. Fallback candidates are filtered to the same price tier or cheaper, preventing expensive model switches that increase spend unexpectedly.
+
+If you're tracking costs, this guard rate-limiting helps keep model selection aligned with configured budgets and tiers.
+
 ## Skills
 
 Skills let you cluster related tasks, projects, and workflows around shared expertise. AI agents can use skills to:
@@ -180,7 +186,7 @@ Strix is an AI-powered pentest agent that can analyze your application and surfa
   <Card title="Automated security checks" icon="🛡️">
     Strix runs a defined-function set of checks across your exposed routes, can identify missing auth, XSS risks, and other common issues without manual penetration-test effort.
   </Card>
-  <Card title="Fast retrospectives" icon="⚡">
+  <Card title="Fast retrospectives" icon="📊">
     Get actionable findings within minutes. Runs are cheap and quick enough to integrate into your definition of done to catch regressions early.
   </Card>
   <Card title="Defined Scope Inspection" icon="🔍">
@@ -224,10 +230,10 @@ To use Strix:
 Strix integration is part of your AI toolkit and integrates with your existing Pentesting workflow. Refer to the [Safety & Quality Guidelines](#) for onboarding and prompt security best practices.
 
 <cardgrid>
-  <Card title="Scan definitions" icon="📋">
+  <Card title="Scan definitions" icon="📄">
     You can configure Scan Definition documents for Strix to define custom checks, expected responses, and CORS handling per route. Define per-project and per-team defaults.
   </Card>
-  <Card title="Results interpretation" icon="📋">
+  <Card title="Results interpretation" icon="🔎">
     Findings are surfaced in your inbox as items with severity tags and remediation notes. Integrate with your remediation trackers via e.g. GitHub PR checks, Vercel logs, or CI pipeline notifications.
   </Card>
   <Card title="Ingenta + Strix synergy" icon="🔗">
