@@ -12,7 +12,7 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 Press <kbd>Ctrl+K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
-- **Actionable items** like lines, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
+- **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
 - **Important tasks** — rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
 
 The inbox can be grouped into multiple views:
@@ -40,7 +40,7 @@ Inboxes may be split into multiple panes (e.g., "Awaiting reply" and "Mentions")
 Turn on read receipts in a board's Settings page to get visibility into whether others have seen your comments:
 
 - **Toggle per board**: Go to Settings and enable read receipts for a specific board.
-- **Start receiving receipts** once you turn them on: receipts appear as soon as other members of the board have read your comments.
+- Start receiving receipts once you turn them on: receipts appear as soon as other members of the board have read your comments.
 
 Use read receipts to track whether your messages were seen without sending a follow-up.
 
@@ -94,11 +94,20 @@ Mark notifications and comments with the star icon to pin them as favorites. Boo
 
 ## Inbox layout
 
-Starting mid‑August 2026, the Inbox card layout has been refined:
+Starting mid-August 2026, the Inbox card layout has been refined:
 
-- Cards now **hug the bottom** of the feed when quick tips are turned off, or rise with the quick‑tips bar when enabled.
-- The previously dead 36 px gap under cards is gone, giving a tighter, more compact column for large notification counts.
+- Cards now **hug the bottom** of the feed when quick tips are turned off, or rise with the quick-tips bar when enabled.
+- The previously dead 36px gap under cards is gone, giving a tighter, more compact column for large notification counts.
 - These changes apply globally across boards and splits but can be toggled per board via Quick Tips in the feed or command palette.
+
+## Real-time inbox updates
+
+Inbox notifications now update in real-time using WebSocket connections. As notifications are created or changed, the server broadcasts updates to all connected clients, eliminating manual page refreshes.
+
+- **Subscription on client**: <code>useInboxRealtime</code> hook in the frontend layer subscribes to inbox changes for the current user.
+- **Broadcast mechanism**: <code>broadcastInboxChange</code> fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest, AI chat).
+
+This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
 
 ## Keyboard shortcuts
 
