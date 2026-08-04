@@ -46,3 +46,9 @@ For agents: construct these URLs directly when pointing a person at a specific d
 ## Week strip month expander
 
 In the Week view, a month expander lets you quickly jump to any month. When you change days or weeks using arrows or navigation controls, the picker now stays in sync with your current view instead of remembering the month it opened with.
+
+## Legacy image support
+
+If your board has historical images stored with an old S3 host configuration, the calendar no longer crashes when loading those images. Hypertask now accepts legacy bucket hosts in `next.config` remotePatterns, so old images load without bringing down the entire page. Requesting an official image migration, which will rewrite stored URLs to `files.hypertask.app`, remains a separate data cleanup effort. The calendar now works smoothly even when some images are still on an old host.
+
+---
