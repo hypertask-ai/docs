@@ -1,172 +1,41 @@
 ---
 title: "Appearance & AI Models"
-description: "Customize themes and select AI models for Hypertask."
+description: "Customize themes, icons, fonts, and select AI models for Hypertask."
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-This page covers personalization options at a glance: theme selection, dictation language settings, and AI model choices.
+## Active quick-tips bar layout
 
-## Current Views
+- Board cards and lists hug the bottom of the quick-tips bar when that bar is on.
+- Inbox visualizer surfaces flow and love states are pinned at the bottom.
+- If you turn off the quick-tips bar, the remaining content fills the viewport.
 
-| View | URL | Description |
-|------|-----|-------------|
-| **Tasks & Board** | app.hypertask.ai | Main workspace for tasks and boards. |
-| **Inbox** | app.hypertask.ai | Unified inbox for assignments, mentions, and notifications. |
-| **Errors (current view)** | hypertask.app/errors | Launch the current view to review errors, auto-filed pipeline tickets, and history. |
+## Closed quick-tips bar layout
 
-## Theme Selection
+- Board columns now run to the full height of their containers.
+- Columns shrink by the measured height of the quick-tips bar when you re-enable it.
 
-Hypertask provides a comprehensive theme system. Choose from five built-in themes or let the system match your operating system default.
+## Compact sidebar
 
-### Available themes
+- Left sidebar appears collapsed by default with a chevron toggle.
+- Expand to 130px and show a logged-in user label.
+- Toggle or viewing persistent state; tooltips reveal all real keyboard shortcuts including [<kbd>\</kbd>] for the rail.
 
-| Theme | Description |
-|-------|-------------|
-| **Light** | Clean, minimal workspace with light backgrounds and subtle shadows |
-| **Dark** | High-contrast dark mode for reduced eye strain in low-light environments |
-| **System** | Automatically follows your operating system's preference (Light → Dark) |
-| **AMOLED** | Pure black backgrounds for OLED and AMOLED displays to conserve battery |
-| **Paper** | Warm editorial light theme with soft paper-like backgrounds for a cozy writing feel |
-| **Mobile** | Mobile-specific dark theme with touch-optimized controls (390x844+ viewport) |
-| **Dark Grey (New)** | Refined dark theme with subtle grey-neutral accents |
-| **Light (New)** | Refined light theme with refined typography and interaction styles |
+## Themes
 
-### Viewing theme options
+Hypertask supports these themes; themeships with AMOLED v2 and two new themes:
 
-To see current theme and switch:
+- **AMOLED v2**: near-black elevation ladder, IBM Plex system typeface, compact card styling, muted ticket IDs on boards, and iris accent across core themes.
+- **Dark Grey (New)**: refined accents, dark grey panel instead of white.
+- **Light (New)**: light input well, white panel.
+- **Graphite**: original Graphite theme.
+- **Porcelain**: original Porcelain theme.
 
-1. Open the **Teams** section
-2. Click the gear icon next to the team name (then click **Users** or select a user)
-3. Under **Appearance**, click the theme picker
-4. Select a theme from the dropdown
+The system defaults are now Graphite/Porcelain (original Graphite left sidebar outline dropped). AMOLED v2, Dark Grey, and Light ship with refined typography and note minor visual polish in changelog entries.
 
-Themes persist per user and apply globally across the app (board views, inbox, calendar, etc.).
+For theme configuration and per-theme AI model selection, see [Profile & Settings](../getting-started/settings-profile.mdx).
 
-<Aside type="tip">
-Use the **board palette** (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) to quickly switch accounts and view profile settings without leaving the board surface.
-</Aside>
+## AI status updates
 
-### AMOLED theme details
-
-The AMOLED theme is tuned for OLED and AMOLED displays with true-black backgrounds that conserve battery:
-
-- **Pure black backgrounds**: Elements render directly on pure #000 for maximum power savings on OLED/AMOLED screens.
-- **Elevation ladder**: Lighter shades (#101010, #343434) for hairlines, #1d1d1d for cards and elevated panels.
-- **Accent wash**: The iris accent is replaced by theme-tinted greys across core themes, maintaining hints of blue for interaction states.
-- **Compact card type**: Card content is more tightly spaced; ticket IDs are muted and distinct from property values.
-- **Typography**: IBM Plex serves as the system typeface for labels, property values, and card titles.
-
-<Aside type="note">
-AMOLED v2 is live on production at app.hypertask.ai and applies to colored text, labels, and active elements. It does not alter functional Layout tokens.
-</Aside>
-
-### Keyboard theme activation
-
-Quickly change themes at the keyboard:
-
-| Command | Theme |
-|---------|-------|
-| <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> | Cycle through themes (Light → Dark → System → AMOLED → Paper) |
-
-Use the command palette (default <kbd>Ctrl+P</kbd> / <kbd>Cmd+P</kbd>) to see all theme options and shortcuts if you prefer a visual picker.
-
-## Theme Accent Finishes
-
-Core themes now use the theme-tinted grey as the primary accent, replacing the iris blue.
-
-- Focus markers: deep grey tones across Light, Dark, and Dark Grey themes
-- Primary buttons rendered on matching grey surfaces
-- Hover and active states shifted to grey with minimal blue tinting
-
-This unified accent improves visual consistency and depth while keeping the desired hint of blue for interaction states.
-
-## Table View Hairlines
-
-Table view elements now render with subtle hairlines to improve visual distinction between rows and sections.
-
-- Row borders and section separators use refined 1px borders
-- Hairlines apply consistently across Light, Dark, and Dark Grey themes
-- The styling maintains readability while keeping layout uncluttered
-
-## Mobile UI & Status Bar
-
-On mobile devices (~390x844 viewport), the app uses a true edge-to-edge layout on Android with shell v1.17 and web insets:
-
-- The status bar uses the same color as the app background, creating a unified bar.
-- There is no double top gap; the browser's safe-area insets are fully respected.
-- Content areas adjust to provide consistent touch targets while leveraging the full screen.
-
-### Rocket visibility
-
-- The rocket appears when there are new updates to display
-- On mobile, the rocket group clears the bottom tab bar to ensure visibility
-- Users can open **Settings** to see the full list of updates when the rocket is hidden
-- If there are no new updates, the rocket hides entirely and the X row in Settings shows additional options
-
-### Settings behavior
-
-Press <strong class="highlight">Settings</strong> to view your recent activity. When updates are pending, a rocket icon in the rail allows quick access. Once you've reviewed updates, settings shows a compact list and the rocket clears from the rail.
-
-## Dictation Language Setting
-
-Dictation language is now per-user. This lets you choose the language you prefer for voice-to-text input.
-
-### Setting dictation language
-
-1. Go to **Profile & Settings** (gear icon on user account row in sidebar)
-2. Navigate to **Appearance** — **Dictation**
-3. Select your preferred language (default is English)
-4. Additional languages appear in the dropdown once configured
-
-### Subsequent use
-
-From then on, dictation uses the language you've selected. The setting is saved server-side and applies whenever you activate voice dictation in the task composer, reply box, or comment composer.
-
-### Visibility notes
-
-- The dictation language setting is **global** (per user) and affects dictation everywhere in the app
-- Language packages and models are optimized for the selected language to improve accuracy
-- You can change this setting at any time in settings
-
-## AI Model Selection
-
-AI models are configured globally in the team settings. The current model choice affects:
-
-- Task Writer (`/task` command)
-- Write with AI (`/ai` command and Write with AI button)
-- Chat responses
-
-### Available models
-
-| Model | Best for |
-|-------|----------|
-| **Grok-4.1** | Fast responses, casual tone (RTX 5090 pricing model) |
-| **Claude Opus-5** | High-accuracy reasoning and structured outputs |
-| **Claude Opus-4.8** — legacy | Older model, deprecated (replaced by Opus-5) |
-| **OpenAI** — removed | No longer supported; use local or custom providers |
-
-### Changing AI models
-
-1. Open **Teams** section
-2. Click the gear icon next to the team name (then click **AI Models** or **General**)
-3. Under **AI Models**, use the model picker dropdown
-4. Select the model you want to use
-
-### Model-specific notes
-
-- **Grok-4.1**: Uses a new pricing model (RTX 5090) and offers faster response times
-- **Opus-5**: Next-generation model with improved reasoning and structured output handling
-- Legacy models continue to work for existing projects but are not shown in the picker
-
-## Personalization Summary
-
-| Setting | Location | Scope |
-|---------|----------|-------|
-| **Theme** | Profile & Settings — Appearance — Theme | Per-user, global |
-| **Theme accents** | Profile & Settings — Appearance — Theme | Per-user, global |
-| **Dictation language** | Profile & Settings — Appearance — Dictation | Per-user, global |
-| **AI model** | Teams — AI Models picker | Team-wide, global |
-| **Mobile rocket** | Rail (signals new updates) | Per-user activity stream |
-
-These settings are saved server-side and apply across devices logged into the same account. You can change them at any time without losing your preferences.
+AI status updates appear on task cards when an AI agent has updated task metadata in a way you can see at a glance.
