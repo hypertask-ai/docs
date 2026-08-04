@@ -9,9 +9,9 @@
 :root,
 [data-theme="light"],
 [data-theme="dark"] {
-	--sl-color-bg: #111111;
-	--sl-color-bg-nav: #0a0a0a;
-	--sl-color-bg-sidebar: #0e0e0e;
+	--sl-color-bg: #000000;
+	--sl-color-bg-nav: #000000;
+	--sl-color-bg-sidebar: #000000;
 	--sl-color-bg-accent: #ffffff;
 
 	--sl-color-text: #e5e5e5;
@@ -20,47 +20,52 @@
 	--sl-color-accent-low: #1a1a1a;
 	--sl-color-accent: #ffffff;
 	--sl-color-accent-high: #ffffff;
+	--sl-color-purple-low: rgba(255, 255, 255, 0.1);
+	--sl-color-purple: #8e9093;
+	--sl-color-purple-high: #ffffff;
 
-	--sl-color-hairline-light: rgba(255, 255, 255, 0.06);
+	--sl-color-hairline-light: rgba(255, 255, 255, 0.1);
 	--sl-color-hairline: rgba(255, 255, 255, 0.1);
-	--sl-color-hairline-shade: rgba(255, 255, 255, 0.14);
+	--sl-color-hairline-shade: rgba(255, 255, 255, 0.1);
 
 	--sl-color-white: #ffffff;
 	--sl-color-black: #000000;
 	--sl-color-gray-1: #e5e5e5;
-	--sl-color-gray-2: #a3a3a3;
+	--sl-color-gray-2: #8e9093;
 	--sl-color-gray-3: #737373;
 	--sl-color-gray-4: #525252;
 	--sl-color-gray-5: #262626;
 	--sl-color-gray-6: #171717;
-	--sl-color-gray-7: #0a0a0a;
+	--sl-color-gray-7: #000000;
 }
 
 /* Navigation bar */
 header.header {
-	background-color: rgba(10, 10, 10, 0.9) !important;
+	background-color: rgba(0, 0, 0, 0.9) !important;
 	backdrop-filter: blur(12px);
-	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Sidebar */
 nav.sidebar {
-	border-right: 1px solid rgba(255, 255, 255, 0.06);
+	border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Links — clean white/gray */
 a {
-	color: #d4d4d4;
+	color: #ffffff;
 }
 
-a:hover {
+a:not(.sl-link-button):hover {
 	color: #ffffff;
+	text-decoration: underline;
 }
 
 /* Buttons — Starlight uses a `.primary` class, not [data-variant] */
 .sl-link-button.primary {
 	background: #ffffff !important;
 	border-color: #ffffff !important;
+	border-radius: 8px;
 	color: #000000 !important;
 }
 
@@ -70,10 +75,17 @@ a:hover {
 	color: #000000 !important;
 }
 
+.sl-link-button.secondary {
+	background: #333b47 !important;
+	border-color: #333b47 !important;
+	border-radius: 8px;
+	color: #ffffff !important;
+}
+
 /* Code blocks */
 pre {
-	background-color: #0a0a0a !important;
-	border: 1px solid rgba(255, 255, 255, 0.08);
+	background-color: #000000 !important;
+	border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 code {
@@ -87,8 +99,8 @@ pre code {
 
 /* Cards */
 .card {
-	background-color: rgba(255, 255, 255, 0.02);
-	border: 1px solid rgba(255, 255, 255, 0.08);
+	background-color: #2a2d34;
+	border: 1px solid #4c5362;
 }
 
 .card:hover {
@@ -97,7 +109,7 @@ pre code {
 
 /* Tables */
 table {
-	border-color: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.1);
 }
 
 th {
@@ -105,7 +117,7 @@ th {
 }
 
 td, th {
-	border-color: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Scrollbar */
@@ -114,7 +126,7 @@ td, th {
 }
 
 ::-webkit-scrollbar-track {
-	background: #111111;
+	background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -129,6 +141,13 @@ td, th {
 /* --- Landing page (splash) polish --- */
 .hero {
 	padding-block: 2.5rem 1rem;
+}
+
+h1#_top,
+.sl-markdown-content h2 {
+	font-family: "Newsreader", serif;
+	font-weight: 500;
+	letter-spacing: -0.02em;
 }
 
 .hero .tagline {

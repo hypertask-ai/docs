@@ -7,6 +7,24 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Hypertask Docs',
+      customCss: ['./src/styles/custom.css'],
+      head: [
+        {
+          tag: 'link',
+          attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        },
+        {
+          tag: 'link',
+          attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: true },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Newsreader:wght@500&display=swap',
+          },
+        },
+      ],
       sidebar: [
         {
           label: 'Features',
