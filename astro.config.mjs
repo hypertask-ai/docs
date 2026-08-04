@@ -14,6 +14,7 @@ export default defineConfig({
           'features/ai-features',
           'features/boards',
           'features/tasks',
+          'features/scheduling',
           'features/inbox',
           'features/collaboration',
           'features/calendar',
