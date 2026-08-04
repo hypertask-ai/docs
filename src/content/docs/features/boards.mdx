@@ -22,26 +22,6 @@ The empty state:
 - Offers quick actions to create a board or invite a teammate
 - Matches your theme and is consistent with other empty states in the app
 
-## Authentication
-
-Hypertask supports multiple authentication methods, all integrated through the server-side session layer:
-
-### Email-based authentication
-
-- Sign-in with a six-digit code delivered via email
-- Access a persistent sign-in link (doesn't expire until used)
-- No need to manage custom tokens — the session is handled server-side
-- Reliable across mail scanners and email clients
-
-### Sign-out
-
-All authentication flows support clean sign-out that immediately invalidates the session and clears cookies.
-
-### Cookie consent and guest CTAs
-
-- Cookie consent banner appears on guest boards to capture consent for analytics and personalization (opt-out and edgy).
-- Header includes "Log in" or "Sign up" depending on session state under the board title, with links to app.hypertask.ai app pages ([HTPR-4883](https://app.hypertask.ai/detail/project-15/4883)).
-
 ## Free tier limits
 
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
@@ -65,16 +45,33 @@ ht --create-board secret-project
 # > Error: Board limit reached. Upgrade to add more boards.
 ```
 
-## Project pages safety
+## Compact modal palette
 
-Secure and reliable project page navigation is critical for boards. Hypertask ensures `/project` page loads correctly by:
+Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g., the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
 
-```text
-GET /project?{boardId|*|<shareId|?>}
-─────────────────────────────────────────────────────────────────────────────────────────────────────
-200 OK (no crash; no NEXT_REDIRECT body injected in buffers)
+**Default behavior (compact)**
+
+```jsx
+// flowsProps.tsx or shared-modal.jsx
+// legacySizing omitted → uses compact tokens
+<Modal title="Task Details" open={isModalOpen}>
+  <div className="modal-content">
+    <Input label="Title" />
+    <Button variant="primary">Save</Button>
+  </div>
+</Modal>
 ```
 
-- Valid board IDs blend into the URL so the correct board opens directly.
-- Minimizing redirects and avoiding middleware that rewrites responses reduces round-trips.
-- Bad or unexpected parameters are handled gracefully, preserving a clean UI rather than crashing or exposing errors in the rendered payload.
+**Legacy sizing (sidebars)**
+
+```jsx
+// SharePoint summary modal
+<Modal title="SharePoint" legacySizing={true}>...</Modal>
+```
+
+Layout notes:
+- Users see a cohesive font-sizes: 16px body, 14px UI labels, 13px subtitles.
+- Height is tightly calibrated: header 48px, input 44px, rows 36px.
+- No onboarding is required; modals respect the current theme and compact palette by default.
+
+</> Including all changes related to modal sizing that ship with the updated modal scale and palette alignment.</>
