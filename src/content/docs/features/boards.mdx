@@ -84,4 +84,12 @@ This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment)
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive shortcuts.
 
-This behavior matches the expectations you’re used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
+This behavior matches the expectations you're used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
+
+## Rail navigation state
+
+Hover states on the left rail now correctly highlight the active item. The rail matches the current path, so when you navigate to `/time`, the Timers item in the rail shows as active.
+
+This change fixed a subtle issue where the rail highlight could not detect the active state because the URL path used by the client is always `/time` (or `/time?running=1`), even when the original navigation entered via `/timers`. Now the rail state is consistent with the surface you're viewing.
+
+---
