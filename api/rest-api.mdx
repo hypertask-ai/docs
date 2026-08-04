@@ -1,0 +1,161 @@
+---
+title: "REST API"
+description: "Complete reference for Hypertask's public REST API endpoints."
+---
+
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Aside type="tip">
+Hypertask's REST API endpoints are key surfaces for integration. Use the MCP tools reference for agents, and the CLI reference for command-line workflows.
+</Aside>
+
+## Overview
+
+This reference documents Hypertask's public REST API endpoints, focusing on MCP-related time-entry actions. The API serves both the MCP server and the CLI. Authentication requires a header with your API key as a Bearer token (see authentication note below).
+
+**Base URL**: `https://hypertask.ai/api/rest`
+
+> **Authentication**
+>
+> Provide an API key in the `Authorization` header on every request:
+>
+> ```http
+> Authorization: Bearer YOUR_API_KEY
+> ```
+
+---
+
+## Time-entry endpoints
+
+Use these POST endpoints for updating or closing existing time entries via MCP or CLI.
+
+### POST /api/mcp/time/update
+
+Update an existing time entry's minutes (if any), optional date, optional timezone_offset_minutes, and optional note.
+
+**Request body** (JSON):
+
+```json
+{
+  "entry_id": 123,
+  "minutes": 90,
+  "date": "2026-08-04",
+  "timezone_offset_minutes": -420,
+  "note": "Adjustment from CLI"
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `entry_id` | integer | Yes | The ID of the time entry to update |
+| `minutes` | number | No | New duration in minutes (HTTP status code: 400 if omitted) |
+| `date` | ISO 8601 date string (YYYY-MM-DD) | No | Date of the entry. Use this to target a specific day (HTTP status code: 400 if omitted) |
+| `timezone_offset_minutes` | integer | No | Your timezone offset in minutes from UTC (e.g., `0` for UTC, `-420` for UTC-7) |
+| `note` | string | No | Optional note for the entry |
+
+**Example Response** (HTTP/202 Accepted):
+
+```json
+{
+  "id": 123,
+  "entry_id": 123,
+  "minutes": 90,
+  "date": "2026-08-04",
+  "timezone_offset_minutes": -420,
+  "note": "Adjustment from CLI",
+  "updated_at": "2026-08-04T15:30:00Z"
+}
+```
+
+**Notes**:
+
+- Request fails with HTTP 400 if neither `minutes` nor `date` is provided.
+- Use the MCP tools reference to see the unsupported /api/mcp/time/log endpoint and its original parameters.
+- CLI usage: `hypertask time log` only supports manual minutes entry and has no update/delete actions; the two REST endpoints here replace generic update/delete capabilities.
+
+<Aside type="note">
+These endpoints are analogous for both MCP and CLI integrations. MCP may surface them under tool schemas, while CLI invokes them directly via curl.
+</Aside>
+
+### POST /api/mcp/time/delete
+
+Delete an existing time entry using its `entry_id`. Use this to close or remove entries created via the platform.
+
+**Request body** (JSON):
+
+```json
+{
+  "entry_id": 123
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `entry_id` | integer | Yes | The ID of the time entry to delete |
+
+**Example Response** (HTTP/204 No Content):
+
+No body on success.
+
+**Notes**:
+
+- No corresponding CLI counterpart exists today; CLI time entry management is manual only.
+- Use `/api/mcp/time/update` to update entries when needed instead of deleting and recreating.
+
+<Aside type="tip">
+Use the command palette (`Ctrl+P` / `Cmd+P`) to open the existing ended-entry viewer and look up `entry_id` values before calling these endpoints.
+</Aside>
+
+---
+
+## Error handling
+
+Hypertask REST API returns standard HTTP status codes.
+
+| Code | Meaning |
+|------|---------|
+| 200 OK | Request succeeded (rare for write-only endpoints) |
+| 201 Created | Record created successfully |
+| 202 Accepted | Request accepted and queued |
+| 204 No Content | Request succeeded with no response body |
+| 400 Bad Request | Invalid request body (e.g., missing required fields) |
+| 401 Unauthorized | Missing or invalid API key |
+| 403 Forbidden | No access to the requested resource |
+| 404 Not Found | Resource does not exist |
+| 429 Too Many Requests | Rate limit exceeded |
+| 500 Server Error | Internal server error |
+
+---
+
+## Common usage patterns
+
+### Update minutes for a today's logged entry
+
+```bash
+curl -X POST https://hypertask.ai/api/rest/api/mcp/time/update \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"entry_id": 123, "minutes": 60}'
+```
+
+### Update date and timezone offset for a specific day
+
+```bash
+curl -X POST https://hypertask.ai/api/rest/api/mcp/time/update \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"entry_id": 123, "minutes": 120, "date": "2026-08-03", "timezone_offset_minutes": -480}'
+```
+
+### Delete an old entry you don't want
+
+```bash
+curl -X POST https://hypertask.ai/api/rest/api/mcp/time/delete \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"entry_id": 123}'
+```
+
+### Create a new entry (from the ended-entry viewer)
+
+All new entries should be created via the Task-level time tracking form or the UI; these endpoints are for mutating existing logged entries only.
