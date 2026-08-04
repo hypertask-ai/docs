@@ -35,7 +35,7 @@ The assistant drafts directly into the field, ready for your review.
 Use slash commands to invoke registered skills:
 
 - **/skill** — Open the skills menu to tap a skill by name or first letter.
-- **/skill \{name\}** — Run a specific skill if you know its name.
+- **/skill {name}** — Run a specific skill if you know its name.
 
 Known skills include:
 
@@ -54,6 +54,42 @@ An AI agent can update task metadata in a visible way—priority, assignees, lab
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
+
+## Help-site AI chat
+
+The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. It connects directly to the full Hypertask documentation site, including CLI, MCP, REST API, and agent docs.
+
+### Performance and model
+
+The chat uses the **google/gemini-3.5-flash-lite** model via the Vercel AI Gateway. Responses stream in real time with first-token latencies around **0.3 seconds** on typical queries.
+
+- Multimodal path for text and image questions in one model.
+- Automatic fallback to the previous model if the gateway fails.
+- Serverless deployment on Cloudflare Workers with a D1 database for article storage.
+
+### Knowledge coverage
+
+The chat answers are grounded in **49 documentation articles** (including the 48KB CLI reference). Previously, the bot lacked CLI context; now it can answer questions about `nl` commands, `ht` CLI, MCP tools, and REST endpoints.
+
+- Keyword scoring replaces first-come fill logic, so contextual terms like "cli" and "hypertask" score accurately.
+- References link directly to the relevant docs.hypertask.ai article.
+- Topics include:
+  - Installing and configuring the CLI
+  - Creating, updating, and completing tasks
+  - MCP tool usage and agent workflows
+  - REST API endpoints
+  - Board and column operations
+
+### Quick examples
+
+Try these prompts in the help-site chat:
+
+- *"How do I install the hypertask CLI and create a task?"*
+- *"What MCP tools are available for project management?"*
+- *"What are the REST API endpoints for tasks?"*
+- Show a screenshot of a Hypertask dashboard and ask *"What are these columns for?"*
+
+The chat responds instantly with tailored guidance and clickable documentation links.
 
 ## Other AI context and tools
 
