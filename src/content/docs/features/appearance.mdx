@@ -1,41 +1,55 @@
 ---
-title: "Appearance & AI Models"
-description: "Customize themes, icons, fonts, and select AI models for Hypertask."
+title: Appearance & AI Models
+description: Customize themes, icons, fonts, and select AI models for Hypertask.
 ---
 
-import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Aside, Tabs, DecimalItem, Steps } from '@astrojs/starlight/components';
 
-## Active quick-tips bar layout
+## Theme defaults
 
-- Board cards and lists hug the bottom of the quick-tips bar when that bar is on.
-- Inbox visualizer surfaces flow and love states are pinned at the bottom.
-- If you turn off the quick-tips bar, the remaining content fills the viewport.
+Hypertask uses sensible theme defaults that adapt to your system settings while preserving control.
 
-## Closed quick-tips bar layout
+- **AMOLED** — the default dark theme (pure #101010 panel base, durable).
+- **Light (New)** — the default light theme (refined light surface).
+- **Legacy themes** — Dark Grey (New), Graphite, and Porcelain remain selectable from the Theme picker.
+- **System behavior** — When a OS theme is detected, the app resolves the system default to AMOLED (dark) or Light (New) (light). Dark/Light, AMOLED ↔ Light toggles override those defaults; other theme pickers stay available.
 
-- Board columns now run to the full height of their containers.
-- Columns shrink by the measured height of the quick-tips bar when you re-enable it.
+## Visual system
 
-## Compact sidebar
+### Typography
 
-- Left sidebar appears collapsed by default with a chevron toggle.
-- Expand to 130px and show a logged-in user label.
-- Toggle or viewing persistent state; tooltips reveal all real keyboard shortcuts including [<kbd>&#92;</kbd>] for the rail.
+Typefaces are consistent across core themes. AMOLED adopts IBM Plex as the system typeface. Light (New) and legacy themes keep their existing core typefaces.
 
-## Themes
+### Sidebar & modals
 
-Hypertask supports these themes; themeships with AMOLED v2 and two new themes:
+Modals use compact modal header sizing (48px/16px header, 44px/14px input, 36px/13px rows by default) for a contemporary feel. Legacy sizing remains opt-in.
 
-- **AMOLED v2**: near-black elevation ladder, IBM Plex system typeface, compact card styling, muted ticket IDs on boards, and iris accent across core themes.
-- **Dark Grey (New)**: refined accents, dark grey panel instead of white.
-- **Light (New)**: light input well, white panel.
-- **Graphite**: original Graphite theme.
-- **Porcelain**: original Porcelain theme.
+### Homepage styling
 
-The system defaults are now Graphite/Porcelain (original Graphite left sidebar outline dropped). AMOLED v2, Dark Grey, and Light ship with refined typography and note minor visual polish in changelog entries.
+Homepage elements now match the login/pricing design language for visual harmony; the hero features a product animation (16s crossfade of four real captured screens) with a static variant for reduced-motion users.
 
-For theme configuration and per-theme AI model selection, see [Profile & Settings](../getting-started/settings-profile.mdx).
+### Visual emphasis
 
-## AI status updates
+Table column edges on AMOLED displays show a 2px purple accent line on hover and a full-height guide line while dragging; hovering any column header reveals faint column separators for better discoverability of the grid.
 
-AI status updates appear on task cards when an AI agent has updated task metadata in a way you can see at a glance.
+## Onboard and customize
+
+<Tabs>
+<TabItem label="Theme picker">
+<Steps>
+<StepItem>Press <kbd>Ctrl+K</kbd> and search for "Theme"</StepItem>
+<StepItem>Select from Light (New), Dark (AMOLED), System, or legacy options (Dark Grey (New), Graphite, Porcelain). The defaults map system dark → AMOLED and system light → Light (New).</StepItem>
+<StepItem>Toggles on Dark/Light, AMOLED ↔ Light override those defaults.</StepItem>
+</Steps>
+</TabItem>
+<TabItem label="Keyboard commands">
+<Steps>
+<StepItem><kbd>Ctrl+K</kbd> → Open command palette (supports theme quick switch)</StepItem>
+<StepItem><kbd>Alt+T</kbd> → Quick open theme picker (if enabled)</StepItem>
+</Steps>
+</TabItem>
+</Tabs>
+
+<Aside type="tip">
+A subset of keyboard shortcuts and UI behaviors supports per-image-aware themes; for the full shortcut list see the Keyboard shortcuts reference.
+</Aside>
