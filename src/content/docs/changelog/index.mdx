@@ -19,6 +19,7 @@ export const Update = ({ label, children }) => (
   * Improved: Table resize handles are now visible on AMOLED displays with a 2px purple accent line while dragging and a full-height guide line; hovering the header row shows faint separators for discoverability ([HTPR-4991](https://app.hypertask.ai/detail/project-15/4991))
   * Fixed: CLI now prints the resolved API URL actually used by a config override or default routing, and the CLI endpoint is now api.hypertask.ai (no longer silently remapped from app.hypertask) ([HTPR-4984](https://app.hypertask.ai/detail/project-15/4984))
   * Fixed: Task write routes now validate board membership and reject writes for non-members on updateTaskSingle and related endpoints ([HTPR-4982](https://app.hypertask.ai/detail/project-15/4982))
+  * Added: Agents can create custom fields on a board and immediately set values via POST /api/mcp/custom-fields/value with auto-field creation (e.g., field_name: "ICE") ([HTPR-3805](https://app.hypertask.ai/detail/project-15/3805))
 </Update>
 
 <Update label="August 4, 2026">
