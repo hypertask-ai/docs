@@ -25,10 +25,10 @@ The flagship use case is an **ICE rating** (a Number field for Impact/Confidence
 
 <Steps>
 
-1. Press <kbd>Ctrl+K</kbd> and search for "Create custom field".
+1. Press `<kbd>Ctrl+K</kbd>` and search for "Create custom field".
 2. Enter a name for the field.
 3. Pick a type: Number, Text, Select, Date, or Checkbox.
-4. Press <kbd>Enter</kbd> to create it.
+4. Press `<kbd>Enter</kbd>` to create it.
 
 </Steps>
 
@@ -36,7 +36,7 @@ The field is created on the current board and is visible by default — no separ
 
 ## Setting values
 
-Open a task and the field appears as a property row in the right rail, alongside priority, size, and due date. Click it, type or pick a value, and press <kbd>Enter</kbd> to save.
+Open a task and the field appears as a property row in the right rail, alongside priority, size, and due date. Click it, type or pick a value, and press `<kbd>Enter</kbd>` to save.
 
 ## Table view: columns and sorting
 
@@ -66,40 +66,69 @@ Anyone who opens the "ICE ranking" view sees the board pre-sorted by score, no r
 
 Custom fields are managed through the same `Bearer htk_...` REST API used elsewhere in Hypertask ([authentication](/api/rest-api/#authentication)). Task detail responses include a `customFieldValues` array for every task on a board with custom fields defined.
 
-### Create or list fields
+### Create a field
 
-**Endpoint:** `GET /api/mcp/custom-fields` / `POST /api/mcp/custom-fields`
+**Endpoint:** `POST /api/mcp/custom-fields`
 
 Creating a field is idempotent on `name` — calling create again with a name that already exists on the board returns the existing field instead of erroring.
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $HT_API_KEY" \
+curl -s -X POST \
+  -H "Authorization: Bearer $HT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"project_id": 123, "name": "ICE", "type": "number"}' \
   "https://app.hypertask.ai/api/mcp/custom-fields"
+```
+
+**Response example:**
+
+```json
+{
+  "fieldId": 789,
+  "name": "ICE",
+  "type": "number"
+}
 ```
 
 ### Set a value
 
 **Endpoint:** `POST /api/mcp/custom-fields/value`
 
-Accepts either `field_id` or `field_name`. Using `field_name` auto-creates the field on the board if it doesn't already exist, so an agent can set a value without a separate create call:
+Accepts either `field_id` or `field_name`. The recommended surface is to first create the field via `POST /api/mcp/custom-fields`, obtaining `field_id`, then assign values. Values are strictly validated against the field's type — for example, a non-numeric value sent to a Number field is rejected with a `400` response.
+
+**Set value by field_id**
 
 ```bash
-curl -s -X POST -H "Authorization: Bearer $HT_API_KEY" \
+curl -s -X POST \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"task_id": 789, "field_id": 789, "value": 42}' \
+  "https://app.hypertask.ai/api/mcp/custom-fields/value"
+```
+
+**Switch to field_name (auto-creates the field first)**
+
+```bash
+curl -s -X POST \
+  -H "Authorization: Bearer $HT_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"task_id": 789, "field_name": "ICE", "value": 42}' \
   "https://app.hypertask.ai/api/mcp/custom-fields/value"
 ```
 
-Values are strictly validated against the field's type — for example, a non-numeric value sent to a Number field is rejected with a `400` response rather than silently coerced.
+**Tips:**
+
+- Use `field_id` in named endpoints after retrieval for clarity.
+- Typed values must match the field's declared type.
+- Empty or unset values are represented as `null` unless overridden.
 
 ### Delete a field
 
 **Endpoint:** `DELETE /api/mcp/custom-fields/{fieldId}`
 
 ```bash
-curl -s -X DELETE -H "Authorization: Bearer $HT_API_KEY" \
+curl -s -X DELETE \
+  -H "Authorization: Bearer $HT_API_KEY" \
   "https://app.hypertask.ai/api/mcp/custom-fields/456"
 ```
 
