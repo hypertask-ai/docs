@@ -1,81 +1,55 @@
----
-title: Changelog
-description: Daily log of new features, bug fixes, and improvements shipped to Hypertask.
----
+/** @type {import('astro').AstroConfig} */
+export default {
+  site: 'https://docs.hypertask.ai',
+  integrations: [starlight({
+    sidebar: [
+      { label: 'Introduction', slug: '/getting-started/introduction' },
+      { label: 'Quick start', slug: '/getting-started/quickstart' },
+      { label: 'Core concepts', slug: '/getting-started/concepts' },
+      { label: 'Profile & settings', slug: '/getting-started/settings-profile' },
+      { label: 'Features', items: [
+        { label: 'Features', slug: '/features' },
+        { label: 'AI Features', slug: '/features/ai-features' },
+        { label: 'Appearance & AI Models', slug: '/features/appearance' },
+        { label: 'Boards & Sections', slug: '/features/boards' },
+        { label: 'Task View', slug: '/features/table-view' },
+        { label: 'Tasks', slug: '/features/tasks' },
+        { label: 'Inbox & Notifications', slug: '/features/inbox' },
+        { label: 'Keyboard Shortcuts', slug: '/features/keyboard-shortcuts' },
+        { label: 'Slack', slug: '/features/slack' },
+        { label: 'Custom Fields', slug: '/features/custom-fields' },
+        { label: 'Reports', slug: '/features/reports' },
+        { label: 'Calendar', slug: '/features/calendar' },
+        { label: 'Scheduling', slug: '/features/scheduling' },
+        { label: 'Time Tracking', slug: '/features/time-tracking' },
+        { label: 'Cost Forecast Page', slug: '/features/cost-forecast' },
+        { label: 'Observability & Error Tracking', slug: '/features/observability' },
+        { label: 'Pages', slug: '/features/pages' },
+        { label: 'Favorites', slug: '/features/favorites' },
+        { label: 'Skills', slug: '/features/skills' },
+        { label: 'Smart Labels', slug: '/features/smart-labels' },
+        { label: 'Superhuman-Style Snippets', slug: '/features/superhuman-snippets' },
+        { label: 'Board Settings', slug: '/features/board-settings' },
+        { label: 'BYOK', slug: '/features/byok' },
+        { label: 'Reports', slug: '/features/reports' },
+      ]},
+      { label: 'MCP', items: [
+        { label: 'Integration overview', slug: '/mcp/overview' },
+        { label: 'Creating Agents', slug: '/mcp/agents' },
+        { label: 'Scheduling Agents', slug: '/mcp/scheduling' },
+        { label: 'Agent Workflows', slug: '/mcp/workflows' },
+      ]},
+      { label: 'CLI', slug: '/cli/reference' },
+      { label: 'REST API', slug: '/api/rest-api' },
+    ],
+  })],
+}
 
-{/* Starlight has no Update component; local shim so the entries render as
-    labeled sections without rewriting them. */}
+declare module 'astro' {
+  interface AstroConfig {
+    site?: string;
+    integrations: ImportValue[];
+  }
+}
 
-export const Update = ({ label, children }) => (
-  <section>
-    <h3>{label}</h3>
-    {children}
-  </section>
-);
-
-<Update label="August 5, 2026">
-  * Improved: Inbox and calendar header rows now share guest CTAs with filter controls in a unified gutter for consistent alignment and clearer touch targets ([HTPR-4953](https://app.hypertask.ai/detail/project-15/4953))
-  * Improved: Table view title column now flexes to fill remaining width, and you can drag columns by their grip handle to reorder or by their edge to resize (drag-to-reorder + drag-to-resize) ([HTPR-4987](https://app.hypertask.ai/detail/project-15/4987))
-  * Improved: Table resize handles are now visible on AMOLED displays with a 2px purple accent line while dragging and a full-height guide line; hovering the header row shows faint separators for discoverability ([HTPR-4991](https://app.hypertask.ai/detail/project-15/4991))
-  * Fixed: CLI now prints the resolved API URL actually used by a config override or default routing, and the CLI endpoint is now api.hypertask.ai (no longer silently remapped from app.hypertask) ([HTPR-4984](https://app.hypertask.ai/detail/project-15/4984))
-  * Fixed: Task write routes now validate board membership and reject writes for non-members on updateTaskSingle and related endpoints ([HTPR-4982](https://app.hypertask.ai/detail/project-15/4982))
-  * Added: Agents can create custom fields on a board and immediately set values via POST /api/mcp/custom-fields/value with auto-field creation (e.g., field_name: "ICE") ([HTPR-3805](https://app.hypertask.ai/detail/project-15/3805))
-</Update>
-
-<Update label="August 4, 2026">
-  * Added: Board filter picker now supports a "Blocked by person" filter to show tasks waiting on specific individuals or "Anyone" to see all blocked tasks ([HTPR-4947](https://app.hypertask.ai/detail/project-15/4947))
-  * Fixed: Description and comment-editing containers no longer draw an extra inner outline in Dark Grey (New) and AMOLED themes; only the outer card border remains visible ([HTPR-4951](https://app.hypertask.ai/detail/project-15/4951))
-  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
-  * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
-  * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
-  * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
-  * Improved: Expanded sidebar no longer overlaps task-detail up/down navigation buttons and other fixed controls ([HTPR-4908](https://app.hypertask.ai/detail/project-15/4908))
-  * Added: Inbox notifications now update in real-time via WebSockets, so changes appear instantly across app, CLI, MCP, manifest, and AI chat ([HTPR-3312](https://app.hypertask.ai/detail/project-15/3312))
-  * Added: AMOLED theme v2 uses IBM Plex as system typeface, with a true-black elevation ladder (#101010), compact card styling, and muted ticket IDs on boards; iris accent is replaced across core themes ([HTPR-4899](https://app.hypertask.ai/detail/project-15/4899))
-  * Added: MCP and CLI can now update existing time entries via POST /api/mcp/time/update (HTTP 400 if neither minutes nor date is provided), and POST /api/mcp/time/delete via entry_id; no separate /api/mcp/time/log delete action exists, and hypertask_time log remains CLI-only for manual entry ([HTPR-4725](https://app.hypertask.ai/detail/project-15/4725))
-  * Added: Free users on web are capped at 3 owned boards across all creation surfaces (app, CLI, MCP, manifest, AI chat) and receive upgrade prompts when the limit is reached ([HTPR-4894](https://app.hypertask.ai/detail/project-15/4894))
-  * Added: Free setup now provides 100 credit-machines (web/desktop) + 30 credit-machines (mobile) per user, matching the engine's paid tier defaults when proven through adoption or contact ([HTPR-4993](https://app.hypertask.ai/detail/project-15/4993))
-  * Added: Free users now get 3 machine credits per platform (web 100, desktop 100, mobile 30) at signup, scaling with verified use or contact for higher tiers ([HTPR-1067](https://app.hypertask.ai/detail/project-15/1067))
-  * Added: Open Latest Updates via command palette from any route ([HTPR-4813](https://app.hypertask.ai/detail/project-15/4813))
-  * Fixed: Agent comments now properly create inbox notifications for mentioned users, including cases where an agent mentions its owner ([HTPR-4229](https://app.hypertask.ai/detail/project-15/4229))
-  * Added: Board columns now expand to full container height when the quick-tips bar is hidden on the board view, so they fill the available space cleanly ([HTPR-4967](https://app.hypertask.ai/detail/project-15/4967))
-  * Added: Task detail view now shows start dates with natural language presets and supports clearing them; start dates affect how My tasks orders your work ([HTPR-4884](https://app.hypertask.ai/detail/project-15/4884))
-  * Added: Tasks can be saved as templates from the command palette and reused from the board, preserving fields like title, description, priority, size, and labels ([HTPR-4886](https://app.hypertask.ai/detail/project-15/4886))
-  * Added: AI status updates appear on task cards when an AI agent updates task metadata in a visible way; changes include priority, assignees, labels, due dates, and related tasks, visible on cards, task detail, and notifications via Write with AI ([HTPR-4888](https://app.hypertask.ai/detail/project-15/4888))
-  * Added: Today / Upcoming / Later surface across My tasks boards with date grouping and consistent keyboard navigation ([HTPR-4887](https://app.hypertask.ai/detail/project-15/4887))
-  * Added: Swipe-through-unread card stack for mobile inbox via Ctrl+K with right/left swipe or arrow keys, undo, and bulk archive on exit ([HTPR-4969](https://app.hypertask.ai/detail/project-15/4969))
-  * Added: Ctrl+K Get started group for first-time users: Create task, AI Task Writer, Invite people, Create board, Add column, plus CLI/MCP seeding for guest boards ([HTPR-4959](https://app.hypertask.ai/detail/project-15/4959))
-  * Fixed: Build process no longer hangs prematurely; deployments now complete within a stable window (htn/hypertask#2288) ([HTPR-4974](https://app.hypertask.ai/detail/project-15/4974))
-  * Added: Custom fields page and in-app help are live (creating fields, rail values, table sorting + columns picker, ICE-ranking recipe, agent/API section with curl examples) ([HTPR-4979](https://app.hypertask.ai/detail/project-15/4979))
-  * Improved: Vercel production builds no longer hang; median deployment time is ~4.4 min, slowest ~4.8 min, with no timeout behavior (agent sessions no longer interfere) ([HTPR-4031](https://app.hypertask.ai/detail/project-15/4031))
-</Update>
-
-<Update label="August 3, 2026">
-  * Added: Time reports now support date presets (Yesterday, Last week, Last month, Custom with From/To fields) and clickable durations that open the time log modal ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
-  * Added: Time reports entry form has separate Hours and Minutes fields for clear duration entry, and supports split hours/minutes input ([HTPR-4934](https://app.hypertask.ai/detail/project-15/4934))
-  * Added: Guest onboarding creates a demo board and opens the AI Task Writer with a prompt so new users can immediately experience AI task creation ([HTPR-4937](https://app.hypertask.ai/detail/project-15/4937))
-  * Improved: Inactive tab labels in the view cluster now render at 90% opacity; on AMOLED, the icon rail and inbox container sit on pure #000 with their hairline edges kept ([HTPR-4943](https://app.hypertask.ai/detail/project-15/4943))
-  * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
-  * Fixed: App no longer crashes in headless Chrome due to dictation MicVAD errors ([HTPR-4085](https://app.hypertask.ai/detail/project-15/4085))
-  * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
-  * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
-  * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
-  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>\\</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
-  * Added: Signing in with a guest session now transfers the guest team, its boards, and memberships to the new account, with guest UIDs re-prefixed so that cleanup cron can still find them ([HTPR-4893](https://app.hypertask.ai/detail/project-15/4893))
-  * Added: Two new themes — Dark Grey (New) and Light (New) — with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
-  * Improved: Sidebar elements now render with subtle hairlines for better visual distinction, and table view row borders use refined styling ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
-  * Fixed: React crash on project pages with no board ID no longer occurs ([HTPR-4847](https://app.hypertask.ai/detail/project-15/4847))
-  * Added: Graphite/Porcelain become the system-theme defaults and the graphite left-sidebar outline is dropped ([HTPR-4909](https://app.hypertask.ai/detail/project-15/4909))
-</Update>
-
-<Update label="August 2, 2026">
-  * Added: Most pages now use compact modal header sizing; modals have 48px/16px header, 44px/14px input, and 36px/13px rows by default, with legacy sizing opt-in via `legacySizing` prop for compatibility ([HTPR-4742](https://app.hypertask.ai/detail/project-15/4742))
-  * Added: Left sidebar rail now expands to 130px for logged-in users, with user labels, accordion accordions, and Favorites section at the bottom; collapsed by default with chevron toggle and persistent state ([HTPR-4738](https://app.hypertask.ai/detail/project-15/4738))
-  * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g., "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
-  * Fixed: Container picker now correctly selects multiple values and respects the `aria-invalid` attribute when there are errors during submission ([HTPR-4373](https://app.hypertask.ai/detail/project-15/4373))
-  * Fixed: Kanban switcher `<kbd>Ctrl+B</kbd>` now consistently opens the board palette from any route ([HTPR-4696](https://app.hypertask.ai/detail/project-15/4696))
-  * Added: User AV2 temporarily disabled while investigating playback issues; a full migration over ATSP to ATAP is in progress ([HTPR-4744](https://app.hypertask.ai/detail/project-15/4744))
-  * Fixed: Time tracking tooltip now correctly shows the last tracked duration even if the user is currently editing another timer ([HTPR-4758](https://app.hypertask.ai/detail/project-15/4758))
-  * Added: Accepts `timers` path for legacy links; /timers now redirects to /time with `running=1` query param (HTPR-4774) ([HTPR-4774](https://app.hypertask.ai/detail/project-15/4774))
-  * Added: Timers rail item now correctly highlights as active when on the /time surface ([HTPR-4774](https://app.hypertask.ai/detail/project-15/4774))
-</Update>
+import { starlight } from '@astrojs/starlight';
