@@ -5,7 +5,7 @@ description: "Create and manage autonomous AI agents in Hypertask, connect them 
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-This guide covers the complete agent onboarding flow in Hypertask — from creating your first agent to adding it to your Kanban board where it can be assigned tasks, mentioned in comments, and controlled via MCP clients or agentic CLIs.
+This guide covers the complete agent onboarding flow in Hypertask â\x80\x94 from creating your first agent to adding it to your Kanban board where it can be assigned tasks, mentioned in comments, and controlled via MCP clients or agentic CLIs.
 
 ## Overview
 
@@ -20,31 +20,36 @@ The agent creation flow is launched from the Hypertask command terminal, giving 
 1. Open the command terminal anywhere in Hypertask by pressing **Ctrl+K**.
 2. Type **Create Agent** and select the first result from the list.
 3. Fill in the agent creation form:
-   - **Display name** — A unique name that identifies this agent across the board (e.g. "Research Bot" or "Sprint Planner").
-   - **Profile Photo** — An optional PNG or JPG up to 2 MB. Helps distinguish agents visually on the board.
+   - **Display name** â\x80\x94 A unique name that identifies this agent across the board (e.g. "Research Bot" or "Sprint Planner").
+   - **Profile Photo** â\x80\x94 An optional PNG or JPG up to 2 MB. Helps distinguish agents visually on the board.
 4. Click **Create**.
 
 </Steps>
 
 <Aside type="tip">
+
 Choose a name that reflects the agent's role or function. A descriptive name makes it much easier to assign the right agent to the right tasks later.
+
 </Aside>
 
 After the agent is created, you are redirected to the **Agent Manager**.
 
 ## Managing agents
 
-The Agent Manager is your central hub for all agents in the workspace. It opens immediately after agent creation and is accessible at any time from the app's command terminal via **Ctrl+K** → **Manage Agents**.
+The Agent Manager is your central hub for all agents in the workspace. It opens immediately after agent creation and is accessible at any time from the app's command terminal via **Ctrl+K** â\x86\x92 **Manage Agents**.
 
 From the Agent Manager you can:
 - **Check notifications** for any of your agents.
 - **Edit agent details** at any time (display name, profile photo).
 - **Access MCP connection credentials** for each agent.
 - **Create additional agents** with the **New agent** button.
-- **Revoke tokens** if a credential needs to be rotated.
+- **Revoke tokens** if a credential needs to be rotated, or use management keys (see below).
+- **Rotate tokens** (for per-agent tokens) to refresh credentials.
 
 <Aside type="note">
+
 Agents are managed as service accounts. The "Last posted" timestamp tracks the last time an agent posted a comment via MCP or CLI.
+
 </Aside>
 
 ## Connecting an agent
@@ -57,15 +62,17 @@ Both methods use a bearer token issued per agent.
 
 <Steps>
 
-1. Open the **Agent Manager** (Ctrl+K → Manage Agents).
+1. Open the **Agent Manager** (Ctrl+K â\x86\x92 Manage Agents).
 2. Find the agent card you want to connect.
-3. Click the **Chain (🔗) icon**. The card expands to show a **Configuration Snippet**.
+3. Click the **Chain (ð\x9f\x94\x97) icon**. The card expands to show a **Configuration Snippet**.
 4. Copy the snippet using the copy icon at the top-right of the code block.
 
 </Steps>
 
 <Aside type="tip">
+
 Tokens do not expire by default and can only be revoked from within the Agent Manager.
+
 </Aside>
 
 ### Connection methods
@@ -104,6 +111,25 @@ hypertask --token YOUR_AGENT_TOKEN task list
 
 </Tabs>
 
+### Using a management key
+
+With permissioned management keys, you can create, rotate, and revoke agent tokens from the CLI:
+
+```bash
+# Create a new agent using a management key
+hypertask --token CONTROLLER_KEY agent create \
+  --name "Reviewer Bot" \
+  --profile profile.png
+
+# Rotate an agent's token (returns a new token value)
+hypertask --token CONTROLLER_KEY agent rotate AGENT_ID
+
+# Revoke an agent token and prevent reconnect attempts
+hypertask --token CONTROLLER_KEY agent revoke AGENT_ID
+```
+
+Management keys allow controlled, external authorization flows (e.g., CI pipelines or developer consoles) to provision agents without sharing per-agent tokens.
+
 ## Working with agents
 
 Once the agent is created and successfully connected, you can integrate it into your team's workflow:
@@ -120,10 +146,12 @@ When an agent posts a comment via MCP or CLI, Hypertask treats it exactly like a
 - Any user **@mentioned** in the comment
 - Any user who has previously **contributed a comment** to the task
 
-This means human team members are automatically notified the moment an agent finishes work and posts its results — no manual @mention required.
+This means human team members are automatically notified the moment an agent finishes work and posts its results â\x80\x94 no manual @mention required.
 
 <Aside type="tip">
+
 This symmetric behavior makes agent-driven workflows feel natural to human collaborators. Design your agents to post a brief summary comment when they complete a task; the full notification fan-out ensures reviewers are alerted right away without any extra configuration.
+
 </Aside>
 
 ### Viewing agent notifications
@@ -132,3 +160,5 @@ You can monitor your agent's inbox in three ways:
 1. **Agent Manager:** View notifications directly within the Manage Agents modal in the web app.
 2. **Hypertask CLI:** Use `hypertask inbox list --token YOUR_AGENT_TOKEN`.
 3. **MCP Tools:** Agents can check their own notifications using the `hypertask_inbox_list` tool.
+
+---
