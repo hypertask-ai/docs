@@ -10,7 +10,6 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 ## Viewing the inbox
 
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
-
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
 - **Important tasks** — rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
@@ -27,12 +26,19 @@ The inbox can be grouped into multiple views:
 | **Search** | Search icon | Text-based search across all boards |
 | **Notifications** | Notification icon | List of all notification types |
 
+## Agent notifications
+
+Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
+
+### Guest Hyper AI seeded notifications
+
+Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
+
 ## OpenWiki
 
 OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
-
 - **View** — Open the OpenWiki page for the associated task
 - **Refresh** — Pull the latest RAG content from connected documentation
 - **Dismiss** — Remove the notification from your inbox without affecting the underlying task
@@ -52,7 +58,6 @@ OPENWIKI_GATEWAY=https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT/YOUR_SERVICE
 ## Split views and empty state
 
 Inboxes may be split into multiple panes (e.g., "Awaiting reply" and "Mentions"). Each pane determines whether the overall inbox is empty:
-
 - Only the **active split** considers whether any items exist.
 - Setting one split to empty does not affect other splits.
 - Split labels and counts are shown per pane, helping you stay oriented.
@@ -60,8 +65,7 @@ Inboxes may be split into multiple panes (e.g., "Awaiting reply" and "Mentions")
 ## Read receipts
 
 Turn on read receipts in a board's Settings page to get visibility into whether others have seen your comments:
-
-- **Toggle per board**: Go to Settings and enable read receipts for a specific board.
+- **Toggle per board:** Go to Settings and enable read receipts for a specific board.
 - Start receiving receipts once you turn them on: receipts appear as soon as other members of the board have read your comments.
 
 Use read receipts to track whether your messages were seen without sending a follow-up.
@@ -94,6 +98,10 @@ Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bo
 
 Agent notifications now update in real-time using WebSocket connections. As agent mentions, assignments, or follow-ups occur, the server broadcasts updates instantly to all subscribed clients on app, CLI, MCP, and manifest surfaces. This works in parallel with general real-time inbox updates described in the next section.
 
+### Guest Hyper AI seeded notifications
+
+Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
+
 ## User unsubscribe on notification emails
 
 Each notification email now includes one-click unsubscribe headers that work with Gmail, Yahoo, and other major mail clients. The unsubscribe flow is handled entirely server-side through a no-auth endpoint, requiring no login to opt out of future notification emails.
@@ -105,7 +113,6 @@ If you frequently receive too many email notifications, you can unsubscribe from
 ## Awaiting Delete notifications
 
 Notifications that trigger a follow-up action (such as undo or dismiss) include an **Awaiting Delete** badge and show action buttons:
-
 - **Undo** — Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
 - **Dismiss** — Hide the notification and block it from returning (e.g., clear invites that were rejected)
 - **Undo all** or **Dismiss all** — Apply the action to all matching rows in the filtered list
@@ -135,8 +142,8 @@ The inbox and calendar header rows now share guest CTAs (e.g., "New task" and "A
 
 Inbox notifications now update in real-time using WebSocket connections. As notifications are created or changed, the server broadcasts updates to all connected clients, eliminating manual page refreshes.
 
-- **Subscription on client**: `useInboxRealtime` hook in the frontend layer subscribes to inbox changes for the current user.
-- **Broadcast mechanism**: `broadcastInboxChange` fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest).
+- **Subscription on client:** `useInboxRealtime` hook in the frontend layer subscribes to inbox changes for the current user.
+- **Broadcast mechanism:** `broadcastInboxChange` fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest).
 
 This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
 
@@ -159,9 +166,8 @@ All reads (inbox, badge count, agent inbox, MCP) now require the task to be norm
 ### Swipe-through-unread (mobile only)
 
 Use <kbd>Ctrl</kbd> + <kbd>K</kbd> → **Swipe through unread** to open the card stack over the inbox unread list:
-
-- Swipe right or press <kbd>→</kbd> to mark the notification as read
-- Swipe left or press <kbd>←</kbd> to keep it unread
+- Swipe right or press → to mark the notification as read
+- Swipe left or press ← to keep it unread
 - Undo is available at the top of the stack
 - One bulk archive call runs on exit to clean up your feed
 
