@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 5, 2026">
+  * Added: Kanban cards now show the blocker's avatar and name as a solid red chip in the tag row, placed first and followed by a 3px red left accent ([HTPR-5006](https://app.hypertask.ai/detail/project-15/5006))
+  * Added: Built-in view tabs (Overdue, Blocked, My Tasks, Agents) are now ordinary orderable views: drag them anywhere in the bar including up to an earlier row, and they show in Manage views with drag + hide ([HTPR-5011](https://app.hypertask.ai/detail/project-15/5011))
   * Added: Guest demo boards now seed 4 Hyper AI agent notifications and expose the Important split ([HTPR-5002](https://app.hypertask.ai/detail/project-15/5002))
   * Improved: Guest board header and expanded sidebar rail now use the inverse theme for visual consistency ([HTPR-5000](https://app.hypertask.ai/detail/project-15/5000))
   * Improved: CLI/MCP board creation for newly seeded guest boards preserves their seed tasks and does not create a replacement board ([HTPR-4999](https://app.hypertask.ai/detail/project-15/4999))
