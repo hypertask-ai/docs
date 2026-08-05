@@ -3,68 +3,45 @@ title: Appearance & AI Models
 description: Customize themes, icons, fonts, and select AI models for Hypertask.
 ---
 
-import { Aside, Tabs, DecimalItem, Steps } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-## Theme defaults
+Hypertask lets you control how things look and how AI behaves. Choose from multiple core themes, wave on mobile, customise the sidebar, keyboards, and dictation languages, and tailor AI options across tasks, boards, and help-site chat.
 
-Hypertask uses sensible theme defaults that adapt to your system settings while preserving control.
+## Themes
 
-- **AMOLED** â\x80\x94 the default dark theme (pure #101010 panel base, durable).
-- **Light (New)** â\x80\x94 the default light theme (refined light surface).
-- **Legacy themes** â\x80\x94 Dark Grey (New), Graphite, and Porcelain remain selectable from the Theme picker.
-- **System behavior** â\x80\x94 When a OS theme is detected, the app resolves the system default to AMOLED (dark) or Light (New) (light). Dark/Light, AMOLED â\x86\x92 Light toggles override those defaults; other theme pickers stay available.
+Hypertask offers several built-in themes to suit your visual preference. All themes respect system fonts and support theming of emoji icons and modals.
 
-## Guest CTAs on the web
+- **Light** — Clean, high-contrast look for bright environments.
+- **Dark Grey** — Dark grey panel background with amoled-friendly accents.
+- **AMOLED** — True black (#000) panel backgrounds with dense card styling and muted ticket IDs across boards.
 
-On guest boards, the "New task" and "Add board" CTAs use the inverse theme (light color on dark background). This ensures text remains readable regardless of your system theme.
+### AMOLED theme controls
 
-## Visual system
+The AMOLED theme v2 deploys with:
 
-### Typography
+- IBM Plex as system typeface on light and dark routes.
+- True-black expansion ladder of #101010 for cards.
+- Compact card styling for dense information.
+- Muted ticket IDs on board cards in AMOLED.
 
-Typefaces are consistent across core themes. AMOLED adopts IBM Plex as the system typeface. Light (New) and legacy themes keep their existing core typefaces.
+### Guest and replace rail themes
 
-### Sidebar & modals
+Guest demo boards and the expanded sidebar rail use the inverse theme for visual consistency, ensuring labels and controls stay legible even when the base theme is light or dark.
 
-Modals use compact modal header sizing (48px/16px header, 44px/14px input, 36px/13px rows by default) for a contemporary feel. Legacy sizing remains opt-in.
+### Where themes apply
 
-### Homepage styling
+Themes in Hypertask apply across:
 
-Homepage elements now match the login/pricing design language for visual harmony; the hero features a product animation (16s crossfade of four real captured screens) with a static variant for reduced-motion users.
+- Board and column backgrounds
+- Task and comment surface colors
+- Chart and graph surfaces
+- Modals and dropdowns
+- AI chat input and model selector
+- Portrait rail icons and navigation labels
 
-### Visual emphasis
-
-Table column edges on AMOLED displays show a 2px purple accent line on hover and a full-height guide line while dragging; hovering any column header reveals faint column separators for better discoverability of the grid.
-
-## Onboard and customize
-
-<Tabs>
-<TabItem label="Theme picker">
-<Steps>
-<StepItem>Press <kbd>Ctrl+K</kbd> and search for "Theme"</StepItem>
-<StepItem>Select from Light (New), Dark (AMOLED), System, or legacy options (Dark Grey (New), Graphite, Porcelain). The defaults map system dark â\x86\x92 AMOLED and system light â\x86\x92 Light (New).</StepItem>
-<StepItem>Toggles on Dark/Light, AMOLED â\x86\x92 Light override those defaults.</StepItem>
-</Steps>
-</TabItem>
-<TabItem label="Keyboard commands">
-<Steps>
-<StepItem><kbd>Ctrl+K</kbd> â\x80\x94 Open command palette (supports theme quick switch)</StepItem>
-<StepItem><kbd>Alt+T</kbd> â\x80\x94 Quick open theme picker (if enabled)</StepItem>
-</Steps>
-</TabItem>
-</Tabs>
+---
 
 <Aside type="tip">
-A subset of keyboard shortcuts and UI behaviors supports per-image-aware themes; for the full shortcut list see the Keyboard shortcuts reference.
+All themes now use IBM Plex on light and dark routes in AMOLED. Use the Settings menu to switch or add custom themes via your organization's design system settings.
+
 </Aside>
-
-## Marketing-style rollout
-
-The new marketing design language now covers core surfaces:
-
-- **Homepage** â\x80\x94 Real screen-recording hero video, refined typography, rounded buttons, with a static variant for reduced-motion users and full dark/light support.
-- **Login** â\x80\x94 Centered card layout with black color palette, ambient tone, rounded CTAs, refined wordmark.
-- **Pricing** â\x80\x94 Shared styling module aligned with the login and homepage themes; consistent gradient cards, pricing tables, and CTA styling across the page.
-- **Documentation & Help center** â\x80\x94 Custom theme treatment inherited from the main site; fixed deploy-blocking MDX bugs, so all docs and help center surfaces use the updated visual system out of the box.
-
-The homepage, login, /pricing, the main docs site, and the help center now share a single updated design language for a more cohesive Hypertask experience.
