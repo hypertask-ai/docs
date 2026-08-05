@@ -9,10 +9,10 @@ import { Aside, Tabs, DecimalItem, Steps } from '@astrojs/starlight/components';
 
 Hypertask uses sensible theme defaults that adapt to your system settings while preserving control.
 
-- **AMOLED** — the default dark theme (pure #101010 panel base, durable).
-- **Light (New)** — the default light theme (refined light surface).
-- **Legacy themes** — Dark Grey (New), Graphite, and Porcelain remain selectable from the Theme picker.
-- **System behavior** — When a OS theme is detected, the app resolves the system default to AMOLED (dark) or Light (New) (light). Dark/Light, AMOLED → Light toggles override those defaults; other theme pickers stay available.
+- **AMOLED** â\x80\x94 the default dark theme (pure #101010 panel base, durable).
+- **Light (New)** â\x80\x94 the default light theme (refined light surface).
+- **Legacy themes** â\x80\x94 Dark Grey (New), Graphite, and Porcelain remain selectable from the Theme picker.
+- **System behavior** â\x80\x94 When a OS theme is detected, the app resolves the system default to AMOLED (dark) or Light (New) (light). Dark/Light, AMOLED â\x86\x92 Light toggles override those defaults; other theme pickers stay available.
 
 ## Guest CTAs on the web
 
@@ -42,14 +42,14 @@ Table column edges on AMOLED displays show a 2px purple accent line on hover and
 <TabItem label="Theme picker">
 <Steps>
 <StepItem>Press <kbd>Ctrl+K</kbd> and search for "Theme"</StepItem>
-<StepItem>Select from Light (New), Dark (AMOLED), System, or legacy options (Dark Grey (New), Graphite, Porcelain). The defaults map system dark → AMOLED and system light → Light (New).</StepItem>
-<StepItem>Toggles on Dark/Light, AMOLED → Light override those defaults.</StepItem>
+<StepItem>Select from Light (New), Dark (AMOLED), System, or legacy options (Dark Grey (New), Graphite, Porcelain). The defaults map system dark â\x86\x92 AMOLED and system light â\x86\x92 Light (New).</StepItem>
+<StepItem>Toggles on Dark/Light, AMOLED â\x86\x92 Light override those defaults.</StepItem>
 </Steps>
 </TabItem>
 <TabItem label="Keyboard commands">
 <Steps>
-<StepItem><kbd>Ctrl+K</kbd> — Open command palette (supports theme quick switch)</StepItem>
-<StepItem><kbd>Alt+T</kbd> — Quick open theme picker (if enabled)</StepItem>
+<StepItem><kbd>Ctrl+K</kbd> â\x80\x94 Open command palette (supports theme quick switch)</StepItem>
+<StepItem><kbd>Alt+T</kbd> â\x80\x94 Quick open theme picker (if enabled)</StepItem>
 </Steps>
 </TabItem>
 </Tabs>
@@ -57,3 +57,14 @@ Table column edges on AMOLED displays show a 2px purple accent line on hover and
 <Aside type="tip">
 A subset of keyboard shortcuts and UI behaviors supports per-image-aware themes; for the full shortcut list see the Keyboard shortcuts reference.
 </Aside>
+
+## Marketing-style rollout
+
+The new marketing design language now covers core surfaces:
+
+- **Homepage** â\x80\x94 Real screen-recording hero video, refined typography, rounded buttons, with a static variant for reduced-motion users and full dark/light support.
+- **Login** â\x80\x94 Centered card layout with black color palette, ambient tone, rounded CTAs, refined wordmark.
+- **Pricing** â\x80\x94 Shared styling module aligned with the login and homepage themes; consistent gradient cards, pricing tables, and CTA styling across the page.
+- **Documentation & Help center** â\x80\x94 Custom theme treatment inherited from the main site; fixed deploy-blocking MDX bugs, so all docs and help center surfaces use the updated visual system out of the box.
+
+The homepage, login, /pricing, the main docs site, and the help center now share a single updated design language for a more cohesive Hypertask experience.
