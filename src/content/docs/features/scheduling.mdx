@@ -95,21 +95,16 @@ POST   /api/task-templates/apply             # { "templateId": 7 }
 
 **My tasks** answers "what am I working on today" across every board you belong to. The inbox remains the place to triage what arrived; this is the place to plan.
 
-**To open it:** <kbd>Ctrl+K</kbd> — **Go to my tasks**, or visit `/my-tasks`.
+**To open it:** <kbd>G</kbd> then <kbd>M</kbd>, or <kbd>Ctrl+K</kbd> and **Go to my tasks**, or visit `/my-tasks`.
 
-It lists every open task assigned to you, grouped by when it needs attention:
+It shows every open task assigned to you as a **table**, the same table the board uses, with **one section per board**. The section header is the board's name, and the columns are the board table's columns: Ticket, Title, Assignee, Priority, Size, Due.
 
-| Group | Contains |
-|---|---|
-| **Overdue** | A due date that has passed |
-| **Today** | Due today — plus work whose start date has arrived, which is never counted as overdue |
-| **Tomorrow** | Due or starting tomorrow |
-| **This week** | Due or starting before the end of the current week (weeks end Sunday) |
-| **Later** | Anything further out |
-| **No date** | No due date and no start date |
+**Ordering puts urgent work first.** Boards that contain overdue tasks sort above boards that do not. Inside a board, overdue tasks lead, then the rest by due date, with undated tasks last.
 
-A task is filed against its **start date while that is still in the future**, and its **due date** otherwise. So work that cannot begin until Friday sits under Friday, rather than under a deadline you cannot act on yet.
+**The split pills filter by board.** "All" shows every board's section; picking a board narrows the table to that board alone. <kbd>Tab</kbd> and <kbd>Shift+Tab</kbd> cycle through them, exactly as on the inbox and board surfaces.
+
+**Sorting keeps the grouping.** Clicking a column header sorts within each board's section rather than flattening everything into one list, so a row never loses the board it belongs to.
 
 Navigation matches the inbox and scheduled views: <kbd>J</kbd> and <kbd>K</kbd> (or the arrow keys) to move, <kbd>Enter</kbd> to open, <kbd>Esc</kbd> to go back.
 
-The view shows up to 200 tasks, ordered by date. When there are more, it says so at the foot of the list rather than truncating silently.
+My tasks is a **read-only planning surface**. It has no create-task shortcut, because a new task needs a board and this view spans all of them. Create from the board, the inbox, or <kbd>Ctrl+K</kbd>.

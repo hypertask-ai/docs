@@ -3,7 +3,7 @@ title: What is Hypertask?
 description: AI-native project management for teams and AI agents — manage tasks, collaborate in real-time, and connect AI agents with MCP, CLI, and REST APIs.
 ---
 
-import { Steps, StepItem, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/components';
+import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/components';
 
 # What is Hypertask?
 
@@ -33,25 +33,31 @@ Whether you prefer a browser UI, the command line, or integrating via code, ther
 <TabItem label="CLI">
 <p class="lead">Manage and create tasks from the terminal with the <code>hypertask</code> CLI. Install via your package manager, login, and start creating.</p>
 <Steps>
-<StepItem>Install the CLI via npm or homebrew.</StepItem>
-<StepItem>Run <code>hypertask login</code> and follow the on-screen prompts.</StepItem>
-<StepItem>Use commands like <code>hypertask task create</code>, <code>hypertask list</code>, and <code>hypertask chat</code> from your shell.</StepItem>
+<ol>
+<li>Install the CLI via npm or homebrew.</li>
+<li>Run <code>hypertask login</code> and follow the on-screen prompts.</li>
+<li>Use commands like <code>hypertask task create</code>, <code>hypertask list</code>, and <code>hypertask chat</code> from your shell.</li>
+</ol>
 </Steps>
 </TabItem>
 <TabItem label="MCP">
 <p class="lead">Connect Hypertask to your AI agents via the Model Context Protocol. The MCP server exposes tools for tasks, boards, chat, and more.</p>
 <Steps>
-<StepItem>Add the Hypertask MCP endpoint to your LM Studio, Claude Desktop, or another MCP-compatible client.</StepItem>
-<StepItem>Authenticate with a Bearer token or session cookie.</StepItem>
-<StepItem>Use tools like <code>hypertask_assign_user</code>, <code>hypertask_create_task</code>, and <code>hypertask_chat</code> in your agent.</StepItem>
+<ol>
+<li>Add the Hypertask MCP endpoint to your LM Studio, Claude Desktop, or another MCP-compatible client.</li>
+<li>Authenticate with a Bearer token or session cookie.</li>
+<li>Use tools like <code>hypertask_assign_user</code>, <code>hypertask_create_task</code>, and <code>hypertask_chat</code> in your agent.</li>
+</ol>
 </Steps>
 </TabItem>
 <TabItem label="REST API">
 <p class="lead">Use our REST API to build integration or mobile apps. Seeds, boards, views, tasks, comments, and more are all reachable via simple HTTP requests.</p>
 <Steps>
-<StepItem>Get an API key from the Settings sidebar in the app.</StepItem>
-<StepItem>Add <code>Authorization: Bearer &lt;key&gt;</code> headers to your requests.</StepItem>
-<StepItem>Use endpoints like <code>GET /boards</code>, <code>POST /tasks</code>, <code>POST /messages/chat</code>, and more.</StepItem>
+<ol>
+<li>Get an API key from the Settings sidebar in the app.</li>
+<li>Add <code>Authorization: Bearer &lt;key&gt;</code> headers to your requests.</li>
+<li>Use endpoints like <code>GET /boards</code>, <code>POST /tasks</code>, <code>POST /messages/chat</code>, and more.</li>
+</ol>
 </Steps>
 </TabItem>
 </Tabs>
@@ -80,13 +86,15 @@ It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and yo
 ## Getting started
 
 <Steps>
-<StepItem>Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.</StepItem>
-<StepItem>Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).</StepItem>
-<StepItem>Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).</StepItem>
-<StepItem>Start adding tasks, tagging them for organization, and assigning them.</StepItem>
-<StepItem>Use <kbd>Ctrl+K</kbd> to access the command palette for quick navigation and actions.</StepItem>
-<StepItem>Chat with the AI assistant to create tasks, summarize boards, or brainstorm without leaving the page.</StepItem>
-<StepItem>Optional: install the CLI or set up an MCP agent for programmatic control over your tasks.</StepItem>
+<ol>
+<li>Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.</li>
+<li>Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).</li>
+<li>Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).</li>
+<li>Start adding tasks, tagging them for organization, and assigning them.</li>
+<li>Use <kbd>Ctrl+K</kbd> to access the command palette for quick navigation and actions.</li>
+<li>Chat with the AI assistant to create tasks, summarize boards, or brainstorm without leaving the page.</li>
+<li>Optional: install the CLI or set up an MCP agent for programmatic control over your tasks.</li>
+</ol>
 </Steps>
 
 ## Keyboard shortcuts
