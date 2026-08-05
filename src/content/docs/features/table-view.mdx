@@ -17,8 +17,9 @@ Table view gives you a grid-based way to organize and manage tasks, similar to N
 
 Table view automatically adjusts to the columns you're using:
 
-- **Full titles:** Task titles now take up all available width — columns you don't need are compressed or hidden, so critical information is always visible.
+- **Flexible title column:** The title column flexes to fill the remaining horizontal space; its width is a minimum, so you can use full width without nested scrolling or cramped visibility.
 - **Flexible columns:** The table layout derives from your visible sections and columns, so you see the most relevant information without cramped spacing.
+- **Full-title row behavior:** Press <kbd>Enter</kbd> to open a task focused on its description; the task detail view updates inline within the row, preserving the table layout without needing to leave the grid.
 
 ## Column picker
 
@@ -35,6 +36,10 @@ Your column choices are saved per user, so each team member can have their own t
 The column picker and table layout are per-user settings. You can show or hide any column without deleting it, and changes apply immediately to your view.
 
 </Aside>
+
+## Drag to reorder and resize
+
+Drag columns directly to reorder them in place; the order stays in sync with the Table columns picker dropdown. Drag the column edge to resize each column to your preferred width. The title column remains locked as the leftmost column, with ticket detail keyed by title; the title column still flexes to fill leftover width.
 
 ## Advanced column configuration
 
@@ -57,6 +62,7 @@ Open the Configure table modal for more control over your table setup:
 
 **Actions**
 - Drag columns by their grip handle to reorder them.
+- Drag a column edge to resize to your preferred width.
 - Click **Reset to default** to restore the original order and visibility.
 
 <Aside type="note">
@@ -72,6 +78,7 @@ Open the Configure table modal for more control over your table setup:
 | <kbd>Ctrl+K</kbd> | Open the column picker and configure table view |
 | <kbd>Shift+F</kbd> | Toggle focused search on the board |
 | <kbd>W</kbd> | Start or stop the timer for the selected task |
+| <kbd>Enter</kbd> | Open task focused on description and keep the table layout |
 
 ## Sorting behavior
 
@@ -91,9 +98,10 @@ Table view is great for:
 - **Comparing priorities:** Side-by-side visibility of priority, size, and due dates.
 - **Quick filtering:** Combine visibility filters with your column choices to surface the exact set of tasks you need.
 - **Tracking staleness:** Use the Stale column to identify tasks that haven't been updated recently, especially on boards with staleness detection enabled.
+- **Drag and reorder columns:** Drag columns to match your workflow; see them right after switching views.
 
 ## Scroll positions
 
-**Full-height scroll container:** The scroll container now reaches the bottom of the window, so the horizontal scrollbar stays pinned at the bottom regardless of row count. This ensures stable navigation when working with rows of any size.
+**Full-height scroll container:** The scroll container reaches the bottom of the window, so the horizontal scrollbar stays pinned at the bottom regardless of row count. This ensures stable navigation when working with rows of any size.
 
 ---
