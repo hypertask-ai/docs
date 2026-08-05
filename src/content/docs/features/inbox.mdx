@@ -12,7 +12,7 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
-- **Important tasks** — rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
+- **Important tasks** â\x80\x94 rows marked with the <strong>Important</strong> label appear first, in priority order and timeline-sorted (newest first)
 
 The inbox can be grouped into multiple views:
 
@@ -39,10 +39,10 @@ Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. Wh
 OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
-- **View** — Open the OpenWiki page for the associated task
-- **Refresh** — Pull the latest RAG content from connected documentation
-- **Dismiss** — Remove the notification from your inbox without affecting the underlying task
-- **Undo** — Re-add a dismissed OpenWiki notification
+- **View** â\x80\x94 Open the OpenWiki page for the associated task
+- **Refresh** â\x80\x94 Pull the latest RAG content from connected documentation
+- **Dismiss** â\x80\x94 Remove the notification from your inbox without affecting the underlying task
+- **Undo** â\x80\x94 Re-add a dismissed OpenWiki notification
 
 To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
 
@@ -73,10 +73,10 @@ Use read receipts to track whether your messages were seen without sending a fol
 ## Mention-based notifications
 
 When someone @mentions you on a task or comment, the notification appears in your inbox with a personal touch. Mention email notifications now:
-- **Lead with your name** — The email greeting starts with "Hi [Your Name]," making it feel more direct and readable
-- **Signal 1:1 mentions** — A clear badge or visual indicator marks the mention as a direct tag, distinguishing it from channel-wide tags or other notifications
-- **Include personal CTAs** — Call-to-action buttons in the notification (or inbox view) are tailored to action on the mentioned task
-- **Show reply preview in snippet** — When someone replies below a mention, the reply preview strips blockquotes, empty headers (like "@name said"), and other quoted content before displaying the actual message in the inbox
+- **Lead with your name** â\x80\x94 The email greeting starts with "Hi [Your Name]," making it feel more direct and readable
+- **Signal 1:1 mentions** â\x80\x94 A clear badge or visual indicator marks the mention as a direct tag, distinguishing it from channel-wide tags or other notifications
+- **Include personal CTAs** â\x80\x94 Call-to-action buttons in the notification (or inbox view) are tailored to action on the mentioned task
+- **Show reply preview in snippet** â\x80\x94 When someone replies below a mention, the reply preview strips blockquotes, empty headers (like "@name said"), and other quoted content before displaying the actual message in the inbox
 
 For moderate mention volume, tasks appear directly in your inbox with the mention context attached. For high mention frequency, the inbox aggregates mentions you can review at a glance while still preserving the one-on-one nature of individual tags.
 
@@ -85,8 +85,8 @@ For moderate mention volume, tasks appear directly in your inbox with the mentio
 Temporarily hide notifications from appearing in your feed. Snoozed items are resurfaced after the specified duration on a specified date.
 
 Use **Snooze** in two ways:
-1. **Notification actions** — click the S button on a notification and choose a future time
-2. **Task Snooze** — within a task detail, use <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
+1. **Notification actions** â\x80\x94 click the S button on a notification and choose a future time
+2. **Task Snooze** â\x80\x94 within a task detail, use <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
 
 When a snoozed notification resurfaces, it re-enters your inbox at the top of the list.
 
@@ -102,6 +102,10 @@ Agent notifications now update in real-time using WebSocket connections. As agen
 
 Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
 
+### Demo sign-in: guest boards only for new empty accounts
+
+When you sign in via demo links, existing accounts that already own or belong to any board receive no new guest seeds. Guest inboxes on new accounts are limited to 4 seeded notifications from a Hyper AI agent, and guest rows expire automatically after 24 hours. This keeps demo environments focused on fresh adoption without clogging accounts with pre-existing content.
+
 ## User unsubscribe on notification emails
 
 Each notification email now includes one-click unsubscribe headers that work with Gmail, Yahoo, and other major mail clients. The unsubscribe flow is handled entirely server-side through a no-auth endpoint, requiring no login to opt out of future notification emails.
@@ -113,9 +117,9 @@ If you frequently receive too many email notifications, you can unsubscribe from
 ## Awaiting Delete notifications
 
 Notifications that trigger a follow-up action (such as undo or dismiss) include an **Awaiting Delete** badge and show action buttons:
-- **Undo** — Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
-- **Dismiss** — Hide the notification and block it from returning (e.g., clear invites that were rejected)
-- **Undo all** or **Dismiss all** — Apply the action to all matching rows in the filtered list
+- **Undo** â\x80\x94 Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
+- **Dismiss** â\x80\x94 Hide the notification and block it from returning (e.g., clear invites that were rejected)
+- **Undo all** or **Dismiss all** â\x80\x94 Apply the action to all matching rows in the filtered list
 
 These notifications appear at the top of the list because they require your decision.
 
@@ -157,17 +161,17 @@ All reads (inbox, badge count, agent inbox, MCP) now require the task to be norm
 
 ## Keyboard shortcuts
 
-- <kbd>Ctrl</kbd> + <kbd>K</kbd> — Open command palette with inbox options (Snooze, Read/Unread, Mark Read)
-- <kbd>Ctrl</kbd> + <kbd>F</kbd> — Search across all notifications
-- <kbd>N</kbd> — Create a new task from the active board
-- <kbd>Space</kbd> — Mark current item as read/unread
-- <kbd>Esc</kbd> — Close modal, draft error, or focused search
+- <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 Open command palette with inbox options (Snooze, Read/Unread, Mark Read)
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> â\x80\x94 Search across all notifications
+- <kbd>N</kbd> â\x80\x94 Create a new task from the active board
+- <kbd>Space</kbd> â\x80\x94 Mark current item as read/unread
+- <kbd>Esc</kbd> â\x80\x94 Close modal, draft error, or focused search
 
 ### Swipe-through-unread (mobile only)
 
-Use <kbd>Ctrl</kbd> + <kbd>K</kbd> → **Swipe through unread** to open the card stack over the inbox unread list:
-- Swipe right or press → to mark the notification as read
-- Swipe left or press ← to keep it unread
+Use <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x86\x92 **Swipe through unread** to open the card stack over the inbox unread list:
+- Swipe right or press â\x86\x92 to mark the notification as read
+- Swipe left or press â\x86\x90 to keep it unread
 - Undo is available at the top of the stack
 - One bulk archive call runs on exit to clean up your feed
 
