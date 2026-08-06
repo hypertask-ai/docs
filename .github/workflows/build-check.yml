@@ -6,6 +6,12 @@ name: Build Check
 
 on:
   pull_request:
+  # Agents push docs straight to main far more often than they open a PR, and
+  # pull_request alone never fires on those. Both errors that took the site
+  # down on 2026-08-06 arrived that way (HTPR-5110). Running on push means a
+  # direct commit still fails loudly instead of silently blocking every deploy.
+  push:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
