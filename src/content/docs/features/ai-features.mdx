@@ -1,6 +1,6 @@
 ---
-title: AI Features
-description: AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow.
+title: "AI Features"
+description: "AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow."
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -54,6 +54,16 @@ Known skills include:
 - **Subtask** — Generate a new subtask rooted from the current one.
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
+
+## My Tasks context
+
+The AI understands your **My Tasks** workload and can answer context-specific questions about it:
+
+- **"What's on my My Tasks board?"** — Generates a concise list of assigned tasks with priorities and due dates.
+- **"Any overdue or blocked work?"** — Flags urgent or late items for follow-up.
+- **"Show me tasks due this week"** — Filters and presents upcoming commitments.
+
+For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
 ## AI status updates
 
