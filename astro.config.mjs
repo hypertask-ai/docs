@@ -64,6 +64,7 @@ export default defineConfig({
           'getting-started/quickstart',
           'getting-started/concepts',
           'getting-started/settings-profile',
+          'getting-started/troubleshooting-login',
         ],
         },
         {
@@ -88,7 +89,6 @@ export default defineConfig({
           'design-system/visual-standard',
           'design-system/typography',
         ],
-        },
       ],
     }),
   ],
