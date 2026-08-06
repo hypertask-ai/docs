@@ -86,9 +86,10 @@ export default defineConfig({
         {
           label: 'Design system',
           items: [
-          'design-system/visual-standard',
-          'design-system/typography',
-        ],
+            'design-system/visual-standard',
+            'design-system/typography',
+          ],
+        },
       ],
     }),
   ],
