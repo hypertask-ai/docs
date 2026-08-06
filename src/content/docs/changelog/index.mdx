@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 6, 2026">
+  * Added: Table view now shows clear column separators at 20% on every column edge; edges lift to 40% on header hover for better context ([HTPR-5050](https://app.hypertask.ai/detail/project-15/5050))
+  * Fixed: Tasks can now be unassigned even when the agent that created or was assigned to them has been revoked ([HTPR-5049](https://app.hypertask.ai/detail/project-15/5049))
   * Improved: AI chat now understands My Tasks context and can reference your personal workload when responding to questions ([HTPR-5036](https://app.hypertask.ai/detail/project-15/5036))
   * Added: Board sidebar groups by team but sorts teams by most recent board opens so your active teams appear first ([HTPR-5045](https://app.hypertask.ai/detail/project-15/5045))
   * Fixed: AI chat writes now respect project boundaries so a task_id is only written to a ticket within the correct project scope ([HTPR-5033](https://app.hypertask.ai/detail/project-15/5033))
@@ -74,7 +76,7 @@ export const Update = ({ label, children }) => (
   * Added: Board switcher now tops the left rail with Ctrl+B board palette, and inbox joins the view icons in view cluster ([HTPR-4835](https://app.hypertask.ai/detail/project-15/4835))
   * Improved: Inbox mention rows now display sender, @name pill + message snippet, ticket ID, title, tags, and date in mention-first order ([HTPR-4812](https://app.hypertask.ai/detail/project-15/4812))
   * Improved: Inbox card layout hugs the bottom when quick tips are off and rises with the quick-tips bar; dead 36px gap removed ([HTPR-4898](https://app.hypertask.ai/detail/project-15/4898))
-  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>{`\\`\\`}</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
+  * Improved: Left sidebar expanded to 130px with user labels for logged-in users; collapsed by default with chevron toggle and persistent state; right tooltips show all real keyboard shortcuts including [<kbd>{`\\\\`\\\\`}</kbd>] for rail ([HTPR-4890](https://app.hypertask.ai/detail/project-15/4890))
   * Added: Signing in with a guest session now transfers the guest team, its boards, and memberships to the new account, with guest UIDs re-prefixed so that cleanup cron can still find them ([HTPR-4893](https://app.hypertask.ai/detail/project-15/4893))
   * Added: Two new themes — Dark Grey (New) and Light (New) — with refined accents and improved visual consistency across the app ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
   * Improved: Sidebar elements now render with subtle hairlines for better visual distinction, and table view row borders use refined styling ([HTPR-4906](https://app.hypertask.ai/detail/project-15/4906))
