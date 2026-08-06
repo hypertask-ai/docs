@@ -143,7 +143,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 
 ### `hypertask_assign_user`
 
-Assign or unassign a user to a task. Use intent (default assign): idempotent — assigns if not already assigned; does not unassign. Use intent unassign to remove the user from assignees. Use list_project_members to resolve display names to user IDs. Requires task identification (task_id, ticket_number, or project_id+unique_index) and either user_id (single) or user_ids (array for multiple). Assigning removes the user from followers if they were a follower. Creates activity log and sends notifications.
+Assign or unassign a person or agent to a task. Use `intent` (default `assign`) for an idempotent add, or `unassign` to remove the assignee. Use `hypertask_list_project_members` to resolve people and board agents. Provide one assignee identifier: `user_id`, `user_ids`, `agent_id`, or `assign_self`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -154,6 +154,7 @@ Assign or unassign a user to a task. Use intent (default assign): idempotent —
 | `intent` | `assign` \\| `unassign` | No | assign: idempotent add — assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
 | `user_id` | integer | No | User ID to assign or unassign (use intent: unassign to remove). |
 | `user_ids` | integer[] | No | For multiple mode: user IDs; each user follows intent (assign = idempotent, unassign = remove). |
+| `agent_id` | UUID string | No | Agent owner only: assign or unassign one of your own agents to the task, no user_id needed. Mirrors the REST agent_id field. |
 | `assign_self` | boolean | No | Agent token only: assign the calling agent to the task, no user_id needed. Mirrors the REST assign_self flag. |
 
 ### `hypertask_attach_files`

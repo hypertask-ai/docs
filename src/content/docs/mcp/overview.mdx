@@ -213,9 +213,11 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 ## AI Chat integration
 
-New MCP tools and parameters are **automatically available in AI Chat** without any separate integration step. AI Chat uses the same underlying MCP tools as external agents, so its capabilities stay in sync with the MCP server as new tools are added.
+AI Chat exposes equivalents for most MCP operations and shares the same assignment behavior layer. Its tool definitions are maintained separately, so each new MCP parameter still needs an AI Chat adapter when the input shape differs.
 
-AI Chat reads and writes, and it is not a reduced version of MCP. It manages tasks, comments, drafts, pages, labels, views, skills, sections, timers and task relations, assigns people, moves tasks between boards and to the inbox, reads board manifests and playbooks, checks agent presence, and raises decision requests. Its `hypertask_update_task` is the richest of any surface: it alone adds or removes a single label without replacing the rest, and writes to several tasks in one call.
+AI Chat reads and writes, and it is not a reduced version of MCP. It manages tasks, comments, drafts, pages, labels, views, skills, sections, timers and task relations, assigns people or board agents, moves tasks between boards and to the inbox, reads board manifests and playbooks, checks agent presence, and raises decision requests. Its `hypertask_update_task` is the richest of any surface: it alone adds or removes a single label without replacing the rest, and writes to several tasks in one call.
+
+For assignment and unassignment, AI Chat accepts a person's user ID, `me`, display name, or email. It also accepts a board agent's display name or UUID. Agent matching is case-insensitive and board-scoped; a person-agent name collision returns an explicit ambiguity error.
 
 Only two MCP tools have no AI Chat equivalent, and neither is a capability gap: `hypertask_hello` (the connection-time onboarding map, which the chat gets from its system prompt) and the `report` action of `hypertask_time`.
 
