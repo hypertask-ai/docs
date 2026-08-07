@@ -13,6 +13,17 @@ Use **/time** from the command palette to open the time tracking interface:
 
 Both modes support saving the entry directly from the form.
 
+### React to the per-ticket time log modal
+
+The per-ticket time log modal in the task detail view links to the broader **/time** view. Click **See all time entries** (or use the link in the modal header) to open `/time?board=<board-id>&task=<ticket>` in a new tab. The /time view then:
+
+- Loads the board and task parameters from the URL
+- Shows the time log for that specific task instead of a filtered list
+- Includes an add/edit entry form with full Hours/Minutes, date, and note fields
+- Displays all existing time entries grouped by date for the selected task
+
+This makes it easy to navigate from a quick check of tracked time on a ticket into a detailed log with bulk actions (add rows, edit, delete).
+
 ### Time reports in Light Mode
 
 Time reports render correctly across Light and Dark themes:
@@ -44,11 +55,11 @@ Select a date range from the start of the report:
 | **Last month** | Entries from the previous full month |
 | **Custom** | Open a date picker with <strong>From</strong> and <strong>To</strong> fields |
 
-### Time report time log interaction
+### Time report interaction
 
 For any filter view that shows a duration:
 - **Click a duration** to open an in-depth time log modal for that row, with the full entry history and ability to add or edit entries
-- This modal matches the per-ticket time log opened with <kbd>B</kbd> on an open ticket
+- This modal is basically the same view opened from the per-ticket time log on a ticket
 
 ### Time report entry form UI
 
@@ -64,7 +75,6 @@ This UX appears in both the per-ticket time log modal and the broader time repor
 ### Time log filters
 
 The time log modal also supports quick filters:
-
 | Filter | Description |
 |--------|-------------|
 | **Assignee** | Filter entries by who logged them; real assignee filter helps surface who actually worked on a task rather than who merely received it |
@@ -135,6 +145,13 @@ Pause and resume are currently available in the app only. The CLI and MCP surfac
 5. Adjust the date, duration, and optional note per row; the Board and User fields are multi-select checkboxes per entry
 6. Total updates in real time; click **Save** or press <kbd>Return</kbd> to commit all entries
 
+#### See detailed entries for a task
+
+1. Click the time cell on a board card to open the per-ticket time log modal
+2. Click **See all time entries** in the modal header to open `/time?board=<board-id>&task=<ticket>`
+3. The /time view shows the full time log, edit/add forms, and filters for that specific task
+4. Add additional entries directly from the /time view using Hours/Minutes or minutes
+
 #### Refine filter views
 
 1. Open `/time` from the command palette
@@ -174,6 +191,7 @@ Pause and resume are currently available in the app only. The CLI and MCP surfac
 - Timer state is stored as `startTime` and `endTime` timestamps relative to the board scope
 - Per-ticket time log entries live under the ticket's time tracking row and are grouped by day with a running total
 - Time report now includes date presets (Yesterday, Last week, Last month, Custom), clickable durations, and split Hours/Minutes fields
+- The time log modal and /time entry form support Hours, Minutes, h:mm:ss precision, and per-date local-noon storage with multi-select filters per entry
 
 </details>
 </Aside>
