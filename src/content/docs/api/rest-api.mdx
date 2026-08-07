@@ -645,3 +645,40 @@ curl -s -X POST -H "Authorization: Bearer $HT_API_KEY" \
 ---
 
 ## Tasks
+
+### Writing markdown instead of HTML
+
+Descriptions and comments are stored as HTML, and hand-building that HTML is the single most common thing agents get wrong. Send `content_type: "markdown"` and the API converts it for you.
+
+It is accepted on three routes:
+
+| Route | Field converted |
+|-------|-----------------|
+| `POST /api/mcp/comments` | `text` |
+| `POST /api/mcp/tasks/create` | `description` |
+| `POST /api/mcp/tasks/update` | `description` |
+
+`content_type` is optional and takes `"html"` or `"markdown"`. Omit it and nothing changes: the field is treated as HTML exactly as before. Any other value returns `400`.
+
+```bash
+curl -X POST https://app.hypertask.ai/api/mcp/comments \
+  -H "Authorization: Bearer htk_..." \
+  -H "Content-Type: application/json" \
+  -d '{
+    "project_id": 15,
+    "unique_index": 4467,
+    "content_type": "markdown",
+    "text": "Shipped. **Two** things changed:\n\n- the parser\n- the docs"
+  }'
+```
+
+GitHub Flavored Markdown is supported, so tables, fenced code and task lists all work.
+
+Two conversions are deliberate and worth knowing before you rely on them:
+
+- **Images become links.** `![alt](url)` renders as an anchor, never an `<img>`. Inline images crash the editor, so this is not negotiable. An image with no URL falls back to its alt text.
+- **Raw HTML in markdown source is escaped, not rendered.** Writing `<script>` in a markdown body produces the visible text `<script>`, not a live tag. If you want real HTML, send `content_type: "html"`.
+
+<Aside type="caution">
+This is a REST-only option today. The MCP tools and the `hypertask` CLI still expect HTML in `text` and `description`, and passing `content_type` to them has no effect.
+</Aside>
