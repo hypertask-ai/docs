@@ -13,12 +13,24 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
-<Update label="August 6, 2026">
-  * Added: Fast like button appears on task cards and comment rows via hover (task) and inline (comments); tooltip includes [L] hint and renders behind toggle when !hasLiked ([HTPR-3616](https://app.hypertask.ai/detail/project-15/3616))
+<Update label="August 7, 2026">
+  * Added: Documentation for board-15 agent team including lanes, interaction rules, and Board Maintainer daily runbook ([HTPR-5130](https://app.hypertask.ai/detail/project-15/5130))
+  * Fixed: CLI table formatTaskTable now renders the first assignee and additional assignees as "+N" after sorting, with agents placed before humans and capped at two names; previously only agents after multiple people would fall into "+N" silently ([HTPR-5155](https://app.hypertask.ai/detail/project-15/5155))
+  * Fixed: ht-agent new crashes due to unescaped quote in embedded Python; token is now minted and saved reliably ([HTPR-5048](https://app.hypertask.ai/detail/project-15/5048))
+  * Fixed: setTaskLabels now logs removal activity so removed labels leave a trace, removing silent data loss ([HTPR-5108](https://app.hypertask.ai/detail/project-15/5108))
+  * Fixed: CLI now validates unknown --labels values on task create/update and fails explicitly with a list of valid labels; tasks get --json also returns the labels field ([HTPR-5058](https://app.hypertask.ai/detail/project-15/5058))
+  * Improved: Task descriptions now preserve YouTube, Loom, Vimeo, and Figma embeds from the editor, and these iframes are retained in API responses ([HTPR-5071](https://app.hypertask.ai/detail/project-15/5071))
+  * Improved: Board view filters now accept agent IDs in assignee filters, so views can reliably filter tasks by agent assignees ([HTPR-5043](https://app.hypertask.ai/detail/project-15/5043))
+  * Fixed: CLI task create now succeeds reliably with longer HTML descriptions containing quotes and repeated tags ([HTPR-4924](https://app.hypertask.ai/detail/project-15/4924))
+  * Fixed: CLI tasks get --json and MCP GET /mcp/tasks now return full task details when querying by ticket number (previously could return empty body) ([HTPR-4911](https://app.hypertask.ai/detail/project-15/4911))
+  * Fixed: CLI now shows the active identity in agent token mode: `status` and `--json` output display "Identity: acting as AGENT 24a7c4df..." and "Expires: never expires" when a saved token is an agent token ([HTPR-5069](https://app.hypertask.ai/detail/project-15/5069))
+  * Fixed: Table view now shows clear column separators at 20% on every column edge; edges lift to 40% on header hover for better context ([HTPR-5050](https://app.hypertask.ai/detail/project-15/5050))
+  * Fixed: Board view filters now accept agent IDs in assignee filters, so views can reliably filter tasks by agent assignees ([HTPR-5043](https://app.hypertask.ai/detail/project-15/5043))
   * Fixed: Mobile create-task modal no longer overflows the screen; dictation button is present, the action row is bounded, and save/create buttons are fully reachable by swiping on narrow screens ([HTPR-5040](https://app.hypertask.ai/detail/project-15/5040))
   * Fixed: Tasks can now be unassigned even when the agent that created or was assigned to them has been revoked ([HTPR-5049](https://app.hypertask.ai/detail/project-15/5049))
   * Improved: AI chat now understands My Tasks context and can reference your personal workload when responding to questions ([HTPR-5036](https://app.hypertask.ai/detail/project-15/5036))
   * Added: Board sidebar groups by team but sorts teams by most recent board opens so your active teams appear first ([HTPR-5045](https://app.hypertask.ai/detail/project-15/5045))
   * Fixed: Search now returns results on demo boards instead of always showing "No results found" ([HTPR-4989](https://app.hypertask.ai/detail/project-15/4989))
   * Fixed: AI chat writes now respect project boundaries so a task_id is only written to a ticket within the correct project scope ([HTPR-5033](https://app.hypertask.ai/detail/project-15/5033))
+  * Added: On Desktop, Ctrl+J on a board now creates a new task with the AI Task Writer open for instant text generation ([HTPR-4881](https://app.hypertask.ai/detail/project-15/4881))
 </Update>
