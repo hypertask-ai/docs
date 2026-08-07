@@ -20,12 +20,6 @@ Built-in splits need no setup and cannot be edited or deleted; they don't appear
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
-## Guest appearance on the web
-
-When you anonymously visit a guest board from the web:
-
-**CTA buttons in the header:** The "New task" and "Add board" CTAs in the header row and the expanded sidebar rail use the inverse theme (light color on dark background). This ensures text remains readable regardless of your system theme.
-
 ## Saved views
 
 Saved views are named filter/sort configurations stored on a project. They make it easy to quickly jump to a common view of specific tasks.
@@ -97,6 +91,14 @@ hypertask view delete view_abc123
 
 Only your own views and shared views you have write access to can be deleted.
 
+## Board sidebar behavior
+
+The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
+
+- Boards are ranked by the most recently opened board inside a team.
+- This ensures teams you actively use (for example, Inne or Hypertask) rise to the top of the list.
+- The sorting is applied consistently across collapsed and expanded sections, keeping high-activity teams easily accessible.
+
 ## Guest boards
 
 - Anonymously visit an empty guest board for the app.hypertask.ai host (hypertask.ai in production).
@@ -105,10 +107,10 @@ Only your own views and shared views you have write access to can be deleted.
 
 ### Guest demo behavior
 
-Guest demo boards now provide a guided onboarding experience:
+Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach even if the guest closes the chat manually. A manual close no longer permanently suppresses the chat—subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 Additionally, fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent; the Important split is available via the `notificationMatrix` flag.
