@@ -32,6 +32,8 @@ export const Update = ({ label, children }) => (
   * Fixed: Search now returns results on demo boards instead of always showing "No results found" ([HTPR-4989](https://app.hypertask.ai/detail/project-15/4989))
   * Fixed: AI chat writes now respect project boundaries so a task_id is only written to a ticket within the correct project scope ([HTPR-5033](https://app.hypertask.ai/detail/project-15/5033))
   * Added: On Desktop, Ctrl+J on a board now creates a new task with the AI Task Writer open for instant text generation ([HTPR-4881](https://app.hypertask.ai/detail/project-15/4881))
+  * Improved: AI chat now reads validation errors in English; framework errors (e.g., LangChain recursion-limit) no longer leak to users ([HTPR-4377](https://app.hypertask.ai/detail/project-15/4377))
+  * Improved: Table view tasks can now be dragged into a different section (column) by dragging a row onto any section card ([HTPR-5135](https://app.hypertask.ai/detail/project-15/5135))
 </Update>
 
 <Update label="August 6, 2026">
