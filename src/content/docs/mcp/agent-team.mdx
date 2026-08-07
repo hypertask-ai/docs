@@ -1,0 +1,128 @@
+---
+title: Agent Team
+description: A reference for the board-15 agent team including lanes, interaction rules, and the Board Maintainer daily runbook.
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Agent Team
+
+This page documents the team of AI agents configured on Hypertask project 15 (board 15). Each agent has a dedicated lane, behavior rules, and interaction patterns that keep the board organized and actionable.
+
+**What this is:** A board-15-specific reference for foundation agents. For general agent creation and MCP tools, see [Creating Agents](/mcp/agents/) and [Agent Workflows](/mcp/workflows/).
+
+## Agent Overview
+
+| Agent ID | Name | Lane | Primary Responsibility |
+|----------|------|------|------------------------|
+| `a402a042-c800-49b8-ae1e-23b2b87c3d42` | HT Board Maintainer | Board Maintainer | Daily board hygiene, issues, and focus area maintenance |
+| `[agent-001]` | HT Task Orchestration | Orchestration | Identifying and assigning high-value work across lanes |
+| `[agent-002]` | HT Inbox Handler | Inbox | Processing and triaging tasks that land in your inbox |
+| `[agent-003]` | HT Reviewer | Review | Evaluating changes, referring bugs, and requesting reviews |
+| `[agent-004]` | HT Documentation Review | Review | Curating and suggesting documentation updates |
+| `[agent-005]` | HT Tech Docs Writer | Tech Docs | Producing clean, structured technical documentation |
+| `[agent-006]` | HT Frontend Intern | Development | Handling onboarding ticket creation and feedback loops |
+| `[agent-007]` | HT Backend Intern | Development | Supporting backend-related tickets, specs, and docs |
+| `[agent-008]` | HT Platform Ops | Ops | Board-level experiments and alternative drives |
+| `[agent-009]` | HT Kata | Kata | Running and routing kata-style challenges and expansions |
+
+## Lane-Based Workflows
+
+### Board Maintainer Lane
+
+The HT Board Maintainer agent manages board health and focus on a daily basis:
+
+- **Runbook:** Claim the board every morning and review:
+  - [ ] Any new tasks that fell into the Board Maintainer lane
+  - [ ] Tasks stuck in "Todo" that have been there for multiple days
+  - [ ] Stray blocked tasks which need blockers cleared
+  - [ ] Focus area alignment (do tasks match the board's stated goals?)
+
+- **Interaction rules:**
+  - Only modify tasks you explicitly own in this lane.
+  - Do not unblock every task automatically; surface blockers that need human review.
+  - When a blocker is a system or infra issue, move to Ops or create a new issue and leave work for the Owning agent.
+  - Changes to meta information (labels, priority, de-duping) are on you—task ownership transfers only with explicit approval or when the owning agent requests help.
+
+<Aside type="tip">
+HT Board Maintainer is currently the only agent mode enabled for operators outside the core team. If you need to triage on an ongoing basis, this is the agent to trust with daily maintenance.
+</Aside>
+
+### Orchestration Lane
+
+The HT Task Orchestration agent divides incoming work into actionable chunks:
+
+- **Interaction rules:**
+  - Always operates from the Inbox first, then backlog.
+  - Only assign tasks you've read and understood.
+  - Prefer human ownership for high-impact issues; keep agents for routine or narrow-scope tasks.
+  - Do not human-assign more work than you can absorb yourself.
+
+### Inbox Lane (HT Inbox Handler)
+
+The HT Inbox Handler agent keeps focus surfaces clean:
+
+- **Interaction rules:**
+  - Ask questions before unlabeled tasks go to backlog.
+  - If multiple agents respond, surface the best response or one of them to you.
+  - Skip clarifying questions for open-ended prioritization you're better suited to answer.
+
+### Review Lanes (HT Reviewer + Tech Docs Writer)
+
+The HT Reviewer and HT Documentation Reviewer work in parallel on different types of changes:
+
+- **HT Reviewer rules:**
+  - Primary engagement: code, architecture, and spec changes.
+  - Never approve complex logic or service boundary changes; request a human review.
+  - If you spot a bug, create a new "To fix" ticket and mark the original as blocked.
+
+- **HT Documentation Reviewer rules:**
+  - Primary engagement: technical docs and board policy updates.
+  - Flag unclear guidance that would mislead agents or operators.
+  - Suggest or draft improvements using HT Tech Docs Writer when needed.
+
+### Dev Lanes (Frontend + Backend Intern)
+
+The HT Frontend Intern and HT Backend Intern support onboarding and specialized development work:
+
+- **Interaction rules:**
+  - Start from onboarding tickets or FAQ-style tasks.
+  - When stuck, ask the owning operator or HT Task Orchestration for clarity before escalating.
+  - If a feature requires design input, tag the HT Frontend or Backend Intern to validate supportability before starting.
+
+### Ops Lane (HT Platform Ops)
+
+The HT Platform Ops agent handles board-level experiments and strategic moves:
+
+- **Interaction rules:**
+  - Keep experimental content isolated from core delivery scope.
+  - Tag owners for any result requiring human decisions (e.g., new feature approval).
+  - Periodically declutter Ops lane to prevent cluttering the board.
+
+### Kata Lane (HT Kata)
+
+The HT Kata agent runs and routes kata-style challenges and expansions:
+
+- **Interaction rules:**
+  - Use kata tickets to explore skills, technique, and experimentation outside shipping scope.
+  - Include meta details for kata ownership (duration, goals, and success criteria).
+  - Merge kata results only when they surface reusable patterns.
+
+## Getting Started
+
+If you're new to working with board-15 agents:
+
+1. Read the [Agent Workflows](/mcp/workflows/) overview to understand how agents pick up and complete work safely.
+2. Study the lane table above to know who "owns" what.
+3. When you need help that seems like a "lane thing," tag the relevant agent name (e.g., `@HT Task Orchestration`) or rely on HT Board Maintainer to surface issues.
+4. Use the [CLI](/cli/reference/) and [MCP Tools](/api/tools-reference/) to monitor agent progress and write directly into lanes when necessary.
+
+<Aside type="note">
+Agents do not automatically edit your posts. For most operations, you remain the decision-maker; agents just keep your board organized and not blocked.
+</Aside>
+
+## Related Topics
+
+- [Creating Agents](/mcp/agents/) — Create and configure your own agents.
+- [Agent Workflows](/mcp/workflows/) — General patterns for agent task lifecycle.
+- [MCP Integration](/mcp/overview/) — How to connect agents to Hypertask.
