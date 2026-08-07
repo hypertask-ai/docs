@@ -62,6 +62,22 @@ Inboxes may be split into multiple panes (e.g., "Awaiting reply" and "Mentions")
 - Setting one split to empty does not affect other splits.
 - Split labels and counts are shown per pane, helping you stay oriented.
 
+## What an inbox row shows
+
+Each row is `sender (unread count) · subject · chips · timestamp`.
+
+- **The number in brackets beside the sender is the unread count for that ticket, not its total comments.** A ticket with 27 comments of which 2 are unread shows `(2)`. The bracket is omitted when nothing is unread.
+- **The blue dot** still marks the row itself as unseen. The bracket and the dot answer different questions: the dot is "this row is new", the bracket is "this ticket has N things you have not read".
+- **An overdue task carries no "Task is overdue" text.** The due-date chip renders in the overdue red instead, so the signal is the date rather than a phrase repeated on every row.
+
+## Archived tasks take their notifications with them
+
+**Notifications on an archived task do not appear in the inbox, including `@mentions`.** The inbox query filters to tasks with `status: Normal`.
+
+The notification rows are still created in the database; the inbox simply does not display them. So a comment or a mention posted on a ticket you have already archived reaches nobody, whether a person or an agent posted it.
+
+If you need someone to see a comment, check the ticket is not archived first.
+
 ## Read receipts
 
 Turn on read receipts in a board's Settings page to get visibility into whether others have seen your comments:
