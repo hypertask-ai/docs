@@ -37,6 +37,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 
 - **Assignees**: Current assignees with ability to add or remove. Added assignees trigger notifications.
 - **Sections**: Drag tasks between sections to change their column. This can trigger auto-assign rules if configured.
+- **Table view**: In Table view, you can also drag any row onto another section's card and the task moves into that section. The row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views. (Note: this only works when no column sort is active; on /my-tasks, rows are grouped by board, so dragging doesn't target a section.)
 - **Due date**: Click a date to pick another date or remove it. The date affects due date pickers and filter views.
 - **Priority**: Change priority to reflect updated urgency.
 - **Estimated time**: Type hours or a low-high range for time-tracking integration.
@@ -84,7 +85,7 @@ Mark a ticket as waiting on one specific person (like a blocked-by relation, but
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — — in the sidebar row or by picking "Nobody" in the picker.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
 - **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
