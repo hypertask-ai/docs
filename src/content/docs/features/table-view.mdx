@@ -39,6 +39,21 @@ The column picker and table layout are per-user settings. You can show or hide a
 
 </Aside>
 
+## Move a task to another section
+
+Drag any row onto another section's card and the task moves into that section. The row is the drag handle and the section card is the drop target, so nothing extra appears on screen; the card you are over takes the normal hover highlight.
+
+Dragging is off in two cases, because a drop would be meaningless or wrong:
+
+- **A column sort is active.** Rows render as one flat list with no section groups to drop into.
+- **On /my-tasks.** Rows are grouped by board rather than by section, so a move would target the wrong thing.
+
+## The Created column
+
+Turn on **Created** in the column picker to see when each task was opened, and click the header twice to sort oldest first.
+
+It shows a real date rather than an age, because **On board** already gives you the age in days and "412d" does not tell you when something started. Dates outside the current year keep their year (`12 Sep, 2025`), so an old task can never be mistaken for a recent one. Sorting runs on the underlying timestamp, not the displayed text.
+
 ## Drag to reorder and resize
 
 Drag columns directly to reorder them in place; the order stays in sync with the Table columns picker dropdown. Drag the column edge to resize each column to your preferred width. The title column remains locked as the leftmost column, with ticket detail keyed by title; the title column still flexes to fill leftover width.

@@ -101,6 +101,20 @@ Use these prompt patterns when entering time tracking queries:
 
 Toggle **Quiet rows** in the view toolbar to hide the time cell for less verbose views. This keeps the table compact while preserving edit/delete access to each entry.
 
+### Save a "what is running now" view
+
+**Has a running timer** is a filter like any other, so a saved view can hold it permanently instead of relying on the temporary board toggle. It works in table layout as well as on the board.
+
+The filter needs time tracking enabled on the board; with it off, or with nothing running, it matches nothing rather than everything.
+
+### Pause and resume a timer
+
+On the running-timers overview, **Pause** freezes a timer in place and **Resume** continues the same total. The row stays listed while paused, showing **Paused** where the end time would be, and its elapsed count stops moving everywhere it appears: the overview, the task-detail indicator, and the board card badge.
+
+**A paused gap is never billed.** Stopping a timer while it is paused ends it at the moment you paused, not at the moment you pressed stop, so a timer left paused overnight charges the work rather than the night. Starting a paused timer again resumes it instead of leaving it frozen.
+
+Pause and resume are currently available in the app only. The CLI and MCP surfaces can start, stop and log time, and their payloads already report whether a timer is paused, but they cannot pause one yet.
+
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board

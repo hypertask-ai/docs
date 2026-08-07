@@ -79,9 +79,16 @@ Configuration:
 
 ### Filtering stale vs healthy
 
-The "**No recent activity**" and "**Stuck in column**" filters on saved views show only stale tasks by default. Both automatically apply the per-board staleness threshold, so stale items are surfaced at board and view level.
+Every staleness filter is named so that typing **stale** in the filter menu finds all of them:
 
-To separate stale from healthy tasks, add a "**Not stale**" filter to your view. This inverse filter identifies tasks that remain active in your defined window, letting you compare work that needs attention to work still in progress.
+- **Stale in column** — days since the task last changed column, falling back to its creation date if it has never moved.
+- **Stale without comment** — days since the last comment, falling back to creation if nobody has ever commented.
+- **Stale on board** — days since the task was created, regardless of activity.
+- **Not stale** — the inverse: both the column age and the comment age are under the warn threshold.
+
+All four apply the per-board staleness threshold automatically, so a filtered board always agrees with the ages shown on the cards.
+
+Use **Not stale** to separate healthy work from work that needs attention. Note that it deliberately ignores board age: a long-lived task that is still being moved and discussed is not stale.
 
 <Aside type="caution">
 Staleness only accounts for updates to the task record. Activities like commenting or toggling status updates the last-touch date automatically.
