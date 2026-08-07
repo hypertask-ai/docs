@@ -1087,12 +1087,13 @@ Pages are rich documents attached to a task — longer than a description, versi
 ### `pages create`
 
 ```bash
+hypertask pages create --task HTPR-5132 --title "Migration plan" --markdown-file ./plan.md
 hypertask pages create --task 24554 --title "Migration plan" --markdown-file ./plan.md
 ```
 
 | Flag | Description |
 |------|-------------|
-| `--task <id>` | Task ID the page belongs to |
+| `--task <id-or-ticket>` | Task the page belongs to. Accepts a ticket reference (`HTPR-5132`) or a numeric task ID |
 | `--title <title>` | Page title |
 | `--content <content>` | Page content inline |
 | `--markdown-file <path>` | Read the content from a file instead |
@@ -1137,6 +1138,7 @@ Use `--if-version` when several agents may touch the same page: the write fails 
 ### `pages list` / `pages search`
 
 ```bash
+hypertask pages list --task HTPR-5132
 hypertask pages list --task 24554
 hypertask pages list --project 15
 hypertask pages search "rollback"
@@ -1512,6 +1514,33 @@ hypertask task update HTPR-2992 --clear-parent
 # Inspect the full subtask hierarchy
 hypertask task tree --ticket HTPR-1234
 ```
+
+### Link related and blocking tasks
+
+Relations are separate from the parent/subtask hierarchy above. A relation is
+`RelatedTo`, `BlockedBy`, or `BlockedTo`, and every command accepts a ticket
+reference or a numeric task ID.
+
+```bash
+# Link two tasks
+hypertask task link HTPR-1234 HTPR-5678 --type RelatedTo
+
+# Record that one task is blocked by another
+hypertask task link HTPR-1234 HTPR-5678 --type BlockedBy
+
+# List a task's relations, both incoming and outgoing
+hypertask task relations HTPR-1234
+
+# Remove the link between two tasks
+hypertask task unlink HTPR-1234 HTPR-5678
+
+# Find semantically similar tasks (embedding search, not stored relations)
+hypertask task related HTPR-1234
+```
+
+`task unlink` takes no `--type`: it removes whatever relation exists between the
+pair. `task relations` prints the relation type, its direction, and a link to
+the other ticket.
 
 ### Triage tasks by priority
 
