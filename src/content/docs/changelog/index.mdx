@@ -15,6 +15,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 7, 2026">
   * Added: Documentation for board-15 agent team including lanes, interaction rules, and Board Maintainer daily runbook ([HTPR-5130](https://app.hypertask.ai/detail/project-15/5130))
+  * Fixed: ht-agent new crashes due to unescaped quote in embedded Python; token is now minted and saved reliably ([HTPR-5048](https://app.hypertask.ai/detail/project-15/5048))
   * Fixed: setTaskLabels now logs removal activity so removed labels leave a trace, removing silent data loss ([HTPR-5108](https://app.hypertask.ai/detail/project-15/5108))
   * Fixed: CLI now validates unknown --labels values on task create/update and fails explicitly with a list of valid labels; tasks get --json also returns the labels field ([HTPR-5058](https://app.hypertask.ai/detail/project-15/5058))
   * Improved: Task descriptions now preserve YouTube, Loom, Vimeo, and Figma embeds from the editor, and these iframes are retained in API responses ([HTPR-5071](https://app.hypertask.ai/detail/project-15/5071))
