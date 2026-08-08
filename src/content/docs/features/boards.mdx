@@ -7,6 +7,14 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
+## Creating a board
+
+From the web UI, click **New board** to create a blank board. You can also generate a board with AI-powered content:
+
+From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your board structure and sections. The AI generates sections and optionally pre-seeds tasks.
+
+If you invoke AI board creation and the model doesn't return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
+
 ## Built-in splits
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
@@ -118,7 +126,7 @@ The left sidebar organizes your boards into collapsible teams. When you group bo
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 Additionally, fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent; the Important split is available via the `notificationMatrix` flag.
@@ -137,7 +145,6 @@ The empty state:
 ## Free tier limits
 
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
-
 - App web interface
 - CLI (`ht --create-board` / `ht board create`)
 - MCP tool (`boards.create`)
