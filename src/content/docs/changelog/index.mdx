@@ -26,6 +26,7 @@ export const Update = ({ label, children }) => (
   * Improved: Table column labels now have minimum spacing from the drag handle in the table header to improve readability on tables (HTPR-5138)
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (HTPR-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (HTPR-5164)
+  * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
 </Update>
 
 <Update label="August 8, 2026">
