@@ -55,7 +55,8 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 
 ### Related fields
 
-- **Assignees**: Current assignees with ability to add or remove. Added assignees trigger notifications.
+- **Assignees**: Current human assignees with ability to add or remove. Added assignees trigger notifications.
+- **Workers**: Agent nodes and nodes can have their own assignee field, tracked separately from human assignees. Workers appear in the Relationships section under the *Workers* relation type.
 - **Sections**: Drag tasks between sections to change their column. This can trigger auto-assign rules if configured.
 - **Table view**: In Table view, you can also drag any row onto another section's card and the task moves into that section. The row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views. (Note: this only works when no column sort is active; on /my-tasks, rows are grouped by board, so dragging doesn't target a section.)
 - **Due date**: Click a date to pick another date or remove it. The date affects due date pickers and filter views.
@@ -73,7 +74,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 
 Open a task to see:
 
-- Header with title, status section, assignees, priority, and due date.
+- Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
 - Top bar with quick actions like Move, Duplicate, Archive, or Delete.
@@ -98,6 +99,7 @@ Create relationships between tasks to surface context without leaving tasks:
 - **Block**: Mark a task as blocking another task.
 - **Blocked by**: Identify what indirectly holds a task back.
 - **Duplicate**: Link to other tasks that represent the same work item.
+- **Workers**: Associate an agent or intelligent agent with the task for scheduling and coordination.
 
 See a task's relations in the **Relations** section of the task detail view.
 
@@ -105,12 +107,12 @@ See a task's relations in the **Relations** section of the task detail view.
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
 
-- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> — "Blocked by person...", then pick the person. One blocker per ticket.
+- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> â\x80\x94 "Blocked by person...", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
-- **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the â\x80\x94 in the sidebar row or by picking "Nobody" in the picker.
+- **Filter**: The board filter picker has a **Blocked by person** filter â\x80\x94 pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
 
@@ -159,7 +161,7 @@ See the <a href="https://docs.hypertask.ai/features/pages/">Pages</a> feature do
 
 ## AI status updates
 
-AI status updates appear on task cards when an AI agent updates task metadata in a visible way. This includes fields like priority, assignees, labels, due dates, and related tasks. You can see these changes via the task detail panel, the board cards, and notification contexts without opening every detail.
+AI status updates appear on task cards when an AI agent updates task metadata in a visible way. This includes fields like priority, assignees, workers, labels, due dates, and related tasks. You can see these changes via the task detail panel, the board cards, and notification contexts without opening every detail.
 
 ## Export and integration
 
