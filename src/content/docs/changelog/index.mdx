@@ -14,6 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 9, 2026">
+  * Added: Internal and custom-deal teams map to dedicated managed-key credentials in a verified production registry, isolating them from customer BYOK subscriptions ([HTPR-4132](https://app.hypertask.ai/detail/project-15/4132))
+  * Added: Free and BYOK subscribers now receive AI access through included-allowance routing instead of being denied, obsoleting the "no plan = no AI" rule for those tiers ([HTPR-4130](https://app.hypertask.ai/detail/project-15/4130))
+  * Added: Plan-aware AI gateway routing now isolates Free and BYOK access in a shared included-allowance key while routing paid, legacy, and comped teams through dedicated credentials ([HTPR-4133](https://app.hypertask.ai/detail/project-15/4133))
   * Added: Time reports now include the standard app navigation rail for Board, Calendar, Inbox, AI, and Search ([HTPR-4715](https://app.hypertask.ai/detail/project-15/4715))
   * Added: Table view now freezes the Ticket and Title columns during horizontal scroll, matching Excel's frozen panes behavior ([HTPR-4643](https://app.hypertask.ai/detail/project-15/4643))
   * Added: Running-timers overview now supports pause and resume buttons that freeze a timer in place and continue it without resetting ([HTPR-4380](https://app.hypertask.ai/detail/project-15/4380))
