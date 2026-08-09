@@ -10,7 +10,6 @@ The **Hypertask AI assistant** lives at your fingertips. Use it to create tasks,
 ## AI Task Writer and Write with AI
 
 ### Create tasks from prompts
-
 The AI Task Writer instantly turns text into structured tasks. Just ask in natural language, and the assistant fills in title, description, due date, and assignee if you include that context.
 
 ```bash
@@ -21,7 +20,6 @@ ht task create "Design the upcoming Q3 marketing campaign. Include three concept
 In the UI, use the AI Task Writer from the New Task flow. The editor is context-aware: it respects the board, team, and board-level AI instructions you've configured.
 
 ### Write with AI in comments and descriptions
-
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
 - **/ai** — Generate a draft for the active text field.
@@ -31,7 +29,6 @@ Start a comment or task description with **/ai** to open the AI Task Writer.
 The assistant drafts directly into the field, ready for your review.
 
 ### Write confirmation for wide or destructive actions
-
 The AI assistant requires confirmation before making wide or destructive writes across your boards. This prevents silent task creation or modification.
 
 When you invoke **Write with AI** with flags that span multiple tasks or boards (such as `--mode write-with-ai --all`), the assistant pauses and prompts you:
@@ -43,7 +40,6 @@ When you invoke **Write with AI** with flags that span multiple tasks or boards 
 This confirmation gate guards against accidental bulk operations and keeps your boards aligned with your intent.
 
 ### Seed tasks on guest boards
-
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
 
 - Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
@@ -53,7 +49,6 @@ When you open a fresh guest showcase board, click Ctrl+K to open the board picke
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
 ### Skills invoked from AI Task Writer
-
 Use slash commands to invoke registered skills:
 
 - **/skill** — Open the skills menu to tap a skill by name or first letter.
@@ -68,7 +63,6 @@ Known skills include:
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
 ## My Tasks context
-
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
 
 - **"What's on my My Tasks board?"** — Generates a concise list of assigned tasks with priorities and due dates.
@@ -78,7 +72,6 @@ The AI understands your **My Tasks** workload and can answer context-specific qu
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
 ## AI status updates
-
 An AI agent can update task metadata in a visible way—priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 
 - The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
@@ -88,19 +81,18 @@ An AI agent can update task metadata in a visible way—priority, assignees, lab
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
 
 ## AI access and entitlement
-
 AI access is controlled through an allowance model based on team plan type. The gateway routes requests to dedicated credentials for internal teams, paid and legacy plans, and the allowance key for Free and BYOK subscriptions.
 
-| Team type | Credentials | Default model | Notes |
-|-----------|-------------|---------------|-------|
+| Channel | Credentials | Default model | Notes |
+|---------|-------------|---------------|-------|
 | Internal team members and custom-deal teams | Dedicated managed-key registry (14 teams, 11 credentials) | Eligible users | Isolated from customer BYOK; production-ready and verified |
 | Paid, legacy, and comped teams | Dedicated routed keys by entitlement | Eligible users | Server-gated; consistent with paid product tiers |
 | Free and BYOK subscribers | Shared Free/BYOK included-allowance key | Luna Standard | Limited models; Premium models require server-gated entitlement |
+| Android app | PKCE OAuth tokens via native OAuth 2.1 flow | Eligible users | Native Android sign-in integrates with existing web PKCE OAuth; provides access to AI chat streaming and AI-assisted Task Writer |
 
 Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machines (mobile) at signup. Additional credits are available through verified use or contact.
 
 ### Plan-aware default-model repair
-
 The gateway now maps eligible users to appropriate default models based on team entitlement:
 
 - **Eligible teams** (paid, legacy, comped) default to **Luna Standard**, bypassing premium model selection during task creation.
@@ -109,11 +101,9 @@ The gateway now maps eligible users to appropriate default models based on team 
 This repair ensures consistent default model access aligned with plan capabilities.
 
 ## Help-site AI chat
-
 The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. It connects directly to the full Hypertask documentation site, including CLI, MCP, REST API, and agent docs.
 
 ### Performance and model
-
 The chat uses the **google/gemini-3.5-flash-lite** model via the Vercel AI Gateway. Responses stream in real time with first-token latencies around **0.3 seconds** on typical queries.
 
 - Multimodal path for text and image questions in one model.
@@ -121,7 +111,6 @@ The chat uses the **google/gemini-3.5-flash-lite** model via the Vercel AI Gatew
 - Serverless deployment on Cloudflare Workers with a D1 database for article storage.
 
 ### Knowledge coverage
-
 The chat answers are grounded in **49 documentation articles** (including the 48KB CLI reference). Previously, the bot lacked CLI context; now it can answer questions about `nl` commands, `ht` CLI, MCP tools, and REST endpoints.
 
 - Keyword scoring replaces first-come fill logic, so contextual terms like "cli" and "hypertask" score accurately.
@@ -134,7 +123,6 @@ The chat answers are grounded in **49 documentation articles** (including the 48
   - Board and column operations
 
 ### Try it out
-
 Try these prompts in the help-site chat:
 
 - *"How do I install the hypertask CLI and create a task?"*
@@ -145,7 +133,6 @@ Try these prompts in the help-site chat:
 The chat responds instantly with tailored guidance and clickable documentation links.
 
 ## Other AI context and tools
-
 - **/summarize** — Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
 - **Context scope** — AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
 - **Share chat sessions** — Start a chat session on any board and pin context so future prompts stay scoped.
