@@ -14,6 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 9, 2026">
+  * Added: Plan-aware default-model repair for Free and BYOK teams: eligible teams now default to Luna Standard instead of premium Luna, preventing silent failures during model selection ([HTPR-5252](https://app.hypertask.ai/detail/project-15/5252))
+  * Improved: New-task assignee row alignment: the field now uses the same shared label/value layout as other rows, fixing visual offset on filled and empty assignees ([HTPR-5250](https://app.hypertask.ai/detail/project-15/5250))
+  * Improved: Android Native Board metadata parity in v0.12: cached priority, estimate, due date, labels, assignees, comments, and freshness render without a network enrichment pass, while preserving RecyclerView diffing and full-column layouts ([HTPR-5221](https://app.hypertask.ai/detail/project-15/5221))
   * Added: Internal and custom-deal teams map to dedicated managed-key credentials in a verified production registry, isolating them from customer BYOK subscriptions ([HTPR-4132](https://app.hypertask.ai/detail/project-15/4132))
   * Added: Free and BYOK subscribers now receive AI access through included-allowance routing instead of being denied, obsoleting the "no plan = no AI" rule for those tiers ([HTPR-4130](https://app.hypertask.ai/detail/project-15/4130))
   * Added: Plan-aware AI gateway routing now isolates Free and BYOK access in a shared included-allowance key while routing paid, legacy, and comped teams through dedicated credentials ([HTPR-4133](https://app.hypertask.ai/detail/project-15/4133))
