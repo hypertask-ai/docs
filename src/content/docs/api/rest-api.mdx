@@ -119,6 +119,28 @@ For agent workloads that currently shell out to the CLI, switching to direct `cu
 The MCP server itself is already a direct API client — if you're using Hypertask via MCP from Claude, Cursor, or another agent host, you're already getting REST-speed access. Direct `curl` is most valuable when you're scripting in shell or want to avoid the Node.js runtime entirely.
 </Aside>
 
+### Saved view subtask display
+
+Create or update a saved view through the MCP-compatible REST routes to control the same five-mode subtask setting available from the board's `Ctrl+K` menu:
+
+```bash
+# Create a view that shows subtasks as rows and on parent cards
+curl -s -X POST \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"project_id":15,"title":"All subtasks","subtask_setting":"Flattened_Card"}' \
+  "https://app.hypertask.ai/api/mcp/view"
+
+# Change only the subtask display mode; other view settings stay unchanged
+curl -s -X PATCH \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"subtask_setting":"Parent"}' \
+  "https://app.hypertask.ai/api/mcp/view/VIEW_ID"
+```
+
+Accepted values are `None`, `Parent`, `Flattened`, `Card`, and `Flattened_Card`. View responses report the effective value as `board_subtask_setting`.
+
 ## Task Identifiers
 
 Routes that operate on a specific task usually accept exactly one task identifier:

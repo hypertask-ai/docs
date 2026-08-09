@@ -479,7 +479,7 @@ Full CRUD for board columns/sections. Use action to choose: list (all columns fo
 
 ### `hypertask_create_view`
 
-Creates a saved filtered tab on a board. Provide project_id and title; filters is a nested object containing optional label_names, assignee_ids, and match. Use hypertask_list_views afterward to find saved view IDs.
+Creates a saved board view. Provide project_id and title; filters is a nested object containing optional label_names, assignee_ids, and match. Set `subtask_setting` to control how subtasks appear. Use hypertask_list_views afterward to find saved view IDs.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -489,6 +489,7 @@ Creates a saved filtered tab on a board. Provide project_id and title; filters i
 | `filters` | object | No |  |
 | `sorting_mode` | `Manual` \\| `Priority` \\| `DueDate` \\| `Size` \\| `CreatedAt` \\| `UpdatedAt` \\| `SectionChangedAt` \\| `LastCommentAt` \\| `Assignee` \\| `Title` \\| `TicketNumber` \\| `TimeInColumn` \\| `TimeOnBoard` \\| `TimeWithoutComment` | No |  |
 | `sorting_order` | `Ascending` \\| `Descending` | No |  |
+| `subtask_setting` | `None` \\| `Parent` \\| `Flattened` \\| `Card` \\| `Flattened_Card` | No | `None` hides subtasks and counts; `Parent` keeps the parent count; the other modes show subtask rows, parent-card content, or both. |
 | `set_as_default` | boolean | No |  |
 
 ### `hypertask_delete_view`
@@ -530,7 +531,7 @@ Switches the caller's active saved view, changing what the user's highlighted bo
 
 ### `hypertask_update_view`
 
-Updates a saved board view. Filter fields are flat for updates: label_names, assignee_ids, and match. Find the ID with hypertask_list_views first.
+Updates a saved board view. Filter fields are flat for updates: label_names, assignee_ids, and match. Set `subtask_setting` to change the same subtask display option available from the board's `Ctrl+K` menu. Omitted fields are preserved. Find the ID with hypertask_list_views first.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -542,6 +543,7 @@ Updates a saved board view. Filter fields are flat for updates: label_names, ass
 | `match` | `ALL` \\| `ANY` | No |  |
 | `sorting_mode` | `Manual` \\| `Priority` \\| `DueDate` \\| `Size` \\| `CreatedAt` \\| `UpdatedAt` \\| `SectionChangedAt` \\| `LastCommentAt` \\| `Assignee` \\| `Title` \\| `TicketNumber` \\| `TimeInColumn` \\| `TimeOnBoard` \\| `TimeWithoutComment` | No |  |
 | `sorting_order` | `Ascending` \\| `Descending` | No |  |
+| `subtask_setting` | `None` \\| `Parent` \\| `Flattened` \\| `Card` \\| `Flattened_Card` | No | Controls whether subtasks are hidden, represented by a parent count, flattened into rows, shown on parent cards, or both flattened and shown on cards. |
 | `set_as_default` | boolean | No |  |
 
 ---

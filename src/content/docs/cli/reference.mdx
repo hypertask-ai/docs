@@ -515,7 +515,7 @@ hypertask task update-custom-field HTPR-2992 --field-id 789 --clear
 
 ## Views
 
-Views are named filter/sort configurations saved in the Hypertask UI (e.g. "Dev Review & QA", "Tests Running"). The CLI exposes read-only commands to list views and fetch their pre-filtered tasks — especially useful for agents working on large boards where scanning all tasks would be noisy and slow.
+Views are named board configurations saved in Hypertask. The CLI can list, inspect, create, update, switch, and delete them, including control over how subtasks appear on the board.
 
 ### `view list`
 
@@ -572,28 +572,29 @@ hypertask view get view_abc123 --json | jq '.[].title'
 
 ### `view create`
 
-Create a new named view from your current board or a project you have access to. The CLI reads the current view state from your last interacted project and its active view, or you can specify a project to target.
+Create a new named view on a project you can access.
 
 ```bash
 hypertask view create \
-  --name "Epic checks" \
+  --title "Epic checks" \
   --project 15 \
-  --section "Doing" \
-  --priority "high,urgent" \
-  --sort-by "dueDate" \
-  --sort-order "asc"
+  --sort-mode DueDate \
+  --sort-order Ascending \
+  --subtasks Flattened_Card
 ```
 
 | Flag | Description |
 |------|-------------|
-| `--name <text>` | View name (required) |
+| `--title <text>` | View title (required) |
 | `--project <id>` | Target project (required) |
-| `--section <name>` | Filter by section name (required) |
-| `--priority <list>` | Comma-separated priorities (`urgent`, `high`, `medium`, `low`, `none`) |
-| `--assignee <name\|ID>` | Filter by assignee (`me`, `unassigned`, or user ID/name) |
-| `--labels <list>` | Comma-separated label names or IDs |
-| `--sort-by <field>` | Sort by `createdAt`, `updatedAt`, or `dueDate` |
-| `--sort-order <asc\|desc>` | Sort direction (`asc`, `desc`) |
+| `--visibility <value>` | `Public` or `Private` |
+| `--label <name>` | Filter by label name; repeat for multiple labels |
+| `--assignee <userId>` | Filter by numeric user ID or agent UUID; repeat for multiple assignees |
+| `--match <mode>` | Filter matching: `ALL` or `ANY` |
+| `--sort-mode <mode>` | `Manual`, `Priority`, `DueDate`, `Size`, `CreatedAt`, or `UpdatedAt` |
+| `--sort-order <order>` | `Ascending` or `Descending` |
+| `--subtasks <mode>` | `None`, `Parent`, `Flattened`, `Card`, or `Flattened_Card` |
+| `--default` | Set this view as the board default |
 
 ### `view update`
 
@@ -601,21 +602,32 @@ Update an existing saved view. You can modify which fields are included, filters
 
 ```bash
 hypertask view update view_abc123 \
-  --section "Doing,In Review" \
-  --priority "high" \
-  --sort-by "createdAt" \
-  --sort-order "desc"
+  --subtasks Parent
 ```
 
 | Flag | Description |
 |------|-------------|
-| `--name <text>` | New view name |
-| `--section <name\|...>` | One or more section names to include in the view |
-| `--priority <list>` | Updated priority filter |
-| `--assignee <name\|ID>` | Updated assignee filter |
-| `--labels <list>` | Updated label filter |
-| `--sort-by <field>` | New sort field |
-| `--sort-order <asc\|desc>` | New direction |
+| `--title <text>` | New view title |
+| `--visibility <value>` | `Public` or `Private` |
+| `--label <name>` | Replace label filters; repeat for multiple labels |
+| `--assignee <userId>` | Replace assignee filters; repeat for multiple assignees |
+| `--clear-labels` | Clear every label filter |
+| `--clear-assignees` | Clear every assignee filter |
+| `--match <mode>` | Filter matching: `ALL` or `ANY` |
+| `--sort-mode <mode>` | New sorting mode |
+| `--sort-order <order>` | `Ascending` or `Descending` |
+| `--subtasks <mode>` | New subtask display mode; omitted fields are preserved |
+| `--default` | Set this view as the board default |
+
+The five modes match the board's `Ctrl+K` subtask setting:
+
+| Mode | Board behavior |
+|------|----------------|
+| `None` | Hide subtasks and the parent task's subtask count |
+| `Parent` | Show parent tasks with their subtask count, but no separate subtask rows |
+| `Flattened` | Show subtasks as separate rows with parent context |
+| `Card` | Show subtasks on their parent cards |
+| `Flattened_Card` | Show both separate rows and subtask card content |
 
 ### `view switch`
 
