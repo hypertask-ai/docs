@@ -14,6 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 9, 2026">
+  * Added: Time reports now include the standard app navigation rail for Board, Calendar, Inbox, AI, and Search ([HTPR-4715](https://app.hypertask.ai/detail/project-15/4715))
+  * Added: Table view now freezes the Ticket and Title columns during horizontal scroll, matching Excel's frozen panes behavior ([HTPR-4643](https://app.hypertask.ai/detail/project-15/4643))
+  * Added: Running-timers overview now supports pause and resume buttons that freeze a timer in place and continue it without resetting ([HTPR-4380](https://app.hypertask.ai/detail/project-15/4380))
   * Improved: Table column labels now have minimum spacing from the drag handle in the table header to improve readability on tables (HTPR-5138)
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (HTPR-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (HTPR-5164)
