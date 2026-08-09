@@ -1,0 +1,137 @@
+---
+title: Boards & Sections
+description: Manage boards, columns, sections, and view customizations in Hypertask.
+---
+
+import { LinkCard, Tabs, TabItem } from "@astrojs/starlight/components";
+
+# Boards & Sections
+
+A **board** is the top-level container for a project's work. Each board groups tasks by related columns and sections, and supports rich customization.
+
+## Create a board
+
+**From the web UI:**
+1. Click the board switcher (<kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>) or navigate to **Board** from the left rail.
+2. Click **New board** to open the board creator.
+3. Enter a board title and optional description.
+4. Choose a team or leave default to create on your personal team.
+5. Select where tasks appear first:
+   - **Start with a blank board** — Begin with an empty board.
+   - **Seed with demo tasks** — Let us draft a quick-start board structure for you (best for new users).
+6. Click **Create board**.
+
+The board is added to your left rail under the team section.
+
+**From the CLI or MCP:** Boards can be created programmatically for automation workflows.
+
+## Board sections and columns
+
+A board has one or more sections, each containing columns (also called statuses). Each task belongs to a single column within its board.
+
+### Standard columns layout
+
+- **TODO**: New, backlog, or ready tasks.
+- **IN PROGRESS**: Active work in progress.
+- **REVIEW**: Tasks awaiting peer or team review.
+- **DONE**: Completed tasks.
+
+Customize column order or create additional columns by clicking **Edit board** on the board header and dragging sections via the **Manage views** menu.
+
+### Section behavior
+
+- **Drag and drop**: Relocate sections to reorder them on the board.
+- **Quick-tips bar**: Optional bar that can be toggled on or off. When hidden, board columns expand to fill the available vertical space.
+- **Filter and sort**: Configure per-view filters, see filtering guide below.
+
+## Manage views
+
+Boards support saved views for flexible task filtering and sorting.
+
+**From the web UI:**
+1. Open the board.
+2. Click **Manage views** on the board header.
+3. Choose from:
+   - **View cluster**: Built-in views including Overdue, Blocked, My Tasks, and Agencies.
+   - **Custom views**: Create filters on sections, assignees, labels, due dates, priority, created date, and more.
+4. Name the view (e.g., "Sprint cleanup").
+5. **Hide** views to remove them from the board header without deleting them.
+6. **Pin** views to keep them at the top of the view cluster.
+7. **Drag and drop** views to reorder them across the bar and list.
+
+Built-in views are orderable in the bar; you can move them to an earlier row or hide them via Manage views.
+
+**From the CLI:**
+Use `ht board view` commands to manage and create custom views programmatically.
+
+## Filtering on boards
+
+Filter predictions are precomputed from your completed tasks and live board data. Preview or save filters via built-in and custom views.
+
+### Blocked-by-person filter
+
+Mark tickets as waiting on a specific person using <kbd>Shift</kbd>+<kbd>B</kbd> on a ticket. Board filters support a **Blocked by person** picker:
+
+- Select one or more people to see tasks waiting on them.
+- Choose **Anyone** to show every blocked task.
+- Combine with saved views to create a permanent "everything blocked" board.
+
+## Task count and summary
+
+For projects with many boards, each project summary lists tasks by board:
+
+- **Open**: Tasks currently on TODO, IN PROGRESS, REVIEW.
+- **Closed**: Tasks in DONE.
+- **Done today**: Tasks completed today.
+- **Total boards**: Summary across all boards in the project.
+
+Use this view when you need a quick pulse or want to track changes over time.
+
+## Mobile boards
+
+### Android Native
+
+The native Android app renders cached board metadata locally:
+
+- Priority, estimate, due date, labels, assignees, comments, and freshness appear on cards from cached SQLite data without a network enrich pass.
+- RecyclerView diffing preserves smooth list updates.
+- Full-width columns retain existing gesture behaviors (long press for details, swipe to open).
+
+This reduces network latency on low-bandwidth networks and improves perceived responsiveness.
+
+### Mobile web parity
+
+The mobile web implementation follows the same cached-data strategy where applicable, ensuring consistent behavior across platforms for key addresses.
+
+## Color themes per board
+
+Each board can be tied to a color theme distinct from the global system theme. Use this for project colors:
+
+- **Light boards**: Use porcelain, off-white, and soft pastels.
+- **Dark boards**: Use graphite, slate, and muted accents.
+
+To set a board color theme:
+1. Open **Board settings** on the board header.
+2. Choose a **Theme** picker.
+3. Save and apply globally or per-team.
+
+## List cards vs. Kanban
+
+Hover on board cards to see a **list view** tooltip: a flat list of ticket numbers and titles by column stack order. Use this to scan board contents offline or from any surface.
+
+## Keyboard shortcuts
+
+- <kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>: Open board switcher palette.
+- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>: Open command palette to search and move tasks or manage views.
+- <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd>: Quick-create a task.
+
+## Tips
+
+- **Seed with demo tasks**: Good for first-time users to quickly experience AI Task Writer.
+- **Blockers**: Use **Blocked by person** to track external dependencies.
+- **Saved views**: Create a "Sprint cleanup" view for recurring tasks.
+- **Custom columns**: Drag and drop columns to match your team's workflow.
+
+<Aside type="tip">
+Board sections are unit operations: dragging a section to a different column moves all its tasks to that column while preserving their individual states.
+</Aside>
