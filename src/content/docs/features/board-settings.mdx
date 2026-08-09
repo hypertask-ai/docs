@@ -1,6 +1,6 @@
 ---
 title: Board Settings
-description: Manage board-level rules including auto-archive, staleness detection, and per-column auto-assign rules.
+description: "Manage board-level rules including auto-archive, staleness detection, and per-column auto-assign rules."
 ---
 
 import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
@@ -26,7 +26,7 @@ You can open board settings from:
  - **Ctrl+K command palette** — Search for **"Board settings"** and select your board.
  - **Board menu** — Open a board's menu and choose **Settings**.
 
-CardGrid>
+```markdown
 <CardGrid>
 <Card title="Auto-archive" icon="folder">
 Clear expired backlog and automate housekeeping.
@@ -38,6 +38,7 @@ Identify tasks that haven't moved recently.
 Propagate responsibilities to unassigned cards.
 </Card>
 </CardGrid>
+```
 
 ## Auto-archive
 
@@ -83,12 +84,10 @@ Every staleness filter is named so that typing **stale** in the filter menu find
 
 - **Stale in column** — days since the task last changed column, falling back to its creation date if it has never moved.
 - **Stale without comment** — days since the last comment, falling back to creation if nobody has ever commented.
-- **Stale on board** — days since the task was created, regardless of activity.
-- **Not stale** — the inverse: both the column age and the comment age are under the warn threshold.
+- **Stale on board** — days since the task was created, regardless of activity (not affected by column moves or comments).
+- **Not stale** — the inverse: both the column age and the comment age are under the warn threshold. This deliberately ignores board age: a long-lived task that is still being moved and discussed is not stale.
 
-All four apply the per-board staleness threshold automatically, so a filtered board always agrees with the ages shown on the cards.
-
-Use **Not stale** to separate healthy work from work that needs attention. Note that it deliberately ignores board age: a long-lived task that is still being moved and discussed is not stale.
+All four filters apply the per-board staleness threshold automatically, so a filtered board always agrees with the ages shown on the cards.
 
 <Aside type="caution">
 Staleness only accounts for updates to the task record. Activities like commenting or toggling status updates the last-touch date automatically.
