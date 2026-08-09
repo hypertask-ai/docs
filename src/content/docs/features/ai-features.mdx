@@ -24,9 +24,9 @@ In the UI, use the AI Task Writer from the New Task flow. The editor is context-
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** ― Generate a draft for the active text field.
-- **/ai rewrite** ― Improve or rethink what you typed.
-- **/ai fix** ― Correct grammar, sharpen tone, or expand with details.
+- **/ai** – Generate a draft for the active text field.
+- **/ai rewrite** – Improve or rethink what you typed.
+- **/ai fix** – Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -46,9 +46,9 @@ This confirmation gate guards against accidental bulk operations and keeps your 
 
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
 
-- Press Ctrl+K: every action is one keystroke away ― Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
-- Ask the AI to build this board for you ― Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
-- Run tasks / tools ― Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
+- Press Ctrl+K: every action is one keystroke away – Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
+- Ask the AI to build this board for you – Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
+- Run tasks / tools – Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
@@ -56,14 +56,14 @@ These prompts start a simulated typing session that ends with AI Task Writer emp
 
 Use slash commands to invoke registered skills:
 
-- **/skill** ― Open the skills menu to tap a skill by name or first letter.
-- **/skill `name`** ― Run a specific skill if you know its name.
+- **/skill** – Open the skills menu to tap a skill by name or first letter.
+- **/skill `name`** – Run a specific skill if you know its name.
 
 Known skills include:
 
-- **Defer** ― Suggest a deferral with a new due date and optional sub-task.
-- **Duplicate** ― Mirror the current task into a draft that you can rename and refine.
-- **Subtask** ― Generate a new subtask rooted from the current one.
+- **Defer** – Suggest a deferral with a new due date and optional sub-task.
+- **Duplicate** – Mirror the current task into a draft that you can rename and refine.
+- **Subtask** – Generate a new subtask rooted from the current one.
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
@@ -71,21 +71,33 @@ Types skip over canvas or rich content blocks instead of treating them as text t
 
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
 
-- **"What's on my My Tasks board?"** ― Generates a concise list of assigned tasks with priorities and due dates.
-- **"Any overdue or blocked work?"** ― Flags urgent or late items for follow-up.
-- **"Show me tasks due this week"** ― Filters and presents upcoming commitments.
+- **"What's on my My Tasks board?"** – Generates a concise list of assigned tasks with priorities and due dates.
+- **"Any overdue or blocked work?"** – Flags urgent or late items for follow-up.
+- **"Show me tasks due this week"** – Filters and presents upcoming commitments.
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
 ## AI status updates
 
-An AI agent can update task metadata in a visible way―priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
+An AI agent can update task metadata in a visible way—priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 
 - The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
+
+## AI access and entitlement
+
+AI access is controlled through an allowance model based on team plan type. The gateway routes requests to dedicated credentials for internal teams, paid and legacy plans, and the allowance key for Free and BYOK subscriptions.
+
+| Team type | Credentials | Notes |
+|-----------|-------------|-------|
+| Internal team members and custom-deal teams | Dedicated managed-key registry (14 teams, 11 credentials) | Isolated from customer BYOK; production-ready and verified |
+| Paid, legacy, and comped teams | Dedicated routed keys by entitlement | Server-gated; consistent with paid product tiers |
+| Free and BYOK subscribers | Shared Free/BYOK included-allowance key | Includes usage within allowance tier; premium models remain server-gated |
+
+Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machines (mobile) at signup. Additional credits are available through verified use or contact.
 
 ## Help-site AI chat
 
@@ -125,10 +137,10 @@ The chat responds instantly with tailored guidance and clickable documentation l
 
 ## Other AI context and tools
 
-- **/summarize** ― Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
-- **Context scope** ― AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
-- **Share chat sessions** ― Start a chat session on any board and pin context so future prompts stay scoped.
-- **Personal dictation language** ― Choose your preferred dictation language (default English; multilingual options supported).
+- **/summarize** – Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
+- **Context scope** – AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
+- **Share chat sessions** – Start a chat session on any board and pin context so future prompts stay scoped.
+- **Personal dictation language** – Choose your preferred dictation language (default English; multilingual options supported).
 
 ---
 
