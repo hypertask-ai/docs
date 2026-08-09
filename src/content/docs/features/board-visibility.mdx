@@ -1,0 +1,110 @@
+---
+title: Board & Subtask Visibility
+description: Configure which tasks and subtasks are visible to users across boards, saved views, tables, and AI Chat.
+---
+
+import { Aside, Tabs, TabItem, Steps, Card, CardGrid, Table, LinkCard } from '@astrojs/starlight/components';
+
+Every board has a **Visibility** setting that controls which task and subtask encodings are exposed. This setting is applied consistently across all surfaces where a board is viewed or acted upon and can be overridden in the **Board hierarchy**.
+
+## Board visibility modes
+
+A board’s top-level setting is configured from the board’s header, using **Ctrl+K** → “Edit board visibility” (or via the context menu). The available modes are:
+
+| Mode               | Description                                                | Conflicts with inherited |
+|--------------------|------------------------------------------------------------|--------------------------|
+| **Visible**        | All task and subtask fields are shown.                     | No                       |
+| **Basic**          | Only the `title` and `description` of tasks are shown.     | Partial (core fields may still be inherited) |
+| **Dimmed**         | Visibility applies to the owning team only (BYOK & free teams are effectively Hidden). | No (inherits from parent if permitted) |
+| **Hidden**         | Layout shows only the owning team; other teams see an empty placeholder. | Only the owning team |
+
+### Saved-view subtask controls
+
+When access is **Visible**, saved views can further restrict subtask visibility via a new subtask controls property. This property is stored as part of the saved view’s `view_query` payload and affects read responses from:
+
+- CLI (`--tasks` / `view show`)
+- MCP tools
+- Board & table API endpoints
+- AI Chat create/update actions
+
+Supported modes are enumerated in the table below, and they behave consistently when read through any surface:
+
+| Mode                       | CLI / MCP / API / AI Chat read effect                      | Notes |
+|----------------------------|------------------------------------------------------------|-------|
+| Visibility — all           | All task and subtask fields are shown.                     | Default when the board visibility is Visible |
+| Visibility — basic         | Only `title` and `description` are shown.                  | Same behavior as board-level Basic |
+| Visibility — disabled      | Subtasks are omitted from read and create responses.      | Subtasks cannot be created or shown; `displaySubtasks` appears as `false` |
+| Visibility — inherited     | Subtasks follow their parent board’s visible sections.     | Used when a parent board or saved view explicitly sets this mode |
+
+### Practical examples
+
+#### Example 1: Expose more subtask data via CLI
+
+```bash
+# Create a board with full and basic items in parallel
+hypertask task create "Create landing page assets" --project 15 --section "Backlog" --displaySubtasks "all"
+hypertask view create \
+  --name "Draft documentation" \
+  --project 15 \
+  --section "Backlog" \
+  --base-query '{"displaySubtasks":"basic"}'
+
+# Show the basic-view results: only titles and descriptions are returned
+hypertask view show draft-documentation
+```
+
+#### Example 2: Omit subtasks for bots via MCP
+
+```json
+{
+  "view": {
+    "name": "scaffold-review-prompt",
+    "query": {
+      "displaySubtasks": "disabled"
+    }
+  }
+}
+```
+
+The resulting MCP backend load is reduced because subtask encodings are not marshaled or backfilled around read actions.
+
+#### Example 3: AI Chat respects saved-view subtask controls
+
+When interacting with AI Chat on a board, ensure that the context used matches the desired subtask visibility:
+
+- If the board visibility is **Visible** and the saved view uses `displaySubtasks: "all"`, the model sees full subtask data in its read outputs.
+- If the board visibility is **Visible** and the saved view uses `displaySubtasks: "disabled"`, subtasks do not appear in the Chat’s read context, reducing noise and space on narrow mobile displays.
+
+---
+
+## Why use visibility modes?
+
+- **Free and BYOK users** can share boards with inner-team guests by setting the board to **Dimmed**; guest users see placeholders for other teams.
+- **Boards that are shared externally** may set visibility to **Basic** to limit detailed data that isn’t relevant to external collaborators.
+- **Bot agents and scheduled MCP pipelines** may use **Disabled** subtask visibility in saved views to reduce payload size and operational noise.
+- **Kanban vs table layout compatibility**—low-detail modes ensure consistent views regardless of whether you are looking at cards or a table, without changing board-level visibility.
+
+---
+
+## Keyboard shortcuts
+
+From a board’s header:
+
+- **Ctrl+K** → **Edit board visibility** (opens a context menu with the four board modes)
+- **Ctrl+K** → **Save view** (creates or updates a saved view with any displaySubtasks mode)
+
+From any board or task list:
+
+- **Ctrl+S** (on a view) → **Save as view** (opens a dialog; includes a **Display subtasks** toggle)
+
+---
+
+## References
+
+<dl>
+  <dt>Browse features</dt>
+  <dd>
+    <LinkCard title="Tasks" href="/features/tasks/" />
+    <LinkCard title="Appearance & AI Models" href="/features/appearance/" />
+  </dd>
+</dl>
