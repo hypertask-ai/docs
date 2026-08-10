@@ -9,7 +9,7 @@ import { Aside, Card, Tabs, TabItem, LinkCard, Steps } from '@astrojs/starlight/
 
 Use **/time** from the command palette to open the time tracking interface:
 - **Timer mode**: Select a task on a board or table, or open its detail page, then press <kbd>W</kbd> to start or stop its timer
-- **Per-ticket time log modal**: Press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> â\x80\x94 "Log time") on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
+- **Per-ticket time log modal**: Press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> — "Log time") on an open ticket to open an in-place dialog (day-grouped entries with a total and inline add row for any date and duration; total updates in real time as you add rows)
 
 Both modes support saving the entry directly from the form.
 
@@ -132,17 +132,18 @@ Pause and resume are available in the app and via the MCP API endpoints `/api/ti
 ### Timer indicators
 
 - **Running timer badge**: Appears in the Kanban header (Ctrl+K view) showing the number of active timers on the board
-- **Per-board persistence**: Timer state is scoped per board â\x80\x94 starting a timer on one board doesn't affect timers on other boards
+- **Per-board persistence**: Timer state is scoped per board — starting a timer on one board doesn't affect timers on other boards
+- **Rail timer icon**: When time tracking is enabled, the App shell rail shows a **Timer** icon that opens the running-timers view
 
 #### Start a timer
 
 1. Select a task on the board or table, or open its detail page
-2. Press <kbd>W</kbd> â\x80\x94 the timer starts automatically
+2. Press <kbd>W</kbd> — the timer starts automatically
 3. Press <kbd>W</kbd> again to stop and save the entry
 
 #### Log time on an open ticket
 
-1. On an open ticket, press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> â\x80\x94 "Log time")
+1. On an open ticket, press <kbd>B</kbd> (or <kbd>Cmd+K</kbd> — "Log time")
 2. Day-grouped time entries appear with rows for each calendar day and a total at the top
 3. Click **Add row** to create a new entry for any date; type a duration in HH:MM or minutes (e.g., `1:30` or `90m`)
 4. Enter separate **Hours** and **Minutes** values for precise durations (e.g., 1 hour 30 minutes)
@@ -168,7 +169,7 @@ Pause and resume are available in the app and via the MCP API endpoints `/api/ti
 
 1. Apply filters you want to export
 2. Click **Export CSV**
-3. Open in Excel or Google Sheets â\x80\x94 times display as decimal hours ready for calculations
+3. Open in Excel or Google Sheets — times display as decimal hours ready for calculations
 
 ### Keyboard shortcut summary
 
@@ -178,8 +179,12 @@ Pause and resume are available in the app and via the MCP API endpoints `/api/ti
 <dd>Starts/stops a timer on the selected task</dd>
 <dt><kbd>B</kbd> on a ticket (open ticket only)</dt>
 <dd>Opens the per-ticket time log modal (in-place dialog; fires only outside text inputs)</dd>
-<dt><kbd>Cmd+K</kbd> â\x80\x94 "Log time"</dt>
+<dt><kbd>Cmd+K</kbd> — "Log time"</dt>
 <dd>Time log modal on any open ticket via the command palette</dd>
+<dt><kbd>7</kbd> on the App shell rail (when time tracking is enabled)</dt>
+<dd>Opens the running-timers overview</dd>
+<dt><kbd>Option</kbd>+<kbd>T</kbd> or <kbd>Alt</kbd>+<kbd>T</kbd> on an open task</dt>
+<dd>Starts/stops the open task timer in the task detail</dd>
 </dl>
 </Aside>
 
@@ -197,6 +202,7 @@ Pause and resume are available in the app and via the MCP API endpoints `/api/ti
 - Time report now includes date presets (Yesterday, Last week, Last month, Custom), clickable durations, and split Hours/Minutes fields
 - The time log modal and /time entry form support Hours, Minutes, h:mm:ss precision, and per-date local-noon storage with multi-select filters per entry
 - The `/time` view now includes the standard app navigation rail
+- Fixed recurrence date logic: long-abandoned fixed-period recurrences are fast-forwarded instead of stopping at 400 steps, preventing occurrences from spawning in the past
 
 </details>
 </Aside>
