@@ -95,6 +95,75 @@ Knowing these endpoints were already unused, this change does not affect integra
 
 ---
 
+## Webhooks
+
+Webhooks let external systems subscribe to events on your Hypertask tasks. When an event occurs (such as a task being created, assigned, or updated), Hypertask sends a POST request to your configured webhook URL with the event payload.
+
+<Aside type="tip">
+Task lifecycle events are included in subscriptions that previously tracked only subscription metadata. Create or update a subscription's metadata to trigger task lifecycle webhook deliveries.
+</Aside>
+
+### Event Types
+
+Webhook events travel through your subscription's metadata and are emitted when tasks in that subscription are created, assigned, or updated.
+
+| Event name | Description |
+|-----------|------------|
+| `task.created` | Fired when a new task is created. |
+| `task.assigned` | Fired when a task is assigned to a user or agent. |
+| `task.updated` | Fired when a task is modified (title, description, priority, sections, etc.). |
+
+### Payload Shape
+
+Each webhook event payload follows this shape:
+
+```json
+{
+  "event": "task.created | task.assigned | task.updated",
+  "task_id": 789,
+  "ticket_number": "ENG-42",
+  "project_id": 123,
+  "data": {
+    // Event-specific metadata
+  },
+  "timestamp": "2026-08-08T10:30:00Z"
+}
+```
+
+### Subscriptions
+
+Create or update a subscription to define which webhook events to listen to. The subscription's `metadata` field is used to signal the relevant task lifecycle events for that subscription through headers such as:
+
+- `X-Event-Type: task.created`
+- `X-Event-Type: task.assigned`
+- `X-Event-Type: task.updated`
+
+When `metadata` is set correctly on a subscription, Hypertask emits task lifecycle events to your webhook endpoint for tasks within that subscription's scope.
+
+### Example Subscription Update
+
+To enable task lifecycle events on a subscription, update its metadata to include signal headers:
+
+```bash
+curl -s -X PATCH \
+  -H "Authorization: Bearer $HT_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "metadata": {
+      "X-Event-Type": ["task.created", "task.assigned", "task.updated"]
+    }
+  }' \
+  "https://app.hypertask.ai/api/v1/webhook/subscriptions/SUB_ID"
+```
+
+### Deliveries
+
+- Each event is delivered once per subscription when the corresponding task state changes.
+- Events are queued and sent when subscribed to; updating subscription metadata provides visibility into which events are active.
+- The payload includes explicit `task_id`, `ticket_number`, and `project_id` for routing.
+
+---
+
 ## Calling the API Directly from Agents
 
 The Hypertask CLI is a thin wrapper around the REST API. Every CLI command ultimately calls a route under `https://app.hypertask.ai/api/mcp/*`. You can call those same routes directly with `curl` or any HTTP client, bypassing the Node.js process startup cost.
