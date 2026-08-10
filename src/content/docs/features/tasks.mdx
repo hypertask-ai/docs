@@ -34,20 +34,22 @@ You can also add tasks directly in any column via the bottom-of-column quick-ent
 From a board, note the **AI Task Writer** bottom composer in columns and cards.
 
 **Mobile waveform and layout**:
-
 - The waveform sits full-width at the bottom of the composer; the action row stays anchored and swiping on narrow screens keeps the controls reachable.
 - On screens at 390px or narrower, the **Back pill** is removed to avoid overlapping the waveform; this eliminates the border-padding issue on small viewports where the pill would overlap the waveform controls.
 - Waveform buttons (mic, pause, play) are present and fully visible so you can dictate and review your draft without scrolling.
 
 **Dictation and save**:
-
 - Tap **Dictate** to start mobile dictation via the microphone; in the composer you can say your task description and pauses.
 - Saving a dictated draft is automatic when you confirm on the action row; no extra manual save roundtrip is required.
 - The workflow cloaks distraction: check list formatting, attach links, and adjust priority before releasing a clean draft.
 
 **Create via composer**:
-
 - For quick task ideas while swiping columns on mobile, use the AI Task Writer composer directly; type, dictate, and save to instantly create the task from the same surface.
+
+**Actions**:
+- The action row now features prominent **Send** (submit) and **Resend** actions; both are sized at 44px with equal prominence.
+- Sending a task pauses any in-flight request and disables the **Resend** button until the action completes, preventing rapid double-submission.
+- Resend can be used to revise the task and submit again without requiring a fresh keyboard/voice snapshot.
 
 ## Editing a task
 
@@ -73,7 +75,6 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 ## Task detail view
 
 Open a task to see:
-
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
@@ -83,10 +84,13 @@ Open a task to see:
 
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
 
+**Mobile dictation interaction**:
+- On mobile screens, posting a comment no longer spurs unintended dictation that can overlap with nearby action buttons.
+- Send and Resend are treated as semantic click-driven actions; their target remains fixed before the click event, preventing the browser's click emission from retargeting to unintended controls.
+
 ### Actions
 
 Common actions include:
-
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the <a href="https://docs.hypertask.ai/features/boards/">Boards & Sections</a> docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
