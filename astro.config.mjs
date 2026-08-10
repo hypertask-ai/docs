@@ -55,6 +55,7 @@ export default defineConfig({
           'features/superhuman-snippets',
           'features/observability',
           'features/slack',
+          'features/agents',
         ],
         },
         {
