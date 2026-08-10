@@ -80,6 +80,11 @@ An AI agent can update task metadata in a visible way—priority, assignees, lab
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
 
+## ChatProvider and hooks
+When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the <code>ChatProvider</code> boundary. This prevents hydration errors and ensures proper context control for hooks like <code>useAiChatContext</code>.
+
+This is automatically handled for standard flows—use the AI Task Writer, context menus, and panel-based chat—and is handled by the fallback behavior on detail pages that load the provider safely.
+
 ## AI access and entitlement
 AI access is controlled through an allowance model based on team plan type. The gateway routes requests to dedicated credentials for internal teams, paid and legacy plans, and the allowance key for Free and BYOK subscriptions.
 
@@ -115,8 +120,8 @@ Use the mode group in the chat surface:
 
 1. Open AI chat from the app rail (press <kbd>5</kbd> or <kbd>]</kbd>) or from within a board or table view.
 2. Choose a display mode using the mode buttons in the chat header:
-   - Full‑screen
-   - Right‑side panel
+   - Full–screen
+   - Right–side panel
    - Floating window
 
 ### Mode persistence
