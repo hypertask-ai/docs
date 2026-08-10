@@ -5,7 +5,7 @@ description: "Organize work with Kanban-style boards, customizable sections, and
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** â\x80\x94 a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
 ## Creating a board
 
@@ -19,12 +19,12 @@ If you invoke AI board creation and the model doesn't return a response after 45
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
-- **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
-- **Overdue** — tasks whose due date has passed and are not in a done column.
-- **Blocked** — tasks blocked by another task or waiting on a person.
-- **Agents** — tasks assigned to an AI agent.
+- **My Tasks** â\x80\x94 tasks assigned to you. Each member sees their own slice of the board.
+- **Overdue** â\x80\x94 tasks whose due date has passed and are not in a done column.
+- **Blocked** â\x80\x94 tasks blocked by another task or waiting on a person.
+- **Agents** â\x80\x94 tasks assigned to an AI agent.
 
-Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice — it never changes the board's saved default view.
+Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice â\x80\x94 it never changes the board's saved default view.
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
@@ -126,7 +126,7 @@ The left sidebar organizes your boards into collapsible teams. When you group bo
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chatâ\x80\x94all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 Additionally, fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent; the Important split is available via the `notificationMatrix` flag.
@@ -172,7 +172,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 
 ```jsx
 // flowsProps.tsx or shared-modal.jsx
-// legacySizing omitted — uses compact tokens
+// legacySizing omitted â\x80\x94 uses compact tokens
 <Modal title="Task Details" open={isModalOpen}>
   <div className="modal-content">
     <Input label="Title" />
@@ -199,7 +199,7 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the boardâ\x80\x94after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive shortcuts.
 
@@ -210,5 +210,11 @@ This behavior matches the expectations you're used to in similar Kanban tools an
 Hover states on the left rail now correctly highlight the active item. The rail matches the current path, so when you navigate to `/time`, the Timers item in the rail shows as active.
 
 This change fixed a subtle issue where the rail highlight could not detect the active state because the URL path used by the client is always `/time` (or `/time?running=1`), even when the original navigation entered via `/timers`. Now the rail state is consistent with the surface you're viewing.
+
+## Mobile board layout
+
+On narrow mobile screens, split columns on boards are constrained by a maximum height. Previously, the column container clamped at 92% of the viewport height, which could leave tasks partially off-screen or cut off before reaching the true bottom of the list.
+
+With this update, the column container scrolls up to 98% of the viewport height, giving you enough reach to see all items in a split without scrolling beyond the document. Keyboard shortcuts and the board's detail/preview remain fully accessible. If you were working around a previously truncated view, this resolves the cutoff issue entirely and restores sticky headers when the quick-tips bar is hidden.
 
 ---
