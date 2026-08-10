@@ -11,7 +11,7 @@ BYOK lets you bring your own API keys and providers directly into Hypertask. Add
 
 Add a key from any supported provider directly in your workspace:
 
-1. Open the **Board** menu (**ØK** or click the board icon)
+1. Open the **Board** menu (**⌘K** or click the board icon)
 2. Select **Board settings** or go to **Settings > Keys & providers**
 3. Click **Add provider** and choose from the available options, or paste a provider URL for custom endpoints
 
@@ -25,6 +25,27 @@ Hypertask supports the following provider types:
 
 <Aside type="note">
 Provider access is tied to your project-level permissions. Only owners and admins can add or remove keys for a project.
+</Aside>
+
+## GDPR-safe mode (HTPR-4405)
+
+Enable GDPR-safe mode to remove all China-hosted providers from your configuration across the platform. This toggle removes providers from settings and selectors and rejects BYOK keys that list China-hosted endpoints. The setting applies globally to your team workspace and persists across devices.
+
+### How GDPR-safe mode works
+
+When you enable GDPR-safe mode:
+
+- **China-hosted providers are rejected:** Keys and custom endpoints pointing to providers hosted in China (e.g., Alibaba Cloud regions, Tencent Cloud regions) are removed from your saved configuration and cannot be used.
+- **Settings and selectors are cleaned:** China-hosted entries are removed from settings, preference selectors, and validation flows.
+- **BYOK validation:** By adding a new key with a China-hosted endpoint, the validation endpoint rejects it and surfaces a clear error.
+- **System-wide impact:** Features like Gateway fallback and backend latency optimization climb back to non-China endpoints when available.
+
+### Enabling GDPR-safe mode
+
+To enable, go to **Settings > Privacy** and toggle **GDPR-safe mode** on. The change takes effect immediately and persists for your team.
+
+<Aside type="tip">
+GDPR-safe mode does not affect regions outside of China. It specifically targets providers and endpoints hosted within mainland China.
 </Aside>
 
 ## Managing Your Keys
