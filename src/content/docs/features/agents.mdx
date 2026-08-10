@@ -31,6 +31,24 @@ From the AI pane:
 
 Tokens inherit the agent’s board and permission scope at creation time. Revoke a token to force the agent to exit any in-flight workflows and to stop all API access.
 
+## Security
+
+<Tabs>
+
+<TabItem value="token-security">
+
+**Agent token exposure:** Agent tokens are only rendered in the UI when they are actively being used (for example, when you are viewing the AI details for an agent or expanding its connection panel). Collapsed or hidden agent panels no longer mount token-bearing content, reducing the surface area for XSS- or devtools-based token extraction.
+
+</TabItem>
+
+<TabItem value="practical-tips">
+
+**If you see a token expose error:** Ensure you are not manually editing hidden panel HTML. Tokens should only be used through the authenticated API or MCP setup UI.
+
+</TabItem>
+
+</Tabs>
+
 ## Agent workflows
 
 Add agents to step-based workflows using the MCP agent team infrastructure. Each step can invoke a different tool, inspect intermediate results, and transact changes to tasks or comments.
