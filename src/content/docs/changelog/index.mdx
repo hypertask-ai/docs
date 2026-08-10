@@ -14,13 +14,15 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 10, 2026">
-  * Added: Task lifecycle webhook eventsâ\x80\x94task.created, task.assigned, and task.updatedâ\x80\x94emitted on task creation, assignment, and updates ([HTPR-5168](https://app.hypertask.ai/detail/project-15/5168))
+  * Added: Task lifecycle webhook events—task.created, task.assigned, and task.updated—emitted on task creation, assignment, and updates ([HTPR-5168](https://app.hypertask.ai/detail/project-15/5168))
   * Improved: Saved views remember their board/table layout preference; unset views inherit the browser default ([HTPR-5132](https://app.hypertask.ai/detail/project-15/5132))
   * Improved: Built-in views restore your browser's Board/Table preference when you open them ([HTPR-5246](https://app.hypertask.ai/detail/project-15/5246))
-  * Improved: Keyboard-driven cross-section movement and vertical reorderingâ\x80\x94press `Shift` + `J/K` to reorder within a column, and `Shift` + `L/H` to throw cards to adjacent columns (cards persist their original position, then restore) ([HTPR-5057](https://app.hypertask.ai/detail/project-15/5057))
+  * Improved: Keyboard-driven cross-section movement and vertical reordering—press `Shift` + `J/K` to reorder within a column, and `Shift` + `L/H` to throw cards to adjacent columns (cards persist their original position, then restore) ([HTPR-5057](https://app.hypertask.ai/detail/project-15/5057))
   * Improved: Inbox Zero now counts only visible, unarchived Inbox items and archives exactly those rows behind selected items ([HTPR-5281](https://app.hypertask.ai/detail/project-15/5281))
   * Improved: Mobile Task Writer actions are more prominent; Send and Resend are now 44px with reduced double-submission risk ([HTPR-5290](https://app.hypertask.ai/detail/project-15/5290))
   * Fixed: Board split columns now scroll far enough to show all tasks on narrow mobile screens ([HTPR-5096](https://app.hypertask.ai/detail/project-15/5096))
+  * Fixed: Shared-page hydration errors no longer crash when opening shared document view ([HTPR-5283, HTPR-5282](https://app.hypertask.ai/detail/project-15/5283))
+  * Fixed: Concurrent first autosave for a draft no longer returns 500 error ([HTPR-5295](https://app.hypertask.ai/detail/project-15/5295))
 </Update>
 
 <Update label="August 9, 2026">
@@ -37,7 +39,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (HTPR-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (HTPR-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without imagesâ\x80\x94two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images—two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
