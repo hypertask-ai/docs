@@ -26,6 +26,21 @@ The inbox can be grouped into multiple views:
 | **Search** | Search icon | Text-based search across all boards |
 | **Notifications** | Notification icon | List of all notification types |
 
+## Collaborate on the inbox
+
+Use **Snack bar** buttons on inbox rows to quickly consume notifications or undo actions. Swipe the row to reveal cleanup actions on narrow screens.
+
+### Snack bar options
+
+| Button | Action |
+|--------|--------|
+| **Snooze** | Temporarily hide from your feed |
+| **Dismiss** | Remove and ensure future updates don't resurface |
+| **Undo** | Revert a dismissed notification or undone action |
+| **Undo all / Dismiss all** | Apply the action to visible rows matching the filter |
+
+Snack bar buttons appear at the bottom of an inbox row and can be accessed via swipe on mobile or click on desktop.
+
 ## Agent notifications
 
 Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
@@ -55,118 +70,27 @@ OpenWiki refresh periodically pulls the latest RAG content from connected docume
 OPENWIKI_GATEWAY=https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT/YOUR_SERVICE
 ```
 
-## Split views and empty state
+## Read model for returning visits
 
-Inboxes may include the Important split to group tasks by importance, helping you focus on the most relevant items at the top of your feed:
+Returning users now see a synchronized local IndexedDB read model in the Inbox. This makes returning visits faster by preserving local state across sessions and providing resilient updates when the network returns.
 
-### Important split
+### How read model works
 
-Use the <strong>Important</strong> split to keep high-priority tasks visible first:
-- Shows only tasks and notifications marked as Important
-- Rows appear in priority order and timeline-sorted (oldest when they became Important; updated rows bubble to the top)
-- Tasks qualify as Important when they're addressed to you (mentions, assignments, your own reminders) and still active in your current board
+When you navigate to the Inbox on a return visit:
 
-<Aside type="note">
-The Important split is automatically enabled for fresh guest inboxes and provides immediate clarity on your high-priority work.
-</Aside>
+- **Local state restoration**: IndexedDB reads your cached state locally before waiting for network confirmation. This reduces initial load time and improves perceived responsiveness.
+- **Optimistic updates**: Local writes are immediately persisted and reflected in the UI while the server acknowledges them.
+- **Reconciliation on refresh**: Network changes are reconciled with your local cache, and the freshest data is presented. Older local updates are discarded in favor of newer server state.
 
-## What an inbox row shows
+### Timeline-sorted returning visits
 
-Each row is `sender (unread count) · subject · chips · timestamp`.
+For returning users, inbox rows appear in timeline-sorted order (updates bubble to the top within the last 24 hours). This gives you a prioritized view of recently updated notifications without needing to dig through archives.
 
-- **The number in brackets beside the sender is the unread count for that ticket, not its total comments.** A ticket with 27 comments of which 2 are unread shows `(2)`. The bracket is omitted when nothing is unread.
-- **The blue dot** still marks the row itself as unseen. The bracket and the dot answer different questions: the dot is "this row is new", the bracket is "this ticket has N things you have not read".
-- **An overdue task carries no "Task is overdue" text.** The due-date chip renders in the overdue red instead, so the signal is the date rather than a phrase repeated on every row.
+### Indexing across boards
 
-## Archived tasks take their notifications with them
+The read model follows your account-scoped setting. When you switch boards and return to the Inbox, your local cache adapts to your workspace context and presents the most relevant notifications.
 
-**Notifications on an archived task do not appear in the inbox, including `@mentions`.** The inbox query filters to tasks with `status: Normal`.
-
-The notification rows are still created in the database; the inbox simply does not display them. So a comment or a mention posted on a ticket you have already archived reaches nobody, whether a person or an agent posted it.
-
-If you need someone to see a comment, check the ticket is not archived first.
-
-## Read receipts
-
-Turn on read receipts in a board's Settings page to get visibility into whether others have seen your comments:
-- **Toggle per board:** Go to Settings and enable read receipts for a specific board.
-- Start receiving receipts once you turn them on: receipts appear as soon as other members of the board have read your comments.
-
-Use read receipts to track whether your messages were seen without sending a follow-up.
-
-## Mention-based notifications
-
-When someone @mentions you on a task or comment, the notification appears in your inbox with a personal touch. Mention email notifications now:
-- **Lead with your name** — The email greeting starts with "Hi [Your Name]," making it feel more direct and readable
-- **Signal 1:1 mentions** — A clear badge or visual indicator marks the mention as a direct tag, distinguishing it from channel-wide tags or other notifications
-- **Include personal CTAs** — Call-to-action buttons in the notification (or inbox view) are tailored to action on the mentioned task
-- **Show reply preview in snippet** — When someone replies below a mention, the reply preview strips blockquotes, empty headers (like "@name said"), and other quoted content before displaying the actual message in the inbox
-
-For moderate mention volume, tasks appear directly in your inbox with the mention context attached. For high mention frequency, the inbox aggregates mentions you can review at a glance while still preserving the one-on-one nature of individual tags.
-
-## Snooze
-
-Temporarily hide notifications from appearing in your feed. Snoozed items are resurfaced after the specified duration on a specified date.
-
-Use **Snooze** in two ways:
-1. **Notification actions** — click the S button on a notification and choose a future time
-2. **Task Snooze** — within a task detail, use <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and run **Snooze**, then pick the duration and date. The notification is hidden until the timer expires.
-
-When a snoozed notification resurfaces, it re-enters your inbox at the top of the list.
-
-## Agent notifications
-
-Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
-
-### Real-time agent inbox
-
-Agent notifications now update in real-time using WebSocket connections. As agent mentions, assignments, or follow-ups occur, the server broadcasts updates instantly to all subscribed clients on app, CLI, MCP, and manifest surfaces. This works in parallel with general real-time inbox updates described in the next section.
-
-### Guest Hyper AI seeded notifications
-
-Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
-
-### Demo sign-in: guest boards only for new empty accounts
-
-When you sign in via demo links, existing accounts that already own or belong to any board receive no new guest seeds. Guest inboxes on new accounts are limited to 4 seeded notifications from a Hyper AI agent, and guest rows expire automatically after 24 hours. This keeps demo environments focused on fresh adoption without clogging accounts with pre-existing content.
-
-## User unsubscribe on notification emails
-
-Each notification email now includes one-click unsubscribe headers that work with Gmail, Yahoo, and other major mail clients. The unsubscribe flow is handled entirely server-side through a no-auth endpoint, requiring no login to opt out of future notification emails.
-
-If you frequently receive too many email notifications, you can unsubscribe from the list view using the action button on select notifications to permanently turn off email delivery for that category.
-
-<Aside type="note">Unsubscribing affects all notification deliveries across boards. To adjust per-board or per-type granularity, use board settings and notification controls.</Aside>
-
-## Awaiting Delete notifications
-
-Notifications that trigger a follow-up action (such as undo or dismiss) include an **Awaiting Delete** badge and show action buttons:
-- **Undo** — Revert the operation (e.g., re-create a deleted task, re-add a dismissed notification)
-- **Dismiss** — Hide the notification and block it from returning (e.g., clear invites that were rejected)
-- **Undo all** or **Dismiss all** — Apply the action to all matching rows in the filtered list
-
-These notifications appear at the top of the list because they require your decision.
-
-## Important
-
-**Important** represents tasks and notifications that matter specifically to you, filtering the inbox to show only rows relevant to your work. Tasks in Importance qualify based on:
-- Addressed to you (mentions, assignments, your own reminders, returned snoozes)
-- Live context (the task itself, comments on your tasks, overdue status for tasks you're personally assigned)
-- Your involvement (description edits for tasks you're personally assigned)
-
-Rows in Important are shown in priority order and timeline-sorted (oldest first when they became Important; updated rows bubble to the top). Use the <strong>Important</strong> filter in the inbox to focus only on your most relevant activity.
-
-<Aside type="note">Important is applied to all workspaces where you have permissions. Tasks marked Important in one board are visible in the Important view of that board.</Aside>
-
-## Bookmarking
-
-Mark notifications and comments with the star icon to pin them as favorites. Bookmarked items appear at the top of the list, helping you quickly access key updates or important threads.
-
-## Inbox header layout
-
-The inbox and calendar header rows now share guest CTAs (e.g., "New task" and "Add board") with calendar filter controls in a unified gutter, maintaining consistent visual alignment across surfaces. This reflow keeps both inbox and calendar headers in sync for a clearer touch target grid.
-
-## Real-time inbox updates
+## Real-time updates
 
 Inbox notifications now update in real-time using WebSocket connections. As notifications are created or changed, the server broadcasts updates to all connected clients, eliminating manual page refreshes.
 
@@ -174,14 +98,6 @@ Inbox notifications now update in real-time using WebSocket connections. As noti
 - **Broadcast mechanism:** `broadcastInboxChange` fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest).
 
 This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
-
-## Post-delete and post-archive behavior
-
-When you delete or archive a task, the inbox updates accordingly:
-- **Archive** now hides the row in the inbox (previously it lingered)
-- **Delete** now removes the row live, so deleted tasks no longer appear in queries or MCP endpoints
-
-All reads (inbox, badge count, agent inbox, MCP) now require the task to be normal, ensuring deleted or archived items are excluded consistently.
 
 ## Keyboard shortcuts
 
@@ -191,12 +107,8 @@ All reads (inbox, badge count, agent inbox, MCP) now require the task to be norm
 - <kbd>Space</kbd> — Mark current item as read/unread
 - <kbd>Esc</kbd> — Close modal, draft error, or focused search
 
-### Swipe-through-unread (mobile only)
+### Merge actions
 
-Use <kbd>Ctrl</kbd> + <kbd>K</kbd> → **Swipe through unread** to open the card stack over the inbox unread list:
-- Swipe right or press → to mark the notification as read
-- Swipe left or press ← to keep it unread
-- Undo is available at the top of the stack
-- One bulk archive call runs on exit to clean up your feed
+Use <kbd>Ctrl</kbd> + <kbd>K</kbd> — **Merge into inbox** to consolidate multiple activities into a single notification entry.
 
-This gives you a Tinder-style review of your inbox items on mobile, with keyboard support on desktop.
+<Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</Aside>
