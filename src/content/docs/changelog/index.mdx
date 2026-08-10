@@ -15,7 +15,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 10, 2026">
   * Improved: Mobile Task Writer actions are more prominent; Send and Resend are now 44px with reduced double-submission risk ([HTPR-5290](https://app.hypertask.ai/detail/project-15/5290))
-  * Fixed: Shared-page SSR boundary no longer crashes when opening a public document view ([HTPR-5283, HTPR-5282, HTPR-5301](https://app.hypertask.ai/detail/project-15/5301))
+  * Fixed: Rich HTML content in public shares no longer triggers React hydration mismatch errors; all #418 and related boundary-flush issues are resolved ([HTPR-5303, HTPR-5304, HTPR-5306](https://app.hypertask.ai/detail/project-15/5306))
   * Fixed: Agent tokens are no longer rendered in hidden or collapsed connection panels ([HTPR-5297](https://app.hypertask.ai/detail/project-15/5297))
   * Fixed: Board split columns now scroll far enough to show all tasks on narrow mobile screens ([HTPR-5096](https://app.hypertask.ai/detail/project-15/5096))
   * Fixed: Concurrent first autosave for a draft no longer returns 500 error ([HTPR-5295](https://app.hypertask.ai/detail/project-15/5295))
