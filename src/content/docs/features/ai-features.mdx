@@ -44,7 +44,7 @@ When you open a fresh guest showcase board, click Ctrl+K to open the board picke
 
 - Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
 - Ask the AI to build this board for you — Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
-- Run tasks / tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
+- Run tasks/tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
@@ -99,6 +99,34 @@ The gateway now maps eligible users to appropriate default models based on team 
 - **Free and keyless BYOK teams** default to **Luna Standard** instead of premium Luna, preventing silent failures when selecting models.
 
 This repair ensures consistent default model access aligned with plan capabilities.
+
+## AI chat display modes (HTPR-4207)
+AI chat can be shown in different surfaces depending on how you want to work with it.
+
+### Supported display modes
+You can switch between these display modes:
+
+- **Full-screen** — The chat panel expands to fill your screen without any other surfaces visible.
+- **Right-side Copilot panel** — The chat appears as a panel on the right, letting you keep other content visible while you ask AI questions.
+- **Floating window** — The chat floats in a draggable window that you can position anywhere. This mode persists across reloads.
+
+### How to switch modes
+Use the mode group in the chat surface:
+
+1. Open AI chat from the app rail (press <kbd>5</kbd> or <kbd>]</kbd>) or from within a board or table view.
+2. Choose a display mode using the mode buttons in the chat header:
+   - Full‑screen
+   - Right‑side panel
+   - Floating window
+
+### Mode persistence
+The selected display mode is remembered automatically:
+
+- Click any mode to apply it.
+- If you reload the page or re-open the chat, it returns to the mode you used last.
+- Full-screen mode and floating mode persist; if you switch, the new mode is retained across sessions.
+
+Use the mode that fits what you're doing—full-screen for focused deep-work, right-side for quick answers, or floating for keeping context visible on top of your boards or tasks.
 
 ## Help-site AI chat
 The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. It connects directly to the full Hypertask documentation site, including CLI, MCP, REST API, and agent docs.
