@@ -11,9 +11,9 @@ Hypertask lets you control how things look and how AI behaves. Choose from multi
 
 Hypertask offers several built-in themes to suit your visual preference. All themes respect system fonts and support theming of emoji icons and modals.
 
-- **Light** â\x80\x94 Clean, high-contrast look for bright environments. Uses porcelain as the default visual style in UI elements like panels, borders, and accents.
-- **Dark** â\x80\x94 Dark grey panel background with amoled-friendly accents. Uses graphite as the default visual style.
-- **AMOLED** â\x80\x94 True black (#000) panel backgrounds with dense card styling and muted ticket IDs across boards.
+- **Light** — Clean, high-contrast look for bright environments. Uses porcelain as the default visual style in UI elements like panels, borders, and accents.
+- **Dark** — Dark grey panel background with amoled-friendly accents. Uses graphite as the default visual style.
+- **AMOLED** — True black (#000) panel backgrounds with dense card styling and muted ticket IDs across boards.
 
 ### Light and Dark theme style
 
@@ -48,9 +48,23 @@ Themes in Hypertask apply across:
 - AI chat input and model selector
 - Portrait rail icons and navigation labels
 
-### Rich text and embedded content
+## Mobile touch targets
 
-Task descriptions and comments support rich HTML content, including video embeds. Hypertask's editor and API now preserve embeds from supported sources like YouTube, Loom, Vimeo, and Figma. When you add a video embed, it’s rendered directly in task cards and view summaries, and the embedded content is retained across API reads and writes. This makes it easier to keep context about recordings, demos, and design specs without manually linking to external sites.
+Mobile controls now enforce a 44px minimum touch target across the entire app-wide standard. This rule applies to all icon buttons, tool buttons, navigation items, header controls, and interactive shortcuts, making touch interactions uniform and reliable regardless of device size. This change simplifies gesture patterns and improves usability for touch-based workflows.
+
+### Touch target checklist
+
+- All icon buttons and commands meet or exceed 44×44 px
+- Header and rail icons respect the larger base size
+- Keyboard shortcuts that invoke commands are associated with tap targets large enough to target comfortably
+
+<Aside type="tip">
+The 44px minimum touch target is a single app-wide rule rather than a series of patch-level fixes. This ensures consistent behavior everywhere you interact with Hypertask on mobile.
+</Aside>
+
+## Rich text and embedded content
+
+Task descriptions and comments support rich HTML content, including video embeds. Hypertask's editor and API now preserve embeds from supported sources like YouTube, Loom, Vimeo, and Figma. When you add a video embed, it's rendered directly in task cards and view summaries, and the embedded content is retained across API reads and writes. This makes it easier to keep context about recordings, demos, and design specs without manually linking to external sites.
 
 ---
 
