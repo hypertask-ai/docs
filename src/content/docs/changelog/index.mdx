@@ -18,6 +18,10 @@ export const Update = ({ label, children }) => (
   * Improved: Plan access guidance messages now clearly indicate when a model requires a paid plan or an owned API key ([HTPR-5287](https://app.hypertask.ai/detail/project-15/5287))
   * Improved: Global Alt+Number board-jump shortcuts now work on all views when the app-shell rail is enabled, making board navigation truly global across the app ([HTPR-5126](https://app.hypertask.ai/detail/project-15/5126))
   * Improved: Synchronized IndexedDB is now the default read model for authenticated Board and Table routes, keeping data in sync across views without a manual refresh ([HTPR-5260](https://app.hypertask.ai/detail/project-15/5260))
+  * Fixed: Rich HTML content in public shares no longer triggers React hydration mismatch errors; all #418 and related boundary-flush issues are resolved ([HTPR-5303, HTPR-5304, HTPR-5306](https://app.hypertask.ai/detail/project-15/5306))
+  * Fixed: Agent tokens are no longer rendered in hidden or collapsed connection panels ([HTPR-5297](https://app.hypertask.ai/detail/project-15/5297))
+  * Fixed: Board split columns now scroll far enough to show all tasks on narrow mobile screens ([HTPR-5096](https://app.hypertask.ai/detail/project-15/5096))
+  * Fixed: Concurrent first autosave for a draft no longer returns 500 error ([HTPR-5295](https://app.hypertask.ai/detail/project-15/5295))
 </Update>
 
 <Update label="August 10, 2026">
@@ -42,7 +46,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([htpr-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â€” two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images — two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
@@ -157,7 +161,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Kanban switcher `Ctrl+B` now consistently opens the board palette from any route ([htpr-4696](https://app.hypertask.ai/detail/project-15/4696))
   * Added: User AV2 temporarily disabled while investigating playback issues; a full migration over ATSP to ATAP is in progress ([htpr-4744](https://app.hypertask.ai/detail/project-15/4744))
   * Fixed: Time tracking tooltip now correctly shows the last tracked duration even if the user is currently editing another timer ([htpr-4758](https://app.hypertask.ai/detail/project-15/4758))
-  * Added: Accepts `timers` path for legacy links; /timers now redirects to /time with `running=1` query param ([htpr-4774) ([htpr-4774](https://app.hypertask.ai/detail/project-15/4774))
+  * Added: Accepts `timers` path for legacy links; /timers now redirects to /time with `running=1` query param ([htpr-4774]([htpr-4774](https://app.hypertask.ai/detail/project-15/4774)))
   * Added: Timers rail item now correctly highlights as active when on the /time surface ([htpr-4774](https://app.hypertask.ai/detail/project-15/4774))
 </Update>
 
