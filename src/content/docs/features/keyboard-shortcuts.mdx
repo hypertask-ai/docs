@@ -73,7 +73,7 @@ On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> opens the command palette in addition to 
 | Set due date | <kbd>Shift</kbd> + <kbd>D</kbd> | <kbd>Shift</kbd> + <kbd>D</kbd> |
 | Move task to a different board | <kbd>Shift</kbd> + <kbd>M</kbd> | <kbd>Shift</kbd> + <kbd>M</kbd> |
 | Toggle voice dictation | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>N</kbd> |
-| Global Alt+Number (rail surfaces 2–7) | <kbd>Shift</kbd> + <kbd>5</kbd> | <kbd>Shift</kbd> + <kbd>5</kbd> |
+| Global Alt+Number (rail surfaces 2–7) | <kbd>Alt</kbd> + <kbd>2-7</kbd> | <kbd>Ctrl</kbd> + <kbd>2-7</kbd> |
 
 ## Board
 
@@ -291,9 +291,15 @@ The board palette joins <kbd>Ctrl+K</kbd> as a non-intrusive way to access works
 
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) then search for **"Latest Updates"** in the board palette or command palette to open the Latest Updates panel from any route in the app. This provides quick access to see recent activity across your boards without leaving your current view.
 
-## Global Alt+Number shortcuts (HTPR-5126)
+## Global Alt+Number board shortcuts (HTPR-5126)
 
-The global Alt+Number shortcuts <kbd>Alt</kbd> + <kbd>1-7</kbd> switch to the corresponding app-shell rail surface when the rail is enabled (Board = 2, Table = 3, etc.). When not using the rail, the rail surfaces are not available to map to. This mapping now persists correctly and is properly supported on all views when the rail is active.
+**Before:** On the table view or any board view, <kbd>Alt</kbd> + <kbd>1-7</kbd> shortcuts did nothing even when the app-shell rail was supposed to be active, causing them to behave as no-ops.
+
+**After:** When the rail is enabled, <kbd>Alt</kbd> + <kbd>2-7</kbd> now correctly switch to their corresponding surfaces (Board = 2, Table = 3, Calendar = 4, AI Chat dock = 5, and Search = 6) from any view. On Mac, the global board switcher uses <kbd>Ctrl</kbd> + <kbd>2-7</kbd> instead of <kbd>Cmd</kbd> to avoid interfering with tab switching.
+
+<Aside type="note">
+The app-shell rail and global Alt+Number shortcuts were designed to provide tactile, one-hand navigation across main surfaces. Enabling the rail (via account menu or command palette) unlocks these skips so they work reliably everywhere, not only on the rail itself.
+</Aside>
 
 ## Timer shortcuts (HTPR-4414)
 
