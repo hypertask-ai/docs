@@ -90,8 +90,8 @@ AI access is controlled through an allowance model based on team plan type. The 
 | Channel | Credentials | Default model | Notes |
 |---------|-------------|---------------|-------|
 | Internal team members and custom-deal teams | Dedicated managed-key registry (14 teams, 11 credentials) | Eligible users | Isolated from customer BYOK; production-ready and verified |
-| Paid, legacy, and comped teams | Dedicated routed keys by entitlement | Eligible users | Server-gated; consistent with paid product tiers |
-| Free and BYOK subscribers | Shared Free/BYOK included-allowance key | Luna Standard | Limited models; Premium models require server-gated entitlement |
+| Paid, legacy, and comped teams | Dedicated routed keys by entitlement | Luna Standard (5.6) | Server-gated; consistent with paid product tiers |
+| Free and BYOK subscribers | Shared Free/BYOK included-allowance key | Mini (5.4) for free/keyless BYOK; Luna Standard (5.6) for paid/buy-your-own-key BYOK | Usage limited to the models in your allocation |
 | Android app | PKCE OAuth tokens via native OAuth 2.1 flow | Eligible users | Native Android sign-in integrates with existing web PKCE OAuth; provides access to AI chat streaming and AI-assisted Task Writer |
 
 Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machines (mobile) at signup. Additional credits are available through verified use or contact.
@@ -99,13 +99,17 @@ Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machi
 ### Plan-aware default-model repair
 The gateway now maps eligible users to appropriate default models based on team entitlement:
 
-- **Eligible teams** (paid, legacy, comped) default to **Luna Standard**, bypassing premium model selection during task creation.
-- **Free and keyless BYOK teams** default to **Luna Standard** instead of premium Luna, preventing silent failures when selecting models.
+- **Paid, legacy, and comped teams** default to **Luna Standard (5.6)**, bypassing premium model selection during task creation.
+- **Free and keyless BYOK teams** default to **Mini (5.4)** with a corresponding downgrade to Mini-only allocation; BYOK teams with an owned key are eligible for Luna Standard.
+- Eligible BYOK squads reclaim **Luna Standard (5.6)** instead of staying on Mini, restoring Luna Standard as the design default for BYOK teams with an owned key.
 
-This repair ensures consistent default model access aligned with plan capabilities.
+**Recommended:** if you previously saw Mini as the visible or persisted default for paid or BYOK squads, verify that your plan shows Luna Standard as the eligible model and that your usage allocation permits Luna Standard.
 
 ### Plan access guidance
 When a model requires a paid plan or an owned API key, the system shows an appropriate upgrade/BYOK message to help teams align their models with the right plan or credential setup. This message is now surfaced correctly as guidance, while the handled-error reporter correctly does not create product bug tickets for this expected outcome.
+
+## Chat sidebar naming (HTPR-5268)
+After the first AI chat, the left rail expands and the launcher shows **AI Chat**. This name change conveys the assistant’s identity clearly, while fixed behavior and keyboard shortcut remain unchanged. Nothing in this page needs adjustment; the page already describes using AI chat and the app rail.
 
 ## AI chat display modes (HTPR-4207)
 AI chat can be shown in different surfaces depending on how you want to work with it.
