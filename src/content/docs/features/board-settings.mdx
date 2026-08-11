@@ -14,6 +14,7 @@ Board settings apply to individual boards on a project. They govern default beha
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
 - **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
 - **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
+- **Synchronized IndexedDB defaults** — For authenticated Board and Table routes, the synchronized IndexedDB read model is now enabled by default to keep data in sync across opened tabs without manual refresh. You can still opt into the local model by using <code>?local_db=0</code> in the URL.
 
 <Aside type="note">
 Board settings are stored at the board level, so you can tailor behaviors per workflow. Changes here apply immediately; monitor the effect on your active tasks.
@@ -36,6 +37,9 @@ Identify tasks that haven't moved recently.
 </Card>
 <Card title="Auto-assign rules" icon="user">
 Propagate responsibilities to unassigned cards.
+</Card>
+<Card title="Synchronized IndexedDB defaults" icon="database">
+Keep data in sync across browsers by default for authenticated board and table routes.
 </Card>
 </CardGrid>
 ```
@@ -147,3 +151,12 @@ Hypertask tracks rule executions at the board level for review:
 <Aside type="note">
 Hygiene protects performance and schema stability over time. Project owners should rely on boards and historiques for governance rather than logs after a few days.
 </Aside>
+
+## Synced IndexedDB defaults (HTPR-5260)
+
+You can choose between two read models for Boards and Tables:
+
+- **Synchronized IndexedDB (default)** — Active when no <code>?local_db=0</code> in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
+- **Local IndexedDB (optional)** — Activated by appending <code>?local_db=0</code> to the URL. Reads and writes stay in the local browser state, giving high performance with less CPU and a smaller footprint. Data may not reflect changes from other tabs or browsers until you reload.
+
+This defaults to the synchronized model for authenticated Board and Table routes. The system preserves the opt-out via URL flags, so local flow can still be opted into for testing or performance-sensitive workflows.
