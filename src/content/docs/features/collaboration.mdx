@@ -5,11 +5,13 @@ description: "Work together with team workspaces, real-time editing, mentions, r
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Hypertask is built for teams â\x80\x94 whether that\'s two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
+Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
 ## Follower notifications
 
-When you mention someone on a task, they\'re automatically added as a follower so they receive updates. Hypertask also respects the explicit follower field on task pages: sending those emails now uses the correct recipient key, so deliveries succeed without silent failures.
+When you mention someone on a task, they're automatically added as a follower so they receive updates. Hypertask also respects the explicit follower field on task pages: sending those emails now uses the correct recipient key, so deliveries succeed without silent failures.
+
+Profile photos are now included in assignment rows and activity history: photoURL is preserved across assignment and unassignment events, so cards, inbox items, and task detail history show the same person with a consistent avatar. When no usable image is available, the system falls back to initials instead of leaving holes.
 
 ## Slack integration
 
@@ -19,9 +21,9 @@ Connect Slack directly to Hypertask so decisions about tickets live where your t
 
 If your team minds decisions live in Slack instead of wandering into a separate tool:
 
-1. **Invite the Hypertask bot** to the Slack channel where you want to capture ticket candidates (e.g., `@Hypertask invite`).
+1. **Invite the Hypertask bot** to the Slack channel where you want to capture ticket candidates (e.g. `@Hypertask invite`).
 
-2. **Create a task from a thread** â\x80\x94 in any thread, type:
+2. **Create a task from a thread** — in any thread, type:
 
    ```
    @Hypertask create a task for this
@@ -33,20 +35,20 @@ The bot reads the entire thread, extracts a title and description using AI, crea
 
 When a Slack thread mentions a ticket (by ID like `HTPR-123` or URL), Hypertask watches for quiet cycles:
 
-- The bot monitors tabs and channels you\'ve connected.
+- The bot monitors tabs and channels you've connected.
 - When a thread goes idle for more than 30 minutes after receiving a ticket mention, it generates an AI summary and posts it as a comment on that ticket.
 - The summary includes the key points and a Slack permalink so you can continue the discussion there.
 
-This way, conversations that started in Slack don\'t die there â\x80\x94 they live permanently on the right ticket for your team and agents.
+This way, conversations that started in Slack don't die there — they live permanently on the right ticket for your team and agents.
 
 ### Requirements and setup
 
 - **Slack app permissions:** Ensure your Slack app has:
-  - `chat:write` â\x80\x94 to reply with ticket links
-  - `chat:write.public` â\x80\x94 to post in channels you don\'t own
-  - `channels:history` and `groups:history` â\x80\x94 to read thread context
-  - `app_mentions:read` â\x80\x94 to detect ticket mentions
-- **Channel watching:** You control which channels to watch (e.g., direct invite or workspace-wide discovery).
+  - `chat:write` — to reply with ticket links
+  - `chat:write.public` — to post in channels you don't own
+  - `channels:history` and `groups:history` — to read thread context
+  - `app_mentions:read` — to detect ticket mentions
+- **Channel watching:** You control which channels to watch (e.g. direct invite or workspace-wide discovery).
 - **Workspace scope:** Slack integrations are team-scoped, so your connection is tied to your Hypertask team and limited to boards and tasks you have access to.
 
 ### Comparison with existing Slack integrations
@@ -56,9 +58,9 @@ Hypertask natively integrates Slack with thread-aware sync, unlike the older wor
 | Feature | `ht-slack` Worker | `inne-slack-scout` Agent | Hypertask Slack Integration |
 |---------|-------------------|--------------------------|------------------------------|
 | Can read channel messages | No (mention/DM only) | No (mentions only) | Yes (full thread history) |
-| Links to existing tickets | No | No (drafts only) | Yes â\x80\x94 auto-watches threads |
+| Links to existing tickets | No | No (drafts only) | Yes — auto-watches threads |
 | Team-scoped | No (workspace fallback token) | Single-tenant | Team-scoped accounts |
-| AI-driven summaries | No | No | Yes â\x80\x94 auto-summaries on idle cycles |
+| AI-driven summaries | No | No | Yes — auto-summaries on idle cycles |
 
 ---
 
@@ -108,13 +110,13 @@ To see who contributes which tasks:
 Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
 
 ### Login flow
-1. **Initiate login** â\x80\x94 Click email code or magic-link in the login modal.
-2. **Server processes** â\x80\x94 Better Auth verifies your identity on the server.
-3. **Response includes cookies** â\x80\x94 The login response sets:
-   - **Better Auth session** â\x80\x94 Server-side session for your authentication.
-   - **nookies_user** â\x80\x94 Client-side user identity token.
-   - **ht_session** â\x80\x94 Server-validated signature for cookie integrity.
-4. **Redirect to board** â\x80\x94 You\'re redirected to a board in the app.
+1. **Initiate login** — Click email code or magic-link in the login modal.
+2. **Server processes** — Better Auth verifies your identity on the server.
+3. **Response includes cookies** — The login response sets:
+   - **Better Auth session** — Server-side session for your authentication.
+   - **nookies_user** — Client-side user identity token.
+   - **ht_session** — Server-validated signature for cookie integrity.
+4. **Redirect to board** — You're redirected to a board in the app.
 
 <Aside type="note">
 All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
@@ -122,17 +124,17 @@ All authentication flows are server-led. Firebase is retained exclusively for FC
 
 ### BYOK and API keys
 
-API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings â\x86\x92 Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
+API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
 
 ---
 
 ### Settings navigation
 
-The **Settings â\x86\x92 Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
+The **Settings → Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
 
-- **Base price** â\x80\x94 The full list price of your plan, shown with the expected period
-- **Discount** â\x80\x94 The discount amount applied if your team is eligible (e.g. for long-term commitments or enterprise pricing)
-- **Amount due** â\x80\x94 The final amount you pay after applying the discount
+- **Base price** — The full list price of your plan, shown with the expected period
+- **Discount** — The discount amount applied if your team is eligible (e.g. for long-term commitments or enterprise pricing)
+- **Amount due** — The final amount you pay after applying the discount
 
 <Aside type="tip">
 This billing view makes the effective cost of your plan more transparent, especially for discounted enterprise or long-term pricing tiers.
@@ -141,33 +143,33 @@ This billing view makes the effective cost of your plan more transparent, especi
 
 On every settings page, the viewport is now terminated by a **sticky footer** with quick access links and a labeled Sign out button:
 
-- **Feedback** â\x80\x94 icons for general feedback and contact page opening
-- **Sign out** â\x80\x94 prominent red button that updates to indicate action on hover
+- **Feedback** — icons for general feedback and contact page opening
+- **Sign out** — prominent red button that updates to indicate action on hover
 
-The previously misleading **Profile > Account** section is no longer displayed. Links previously reachable under "Profile â\x86\x92 Account" now redirect to their correct locations.
+The previously misleading **Profile > Account** section is no longer displayed. Links previously reachable under "Profile → Account" now redirect to their correct locations.
 
 - **Navigation footer** persists across navigation throughout settings pages
 - **Sign out behavior** is updated with visual feedback when hovered
 - **Last-visible anchor details** appear only when the user intentionally scrolls into view
 
 <Aside type="tip">
-The sticky settings footer ensures you can quickly reach feedback tools and sign out, no matter which settings panel you\'re in.
+The sticky settings footer ensures you can quickly reach feedback tools and sign out, no matter which settings panel you're in.
 </Aside>
 
 ### Switching accounts without logout
 
-When you\'re already logged in and want to switch to a different account (for example, on the same browser):
+When you're already logged in and want to switch to a different account (for example, on the same browser):
 
-1. **Initiate new login** â\x80\x94 Start logging in via email code or magic-link for the target account.
-2. **Previous session cleared** â\x80\x94 The login response now properly clears the previous user\'s Better Auth session cookies (Max-Age=0). This prevents the old user\'s session from persisting.
-3. **Fresh cookies set** â\x80\x94 Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
-4. **Redirect to board** â\x80\x94 You\'re now logged in as the intended user.
+1. **Initiate new login** — Start logging in via email code or magic-link for the target account.
+2. **Previous session cleared** — The login response now properly clears the previous user's Better Auth session cookies (Max-Age=0). This prevents the old user's session from persisting.
+3. **Fresh cookies set** — Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
+4. **Redirect to board** — You're now logged in as the intended user.
 
 This ensures that account switching works correctly and you always see the correct user in the app.
 
 ### Persistent sign-in state
 
-After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn\'t automatically log you out.
+After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn't automatically log you out.
 
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
@@ -177,34 +179,34 @@ If you persist LocalStorage across sign-ins or sessions (e.g. in test environmen
 
 ## Scope-aware agents and membership
 
-Agents and team members are now **team-scoped**: an agent\'s access is derived from the teams you belong to. This prevents cross-team leakage and ensures agents can only work on boards you have permission to access.
+Agents and team members are now **team-scoped**: an agent's access is derived from the teams you belong to. This prevents cross-team leakage and ensures agents can only work on boards you have permission to access.
 
 ### Team-scoped agents
 
-When you create an agent, it inherits access to all teams you\'re a member of:
+When you create an agent, it inherits access to all teams you're a member of:
 
-- **Access enforcement** â\x80\x94 Hypertask uses server-side gates to verify the creator\'s membership. If you don\'t have permission to add the agent to a team, the operation is rejected.
-- **Cross-team attachment prevented** â\x80\x94 Even if an agent exists under a team, it cannot be attached to a board or team you don\'t belong to. Any attempt to configure such an attachment fails server-side.
-- **No schema changes** â\x80\x94 Scoping is enforced via application logic, not database schema changes, keeping the database stable.
+- **Access enforcement** — Hypertask uses server-side gates to verify the creator's membership. If you don't have permission to add the agent to a team, the operation is rejected.
+- **Cross-team attachment prevented** — Even if an agent exists under a team, it cannot be attached to a board or team you don't belong to. Any attempt to configure such an attachment fails server-side.
+- **No schema changes** — Scoping is enforced via application logic, not database schema changes, keeping the database stable.
 
 This scoping applies when:
 
 - Inviting an agent to a board from the board invite modal
-- Configuring an agent\'s permissions in Settings
+- Configuring an agent's permissions in Settings
 - Using the agent in MCP tools or interactive sessions
 
 ### Platform-level team membership
 
 Team membership controls what agents you can create and configure:
 
-- **Team tab** â\x80\x94 Shows your team and any board you\'re a member of, plus the agents you can add to that team\'s boards.
-- **All teams** â\x80\x94 Lists all available teams and their associated agents.
-- **Board tab** â\x80\x94 Shows a specific board and whether it\'s associated with your team across charts.
+- **Team tab** — Shows your team and any board you're a member of, plus the agents you can add to that team's boards.
+- **All teams** — Lists all available teams and their associated agents.
+- **Board tab** — Shows a specific board and whether it's associated with your team across charts.
 
 Membership visibility is scoped per section:
 
-- **Team tab** â\x80\x94 Displays Members / Agents / Skills for each team you\'re a member of.
-- **Board tab** â\x80\x94 Shows that board\'s Members and Agents alongside their roles and association checkboxes if applicable.
+- **Team tab** — Displays Members / Agents / Skills for each team you're a member of.
+- **Board tab** — Shows that board's Members and Agents alongside their roles and association checkboxes if applicable.
 
 <Aside type="tip">
 Agents are scoped by team, so you can safely reuse agents across projects in the same client or department without exposing agents to unrelated teams.
@@ -212,14 +214,14 @@ Agents are scoped by team, so you can safely reuse agents across projects in the
 
 ## AI Agents
 
-AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board\'s tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
+AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board's tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
 
 ### Adding agents to boards
 <Steps>
-1. Open the board\'s settings or invite panel.
-2. Look for the **invite modal** â\x80\x94 it now shows both team members and any agents you\'ve created.
+1. Open the board's settings or invite panel.
+2. Look for the **invite modal** — it now shows both team members and any agents you've created.
 3. Select the agent you want to add to the board.
-4. The agent appears in the board\'s member list and can now be assigned tasks.
+4. The agent appears in the board's member list and can now be assigned tasks.
 </Steps>
 
 Agents added to a board are treated as members of that board. This means:
@@ -234,11 +236,11 @@ Agents do not count as team seats toward your subscription limit. You can add as
 
 ### Agent access scope
 
-When you create an agent, it inherits access to all boards in projects where you\'re a member. Use the board-level invite modal to **restrict which boards an agent can access** â\x80\x94 boards not on the list treat the agent as if it doesn\'t exist.
+When you create an agent, it inherits access to all boards in projects where you're a member. Use the board-level invite modal to **restrict which boards an agent can access** — boards not on the list treat the agent as if it doesn't exist.
 
 This is useful when:
 
-- You work across multiple clients or teams and don\'t want a given agent active everywhere
+- You work across multiple clients or teams and don't want a given agent active everywhere
 - You want to limit an agent to only the boards where it has relevant context
 - You have specialized agents for different workflows and need to keep them scoped
 
@@ -259,8 +261,8 @@ Use the feedback button to share ideas, report bugs, or suggest improvements. Yo
 
 Type `@` in any comment to mention a team member. Mentions do two things:
 
-1. **Send a notification** â\x80\x94 the mentioned person receives an inbox notification immediately.
-2. **Add as follower** â\x80\x94 the mentioned person is automatically added as a follower on the task, so they receive future updates.
+1. **Send a notification** — the mentioned person receives an inbox notification immediately.
+2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
 
 Mentions work in comments and task descriptions, and support native and external agents:
 
@@ -270,23 +272,23 @@ If you receive a mention that looks suspicious, report it to your workspace owne
 
 ### Agent @mentions
 <Aside type="note">
-Agent owners are not notified of their own agent\'s comments.
+Agent owners are not notified of their own agent's comments.
 </Aside>
-@mentioning an agent (native or external) triggers a **Mentioned notification** in that agent\'s inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
+@mentioning an agent (native or external) triggers a **Mentioned notification** in that agent's inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
 
-This means you can @mention external agents in comments and task descriptions to trigger automation; the agent\'s inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
+This means you can @mention external agents in comments and task descriptions to trigger automation; the agent's inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
 
-If an external agent isn\'t receiving @mentions, verify that it has board-level access.
+If an external agent isn't receiving @mentions, verify that it has board-level access.
 
 ## Emoji reactions
 
-React to tasks and comments with emoji. Reactions serve as lightweight feedback â\x80\x94 a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
+React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
 
 Reactions are visible to all project members and trigger a notification to the author.
 
 ### Fast like button
 
-For the most common reaction â\x80\x94 a simple thumbs-up â\x80\x94 Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
+For the most common reaction — a simple thumbs-up — Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
 
 - **Mouse users:** hover over a task card or comment row to reveal the like button, which shows a tooltip with an "[L]" hint; click it to toggle your reaction on or off (the tooltip appears behind the button per production behavior).
 - **Mobile users:** tap the like button that appears inline alongside the comment or task actions.
@@ -294,7 +296,6 @@ For the most common reaction â\x80\x94 a simple thumbs-up â\x80\x94 Hypertask 
 The like button is a shortcut for the thumbs-up reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
 
 ---
-
 
 | Position | Appearance |
 |----------|-------------|
@@ -313,24 +314,24 @@ On mobile devices, emoji reactions are organized into a docked picker that mimic
 
 Comments can be starred (saved) or pinned, and the visual indicators update based on comment state:
 
-1. **Pinned + saved** â\x80\x94 only the orange pinned dot displays (saved state is suppressed)
-2. **Pinned only** â\x80\x94 only the orange pinned dot displays
-3. **Saved only** â\x80\x94 only the yellow saved/starred dot displays
+1. **Pinned + saved** — only the orange pinned dot displays (saved state is suppressed)
+2. **Pinned only** — only the orange pinned dot displays
+3. **Saved only** — only the yellow saved/starred dot displays
 
 ### All reactions icon
 
-Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether it\'s a like or another emoji expression.
+Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether it's a like or another emoji expression.
 
 ## Agent decision requests
 
-Agents can now ask you for decisive feedback on tickets. When an agent encounters a decision that impacts work (e.g., \"Archive this task,\" \"Move to inactive,\" etc.), it opens a **decision request** on the ticket with one-tap approve/answer buttons.
+Agents can now ask you for decisive feedback on tickets. When an agent encounters a decision that impacts work (e.g., "Archive this task," "Move to inactive," etc.), it opens a **decision request** on the ticket with one-tap approve/answer buttons.
 
 ### Triggering decision requests
 
 Decision requests appear as inline panels on the ticket:
 
-- **Approve** â\x80\x94 Applies the agent\'s suggested action with one tap
-- **Reject / More options** â\x80\x94 Opens a menu with detailed choices or alternative actions
+- **Approve** — Applies the agent's suggested action with one tap
+- **Reject / More options** — Opens a menu with detailed choices or alternative actions
 
 Agents only create decision requests when the suggested action clearly affects board state and benefits from human sign-off. Routine summaries, AI editor outputs, and informational messages do not trigger requests.
 
@@ -338,14 +339,14 @@ Agents only create decision requests when the suggested action clearly affects b
 
 Once you respond:
 
-- **Approved decisions** â\x80\x94 The agent applies the action to the ticket immediately (e.g., archives the task and adds a reason comment)
-- **Rejected or alternative** â\x80\x94 The agent stops iterating on that item and moves on, leaving the ticket in its current state
+- **Approved decisions** — The agent applies the action to the ticket immediately (e.g., archives the task and adds a reason comment)
+- **Rejected or alternative** — The agent stops iterating on that item and moves on, leaving the ticket in its current state
 
-You can review all pending decision requests anytime in the ticket feed â\x80\x94 the panel stays visible until resolved.
+You can review all pending decision requests anytime in the ticket feed — the panel stays visible until resolved.
 
 ## Real-time sync
 
-Hypertask keeps every connected client live â\x80\x94 no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
+Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
 **What updates in real time:**
 - Tasks appearing, disappearing, or moving between sections when created, archived, or moved
@@ -353,7 +354,7 @@ Hypertask keeps every connected client live â\x80\x94 no manual refreshes neede
 - New comments and reactions
 - Board and section changes
 
-This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow â\x80\x94 useful for monitoring agents running in your terminal or CI pipeline.
+This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow — useful for monitoring agents running in your terminal or CI pipeline.
 
 ### Real-time collaborative text editing
 
@@ -364,35 +365,35 @@ This applies to:
 - Comments (while drafting)
 - Any rich text field in the app
 
-There are no save buttons â\x80\x94 changes persist as you type.
+There are no save buttons — changes persist as you type.
 
 <Aside>
-Real-time sync means AI agents editing task descriptions via MCP won\'t overwrite human edits. Changes are merged automatically.
+Real-time sync means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
 </Aside>
 
 ## Managing comments
 
-You can manage comments on any task â\x80\x94 including comments left by other team members or agents. This is useful when:
+You can manage comments on any task — including comments left by other team members or agents. This is useful when:
 
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
 - Tidying up task threads for better readability
 
-To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members â\x80\x94 trust within the team is assumed for collaborative housekeeping.
+To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
 
 ### Comment hover panel
 
 The comment hover panel in table views and card lists is streamlined for faster access to actions:
 
-- **Reply** â\x80\x94 standard reply action
-- **React** â\x80\x94 add or remove a reaction (thumbs-up, favorite, flag, etc.)
-- **Three-dot menu** â\x80\x94 click the three-dot to reveal remaining options
+- **Reply** — standard reply action
+- **React** — add or remove a reaction (thumbs-up, favorite, flag, etc.)
+- **Three-dot menu** — click the three-dot to reveal remaining options
 
 Press and hold <kbd>Ctrl+K</kbd> (or the three-dot itself) to access the full menu with all comment commands pinned at the top:
 
-- **Edit** â\x80\x94 modify the comment
-- **Summarize** â\x80\x94 generate an AI summary of the comment thread
-- **Fast like** â\x80\x94 quickly add a thumbs-up reaction
+- **Edit** — modify the comment
+- **Summarize** — generate an AI summary of the comment thread
+- **Fast like** — quickly add a thumbs-up reaction
 
 For the most common reaction, just hover and click the like button directly on the comment row. No need to open the full emoji picker.
 
@@ -408,16 +409,16 @@ This makes quick to delete, star, or otherwise manage comments directly from you
 
 ### Mobile comment actions menu
 
-When you tap into a comment\'s action menu on mobile, you can find and manage several options:
+When you tap into a comment's action menu on mobile, you can find and manage several options:
 
-- **Edit** â\x80\x94 tap to open the comment composer
-- **Delete** â\x80\x94 remove the comment from the thread
-- **Star or turn off star** â\x80\x94 save or unsave the comment
-- **Pin or turn off pin** â\x80\x94 pin the comment to the top of the feed
+- **Edit** — tap to open the comment composer
+- **Delete** — remove the comment from the thread
+- **Star or turn off star** — save or unsave the comment
+- **Pin or turn off pin** — pin the comment to the top of the feed
 
 ### URL auto-linkification
 
-Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client â\x80\x94 so a deploy URL pasted by a CLI script or an agent\'s status update with a link will always be clickable for your teammates.
+Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
 
 Links open in a new tab. URLs that are already formatted as hyperlinks or embedded inside images are left unchanged.
 
@@ -429,9 +430,9 @@ On mobile, the composer automatically adjusts its positioning: it offsets by `ma
 
 ### Quoted replies
 
-When you reply to a comment, Hypertask inserts a placeholder for the quoted message. If you were typing before you selected the comment, the system adds a space before the quoted text so your existing words don\'t run together:
+When you reply to a comment, Hypertask inserts a placeholder for the quoted message. If you were typing before you selected the comment, the system adds a space before the quoted text so your existing words don't run together:
 
-- **After existing text:** the reply includes `Your text [quotation start]` â\x80\x94 `Your text "Original comment"` (space inserted automatically)
+- **After existing text:** the reply includes `Your text [quotation start]` — `Your text "Original comment"` (space inserted automatically)
 - **Already after whitespace:** the quoted text appears and you can keep typing without an extra space
 
 This spacing is handled invisibly in the background, so quoted replies flow naturally into your sentence structure.
@@ -457,10 +458,10 @@ Browse and search a full emoji library. Click any emoji to insert it into your c
 
 The GIFs tab is powered by **Giphy** and offers two modes:
 
-- **Trending** â\x80\x94 shows popular GIFs by default when you open the tab.
-- **Search** â\x80\x94 type any query to find a GIF that fits the moment.
+- **Trending** — shows popular GIFs by default when you open the tab.
+- **Search** — type any query to find a GIF that fits the moment.
 
-Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** â\x80\x94 drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
+Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** — drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
 
 <Aside type="note">
 GIF search requires a Giphy API key configured on the Hypertask deployment. If GIFs are not loading, contact your workspace admin.
@@ -477,7 +478,7 @@ Edit a comment to refine your thoughts or fix mistakes. The editor includes keyb
 
 ### Exiting edit mode
 
-When you\'re in edit mode and want to abandon your changes:
+When you're in edit mode and want to abandon your changes:
 
 - **Mouse:** click the trash can icon in the edit-mode footer
 - **Keyboard:** press **ESC**
@@ -486,7 +487,7 @@ Both options exit edit mode without posting the comment and without polluting th
 
 ## Activity logs
 
-Every change in Hypertask is recorded in the activity log â\x80\x94 a full audit trail of who did what, and when.
+Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
 
@@ -501,7 +502,7 @@ Activity logs are available at the task level (see what happened to a specific t
 
 ### Comments-only view (default)
 
-The task feed defaults to **comments only** â\x80\x94 history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
+The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
 
