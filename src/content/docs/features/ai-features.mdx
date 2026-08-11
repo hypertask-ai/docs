@@ -8,7 +8,6 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 The **Hypertask AI assistant** lives at your fingertips. Use it to create tasks, enhance descriptions, draft code, summarize threads, or prescribe actions throughout your workflow.
 
 ## AI Task Writer and Write with AI
-
 ### Create tasks from prompts
 The AI Task Writer instantly turns text into structured tasks. Just ask in natural language, and the assistant fills in title, description, due date, and assignee if you include that context.
 
@@ -105,6 +104,9 @@ The gateway now maps eligible users to appropriate default models based on team 
 
 This repair ensures consistent default model access aligned with plan capabilities.
 
+### Plan access guidance
+When a model requires a paid plan or an owned API key, the system shows an appropriate upgrade/BYOK message to help teams align their models with the right plan or credential setup. This message is now surfaced correctly as guidance, while the handled-error reporter correctly does not create product bug tickets for this expected outcome.
+
 ## AI chat display modes (HTPR-4207)
 AI chat can be shown in different surfaces depending on how you want to work with it.
 
@@ -120,8 +122,8 @@ Use the mode group in the chat surface:
 
 1. Open AI chat from the app rail (press <kbd>5</kbd> or <kbd>]</kbd>) or from within a board or table view.
 2. Choose a display mode using the mode buttons in the chat header:
-   - Full–screen
-   - Right–side panel
+   - Full-screen
+   - Right-side panel
    - Floating window
 
 ### Mode persistence
