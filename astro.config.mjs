@@ -76,6 +76,7 @@ export default defineConfig({
           'mcp/workflows',
           'mcp/scheduling',
           'mcp/agents',
+          'mcp/agent-webhooks',
         ],
         },
         {
