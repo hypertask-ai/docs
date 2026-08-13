@@ -171,7 +171,6 @@ During guest demo onboarding, interactive modals that ask users to confirm actio
 If a modal implementation incorrectly passes a non-boolean placeholder instead of a valid boolean toggle, the modal crashes with a `this.props.toggle is not a function` error when it attempts to invoke the toggle prop.
 
 This occurred in four onboarding scenes before the fix was applied:
-
 - Scene 8: Archive existing public view prompt
 - Scene 11: Duplicate members confirmation
 - Scene 17: Archive section prompt
@@ -228,10 +227,13 @@ Hover states on the left rail now correctly highlight the active item. The rail 
 
 This change fixed a subtle issue where the rail highlight could not detect the active state because the URL path used by the client is always `/time` (or `/time?running=1`), even when the original navigation entered via `/timers`. Now the rail state is consistent with the surface you're viewing.
 
-## Mobile board layout
+## Mobile board performance
 
-On narrow mobile screens, split columns on boards are constrained by a maximum height. Previously, the column container clamped at 92% of the viewport height, which could leave tasks partially off-screen or cut off before reaching the true bottom of the list.
+On narrow mobile screens, Boards are optimized to feel fast from the moment you open them:
 
-With this update, the column container scrolls up to 98% of the viewport height, giving you enough reach to see all items in a split without scrolling beyond the document. Keyboard shortcuts and the board's detail/preview remain fully accessible. If you were working around a previously truncated view, this resolves the cutoff issue entirely and restores sticky headers when the quick-tips bar is hidden.
+- **Startup rendering:** The board renders only the first visible column immediately, then progressively renders additional columns as they approach the viewport. This reduces initial DOM size and lowers long-task spikes.
+- **Secondary traffic:** Non-critical API requests (rich data, extended metadata) are deferred until the Board is usable, cutting requests and improving perceived startup speed.
+
+These changes improve 3‑second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
 
 ---
