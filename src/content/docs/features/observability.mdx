@@ -61,6 +61,19 @@ The error influx endpoint is monitored proactively. Sentinel agents review new e
 - **From Sentry / log shipping**: If you ship errors to Sentry, Datadog, or similar, forward error JSON to `https://hypertask.app/errors` with the same field shape and the system will match against existing tickets for deduplication.
 - **From application logs**: For custom logging integrations, POST JSON with consistent keys such as `message, stackTrace, context, userAgent, projectId`.
 
+### Recovering Browser-Specific React Server Errors
+
+Hypertask recognizes and gracefully handles certain browser-specific React Fizz errors that previously caused unit crashes. If you encounter errors like:
+
+- `TypeError: can't access property "parentNode", b is null`
+- Related React Server (React$RS) stack traces prefixed for Firefox Fizz cleanup
+
+The application now filters and recovers these specific errors. The exact production payload is ignored on these cases, allowing your board to remain functional even when browser-specific guard updates still apply.
+
+<Aside type="tip">
+This fix ensures continued board operation and automatic ticket filing for genuine failures, while suppressing browser-specific React$RS noise that doesn't affect functionality.
+</Aside>
+
 ## FAQ
 
 <details>
