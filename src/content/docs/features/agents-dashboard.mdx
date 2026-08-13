@@ -1,0 +1,60 @@
+---
+title: "Agents Dashboard"
+description: "View all your agents from a central dashboard, with detail pages for each agent and status toggles at a glance."
+---
+
+# Agents Dashboard
+
+The **Agents Dashboard** gives you a full-screen view of all your AI agents in Hypertask, organized by status. Instead of only viewing agents through modals, you now have a dedicated page at `/agents`.
+
+## Navigate to the dashboard
+
+- **URL**: `https://app.hypertask.ai/agents`
+- From any page, use `Cmd+K` (Mac), `Ctrl+K` (Windows/Linux) and search for **"Go to Agents"** to jump there.
+
+## View agents by status
+
+The dashboard groups your agents into three top-level sections:
+
+- **Running** — agents currently active and executing tasks
+- **Quiet** — agents not currently running, but ready to start
+- **Off** — agents paused or stopped
+
+Each group displays agent cards that show key information at a glance.
+
+## Agent cards
+
+Each card in the dashboard shows:
+
+- **Agent name** — the name of the agent
+- **Current status** — Running, Quiet, or Off
+- **On/Off toggle** —Immediate pause or resume of the agent
+
+Cards are filtered and sorted based on their current status.
+
+## Browse and filter agents
+
+You can quickly scan through all your agents and filter by status sections. The dashboard scales to show all agents in your workspace, with cards laid out so you can easily compare running vs. paused agents.
+
+## Performance and reliability
+
+Agents are fully integrated with your board, tasks, and other AI tools. Use the dashboard to:
+
+- See which agents are actively working
+- Quickly pause or resume agents that are consuming resources
+- Monitor agent distribution across your workflows
+
+For more on agent setup and MCP configuration, see the [AI Agents](./agents.mdx) reference.
+
+## Troubleshooting
+
+<Aside type="note">
+
+If you don't see an agent in the dashboard, check that:
+1. The agent is properly connected to an active board
+2. The agent schedule has the necessary permissions
+3. The agent is associated with your team and not restricted to a different scope
+
+See the [AI Agents](./agents.mdx) and [Scheduling Agents](./scheduling.mdx) pages for detailed setup guidance.
+
+</Aside>
