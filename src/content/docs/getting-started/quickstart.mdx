@@ -11,7 +11,7 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
 1. **Sign up** at [hypertask.ai](https://hypertask.ai) using email or Google. Provide your email address to create an account; the service will send you a sign-in link and a shorter 6-digit code for quick access. ([HTPR-4166](https://app.hypertask.ai/detail/project-15/4166)) This also provisions you as a Stripe customer if you opt into billing.
 
-2. **First board generation.** New free-tier accounts start with an empty board. A default section is seeded, and the AI chat is open by default on desktop; your manual chat state persists until you close the chat manually. No static fallback board appears by default. ([HTPR-4866](https://app.hypertask.ai/detail/project-15/4866))
+2. **Get onboarded.** Visitors landing at [hypertask.ai/demo](https://hypertask.ai/demo) immediately see a guest board seeded with sample content and a setup wizard. On desktop, the AI Task Writer opens by default; press <kbd>Ctrl</kbd> + <kbd>K</kbd> and select "Create board" to open the Board creation assistant, which walks you through naming, adding columns, and inviting people.
 
 3. **Create a project** from the dashboard. Give it a name and a short prefix (e.g., `HT` for "Hypertask") — this prefix is used for ticket numbers like `HT-1`, `HT-2`.
 
@@ -44,7 +44,7 @@ Hypertask exposes a full MCP server over SSE. Connect any MCP-compatible client 
 
 <Steps>
 
-1. Open [app.hypertask.ai](https://app.hypertask.ai) and go to **Settings**.
+1. Open [app.hypertask.ai](https://hypertask.ai) and go to **Settings**.
 2. Navigate to the **API Keys** section.
 3. Click **Generate API Key** and copy the token.
 
