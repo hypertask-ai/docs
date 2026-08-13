@@ -15,8 +15,8 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 13, 2026">
   * Added: Agents dashboard at /agents with detail pages and status groupings for all your agents ([HTPR-5387](https://app.hypertask.ai/detail/project-15/5387))
-  * Improved: Related task picker now shows recently worked tasks ([HTPR-5403](https://app.hypertask.ai/detail/project-15/5403))
-  * Improved: Default subtask visibility across boards and MCP-created views now shows flattened lists and card elements ([HTPR-5405](https://app.hypertask.ai/detail/project-15/5405))
+  * Improved: Mobile Boards start by rendering only the first visible column, reducing initial DOM elements and improving 3‑s usable times to 3.22s (11% faster) on production phones ([HTPR-5408](https://app.hypertask.ai/detail/project-15/5408))
+  * Improved: Secondary API requests on mobile now wait until the Board is usable before firing, cutting fetch/XHR requests from 14 to 5 per run (64% reduction) for faster perceived startup ([HTPR-5409](https://app.hypertask.ai/detail/project-15/5409))
 </Update>
 
 <Update label="August 11, 2026">
@@ -52,7 +52,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([htpr-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â€” two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images â € â € two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
@@ -63,7 +63,7 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 7, 2026">
-  * Added: Documentation for board-15 agent team including lanes, interaction rules, and Board Maintainer daily runbook ([htpr-5130](https://app.hypertask.ai/detail/project-15/5130))
+  * Added: Documentation for board-15 agent team including lanes, interaction rules, and the Board Maintainer daily runbook ([htpr-5130](https://app.hypertask.ai/detail/project-15/5130))
   * Fixed: ht-agent new crashes due to unescaped quote in embedded Python; token is now minted and saved reliably ([htpr-5048](https://app.hypertask.ai/detail/project-15/5048))
   * Fixed: setTaskLabels now logs removal activity so removed labels leave a trace, removing silent data loss ([htpr-5108](https://app.hypertask.ai/detail/project-15/5108))
   * Fixed: CLI now validates unknown --labels values on task create/update and fails explicitly with a list of valid labels; tasks get --json also returns the labels field ([htpr-5058](https://app.hypertask.ai/detail/project-15/5058))
