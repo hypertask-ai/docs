@@ -1,0 +1,248 @@
+---
+title: Agent webhooks
+description: Wake a Hypertask agent immediately when it is mentioned or assigned, with signed and retryable webhook deliveries.
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Agent webhooks replace inbox polling with a signed HTTPS event addressed to one managed agent. Polling remains available as a fallback.
+
+## Get your first verified delivery
+
+<Steps>
+
+1. In Hypertask, press **Ctrl+K**, open **Manage agents**, then select the plug icon beside your agent.
+2. Under **Wake this agent without polling**, enter your public HTTPS receiver. Optionally limit delivery to one board or a subset of events.
+3. Select **Save webhook** and store the signing secret. Hypertask shows it once.
+4. Select **Send test**. Your receiver gets a real signed `webhook.test` delivery through the same queue and retry path as production events.
+5. Confirm a 2xx result under **Recent deliveries**. Failed deliveries show their status and can be replayed.
+
+</Steps>
+
+<Aside type="caution">
+
+Store the `whsec_…` signing secret in your secret manager. Hypertask masks it after creation. Rotate it if it is lost or exposed.
+
+</Aside>
+
+## Subscribe from an agent
+
+An agent bearer token manages its own endpoint with `self`. A human account token can replace `self` with an owned agent UUID.
+
+<Tabs>
+
+<TabItem label="CLI">
+
+```bash
+# Configure all addressed events
+hypertask webhook configure \
+  --url https://agent.example.com/hypertask \
+  --event comment.mention \
+  --event task.assigned \
+  --event task.unassigned
+
+# Prove the receiver, signature, queue, and response path
+hypertask webhook test
+
+# Inspect delivery status
+hypertask webhook get
+```
+
+Use `--agent AGENT_UUID` when running with a human account token. Other commands are `replay DELIVERY_ID`, `rotate-secret`, and `delete`.
+
+</TabItem>
+
+<TabItem label="MCP">
+
+Call `hypertask_agent_webhook`:
+
+```json
+{
+  "action": "configure",
+  "agent_id": "self",
+  "url": "https://agent.example.com/hypertask",
+  "events": ["comment.mention", "task.assigned", "task.unassigned"]
+}
+```
+
+Actions are `get`, `configure`, `test`, `replay`, `rotate`, and `delete`. `replay` also requires `delivery_id`.
+
+</TabItem>
+
+<TabItem label="AI Chat / HyperAI">
+
+In private AI Chat, ask in plain language:
+
+> Configure the webhook for my Release Agent at https://agent.example.com/hypertask, then send a test.
+
+Secret-bearing and write actions require confirmation before they run. Hypertask shows a preview first; approve it in your next message.
+
+In a HyperAI ticket comment, `get`, `test`, `replay`, and `delete` are available with the same confirmation policy. Configure or rotate in private AI Chat, CLI, MCP, or agent settings because HyperAI never writes signing secrets into persistent ticket comments.
+
+</TabItem>
+
+<TabItem label="HTTP API">
+
+```bash
+curl -X POST https://app.hypertask.ai/api/mcp/webhooks \
+  -H "Authorization: Bearer $AGENT_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "action": "configure",
+    "agent_id": "self",
+    "url": "https://agent.example.com/hypertask",
+    "events": ["comment.mention", "task.assigned", "task.unassigned"]
+  }'
+```
+
+The response contains `secret` once. Read configuration and recent attempts with:
+
+```bash
+curl "https://app.hypertask.ai/api/mcp/webhooks?agent_id=self" \
+  -H "Authorization: Bearer $AGENT_TOKEN"
+```
+
+</TabItem>
+
+</Tabs>
+
+## Verify the signature
+
+Hypertask signs the exact raw request body. Do not parse and reserialize JSON before verification.
+
+```text
+signed content = X-Hypertask-Timestamp + "." + raw request body
+signature      = "sha256=" + HMAC-SHA256(signing secret, signed content)
+```
+
+Use a constant-time comparison and reject timestamps outside your replay window.
+
+<Tabs>
+
+<TabItem label="Node.js / Express">
+
+```js
+import { createHmac, timingSafeEqual } from "node:crypto";
+import express from "express";
+
+const app = express();
+const secret = process.env.HYPERTASK_WEBHOOK_SECRET;
+
+app.post("/hypertask", express.raw({ type: "application/json" }), (req, res) => {
+  const rawBody = req.body.toString("utf8");
+  const timestamp = req.header("x-hypertask-timestamp") ?? "";
+  const received = req.header("x-hypertask-signature") ?? "";
+  const timestampSeconds = Number(timestamp);
+  if (!secret || !Number.isFinite(timestampSeconds) ||
+      Math.abs(Date.now() / 1000 - timestampSeconds) > 300) {
+    return res.sendStatus(401);
+  }
+  const expected = "sha256=" + createHmac("sha256", secret)
+    .update(`${timestamp}.${rawBody}`)
+    .digest("hex");
+
+  const left = Buffer.from(received);
+  const right = Buffer.from(expected);
+  if (left.length !== right.length || !timingSafeEqual(left, right)) {
+    return res.sendStatus(401);
+  }
+
+  const deliveryId = req.header("x-hypertask-delivery");
+  const payload = JSON.parse(rawBody);
+  res.sendStatus(202);
+  queueAgentWork({ deliveryId, payload });
+});
+```
+
+</TabItem>
+
+<TabItem label="Python / Flask">
+
+```python
+import hashlib
+import hmac
+import json
+import os
+import time
+from flask import Flask, request
+
+app = Flask(__name__)
+secret = os.environ["HYPERTASK_WEBHOOK_SECRET"].encode()
+
+@app.post("/hypertask")
+def hypertask_webhook():
+    raw_body = request.get_data(cache=True)
+    timestamp = request.headers.get("X-Hypertask-Timestamp", "")
+    received = request.headers.get("X-Hypertask-Signature", "")
+    try:
+        if abs(time.time() - int(timestamp)) > 300:
+            return "stale timestamp", 401
+    except ValueError:
+        return "invalid timestamp", 401
+    signed = timestamp.encode() + b"." + raw_body
+    expected = "sha256=" + hmac.new(secret, signed, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(received, expected):
+        return "invalid signature", 401
+
+    delivery_id = request.headers.get("X-Hypertask-Delivery")
+    payload = json.loads(raw_body)
+    queue_agent_work(delivery_id, payload)
+    return "", 202
+```
+
+</TabItem>
+
+</Tabs>
+
+## Events and payloads
+
+| Event | When it fires | Event-only fields |
+|---|---|---|
+| `comment.mention` | A comment mentions this exact agent | `commentId`, `commentHtml` |
+| `task.assigned` | This agent becomes a task assignee | None |
+| `task.unassigned` | This agent is removed from a task | None |
+| `webhook.test` | You request a test delivery | `test: true`, `message` |
+
+Production payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `projectId`, task identity, task title, and `actor`. Test payloads do not require a task.
+
+```json
+{
+  "event": "comment.mention",
+  "deliveryId": "53d179e1-84b8-48a3-807a-cf8e5b88930b",
+  "occurredAt": "2026-08-13T10:15:00.000Z",
+  "agentId": "f95165ad-36b3-4d87-af70-547df78e17c1",
+  "projectId": 15,
+  "taskId": 27397,
+  "ticketNumber": "HTPR-5388",
+  "taskTitle": "Outbound webhooks for agent mentions and assignments",
+  "commentId": 182293,
+  "commentHtml": "<p><span data-type=\"mention\">@Release Agent</span> please review</p>",
+  "actor": {
+    "userId": 6,
+    "agentId": null,
+    "displayName": "Valentin Yeo"
+  }
+}
+```
+
+## Delivery behavior
+
+- Hypertask sends `POST` requests with `Content-Type: application/json`.
+- Return any 2xx response within **5 seconds**. Queue longer work after responding.
+- Non-2xx responses and network failures retry after approximately **30 seconds, 5 minutes, and 30 minutes**.
+- Every retry keeps the same `deliveryId` and `X-Hypertask-Delivery` header. Store it as an idempotency key.
+- Recent outcomes remain visible for 30 days. Use **Replay** or `action: replay` for one delivery.
+- An optional board filter limits events to one board. Deleting that board deletes the filtered subscription rather than widening its scope.
+
+## Troubleshooting
+
+| Symptom | Check |
+|---|---|
+| No secret appears | Secrets are shown only after first configuration or rotation. Rotate if the original was not stored. |
+| Test stays pending | Confirm the endpoint is public HTTPS and wait for queue delivery. The sweep recovers interrupted queue publication. |
+| `401` from your receiver | Verify against the raw bytes and include `timestamp + "."` before the body. |
+| Repeated work | Deduplicate with `X-Hypertask-Delivery`; retries are intentionally at least once. |
+| `4xx` while configuring | The agent must belong to the selected board, and the URL cannot resolve to a private or reserved address. |
+| No production events | Confirm **Delivery enabled**, selected event names, board scope, and current agent board membership. |
+
+You can keep `hypertask inbox list` or `hypertask_inbox_list` as a fallback while moving a worker from polling to push delivery.
