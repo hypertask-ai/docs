@@ -7,7 +7,7 @@ import { Aside, Card, Steps, Tabs } from '@astrojs/starlight/components';
 
 ## Visible Error Influx
 
-Hypertask provides a public error-influx endpoint at <code class="language-bash">https://hypertask.app/errors</code> where application errors, including those during AI-chat interactions, are reported and processed. The endpoint surfaces:
+Hypertask provides a public error-influx endpoint at `https://hypertask.app/errors` where application errors, including those during AI-chat interactions, are reported and processed. The endpoint surfaces:
 
 - Error details (stack traces, context)
 - Auto-filed tickets via the existing MCP task service
@@ -19,14 +19,14 @@ Accessed from the URL or through integrations; no auth token is required for ing
 
 ## PostHog Analytics Proxy
 
-Hypertask routes analytics through the first-party domain <code class="language-bash">e.hypertask.ai</code>. Client-side tracking sends requests to the proxy instead of directly to PostHog servers.
+Hypertask routes analytics through the first-party domain `e.hypertask.ai`. Client-side tracking sends requests to the proxy instead of directly to PostHog servers.
 
 **Effects:**
 - Zero requests to posthog.com reach the browser
 - Proxy handles CORS preflight, asset loads, and feature flags
-- Analytics capture returns <code>Ok</code> on all tracked events
+- Analytics capture returns `Ok` on all tracked events
 
-This ensures合规 cookie consent across all consent platforms by keeping analytics under your own domain.
+This ensures cookie consent across all consent platforms by keeping analytics under your own domain.
 
 ## Web Performance Telemetry
 
@@ -42,7 +42,7 @@ When production or client-side errors occur in Hypertask, the self-healing error
 
 - Files bug tickets to a dedicated board or project
 - Sends telemetry via PostHog EU
-- Reports through <code class="language-bash">/api/errors</code> for downstream processing
+- Reports through `/api/errors` for downstream processing
 
 The pipeline operates on both server and browser-level catchers, ensuring coverage of:
 
@@ -51,7 +51,7 @@ The pipeline operates on both server and browser-level catchers, ensuring covera
 - Application errors originating from external integrations
 
 <Aside type="caution">
-The exposed <code class="language-bash">/api/errors</code> endpoint respects a server-side allowlist. Public access is restricted to whitelisted requests; rate-capping prevents abuse.
+The exposed `/api/errors` endpoint respects a server-side allowlist. Public access is restricted to whitelisted requests; rate-capping prevents abuse.
 </Aside>
 
 ## Using Error Telemetry
@@ -65,7 +65,7 @@ The error influx endpoint is monitored proactively. Sentinel agents review new e
 
 <details>
 <summary>Can I disable the self-healing behavior?</summary>
-The error pipeline respects privacy and tenant scopes; errors that fall outside your boardâ\x80\x99s context are not auto-filed. You can also route enterprise environments through custom observability stacks with appropriate rate-limiting.
+The error pipeline respects privacy and tenant scopes; errors that fall outside your board's context are not auto-filed. You can also route enterprise environments through custom observability stacks with appropriate rate-limiting.
 </details>
 
 <details>
