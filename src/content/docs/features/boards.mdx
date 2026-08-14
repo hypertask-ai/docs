@@ -129,10 +129,6 @@ Guest demo boards provide a guided onboarding experience:
 - **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
-Additionally, fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent; the Important split is available via the `notificationMatrix` flag.
-
-This behavior helps new users quickly see the value of AI assistance and task creation during onboarding.
-
 ## Boardless accounts
 
 If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
@@ -234,6 +230,10 @@ On narrow mobile screens, Boards are optimized to feel fast from the moment you 
 - **Startup rendering:** The board renders only the first visible column immediately, then progressively renders additional columns as they approach the viewport. This reduces initial DOM size and lowers long-task spikes.
 - **Secondary traffic:** Non-critical API requests (rich data, extended metadata) are deferred until the Board is usable, cutting requests and improving perceived startup speed.
 
-These changes improve 3‑second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
+These changes improve 3‒second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
+
+## Board reset-to-default
+
+The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
 ---
