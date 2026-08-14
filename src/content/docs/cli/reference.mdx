@@ -742,7 +742,6 @@ The project used for the rewrite is resolved from the ticket, so `--project` is 
 ```
 hypertask tasks search "dark mode" --project 15
 ```
-
 Both forms are valid and documented for clarity in task-accessible commands.
 </Aside>
 
@@ -1351,7 +1350,7 @@ Common questions it can handle:
 
 ## Management Keys
 
-Management keys (`htmk_…`) administer your account rather than read your boards. Since CLI 1.13.9 you can manage them from the terminal.
+Management keys (`htmk_…`) administer your account rather than read your boards. Since CLI 1.13.9 you can manage them from the terminal. The `list` subcommand is used interactively (no `--json` for introspection).
 
 ```bash
 hypertask admin keys list
@@ -1360,7 +1359,7 @@ hypertask admin keys create --name "ci-runner" --scope full --expires-in-days 90
 hypertask admin keys revoke 12
 ```
 
-**A created key is printed once and never again.** Store it before the command scrolls away.
+**A created key is printed once and never again.**
 
 | Flag | Description |
 |------|-------------|
