@@ -15,11 +15,14 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 13, 2026">
   * Added: Agents dashboard at /agents with detail pages and status groupings for all your agents ([HTPR-5387](https://app.hypertask.ai/detail/project-15/5387))
-  * Improved: Mobile Boards start by rendering only the first visible column, reducing initial DOM elements and improving 3–s usable times to 3.22s (11% faster) on production phones ([HTPR-5408](https://app.hypertask.ai/detail/project-15/5408))
+  * Improved: Mobile Boards start by rendering only the first visible column, reducing initial DOM elements and improving 3–3s usable times to 3.22s (11% faster) on production phones ([HTPR-5408](https://app.hypertask.ai/detail/project-15/5408))
   * Improved: Secondary API requests on mobile now wait until the Board is usable before firing, cutting fetch/XHR requests from 14 to 5 per run (64% reduction) for faster perceived startup ([HTPR-5409](https://app.hypertask.ai/detail/project-15/5409))
   * Added: Outbound webhooks for agent mentions and assignments: per-agent HTTPS delivery with event types comment.mention, task.assigned, and task.unassigned, plus optional board filtering, signed requests, and stable delivery IDs ([HTPR-5388](https://app.hypertask.ai/detail/project-15/5388))
   * Improved: Desktop slash commands from short new-task descriptions now use the larger of the vertical spaces above or below the caret, keeping the full menu inside the viewport without clipping ([HTPR-5392](https://app.hypertask.ai/detail/project-15/5392))
   * Improved: Calendar view names are visibly editable from Manage calendar views; owned views show clear edit affordances, teammate-owned views remain read-only, and the modal has standard close/back controls ([HTPR-5390](https://app.hypertask.ai/detail/project-15/5390))
+  * Added: Global `g` chords now run in order before surface-specific handlers: `g` then `i` from Calendar now correctly navigates to Inbox, and `g` then `c` from Inbox correctly navigates to Calendar, preventing conflicts ([HTPR-5411](https://app.hypertask.ai/detail/project-15/5411))
+  * Improved: Shared modal headers now use a consistent 24px inset instead of variable spacing, and width-fixed separators now stay inside every modal size while full-bleed lists intentionally remain full bleed for scannability ([HTPR-5412](https://app.hypertask.ai/detail/project-15/5412))
+  * Added: External agents now mint fresh MCP credentials the first time you turn them back on, returning hasMcpToken: true via detail APIs and showing one-time copyable configurations so the management UI cannot claim an unusable agent is active ([HTPR-5406](https://app.hypertask.ai/detail/project-15/5406))
 </Update>
 
 <Update label="August 11, 2026">
@@ -117,9 +120,9 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 4, 2026">
-  * Added: Board filter picker now supports a "Blocked by person" filter to show tasks waiting on specific individuals or "Anyone" to see all blocked tasks ([HTPR-4947](https://app.hypertask.ai/detail/project-15/4947))
+  * Added: Board filter picker now supports a "Blocked by person" filter to show tasks waiting on specific individuals or "Anyone" to show all blocked tasks ([HTPR-4947](https://app.hypertask.ai/detail/project-15/4947))
   * Fixed: Description and comment-editing containers no longer draw an extra inner outline in Dark Grey (New) and AMOLED themes; only the outer card border remains visible ([HTPR-4951](https://app.hypertask.ai/detail/project-15/4951))
-  * Added: Ctrl+J on a board now quickly creates a new task with AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
+  * Added: Ctrl+J on a board now quickly creates a new task with the AI Task Writer open for instant text generation ([HTPR-4903](https://app.hypertask.ai/detail/project-15/4903))
   * Fixed: Emoji picker now properly carries per-theme chrome across all core themes: near-black in AMOLED, #2c2f36 panel in Dark Grey (New), and white panel with light input well in Light (New) ([HTPR-4914](https://app.hypertask.ai/detail/project-15/4914))
   * Fixed: Ticket ID in the detail properties column now inherits the same font as every other property value, while staying muted on board cards ([HTPR-4915](https://app.hypertask.ai/detail/project-15/4915))
   * Fixed: Mobile dictation now closes the audio session (AudioContext) when recording stops, allowing other apps to use the microphone ([HTPR-4948](https://app.hypertask.ai/detail/project-15/4948))
