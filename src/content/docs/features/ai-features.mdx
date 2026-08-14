@@ -79,8 +79,18 @@ An AI agent can update task metadata in a visible way—priority, assignees, lab
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
 
+## Time, profile, and report parity in AI Chat
+AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
+
+- **View filtered time reports** — Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
+- **Update shared user profiles** — Update profile fields like name, role, or custom attributes with correct flag handling.
+- **Read complete saved reports** — Pull full saved report data including filters, columns, and time ranges.
+- **Delete reports with confirmation** — Remove saved reports and confirm the action before it happens.
+
+Use the same context and permissions that apply elsewhere in Hypertask. Check access, see the full report content, and clean up saved reports directly from your conversation.
+
 ## ChatProvider and hooks
-When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the <code>ChatProvider</code> boundary. This prevents hydration errors and ensures proper context control for hooks like <code>useAiChatContext</code>.
+When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
 This is automatically handled for standard flows—use the AI Task Writer, context menus, and panel-based chat—and is handled by the fallback behavior on detail pages that load the provider safely.
 
@@ -109,7 +119,7 @@ The gateway now maps eligible users to appropriate default models based on team 
 When a model requires a paid plan or an owned API key, the system shows an appropriate upgrade/BYOK message to help teams align their models with the right plan or credential setup. This message is now surfaced correctly as guidance, while the handled-error reporter correctly does not create product bug tickets for this expected outcome.
 
 ## Chat sidebar naming (HTPR-5268)
-After the first AI chat, the left rail expands and the launcher shows **AI Chat**. This name change conveys the assistant’s identity clearly, while fixed behavior and keyboard shortcut remain unchanged. Nothing in this page needs adjustment; the page already describes using AI chat and the app rail.
+After the first AI chat, the left rail expands and the launcher shows **AI Chat**. This name change conveys the assistant's identity clearly, while fixed behavior and keyboard shortcut remain unchanged. Nothing in this page needs adjustment; the page already describes using AI chat and the app rail.
 
 ## AI chat display modes (HTPR-4207)
 AI chat can be shown in different surfaces depending on how you want to work with it.
