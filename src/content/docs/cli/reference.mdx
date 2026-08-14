@@ -24,7 +24,7 @@ hypertask --version
 </Aside>
 
 <Aside type="caution">
-The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you previously installed `<code>hypertask_cli</code>` (without the scope), uninstall it first: `<code>npm uninstall -g hypertask_cli</code>`
+The CLI package has moved to `<code>@hypertask/hypertask_cli</code>`. If you previously installed `<code>hypertask_cli</code> (without the scope), uninstall it first: `<code>npm uninstall -g hypertask_cli</code>`
 </Aside>
 
 ## Authentication
@@ -472,9 +472,9 @@ hypertask task list-custom-field --project 123
 **Expected output (text-tab-separated):**
 
 ```
-fieldId	name			type
-789	ICE			number
-790	Sprint		select
+fieldId    name                type
+789        ICE                 number
+790        Sprint              select
 ```
 
 Relations: you can pipe this output into `jq` for filtering, or use it to dynamically derive field IDs and types for subsequent CLI invocations like `task update-custom-field`.
@@ -984,6 +984,18 @@ hypertask project label create --project 15 --name "CLI"
 | `--project <id>` | Project ID (required) |
 | `--name <text>` | Label name (required) |
 
+### `project show`
+
+Inspect a project's access-scoped metadata, ticket prefix, sections, labels, owner, counts, status, and URL.
+
+```bash
+hypertask project show 15
+```
+
+<Aside type="tip">
+This command returns a tab-separated list including the ticket prefix, member counts, section names and IDs, and a direct link to the project board.
+</Aside>
+
 ### `project create-board`
 
 Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
@@ -1446,7 +1458,7 @@ Time tracking data integrates with the Hypertask web UI and MCP tools, so you ca
 
 ```bash
 # 1. Check notifications
-hypertask inbox list
+hypertask inbox archive --scope all
 
 # 2. Read the task details (full description included; plain output is complete)
 hypertask task get HTPR-2992
@@ -1457,7 +1469,7 @@ hypertask task show HTPR-2992
 hypertask task move HTPR-2992 --section "Doing"
 
 # 4. Archive the notification
-hypertask inbox archive 101
+hypertask inbox archive <notification-id>
 ```
 
 ### Create and assign a task
