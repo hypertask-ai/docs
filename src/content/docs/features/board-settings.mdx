@@ -14,7 +14,7 @@ Board settings apply to individual boards on a project. They govern default beha
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
 - **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
 - **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
-- **Synchronized IndexedDB defaults** — For authenticated Board and Table routes, the synchronized IndexedDB read model is now enabled by default to keep data in sync across opened tabs without manual refresh. You can still opt into the local model by using <code>?local_db=0</code> in the URL.
+- **Synchronized IndexedDB defaults** — For authenticated Board and Table routes, the synchronized IndexedDB read model is now enabled by default to keep data in sync across opened tabs without manual refresh. You can still opt into the local model by using `<code>?local_db=0</code>` in the URL.
 
 <Aside type="note">
 Board settings are stored at the board level, so you can tailor behaviors per workflow. Changes here apply immediately; monitor the effect on your active tasks.
@@ -156,7 +156,15 @@ Hygiene protects performance and schema stability over time. Project owners shou
 
 You can choose between two read models for Boards and Tables:
 
-- **Synchronized IndexedDB (default)** — Active when no <code>?local_db=0</code> in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
-- **Local IndexedDB (optional)** — Activated by appending <code>?local_db=0</code> to the URL. Reads and writes stay in the local browser state, giving high performance with less CPU and a smaller footprint. Data may not reflect changes from other tabs or browsers until you reload.
+- **Synchronized IndexedDB (default)** — Active when no `<code>?local_db=0</code>` in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
+- **Local IndexedDB (optional)** — Activated by appending `<code>?local_db=0</code>` to the URL. Reads and writes stay in the local browser state, giving high performance with less CPU and a smaller footprint. Data may not reflect changes from other tabs or browsers until you reload.
 
 This defaults to the synchronized model for authenticated Board and Table routes. The system preserves the opt-out via URL flags, so local flow can still be opted into for testing or performance-sensitive workflows.
+
+## Auto-error routing targeting Bugs (HTPR-5386)
+
+When auto-error tickets are routed to sections, Hypertask now targets the exact Bugs section by default instead of the board's default column. This applies globally for boards with a specific Bugs section. Boards without a clearly defined Bugs section fall back to the current default section behavior. Changes take effect after board settings are saved.
+
+<Aside type="tip">
+If you see Bugs incorrectly routed to another section, double-check that the Bugs section exists with a unique name and that you're using the latest board settings cache after this release.
+</Aside>
