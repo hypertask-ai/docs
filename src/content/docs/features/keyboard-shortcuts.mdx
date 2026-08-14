@@ -78,7 +78,7 @@ On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> opens the command palette in addition to 
 <Aside type="note" title="Undo behavior">
 Outside a text editor, undo restores the latest pending task, inbox, star, or pin action while its undo notification is visible. Inside a description, comment, or other editor, the same shortcut keeps its normal text-undo behavior.
 </Aside>
-| Global Alt+Number (rail surfaces 2–7) | <kbd>Alt</kbd> + <kbd>2-7</kbd> | <kbd>Ctrl</kbd> + <kbd>2-7</kbd> |
+| Global Alt+Number (rail surfaces 2—7) | <kbd>Alt</kbd> + <kbd>2-7</kbd> | <kbd>Ctrl</kbd> + <kbd>2-7</kbd> |
 
 ## Board
 
@@ -144,9 +144,23 @@ Outside a text editor, undo restores the latest pending task, inbox, star, or pi
 | Pin comment | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> |
 | Follow task | <kbd>F</kbd> | <kbd>F</kbd> |
 | Unfollow task | <kbd>Alt</kbd> + <kbd>F</kbd> | <kbd>Alt</kbd> + <kbd>F</kbd> |
-| Speech to text | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> |
-| Dictate and Improve | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> |
-| Discard draft | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>,</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>,</kbd> |
+
+
+## Mobile comment composer gesture actions
+
+On mobile devices, the comment composer keeps dictation as the primary input method with simplified controls:
+
+- Dictate first, then refine with the *Improve with AI* option (opens a focused bottom sheet on mobile)
+- Send remains the secondary, accessible action
+- The Improve with AI trigger provides inline text enhancement without replacing dictation as the primary entry point
+
+<Aside type="tip">
+On mobile, start with dictation and tap *Improve with AI* to refine your comments without leaving the input flow.
+</Aside>
+
+## Mobile in-app gestures
+
+- On mobile, a one-finger swipe left or right on a comment opens its quick actions menu with Edit, Delete, Star, and Pin options
 
 ## Image & Media
 Keyboard controls for media insertions and pickers in comments and task descriptions.
@@ -316,3 +330,16 @@ Time tracking shortcuts are available when time tracking is enabled for your boa
 The timer indicator appears in the task card and task detail, showing whether a timer is running for that task.
 
 See the <a href="/features/time-tracking/">Time Tracking</a> page for full details.
+
+## System-theme prediction (HTPR-5422)
+
+When you open the Command Palette with <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd> on Mac), theme-related options now display context-appropriate labels to make system-theme mode predictable. Retired numeric theme modes (1–5) redirect safely to the Appearance settings with your in-session command state preserved.
+
+<Aside type="tip">
+Theme options in the command palette now adapt to your system theme and gracefully redirect legacy theme choices to Appearance settings.
+</Aside>
+
+## Mobile in-app gestures
+
+- One-finger swipe left or right on a comment opens its quick actions menu (Edit, Delete, Star, Pin)
+- Dictation remains the primary input method on mobile; Tap *Improve with AI* to refine your comments without leaving the input flow
