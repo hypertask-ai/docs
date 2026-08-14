@@ -144,11 +144,7 @@ These are the default settings across the board UI, MCP-created views, and new d
 
 ## Task property rail
 
-The task detail sidebar includes a rail of properties (title, priority, assignees, labels, etc.). The rail responds to the amount of content visible:
-
-- Rails with fewer visible properties use their natural content height, expanding just enough to show all items.
-- Longer property lists remain the full viewport height and are internally scrollable, so the rail mimics the behavior of tables and tables cope with many properties.
-- The behavior applies consistently to shared-task routes as well.
+The task detail sidebar includes a rail of properties (title, priority, assignees, labels, etc.). The rail now occupies the full remaining dynamic viewport height, so it uses all available space rather than a fixed maximum and leaves no unused viewport space.
 
 ## Time tracking
 
