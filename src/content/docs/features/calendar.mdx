@@ -8,7 +8,9 @@ import { Aside } from '@astrojs/starlight/components';
 The calendar at `/calendar` shows every task with a due date across your boards. Filter which boards and people are included from the boards panel, and save any combination as a reusable view.
 
 <Aside type="tip">
+
 You can enshrine your preferred weekday start and weekend visibility by saving a preset, or rely on the default behavior for a fresh calendar.
+
 </Aside>
 
 ## Default behavior
@@ -19,6 +21,12 @@ When you open a calendar without a saved preference:
 - **Weekend days are hidden in Week view** (you still see Monday through Friday). If you prefer to see the full week including Saturday and Sunday, adjust your preference in Settings.
 
 To change your default weekday start or weekend visibility, go to Settings and set your preferred options. Controls are surfaced via <kbd>Ctrl+K</kbd> commands (if configured).
+
+## Managing calendar views
+
+Default views include Day, Week, Month, My Tasks, Overdue, Blocked, and Agents. All default views are ordinary orderable views: you can drag them anywhere in the view cluster, including up to an earlier row. You can also show each default view in Manage views (drag + hide) and reorder it alongside saved custom views.
+
+From **Manage calendar views**, you can rename any calendar view that you own. Owned views show a settings affordance that lets you edit the name. Teammate-owned views are locked and cannot be renamed. The modal includes a clear close/back control for safe, deliberate switching between saved and owned views.
 
 ## Views
 
