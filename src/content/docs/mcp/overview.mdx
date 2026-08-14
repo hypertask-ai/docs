@@ -3,7 +3,7 @@ title: MCP Integration
 description: Connect AI agents to Hypertask via the Model Context Protocol.
 ---
 
-import { Aside, Tabs, TabItem, Steps, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Hypertask provides a full [Model Context Protocol](https://modelcontextprotocol.io/) (MCP) server that lets AI agents create, update, search, and manage tasks programmatically. Any MCP-compatible client can connect to Hypertask and operate as an autonomous worker.
 
@@ -134,9 +134,14 @@ Authenticated agent tokens that carry valid `htk_` API keys receive a higher rat
 
 This mode specifically applies to agent traffic; non-agent traffic remains subject to the base limits. Agent-tier tokens are detected via the `Authorization` header that must include a valid Hypertask API key.
 
+## Full capability parity across surfaces
+
+The MCP server now exposes 81 of 96 core capabilities across the API, CLI, AI Chat, and HyperAI. New and extended tools match REST endpoint behavior for board configuration, project administration, profile updates, page history, task description history, and relations composition. All tools are thin wrappers over the same REST routes that power the web UI, ensuring consistent behavior regardless of which surface you use.
+
 ## Client configuration
 
 <Tabs>
+
 <TabItem label="Claude Desktop">
 
 Add to your Claude Desktop config file (`claude_desktop_config.json`):
@@ -156,6 +161,7 @@ Add to your Claude Desktop config file (`claude_desktop_config.json`):
 ```
 
 </TabItem>
+
 <TabItem label="Claude Code">
 
 Add to your project's `.mcp.json` or global `~/.claude/mcp.json`:
@@ -175,6 +181,7 @@ Add to your project's `.mcp.json` or global `~/.claude/mcp.json`:
 ```
 
 </TabItem>
+
 <TabItem label="Cursor">
 
 Open **Settings > MCP Servers** and add a new server:
@@ -194,6 +201,7 @@ Open **Settings > MCP Servers** and add a new server:
 ```
 
 </TabItem>
+
 <TabItem label="ChatGPT">
 
 Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more — without needing native MCP support.
@@ -218,6 +226,7 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 </Aside>
 
 </TabItem>
+
 </Tabs>
 
 ## AI Chat integration
@@ -276,7 +285,7 @@ The chat uses keyword scoring instead of first-come fill, so contextual terms li
 |---------|--------|---------|
 | **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` works, but mentions can render as plain text without firing a notification. Pass structured mention objects (`user_id` + `display_name`) for reliable results. |
 | **Auto-linking ticket references** | Not supported | A ticket reference such as `HTPR-1234` inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_link_tasks` to create the relation explicitly. |
-| **Page and description history** | REST only | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, but have no MCP tool yet. |
+| **Pages and description history** | REST only | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, but have no MCP tool yet. |
 | **Agent infrastructure** | REST only, by design | Task leases, evidence, escalation, work sessions, service-account management, API keys and webhooks are REST endpoints only. They are plumbing for autonomous workers rather than things an assistant should call mid-conversation. |
 
 <Aside type="note">
