@@ -106,6 +106,14 @@ curl "https://app.hypertask.ai/api/mcp/webhooks?agent_id=self" \
 
 </Tabs>
 
+## Board-level webhooks
+
+Webhook deliveries are scoped to one agent. To deliver events to multiple agents, configure and save separate webhooks for each agent. Delivery names include the agent ID so you can identify which agent sent which event.
+
+Each delivery is per-agent and each board you configure is paired with a specific webhook. A delivery for one board does not trigger for a different board, even when that board uses the same agent.
+
+Hypertask tracks deliveries with stable, unique IDs. You can inspect delivery history and replay failed deliveries using the delivery ID or the webhook commands.
+
 ## Verify the signature
 
 Hypertask signs the exact raw request body. Do not parse and reserialize JSON before verification.
@@ -186,7 +194,7 @@ def hypertask_webhook():
 
     delivery_id = request.headers.get("X-Hypertask-Delivery")
     payload = json.loads(raw_body)
-    queue_agent_work(delivery_id, payload)
+    queueAgentWork(delivery_id, payload)
     return "", 202
 ```
 
@@ -216,7 +224,7 @@ Production payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `pro
   "ticketNumber": "HTPR-5388",
   "taskTitle": "Outbound webhooks for agent mentions and assignments",
   "commentId": 182293,
-  "commentHtml": "<p><span data-type=\"mention\">@Release Agent</span> please review</p>",
+  "commentHtml": "<p><span data-type=\\"mention\\">@Release Agent</span> please review</p>",
   "actor": {
     "userId": 6,
     "agentId": null,
