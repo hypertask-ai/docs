@@ -1,0 +1,39 @@
+---
+title: Verification Fleet
+description: Use a secure dedicated fleet of boards to verify task lifecycles, capture action logs, and auto-cleanup in production workflows.
+---
+
+Verification Fleet provides a dedicated, disposable board for each critical workflow that protects the authenticated task lifecycle against drift, misuse, and configuration errors.
+
+## When to use Verification Fleet
+
+- Run tests or approvals against actual production task flows
+- Audit automated assignments or column moves in a safe environment
+- Capture screenshots and action logs for compliance or debugging
+- Clean up verified clusters after each run without leaving artifacts
+
+## Verify a critical authenticated lifecycle
+
+Use the Verification Fleet to instantiate a one-time board for a specific user task flow:
+
+1. <strong>Initialize the fleet</strong>
+   Create a board scoped to the user scope (`/users/{userId}`) and enable the critical-lifecycle flow in the verification settings.
+
+2. <strong>Execute the flow</strong>
+   The fleet performs a bounded sequence: create, title/description edit, assignment, column movement, comment, Done, full reload, and persisted reopened state. Each step is logged with a unique verdict.
+
+3. <strong>Finalize and cleanup</strong>
+   Once all steps have passed, the fleet automatically archives the board and cleans up associated actions. Logs retain test evidence for the retention period.
+
+## Fleet limits and safety
+
+- Each fleet run creates a separate disposable board under the configured user scope
+- Boards are automatically archived after verification completes
+- Verdicts are independent per step and can be aggregated for regression analysis
+- The lifecycle flow enforces strict ordering and prevents concurrent modifications
+
+## Requirements
+
+- You must have write access to the target user's task scope
+- The verification board must be created under a user that has permission to execute the critical task workflow (create, assign, move, comment, mark Done, reopen)
+- Nothing can be merged into the primary board during a verification run
