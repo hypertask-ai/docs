@@ -7,6 +7,14 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
+## Shared modal spacing
+
+Shared modals now use a consistent 24px inset for headers and footers so layouts behave predictably:
+
+- Headers and footers are separated from content by 24px vertical spacing.
+- Separators and horizontal rules inside modals stay aligned and stay inside the modal bounds.
+- Intentional full-bleed lists (e.g., searchable assignee/worker lists) preserve their visual, making them easy to scan without hitting UI boundaries.
+
 ## Follower notifications
 
 When you mention someone on a task, they're automatically added as a follower so they receive updates. Hypertask also respects the explicit follower field on task pages: sending those emails now uses the correct recipient key, so deliveries succeed without silent failures.
