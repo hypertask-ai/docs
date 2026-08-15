@@ -92,6 +92,9 @@ The comment thread shows all comments on the task. By default, when you open a t
 - On mobile screens, posting a comment no longer spurs unintended dictation that can overlap with nearby action buttons.
 - Send and Resend are treated as semantic click-driven actions; their target remains fixed before the click event, preventing the browser's click emission from retargeting to unintended controls.
 
+**Undo prompt visibility**:
+- Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
+
 ### Actions
 
 Common actions include:
@@ -114,7 +117,7 @@ Create relationships between tasks to surface context without leaving tasks:
 From a task detail view, open the **Relations** section to add a related task. When you create a new relation from the picker:
 
 - **Recently worked tasks**: If you've recently worked on other tasks, they appear in the picker to help you reuse prior context.
-- **Access control**: Mentions and relations are access-controlled — you can only create relationships to tasks you have access to.
+- **Access control**: Mentions and relations are access-controlled â\x80\x94 you can only create relationships to tasks you have access to.
 
 See a task's relations in the **Relations** section of the task detail view.
 
@@ -122,12 +125,12 @@ See a task's relations in the **Relations** section of the task detail view.
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
 
-- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> — "Blocked by person...", then pick the person. One blocker per ticket.
+- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> â\x86\x92 "Blocked by person...", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
-- **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the â\x80\x94 in the sidebar row or by picking "Nobody" in the picker.
+- **Filter**: The board filter picker has a **Blocked by person** filter â\x80\x94 pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
 
@@ -149,7 +152,6 @@ The task detail sidebar includes a rail of properties (title, priority, assignee
 ## Time tracking
 
 Track work hours on tasks via the **Times** section:
-
 - <kbd>B</kbd> opens the time entry modal from the task, or use the command palette ("Log time").
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
@@ -167,7 +169,6 @@ Tasks can belong to one section on a board. Changing a task's section moves it t
 ## Attachments
 
 Upload files to tasks to enrich them with context:
-
 - **From web UI**: Drag and drop files or use the attachment picker in the task description.
 - **From CLI**: Use `<code>hypertask comment add &lt;ticket&gt; --attach &lt;file&gt;</code>` to attach.
 - **From MCP**: Use the `<code>hypertask_attachments_add</code>` tool with file upload support.
@@ -181,7 +182,6 @@ When you mention someone on a task, they're automatically added as a follower so
 ## Notes and pages
 
 Attach rich notes and full-screen notepads directly to tasks:
-
 - **Notes**: Inline-style notes inside the description area.
 - **Pages**: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 
@@ -195,7 +195,7 @@ AI status updates appear on task cards when an AI agent updates task metadata in
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> → search for a task and use **Agent write-with-AI** to trigger the update.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> â\x86\x92 search for a task and use **Agent write-with-AI** to trigger the update.
 
 ## Export and integration
 
@@ -204,7 +204,6 @@ Administrators can configure repository integrations that auto-create tasks or s
 ## Keyboard shortcuts summary
 
 Shortcuts are global by default, but some vary by context:
-
 - <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>: Create a new task.
 - <kbd>Ctrl+O</kbd> / <kbd>Cmd+O</kbd>: Open the link or auto-save picker.
 - <kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>: Open the board palette (account switcher).
