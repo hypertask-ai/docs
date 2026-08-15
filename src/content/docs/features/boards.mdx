@@ -230,10 +230,24 @@ On narrow mobile screens, Boards are optimized to feel fast from the moment you 
 - **Startup rendering:** The board renders only the first visible column immediately, then progressively renders additional columns as they approach the viewport. This reduces initial DOM size and lowers long-task spikes.
 - **Secondary traffic:** Non-critical API requests (rich data, extended metadata) are deferred until the Board is usable, cutting requests and improving perceived startup speed.
 
-These changes improve 3‒second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
+These changes improve 3-second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
 
 ## Board reset-to-default
 
 The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
 ---
+
+## Board access for writes
+
+Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
+
+- CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
+- MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
+- REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
+
+The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+-\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
+
+Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
+
+This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board or task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
