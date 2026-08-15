@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 15, 2026">
+  * Added: Move mobile Inbox splits into the bottom thumb zone and hide regular bottom navigation while Inbox is open ([HTPR-6166](https://app.hypertask.ai/detail/project-15/6166))
+  * Added: Seat loss from concurrent joins is fixed with per-team lease protection and daily reconciliation ([HTPR-6167](https://app.hypertask.ai/detail/project-15/6167))
   * Improved: Mobile board startup is faster by removing duplicate hydration work on cold boards ([HTPR-5342](https://app.hypertask.ai/detail/project-15/5342))
   * Fixed: Mobile new-task modal now keeps properties expanded instead of collapsing beneath descriptions ([HTPR-5345](https://app.hypertask.ai/detail/project-15/5345))
   * Fixed: Undo prompts now dismiss after 5 seconds, while Ctrl/Cmd+Z remains available for 15 seconds ([HTPR-5343](https://app.hypertask.ai/detail/project-15/5343))
@@ -78,7 +80,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([htpr-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images — two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
