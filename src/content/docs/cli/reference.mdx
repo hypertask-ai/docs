@@ -78,7 +78,7 @@ Use `hypertask capabilities --json` in automation pipelines to discover whether 
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage â\x80\x94 unknown or misspelled subcommand / missing required argument |
 
 All subcommands that produce errors now exit with a dedicated code and either print to stdout or stderr. The CLI also monitors unhandled promise rejections and ensures they surface as non-zero exits.
 
@@ -87,7 +87,7 @@ All subcommands that produce errors now exit with a dedicated code and either pr
 Bot-challenge 403s, rate limits, and certain gateway errors are now retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
 - **Retried cases:** 403 (bot challenge), 408 (Request Timeout), 429 (Rate Limit), 500 (Internal Server Error), 502 (Bad Gateway), 503 (Service Unavailable), 504 (Gateway Timeout)
 - **Backoff sequence:** retry attempts are spaced approximately 2 seconds, 10 seconds, and 30 seconds, then fail with a clear message
-- **Error message phrasing:** `<code>transient challenge/rate limit — retry in a minute</code>` clarifies that the failure is temporary and not due to a bad token
+- **Error message phrasing:** `<code>transient challenge/rate limit â\x80\x94 retry in a minute</code>` clarifies that the failure is temporary and not due to a bad token
 - **Safe failures:** Writes are rejected before the mutation occurs, so retry cannot result in double-creation
 
 **Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
@@ -113,7 +113,7 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 
 ## `capabilities` / `commands`
 
-Enumerate every command the CLI has, in one call — no recursive `--help` grepping needed.
+Enumerate every command the CLI has, in one call â\x80\x94 no recursive `--help` grepping needed.
 
 The command has two modes, and which one you want depends on where the output is going:
 
@@ -122,7 +122,7 @@ hypertask capabilities          # ~145 lines of markdown, one line per command
 hypertask capabilities --json   # the full tree, every command with every flag
 ```
 
-**Paste the plain output into an agent's memory file.** Since CLI 1.13.7 the bare command prints a compact markdown list — command, arguments, one-line description — small enough to live in a `CLAUDE.md` permanently. The JSON tree is roughly 38 KB, which is why nobody ever pasted it anywhere.
+**Paste the plain output into an agent's memory file.** Since CLI 1.13.7 the bare command prints a compact markdown list â\x80\x94 command, arguments, one-line description â\x80\x94 small enough to live in a `CLAUDE.md` permanently. The JSON tree is roughly 38 KB, which is why nobody ever pasted it anywhere.
 
 `commands` is an alias for `capabilities`; both are identical.
 
@@ -157,7 +157,7 @@ hypertask capabilities --json   # the full tree, every command with every flag
 ```
 
 <Aside type="tip">
-**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported — `task create`, `task update`, and `comment add` — appear explicitly in the output. Read commands like `task get` and `comment list` also advertise in the capabilities dump that their plain output is complete and tab-separated, so agents do not need to default to `--json` + custom parsers for these commands.
+**For AI agents:** `hypertask capabilities --json` is the recommended starting point for any agent that drives the CLI. All three locations where `--attach` is supported â\x80\x94 `task create`, `task update`, and `comment add` â\x80\x94 appear explicitly in the output. Read commands like `task get` and `comment list` also advertise in the capabilities dump that their plain output is complete and tab-separated, so agents do not need to default to `--json` + custom parsers for these commands.
 </Aside>
 
 ---
@@ -174,18 +174,18 @@ hypertask task list --project 15 --section "Doing" --assigned-to me
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--project <id>` | Filter by project ID | — |
-| `--section <name>` | Filter by section name | — |
-| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | — |
-| `--created-by <id>` | Filter by creator user ID (numeric) | — |
-| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | — |
-| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | — |
-| `--sort-order <asc\|desc>` | Sort direction — use together with `--sort-by` | — |
+| `--project <id>` | Filter by project ID | â\x80\x94 |
+| `--section <name>` | Filter by section name | â\x80\x94 |
+| `--assigned-to <value>` | Filter by assignee: `me`, `unassigned`, or a user ID | â\x80\x94 |
+| `--created-by <id>` | Filter by creator user ID (numeric) | â\x80\x94 |
+| `--priority <list>` | Comma-separated priorities: `urgent`, `high`, `medium`, `low` | â\x80\x94 |
+| `--sort-by <field>` | Sort results by `createdAt`, `updatedAt`, or `dueDate` | â\x80\x94 |
+| `--sort-order <asc\\|desc>` | Sort direction â\x80\x94 use together with `--sort-by` | â\x80\x94 |
 | `--limit <n>` | Results per page | `10` |
 | `--offset <n>` | Pagination offset | `0` |
 
 <Aside type="note">
-**File attachments** are not on `task list` — use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
+**File attachments** are not on `task list` â\x80\x94 use `task create --attach` or `task update --attach` to attach files. See the [Capability Discovery](#capability-discovery) section or run `hypertask capabilities --json` to see all commands that support `--attach`.
 </Aside>
 
 <Aside type="note">
@@ -206,9 +206,9 @@ hypertask task show HTPR-2992   # alias for task get
 | `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 <Aside type="tip">
-**Plain output is complete.** The default (non-`--json`) output of `task get` is tab-separated and contains every field — you do not need `--json` just to get the full task data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured output for tools like `jq`.
+**Plain output is complete.** The default (non-`--json`) output of `task get` is tab-separated and contains every field â\x80\x94 you do not need `--json` just to get the full task data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured output for tools like `jq`.
 
-`task show` is an alias for `task get` — both commands are identical.
+`task show` is an alias for `task get` â\x80\x94 both commands are identical.
 </Aside>
 
 ### `task tree`
@@ -221,8 +221,8 @@ hypertask task tree --ticket HTPR-2992
 
 | Flag | Description | Default |
 |------|-------------|---------|
-| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | — |
-| `--task-id <id>` | Numeric task ID | — |
+| `--ticket <ticket>` | Ticket number (e.g., `HTPR-2992`) | â\x80\x94 |
+| `--task-id <id>` | Numeric task ID | â\x80\x94 |
 | `--depth <n>` | Max levels deep to show | Full tree |
 
 ```bash
@@ -254,16 +254,16 @@ hypertask task create \
 | `--title <text>` | Task title (required) |
 | `--description <text>` | Description (HTML preferred; see note below) |
 | `--priority <p>` | Priority: `urgent`, `high`, `medium`, `low`, `none` |
-| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
+| `--estimate <n>` | Size index: `0` = none, `2`â\x80\x93`6` = XS, S, M, L, XL |
 | `--labels <list>` | Comma-separated label names or IDs (e.g., `"CLI,BUG"`) |
 | `--due <date>` | Due date in ISO 8601 format (e.g., `2026-04-01`) |
-| `--parent-task <id>` | Parent task ID — creates this task as a subtask |
-| `--section <id\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
+| `--parent-task <id>` | Parent task ID â\x80\x94 creates this task as a subtask |
+| `--section <id\\|name>` | Section ID or name (e.g., `4005` or `"Doing"`) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--attach <path-or-url>` | Attach a local file or URL (repeatable for multiple attachments) |
 
 <Aside type="note">
-**Description format:** HTML is the canonical format — wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
+**Description format:** HTML is the canonical format â\x80\x94 wrap text in `<p>` tags and use standard HTML elements like `<ul>`, `<ol>`, `<code>`, and `<strong>`. Plain text without HTML tags is auto-wrapped in `<p>...</p>` before being sent to the API. Rich structured text using markdown-style headers and numbered steps (a "bug template" style) is also accepted and stored correctly.
 </Aside>
 
 <Aside type="caution">
@@ -271,7 +271,7 @@ hypertask task create \
 </Aside>
 
 <Aside type="note">
-**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code — so you always know the task exists and can re-attach without creating a duplicate. Example:
+**`--attach` is non-atomic.** The task is created first, and the attachment upload runs as a separate step immediately after. If the upload fails (e.g. unsupported file type, network error), the CLI reports which task was created, explains why the attachment failed, prints the exact retry command, and exits with a dedicated error code â\x80\x94 so you always know the task exists and can re-attach without creating a duplicate. Example:
 ```
 Created task HTPR-3102: Review mockups
 Attachment failed: unsupported content type text/html
@@ -312,11 +312,11 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--title <text>` | New title |
 | `--description <text>` | New description (plain text or HTML; plain text is auto-wrapped in `<p>` tags) |
 | `--priority <p>` | New priority |
-| `--estimate <n>` | Size index: `0` = none, `2`–`6` = XS, S, M, L, XL |
+| `--estimate <n>` | Size index: `0` = none, `2`â\x80\x93`6` = XS, S, M, L, XL |
 | `--due <date>` | New due date (ISO 8601) |
 | `--clear-due` | Remove the due date (e.g., to clear a past due date) |
 | `--status <s>` | Lifecycle status: `Normal`, `Archive`, or `Deleted` |
-| `--section <id\|name>` | Section (board column): ID or name like `"Doing"`, `"Done"` |
+| `--section <id\\|name>` | Section (board column): ID or name like `"Doing"`, `"Done"` |
 | `--project <id>` | Project ID (required when using `--section` with a name across projects) |
 | `--assignee <list>` | Comma-separated user IDs to assign (e.g., `"42"` or `"42,99"`) |
 | `--labels <list>` | Comma-separated label names or IDs |
@@ -325,7 +325,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 | `--attach <path>` | Attach a local file (repeatable) |
 
 <Aside type="note">
-**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` — not section names.
+**Status vs. Section:** These are two different concepts. Use `--status` for the task lifecycle (active, archived, or deleted). Use `--section` to move a task between board columns (e.g., from "Backlog" to "Doing"). The `--status` flag only accepts `Normal`, `Archive`, or `Deleted` â\x80\x94 not section names.
 </Aside>
 
 <Aside type="note">
@@ -397,7 +397,7 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | Flag | Description |
 |------|-------------|
 | `--section <name>` | Destination section name within the same board (e.g., `"Doing"`, `"Done"`) |
-| `--to <id>` | Target project ID — move to a different project |
+| `--to <id>` | Target project ID â\x80\x94 move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
 ### `task move-board` / `task move-project`
@@ -436,7 +436,7 @@ Use this when an agent or external service needs to funnel a task into a specifi
 The recipient must be a member of the task's project. Attempting to move a task into another user's inbox will fail with a 400 if they lack project access.
 </Aside>
 
-**Common use case — Slack-to-Hypertask draft bots**
+**Common use case â\x80\x94 Slack-to-Hypertask draft bots**
 
 When your team uses Slack and a bot drafts Hypertask tasks for people, use `move-to-inbox` in the bot's workflow:
 
@@ -493,8 +493,8 @@ hypertask task update-custom-field HTPR-2992 --field-id 790 --clear
 | Flag | Description |
 |------|-------------|
 | `<ticket>` | The task's ticket number (e.g., `HTPR-2992`) |
-| `--field-id <id>` | The field's numeric ID — use after retrieving it via `list-custom-field` |
-| `--field-name <name>` | The field's string name — server will try the current board and project context; for cross-project callers, use `--field-id` |
+| `--field-id <id>` | The field's numeric ID â\x80\x94 use after retrieving it via `list-custom-field` |
+| `--field-name <name>` | The field's string name â\x80\x94 server will try the current board and project context; for cross-project callers, use `--field-id` |
 | `--value <val>` | A value matching the field type (number, string, ISO date, boolean) |
 | `--clear` | Remove the value instead of setting it |
 
@@ -671,10 +671,10 @@ hypertask search "dark mode" --project 15 --limit 5
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
+| `<query>` | Search query (required) | â\x80\x94 |
+| `--project <id>` | Restrict search to a project | â\x80\x94 |
 | `--limit <n>` | Maximum results | `10` |
-| `--json` | Output raw JSON instead of the formatted table | — |
+| `--json` | Output raw JSON instead of the formatted table | â\x80\x94 |
 
 <Aside type="tip">
 This command is an alias under `tasks search` as of CLI 1.9.1. Using `tasks search` for convenience works the same as the top-level `search` command.
@@ -690,8 +690,8 @@ hypertask tasks search "firebase" --project 15
 
 | Argument / Flag | Description | Default |
 |-----------------|-------------|---------|
-| `<query>` | Search query (required) | — |
-| `--project <id>` | Restrict search to a project | — |
+| `<query>` | Search query (required) | â\x80\x94 |
+| `--project <id>` | Restrict search to a project | â\x80\x94 |
 | `--limit <n>` | Maximum results | `10` |
 
 ---
@@ -711,12 +711,12 @@ hypertask comment list HTPR-2992
 | `<ticket>` | Ticket identifier in PREFIX-NNN format (e.g., `HTPR-2992`) |
 
 <Aside type="tip">
-**Plain output is complete.** The default (non-`--json`) output of `comment list` is tab-separated and contains every comment field — author, timestamp, and full text. You do not need `--json` to get all the data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured data for downstream tools.
+**Plain output is complete.** The default (non-`--json`) output of `comment list` is tab-separated and contains every comment field â\x80\x94 author, timestamp, and full text. You do not need `--json` to get all the data. This is stated in the command's `--help` output and in `hypertask capabilities --json`. Use `--json` when you need structured data for downstream tools.
 </Aside>
 
 ### `comment add`
 
-Add a comment to a task. The comment is persisted immediately and a real comment URL is returned — use `comment list` to confirm the comment appears.
+Add a comment to a task. The comment is persisted immediately and a real comment URL is returned â\x80\x94 use `comment list` to confirm the comment appears.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>Looks good, merging now.</p>"
@@ -758,7 +758,7 @@ hypertask comment add HTPR-2992 \
 ```
 
 <Aside type="tip">
-**Plain `<@Name>` mentions work.** Writing `<p>@Alice</p>` in your comment text is resolved server-side — Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
+**Plain `<@Name>` mentions work.** Writing `<p>@Alice</p>` in your comment text is resolved server-side â\x80\x94 Hypertask looks up the matching project member by name and sends them a notification automatically. No need to write span markup by hand.
 
 ```bash
 hypertask comment add HTPR-2992 --text "<p>@Alice this is ready for your review.</p>"
@@ -824,7 +824,7 @@ hypertask section create --project 15 --title "In Review"
 |------|-------------|
 | `--project <id>` | Project ID (required) |
 | `--title <text>` | Section title (required) |
-| `--after <id\|name>` | Insert after this existing section (optional) |
+| `--after <id\\|name>` | Insert after this existing section (optional) |
 
 ```bash
 # Create a section and place it after an existing one
@@ -832,7 +832,7 @@ hypertask section create --project 15 --title "In Review" --after "Doing"
 ```
 
 <Aside type="caution">
-Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed — use `hypertask section create` instead.
+Earlier CLI versions exposed section creation under `hypertask project section create`. That subcommand has been removed â\x80\x94 use `hypertask section create` instead.
 </Aside>
 
 ### `section rename`
@@ -846,7 +846,7 @@ hypertask section rename --project 15 --section "In Review" --title "Code Review
 | Flag | Description |
 |------|-------------|
 | `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to rename, by ID or current name (required) |
+| `--section <id\\|name>` | The section to rename, by ID or current name (required) |
 | `--title <text>` | New title for the section (required) |
 
 ### `section delete`
@@ -860,10 +860,10 @@ hypertask section delete --project 15 --section "In Review"
 | Flag | Description |
 |------|-------------|
 | `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to delete, by ID or name (required) |
+| `--section <id\\|name>` | The section to delete, by ID or name (required) |
 
 <Aside type="caution">
-Deleting a section removes the column from the board. Tasks inside the section are not deleted — they are left without a section and may need to be moved manually. Verify section contents before deleting.
+Deleting a section removes the column from the board. Tasks inside the section are not deleted â\x80\x94 they are left without a section and may need to be moved manually. Verify section contents before deleting.
 </Aside>
 
 ### `section reorder`
@@ -877,8 +877,8 @@ hypertask section reorder --project 15 --section "In Review" --after "Doing"
 | Flag | Description |
 |------|-------------|
 | `--project <id>` | Project ID (required) |
-| `--section <id\|name>` | The section to move, by ID or name (required) |
-| `--after <id\|name>` | The section it should appear after, by ID or name (required) |
+| `--section <id\\|name>` | The section to move, by ID or name (required) |
+| `--after <id\\|name>` | The section it should appear after, by ID or name (required) |
 
 ```bash
 # Move "QA" to appear after "In Review"
@@ -997,7 +997,7 @@ This command returns a tab-separated list including the ticket prefix, member co
 
 ### `project create-board`
 
-Create a whole new board from a JSON manifest — sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
+Create a whole new board from a JSON manifest â\x80\x94 sections, labels, and starter tasks in one call. Uses the same manifest shape as the `hypertask_create_board` MCP tool.
 
 ```bash
 hypertask project create-board --file board.json
@@ -1052,10 +1052,10 @@ A draft is unsent text parked on a task: a comment you have not posted yet, or a
 Create a draft on a task. Without `--comment` you are drafting the **description**.
 
 ```bash
-# Comment draft — lands in the task's comment composer
+# Comment draft â\x80\x94 lands in the task's comment composer
 hypertask draft create HTPR-2992 --comment --text "Ready for review, tests are green."
 
-# Description draft — replaces the description when published
+# Description draft â\x80\x94 replaces the description when published
 hypertask draft create HTPR-2992 --text "Rewrite the importer to stream rows."
 ```
 
@@ -1075,7 +1075,7 @@ Show the drafts on a task, with their IDs.
 hypertask draft list HTPR-2992
 ```
 
-Empty drafts are not returned — a draft whose content is blank reads as no draft at all.
+Empty drafts are not returned â\x80\x94 a draft whose content is blank reads as no draft at all.
 
 ### `draft update`
 
@@ -1105,7 +1105,7 @@ hypertask draft delete 98711
 
 ## Pages
 
-Pages are rich documents attached to a task — longer than a description, versioned, and editable in pieces. Content is markdown unless you pass `--html`.
+Pages are rich documents attached to a task â\x80\x94 longer than a description, versioned, and editable in pieces. Content is markdown unless you pass `--html`.
 
 ### `pages create`
 
@@ -1132,11 +1132,11 @@ hypertask pages get 812 --format markdown
 | Argument / Flag | Description |
 |-----------------|-------------|
 | `<id>` | Page ID |
-| `--format <markdown\|html>` | Content format, markdown by default |
+| `--format <markdown\\|html>` | Content format, markdown by default |
 
 ### `pages append`
 
-Add to the end of a page without rewriting it — the safe way for an agent to add a finding to a shared document.
+Add to the end of a page without rewriting it â\x80\x94 the safe way for an agent to add a finding to a shared document.
 
 ```bash
 hypertask pages append 812 --content "## Rollback\n\nPromote the previous deployment."
@@ -1151,7 +1151,7 @@ hypertask pages update 812 --markdown-file ./plan.md --mode replace --note "post
 | Flag | Description |
 |------|-------------|
 | `--content <content>` / `--markdown-file <path>` | The new content |
-| `--mode <replace\|append\|prepend>` | How to apply it, replace by default |
+| `--mode <replace\\|append\\|prepend>` | How to apply it, replace by default |
 | `--if-version <n>` | Only write if the page is still at this version |
 | `--note <text>` | Why you changed it |
 | `--html` | Treat the content as HTML |
@@ -1194,7 +1194,7 @@ hypertask skills create --markdown ./SKILL.md --scope project --project 15
 | `--body <body>` | Instruction body |
 | `--description <description>` | What the skill is for |
 | `--argument-hint <hint>` | Hint shown after the slug in the picker |
-| `--scope <user\|project>` | `user` by default |
+| `--scope <user\\|project>` | `user` by default |
 | `--project <id>` | Required for project scope |
 | `--markdown <path>` | Read name, slug, description and body from a `SKILL.md` |
 | `--disabled` | Create it switched off |
@@ -1221,7 +1221,7 @@ hypertask skills import https://github.com/user/repo --scope project --project 1
 
 ## AI
 
-Both `ai` subcommands run the same AI harness the web editor uses — board context, the team's configured model, and any custom AI instructions set for the project. They count against the team's AI usage like the in-app helpers, and return a 403 if the team has AI writing switched off in its settings.
+Both `ai` subcommands run the same AI harness the web editor uses â\x80\x94 board context, the team's configured model, and any custom AI instructions set for the project. They count against the team's AI usage like the in-app helpers, and return a 403 if the team has AI writing switched off in its settings.
 
 ### `ai write`
 
@@ -1238,14 +1238,14 @@ hypertask ai write "Tighten this description" --task HTPR-4650 --apply
 hypertask ai write "Summarize the decision above" --task HTPR-4650 --mode write-with-ai --apply
 ```
 
-| Argument / Flag | Description |
-|-----------------|-------------|
-| `<prompt>` | What you want written. Supports `/slug` skill invocation, same as the editor's slash-command popup |
-| `--task <ticket>` | Ticket used as context, e.g. `HTPR-4650` |
-| `--project <id>` | Board to use, defaults to the task's board |
-| `--mode <task-writer\|write-with-ai>` | `task-writer` (default) drafts a task description. `write-with-ai` drafts a comment |
-| `--instructions <text>` | Extra instructions for this run |
-| `--apply` | Apply the result. In `task-writer` mode this writes description, title, priority, and size back to the ticket. In `write-with-ai` mode this posts the draft as a comment. Requires `--task` |
+| Argument | Flag | Description |
+|----------|------|-------------|
+| `<prompt>` | — | What you want written. Supports `/slug` skill invocation, same as the editor's slash-command popup |
+| — | `--task <ticket>` | Ticket used as context, e.g. `HTPR-4650` |
+| — | `--project <id>` | Board to use, defaults to the task's board |
+| — | `--mode <task-writer\\|write-with-ai>` | `task-writer` (default) drafts a task description. `write-with-ai` drafts a comment |
+| — | `--instructions <text>` | Extra instructions for this run |
+| — | `--apply` | Apply the result. In `task-writer` mode this writes description, title, priority, and size back to the ticket. In `write-with-ai` mode this posts the draft as a comment. Requires `--task` |
 
 <Aside type="note">
 `ai write` calls `POST /api/mcp/ai/task-writer` under the hood.
@@ -1266,13 +1266,13 @@ echo "the button dont work when u click twice fast" | hypertask ai improve --tas
 hypertask ai improve "Ship it Friday." --project 15 --command translate:german
 ```
 
-| Argument / Flag | Description |
-|-----------------|-------------|
-| `<text>` | Text to rewrite. Omit this and pipe text on stdin instead |
-| `--task <ticket>` | Ticket to resolve the project (and its AI settings/model) from |
-| `--project <id>` | Project whose AI settings and model to use. One of `--task` or `--project` is required |
-| `--command <name>` | `improve-readability` (default), `fix-spelling`, `summarize`, `make-shorter`, or `translate:<language>` (e.g. `translate:german`, `translate:brazilian portuguese`) |
-| `--json` | Print the full API response instead of just the rewritten text |
+| Argument | Flag | Description |
+|----------|------|-------------|
+| `<text>` | — | Text to rewrite. Omit this and pipe text on stdin instead |
+| — | `--task <ticket>` | Ticket to resolve the project (and its AI settings/model) from |
+| — | `--project <id>` | Project whose AI settings and model to use. One of `--task` or `--project` is required |
+| — | `--command <name>` | `improve-readability` (default), `fix-spelling`, `summarize`, `make-shorter`, or `translate:<language>` (e.g. `translate:german`, `translate:brazilian portuguese`) |
+| — | `--json` | Print the full API response instead of just the rewritten text |
 
 <Aside type="tip">
 **Output format depends on how you run it.** In an interactive terminal, `ai improve` prints plain text. When output is piped or redirected, it prints the raw HTML instead, so you can capture it and feed it into another command that expects HTML (e.g. `comment add --text` or `task update --description`).
@@ -1284,7 +1284,7 @@ hypertask comment add HTPR-1234 --text "$REWRITTEN"
 </Aside>
 
 <Aside type="note">
-`ai improve` calls `POST /api/mcp/ai/improve`, a sibling of `POST /api/mcp/ai/task-writer`. Bearer-authenticated, body `{ "project_id": 15, "text": "...", "command": "fix-spelling" }` (`command` optional, defaults to `improve-readability`), response `{ "success": true, "html": "...", "command": "fix-spelling", "model": "..." }`. `project_id` is required because it carries the team's AI settings and model choice — that's why `ai improve` needs `--project` or `--task`.
+`ai improve` calls `POST /api/mcp/ai/improve`, a sibling of `POST /api/mcp/ai/task-writer`. Bearer-authenticated, body `{ "project_id": 15, "text": "...", "command": "fix-spelling" }` (`command` optional, defaults to `improve-readability`), response `{ "success": true, "html": "...", "command": "fix-spelling", "model": "..." }`. `project_id` is required because it carries the team's AI settings and model choice â\x80\x94 that's why `ai improve` needs `--project` or `--task`.
 </Aside>
 
 ---
@@ -1350,7 +1350,7 @@ Common questions it can handle:
 
 ## Management Keys
 
-Management keys (`htmk_…`) administer your account rather than read your boards. Since CLI 1.13.9 you can manage them from the terminal. The `list` subcommand is used interactively (no `--json` for introspection).
+Management keys (`htmk_â\x80¦`) administer your account rather than read your boards. Since CLI 1.13.9 you can manage them from the terminal. The `list` subcommand is used interactively (no `--json` for introspection).
 
 ```bash
 hypertask admin keys list
@@ -1363,9 +1363,9 @@ hypertask admin keys revoke 12
 
 | Flag | Description |
 |------|-------------|
-| `--name <name>` | Key name, 1–32 characters (required for `create`) |
+| `--name <name>` | Key name, 1â\x80\x9332 characters (required for `create`) |
 | `--scope <scope>` | `management` (default) or `full` |
-| `--expires-in-days <n>` | 1–365; omit for a key that never expires |
+| `--expires-in-days <n>` | 1â\x80\x93365; omit for a key that never expires |
 | `--management-key <key>` | Authenticate with this key instead of your session |
 
 A key cannot create another key with wider permissions than it holds; attempting it fails with `insufficient_scope`.
@@ -1657,7 +1657,7 @@ hypertask capabilities --json
 # Pipe to jq to find every command that supports --attach
 hypertask capabilities --json | jq '[.[] | select(.options[]?.flags | contains("--attach"))]'
 
-# Identify read commands — their plain output is complete and tab-separated
+# Identify read commands â\x80\x94 their plain output is complete and tab-separated
 hypertask capabilities --json | jq '[.[] | select(.description | contains("tab-separated"))]'
 ```
 
