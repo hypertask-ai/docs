@@ -115,9 +115,8 @@ Create relationships between tasks to surface context without leaving tasks:
 ### Adding a related task
 
 From a task detail view, open the **Relations** section to add a related task. When you create a new relation from the picker:
-
 - **Recently worked tasks**: If you've recently worked on other tasks, they appear in the picker to help you reuse prior context.
-- **Access control**: Mentions and relations are access-controlled â\x80\x94 you can only create relationships to tasks you have access to.
+- **Access control**: Mentions and relations are access-controlled — you can only create relationships to tasks you have access to.
 
 See a task's relations in the **Relations** section of the task detail view.
 
@@ -125,12 +124,12 @@ See a task's relations in the **Relations** section of the task detail view.
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
 
-- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> â\x86\x92 "Blocked by person...", then pick the person. One blocker per ticket.
+- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> — "Blocked by person...", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the â\x80\x94 in the sidebar row or by picking "Nobody" in the picker.
-- **Filter**: The board filter picker has a **Blocked by person** filter â\x80\x94 pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
+- **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
 
@@ -139,7 +138,6 @@ Break down a task into smaller units. Subtasks appear in the task detail under t
 ### Default subtask visibility
 
 When a board or view is created, or when you create a parent task without selecting a subtask style:
-
 - **Flattened list**: Subtasks appear as a flat list in the parent task detail row.
 - **Card elements**: Subtasks appear as mini cards aligned in a grid beneath the parent task.
 
@@ -161,7 +159,6 @@ See the <a href="https://docs.hypertask.ai/features/time-tracking/">Time Trackin
 ## Status and sections
 
 Tasks can belong to one section on a board. Changing a task's section moves it to the new column. Some sections have special behaviors:
-
 - **Auto-filing**: Certain pipeline tasks are auto-filed from CI or monitoring systems as new tickets. These appear fresh on the board as soon as they're created.
 
 **Note:** Temporary typecast changes for webhook status handling (e.g., internal Stripe SDK version bumps) do not surface as user-visible settings or toggles; they are infrastructure-level fixes and apply silently under the hood.
@@ -195,7 +192,13 @@ AI status updates appear on task cards when an AI agent updates task metadata in
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> â\x86\x92 search for a task and use **Agent write-with-AI** to trigger the update.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
+
+## Billing and seats
+
+Hypertask uses a per-seat billing model based on the number of members with team memberships and project access. Seats are reserved for active members, and the system ensures seats are correctly allocated and reconciled.
+
+**Seat loss prevention**: The system now uses per-team leases with duplicate-membership protection during joins and access grants, and daily reconciliation runs to correct discrepancies. This prevents users from losing seats due to concurrent invites or race conditions.
 
 ## Export and integration
 
