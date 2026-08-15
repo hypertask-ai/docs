@@ -15,6 +15,8 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 15, 2026">
   * Fixed: Calendar server rendering no longer depends on nullable persisted user state; identity-dependent calendar filters render reliably across all views ([HTPR-5338](https://app.hypertask.ai/detail/project-15/5338))
+  * Fixed: CLI ticket prefix validation now enforces ^[A-Za-z0-9]+-\d+$ on emitted ticket numbers and excludes mutation operations that lack board/gate access ([HTPR-5339](https://app.hypertask.ai/detail/project-15/5339))
+  * Fixed: All task/comment write paths and the legacy comment endpoint now require authoritative access to the target board or task before writing ([HTPR-4986](https://app.hypertask.ai/detail/project-15/4986))
 </Update>
 
 <Update label="August 14, 2026">
