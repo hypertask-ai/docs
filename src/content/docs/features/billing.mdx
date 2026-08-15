@@ -1,0 +1,61 @@
+---
+title: Billing & Seat Management
+description: Add and manage seat licenses, view cost forecasts, and test billing flows safely.
+---
+
+import { Card, CardGrid, TabItem, Tabs } from '@astrojs/starlight/components';
+
+Hypertask billing controls license capacity, seat limits, and access tiers. Manage seats, track costs, and safely test billing changes in production without risking database side effects.
+
+## Seats
+
+Seats represent active users with individual access to Hypertask. Each seat corresponds to a user with login credentials and full access to the platform features.
+
+**Seat limits by plan:**
+- Free tier: No active seat limit
+- Paid and team plans: Active seat limits per plan
+- Enterprise: Custom seat limits
+
+When you create or add accounts, new seats are allocated automatically. Upgrading your plan increases your seat capacity, unrestricted reassignments are tracked for billing reconciliation.
+
+## Cost forecasting
+
+The cost forecast shows estimated consumption for GitHub repositories connected to Hypertask. This view helps you anticipate file storage and integration costs before they hit your budget.
+
+**View your forecast:**
+1. Go to the **Cost Forecast** page
+2. See per-repository estimates broken down by usage type
+3. Compare projections against your current subscriptions
+
+## Testing billing changes safely
+
+Stripe test-mode harness lets you safely test billing flows in production without risking database writes or production incidents.
+
+The test harness:
+- Runs **guarded seat billing logic** in a controlled environment
+- Uses **in-memory application state** so tests don't affect live data
+- Implements **bounded cleanup** to discard test states after execution
+- **Never writes to the Hypertask database** during test runs
+
+This means you can safely iterate on seat-loss logic, billing entitlement checks, and upgrade/downgrade flows in production-like conditions without creating cross-tenant leakage or corrupting live seats.
+
+## License management
+
+Seat allocation follows consistent rules across surfaces:
+
+- New user creation adds a seat to your allocation
+- Adding teammates in the app, via CLI, or through API all respect the same capacity checks
+- Free-tier users may add teams and the first seat without restrictions
+- Upgrading your plan increases your tracked capacity and adds seats automatically within the new tier bounds
+
+## Team ownership verification
+
+All billing-affected endpoints now verify team ownership server-side before performing mutations:
+
+| Endpoint | Change |
+|----------|--------|
+| Checkout session creation | Verifies the authenticated user has billing access to the team before creating a checkout URL |
+| Task mutations | Reads billing authority from the authenticated user and enforces access checks before state changes |
+| Comment operations | Validates the requesting user's access to the target board and task before posting |
+
+This prevents client-controlled parameter mismatches from bypassing authorization and ensures operations are scoped only to the intended team's resources.
