@@ -13,6 +13,10 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 17, 2026">
+  * Added: Premium model selection now respects the destination board after quick-create, letting teams choose Luna, Terra, Sol, GPT-5.5, Anthropic, Google, and xAI instead of Mini-only ([HTPR-5430](https://app.hypertask.ai/detail/project-15/5430))
+</Update>
+
 <Update label="August 15, 2026">
   * Added: Move mobile Inbox splits into the bottom thumb zone and hide regular bottom navigation while Inbox is open ([HTPR-6166](https://app.hypertask.ai/detail/project-15/6166))
   * Added: Seat loss from concurrent joins is fixed with per-team lease protection and daily reconciliation ([HTPR-6167](https://app.hypertask.ai/detail/project-15/6167))
@@ -191,7 +195,7 @@ export const Update = ({ label, children }) => (
 <Update label="August 2, 2016">
   * Added: Most pages now use compact modal header sizing; modals have 48px/16px header, 44px/14px input, and 36px/13px rows by default, with legacy sizing opt-in via `legacySizing` prop for compatibility ([HTPR-4742](https://app.hypertask.ai/detail/project-15/4742))
   * Added: Left sidebar rail now expands to 130px for logged-in users, with user labels, accordion accordions, and Favorites section at the bottom; collapsed by default with chevron toggle and persistent state ([HTPR-4738](https://app.hypertask.ai/detail/project-15/4738))
-  * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g. "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
+  * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g., "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
   * Fixed: Container picker now correctly selects multiple values and respects the `aria-invalid` attribute when there are errors during submission ([HTPR-4373](https://app.hypertask.ai/detail/project-15/4373))
   * Fixed: Kanban switcher `Ctrl+B` now consistently opens the board palette from any route ([HTPR-4696](https://app.hypertask.ai/detail/project-15/4696))
   * Added: User AV2 temporarily disabled while investigating playback issues; a full migration over ATSP to ATAP is in progress ([HTPR-4744](https://app.hypertask.ai/detail/project-15/4744))
