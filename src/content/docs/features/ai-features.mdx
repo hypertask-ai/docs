@@ -118,6 +118,9 @@ The gateway now maps eligible users to appropriate default models based on team 
 ### Plan access guidance
 When a model requires a paid plan or an owned API key, the system shows an appropriate upgrade/BYOK message to help teams align their models with the right plan or credential setup. This message is now surfaced correctly as guidance, while the handled-error reporter correctly does not create product bug tickets for this expected outcome.
 
+### Premium model selection after board switch
+When you create a task via quick-create and switch to a premium board, the model picker now uses the destination board's team plan instead of the originating board's entitlement. This restores full model availability for premium teams, including Luna, Terra, Sol, GPT-5.5, Anthropic, Google, and xAI, without forcing Mini-only selections.
+
 ## Chat sidebar naming (HTPR-5268)
 After the first AI chat, the left rail expands and the launcher shows **AI Chat**. This name change conveys the assistant's identity clearly, while fixed behavior and keyboard shortcut remain unchanged. Nothing in this page needs adjustment; the page already describes using AI chat and the app rail.
 
