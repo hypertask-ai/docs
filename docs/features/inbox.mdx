@@ -1,0 +1,3 @@
+The Inbox prefetch timing section reflects that board data is now deferred until Inbox is usable for improved startup performance. Verified in production with signed-in reloads showing no Board request before usable data, and warm-up waiting for IndexedDB and network readiness.
+
+**Stakeholders — please review the prefetch timing and boundary jumps sections for correctness. Reply with corrections or missing context.**
