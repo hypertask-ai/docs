@@ -1,17 +1,18 @@
 ---
 title: Board Settings
-description: "Manage board-level rules including auto-archive, staleness detection, and per-column auto-assign rules."
+description: "Manage board notifications, auto-archive, staleness detection, time tracking, and per-column auto-assign rules."
 ---
 
 import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
-Use the board settings panel to define automatic behaviors that act on your entire board. Configure rules that determine how tasks should be archived, how long tasks should stay in each column, and how columns might automatically assign work.
+Use the board settings panel to control notifications and automatic behaviors for one board. You can mute a noisy board without changing your global notification preferences, then configure archival, staleness, time tracking, and assignment rules.
 
 ## What this affects
 
 Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
 
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
+- **Board notifications** — Mute ordinary inbox, email, and push notifications from this board only.
 - **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
 - **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
 - **Time totals** — Optionally show accumulated tracked time on task cards and in table view.
@@ -44,6 +45,21 @@ Keep data in sync across browsers by default for authenticated board and table r
 </Card>
 </CardGrid>
 ```
+
+## Board notifications
+
+Open **Settings → Board → General**, then turn **Board notifications** off to mute one board. The change applies immediately and persists across refreshes.
+
+Muting a board stops its ordinary:
+
+- Inbox notifications, including snoozed items returning later.
+- Push notifications.
+- Immediate and digest emails.
+- Assignment, reaction, task-move, and due-date alerts.
+
+Your global notification channel settings stay unchanged, and other boards continue notifying you. Direct replies from managed agents still appear in your inbox so an explicit agent request can return its answer.
+
+Turn **Board notifications** on again whenever you want to resume delivery.
 
 ## Auto-archive
 
