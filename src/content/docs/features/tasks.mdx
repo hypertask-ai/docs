@@ -76,6 +76,10 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 - **Ctrl+O** / **Cmd+O**: Open the link picker when in a task detail view or comment.
 - **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation.
 
+## Agent lease interactions
+
+When you make manual changes to a task—moving, assigning, unassigning, archiving, or deleting—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
+
 ## Task detail view
 
 Open a task to see:
@@ -116,7 +120,7 @@ Create relationships between tasks to surface context without leaving tasks:
 
 From a task detail view, open the **Relations** section to add a related task. When you create a new relation from the picker:
 - **Recently worked tasks**: If you've recently worked on other tasks, they appear in the picker to help you reuse prior context.
-- **Access control**: Mentions and relations are access-controlled — you can only create relationships to tasks you have access to.
+- **Access control**: Mentions and relations are access-controlled â\x80\x94 you can only create relationships to tasks you have access to.
 
 See a task's relations in the **Relations** section of the task detail view.
 
@@ -124,12 +128,12 @@ See a task's relations in the **Relations** section of the task detail view.
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
 
-- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> — "Blocked by person...", then pick the person. One blocker per ticket.
+- **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> â\x80\x94 "Blocked by person...", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
-- **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the â\x80\x94 in the sidebar row or by picking "Nobody" in the picker.
+- **Filter**: The board filter picker has a **Blocked by person** filter â\x80\x94 pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
 
@@ -192,7 +196,7 @@ AI status updates appear on task cards when an AI agent updates task metadata in
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> â\x80\x94 search for a task and use **Agent write-with-AI** to trigger the update.
 
 ## Billing and seats
 
