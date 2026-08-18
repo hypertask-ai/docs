@@ -224,7 +224,7 @@ Production payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `pro
   "ticketNumber": "HTPR-5388",
   "taskTitle": "Outbound webhooks for agent mentions and assignments",
   "commentId": 182293,
-  "commentHtml": "<p><span data-type=\\"mention\\">@Release Agent</span> please review</p>",
+  "commentHtml": "<p><span data-type=\"mention\">@Release Agent</span> please review</p>",
   "actor": {
     "userId": 6,
     "agentId": null,
@@ -232,6 +232,41 @@ Production payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `pro
   }
 }
 ```
+
+## Cancellation
+
+Webhooks can be cancelled before a delivery is made, clearing the pending subscription and preventing further events for that agent and board.
+
+<Tabs>
+
+<TabItem label="Agent settings (web UI)">
+In the agent panel, click the webhook icon and toggle **Delivery enabled** to off. Confirm to cancel existing pending deliveries.
+</TabItem>
+
+<TabItem label="CLI">
+```bash
+hypertask webhook cancel
+```
+</TabItem>
+
+<TabItem label="MCP">
+```json
+{
+  "action": "cancel"
+}
+```
+</TabItem>
+
+<TabItem label="HTTP API">
+```bash
+curl -X POST https://app.hypertask.ai/api/mcp/webhooks/cancel \
+  -H "Authorization: Bearer $AGENT_TOKEN"
+```
+</TabItem>
+
+</Tabs>
+
+Cancellation removes the pending subscription immediately but does not resubmit confirmed deliveries. You can reconfigure the webhook after cancellation.
 
 ## Delivery behavior
 
