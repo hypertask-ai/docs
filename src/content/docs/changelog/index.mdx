@@ -14,9 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 18, 2026">
-  * Added: Permanent board-15 Speed Engineer runs in a brokered pattern using a persistent worker and localhost broker, isolating managed tokens ([HTPR-5456](https://app.hypertask.ai/detail/project-15/5456))
-  * Fixed: Board archive actions no longer fail silently; archived tasks and QA Verified tasks persist after page reload ([HTPR-5459](https://app.hypertask.ai/detail/project-15/5459))
-  * Fixed: team leave restores pending invite seats instead of resetting Stripe quantity to totalSeats ([HTPR-3900](https://app.hypertask.ai/detail/project-15/3900))
+  * Fixed: Board prefetch no longer starts before Inbox data is usable (HTPR-5431)
+  * Fixed: Authorized Board writes now wait for project-scoped IndexedDB snapshot publication (HTPR-5443)
+  * Improved: Authenticated web speed telemetry now reports full project-route entries with Board/Table as the entry surface (HTPR-5432)
 </Update>
 
 <Update label="August 17, 2026">
