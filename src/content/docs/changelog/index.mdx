@@ -19,6 +19,8 @@ export const Update = ({ label, children }) => (
   * Fixed: Board prefetch no longer starts before Inbox data is usable (HTPR-5431)
   * Fixed: Authorized Board writes now wait for project-scoped IndexedDB snapshot publication (HTPR-5443)
   * Improved: Authenticated web speed telemetry now reports full project-route entries with Board/Table as the entry surface (HTPR-5432)
+  * Added: Move actions now cancel any active agent lease and persist, preventing conflicts with automated task updates while maintaining agent-versus-agent collision protection ([HTPR-5466](https://app.hypertask.ai/detail/project-15/5466))
+  * Improved: Authentication startup now reuses a fresh cached user profile for up to 5 minutes, reducing refetch load on authenticated loads ([HTPR-5450](https://app.hypertask.ai/detail/project-15/5450))
 </Update>
 
 <Update label="August 17, 2026">
