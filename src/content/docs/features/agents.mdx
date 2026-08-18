@@ -3,145 +3,188 @@ title: AI Agents
 description: Create, configure, and manage autonomous agents in Hypertask with MCP, webhooks, and scheduled vs ad-hoc workflows.
 ---
 
-import { Aside, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import Aside from '@theme/Aside';
+import LinkCard from '@theme/LinkCard';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
-Agents in Hypertask are autonomous AI entities that can create, update, or delete tasks, leave comments, and execute long-running workflows. They are connected to Hypertask via the Model Context Protocol (MCP) or triggered from the UI.
+Agents let you attach an AI model to a workflow that can perform autonomous actions, such as reading tasks, writing comments, scheduling, or running utilities on the platform. They integrate with the Model Context Protocol (MCP) to surface tool calls, returning structured outputs that your agent can use to complete goals.
 
-## Quick setup
+## How agents work
 
-1. Go to any board and open the AI pane.
-2. Click **Create agent** and give the agent a name and description.
-3. Choose a base model and attach an agent token (see “Agent tokens” below).
-4. Save — the agent is ready to create tasks, leave comments, or join workflows.
+1. **Create an agent** — Define a name, description, permissions, and open to task assignment.
+2. **Connect MCP tools** — Grant the agent access to tools like `get_tasks`, `create_task`, `write_comment`, and beyond.
+3. **Orchestrate with workflows** — Build a workflow using Ad-hoc triggers (e.g., task.assigned, comment.mention) or Scheduling Agents to run on a cron.
+4. **Apply MCP credentials** — Use BYOK or per-agent tokens so the agent can securely call tools.
+5. **Start the agent** — Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
 
-## Agent tokens
+## List view and sorting
 
-Securely connect your agent to Hypertask using a dedicated token. Tokens grant the agent scoped access and can be rotated or revoked at any time.
+Browse and manage your agents on the Agents page (`/agents`). The view can be personalized in three ways:
 
-### Create and manage tokens
+| View type | How it behaves |
+|-----------|----------------|
+| **Grouped** | Boards are sorted by their most recent agent activity. Agents inside each board are sorted by their own newest activity. |
+| **Flat** | All agents appear in a single list, sorted by latest activity. Open the margin ellipsis in the header to enable the flat view via `?group=0`. |
+| **Production register** | A read-only reference for the current production environment, highlighting agents most recently active. |
 
-From the AI pane:
+Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>–<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
 
-- **Create token** → generates a fresh, encrypted token tied to the agent.
-- **Rotate token** → revokes the old token and creates a new one.
-- **Revoke token** → denies the agent’s access to Hypertask.
+<Aside>
+**Tip** — Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team’s active agents.
+</Aside>
 
-Tokens inherit the agent’s board and permission scope at creation time. Revoke a token to force the agent to exit any in-flight workflows and to stop all API access.
+## Viewing specific agents
 
-## Security
+Click any agent to open its detail page. The detail page contains:
+
+- **Basic configuration**
+  - Name and description
+  - Auto-assign toggles (boards, team, or project-wide)
+  - MCP tools list and credential status
+- **Activity and logs**
+  - Recent task assignments and webhooks
+  - History of tool calls signed by the agent
+- **Actions**
+  - Start/Stop agent toggle
+  - Rename agent directly from the page
+  - Configure webhooks and accessibility settings
+
+## Renaming agents
+
+You can rename an agent directly from its detail page:
+
+1. Click **Agents** in the sidebar.
+2. Find the agent and open its page.
+3. Click in the visible **title field** — the field is borderless and editable in place.
+4. Type a new name, then press <kbd>Enter</kbd> to save.
+   - <kbd>Escape</kbd> cancels the rename without changing the URL.
+   - Clicking away or blurring the field saves the new name.
+5. The URL automatically updates to match, so an agent previously at `/agents/drainer-1` will become `/agents/new-name`.
+
+<Aside>
+Renaming an agent does not reset its MCP credentials or task assignments; it only updates the accessible slug and bookmarks.
+</Aside>
+
+## Agent webhooks
+
+Wake an agent the moment it is mentioned or assigned by registering webhooks:
+
+| Property | Description |
+|----------|-------------|
+| **Event type** | <code>comment.mention</code> or <code>task.assigned</code> |
+| **Deliveries** | HTTPS POST to your configured endpoint with signed body and ID |
+| **Board filtering** | Optional scope to a single board if you only want notifications on that scope |
+
+Webhooks make agents reactive to incoming mentions or task assignments, supporting faster triage and asynchronous execution.
+
+## Scheduling agents
+
+Run an agent on a schedule using an external scheduler:
 
 <Tabs>
+<TabItem value="github-actions" label="GitHub Actions">
 
-<TabItem label="Token security">
+1. Create a GitHub Actions workflow that toggles "active" for your agent via the MCP credential or internal API.
+2. Set your cron schedule in the workflow file.
+3. The agent respects its MCP tools, board permissions, and credential encryption.
 
-**Agent token exposure:** Agent tokens are only rendered in the UI when they are actively being used (for example, when you are viewing the AI details for an agent or expanding its connection panel). Collapsed or hidden agent panels no longer mount token-bearing content, reducing the surface area for XSS- or devtools-based token extraction.
-
-</TabItem>
-
-<TabItem label="Practical tips">
-
-**If you see a token expose error:** Ensure you are not manually editing hidden panel HTML. Tokens should only be used through the authenticated API or MCP setup UI.
-
-</TabItem>
-
-</Tabs>
-
-## Agent workflows
-
-Add agents to step-based workflows using the MCP agent team infrastructure. Each step can invoke a different tool, inspect intermediate results, and transact changes to tasks or comments.
-
-### Step types
-
-- **Tool call** – invoke an MCP tool when the condition matches.
-- **Condition check** – branch based on task labels, priority, or custom fields.
-- **Delay** – pause for a configured duration before the next step.
-- **Loop** – iterate over a set of tasks or comments until a condition clears.
-
-### Example workflow (AD-HOC)
-
-Below is a lightweight workflow that automatically reprioritizes bugs on a Board:
-
-<Tabs>
-
-<TabItem label="Prerequisites">
-
-Before deploying, ensure your agent has:
-
-- Read-write access to the target Board.
-- The `setTaskLabels` and `setPriority` MCP tools available.
-
-From the AI pane, add a workflow named **Bug reprioritizer** and paste the JSON snippet below. Attach it to the “Bugs” column and trigger it from the workflow sidebar.
+```yaml
+name: Schedule Drainer-1
+on:
+  schedule:
+    - cron: "0 * * * *"  # Hourly
+jobs:
+  awake-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -X POST https://app.hypertask.ai/internal/schedule \
+            -H "Authorization: Bearer ${{ MY_TOKEN }}" \
+            -d '{"agentId":"drainer-1","active":true}'
+```
 
 </TabItem>
+<TabItem value="vercel-cron" label="Vercel Cron">
 
-<TabItem label="Workflow">
+1. Add a cron job function in your Vercel project.
+2. Call the agent toggle endpoint with your service token.
+3. Ensure the endpoint validates and encrypts tool calls.
 
-```json
-{
-  "name": "Bug reprioritizer",
-  "trigger": "once-per-minute",
-  "enabled": true,
-  "steps": [
-    {
-      "type": "Tool call",
-      "name": "List tasks",
-      "config": {
-        "endpoint": "/mcp/tasks/search",
-        "query": {
-          "labels_in": ["bug"],
-          "board_id": "<BOARD_ID>"
-        }
-      }
-    },
-    {
-      "type": "Tool call",
-      "name": "Set priority",
-      "config": {
-        "endpoint": "/mcp/tasks/update",
-        "payload": {
-          "ticket_number": "{{ $task.ticket_number }}",
-          "priority": "high"
-        }
-      }
-    }
-  ]
+```js
+export const config = {
+  schedule: {
+    cron: "0 * * * *"  // hourly
+  }
+}
+
+export default async function handler() {
+  await fetch('https://app.hypertask.ai/internal/schedule', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${process.env.HT_AGENT_TOKEN}` },
+    body: JSON.stringify({ agentId: "drainer-1", active: true })
+  })
 }
 ```
 
-You can reference any `$task` from the previous step using Jinja syntax.
-
 </TabItem>
-
 </Tabs>
 
-## Scheduled vs ad-hoc
-
-- **Ad-hoc agents** react to events (e.g., agents that assign new tasks from custom schedules or templates).
-- **Scheduled agents** are run periodically via external schedulers (GitHub Actions, crontab, Cloudflare Workers, Vercel cron). Run the CLI to schedule a background operator:
-
-```bash
-hypertask agent schedule:run \
-  --agent-name "weekly-board-balance" \
-  --schedule "0 2 * * *" \
-  --board-id <BOARD_ID>
-```
-
-See [Scheduling Agents](./scheduling.mdx) for more on recurring workflows.
-
-## Security and privacy
-
-Agents operate under the same authentication and permissions model as your account. Restrict board access and agent tools to the minimum required scope. Rotate tokens regularly and monitor agent activity in the AI pane.
-
-For board-level security or data isolation policies, see [Board Visibility](./board-visibility.mdx) and [Observability & Error Tracking](./observability.mdx).
-
-## Troubleshooting
-
-<Aside type="note">
-
-Check the AI pane for error messages when agents fail. Common causes include missing tokens, out-of-scope boards, or permission mismatches.
-
+<Aside>
+When using a scheduler, consider the agent's rate limits, MCP token lifecycle, and error handling to avoid loops or uncontrolled executions.
 </Aside>
 
-- **Agent fails to create tasks** – verify the MCP token is active and the agent schedule has board access.
-- **Tools return 403 Forbidden** – the agent’s token lacks the required write permissions on the Board or Team.
-- **Agent timeouts** – reduce the number of tasks processed in a single workflow step or increase timeouts in the schedule configuration.
+## MCP tools
+
+MCP tools are the building blocks an agent can call to interact with Hypertask. The agent server surface exposes tools for tasks, comments, board operations, time tracking, and configuration.
+
+Example MCP tool invocation:
+
+```json
+{
+  "tool": "get_tasks",
+  "args": {
+    "boardId": "board-123",
+    "assignee": "bot-456",
+    "limit": 50
+  }
+}
+```
+
+See the [MCP Tools Reference](/api/tools-reference) for the complete schema list.
+
+## Getting started
+
+<TabGroup>
+<TabItem value="quick-create" label="Quick create">
+1. Go to **Agents** (`/agents`).
+2. Click **New agent**.
+3. Name it and provide a short description.
+4. Select boards or projects where it may be auto-assigned.
+5. Toggle it **active** and optionally set a webhook or job token.
+6. Its MCP tools become available to any scheduled or ad-hoc workflow.
+</TabItem>
+<TabItem value="import" label="Import from MCP">
+1. Open the agent’s detail page.
+2. Under "MCP tools," click **Import tools**.
+3. Choose a provider or import by tool list and signatures.
+4. Save credentials and start the agent.
+</TabItem>
+</TabGroup>
+
+<Aside>
+Many teams build agents around a recurring pattern — e.g., a "drainer" agent for stale tasks, a "bot" for support triage, or a "replier" for common questions. Reuse saved workflows as a blueprint when creating new agents.
+</Aside>
+
+## Inline help
+
+- **Webhooks** — See [Agent Webhooks](/mcp/agent-webhooks)
+- **Workflows** — See [Agent Workflows](/mcp/workflows)
+- **Scheduling** — See [Scheduling Agents](/mcp/scheduling)
+- **MCP overview** — See [MCP Integration](/mcp/overview)
+
+<AlsoRead>
+- [Agents Dashboard](/features/agents-dashboard) — View and group all agents
+- [Skills](/features/skills) — Tune agent behavior with team skills
+- [Cost Forecast](/features/cost-forecast) — Migrate agents to paid tiers safely
+</AlsoRead>
