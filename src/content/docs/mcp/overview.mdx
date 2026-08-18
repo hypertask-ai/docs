@@ -90,6 +90,10 @@ You can manage agents as service accounts with scoped API keys. Configure agents
 
 This makes each agent behave like a dedicated account with its own permission profile. Agents can be created, updated, or deactivated via MCP, and their scoped keys are scoped to the scopes they were assigned.
 
+## Persistent Speed Engineer
+
+On board 15, the Speed Engineer now runs in a brokered pattern. Its sessions are backed by a persistent worker that pulls capability from a localhost broker using a short-lived ticket/cycle. This isolates managed tokens and prevents direct access to credential files or unmanaged token usage. For board-15 task cycles, use the standard lease-based claim/heartbeat/release workflow shown in Agent Workflows; the agent identity itself remains scoped and the broker ensures it cannot read your credential files directly.
+
 ## Expose board AI custom instructions over MCP
 
 In addition to skills and playbooks, you can manage board AI custom instructions directly from MCP:
@@ -249,7 +253,7 @@ The **help-site AI chat** at [help.hypertask.ai](https://help.hypertask.ai) prov
 
 ### Knowledge coverage
 
-- **MCP tools:** Instant understanding of all MCP operations (tools, parameters, return types)
+- **MCP tools:** Instant understanding of all MCP operations (tools, parameters)
 - **Workflow patterns:** Guidance from MCP agent workflows (e.g. safe task claiming, heartbeat loops)
 - **API schemas:** Embeds OpenAPI specs and model responses to answer "what can I call with these parameters?"
 - **Board content:** RAG-based retrieval over indexed tasks, comments, and pages for contextual answers
