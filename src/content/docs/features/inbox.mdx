@@ -12,7 +12,7 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
-- **Important tasks** â\x80\x94 rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
+- **Important tasks** — rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
 
 The inbox can be grouped into multiple views:
 
@@ -48,14 +48,14 @@ On narrow screens, the Inbox displays rows on a single line with sender informat
 
 ### Inbox prefetch timing
 
-Board data is now deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This reduces unnecessary initial Board requests and improves perceived responsiveness on cold runs.
+Board data is deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This ensures that on signed-in reloads, no Board request occurs before usable data, and warm-up of the previous-board query waits for stable IndexedDB and network readiness ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431)).
 
 ### Inbox boundary jumps (HTPR-5431)
 
 When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg</kbd> and <kbd>GG</kbd> to jump to the top or bottom of the list. This fix ensures that:
 - Pressing <kbd>gg</kbd> moves focus to the first item and scrolls the list to center that row on screen.
 - Pressing <kbd>GG</kbd> moves focus to the last item and scrolls the list to center that row on screen.
-- The list viewport updates alongside the focused row, so the jump stays visualized and you donâ��t lose your place in scrolling.
+- The list viewport updates alongside the focused row, so the jump stays visualized and you don't lose your place in scrolling.
 
 This change addresses the case where moving to the last item (via <kbd>G</kbd><kbd>G</kbd>) changed which inbox row was highlighted, but the long list stayed in its old position on screen. Now top and bottom jumps center the matching row and handle filtered and empty inboxes safely.
 
@@ -68,7 +68,7 @@ Use **Snack bar** buttons on inbox rows to quickly consume notifications or undo
 | Button | Action |
 |--------|--------|
 | **Snooze** | Temporarily hide from your feed |
-| **Dismiss** | Remove and ensure future updates donâ��t surface |
+| **Dismiss** | Remove and ensure future updates don't surface |
 | **Undo** | Revert a dismissed notification or undone action |
 | **Undo all / Dismiss all** | Apply the action to visible rows matching the filter |
 
@@ -84,7 +84,7 @@ Inbox Zero counts only items that are:
 - **Unarchived**
 - **Unique** within each row scope (one count per task or invite)
 
-This means hidden rows (e.g., notifications from tasks youâ��ve archived, filtered-out boards, or rows censored by privacy rules) are excluded from the count and will not be archived by Inbox Zero, even if theyâ��re currently visible in some other view.
+This means hidden rows (e.g., notifications from tasks you've archived, filtered-out boards, or rows censored by privacy rules) are excluded from the count and will not be archived by Inbox Zero, even if they're currently visible in some other view.
 
 ### Preview before commit
 1. **Select one or more rows** from the All tab of your Inbox. Each selected row represents a single task or invite.
@@ -93,12 +93,12 @@ This means hidden rows (e.g., notifications from tasks youâ��ve archived, f
 4. If the preview updates (e.g., because you change your filter or a previously filtered row becomes visible), Inbox Zero prompts you to reconfirm before archiving.
 
 ### Reconfirmation on preview changes
-If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering whatâ��s included in the visible scope.
+If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
 ### Limitations
 - Inbox Zero only sees the **visible** portion of the All tab at the moment you open it; items hidden by board filters, privacy settings, or a previous archiving action are out of scope.
-- Itâ��s available from the Inbox pageâ��s All tab and from the action menu on any inbox row.
-- Preview and execution respect your current view filters; if you filter out certain notifications, they wonâ��t appear in the preview.
+- It's available from the Inbox page's All tab and from the action menu on any inbox row.
+- Preview and execution respect your current view filters; if you filter out certain notifications, they won't appear in the preview.
 
 ## Archived inbox
 
@@ -111,13 +111,13 @@ Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bo
 Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
 
 ## OpenWiki
-OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, theyâ��re versioned and can be queried by agents whenever they investigate that task.
+OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
-- **View** â\x80\x94 Open the OpenWiki page for the associated task
-- **Refresh** â\x80\x94 Pull the latest RAG content from connected documentation
-- **Dismiss** â\x80\x94 Remove the notification from your inbox without affecting the underlying task
-- **Undo** â\x80\x94 Re-add a dismissed OpenWiki notification
+- **View** — Open the OpenWiki page for the associated task
+- **Refresh** — Pull the latest RAG content from connected documentation
+- **Dismiss** — Remove the notification from your inbox without affecting the underlying task
+- **Undo** — Re-add a dismissed OpenWiki notification
 
 To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
 
@@ -153,13 +153,13 @@ Inbox notifications now update in real-time using WebSocket connections. As noti
 This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
 
 ## Keyboard shortcuts
-- <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
-- <kbd>Ctrl</kbd> + <kbd>F</kbd> â\x80\x94 Search across all notifications
-- <kbd>N</kbd> â\x80\x94 Create a new task from the active board
-- <kbd>Space</kbd> â\x80\x94 Mark current item as read/unread
-- <kbd>Esc</kbd> â\x80\x94 Close modal, draft error, or focused search
+- <kbd>Ctrl</kbd> + <kbd>K</kbd> — Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> — Search across all notifications
+- <kbd>N</kbd> — Create a new task from the active board
+- <kbd>Space</kbd> — Mark current item as read/unread
+- <kbd>Esc</kbd> — Close modal, draft error, or focused search
 
 ### Merge actions
-Use <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 **Merge into inbox** to consolidate multiple activities into a single notification entry.
+Use <kbd>Ctrl</kbd> + <kbd>K</kbd> — **Merge into inbox** to consolidate multiple activities into a single notification entry.
 
 <Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</Aside>
