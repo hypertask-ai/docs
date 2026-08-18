@@ -110,7 +110,7 @@ Lists project/team members for a given project. Also includes all agents created
 
 ### `hypertask_add_comment_to_task`
 
-Add, update, or delete a comment. Use action: `add` (create comment, requires task_id or ticket_number + text), `update` (edit comment, requires comment_id + text), `delete` (remove comment, requires comment_id only). For update/delete, call get_comments_for_task first to obtain comment_id. CRITICAL: The text field MUST be in HTML format for add/update (e.g., "<p>Text</p>" for paragraphs, "<br>" for line breaks). For @mentions: use @DisplayName in text, then call list_project_members to resolve each name to `{ user_id, display_name }` and pass in the mentions array. To attach files to a comment: after action=add succeeds, call hypertask_attach_files with the same task identifier, comment_id from the returned comment.id, and files[] (each item: filename, content_type, and exactly one of data=base64 bytes or url=https...).
+Add, update, or delete a comment. Use action: `add` (create comment, requires task_id or ticket_number + text), `update` (edit comment, requires comment_id + text), `delete` (remove comment, requires comment_id only). For update/delete, call get_comments_for_task first to obtain comment_id. CRITICAL: The text field MUST be in HTML format for add/update (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). For @mentions: use @DisplayName in text, then call list_project_members to resolve each name to `{ user_id, display_name }` and pass in the mentions array. To attach files to a comment: after action=add succeeds, call hypertask_attach_files with the same task identifier, comment_id from the returned comment.id, and files[] (each item: filename, content_type, and exactly one of data=base64 bytes or url=https...).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -120,7 +120,7 @@ Add, update, or delete a comment. Use action: `add` (create comment, requires ta
 | `project_id` | integer | No |  |
 | `action` | `add` \|\| `update` \|\| `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only) Defaults to `add`. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
-| `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., "<p>Text</p>"). |
+| `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., `<p>Text</p>`). |
 | `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include `{ user_id, display_name }` for each. |
 
 ### `hypertask_get_comments_for_task`
@@ -172,13 +172,13 @@ Uploads one or more files to a task as attachments (same as web UI / CLI --attac
 
 ### `hypertask_create_task`
 
-Creates a new task in a project. Requires project_id and title. Optionally set description, section (by section_id), priority (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low), estimate, due_date (ISO 8601, e.g. "2026-03-10"), and labels. Use hypertask_section with action=list to find the correct section_id for the target column, parent_task_id to create task as a sub-task. IMPORTANT: If the user requests to create a task but does not specify which project or section, you MUST ask them to clarify before creating the task. Do not assume or pick a project/section automatically. First call get_user_context or list_projects to show available options, then ask the user to choose. CRITICAL: The description field MUST be in HTML format (e.g., "<p>Text</p>" for paragraphs, "<br>" for line breaks). Plain text descriptions will be rejected by the API. The created task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files after create: call hypertask_attach_files with ticket_number (or task_id) from the response and files[] (filename, content_type, data or url).
+Creates a new task in a project. Requires project_id and title. Optionally set description, section (by section_id), priority (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low), estimate, due_date (ISO 8601, e.g. "2026-03-10"), and labels. Use hypertask_section with action=list to find the correct section_id for the target column, parent_task_id to create task as a sub-task. IMPORTANT: If the user requests to create a task but does not specify which project or section, you MUST ask them to clarify before creating the task. Do not assume or pick a project/section automatically. First call get_user_context or list_projects to show available options, then ask the user to choose. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The created task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files after create: call hypertask_attach_files with ticket_number (or task_id) from the response and files[] (filename, content_type, data or url).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `project_id` | integer | Yes | The project ID to create the task in (number; strings like "1511" are auto-converted) |
 | `title` | string | Yes | The title of the task |
-| `description` | string | No | The description of the task. MUST be in HTML format (e.g., "<p>Text</p>" for paragraphs, "<br>" for line breaks). Plain text will be rejected. |
+| `description` | string | No | The description of the task. MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text will be rejected. |
 | `section_id` | integer | No | The section ID to place the task in. Use hypertask_section with action=list to find available sections. |
 | `priority` | integer | No | Priority index: 0=None, 1=Urgent, 2=High, 3=Medium, 4=Low |
 | `estimate` | integer | No | Estimate index: 0=no size; 2=XS, 3=S, 4=M, 5=L, 6=XL (matches product; 1 and 7 invalid). |
@@ -303,7 +303,7 @@ Searches for tasks by name, description, or ticket number. Enhanced with filters
 
 ### `hypertask_update_task`
 
-Updates a task after assessing get_comments and get_tasks. Updates description, title, priority, estimate, due_date (ISO 8601, e.g. "2026-03-10"), status(column/section), followers, labels, and more. Use this when the user wants to update a task. Requires task_id or ticket_number to identify the task. CRITICAL: The description field MUST be in HTML format (e.g., "<p>Text</p>" for paragraphs, "<br>" for line breaks). Plain text descriptions will be rejected by the API. The updated task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files without changing other fields: call hypertask_attach_files with the same task identifier and files[].
+Updates a task after assessing get_comments and get_tasks. Updates description, title, priority, estimate, due_date (ISO 8601, e.g. "2026-03-10"), status(column/section), followers, labels, and more. Use this when the user wants to update a task. Requires task_id or ticket_number to identify the task. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The updated task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files without changing other fields: call hypertask_attach_files with the same task identifier and files[].
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -312,7 +312,7 @@ Updates a task after assessing get_comments and get_tasks. Updates description, 
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
 | `title` | string | No |  |
-| `description` | string | No | The description of the task. MUST be in HTML format (e.g., "<p>Text</p>" for paragraphs, "<br>" for line breaks). Plain text will be rejected. |
+| `description` | string | No | The description of the task. MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text will be rejected. |
 | `priority` | integer | No |  |
 | `estimate` | integer | No |  |
 | `status` | `Normal` \|\| `Archive` \|\| `Deleted` | No |  |
