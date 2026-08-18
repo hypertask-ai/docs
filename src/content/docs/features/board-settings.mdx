@@ -1,17 +1,18 @@
 ---
 title: "Board Settings"
-description: "Manage board notifications, auto-archive, staleness detection, time tracking, and per-column auto-assign rules."
+description: "Manage planning, notifications, auto-archive, staleness detection, time tracking, and per-column auto-assign rules."
 ---
 
 import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
-Use the board settings panel to control notifications and automatic behaviors for one board. You can mute a noisy board without changing your global notification preferences, then configure archival, staleness, time tracking, and assignment rules.
+Use board settings to plan one board and control its automatic behavior. Set its target and milestones, post health updates, mute notifications, or configure archival, staleness, time tracking, and assignment rules.
 
 ## What this affects
 
 Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
 
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
+- **Project planning** — Set a target date, track milestones, and post the board's current health.
 - **Board notifications** — Mute ordinary inbox, email, and push notifications from this board only.
 - **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
 - **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
@@ -60,6 +61,19 @@ Muting a board stops its ordinary:
 Your global notification channel settings stay unchanged, and other boards continue notifying you. Direct replies from managed agents still appear in your inbox so an explicit agent request can return its answer.
 
 Turn **Board notifications** on again whenever you want to resume delivery.
+
+## Project planning
+
+Open **Settings → Board → Planning** to keep the board's outcome and current health in one place.
+
+- Set the board's **target date**.
+- Add dated **milestones**, then mark them complete as the project advances.
+- Post a short health update as **On track**, **At risk**, or **Off track**.
+- Review the 20 most recent updates with their author and timestamp.
+
+Any board member can read planning and post a health update. Only the board owner or an admin can change the target date or milestones.
+
+Target and milestone changes save immediately. Press **Ctrl+Enter** or **Cmd+Enter** to post a health update from the message field.
 
 ## Auto-archive
 
