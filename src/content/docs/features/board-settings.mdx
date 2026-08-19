@@ -128,9 +128,9 @@ To configure per-column auto-assign:
 2. Pick an assignee (group or individual) to apply as tasks are moved into that column. The assignment is additive and idempotent—moving a task back into another column and then into this column again respects the rule.
 3. When the rule applies, all tenants receive a notification and the assignee is messaged in the source channel if notifications are set up for the board.
 
-<Aside type="tip">
-Use per-column auto-assign for specialized workflows—for example, "On-call" rotations, triage columns that should always go to the reviewer on duty, or QA columns where incoming issues are handled by dedicated testers.
-</Aside>
+### Auto-assign on task creation (HTPR-5488)
+
+The per-column auto-assign rule now also applies to tasks created directly in a column. Previously, auto-assign only ran when tasks were moved; tickets filed straight into a column (via the bottom-of-column composer, from an inbox, or through CLI) would not be assigned. Now, any new task that lands in a column respects the column's auto-assign rule, whether it's moved in or created there directly.
 
 ### How to configure (defaults)
 
