@@ -29,7 +29,6 @@ The inbox can be grouped into multiple views:
 ### Action icons
 
 Task completion and inbox-archive now use distinct icons to avoid visual confusion.
-
 - **Task completion**: Uses a circle-check icon when marking a task as done from task details, boards, or lists
 - **Inbox archive**: Keeps the existing archive tray icon when removing or archiving notifications from your inbox
 
@@ -41,6 +40,10 @@ On mobile, the Inbox uses a bottom thumb zone for navigation and splits:
 - **Inbox splits** (such as **Important**, **Blocked by you**, and others) now appear in the bottom thumb zone. The regular five-tab navigation bar is hidden while the Inbox is open, so your attention stays focused on the current view and its actions.
 - Split filtering is preserved; you can still switch or filter splits within the dock without losing context.
 - On narrow screens, the thumb zone accommodates splits cleanly, keeping key actions and switches within hand-reach.
+
+### Mobile inbox notification nudge
+
+On mobile, the inbox now explicitly surfaces a notification nudge when your notifications are switched off. This provides clear context at a glance, similar to the desktop experience, and encourages users to re-enable notifications for timely updates.
 
 ### Mobile inbox sender alignment
 
@@ -105,12 +108,15 @@ If the set of visible rows changes while Inbox Zero is open, the reconfirmation 
 Use <kbd>Ctrl</kbd> + <kbd>K</kbd> and search for **"Go to archived inbox"** to view your archived rows. This provides a focused view of historical notifications for review or reference.
 
 ## Agent notifications
+
 Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
 
 ### Guest Hyper AI seeded notifications
+
 Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
 
 ## OpenWiki
+
 OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
@@ -122,6 +128,7 @@ OpenWiki notifications include an **OpenWiki** badge and action buttons:
 To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
 
 ## OpenWiki refresh
+
 OpenWiki refresh periodically pulls the latest RAG content from connected documentation sources. If OpenWiki operations are failing, check your gateway configuration in ~/.openwiki/.env:
 
 ```bash
@@ -130,6 +137,7 @@ OPENWIKI_GATEWAY=https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT/YOUR_SERVICE
 ```
 
 ## Read model for returning visits
+
 Returning users now see a synchronized local IndexedDB read model in the Inbox. This makes returning visits faster by preserving local state across sessions and providing resilient updates when the network returns.
 
 ### How read model works
@@ -145,6 +153,7 @@ For returning users, inbox rows appear in timeline-sorted order (updates bubble 
 The read model follows your account-scoped setting. When you switch boards and return to the Inbox, your local cache adapts to your workspace context and presents the most relevant notifications.
 
 ## Real-time updates
+
 Inbox notifications now update in real-time using WebSocket connections. As notifications are created or changed, the server broadcasts updates to all connected clients, eliminating manual page refreshes.
 
 - **Subscription on client:** `useInboxRealtime` hook in the frontend layer subscribes to inbox changes for the current user.
@@ -160,6 +169,7 @@ This ensures your inbox always reflects the latest state of mentions, assignment
 - <kbd>Esc</kbd> — Close modal, draft error, or focused search
 
 ### Merge actions
+
 Use <kbd>Ctrl</kbd> + <kbd>K</kbd> — **Merge into inbox** to consolidate multiple activities into a single notification entry.
 
 <Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</Aside>
