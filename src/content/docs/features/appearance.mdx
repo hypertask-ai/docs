@@ -7,6 +7,10 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Hypertask lets you control how things look and how AI behaves. Choose from multiple core themes, wave on mobile, customise the sidebar, keyboards, and dictation languages, and tailor AI options across tasks, boards, and help-site chat.
 
+## Typography consistency (HTPR-5465)
+
+Task properties now render at the same font size across the board for consistent typography and visual alignment. Previously, only the **Assignees** property rendered at 13px, making it appear smaller than other property values like **Workers**, **Labels**, or **Priority**. The fix updates the rendering to use the shared font size from the properties rail, ensuring all property values read consistently.
+
 ## Themes
 
 Hypertask offers several built-in themes to suit your visual preference. All themes respect system fonts and support theming of emoji icons and modals.
