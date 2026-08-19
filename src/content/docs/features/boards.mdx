@@ -15,6 +15,49 @@ From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your
 
 If you invoke AI board creation and the model doesn't return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
 
+## Adding and managing columns
+
+Every board starts with a single default section. To add more:
+
+1. From the view tab bar, use **Ctrl+K**, search for **"Add column"** (or **"Add section"**), and follow the dialog prompts.
+2. Or use **Ctrl+K > Create view > Add column**.
+3. In the CLI: `hypertask view create --section "Section name" --project 15`.
+
+<Steps>
+
+**From the app:**
+
+1. Open any board.
+2. Use **Ctrl+K** and choose **"Add column"** (or **"Add section"**).
+3. Enter a name for the section and optional description.
+4. Click **Create** or press <kbd>Enter</kbd> to confirm.
+
+**CLI:**
+
+```bash
+hypertask view create --name "Doing" --project 15
+```
+
+**Saved view options:**
+
+- **Section:** Tasks to include
+- **Priority:** `urgent`, `high`, `medium`, `low`
+- **Assignee:** `me`, `unassigned`, or a user ID
+- **Labels:** Comma-separated label names or IDs
+
+**Sorting:**
+
+- **Sort by:** `createdAt`, `updatedAt`, or `dueDate`
+- **Sort order:** `asc` (ascending) or `desc` (descending)
+
+</Steps>
+
+### Column visibility
+
+<span class="label label--brand">Behavior change</span> A newly added column is visible in **every view of the board** immediately after creation. There is no need to manually include it in Saved Views or other board views.</p>
+
+This ensures that tasks moved into a new section appear in all view contexts (built-in splits, Saved Views, and per-browser preferences) without extra setup.
+
 ## Built-in splits
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
@@ -43,6 +86,7 @@ Saved views appear as pills in a **single row above the board**, with the board'
 ### Create a saved view
 
 From the app:
+
 1. Open any board
 2. Use **Ctrl+K** to open the command palette
 3. Search for "Save view as..."
@@ -85,28 +129,6 @@ hypertask view switch view_abc123
 
 Or from the app: use **Ctrl+K**, search for the view name, and select it from the dropdown.
 
-### View options
-
-You can customize each view with filters and sorting:
-
-**Filters**
-- **Section** (or multiple sections): tasks to include
-- **Priority**: `urgent`, `high`, `medium`, `low`
-- **Assignee**: `me`, `unassigned`, or a user ID
-- **Labels**: comma-separated label names or IDs
-
-**Sorting**
-- **Sort by**: `createdAt`, `updatedAt`, or `dueDate`
-- **Sort order**: `asc` (ascending) or `desc` (descending)
-
-### Delete a saved view
-
-```bash
-hypertask view delete view_abc123
-```
-
-Only your own views and shared views you have write access to can be deleted.
-
 ## Board sidebar behavior
 
 The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
@@ -134,6 +156,7 @@ Guest demo boards provide a guided onboarding experience:
 If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
 
 The empty state:
+
 - Explains what boards are and how to create one
 - Offers quick actions to create a board or invite a teammate
 - Matches your theme and is consistent with other empty states in the app
@@ -141,6 +164,7 @@ The empty state:
 ## Free tier limits
 
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
+
 - App web interface
 - CLI (`ht --create-board` / `ht board create`)
 - MCP tool (`boards.create`)
@@ -167,6 +191,7 @@ During guest demo onboarding, interactive modals that ask users to confirm actio
 If a modal implementation incorrectly passes a non-boolean placeholder instead of a valid boolean toggle, the modal crashes with a `this.props.toggle is not a function` error when it attempts to invoke the toggle prop.
 
 This occurred in four onboarding scenes before the fix was applied:
+
 - Scene 8: Archive existing public view prompt
 - Scene 11: Duplicate members confirmation
 - Scene 17: Archive section prompt
@@ -201,6 +226,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 ```
 
 Layout notes:
+
 - Users see a cohesive font-sizes: 16px body, 14px UI labels, 13px subtitles.
 - Height is tightly calibrated: header 48px, input 44px, rows 36px.
 - No onboarding is required; modals respect the current theme and compact palette by default.
