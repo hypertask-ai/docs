@@ -29,6 +29,16 @@ You can also add tasks directly in any column via the bottom-of-column quick-ent
 - The task is created, and the composer stays open for another title so you can add multiple tasks in row.
 - Press **Escape** or click outside to close the composer. Top add + full-screen task creator remain unchanged.
 
+### Mobile new-task modal
+
+On mobile, the new-task modal opens full screen to give you maximum vertical space. To exit the modal:
+
+- Tap the **X** in the header to close it.
+- Swipe right to dismiss it on supported devices.
+- Use the back button on your phone to close the modal.
+
+The close control and back gesture prevent users from being stuck inside the modal ([HTPR-5518](https://app.hypertask.ai/detail/project-15/5518)).
+
 ### AI Task Writer on mobile
 
 From a board, note the **AI Task Writer** bottom composer in columns and cards.
@@ -149,7 +159,9 @@ These are the default settings across the board UI, MCP-created views, and new d
 
 ## Task property rail
 
-The task detail sidebar includes a rail of properties (title, priority, assignees, labels, etc.). The rail now occupies the full remaining dynamic viewport height, so it uses all available space rather than a fixed maximum and leaves no unused viewport space.**Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history[A JSDoc-style constraint for this change: when a thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
+The task detail sidebar includes a rail of properties (title, priority, assignees, labels, etc.). The rail now occupies the full remaining dynamic viewport height, so it uses all available space rather than a fixed maximum and leaves no unused viewport space.
+
+**Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history[A JSDoc-style constraint for this change: when a thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
 
 ## Time tracking
 
