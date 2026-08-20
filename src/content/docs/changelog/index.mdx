@@ -14,6 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 20, 2026">
+  * Improved: Worker ownership gate prevents managed agents from creating worktrees or starting coding providers without verifying ownership, keeping transient lease conflicts queued while other work continues ([HTPR-5479](https://app.hypertask.ai/detail/project-15/5479))
   * Fixed: Saving a view no longer drops keyboard focus to the last card in the active column ([HTPR-5201](https://app.hypertask.ai/detail/project-15/5201))
   * Fixed: Provider-created cache files outside the resumable allowlist are deleted at run start so that provider home directories do not accumulate stale credentials ([HTPR-5500](https://app.hypertask.ai/detail/project-15/5500))
   * Fixed: Mobile modals now clear the Android status bar so the top row is tappable ([HTPR-5534](https://app.hypertask.ai/detail/project-15/5534))
