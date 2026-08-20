@@ -18,6 +18,16 @@ Agents let you attach an AI model to a workflow that can perform autonomous acti
 4. **Apply MCP credentials** — Use BYOK or per-agent tokens so the agent can securely call tools.
 5. **Start the agent** — Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
 
+## Worker ownership gate
+
+To prevent conflicts when a managed agent attempts to work on a task, the worker verifies managed ownership before taking action. The agent verifies ownership before:
+
+- Creating a writable worktree
+- Posting a pickup
+- Starting the coding provider
+
+Transient lease conflicts remain queued with their exact error while other work continues. This prevents orphaned claims and ensures ownership remains consistent across agent interactions.
+
 ## List view and sorting
 
 Browse and manage your agents on the Agents page (`/agents`). The view can be personalized in three ways:
