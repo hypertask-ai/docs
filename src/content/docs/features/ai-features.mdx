@@ -71,9 +71,9 @@ Types skip over canvas or rich content blocks instead of treating them as text t
 ## My Tasks context
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
 
-- **"What's on my My Tasks board?"** — Generates a concise list of assigned tasks with priorities and due dates.
-- **"Any overdue or blocked work?"** — Flags urgent or late items for follow-up.
-- **"Show me tasks due this week"** — Filters and presents upcoming commitments.
+- "What's on my My Tasks board?" — Generates a concise list of assigned tasks with priorities and due dates.
+- "Any overdue or blocked work?" — Flags urgent or late items for follow-up.
+- "Show me tasks due this week" — Filters and presents upcoming commitments.
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
@@ -85,6 +85,9 @@ An AI agent can update task metadata in a visible way—priority, assignees, lab
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
+
+### Automated approvals from minors-only reviews (HTPR-5531)
+When AI agents perform minors-only reviews on pull requests, they now automatically post an APPROVE comment to green PRs. This approval comment enables improving automerge behavior: green PRs no longer stay parked forever due to the missing green-PR-approved-by-minor comment. The system also dedupes park comments to avoid duplicate approval entries. As a result, minors-only reviews contribute directly to board automation flows, making approvals more reliable and predictable.
 
 ## Time, profile, and report parity in AI Chat
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
