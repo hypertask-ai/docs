@@ -37,7 +37,7 @@ On mobile, the new-task modal opens full screen to give you maximum vertical spa
 - Swipe right to dismiss it on supported devices.
 - Use the back button on your phone to close the modal.
 
-The close control and back gesture prevent users from being stuck inside the modal ([HTPR-5518](https://app.hypertask.ai/detail/project-15/5518)).
+The close control and back gesture prevent users from being stuck inside the modal ([HTPR-5518](https://app.hypertask.ai/detail/project-15/5518)). New-task drafts no longer carry over when opening a different task or switching boards; the composer state is reset on each open to prevent stale content from appearing ([HTPR-5469](https://app.hypertask.ai/detail/project-15/5469)).
 
 ### AI Task Writer on mobile
 
@@ -217,14 +217,6 @@ AI status updates appear on task cards when an AI agent updates task metadata in
 Hypertask uses a per-seat billing model based on the number of members with team memberships and project access. Seats are reserved for active members, and the system ensures seats are correctly allocated and reconciled.
 
 **Seat loss prevention**: The system now uses per-team leases with duplicate-membership protection during joins and access grants, and daily reconciliation runs to correct discrepancies. This prevents users from losing seats due to concurrent invites or race conditions.
-
-## Auto-assign on task creation (HTPR-5488)
-
-Auto-assign rules now run on task creation, not only when tasks are moved between columns. Tasks created directly into a column (via the bottom-of-column composer, from an inbox, or via CLI) will now respect the per-column auto-assign rule just like moved tasks do. Previously, only tasks moved into a column would be auto-assigned; tickets filed straight into the column were skipped.
-
-## Typography consistency (HTPR-5465)
-
-Task properties now render at the same 14px font size across the board. Previously, only the **Assignees** property rendered at 13px, making it appear out of alignment with other properties like **Workers**, **Labels**, or **Priority**. The fix updates the rendering to use the shared font size from the properties rail, ensuring all values read consistently.
 
 ## Exports and integration
 
