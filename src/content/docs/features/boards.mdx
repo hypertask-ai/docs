@@ -129,6 +129,16 @@ hypertask view switch view_abc123
 
 Or from the app: use **Ctrl+K**, search for the view name, and select it from the dropdown.
 
+## Board interactions and state
+
+### Board focus after saving a view ([HTPR-5201])
+
+When you save a board view, the keyboard focus stays on your current card instead of jumping to the last card in the active column. This matches the behavior observed when other modals (command palette, board manager, column manager, search) close: the board restores focus to the card you were on, keeping your focus consistent across interactions.
+
+### Board reset-to-default
+
+The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
+
 ## Board sidebar behavior
 
 The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
@@ -156,7 +166,6 @@ Guest demo boards provide a guided onboarding experience:
 If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
 
 The empty state:
-
 - Explains what boards are and how to create one
 - Offers quick actions to create a board or invite a teammate
 - Matches your theme and is consistent with other empty states in the app
@@ -191,7 +200,6 @@ During guest demo onboarding, interactive modals that ask users to confirm actio
 If a modal implementation incorrectly passes a non-boolean placeholder instead of a valid boolean toggle, the modal crashes with a `this.props.toggle is not a function` error when it attempts to invoke the toggle prop.
 
 This occurred in four onboarding scenes before the fix was applied:
-
 - Scene 8: Archive existing public view prompt
 - Scene 11: Duplicate members confirmation
 - Scene 17: Archive section prompt
@@ -226,7 +234,6 @@ Hypertask's components now respect the compact visual scale by default, includin
 ```
 
 Layout notes:
-
 - Users see a cohesive font-sizes: 16px body, 14px UI labels, 13px subtitles.
 - Height is tightly calibrated: header 48px, input 44px, rows 36px.
 - No onboarding is required; modals respect the current theme and compact palette by default.
@@ -257,10 +264,6 @@ On narrow mobile screens, Boards are optimized to feel fast from the moment you 
 - **Secondary traffic:** Non-critical API requests (rich data, extended metadata) are deferred until the Board is usable, cutting requests and improving perceived startup speed.
 
 These changes improve 3-second usable times on production devices, reduce max long-task duration, and result in fewer DOM elements during early rendering.
-
-## Board reset-to-default
-
-The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
 ---
 
