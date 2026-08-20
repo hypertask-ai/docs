@@ -20,6 +20,7 @@ export const Update = ({ label, children }) => (
   * Fixed: AI Chat no longer asks for confirmation to change a single tag ([HTPR-5536](https://app.hypertask.ai/detail/project-15/5536))
   * Fixed: Wireframe Ready is now a parked section for every agent so agents no longer repeatedly re-pick queued tickets ([HTPR-5496](https://app.hypertask.ai/detail/project-15/5496))
   * Fixed: New task modal opens blank and discards drafts on close ([HTPR-5537](https://app.hypertask.ai/detail/project-15/5537))
+  * Fixed: The create-task composer now resets state when switching boards, so old task content does not reappear in a new task draft ([HTPR-5469](https://app.hypertask.ai/detail/project-15/5469))
 </Update>
 
 <Update label="August 19, 2026">
@@ -105,7 +106,7 @@ export const Update = ({ label, children }) => (
   * Added: Plan-aware AI gateway routing now isolates Free and BYOK access in a shared included-allowance key while routing paid, legacy, and comped teams through dedicated credentials ([htpr-4133](https://app.hypertask.ai/detail/project-15/4133))
   * Added: Time reports now include the standard app navigation rail for Board, Calendar, Inbox, AI, and Search ([HTPR-4715](https://app.hypertask.ai/detail/project-15/4715))
   * Added: Table view now freezes the Ticket and Title columns during horizontal scroll, matching Excel's frozen panes behavior ([htpr-4643](https://app.hypertask.ai/detail/project-15/4643))
-  * Added: Running-timers overview now supports pause and resume buttons that freeze a timer in place and continue it without resetting ([htpr-4380](https://app.hypertask.ai/detail/project-15/4380))
+  * Added: Running-timers overview now supports pause and resume buttons that freeze a timer in place and continue it without resetting ([HTPR-4380](https://app.hypertask.ai/detail/project-15/4380))
   * Improved: Table column labels now have minimum spacing from the drag handle in the table header to improve readability on tables (htpr-5138)
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
