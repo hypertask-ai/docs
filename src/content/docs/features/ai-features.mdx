@@ -21,9 +21,9 @@ In the UI, use the AI Task Writer from the New Task flow. The editor is context-
 ### Write with AI in comments and descriptions
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** — Generate a draft for the active text field.
-- **/ai rewrite** — Improve or rethink what you typed.
-- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
+- **/ai** â\x80\x94 Generate a draft for the active text field.
+- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
+- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -48,43 +48,43 @@ This confirmation gate guards against accidental bulk operations and keeps your 
 ### Seed tasks on guest boards
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
 
-- Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
-- Ask the AI to build this board for you — Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
-- Run tasks/tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
+- Press Ctrl+K: every action is one keystroke away â\x80\x94 Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
+- Ask the AI to build this board for you â\x80\x94 Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
+- Run tasks/tools â\x80\x94 Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
 ### Skills invoked from AI Task Writer
 Use slash commands to invoke registered skills:
 
-- **/skill** — Open the skills menu to tap a skill by name or first letter.
-- **/skill `name`** — Run a specific skill if you know its name.
+- **/skill** â\x80\x94 Open the skills menu to tap a skill by name or first letter.
+- **/skill `name`** â\x80\x94 Run a specific skill if you know its name.
 
 Known skills include:
 
-- **Defer** — Suggest a deferral with a new due date and optional sub-task.
-- **Duplicate** — Mirror the current task into a draft that you can rename and refine.
-- **Subtask** — Generate a new subtask rooted from the current one.
+- **Defer** â\x80\x94 Suggest a deferral with a new due date and optional sub-task.
+- **Duplicate** â\x80\x94 Mirror the current task into a draft that you can rename and refine.
+- **Subtask** â\x80\x94 Generate a new subtask rooted from the current one.
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
 ## My Tasks context
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
 
-- "What's on my My Tasks board?" — Generates a concise list of assigned tasks with priorities and due dates.
-- "Any overdue or blocked work?" — Flags urgent or late items for follow-up.
-- "Show me tasks due this week" — Filters and presents upcoming commitments.
+- "What's on my My Tasks board?" â\x80\x94 Generates a concise list of assigned tasks with priorities and due dates.
+- "Any overdue or blocked work?" â\x80\x94 Flags urgent or late items for follow-up.
+- "Show me tasks due this week" â\x80\x94 Filters and presents upcoming commitments.
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
 ## AI status updates
-An AI agent can update task metadata in a visible way—priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
+An AI agent can update task metadata in a visible wayâ\x80\x94priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 
 - The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> â\x80\x94 search for a task and use **Agent write-with-AI** to trigger the update.
 
 ### Automated approvals from minors-only reviews (HTPR-5531)
 When AI agents perform minors-only reviews on pull requests, they now automatically post an APPROVE comment to green PRs. This approval comment enables improving automerge behavior: green PRs no longer stay parked forever due to the missing green-PR-approved-by-minor comment. The system also dedupes park comments to avoid duplicate approval entries. As a result, minors-only reviews contribute directly to board automation flows, making approvals more reliable and predictable.
@@ -92,17 +92,17 @@ When AI agents perform minors-only reviews on pull requests, they now automatica
 ## Time, profile, and report parity in AI Chat
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
 
-- **View filtered time reports** — Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
-- **Update shared user profiles** — Update profile fields like name, role, or custom attributes with correct flag handling.
-- **Read complete saved reports** — Pull full saved report data including filters, columns, and time ranges.
-- **Delete reports with confirmation** — Remove saved reports and confirm the action before it happens.
+- **View filtered time reports** â\x80\x94 Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
+- **Update shared user profiles** â\x80\x94 Update profile fields like name, role, or custom attributes with correct flag handling.
+- **Read complete saved reports** â\x80\x94 Pull full saved report data including filters, columns, and time ranges.
+- **Delete reports with confirmation** â\x80\x94 Remove saved reports and confirm the action before it happens.
 
 Use the same context and permissions that apply elsewhere in Hypertask. Check access, see the full report content, and clean up saved reports directly from your conversation.
 
 ## ChatProvider and hooks
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows—use the AI Task Writer, context menus, and panel-based chat—and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flowsâ\x80\x94use the AI Task Writer, context menus, and panel-based chatâ\x80\x94and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ## AI access and entitlement
 AI access is controlled through an allowance model based on team plan type. The gateway routes requests to dedicated credentials for internal teams, paid and legacy plans, and the allowance key for Free and BYOK subscriptions.
@@ -140,9 +140,9 @@ AI chat can be shown in different surfaces depending on how you want to work wit
 ### Supported display modes
 You can switch between these display modes:
 
-- **Full-screen** — The chat panel expands to fill your screen without any other surfaces visible.
-- **Right-side Copilot panel** — The chat appears as a panel on the right, letting you keep other content visible while you ask AI questions.
-- **Floating window** — The chat floats in a draggable window that you can position anywhere. This mode persists across reloads.
+- **Full-screen** â\x80\x94 The chat panel expands to fill your screen without any other surfaces visible.
+- **Right-side Copilot panel** â\x80\x94 The chat appears as a panel on the right, letting you keep other content visible while you ask AI questions.
+- **Floating window** â\x80\x94 The chat floats in a draggable window that you can position anywhere. This mode persists across reloads.
 
 ### How to switch modes
 Use the mode group in the chat surface:
@@ -160,7 +160,7 @@ The selected display mode is remembered automatically:
 - If you reload the page or re-open the chat, it returns to the mode you used last.
 - Full-screen mode and floating mode persist; if you switch, the new mode is retained across sessions.
 
-Use the mode that fits what you're doing—full-screen for focused deep-work, right-side for quick answers, or floating for keeping context visible on top of your boards or tasks.
+Use the mode that fits what you're doingâ\x80\x94full-screen for focused deep-work, right-side for quick answers, or floating for keeping context visible on top of your boards or tasks.
 
 ## Help-site AI chat
 The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. It connects directly to the full Hypertask documentation site, including CLI, MCP, REST API, and agent docs.
@@ -195,10 +195,10 @@ Try these prompts in the help-site chat:
 The chat responds instantly with tailored guidance and clickable documentation links.
 
 ## Other AI context and tools
-- **/summarize** — Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
-- **Context scope** — AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
-- **Share chat sessions** — Start a chat session on any board and pin context so future prompts stay scoped.
-- **Personal dictation language** — Choose your preferred dictation language (default English; multilingual options supported).
+- **/summarize** â\x80\x94 Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
+- **Context scope** â\x80\x94 AI defaults to the Current board but can be reset to pinned boards or All boards via the docked scope picker in AI chat.
+- **Share chat sessions** â\x80\x94 Start a chat session on any board and pin context so future prompts stay scoped.
+- **Personal dictation language** â\x80\x94 Choose your preferred dictation language (default English; multilingual options supported).
 
 ---
 
