@@ -91,6 +91,22 @@ Bring key-based providers or self-hosted services into Hypertask by adding a cus
 
 Custom endpoints are stored securely and tied to your account and project access levels.
 
+## Ephemeral per-turn provider home (HTPR-5500)
+
+During agent agent runs that connect to a provider home, each turn creates an ephemeral directory for that turn. The provider home is scoped to the current turn and doesn't persist across turns. Before each turn starts:
+
+- Every path in the provider home is scanned
+- Paths matching the resumable allowlist are preserved (these are expected, safe files such as state resumed from a previous turn)
+- All other paths are deleted immediately (including any provider-created cache files that may have been written to the home)
+
+By wiping the provider home outside the allowlist at run start, Hypertask ensures that stale cache files and provider-specific junk do not accumulate. Provider favorites that need to be preserved for resume already belong to the resumable allowlist; other files are cleared out to keep the environment clean.
+
+This behavior aligns with how you'd set up a provider home manually on your system: prepare the directory for a specific run and clean up loose files afterwards, without keeping things around across unrelated work.
+
+<Aside type="tip">
+If you see unexpected cache files being cleaned up, check the resumable allowlist—anything else in the provider home that is not explicitly expected for resume will be removed at each run start.
+</Aside>
+
 ## Key Security and Access
 
 BYOK keys in Hypertask are managed with these principles:
@@ -113,3 +129,5 @@ Once configured, provider keys are used automatically:
 - **CLI tools** — References provider keys from your account when making authenticated requests
 
 You don't need to manually invoke provider keys. They're selected automatically based on your current context and permissions.
+
+<p>Stakeholders — please review and reply with corrections or missing context.</p>
