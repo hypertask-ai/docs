@@ -18,6 +18,12 @@ Agents let you attach an AI model to a workflow that can perform autonomous acti
 4. **Apply MCP credentials** — Use BYOK or per-agent tokens so the agent can securely call tools.
 5. **Start the agent** — Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
 
+## Speed Engineer Git plumbing
+
+The **Speed Engineer** agent can now bootstrap autonomous worktrees using Git plumbing from scratch. When the agent is configured as a Speed Engineer unit, it uses a Git helper probe to establish a fresh worktree, allowing it to work directly with repository sources in supported environments.
+
+This capability is scoped exclusively to Speed Engineer instances; other agents retain the original atomic-file probe pattern and do not require Speed-only Git support.
+
 ## Worker ownership gate
 
 To prevent conflicts when a managed agent attempts to work on a task, the worker verifies managed ownership before taking action. The agent verifies ownership before:
@@ -38,7 +44,7 @@ Browse and manage your agents on the Agents page (`/agents`). The view can be pe
 | **Flat** | All agents appear in a single list, sorted by latest activity. Open the margin ellipsis in the header to enable the flat view via `?group=0`. |
 | **Production register** | A read-only reference for the current production environment, highlighting agents most recently active. |
 
-Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>–<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
+Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>−<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
 
 <Aside>
 **Tip** — Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team’s active agents.
@@ -64,7 +70,7 @@ Click any agent to open its detail page. The detail page contains:
 
 On the agents list and in agent detail pages, you can now see whether an agent is working and on what.
 
-- **Status indicator** — A pulsing dot next to the agent name shows it’s actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
+- **Status indicator** — A pulsing dot next to the agent name shows it's actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
 - **Active task display** — When working on a task, the card or detail page shows which ticket the agent is handling. The task name and key details are visible so you can track which agent is working on what.
 - **Manage agent** — From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
 
@@ -92,7 +98,7 @@ Wake an agent the moment it is mentioned or assigned by registering webhooks:
 
 | Property | Description |
 |----------|-------------|
-| **Event type** | <code>comment.mention</code> or <code>task.assigned</code> |
+| **Event type** | `<code>comment.mention</code>` or `<code>task.assigned</code>` |
 | **Deliveries** | HTTPS POST to your configured endpoint with signed body and ID |
 | **Board filtering** | Optional scope to a single board if you only want notifications on that scope |
 
@@ -185,7 +191,7 @@ See the [MCP Tools Reference](/api/tools-reference) for the complete schema list
 6. Its MCP tools become available to any scheduled or ad-hoc workflow.
 </TabItem>
 <TabItem value="import" label="Import from MCP">
-1. Open the agent’s detail page.
+1. Open the agent's detail page.
 2. Under "MCP tools," click **Import tools**.
 3. Choose a provider or import by tool list and signatures.
 4. Save credentials and start the agent.
