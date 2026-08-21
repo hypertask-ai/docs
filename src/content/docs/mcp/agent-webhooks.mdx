@@ -1,6 +1,6 @@
 ---
-title: Agent webhooks
-description: Wake a Hypertask agent immediately when it is mentioned or assigned, with signed and retryable webhook deliveries.
+title: "Agent webhooks"
+description: "Wake a Hypertask agent immediately when it is mentioned or assigned, with signed and retryable webhook deliveries."
 ---
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
@@ -106,6 +106,104 @@ curl "https://app.hypertask.ai/api/mcp/webhooks?agent_id=self" \
 
 </Tabs>
 
+### Built-in UI surfaces (Settings App, onboarding, AI Chat, HyperAI)
+
+Agent webhooks are surfaced everywhere, making them easy to discover and configure from:
+
+- **Settings App** — As a webhook endpoint entry per agent.
+- **Onboarding** — A welcome tour step for enabling webhooks.
+- **AI Chat / HyperAI** — Configure webhooks as part of agent setup flows.
+- **Agent detail page** — Access webhook configuration and recent deliveries.
+- **Public receiver guide** — Receive webhooks without changing a line of code.
+
+#### Quick-start receiver templates
+
+Reference implementations below. Copy one to your project and plug in your `WEBHOOK_URL`.
+
+<Tabs>
+
+<TabItem label="Node.js / Express">
+
+```js
+import express from 'express';
+import crypto from 'crypto';
+
+const app = express();
+app.use(ZOQL => express.raw({ type: 'application/json' }));
+
+app.post('/hypertask', (req, res) => {
+  const {
+    body: rawBody,
+    headers: { 'x-hypertask-signature': received, 'x-hypertask-timestamp': timestamp }
+  } = req;
+
+  const secret = process.env.HYPERTASK_WEBHOOK_SECRET;
+  if (!secret) return res.sendStatus(500);
+
+  const expected = crypto
+    .createHmac('sha256', Buffer.from(secret))
+    .update(`${timestamp}.${rawBody}`)
+    .digest('hex');
+
+  if (!crypto.timingSafeEqual(Buffer.from(received), Buffer.from(expected))) {
+    return res.sendStatus(401);
+  }
+
+  const payload = JSON.parse(rawBody);
+  const deliveryId = req.headers['x-hypertask-delivery'];
+  // queueAgentWork({ deliveryId, payload });
+  res.sendStatus(202);
+});
+
+app.listen(3000);
+```
+
+</TabItem>
+
+<TabItem label="Python / Flask">
+
+```python
+import hashlib
+import hmac
+import json
+import os
+import time
+from flask import Flask, request
+
+app = Flask(__name__)
+secret = os.environ["HYPERTASK_WEBHOOK_SECRET"].encode()
+
+@app.post("/hypertask")
+def hypertask_webhook():
+    raw_body = request.get_data(cache=True)
+    timestamp = request.headers.get("X-Hypertask-Timestamp", "")
+    received = request.headers.get("X-Hypertask-Signature", "")
+    try:
+        if abs(time.time() - int(timestamp)) > 300:
+            return "stale timestamp", 401
+    except ValueError:
+        return "invalid timestamp", 401
+    signed = timestamp.encode() + b"." + raw_body
+    expected = "sha256=" + hmac.new(secret, signed, hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(received, expected):
+        return "invalid signature", 401
+
+    delivery_id = request.headers.get("X-Hypertask-Delivery")
+    payload = json.loads(raw_body)
+    # queueAgentWork(delivery_id, payload)
+    return "", 202
+```
+
+</TabItem>
+
+</Tabs>
+
+<Aside type="tip">
+
+If you don’t have a preferred language, just host a minimal compatibility handler (Node or Python) and update your webhook to point there. No backend code is required.
+
+</Aside>
+
 ## Board-level webhooks
 
 Webhook deliveries are scoped to one agent. To deliver events to multiple agents, configure and save separate webhooks for each agent. Delivery names include the agent ID so you can identify which agent sent which event.
@@ -158,7 +256,7 @@ app.post("/hypertask", express.raw({ type: "application/json" }), (req, res) => 
   const deliveryId = req.header("x-hypertask-delivery");
   const payload = JSON.parse(rawBody);
   res.sendStatus(202);
-  queueAgentWork({ deliveryId, payload });
+  // queueAgentWork({ deliveryId, payload });
 });
 ```
 
@@ -194,7 +292,7 @@ def hypertask_webhook():
 
     delivery_id = request.headers.get("X-Hypertask-Delivery")
     payload = json.loads(raw_body)
-    queueAgentWork(delivery_id, payload)
+    # queueAgentWork(delivery_id, payload)
     return "", 202
 ```
 
@@ -224,7 +322,7 @@ Production payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `pro
   "ticketNumber": "HTPR-5388",
   "taskTitle": "Outbound webhooks for agent mentions and assignments",
   "commentId": 182293,
-  "commentHtml": "<p><span data-type=\"mention\">@Release Agent</span> please review</p>",
+  "commentHtml": "<p><span data-type=\\"mention\\">@Release Agent</span> please review</p>",
   "actor": {
     "userId": 6,
     "agentId": null,
