@@ -15,6 +15,10 @@ From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your
 
 If you invoke AI board creation and the model doesn't return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
 
+## Board titles in browser navigation
+
+The browser title now shows the board name and saved-view name when you navigate to a board. The server builds the title from board and saved-view metadata instead of replacing it with a generic title, so your browser tabs and history reflect your actual view.
+
 ## Adding and managing columns
 
 Every board starts with a single default section. To add more:
@@ -130,6 +134,18 @@ hypertask view switch view_abc123
 Or from the app: use **Ctrl+K**, search for the view name, and select it from the dropdown.
 
 ## Board interactions and state
+
+### Board titles in browser navigation ([HTPR-5420])
+
+The browser title reflects the board and saved-view name when you navigate to a board. The server builds the title from authorized board and saved-view metadata, so Next.js no longer replaces it with a generic title during navigation.
+
+This change applies to:
+- Board tabs in the browser
+- History and back navigation
+- Shared board links
+- Default, named, malformed, and fallback routes
+
+Full regression coverage includes these views to prevent unexpected title behavior.
 
 ### Board focus after saving a view ([HTPR-5201])
 
