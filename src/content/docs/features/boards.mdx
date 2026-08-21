@@ -155,6 +155,10 @@ When you save a board view, the keyboard focus stays on your current card instea
 
 The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
+### Faster boardTasks responses ([HTPR-5449])
+
+The boardTasks endpoint no longer performs redundant authenticated-user lookups after the board access guard completes. This reduces unnecessary work and improves response times on desktop, with consistent behavior across views.
+
 ## Board sidebar behavior
 
 The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
