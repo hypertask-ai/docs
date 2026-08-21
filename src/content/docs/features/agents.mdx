@@ -60,6 +60,16 @@ Click any agent to open its detail page. The detail page contains:
   - Rename agent directly from the page
   - Configure webhooks and accessibility settings
 
+### Live status and active task (HTPR-5417)
+
+On the agents list and in agent detail pages, you can now see whether an agent is working and on what.
+
+- **Status indicator** — A pulsing dot next to the agent name shows it’s actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
+- **Active task display** — When working on a task, the card or detail page shows which ticket the agent is handling. The task name and key details are visible so you can track which agent is working on what.
+- **Manage agent** — From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
+
+This visibility helps you spot resource-heavy agents, see which tickets are being processed, and clean up unused agents.
+
 ## Renaming agents
 
 You can rename an agent directly from its detail page:
