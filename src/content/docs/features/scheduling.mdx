@@ -108,3 +108,31 @@ It shows every open task assigned to you as a **table**, the same table the boar
 Navigation matches the inbox and scheduled views: <kbd>J</kbd> and <kbd>K</kbd> (or the arrow keys) to move, <kbd>Enter</kbd> to open, <kbd>Esc</kbd> to go back.
 
 My tasks is a **read-only planning surface**. It has no create-task shortcut, because a new task needs a board and this view spans all of them. Create from the board, the inbox, or <kbd>Ctrl+K</kbd>.
+
+## Agent scheduling and provider selection
+
+Agents can be scheduled on a recurring basis through external schedulers like GitHub Actions or Vercel cron. When setting schedule jobs in a workflow, provide a single default provider to be used for provider-bound operations (e.g., MCP credentials with a provider-attached key). The provider is validated for SSH-HTTPS accessibility before acceptance; if invalid, the schedule entry is rejected and recommended remediation is shown (e.g., use provider completion, fix URL format).
+
+### Supported provider choices
+
+You can enter a provider URL directly or rely on provider completion to avoid typos:
+
+| Source | How to choose |
+|--------|---------------|
+| **Direct URL input** | Paste a trusted HTTPS URL that resolves to the provider's internal endpoint URL |
+| **Provider URL completion** | Start typing a URL and let suggestions surface against an allowlist; completed URLs are validated against a public allowlist before acceptance |
+
+### Valid provider options
+
+The allowlist includes representative secure implementations such as built-in and widely used providers (e.g., https://claude.com or https://codex.com). If a provider is missing from the allowlist but you have a signed endpoint you would like to use, you can enter its HTTPS URL directly; validation ensures the domain is publicly resolvable and responds with a Liveness/Health status endpoint before the scheduler accepts it.
+
+### Scheduler integration
+
+When configuring a schedule in an external scheduler (GitHub Actions, Vercel cron, etc.):
+
+1. Ensure your scheduler's HTTP client is configured to use outbound HTTPS and connection timeouts suitable for provider health checks.
+2. Provide a provider URL in any Credential/Secret field; if using a provider that requires explicit port or subpath, include it.
+3. Validate that the provider URL is accessible via HTTP or HTTPS before committing to your workflow. Location-ready providers are preferred for production outages.
+4. Save the scheduler configuration and monitor run logs for provider validation errors.
+
+<p>Stakeholders — please review and reply with corrections or missing context.</p>
