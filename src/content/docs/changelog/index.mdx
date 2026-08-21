@@ -14,15 +14,15 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 21, 2026">
-  * Added: Agents can configure secure webhooks in multiple UI surfaces â\x80\x94 Settings App, onboarding flows, AI Chat, HyperAI, and agent detail pages â\x80\x94 enabling cross-surface discoverability and easy setup ([HTPR-5400](https://app.hypertask.ai/detail/project-15/5400))
+  * Improved: CLI reporter.mjs now respects absolute path resolution for external binaries when resolving the claude binary, eliminating spawn ENOENT errors caused by bare PATH environments ([HTPR-5544](https://app.hypertask.ai/detail/project-15/5544))
+  * Fixed: Board titles in browser navigation now show the authorized board and saved-view name on the server, fixing generic tab titles during navigation ([HTPR-5420](https://app.hypertask.ai/detail/project-15/5420))
 </Update>
 
 <Update label="August 20, 2026">
-  * Improved: CLI reporter.mjs now respects absolute path resolution for external binaries when resolving the claude binary, eliminating spawn ENOENT errors caused by bare PATH environments ([HTPR-5544](https://app.hypertask.ai/detail/project-15/5544))
+  * Improved: Board columns created with the "Add column" dialog are now visible in every board view by default ([HTPR-5527](https://app.hypertask.ai/detail/project-15/5527))
 </Update>
 
 <Update label="August 19, 2026">
-  * Improved: Board columns created with the "Add column" dialog are now visible in every board view by default ([HTPR-5527](https://app.hypertask.ai/detail/project-15/5527))
   * Fixed: Saving a view no longer drops keyboard focus to the last card in the active column ([HTPR-5201](https://app.hypertask.ai/detail/project-15/5201))
   * Fixed: Provider-created cache files outside the resumable allowlist are deleted at run start so that provider home directories do not accumulate stale credentials ([HTPR-5500](https://app.hypertask.ai/detail/project-15/5500))
   * Fixed: Mobile modals now clear the Android status bar so the top row is tappable ([HTPR-5534](https://app.hypertask.ai/detail/project-15/5534))
@@ -115,7 +115,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images — two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
