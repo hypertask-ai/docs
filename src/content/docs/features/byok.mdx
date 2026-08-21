@@ -11,7 +11,7 @@ BYOK lets you bring your own API keys and providers directly into Hypertask. Add
 
 Add a key from any supported provider directly in your workspace:
 
-1. Open the **Board** menu (**⌘K** or click the board icon)
+1. Open the **Board** menu (···K or click the board icon)
 2. Select **Board settings** or go to **Settings > Keys & providers**
 3. Click **Add provider** and choose from the available options, or paste a provider URL for custom endpoints
 
@@ -26,6 +26,12 @@ Hypertask supports the following provider types:
 <Aside type="note">
 Provider access is tied to your project-level permissions. Only owners and admins can add or remove keys for a project.
 </Aside>
+
+## Provider interchangeability (HTPR-5492)
+
+Agents can use interchangeable provider implementations for AI operations. The current overriding provider must be defined per-run by specifying an absolute provider URL. This may be a built-in (e.g., https://claude.com or https://codex.com) or a custom endpoint. Valid URLs are validated on input and persisted where applicable.
+
+After providing a URL and verifying it, the provider becomes active for that run. Agent workflows using MCP tools or external schedulers can reference this provider URL to guarantee consistent model selection and access control across runs—no manual command-line environment variable overwrite is required when a provider URL is configured.
 
 ## GDPR-safe mode (HTPR-4405)
 
