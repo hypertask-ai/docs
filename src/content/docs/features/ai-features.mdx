@@ -31,14 +31,36 @@ The assistant drafts directly into the field, ready for your review.
 AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements — modes like Archive and Summarize do not append content to your text.
 
 Write plainly from a human-first perspective without overusing jargon, and keep your tone concise and actionable. Avoid filler phrases and contrived expressions like:
+
 - "Great question!", "pivotal", "seamlessly", "robust", "leverage", "I hope this helps"
+
+### Smart brevity precedence on style
+When writing with AI, the assistant respects your board's template and custom instructions as the final authority over brevity. You can still request improvements, but board-level constraints always take precedence:
+
+| Level | Consequence |
+|-------|-------------|
+| **Board custom instructions & templates** | Entirely reflow the AI-generated output to match the board's preferences. |
+| **Your explicit request** | Apply refinements that contradict the default brevity rule. |
+| **Default brevity** | Apply only if the top two levels do not apply. |
+| **Anti-wordiness cap** | Reduce filler phrases like "pivotal," "seamlessly," and "robust" at or below the style limit. |
+
+Example prompts:
+
+```bash
+# Ask for high-level but concise design guidance
+ht task create "High-level guidance for the marketing design system. Layout: layout-doc, typography: typography-doc."
+
+# Explicitly request a long-form, conversational architecture overview
+ht task create "Long-form, conversational architecture overview with no brevity limits."
+```
 
 ### Promoted task-summary action (HTPR-5404)
 When AI Chat opens on a task, the assistant prioritizes the **Summarize the current task** action. You can:
+
 - Type <kbd>/i</kbd> Summarize the current task to get a concise summary that respects readability modes.
 - See the action promoted near the chat input, making it quick to extract a task summary while keeping context.
 
-This integration lets you moments-generate task summaries without leaving the chat flow.
+This integration lets you generate task summaries without leaving the chat flow.
 
 ### Write confirmation for wide or destructive actions
 The AI assistant requires confirmation before making wide or destructive writes across your boards. This prevents silent task creation or modification.
@@ -60,6 +82,23 @@ When you open a fresh guest showcase board, click Ctrl+K to open the board picke
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
+### Cap to smooth and anti-wordiness traits
+The AI Task Writer behavior now includes two documented style traits:
+
+| Trait | What it does | You will see |
+|-------|--------------|--------------|
+| **Anti-wordiness cap** | Prevents the AI from repeatedly using high-fill phrases like "leverage," "pivotal," "seamlessly," "robust," and "I hope this helps." Only one pass of filtering is applied; further iterations may reintroduce content you type. | Misspelled intentional repetitions (e.g., "revision re-vision") are tolerated. | Plain, concise language with structures like "I intend to X and Y instead of A and B." |
+
+Note: This trait is tied to AI-generated messages that inherit default brevity. If board custom instructions or your explicit request take precedence, anti-wordiness will not be applied, consistent with the brevity precedence table.
+
+Example:
+
+```bash
+ht task create "Our design system typography should leverage scale appropriately during page edits so that we never see markdown-like scaling."
+# After the AI Task Writer applies anti-wordiness:
+# "Typography scales in our design system align page-edit behavior with typographic scale, so markdown-like scaling never occurs."
+```
+
 ### Skills invoked from AI Task Writer
 Use slash commands to invoke registered skills:
 
@@ -67,6 +106,7 @@ Use slash commands to invoke registered skills:
 - **/skill `name`** — Run a specific skill if you know its name.
 
 Known skills include:
+
 - **Defer** — Suggest a deferral with a new due date and optional sub-task.
 - **Duplicate** — Mirror the current task into a draft that you can rename and refine.
 - **Subtask** — Generate a new subtask rooted from the current one.
@@ -92,7 +132,6 @@ An AI agent can update task metadata in a visible way — priority, assignees, l
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
 
 ### Automated approvals from minors-only reviews (HTPR-5531)
-
 When AI agents perform minors-only reviews on pull requests, they now automatically post an APPROVE comment to green PRs. This approval comment enables improving automerge behavior: green PRs no longer stay parked forever due to the missing green-PR-approved-by-minor comment. The system also dedupes park comments to avoid duplicate approval entries. As a result, minors-only reviews contribute directly to board automation flows, making approvals more reliable and predictable.
 
 ## Time, profile, and report parity in AI Chat
