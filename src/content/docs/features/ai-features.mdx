@@ -9,6 +9,7 @@ The **Hypertask AI assistant** lives at your fingertips. Use it to create tasks,
 
 ## AI Task Writer and Write with AI
 ### Create tasks from prompts
+
 The AI Task Writer instantly turns text into structured tasks. Just ask in natural language, and the assistant fills in title, description, due date, and assignee if you include that context.
 
 ```bash
@@ -19,6 +20,7 @@ ht task create "Design the upcoming Q3 marketing campaign. Include three concept
 In the UI, use the AI Task Writer from the New Task flow. The editor is context-aware: it respects the board, team, and board-level AI instructions you've configured.
 
 ### Write with AI in comments and descriptions
+
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
 - **/ai** — Generate a draft for the active text field.
@@ -31,7 +33,6 @@ The assistant drafts directly into the field, ready for your review.
 AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements — modes like Archive and Summarize do not append content to your text.
 
 Write plainly from a human-first perspective without overusing jargon, and keep your tone concise and actionable. Avoid filler phrases and contrived expressions like:
-
 - "Great question!", "pivotal", "seamlessly", "robust", "leverage", "I hope this helps"
 
 ### Smart brevity precedence on style
@@ -56,7 +57,6 @@ ht task create "Long-form, conversational architecture overview with no brevity 
 
 ### Promoted task-summary action (HTPR-5404)
 When AI Chat opens on a task, the assistant prioritizes the **Summarize the current task** action. You can:
-
 - Type <kbd>/i</kbd> Summarize the current task to get a concise summary that respects readability modes.
 - See the action promoted near the chat input, making it quick to extract a task summary while keeping context.
 
@@ -66,7 +66,6 @@ This integration lets you generate task summaries without leaving the chat flow.
 The AI assistant requires confirmation before making wide or destructive writes across your boards. This prevents silent task creation or modification.
 
 When you invoke **Write with AI** with flags that span multiple tasks or boards (such as `--mode write-with-ai --all`), the assistant pauses and prompts you:
-
 1. The assistant previews the proposed writes (tasks, comments, or label updates).
 2. You confirm by running **Write** from the command palette or by typing **Yes** in the active confirmation dialog.
 3. Only approved writes are sent on the command. Unconfirmed requests are discarded.
@@ -75,7 +74,6 @@ This confirmation gate guards against accidental bulk operations and keeps your 
 
 ### Seed tasks on guest boards
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
-
 - Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
 - Ask the AI to build this board for you — Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
 - Run tasks/tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
@@ -87,7 +85,7 @@ The AI Task Writer behavior now includes two documented style traits:
 
 | Trait | What it does | You will see |
 |-------|--------------|--------------|
-| **Anti-wordiness cap** | Prevents the AI from repeatedly using high-fill phrases like "leverage," "pivotal," "seamlessly," "robust," and "I hope this helps." Only one pass of filtering is applied; further iterations may reintroduce content you type. | Misspelled intentional repetitions (e.g., "revision re-vision") are tolerated. | Plain, concise language with structures like "I intend to X and Y instead of A and B." |
+| **Anti-wordiness cap** | Prevents the AI from repeatedly using high-fill phrases like "leverage," "pivotal," "seamlessly," "robust," and "I hope this helps." Only one pass of filtering is applied; further iterations may reintroduce content you type. | Misspelled intentional repetitions (e.g., "revision re-vision") are tolerated. Plain, concise language with structures like "I intend to X and Y instead of A and B." |
 
 Note: This trait is tied to AI-generated messages that inherit default brevity. If board custom instructions or your explicit request take precedence, anti-wordiness will not be applied, consistent with the brevity precedence table.
 
@@ -99,14 +97,17 @@ ht task create "Our design system typography should leverage scale appropriately
 # "Typography scales in our design system align page-edit behavior with typographic scale, so markdown-like scaling never occurs."
 ```
 
+### Agent hover cards open the agent page
+Hover over an agent to quickly access its detail page and configuration. When you hover over an agent card, a hover card appears with a link that opens the agent page for review, status, and settings.
+
+The hover card only applies to agents; user-facing hover cards remain unchanged.
+
 ### Skills invoked from AI Task Writer
 Use slash commands to invoke registered skills:
-
 - **/skill** — Open the skills menu to tap a skill by name or first letter.
 - **/skill `name`** — Run a specific skill if you know its name.
 
 Known skills include:
-
 - **Defer** — Suggest a deferral with a new due date and optional sub-task.
 - **Duplicate** — Mirror the current task into a draft that you can rename and refine.
 - **Subtask** — Generate a new subtask rooted from the current one.
@@ -115,7 +116,6 @@ Types skip over canvas or rich content blocks instead of treating them as text t
 
 ## My Tasks context
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
-
 - "What's on my My Tasks board?" — Generates a concise list of assigned tasks with priorities and due dates.
 - "Any overdue or blocked work?" — Flags urgent or late items for follow-up.
 - "Show me tasks due this week" — Filters and presents upcoming commitments.
@@ -134,9 +134,11 @@ An AI agent can update task metadata in a visible way — priority, assignees, l
 ### Automated approvals from minors-only reviews (HTPR-5531)
 When AI agents perform minors-only reviews on pull requests, they now automatically post an APPROVE comment to green PRs. This approval comment enables improving automerge behavior: green PRs no longer stay parked forever due to the missing green-PR-approved-by-minor comment. The system also dedupes park comments to avoid duplicate approval entries. As a result, minors-only reviews contribute directly to board automation flows, making approvals more reliable and predictable.
 
+### Agents page card hover Opens detail
+Hovering over an agent card now opens the agent detail page, making it quick to review agent status, configuration, and history from the main agents page.
+
 ## Time, profile, and report parity in AI Chat
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
-
 - **View filtered time reports** — Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
 - **Update shared user profiles** — Update profile fields like name, role, or custom attributes with correct flag handling.
 - **Read complete saved reports** — Pull full saved report data including filters, columns, and time ranges.
@@ -163,7 +165,6 @@ Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machi
 
 ### Plan-aware default-model repair
 The gateway now maps eligible users to appropriate default models based on team entitlement:
-
 - **Paid, legacy, and comped teams** default to **Luna Standard (5.6)**, bypassing premium model selection during task creation.
 - **Free and keyless BYOK teams** default to **Mini (5.4)** with a corresponding downgrade to Mini-only allocation; BYOK teams with an owned key are eligible for Luna Standard.
 - Eligible BYOK squads reclaim **Luna Standard (5.6)** instead of staying on Mini, restoring Luna Standard as the design default for BYOK teams with an owned key.
@@ -184,7 +185,6 @@ AI chat can be shown in different surfaces depending on how you want to work wit
 
 ### Supported display modes
 You can switch between these display modes:
-
 - **Full-screen** — The chat panel expands to fill your screen without any other surfaces visible.
 - **Right-side Copilot panel** — The chat appears as a panel on the right, letting you keep other content visible while you ask AI questions.
 - **Floating window** — The chat floats in a draggable window that you can position anywhere. This mode persists across reloads.
@@ -200,7 +200,6 @@ Use the mode group in the chat surface:
 
 ### Mode persistence
 The selected display mode is remembered automatically:
-
 - Click any mode to apply it.
 - If you reload the page or re-open the chat, it returns to the mode you used last.
 - Full-screen mode and floating mode persist; if you switch, the new mode is retained across sessions.
@@ -232,7 +231,6 @@ The chat answers are grounded in **49 documentation articles** (including the 48
 
 ### Try it out
 Try these prompts in the help-site chat:
-
 - *"How do I install the hypertask CLI and create a task?"*
 - *"What MCP tools are available for project management?"*
 - *"What are the REST API endpoints for tasks?"*
