@@ -3,7 +3,7 @@ title: "Boards & Sections"
 description: "Organize work with Kanban-style boards, customizable sections, and multiple views."
 ---
 
-import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
@@ -26,8 +26,6 @@ Every board starts with a single default section. To add more:
 1. From the view tab bar, use **Ctrl+K**, search for **"Add column"** (or **"Add section"**), and follow the dialog prompts.
 2. Or use **Ctrl+K > Create view > Add column**.
 3. In the CLI: `hypertask view create --section "Section name" --project 15`.
-
-<Steps>
 
 **From the app:**
 
@@ -54,11 +52,9 @@ hypertask view create --name "Doing" --project 15
 - **Sort by:** `createdAt`, `updatedAt`, or `dueDate`
 - **Sort order:** `asc` (ascending) or `desc` (descending)
 
-</Steps>
-
 ### Column visibility
 
-<span class="label label--brand">Behavior change</span> A newly added column is visible in **every view of the board** immediately after creation. There is no need to manually include it in Saved Views or other board views.</p>
+<span class="label label--brand">Behavior change</span> A newly added column is visible in **every view of the board** immediately after creation. There is no need to manually include it in Saved Views or other board views.
 
 This ensures that tasks moved into a new section appear in all view contexts (built-in splits, Saved Views, and per-browser preferences) without extra setup.
 

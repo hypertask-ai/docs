@@ -3,10 +3,7 @@ title: AI Agents
 description: Create, configure, and manage autonomous agents in Hypertask with MCP, webhooks, and scheduled vs ad-hoc workflows.
 ---
 
-import Aside from '@theme/Aside';
-import LinkCard from '@theme/LinkCard';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import { Aside, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
 
 Agents let you attach an AI model to a workflow that can perform autonomous actions, such as reading tasks, writing comments, scheduling, or running utilities on the platform. They integrate with the Model Context Protocol (MCP) to surface tool calls, returning structured outputs that your agent can use to complete goals.
 
@@ -181,7 +178,7 @@ See the [MCP Tools Reference](/api/tools-reference) for the complete schema list
 
 ## Getting started
 
-<TabGroup>
+<Tabs>
 <TabItem value="quick-create" label="Quick create">
 1. Go to **Agents** (`/agents`).
 2. Click **New agent**.
@@ -196,7 +193,7 @@ See the [MCP Tools Reference](/api/tools-reference) for the complete schema list
 3. Choose a provider or import by tool list and signatures.
 4. Save credentials and start the agent.
 </TabItem>
-</TabGroup>
+</Tabs>
 
 <Aside>
 Many teams build agents around a recurring pattern — e.g., a "drainer" agent for stale tasks, a "bot" for support triage, or a "replier" for common questions. Reuse saved workflows as a blueprint when creating new agents.
@@ -209,8 +206,8 @@ Many teams build agents around a recurring pattern — e.g., a "drainer" agent f
 - **Scheduling** — See [Scheduling Agents](/scheduling)
 - **MCP overview** — See [MCP Integration](/mcp/overview)
 
-<AlsoRead>
+### Related pages
+
 - [Agents Dashboard](/features/agents-dashboard) — View and group all agents
 - [Skills](/features/skills) — Tune agent behavior with team skills
 - [Cost Forecast](/features/cost-forecast) — Migrate agents to paid tiers safely
-</AlsoRead>
