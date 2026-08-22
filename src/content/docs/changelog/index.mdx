@@ -14,6 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 22, 2026">
+  * Fixed: MCP `hypertask_update_task` now preserves descriptions that link to Hypertask tickets ([HTPR-5617](https://app.hypertask.ai/detail/project-15/5617))
+  * Improved: Mobile board switcher search starts with focus, keeps current board pinned, and uses arrow-key navigation ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625))
+  * Improved: Hovering over an agent now opens its detail page instead of only showing details ([HTPR-5605](https://app.hypertask.ai/detail/project-15/5605))
   * Fixed: Inbox Zero requires confirmation before archiving ([HTPR-5613](https://app.hypertask.ai/detail/project-15/5613))
   * Improved: AI Task Writer AI now respects board custom instructions/templates and user's explicit request over default brevity, and enforces anti-wordiness caps with one-pass filtering at or below the style limit; board-339 A/B tests showed richer, information-dense drafts preserved section templates, links, numbers, and GA4 session counts while applying clearer, concise phrasing ([HTPR-5606](https://app.hypertask.ai/detail/project-15/5606))
   * Improved: AI chat and custom instructions now follow shared house-style rules; ADHD shaping applies only to chat-level refinements ([HTPR-5587](https://app.hypertask.ai/detail/project-15/5587))
@@ -128,7 +131,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images — two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([htpr-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
