@@ -82,6 +82,7 @@ Snack bar buttons appear at the bottom of an inbox row and can be accessed via s
 Use <kbd>Ctrl</kbd> + <kbd>K</kbd> and search for **"Clear inbox to zero"** or press within an active inbox to open the Inbox Zero modal. This gives you a quick, clean way to bulk-process rows by selecting multiple notifications at once.
 
 ### What Inbox Zero counts
+
 Inbox Zero counts only items that are:
 - **Visible in your All tab** (no filters applied)
 - **Unarchived**
@@ -90,15 +91,20 @@ Inbox Zero counts only items that are:
 This means hidden rows (e.g., notifications from tasks you've archived, filtered-out boards, or rows censored by privacy rules) are excluded from the count and will not be archived by Inbox Zero, even if they're currently visible in some other view.
 
 ### Preview before commit
+
 1. **Select one or more rows** from the All tab of your Inbox. Each selected row represents a single task or invite.
 2. **Inbox Zero opens a preview** showing how many rows will be archived, and presents a reconfirmation before committing.
 3. **Click Confirm** to archive every selected row. The count reflects the number of visible, unarchived rows matching your selection, and no other rows are affected.
 4. If the preview updates (e.g., because you change your filter or a previously filtered row becomes visible), Inbox Zero prompts you to reconfirm before archiving.
 
 ### Reconfirmation on preview changes
+
 If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+
 ### Limitations
+
 - Inbox Zero only sees the **visible** portion of the All tab at the moment you open it; items hidden by board filters, privacy settings, or a previous archiving action are out of scope.
 - It's available from the Inbox page's All tab and from the action menu on any inbox row.
 - Preview and execution respect your current view filters; if you filter out certain notifications, they won't appear in the preview.
@@ -141,15 +147,18 @@ OPENWIKI_GATEWAY=https://gateway.ai.cloudflare.com/v1/YOUR_ACCOUNT/YOUR_SERVICE
 Returning users now see a synchronized local IndexedDB read model in the Inbox. This makes returning visits faster by preserving local state across sessions and providing resilient updates when the network returns.
 
 ### How read model works
+
 When you navigate to the Inbox on a return visit:
 - **Local state restoration**: IndexedDB reads your cached state locally before waiting for network confirmation. This reduces initial load time and improves perceived responsiveness.
 - **Optimistic updates**: Local writes are immediately persisted and reflected in the UI while the server acknowledges them.
 - **Reconciliation on refresh**: Network changes are reconciled with your local cache, and the freshest data is presented. Older local updates are discarded in favor of newer server state.
 
 ### Timeline-sorted returning visits
+
 For returning users, inbox rows appear in timeline-sorted order (updates bubble to the top within the last 24 hours). This gives you a prioritized view of recently updated notifications without needing to dig through archives.
 
 ### Indexing across boards
+
 The read model follows your account-scoped setting. When you switch boards and return to the Inbox, your local cache adapts to your workspace context and presents the most relevant notifications.
 
 ## Real-time updates
