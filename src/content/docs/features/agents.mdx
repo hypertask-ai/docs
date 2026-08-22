@@ -24,7 +24,6 @@ This capability is scoped exclusively to Speed Engineer instances; other agents 
 ## Worker ownership gate
 
 To prevent conflicts when a managed agent attempts to work on a task, the worker verifies managed ownership before taking action. The agent verifies ownership before:
-
 - Creating a writable worktree
 - Posting a pickup
 - Starting the coding provider
@@ -41,10 +40,10 @@ Browse and manage your agents on the Agents page (`/agents`). The view can be pe
 | **Flat** | All agents appear in a single list, sorted by latest activity. Open the margin ellipsis in the header to enable the flat view via `?group=0`. |
 | **Production register** | A read-only reference for the current production environment, highlighting agents most recently active. |
 
-Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>−<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
+Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>—<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
 
 <Aside>
-**Tip** — Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team’s active agents.
+**Tip** — Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team's active agents.
 </Aside>
 
 ## Viewing specific agents
@@ -72,6 +71,10 @@ On the agents list and in agent detail pages, you can now see whether an agent i
 - **Manage agent** — From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
 
 This visibility helps you spot resource-heavy agents, see which tickets are being processed, and clean up unused agents.
+
+### Hovering over agents ([HTPR-5605])
+
+Entering the hover state on an agent card opens its detail page. This provides a quick, keyboard-friendly way to see an agent's current state, recent activity, and quick actions without fully opening its page. This behavior applies to both list and detail views.
 
 ## Renaming agents
 
