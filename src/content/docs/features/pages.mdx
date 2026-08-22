@@ -112,8 +112,8 @@ Every page has a version history. Restrict updates to safe versions and restore 
 
 Version history and restore are REST-only today. There is no MCP tool and no CLI command for them yet:
 
-- `GET /api/mcp/pages/versions` — lists all versions with timestamps and author.
-- `POST /api/mcp/pages/restore` — restores a page to a chosen version.
+- `GET /api/pages/versions` — lists all versions with timestamps and author.
+- `POST /api/pages/restore` — restores a page to a chosen version.
 
 ---
 
@@ -131,8 +131,8 @@ Task descriptions also gain version history to help you track contributions, rev
 
 As with page history, this is REST-only for now:
 
-- `GET /api/mcp/tasks/description-versions` — list the snapshots of a task description.
-- `POST /api/mcp/tasks/description-restore` — restore one of them.
+- `GET /api/tasks/description-versions` — list the snapshots of a task description.
+- `POST /api/tasks/description-restore` — restore one of them.
 
 ### Conflict safety for task descriptions
 
@@ -171,7 +171,7 @@ Pages are addressed by **numeric page id**, and created against a **numeric task
 | `hypertask pages create --task <task-id> --title "title" --content "..."` | Create a page on a task. |
 | `hypertask pages get <page-id>` | Read a page. |
 | `hypertask pages append <page-id> --content "..."` | Append to a page. |
-| `hypertask pages update <page-id> [--title "title"] [--content "..."] [--mode replace\|append\|prepend]` | Rename a page, rewrite its content, or both. |
+| `hypertask pages update <page-id> [--title "title"] [--content "..."] [--mode replace|append|prepend]` | Rename a page, rewrite its content, or both. |
 | `hypertask pages list [--task <id>] [--project <id>]` | List pages on a task or across a board. |
 | `hypertask pages search <query>` | Search page content. |
 | `hypertask pages archive <page-id>` | Archive a page (soft delete; alias `delete`). |
@@ -183,7 +183,7 @@ Pages are addressed by **numeric page id**, and created against a **numeric task
 | `--title <title>` | create, update | Set or rename the page title. A title-only update preserves the content. |
 | `--content <text>` | create, append, update | The body text. |
 | `--markdown-file <path>` | create, append, update | Read the body from a file instead. |
-| `--mode replace\|append\|prepend` | update | How to apply the content. `replace` by default. |
+| `--mode replace|append|prepend` | update | How to apply the content. `replace` by default. |
 | `--if-version <n>` | update | Only write if the page is still at this version. Returns a conflict otherwise. |
 | `--note <text>` | update | A note attached to this revision. |
 | `--html` / `--canvas` | create, append, update | Treat the content as HTML, or as an HTML canvas page. |
@@ -266,6 +266,16 @@ hypertask pages update 4521 --mode append \
 - **Legacy browsing:** Old explorations embedded on hypertask.app remain visible as read-only HTML; they are not migrated to the Pages system.
 - **New writing:** All new pages must be attached to a task. No task-less wiki pages exist yet.
 - **Co-editing:** Live Yjs/websocket co-editing is parked. Page editing is currently human-only or agent-only, not both simultaneously.
+
+---
+
+## Appearance
+
+Pages run full-width on desktop with a thin 12px gutter inside the editor when the app rail is visible, and 8px of vertical space above the utility row. The constrained 900px document card layout and its padding are no longer present, so full-width writing is the default experience.
+
+<Aside type="note">
+On mobile, pages have the same full-width layout as desktop, with the app rail collapsed to preserve screen space.
+</Aside>
 
 ---
 
