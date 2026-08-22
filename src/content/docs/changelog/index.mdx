@@ -15,6 +15,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="August 22, 2026">
   * Fixed: Inbox Zero requires confirmation before archiving ([HTPR-5613](https://app.hypertask.ai/detail/project-15/5613))
+  * Improved: AI Task Writer AI now respects board custom instructions/templates and user's explicit request over default brevity, and enforces anti-wordiness caps with one-pass filtering at or below the style limit; board-339 A/B tests showed richer, information-dense drafts preserved section templates, links, numbers, and GA4 session counts while applying clearer, concise phrasing ([HTPR-5606](https://app.hypertask.ai/detail/project-15/5606))
   * Improved: AI chat and custom instructions now follow shared house-style rules; ADHD shaping applies only to chat-level refinements ([HTPR-5587](https://app.hypertask.ai/detail/project-15/5587))
 </Update>
 
