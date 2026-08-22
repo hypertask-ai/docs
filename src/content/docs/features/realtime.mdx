@@ -1,0 +1,37 @@
+---
+title: "Realtime Monitoring"
+description: "View a live snapshot of your board, including human activity on hypertask.app/realtime."
+---
+
+import { Aside, Card } from '@astrojs/starlight/components';
+
+Use the Realtime Monitoring page (`hypertask.app/realtime`) to see a live, per-board view of typists currently inside the app. The page is scoped to a single board and excludes agents and anonymous sessions from the headline count.
+
+<Aside type="note">
+Only logged-in humans with events in the last 5 minutes appear in the headline. The page is read-only and no actions can be taken from it.
+</Aside>
+
+## What you see on the page
+
+| Metric | Description |
+|--------|-------------|
+| **Active humans (headline)** | Distinct logged-in users with events in the last 5 minutes. |
+| **30‑minute actives** | How many humans have interacted in the last 30 minutes. |
+| **Today actives** | How many humans have interacted during the current day. |
+| **Anonymous / demo sessions** | Count of anonymous or demo users for context. |
+| **Board scope** | The snapshot is scoped to the selected board only. |
+
+## How to access
+
+- From the board: click the **board header** to see the detailed board page, which lists the realtime activity snapshot for that board.
+- The realtime view appears below the board title when you open a board from the board switcher or saved views.
+
+## Scope and exclusions
+
+- Agents and bots are excluded from all activity counts.
+- Anonymous or demo sessions show only as a secondary stat and do not contribute to headline counts.
+- The view updates in real time to reflect incoming interactions like task moves, comments, and edits.
+
+<Aside type="tip">
+Use this page to spot quiet boards vs busy workflows and coordinate hand-offs between team members in a visual way.
+</Aside>
