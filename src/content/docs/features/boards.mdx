@@ -173,6 +173,14 @@ When you use **Shift+M** (board picker) or the board switcher, boards now appear
 
 This aligns with the agents page's activity-based sorting and ensures your most active boards are always prioritized when navigating.
 
+### Mobile board switcher search and ordering
+
+When you open the board picker or switch boards on mobile, search is focused on launch. Boards are ordered by latest activity with your current board pinned at the top, using the same desktop ordering logic as the board switcher:
+
+- Search starts with focus, so you can begin typing immediately.
+- Arrow keys and <kbd>Enter</kbd> navigate and select filtered results.
+- The current board appears first, followed by the most recently updated boards.
+
 ## Guest boards
 
 - Anonymously visit an empty guest board for the app.hypertask.ai host (hypertask.ai in production).
@@ -199,7 +207,6 @@ The empty state:
 ## Free tier limits
 
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
-
 - App web interface
 - CLI (`ht --create-board` / `ht board create`)
 - MCP tool (`boards.create`)
@@ -285,7 +292,6 @@ Once a task moves into a section, it ages in view over time. To avoid visual noi
 ## Board access for writes
 
 Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
-
 - CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
