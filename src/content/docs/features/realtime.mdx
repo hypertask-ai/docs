@@ -32,6 +32,11 @@ Only logged-in humans with events in the last 5 minutes appear in the headline. 
 - Anonymous or demo sessions show only as a secondary stat and do not contribute to headline counts.
 - The view updates in real time to reflect incoming interactions like task moves, comments, and edits.
 
+## Composition and staleness
+
+- Realtime fetches verify the subscription and exact task identity before updating the open task. This prevents an old response from overwriting a task opened during navigation.
+- Comments, saved view changes, and column moves refresh the open task payload to ensure the displayed task reflects the latest state.
+
 <Aside type="tip">
 Use this page to spot quiet boards vs busy workflows and coordinate hand-offs between team members in a visual way.
 </Aside>
