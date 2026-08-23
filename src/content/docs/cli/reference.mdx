@@ -92,6 +92,23 @@ Bot-challenge 403s, rate limits, and certain gateway errors are now retried auto
 
 **Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
 
+### Non-fatal Errors
+
+Starting from CLI 1.10.0, commands that encounter missing resources (e.g., a ticket that does not exist) exit with a non-zero code and a clear error message instead of succeeding silently. This provides reliable feedback for scripts and automation that rely on task IDs or tickets.
+
+Examples:
+
+- `hypertask task assign HTPR-9999 --user 42` exits with code `1` and prints an error like:
+  ```
+  Error: Ticket HTPR-9999 not found
+  ```
+- `hypertask task move HTPR-9999 --section "Done"` exits with code `1` and prints:
+  ```
+  Error: Cannot find task HTPR-9999. The task may have been deleted or you may not have access.
+  ```
+
+You can rely on these exit codes in CI/CD pipelines and automation scripts to detect problems without scanning error messages manually.
+
 ### CLI API Routing
 
 The CLI connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge. Starting from CLI 1.5.0:
@@ -267,7 +284,7 @@ hypertask task create \
 </Aside>
 
 <Aside type="caution">
-**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a non-numeric value or a value that doesn’t correspond to an existing task results in a clear error before the API call. The task is not created if parent validation fails.
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a non-numeric value or a value that doesn't correspond to an existing task results in a clear error before the API call. The task is not created if parent validation fails.
 </Aside>
 
 <Aside type="note">
@@ -329,7 +346,7 @@ hypertask task update HTPR-2992 --priority urgent --due 2026-03-25
 </Aside>
 
 <Aside type="note">
-**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a value that doesn’t correspond to an existing task results in a clear error before the API call. If `--parent-task` is zero or negative, or not a valid integer, the task is not updated.
+**Parent task validation:** `<code>--parent-task</code>` must be a positive integer. Passing a value that doesn't correspond to an existing task results in a clear error before the API call. If `--parent-task` is zero or negative, or not a valid integer, the task is not updated.
 </Aside>
 
 ```bash
@@ -368,6 +385,11 @@ hypertask task assign HTPR-2992 --user 42
 |------|-------------|
 | `--user <id>` | User ID to assign |
 
+**Error behavior:** If the specified ticket does not exist, the command exits with a non-zero code and prints an error message. Example:
+```
+Error: Ticket HTPR-9999 not found
+```
+
 Unassign a user from a task.
 
 ```bash
@@ -377,6 +399,11 @@ hypertask task unassign HTPR-2992 --assignee 42
 | Flag | Description |
 |------|-------------|
 | `--assignee <id>` | User ID to unassign |
+
+**Error behavior:** If the ticket does not exist, the command exits with a non-zero code and prints an error message. Example:
+```
+Error: Ticket HTPR-9999 not found
+```
 
 <Aside type="tip">
 To find user IDs, use `hypertask project members <project-id>`.
@@ -400,6 +427,11 @@ hypertask task move HTPR-2992 --to 20 --to-section 5010
 | `--to <id>` | Target project ID — move to a different project |
 | `--to-section <id>` | Target section ID in the destination project (use with `--to`) |
 
+**Error behavior:** If the specified ticket does not exist, the command exits with a non-zero code and prints an error message. Example:
+```
+Error: Cannot find task HTPR-9999. The task may have been deleted or you may not have access.
+```
+
 ### `task move-board` / `task move-project`
 
 Move a task to a different project/board entirely. Alias: `task move-board` (preferred) and `task move-project` (legacy).
@@ -413,6 +445,11 @@ hypertask task move-project HTPR-2992 --target-project 20 --target-section 5010
 |------|-------------|
 | `--target-project <id>` | Target project ID |
 | `--target-section <id>` | Target section ID |
+
+**Error behavior:** If the specified ticket does not exist, the command exits with a non-zero code and prints an error message. Example:
+```
+Error: Cannot find task HTPR-9999. The task may have been deleted or you may not have access.
+```
 
 ### `task move-to-inbox`
 
