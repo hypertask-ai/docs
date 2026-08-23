@@ -25,13 +25,13 @@ When a ticket already has a title or description, opening Task Writer starts the
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** — Generate a draft for the active text field.
-- **/ai rewrite** — Improve or rethink what you typed.
-- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
+- **/ai** – Generate a draft for the active text field.
+- **/ai rewrite** – Improve or rethink what you typed.
+- **/ai fix** – Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
-### House style AI text reinforcement ([HTPR-5587](https://app.hypertask.ai/detail/project-15/5587))
+### House style AI text reinforcement (HTPR-5587)
 AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements — modes like Archive and Summarize do not append content to your text.
 
 Write plainly from a human-first perspective without overusing jargon, and keep your tone concise and actionable. Avoid filler phrases and contrived expressions like:
@@ -169,7 +169,7 @@ Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machi
 The gateway now maps eligible users to appropriate default models based on team entitlement:
 - **Paid, legacy, and comped teams** default to **Luna Standard (5.6)**, bypassing premium model selection during task creation.
 - **Free and keyless BYOK teams** default to **Mini (5.4)** with a corresponding downgrade to Mini-only allocation; BYOK teams with an owned key are eligible for Luna Standard.
-- Eligible BYOK squads reclaim **Luna Standard (5.6)** instead of staying on Mini, restoring Luna Standard as the design default for BYOK teams with an owned key.
+- **Eligible BYOK squads** reclaim **Luna Standard (5.6)** instead of staying on Mini, restoring Luna Standard as the design default for BYOK teams with an owned key.
 
 **Recommended:** if you previously saw Mini as the visible or persisted default for paid or BYOK squads, verify that your plan shows Luna Standard as the eligible model and that your usage allocation permits Luna Standard.
 
@@ -209,36 +209,33 @@ The selected display mode is remembered automatically:
 Use the mode that fits what you're doing — full-screen for focused deep-work, right-side for quick answers, or floating for keeping context visible on top of your boards or tasks.
 
 ## Help-site AI chat
-The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. It connects directly to the full Hypertask documentation site, including CLI, MCP, REST API, and agent docs.
-
-### Performance and model
-The chat uses the **google/gemini-3.5-flash-lite** model via the Vercel AI Gateway. Responses stream in real time with first-token latencies around **0.3 seconds** on typical queries.
-
-- Multimodal path for text and image questions in one model.
-- Automatic fallback to the previous model if the gateway fails.
-- Serverless deployment on Cloudflare Workers with a D1 database for article storage.
+The **help.hypertask.ai chat** provides on-the-fly documentation answers and deployment guidance. This chat is automatically enriched with Hypertask's MCP server knowledge, including tool descriptions, schemas, and workflows.
 
 ### Knowledge coverage
-The chat answers are grounded in **49 documentation articles** (including the 48KB CLI reference). Previously, the bot lacked CLI context; now it can answer questions about `nl` commands, `ht` CLI, MCP tools, and REST endpoints.
+- **MCP tools:** Instant understanding of all MCP operations (tools, parameters)
+- **Workflow patterns:** Guidance from MCP agent workflows (e.g. safe task claiming, heartbeat loops)
+- **API schemas:** Embeds OpenAPI specs and model responses to answer "what can I call with these parameters?"
+- **Board content:** RAG-based retrieval over indexed tasks, comments, and pages for contextual answers
 
-- Keyword scoring replaces first-come fill logic, so contextual terms like "cli" and "hypertask" score accurately.
-- References link directly to the relevant docs.hypertask.ai article.
-- Topics include:
+### Performance
+- **Model:** google/gemini-3.5-flash-lite via the Vercel AI Gateway
+- **Streaming:** Real-time tokens around 0.3s to first token
+- **Multimodal:** Text and image questions in a single model
 
-  - Installing and configuring the CLI
-  - Creating, updating, and completing tasks
-  - MCP tool usage and agent workflows
-  - REST API endpoints
-  - Board and column operations
+### Try it
+```bash
+# Ask about tools
+"which MCP tools exist for time tracking?"
 
-### Try it out
-Try these prompts in the help-site chat:
-- *"How do I install the hypertask CLI and create a task?"*
-- *"What MCP tools are available for project management?"*
-- *"What are the REST API endpoints for tasks?"*
-- Show a screenshot of a Hypertask dashboard and ask *"What are these columns for?"*
+# Ask about workflows
+"how should an agent claim a task and keep it alive?"
 
-The chat responds instantly with tailored guidance and clickable documentation links.
+# Ask about a specific endpoint
+"show me the hypertask_create_task tool schema"
+```
+
+### Retrieval
+The chat uses keyword scoring instead of first-come fill, so contextual terms like "cli", "mcp", and "task" score accurately. Answers link to specific MCP tools, API endpoints, and board content.
 
 ## Other AI context and tools
 - **/summarize** — Summarize the focused message, thread, or task. Use Ctrl+K from a comment composer to invoke.
