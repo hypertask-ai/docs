@@ -1,216 +1,273 @@
 ---
-title: AI Agents
-description: Create, configure, and manage autonomous agents in Hypertask with MCP, webhooks, and scheduled vs ad-hoc workflows.
+title: "AI Agents"
+description: "Create, configure, and manage autonomous agents in Hypertask with MCP, webhooks, and scheduled vs ad-hoc workflows."
 ---
 
-import { Aside, Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Agents let you attach an AI model to a workflow that can perform autonomous actions, such as reading tasks, writing comments, scheduling, or running utilities on the platform. They integrate with the Model Context Protocol (MCP) to surface tool calls, returning structured outputs that your agent can use to complete goals.
+Agents are autonomous workers that create, update, and manage tasks on your boards. They run as service accounts with scoped API keys and can act on their own behalf via bearer tokens.
 
-## How agents work
+## Create and configure agents
 
-1. **Create an agent** â\x80\x94 Define a name, description, permissions, and open to task assignment.
-2. **Connect MCP tools** â\x80\x94 Grant the agent access to tools like `get_tasks`, `create_task`, `write_comment`, and beyond.
-3. **Orchestrate with workflows** â\x80\x94 Build a workflow using Ad-hoc triggers (e.g., task.assigned, comment.mention) or Scheduling Agents to run on a cron.
-4. **Apply MCP credentials** â\x80\x94 Use BYOK or per-agent tokens so the agent can securely call tools.
-5. **Start the agent** â\x80\x94 Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
+From the web UI:
 
-## Speed Engineer Git plumbing
+1. Press **Ctrl+K**, open **Manage agents**, and select **New agent**.
+2. Enter an agent name and description.
+3. Choose a project and optionally limit the agent to specific boards.
+4. Save the agent. Hypertask generates a scoped API key under the agent's profile.
 
-The **Speed Engineer** agent can now bootstrap autonomous worktrees using Git plumbing from scratch. When the agent is configured as a Speed Engineer unit, it uses a Git helper probe to establish a fresh worktree, allowing it to work directly with repository sources in supported environments.
-
-This capability is scoped exclusively to Speed Engineer instances; other agents retain the original atomic-file probe pattern and do not require Speed-only Git support.
-
-## Worker ownership gate
-
-To prevent conflicts when a managed agent attempts to work on a task, the worker verifies managed ownership before taking action. The agent verifies ownership before:
-- Creating a writable worktree
-- Posting a pickup
-- Starting the coding provider
-
-Transient lease conflicts remain queued with their exact error while other work continues. This prevents orphaned claims and ensures ownership remains consistent across agent interactions.
-
-## List view and sorting
-
-Browse and manage your agents on the Agents page (`/agents`). The view can be personalized in three ways:
-
-| View type | How it behaves |
-|-----------|----------------|
-| **Grouped** | Boards are sorted by their most recent agent activity. Agents inside each board are sorted by their own newest activity. |
-| **Flat** | All agents appear in a single list, sorted by latest activity. Open the margin ellipsis in the header to enable the flat view via `?group=0`. |
-| **Production register** | A read-only reference for the current production environment, highlighting agents most recently active. |
-
-Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>â\x80\x94<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
-
-<Aside>
-**Tip** â\x80\x94 Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team's active agents.
-</Aside>
-
-## Viewing specific agents
-
-Click any agent to open its detail page. The detail page contains:
-
-- **Basic configuration**
-  - Name and description
-  - Auto-assign toggles (boards, team, or project-wide)
-  - MCP tools list and credential status
-- **Activity and logs**
-  - Recent task assignments and webhooks
-  - History of tool calls signed by the agent
-- **Actions**
-  - Start/Stop agent toggle
-  - Rename agent directly from the page
-  - Configure webhooks and accessibility settings
-
-### Live status and active task (HTPR-5417)
-
-On the agents list and in agent detail pages, you can now see whether an agent is working and on what.
-
-- **Status indicator** â\x80\x94 A pulsing dot next to the agent name shows it's actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
-- **Active task display** â\x80\x94 When working on a task, the card or detail page shows which ticket the agent is handling. The task name and key details are visible so you can track which agent is working on what.
-- **Manage agent** â\x80\x94 From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
-
-This visibility helps you spot resource-heavy agents, see which tickets are being processed, and clean up unused agents.
-
-### Hovering over agents ([HTPR-5605])
-
-Entering the hover state on an agent card opens its detail page. This provides a quick, keyboard-friendly way to see an agent's current state, recent activity, and quick actions without fully opening its page. This behavior applies to both list and detail views.
-
-### Renaming agents
-
-You can rename an agent directly from its detail page:
-
-1. Click **Agents** in the sidebar.
-2. Find the agent and open its page.
-3. Click in the visible **title field** â\x80\x94 the field is borderless and editable in place.
-4. Type a new name, then press <kbd>Enter</kbd> to save.
-   - <kbd>Escape</kbd> cancels the rename without changing the URL.
-   - Clicking away or blurring the field saves the new name.
-5. The URL automatically updates to match, so an agent previously at `/agents/drainer-1` will become `/agents/new-name`.
-
-<Aside>
-Renaming an agent does not reset its MCP credentials or task assignments; it only updates the accessible slug and bookmarks.
-</Aside>
-
-## Agent webhooks
-
-Wake an agent the moment it is mentioned or assigned by registering webhooks:
-
-| Property | Description |
-|----------|-------------|
-| **Event type** | `<code>comment.mention</code>` or `<code>task.assigned</code>` |
-| **Deliveries** | HTTPS POST to your configured endpoint with signed body and ID |
-| **Board filtering** | Optional scope to a single board if you only want notifications on that scope |
-
-Webhooks make agents reactive to incoming mentions or task assignments, supporting faster triage and asynchronous execution.
-
-## Scheduling agents
-
-Run an agent on a schedule using an external scheduler:
-
-<Tabs>
-<TabItem value="github-actions" label="GitHub Actions">
-
-1. Create a GitHub Actions workflow that toggles "active" for your agent via the MCP credential or internal API.
-2. Set your cron schedule in the workflow file.
-3. The agent respects its MCP tools, board permissions, and credential encryption.
-
-```yaml
-name: Schedule Drainer-1
-on:
-  schedule:
-    - cron: "0 * * * *"  # Hourly
-jobs:
-  awake-agent:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          curl -X POST https://app.hypertask.ai/internal/schedule \
-            -H "Authorization: Bearer ${{ MY_TOKEN }}" \
-            -d '{"agentId":"drainer-1","active":true}'
-```
-
-</TabItem>
-<TabItem value="vercel-cron" label="Vercel Cron">
-
-1. Add a cron job function in your Vercel project.
-2. Call the agent toggle endpoint with your service token.
-3. Ensure the endpoint validates and encrypts tool calls.
-
-```js
-export const config = {
-  schedule: {
-    cron: "0 * * * *"  // hourly
-  }
-}
-
-export default async function handler() {
-  await fetch('https://app.hypertask.ai/internal/schedule', {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${process.env.HT_AGENT_TOKEN}` },
-    body: JSON.stringify({ agentId: "drainer-1", active: true })
-  })
-}
-```
-
-</TabItem>
-</Tabs>
-
-<Aside>
-When using a scheduler, consider the agent's rate limits, MCP token lifecycle, and error handling to avoid loops or uncontrolled executions.
-</Aside>
-
-## MCP tools
-
-MCP tools are the building blocks an agent can call to interact with Hypertask. The agent server surface exposes tools for tasks, comments, board operations, time tracking, and configuration.
-
-Example MCP tool invocation:
+Over MCP:
 
 ```json
 {
-  "tool": "get_tasks",
-  "args": {
-    "boardId": "board-123",
-    "assignee": "bot-456",
-    "limit": 50
+  "action": "create_agent",
+  "name": "Release Agent",
+  "description": "Tracks and creates release tasks for HTPR-* tickets",
+  "projectId": 15,
+  "boards": [153, 155],
+  "scopes": {
+    "actions": ["hypertask_create_task", "hypertask_add_comment_to_task", "hypertask_link_tasks"],
+    "memberships": {
+      "projectId": 15,
+      "boards": [153, 155]
+    }
   }
 }
 ```
 
-See the [MCP Tools Reference](/api/tools-reference) for the complete schema list.
+Over REST API (`POST /api/agents`):
 
-## Getting started
+```json
+{
+  "name": "Release Agent",
+  "description": "Tracks and creates release tasks for HTPR-* tickets",
+  "projectId": 15,
+  "boards": [153, 155]
+}
+```
 
-<Tabs>
-<TabItem value="quick-create" label="Quick create">
-1. Go to **Agents** (`/agents`).
-2. Click **New agent**.
-3. Name it and provide a short description.
-4. Select boards or projects where it may be auto-assigned.
-5. Toggle it **active** and optionally set a webhook or job token.
-6. Its MCP tools become available to any scheduled or ad-hoc workflow.
-</TabItem>
-<TabItem value="import" label="Import from MCP">
-1. Open the agent's detail page.
-2. Under "MCP tools," click **Import tools**.
-3. Choose a provider or import by tool list and signatures.
-4. Save credentials and start the agent.
-</TabItem>
-</Tabs>
+The response contains the agent UUID and a token for authenticating the bearer token over MCP or HTTP.
 
-<Aside>
-Many teams build agents around a recurring pattern â\x80\x94 e.g., a "drainer" agent for stale tasks, a "bot" for support triage, or a "replier" for common questions. Reuse saved workflows as a blueprint when creating new agents.
+### Agent credentials and scopes
+
+Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
+
+- **Scopes** – Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
+- **Tokens** – Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Identity** – When authenticated with an agent token, all writes appear as attributed to the agent.
+
+### Agent identities and SMAP token usage
+
+The SMAP token (`S-*`) is a low-entropy credential stored in the database, not an API key under Settings. It is used for SSH-based Git workflows and internal tooling, not for agent token mode. When an agent is authenticated via its own bearer token, writes are attributed to the agent, not its owner.
+
+## Agent scheduled workflows
+
+Agents can run on a schedule via CronJob pattern (JSON cron expression) or gravity (check interval). Choose sync where you want low latency, async where you want low variance.
+
+### Gravity (async, interval)
+
+```json
+{
+  "name": "Sync Agent",
+  "type": "gravity",
+  "checkIntervalMinutes": 10
+}
+```
+
+Gravity runs summaries at distinct intervals; sync runs tasks at the same tick as checks.
+
+### CronJob (sync, cron)
+
+```json
+{
+  "name": "Daily Checks",
+  "type": "cronjob",
+  "cron": "0 * 5 * *"
+}
+```
+
+CronJob fires checks on the corresponding tick; summaries run in the subsequent tick.
+
+### Board-level reconciliation
+
+Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams map to managed-key credentials in a verified production registry. Use board-15-specific credentials over MCP or REST (`/api/agents/leases`); do not share SMAP tokens with agents.
+
+## Agent workflows and lease lifecycle
+
+Lease-based claiming is used on board-15 to coordinate workers. Use standard lease endpoints; background tasks can claim tasks autonomously.
+
+1. **Claim** – `POST /api/mcp/tasks/lease/claim` to get an available task.
+2. **Heartbeat** – `POST /api/mcp/tasks/lease/heartbeat` broadcasting ongoing work.
+3. **Release** – `POST /api/mcp/tasks/lease/release` when done.
+
+The `/agent-status` page shows live fleet health (Active, Draining, Idle) for all agents.
+
+### Safe task claiming and coordination
+
+- Swarm-based claiming sets an intention to claim; no guarantee without heartbeat.
+- Multi-guard protection from board moves preserves in-flight agent turns (HTPR-5545).
+- Uses a delivery fingerprint and watchdog; cancellation of an assignment must cancel all pending deliveries for the same deliveryId.
+
+## Agent webhooks and webhook lifecycle
+
+Agent webhooks replace inbox polling for events, keeping latency low and CPU savings high. Agents can define lifecycle events (`agent.started`, `agent.paused`, `agent.sorted`, `agent.ready`) and consume them without every interaction causing a poll.
+
+### Agent webhook lifecycle (HTPR-5618)
+
+Agents emit state transition events when they start, pause, and transition back to polling:
+
+| Event | Trigger | Persistence | Delivery |
+|---|---|---|---|
+| `agent.started` | First delivery after a pause, or first delivery after restart | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.startTime`, `agentId`, `actor` |
+| `agent.paused` | User pauses webhook deliveries or stops the agent | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.pausedAt`, `agentId`, `actor` |
+| `agent.sorted` | User sorts agents (e.g., ordered by `lastDeliveredAt` to have the last event first) | Included in delivery history | HTTP POST; includes `event`, `event.sortedAt`, `agentId`, `actor` |
+| `agent.ready` | User resumes webhook deliveries (unpause) | Retained in delivery history | HTTP POST; includes `event`, `event.readyAt`, `agentId`, `actor` |
+
+**Important notes:**
+- Each event is emitted once per transition. Do not rely on duplicate deliveries.
+- Events are persisted and accessible via delivery history; you can replay state transitions if needed.
+- `event.startTime`, `event.pausedAt`, `event.sortedAt`, and `event.readyAt` include timezone offsets.
+
+### Secret rotation and webhook lifecycle updates
+
+Agents rely on a webhook signing secret (`whsec_…`). You should rotate it after every lifecycle transition or periodically; rotation is permanently masked to prevent new secrets from leaking into existing delivery payloads. Aggressive rotation does not trigger a `webhook.payment` event; events apply to the subscribed events list configured on the agent and webhook.
+
+<Aside type="caution">
+Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.
 </Aside>
 
-## Inline help
+## Outbound webhooks for agent mentions and assignments (HTPR-5388)
 
-- **Webhooks** â\x80\x94 See [Agent Webhooks](/mcp/agent-webhooks)
-- **Workflows** â\x80\x94 See [Agent Workflows](/mcp/workflows)
-- **Scheduling** â\x80\x94 See [Scheduling Agents](/scheduling)
-- **MCP overview** â\x80\x94 See [MCP Integration](/mcp/overview)
+You can configure outbound webhooks for agent mentions and assignments via per-agent HTTPS delivery.
 
-### Related pages
+- **Events:** `comment.mention`, `task.assigned`, `task.unassigned`.
+- **Signed requests:** Include `X-Hypertask-Signature` and `X-Hypertask-Timestamp`.
+- **Stable IDs:** Every delivery carries a unique `X-Hypertask-Delivery` header for idempotency.
 
-- [Agents Dashboard](/features/agents-dashboard) â\x80\x94 View and group all agents
-- [Skills](/features/skills) â\x80\x94 Tune agent behavior with team skills
-- [Cost Forecast](/features/cost-forecast) â\x80\x94 Migrate agents to paid tiers safely
+See [Agent webhooks](/mcp/agent-webhooks/) for configuration, curl examples, and reference receivers.
+
+## Rocket digest agent: CLI releases (HTPR-4685)
+
+The Rocket digest agent now announces CLI releases by reading CLI publish times from the **npm registry** and READY production deployments from **Vercel**, removing the GitHub-token dependency. This ensures CLI version updates are reflected in your board and inbox.
+
+Agent configuration over MCP:
+
+```json
+{
+  "name": "Rocket Digest",
+  "type": "gravity",
+  "checkIntervalMinutes": 5,
+  "webhook": {
+    "url": "https://rocket.hypertask.ai/digest",
+    "events": ["repository.deployed", "repository.ready"],
+    "secret": "{{WEBHOOK_SECRET}}"
+  },
+  "dataSources": [
+    {
+      "type": "npm",
+      "package": "hypertask-cli",
+      "path": "body.title"
+    },
+    {
+      "type": "vercel",
+      "url": "https://hypertask.vercel.app/deployments",
+      "path": "body.recipeTitle"
+    }
+  ]
+}
+```
+
+<Aside type="tip">
+All data sources are read over HTTPS with OAuth recovery; no GitHub personal access tokens are required.
+</Aside>
+
+## Turbopuffer embeddings via Vercel AI Gateway (HTPR-5627)
+
+Turbopuffer embeddings for AI features now route through the Vercel AI Gateway instead of OpenRouter. This change preserves embed quality while moving to a single gateway for model routing.
+
+Example configuration to apply embeddings via the gateway:
+
+```json
+{
+  "name": "Embeddings Agent",
+  "type": "gravity",
+  "checkIntervalMinutes": 5,
+  "gateway": {
+    "provider": "vercel",
+    "model": "openai/text-embedding-3-small"
+  },
+  "actions": ["hypertask_update_task", "hypertask_link_tasks"],
+  "scopes": {
+    "memberships": {
+      "projectId": 15,
+      "boards": [153, 155]
+    }
+  }
+}
+```
+
+POST embeddings to OpenAI model variants delivered by the Vercel AI Gateway; no OpenRouter keys are used.
+
+## Agent basic actions and workflow examples
+
+For typical tasks (summarize, buffer, schedule), use CLI or MCP `hypertask_find_task` and `hypertask_update_task` — no agent token is required. Agent tokens are reserved for autoscaling teams and rate-limited workflows.
+
+### Typical agent workflow
+
+```bash
+# Step 1: Claim a task
+hypertask task claim --ticket-number HTPR-1234
+
+# Step 2: Capture its context
+hypertask task annotate HTPR-1234
+
+# Step 3: Summarize if needed (free)
+hypertask task summarize HTPR-1234
+
+# Step 4: Suggest a next step (optional milestone)
+hypertask milestone suggest --task-input-file steps.json
+```
+
+For MPC-style requesting tasks and milestones from another task or file, run on the local machine with MCP tools; no backend proxy is needed.
+
+### Rate-limited and autoscaling agent token mode
+
+Agent-tier tokens receive 600 requests/minute. They are used for request-level latency (e.g., `hypertask_find_task` or milestone suggesting). For autoscaling multi-agent management, use board-15's per-task lease endpoints (`/api/agents/leases`) and avoid sharing SMAP tokens with agents.
+
+## Agent management
+
+### Rename agents
+
+Agents can be renamed from their detail page; the URL updates to the new readable slug on save.
+
+### Agent health and deletion
+
+- Hover over an agent to open the agent detail page.
+- Archive or delete actions are available per agent.
+
+### Agent identity and custom instructions
+
+- Agents can inherit board-level AI custom instructions via MCP (`GET /api/mcp/projects/[projectId]/instructions`).
+- Personal dictation language is per-user; agents do not need a language override.
+
+## Troubleshooting
+
+| Symptom | Check |
+|---|---|
+| Agent stops updating tasks | Heartbeats might be interrupted; verify heartbeat frequency equals or exceeds `checkIntervalMinutes`. |
+| Webhooks not reaching endpoint | Verify the receiver is public HTTPS and marks all confirmed deliveries in your webhook state. |
+| `401` on webhook signatures | Validate against raw request body using `timestamp + "." + rawBody` and HMAC-SHA256. |
+| CLI releases ignored | Confirm data source paths read `body.title` or appropriate top-level fields; stale flows drop production cursor mismatch (adjust `dataSources.path` accordingly). |
+| Embeddings fail | Check if the gateway resolved to the correct provider; rotating the gateway or model on Vercel AI Gateway may resolve transient failures. |
+
+<Aside type="note">
+Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.
+</Aside>
+
+---
+
+<CardGrid>
+  <Card title="Agent Workflows" description="Patterns for how AI agents pick up and complete work." />
+  <Card title="MCP Tools Reference" description="Complete parameter reference for all MCP tools." />
+  <Card title="CLI Reference" description="Install the CLI to create, update, and complete tasks from your shell." />
+</CardGrid>
