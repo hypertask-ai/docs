@@ -15,10 +15,10 @@ To access this view, navigate to the board and select <strong>All Tasks</strong>
 
 ### How All Tasks works
 
-All Tasks uses a fetch budget that loads rows once and then builds board splits from those rows. As a result:
+All Tasks uses a single fetch pass that loads rows once and builds board splits from those rows. As a result:
 
 - Each board sees its own split of the task list.
-- Quiet boards do not lose splits in favor of busier boards.
+- Quiet boards do not lose splits in favor of busy boards.
 - The view is stable and deterministic across sessions.
 
 ### Drawing from multiple streams
@@ -31,7 +31,7 @@ Since All Tasks is board-wide, it aggregates tasks from all active columns and s
 
 To hide distracting or temporary tasks:
 
-- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don’t match your current focus.
+- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don't match your current focus.
 - Create and pin a custom view with the exact criteria you want to see.
 - Review tasks by tag or priority and archive or move them away when no longer relevant.
 
