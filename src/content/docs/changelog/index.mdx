@@ -14,6 +14,12 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 23, 2026">
+  * Fixed: <strong>All Tasks</strong> now uses a per-row fetch budget that loads tasks once and builds every board split, so each board shows its actual split instead of missing tasks from less-touch active boards ([HTPR-5539](https://app.hypertask.ai/detail/project-15/5539))
+  * Fixed: CLI now returns a non-zero exit code and a clear error message when `tasks assign` or `tasks move` operate on a nonexistent ticket ([HTPR-5589](https://app.hypertask.ai/detail/project-15/5589))
+  * Fixed: All production code paths now ensure board webhook deliveries for task creation and escalation commits to persistent storage before signaling success, so crashes no longer lose webhook events ([HTPR-5556](https://app.hypertask.ai/detail/project-15/5556))
+</Update>
+
+<Update label="August 23, 2026">
   * Fixed: Table columns now show the three age columns (Stale in column, Stale without comment, Stale on board) when staleness is turned on for the active view, without moving other columns ([HTPR-5643](https://app.hypertask.ai/detail/project-15/5643))
   * Fixed: Selecting Idea, Question, or Praise in the feedback modal now preserves cursor focus, so typing continues without another click ([HTPR-5644](https://app.hypertask.ai/detail/project-15/5644))
   * Fixed: CLI can now read, set, or clear a column's auto-assign rule using `hypertask column auto-assign` ([HTPR-5647](https://app.hypertask.ai/detail/project-15/5647))
@@ -150,7 +156,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images — two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
