@@ -9,11 +9,11 @@ Agents let you attach an AI model to a workflow that can perform autonomous acti
 
 ## How agents work
 
-1. **Create an agent** — Define a name, description, permissions, and open to task assignment.
-2. **Connect MCP tools** — Grant the agent access to tools like `get_tasks`, `create_task`, `write_comment`, and beyond.
-3. **Orchestrate with workflows** — Build a workflow using Ad-hoc triggers (e.g., task.assigned, comment.mention) or Scheduling Agents to run on a cron.
-4. **Apply MCP credentials** — Use BYOK or per-agent tokens so the agent can securely call tools.
-5. **Start the agent** — Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
+1. **Create an agent** â\x80\x94 Define a name, description, permissions, and open to task assignment.
+2. **Connect MCP tools** â\x80\x94 Grant the agent access to tools like `get_tasks`, `create_task`, `write_comment`, and beyond.
+3. **Orchestrate with workflows** â\x80\x94 Build a workflow using Ad-hoc triggers (e.g., task.assigned, comment.mention) or Scheduling Agents to run on a cron.
+4. **Apply MCP credentials** â\x80\x94 Use BYOK or per-agent tokens so the agent can securely call tools.
+5. **Start the agent** â\x80\x94 Toggle the agent "active" in its detail page; an external scheduler (GitHub Actions, Vercel cron, etc.) can start an agent on a schedule.
 
 ## Speed Engineer Git plumbing
 
@@ -40,10 +40,10 @@ Browse and manage your agents on the Agents page (`/agents`). The view can be pe
 | **Flat** | All agents appear in a single list, sorted by latest activity. Open the margin ellipsis in the header to enable the flat view via `?group=0`. |
 | **Production register** | A read-only reference for the current production environment, highlighting agents most recently active. |
 
-Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>—<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
+Shortcuts: <kbd>Alt</kbd> + <kbd>1</kbd>â\x80\x94<kbd>9</kbd> quickly navigate to the first nine agents in the current view.
 
 <Aside>
-**Tip** — Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team's active agents.
+**Tip** â\x80\x94 Pin important agents to your synchronized views or use a saved view filter on assignees to focus on the team's active agents.
 </Aside>
 
 ## Viewing specific agents
@@ -66,9 +66,9 @@ Click any agent to open its detail page. The detail page contains:
 
 On the agents list and in agent detail pages, you can now see whether an agent is working and on what.
 
-- **Status indicator** — A pulsing dot next to the agent name shows it's actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
-- **Active task display** — When working on a task, the card or detail page shows which ticket the agent is handling. The task name and key details are visible so you can track which agent is working on what.
-- **Manage agent** — From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
+- **Status indicator** â\x80\x94 A pulsing dot next to the agent name shows it's actively holding a task lease. The dot stops spinning when the lease expires and re-asks for a new task.
+- **Active task display** â\x80\x94 When working on a task, the card or detail page shows which ticket the agent is handling. The task name and key details are visible so you can track which agent is working on what.
+- **Manage agent** â\x80\x94 From the list, you can archive or delete agents you no longer need. Use the inline actions (three-dot menu or dedicated buttons) to remove or archive a single agent without affecting other agents.
 
 This visibility helps you spot resource-heavy agents, see which tickets are being processed, and clean up unused agents.
 
@@ -76,13 +76,13 @@ This visibility helps you spot resource-heavy agents, see which tickets are bein
 
 Entering the hover state on an agent card opens its detail page. This provides a quick, keyboard-friendly way to see an agent's current state, recent activity, and quick actions without fully opening its page. This behavior applies to both list and detail views.
 
-## Renaming agents
+### Renaming agents
 
 You can rename an agent directly from its detail page:
 
 1. Click **Agents** in the sidebar.
 2. Find the agent and open its page.
-3. Click in the visible **title field** — the field is borderless and editable in place.
+3. Click in the visible **title field** â\x80\x94 the field is borderless and editable in place.
 4. Type a new name, then press <kbd>Enter</kbd> to save.
    - <kbd>Escape</kbd> cancels the rename without changing the URL.
    - Clicking away or blurring the field saves the new name.
@@ -199,18 +199,18 @@ See the [MCP Tools Reference](/api/tools-reference) for the complete schema list
 </Tabs>
 
 <Aside>
-Many teams build agents around a recurring pattern — e.g., a "drainer" agent for stale tasks, a "bot" for support triage, or a "replier" for common questions. Reuse saved workflows as a blueprint when creating new agents.
+Many teams build agents around a recurring pattern â\x80\x94 e.g., a "drainer" agent for stale tasks, a "bot" for support triage, or a "replier" for common questions. Reuse saved workflows as a blueprint when creating new agents.
 </Aside>
 
 ## Inline help
 
-- **Webhooks** — See [Agent Webhooks](/mcp/agent-webhooks)
-- **Workflows** — See [Agent Workflows](/mcp/workflows)
-- **Scheduling** — See [Scheduling Agents](/scheduling)
-- **MCP overview** — See [MCP Integration](/mcp/overview)
+- **Webhooks** â\x80\x94 See [Agent Webhooks](/mcp/agent-webhooks)
+- **Workflows** â\x80\x94 See [Agent Workflows](/mcp/workflows)
+- **Scheduling** â\x80\x94 See [Scheduling Agents](/scheduling)
+- **MCP overview** â\x80\x94 See [MCP Integration](/mcp/overview)
 
 ### Related pages
 
-- [Agents Dashboard](/features/agents-dashboard) — View and group all agents
-- [Skills](/features/skills) — Tune agent behavior with team skills
-- [Cost Forecast](/features/cost-forecast) — Migrate agents to paid tiers safely
+- [Agents Dashboard](/features/agents-dashboard) â\x80\x94 View and group all agents
+- [Skills](/features/skills) â\x80\x94 Tune agent behavior with team skills
+- [Cost Forecast](/features/cost-forecast) â\x80\x94 Migrate agents to paid tiers safely
