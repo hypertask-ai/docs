@@ -7,6 +7,34 @@ description: Create, assign, and manage tasks with rich fields, priorities, rela
 
 A task represents a unit of work that can be assigned, progressed, and tracked. It supports rich fields, priority levels, relationships, and subtasks.
 
+## All Tasks view
+
+The <strong>All Tasks</strong> view provides an at-a-glance overview of every active task across the board. It builds split views for each board section (To Do, In Progress, Done, etc.) from a single source of truth.
+
+To access this view, navigate to the board and select <strong>All Tasks</strong> from the view toolbar.
+
+### How All Tasks works
+
+All Tasks uses a **per-row fetch budget** that limits the number of tasks loaded at once per board. Tasks are fetched once and then split out into their respective board sections, so:
+
+- Each board sees its own projection of the task list.
+- Quiet boards do not lose splits just because a related board is busier.
+- The view is deterministic and stable across sessions.
+
+### Drawing from multiple streams
+
+Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
+
+**Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see <Link to="/features/board-visibility">Board & Subtask Visibility</Link>.
+
+### Exclude tasks you don’t need
+
+To hide distracting or temporary tasks:
+
+- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don’t match your current focus.
+- Create and pin a custom view with the exact criteria you want to see.
+- Review tasks by tag or priority and archive or move them away when no longer relevant.
+
 ## Creating a task
 
 From a board or inbox, click **New task** (or use the keyboard shortcut <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>). This opens the task creator with the following top-level sections:
@@ -44,8 +72,6 @@ You can also add tasks directly in any column via the bottom-of-column quick-ent
 - The task is created, and the composer stays open for another title so you can add multiple tasks in row.
 - Press **Escape** or click outside to close the composer. Top add + full-screen task creator remain unchanged.
 
-===
-
 #### Mobile new-task modal
 
 On mobile, the new-task modal opens full screen to give you maximum vertical space. To exit the modal:
@@ -55,8 +81,6 @@ On mobile, the new-task modal opens full screen to give you maximum vertical spa
 - Use the back button on your phone to close the modal.
 
 The close control and back gesture prevent users from being stuck inside the modal ([HTPR-5518](https://app.hypertask.ai/detail/project-15/5518)). New-task drafts no longer carry over when opening a different task or switching boards; the composer state is reset on each open to prevent stale content from appearing ([HTPR-5469](https://app.hypertask.ai/detail/project-15/5469)).
-
-===
 
 #### AI Task Writer on mobile
 
