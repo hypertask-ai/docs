@@ -21,6 +21,8 @@ export const Update = ({ label, children }) => (
   * Fixed: Undo of archived tasks now correctly restores the task to Todo instead of leaving it archived ([HTPR-5585](https://app.hypertask.ai/detail/project-15/5585))
   * Fixed: Create board modal no longer misleads users with false success feedback when operations are rejected ([HTPR-5576](https://app.hypertask.ai/detail/project-15/5576))
   * Fixed: Seat billing nightly check now correctly recognizes Stripe's plain error response without requiring an error code, preventing false recurring failures ([HTPR-5621](https://app.hypertask.ai/detail/project-15/5621))
+  * Fixed: Every signup route bypasses the onboarding routine and lands directly on the board ([HTPR-5639](https://app.hypertask.ai/detail/project-15/5639))
+  * Improved: Hypertask publishes a /agent-status page that shows live fleet health (Active, Draining, Idle) for all agents ([HTPR-5514](https://app.hypertask.ai/detail/project-15/5514))
 </Update>
 
 <Update label="August 22, 2026">
@@ -141,7 +143,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images Ã¢\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
@@ -170,7 +172,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Search now returns results on demo boards instead of always showing "No results found" ([htpr-4989](https://app.hypertask.ai/detail/project-15/4989))
   * Fixed: AI chat writes now respect project boundaries so a task_id is only written to a ticket within the correct project scope ([htpr-5033](https://app.hypertask.ai/detail/project-15/5033))
   * Added: On Desktop, Ctrl+J on a board now creates a new task with the AI Task Writer open for instant text generation ([HTPR-4881](https://app.hypertask.ai/detail/project-15/4881))
-  * Improved: AI chat now reads validation errors in English; framework errors (e.g., LangChain recursion-limit) no longer leak to users ([htpr-4377](https://app.hypertask.ai/detail/project-15/4377))
+  * Improved: AI chat now reads validation errors in English; framework errors (e.g. LangChain recursion-limit) no longer leak to users ([htpr-4377](https://app.hypertask.ai/detail/project-15/4377))
   * Improved: Table view tasks can now be dragged into a different section (column) by dragging a row onto any section card ([HTPR-5135](https://app.hypertask.ai/detail/project-15/5135))
 </Update>
 
@@ -251,7 +253,7 @@ export const Update = ({ label, children }) => (
 <Update label="August 2, 2016">
   * Added: Most pages now use compact modal header sizing; modals have 48px/16px header, 44px/14px input, and 36px/13px rows by default, with legacy sizing opt-in via `legacySizing` prop for compatibility ([HTPR-4742](https://app.hypertask.ai/detail/project-15/4742))
   * Added: Left sidebar rail now expands to 130px for logged-in users, with user labels, accordion accordions, and Favorites section at the bottom; collapsed by default with chevron toggle and persistent state ([HTPR-4738](https://app.hypertask.ai/detail/project-15/4738))
-  * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g., "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
+  * Improved: Hour picker now formats the displayed value in HH:MM with a leading zero (e.g. "09:00" instead of "9:00"), improving consistency across all clock displays ([HTPR-4362](https://app.hypertask.ai/detail/project-15/4362))
   * Fixed: Container picker now correctly selects multiple values and respects the `aria-invalid` attribute when there are errors during submission ([HTPR-4373](https://app.hypertask.ai/detail/project-15/4373))
   * Fixed: Kanban switcher `Ctrl+B` now consistently opens the board palette from any route ([HTPR-4696](https://app.hypertask.ai/detail/project-15/4696))
   * Added: User AV2 temporarily disabled while investigating playback issues; a full migration over ATSP to ATAP is in progress ([HTPR-4744](https://app.hypertask.ai/detail/project-15/4744))
