@@ -52,9 +52,9 @@ The response contains the agent UUID and a token for authenticating the bearer t
 
 Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
 
-- **Scopes** – Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
-- **Tokens** – Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
-- **Identity** – When authenticated with an agent token, all writes appear as attributed to the agent.
+- **Scopes** — Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
+- **Tokens** — Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Identity** — When authenticated with an agent token, all writes appear as attributed to the agent.
 
 ### Agent identities and SMAP token usage
 
@@ -96,9 +96,9 @@ Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams
 
 Lease-based claiming is used on board-15 to coordinate workers. Use standard lease endpoints; background tasks can claim tasks autonomously.
 
-1. **Claim** – `POST /api/mcp/tasks/lease/claim` to get an available task.
-2. **Heartbeat** – `POST /api/mcp/tasks/lease/heartbeat` broadcasting ongoing work.
-3. **Release** – `POST /api/mcp/tasks/lease/release` when done.
+1. **Claim** — `POST /api/mcp/tasks/lease/claim` to get an available task.
+2. **Heartbeat** — `POST /api/mcp/tasks/lease/heartbeat` broadcasting ongoing work.
+3. **Release** — `POST /api/mcp/tasks/lease/release` when done.
 
 The `/agent-status` page shows live fleet health (Active, Draining, Idle) for all agents.
 
@@ -107,6 +107,17 @@ The `/agent-status` page shows live fleet health (Active, Draining, Idle) for al
 - Swarm-based claiming sets an intention to claim; no guarantee without heartbeat.
 - Multi-guard protection from board moves preserves in-flight agent turns (HTPR-5545).
 - Uses a delivery fingerprint and watchdog; cancellation of an assignment must cancel all pending deliveries for the same deliveryId.
+
+### QA Agent style guide enforcement (HTPR-5648)
+
+The QA Agent verifies and polices the style guide. Dev agents must read `docs/DESIGN.md` to maintain consistency with the team's design system:
+
+- When updating task descriptions or comments, follow the documented style conventions in `docs/DESIGN.md`.
+- The QA Agent checks for style violations and can apply a "probation" label to tasks that do not meet style standards before allowing automerge.
+
+<Aside type="tip">
+Style-guide enforcement ensures all agent-generated content aligns with design system standards, reducing brand inconsistencies and improving readability for users.
+</Aside>
 
 ## Agent webhooks and webhook lifecycle
 
@@ -121,7 +132,7 @@ Agents emit state transition events when they start, pause, and transition back 
 | `agent.started` | First delivery after a pause, or first delivery after restart | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.startTime`, `agentId`, `actor` |
 | `agent.paused` | User pauses webhook deliveries or stops the agent | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.pausedAt`, `agentId`, `actor` |
 | `agent.sorted` | User sorts agents (e.g., ordered by `lastDeliveredAt` to have the last event first) | Included in delivery history | HTTP POST; includes `event`, `event.sortedAt`, `agentId`, `actor` |
-| `agent.ready` | User resumes webhook deliveries (unpause) | Retained in delivery history | HTTP POST; includes `event`, `event.readyAt`, `agentId`, `actor` |
+| `agent.ready` | User resumes webhook deliveries (unpause) | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.readyAt`, `agentId`, `actor` |
 
 **Important notes:**
 - Each event is emitted once per transition. Do not rely on duplicate deliveries.
