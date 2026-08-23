@@ -20,6 +20,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Boards no longer hard-reload after deployment and live updates are maintained without needing a manual refresh ([HTPR-5575](https://app.hypertask.ai/detail/project-15/5575))
   * Fixed: Undo of archived tasks now correctly restores the task to Todo instead of leaving it archived ([HTPR-5585](https://app.hypertask.ai/detail/project-15/5585))
   * Fixed: Create board modal no longer misleads users with false success feedback when operations are rejected ([HTPR-5576](https://app.hypertask.ai/detail/project-15/5576))
+  * Fixed: Seat billing nightly check now correctly recognizes Stripe's plain error response without requiring an error code, preventing false recurring failures ([HTPR-5621](https://app.hypertask.ai/detail/project-15/5621))
 </Update>
 
 <Update label="August 22, 2026">
