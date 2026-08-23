@@ -14,7 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 23, 2026">
-  * Fixed: Move actions now cancel any active agent lease and persist, preventing conflicts with automated task updates while maintaining agent-versus-agent collision protection ([HTPR-5466](https://app.hypertask.ai/detail/project-15/5466))
+  * Fixed: Board column moves no longer cancel in-flight agent turns; multi-guard protection keeps deliveries valid through section changes ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545))
   * Improved: Agents page now sorts boards and agents by latest activity by default, with an option for a flat recency list without board headings ([HTPR-5436](https://app.hypertask.ai/detail/project-15/5436))
   * Improved: Agents can be renamed directly from their detail page; the URL updates to the new readable slug on save ([HTPR-5446](https://app.hypertask.ai/detail/project-15/5446))
   * Fixed: Boards no longer hard-reload after deployment and live updates are maintained without needing a manual refresh ([HTPR-5575](https://app.hypertask.ai/detail/project-15/5575))
