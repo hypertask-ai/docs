@@ -39,6 +39,21 @@ The test harness:
 
 This means you can safely iterate on seat-loss logic, billing entitlement checks, and upgrade/downgrade flows in production-like conditions without creating cross-tenant leakage or corrupting live seats.
 
+## Seat loss and automatic repair
+
+Automatic repair of lost seats is available in production for affected teams. This feature prevents silent seat loss when users pool in from other teams, and helps maintain billing accuracy.
+
+**How automatic repair works:**
+- Detects when active teams have fewer seats than their current plan supports
+- Verifies that the team has a valid Stripe payment method on file
+- Requires billing-owner input if the active subscription cannot identify a single safe replacement Stripe item, to avoid modifying the wrong subscription item
+- Blocks automatic repair and prompts for billing-owner review if:
+  - A Stripe item is stored but no longer valid
+  - The active subscription does not contain exactly one safe replacement at the stored price
+  - Automatic selection could modify the wrong subscription item
+
+Only teams with a payment method on file are eligible for automatic repair, and repair operations are guarded against unsafe mutations to subscriptions.
+
 ## License management
 
 Seat allocation follows consistent rules across surfaces:
