@@ -15,11 +15,11 @@ To access this view, navigate to the board and select <strong>All Tasks</strong>
 
 ### How All Tasks works
 
-All Tasks uses a **per-row fetch budget** that limits the number of tasks loaded at once per board. Tasks are fetched once and then split out into their respective board sections, so:
+All Tasks uses a fetch budget that loads rows once and then builds board splits from those rows. As a result:
 
-- Each board sees its own projection of the task list.
-- Quiet boards do not lose splits just because a related board is busier.
-- The view is deterministic and stable across sessions.
+- Each board sees its own split of the task list.
+- Quiet boards do not lose splits in favor of busier boards.
+- The view is stable and deterministic across sessions.
 
 ### Drawing from multiple streams
 
