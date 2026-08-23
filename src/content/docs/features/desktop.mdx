@@ -1,0 +1,71 @@
+---
+title: Hypertask Desktop
+description: Run Hypertask as a native Windows app with Direct2D/DirectWrite UI and a local SQLite database. Sync with your web account and use agent workflows offline.
+---
+
+# Hypertask Desktop
+
+Hypertask Desktop is a native Windows application that brings the full web experience to your local machine. It runs a thin Zig-based client built on Direct2D and DirectWrite, stores mailboxes and sync state locally in SQLite, and works offline before syncing when you reconnect. Perfect for users who want a persistent desktop UI with the same agents, boards, and workflows as the web app.
+
+## Features
+
+- **Native window integration**: Dark native on Windows with Direct2D/DirectWrite UI.
+- **Work offline to online**: 
+  - Pulls your Inbox over HTTPS when online.
+  - Stores data locally in SQLite with full schema including `mutation_queue` and `sync_state`.
+  - Syncs state when you reconnect.
+- **Real mailbox sync**: Renders a headless preview of your live Inbox, showing notifications from GitHub and other connected sources.
+- **Zero dependencies**: Built as a single 24 KB native exe with direct 2D rendering.
+- **Event-driven**: Efficient CPU usage with negligible idle cost.
+- **WineD3D fallback**: Falls back to IDXGISwapChain1 when IDXGISwapChain2 isn’t available (Gate 6), preventing fatal QueryInterface crashes.
+
+## Design rationale
+
+Hypertask Desktop is designed so that:
+
+- Your work never leaves your local device during offline periods.
+- The experience is lightweight and responsive.
+- The mailboxes you see in Desktop mirror your online boards (with Inbox as the live relay point).
+- Development work can be verified multi-platform on Linux while the final binary runs natively on Windows.
+
+## Architecture notes
+
+- **Language**: Native Zig (cross-compiled from Linux to Windows).
+- **Graphics layer**: Direct2D/DirectWrite for rendering.
+- **Database layer**: Native SQLite with WAL mode and full schema.
+- **Synchronization**: Authenticated HTTPS pulls; always in sync with online state when online.
+- **Verification**: P1 spike with all 6 gates verified, including a permanent `--selfshot` headless verification path.
+
+## Installation / setup
+
+1. Download the latest Hypertask Desktop installer for Windows from the web app or releases page.
+2. Run the installer.
+3. Sign in with your existing Hypertask account (SSO or email/password).
+4. Desktop will pull your latest boards and Inbox before the app opens.
+
+## Usage Tips
+
+- Use Desktop like the web app: open Boards, view Inbox, run agents, and manage tasks.
+- Closing Desktop while offline preserves your local sync state; the next open will synchronize.
+- You can use the same collaborative features here as in the browser (agents, mentions, grouped views, etc.).
+
+## Technical reference
+
+The desktop client implements these key gates (verified in P1 spike):
+
+1. **Cross-compile from Linux native window opens on Windows**: Full visual rendering without GUI framework thrashing.
+2. **Direct2D/DirectWrite dark scene**: Sharp rendering of board cards, headers, and text.
+3. **Local SQLite schema**: Full offline schema (7 tables). Includes `mutation_queue` for pending writes and `sync_state` for reconciliation tags.
+4. **Authed HTTPS data pull**: Synchs Inbox/notifications over authenticated HTTPS without storing credentials locally beyond a process-bound session.
+5. **Offline proxy**: Local SQLite schema and 58 notifications synced live during the spike, rendered directly with Direct2D/DirectWrite.
+6. **IDXGISwapChain2 fallback**: Fall back to IDXGISwapChain1 for unsupported SwapChain2 objects, preventing `QueryInterface failure`.
+
+*Reference*: See the [Hypertask Desktop (Windows) — P1 spike](https://app.hypertask.ai/detail/project-15/5263) on Hypertask for implementation details, gates, and current status.
+
+## Getting Help
+
+If you’re experiencing issues with Hypertask Desktop:
+
+- Check your network connectivity and retry.
+- Verify that your Hypertask web account is active and accessible.
+- Review the Spike gates and Known limitations in the ticket linked above.
