@@ -74,3 +74,7 @@ All billing-affected endpoints now verify team ownership server-side before perf
 | Comment operations | Validates the requesting user's access to the target board and task before posting |
 
 This prevents client-controlled parameter mismatches from bypassing authorization and ensures operations are scoped only to the intended team's resources.
+
+## Stripe customer operations
+
+Stripe customer creation for new accounts now surfaces all errors rather than silently swallowing them. Previously, certain paths returned null on failure without indicating the underlying issue, making debugging difficult. All customer creation paths now properly report errors to help you identify and resolve account or payment configuration problems.
