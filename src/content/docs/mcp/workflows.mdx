@@ -80,6 +80,10 @@ Authorization: Bearer YOUR_AGENT_TOKEN
 Task leases ensure you can safely pick up work without conflicts. Always release your lease when done, and refresh it before expiration to prevent others from stealing the task.
 </Aside>
 
+### Leases for native-agent AI Chat (HTPR-5468)
+
+Native-agent AI Chat workflows must acquire a task lease before performing mutations such as task assignment or movement. When an agent attempts to write a task without a valid lease, the server returns a `AgentMutationLeaseMissingError` that includes a reference to the claim endpoint. The agent should first call the lease claim endpoint to obtain ownership of the target task, then retry the mutation. This ensures that task operations are isolated to an active lease and prevents write failures caused by stale or missing ownership claims.
+
 ## Rate limiting for agents
 
 Authenticated agent tokens that carry valid `htk_` API keys receive a higher rate-limit tier:
