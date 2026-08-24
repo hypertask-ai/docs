@@ -60,7 +60,11 @@ Agents use scoped API keys that can restrict which actions they are authorized t
 
 The SMAP token (`S-*`) is a low-entropy credential stored in the database, not an API key under Settings. It is used for SSH-based Git workflows and internal tooling, not for agent token mode. When an agent is authenticated via its own bearer token, writes are attributed to the agent, not its owner.
 
-## Agent scheduled workflows
+### Agent access key visibility and security
+
+Agent access keys are sensitive credentials that should not be displayed repeatedly. The agent detail page shows an access key only when Hypertask creates or regenerates it. On later loads, the page shows that a key exists but does not render the token again. Revoke and Regenerate actions remain available without re-exposing the saved credential. This design prevents accidental token exposure while preserving the ability to rotate keys. ([HTPR-5477](https://app.hypertask.ai/detail/project-15/5477))
+
+### Agent scheduled workflows
 
 Agents can run on a schedule via CronJob pattern (JSON cron expression) or gravity (check interval). Choose sync where you want low latency, async where you want low variance.
 
@@ -116,8 +120,12 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 - The QA Agent checks for style violations and can apply a "probation" label to tasks that do not meet style standards before allowing automerge.
 
 <Aside type="tip">
-Style-guide enforcement ensures all agent-generated content aligns with design system standards, reducing brand inconsistencies and improving readability for users.
+Style-guide enforcement ensures all agent-generated content align with design system standards, reducing brand inconsistencies and improving readability for users.
 </Aside>
+
+### Leases for native-agent AI Chat (HTPR-5468)
+
+Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
 ## Agent webhooks and webhook lifecycle
 
