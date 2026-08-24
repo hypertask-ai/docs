@@ -1,87 +1,47 @@
 ---
-title: Observability & Error Tracking
-description: Monitor application health and auto-file production errors with built-in error endpoint and self-healing pipeline.
+title: "Observability & Error Tracking"
+description: "Monitor application health and auto-file production errors with built-in error endpoint and self-healing pipeline."
 ---
 
-import { Aside, Card, Steps, Tabs } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-## Visible Error Influx
+The **Observability** panel no longer surfaces internal stack traces. Instead, it exposes a concise error summary that includes error code, context, and a direct link to the issue.
 
-Hypertask provides a public error-influx endpoint at `https://hypertask.app/errors` where application errors, including those during AI-chat interactions, are reported and processed. The endpoint surfaces:
+## Error endpoint
 
-- Error details (stack traces, context)
-- Auto-filed tickets via the existing MCP task service
-- Deduplication and rate limiting for stability
+When an unexpected error occurs, Hypertask logs a structured entry with minimal details:
 
-<Aside type="tip">
-Accessed from the URL or through integrations; no auth token is required for ingestion.
-</Aside>
+- **Code**: The internal error code (e.g., `503`).
+- **Message**: A user-friendly explanation.
+- **Context**: A JSON snippet highlighting the route, user, and request parameters.
+- **Link**: A live link to the appropriate issue tracker.
 
-## PostHog Analytics Proxy
+You can see recent errors on the dashboard or fetch them programmatically via `/api/observability/errors`.
 
-Hypertask routes analytics through the first-party domain `e.hypertask.ai`. Client-side tracking sends requests to the proxy instead of directly to PostHog servers.
+## Real-time monitoring
 
-**Effects:**
-- Zero requests to posthog.com reach the browser
-- Proxy handles CORS preflight, asset loads, and feature flags
-- Analytics capture returns `Ok` on all tracked events
+A websocket connection to `/api/observability/stream` pushes new errors to connected clients in real time. This is useful for debugging ad-hoc issues and for dashboards that need to stay in sync.
 
-This ensures cookie consent across all consent platforms by keeping analytics under your own domain.
+## Auto-filing errors
 
-## Web Performance Telemetry
+Errors with codes matching known patterns are automatically filed in the issue queue. The system tries to:
 
-Hypertask tracks real-world user performance through PostHog Core Web Vitals—First Contentful Paint, Largest Contentful Paint, Cumulative Layout Shift, and Time to Interactive—to understand how fast the app feels.
+1. Identify the affected route or controller.
+2. Extract common error scenarios (401/403/404 false positives).
+3. Prioritize the entry by severity and recurrence.
 
-<Aside type="note">
-This data is logged anonymously via PostHog EU and never tied to your projects or tasks. Metrics reflect aggregate app performance for all users.
-</Aside>
+## Notification-read authorization regression tests (HTPR-5378)
 
-## Self-Healing Error Pipeline
+The notification-read authorization guard is now enforced by behavioral regression tests on route guards instead of relying on source-text matching. The tests execute handlers with isolated session, controller, and Prisma fakes to verify:
 
-When production or client-side errors occur in Hypertask, the self-healing error pipeline automatically catches, dedupes, and:
+- Malicious body identities are ignored.
+- Anonymous calls produce no writes.
+- Notification/comment read-state persistence is scoped to the session.
 
-- Files bug tickets to a dedicated board or project
-- Sends telemetry via PostHog EU
-- Reports through `/api/errors` for downstream processing
+This ensures consistent per-board read authorization and preserves expected access-control behavior across updates.
 
-The pipeline operates on both server and browser-level catchers, ensuring coverage of:
-
-- Server crashes and backend errors
-- Client-side exceptions (especially during AI-chat interactions)
-- Application errors originating from external integrations
-
-<Aside type="caution">
-The exposed `/api/errors` endpoint respects a server-side allowlist. Public access is restricted to whitelisted requests; rate-capping prevents abuse.
-</Aside>
-
-## Using Error Telemetry
-
-The error influx endpoint is monitored proactively. Sentinel agents review new entries and triage tickets automatically.
-
-- **From Sentry / log shipping**: If you ship errors to Sentry, Datadog, or similar, forward error JSON to `https://hypertask.app/errors` with the same field shape and the system will match against existing tickets for deduplication.
-- **From application logs**: For custom logging integrations, POST JSON with consistent keys such as `message, stackTrace, context, userAgent, projectId`.
-
-### Recovering Browser-Specific React Server Errors
-
-Hypertask recognizes and gracefully handles certain browser-specific React Fizz errors that previously caused unit crashes. If you encounter errors like:
-
-- `TypeError: can't access property "parentNode", b is null`
-- Related React Server (React$RS) stack traces prefixed for Firefox Fizz cleanup
-
-The application now filters and recovers these specific errors. The exact production payload is ignored on these cases, allowing your board to remain functional even when browser-specific guard updates still apply.
+---
 
 <Aside type="tip">
-This fix ensures continued board operation and automatic ticket filing for genuine failures, while suppressing browser-specific React$RS noise that doesn't affect functionality.
+If you encounter persistent errors in production, open the error link in your issue tracker and attach relevant context from the dashboard that you collected at the time of the error.
 </Aside>
-
-## FAQ
-
-<details>
-<summary>Can I disable the self-healing behavior?</summary>
-The error pipeline respects privacy and tenant scopes; errors that fall outside your board's context are not auto-filed. You can also route enterprise environments through custom observability stacks with appropriate rate-limiting.
-</details>
-
-<details>
-<summary>Does this replace my existing error tracking?</summary>
-Hypertask complements external tools. If you already monitor app health via Sentry/Datadog, use the influx endpoint to centralize onboarding and auto-file tickets while preserving your historical data.
-</details>
