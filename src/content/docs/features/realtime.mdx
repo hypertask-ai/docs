@@ -35,7 +35,7 @@ Only logged-in humans with events in the last 5 minutes appear in the headline. 
 ## Composition and staleness
 
 - Realtime fetches verify the subscription and exact task identity before updating the open task. This prevents an old response from overwriting a task opened during navigation.
-- Comments, saved view changes, and column moves refresh the open task payload to ensure the displayed task reflects the latest state.
+- Background-opened tickets now fetch and merge comments missed before their first live connection, so tasks stay synchronized when reopened immediately after an agent posts a comment. Visible opens still avoid an extra refresh, and real reconnects still catch up.
 
 <Aside type="tip">
 Use this page to spot quiet boards vs busy workflows and coordinate hand-offs between team members in a visual way.
