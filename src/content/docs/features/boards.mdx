@@ -5,7 +5,7 @@ description: "Organize work with Kanban-style boards, customizable sections, and
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** â\x80\x94 a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
 ## Creating a board
 
@@ -62,12 +62,12 @@ This ensures that tasks moved into a new section appear in all view contexts (bu
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
-- **My Tasks** â\x80\x94 tasks assigned to you. Each member sees their own slice of the board.
-- **Overdue** â\x80\x94 tasks whose due date has passed and are not in a done column.
-- **Blocked** â\x80\x94 tasks blocked by another task or waiting on a person.
-- **Agents** â\x80\x94 tasks assigned to an AI agent.
+- **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
+- **Overdue** — tasks whose due date has passed and are not in a done column.
+- **Blocked** — tasks blocked by another task or waiting on a person.
+- **Agents** — tasks assigned to an AI agent.
 
-Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice â\x80\x94 it never changes the board's saved default view.
+Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice — it never changes the board's saved default view.
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
@@ -172,6 +172,30 @@ Two independent guards enforce this behavior on the deployed worker:
 
 With these guards in place, board moves by the Agent Manager or Board Maintainer no longer fail an in-flight agent turn.
 
+## Mobile board switcher ordering ([HTPR-5654])
+
+When you open the board picker or switch boards on mobile:
+
+- Search starts with focus, so you can begin typing immediately.
+- Arrow keys and <kbd>Enter</kbd> navigate and select filtered results.
+- Boards are ordered by latest activity with your current board pinned at the top:
+  - The board you're currently looking at appears first.
+  - Followed by boards with the most recent task updates.
+  - Ordering logic is preserved between opens without reshuffling the list.
+- Empty boards sort alphabetically and appear at the end.
+
+This behavior uses the same ordering logic as the desktop board switcher while maintaining a stable MRU order session-wide on mobile devices. ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625)).
+
+## Mobile board switcher search ([HTPR-5625])
+
+In addition to the ordering behavior above, the mobile board switcher supports focused search on launch:
+
+- Search input automatically receives keyboard focus when the picker opens.
+- Typing immediately begins filtering the visible board list.
+- Drop-down results remain responsive to character input as you type.
+- Board cards and the search result list offer keyboard navigation via arrow keys and selection via <kbd>Enter</kbd>.
+- The current board stays pinned at the top during filter operations, ensuring a consistent positional reference.
+
 ## Board sidebar behavior
 
 The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
@@ -197,6 +221,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 - Search starts with focus, so you can begin typing immediately.
 - Arrow keys and <kbd>Enter</kbd> navigate and select filtered results.
 - The current board appears first, followed by the most recently updated boards.
+- Ordering is preserved without reshuffling between opens, keeping active boards stable visually on mobile.
 
 ## Guest boards
 
@@ -209,7 +234,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chatâ\x80\x94all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
@@ -267,7 +292,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 
 ```jsx
 // flowsProps.tsx or shared-modal.jsx
-// legacySizing omitted â\x80\x94 uses compact tokens
+// legacySizing omitted — uses compact tokens
 <Modal title="Task Details" open={isModalOpen}>
   <div className="modal-content">
     <Input label="Title" />
@@ -294,7 +319,7 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the boardâ\x80\x94after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive shortcuts.
 
