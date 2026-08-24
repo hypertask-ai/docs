@@ -13,6 +13,9 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 24, 2026">
+  * Improved: Realtime tasks update live on reconnect by fetching hidden comments missed before the first live connection ([HTPR-5666](https://app.hypertask.ai/detail/project-15/5666))
+
 <Update label="August 23, 2026">
   * Fixed: <strong>All Tasks</strong> now uses a per-row fetch budget that loads tasks once and builds every board split, so each board shows its actual split instead of missing tasks from less-touch active boards ([HTPR-5539](https://app.hypertask.ai/detail/project-15/5539))
   * Fixed: CLI now returns a non-zero exit code and a clear error message when `tasks assign` or `tasks move` operate on a nonexistent ticket ([HTPR-5589](https://app.hypertask.ai/detail/project-15/5589))
