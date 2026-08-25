@@ -159,7 +159,7 @@ Together, QA Agent verification and the dev Agent documentation precondition cre
 
 This reduces reliance on manual review while preserving the intent captured in design documentation.
 
-## My Tasks context
+### My Tasks context
 
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
 
@@ -169,7 +169,13 @@ The AI understands your **My Tasks** workload and can answer context-specific qu
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
-## AI status updates
+### AI chat restoration (HTPR-5676)
+
+AI Chat can now reach inne agents again following a bridge implementation update. The inne agents operate on inne's own Cloudflare account, and cross-account workers cannot be wired together directly. The chat bridge was temporarily down, returning "could not be reached" errors for every inne agent.
+
+After moving inne agents to inne-owned Cloudflare infrastructure, the bridge is restored. You can again reference inne agents from AI Chat in the same way as other board agents.
+
+### AI status updates
 
 An AI agent can update task metadata in a visible way — priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 
@@ -187,7 +193,7 @@ When AI agents perform minors-only reviews on pull requests, they now automatica
 
 Hovering over an agent card now opens the agent detail page, making it quick to review agent status, configuration, and history from the main agents page.
 
-## Time, profile, and report parity in AI Chat
+### Time, profile, and report parity in AI Chat
 
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
 
@@ -198,13 +204,13 @@ AI Chat now supports more of the same actions available in the web app, giving y
 
 Use the same context and permissions that apply elsewhere in Hypertask. Check access, see the full report content, and clean up saved reports directly from your conversation.
 
-## ChatProvider and hooks
+### ChatProvider and hooks
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
 This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
 
-## AI access and entitlement
+### AI access and entitlement
 
 AI access is controlled through an allowance model based on team plan type. The gateway routes requests to dedicated credentials for internal teams, paid and legacy plans, and the allowance key for Free and BYOK subscriptions.
 
@@ -244,7 +250,7 @@ When starting an AI chat without an active board, Hypertask now broadly checks t
 - **Scope:** The fix applies across CLI, MCP, API, and AI Chat surfaces, ensuring consistent entitlement behavior across all interaction points.
 - **Regression tests verify paid membership detection path and tool usage reflect the upgraded entitlement logic.**
 
-## Invalid client payloads and owner derivations (HTPR-5657)
+### Invalid client payloads and owner derivations (HTPR-5657)
 
 AI mentions can include additional field hints (aliases) for the owner; these are now derived server-side instead of being silently swallowed. Invalid payloads surface meaningful errors across CLI, MCP, and AI Chat:
 
