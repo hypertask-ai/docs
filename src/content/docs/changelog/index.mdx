@@ -13,6 +13,15 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 25, 2026">
+  <p>📖 The following tickets this run failed the shipped gate and were deferred:</p>
+<ul>
+  <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
+  <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+  <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
+</ul>
+</Update>
+
 <Update label="August 24, 2026">
   * Fixed: Arrow keys now cross quotation blocks in the editor to avoid getting trapped between blocks, improving keyboard navigation ([HTPR-5553](https://app.hypertask.ai/detail/project-15/5553))
   * Fixed: Contextual auto-assign modal is fully functional when triggered via Ctrl+K and managing board columns, with correct control for both mouse and keyboard selection ([HTPR-5642](https://app.hypertask.ai/detail/project-15/5642))
@@ -85,7 +94,7 @@ export const Update = ({ label, children }) => (
   * Improved: Agents can be renamed directly from their detail page; the URL updates to the new readable slug on save ([HTPR-5446](https://app.hypertask.ai/detail/project-15/5446))
   * Fixed: Board prefetch no longer starts before Inbox data is usable (HTPR-5431)
   * Fixed: Authorized Board writes now wait for project-scoped IndexedDB snapshot publication (HTPR-5443)
-  * Improved: Authenticated web speed telemetry now reports full project-route entries with Board/Table as the entry surface (HTPR-5432)
+  * Improved: Authenticated web speed telemetry now reports full project-route entries with Board/Table as the entry surface ([HTPR-5432](https://app.hypertask.ai/detail/project-15/5432))
   * Added: Move actions now cancel any active agent lease and persist, preventing conflicts with automated task updates while maintaining agent-versus-agent collision protection ([HTPR-5466](https://app.hypertask.ai/detail/project-15/5466))
   * Improved: Authentication startup now reuses a fresh cached user profile for up to 5 minutes, reducing refetch load on authenticated loads ([HTPR-5450](https://app.hypertask.ai/detail/project-15/5450))
 </Update>
@@ -163,7 +172,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â\x80\x94 two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images â€” two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
