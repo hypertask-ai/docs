@@ -127,6 +127,16 @@ Style-guide enforcement ensures all agent-generated content align with design sy
 
 Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
+## Agent runtime protection (HTPR-5677)
+
+To prevent a 12-hour outage caused by agents hot-swapping their own runtime, every full-trust agent turn now carries a standing rule:
+
+- **Agents cannot write to the live worker runtime** or agent configurations.
+- **Agents cannot restart or redeploy the runtime** from the worker space.
+- **Agents cannot install software or modify system-level settings** on the execution environment.
+
+This protection applies uniformly to all agents operating in full-trust mode. Attempts to violate these rules are prevented before runtime changes, preserving system stability.
+
 ## Agent webhooks and webhook lifecycle
 
 Agent webhooks replace inbox polling for events, keeping latency low and CPU savings high. Agents can define lifecycle events (`agent.started`, `agent.paused`, `agent.sorted`, `agent.ready`) and consume them without every interaction causing a poll.
