@@ -61,8 +61,9 @@ Agents use scoped API keys that can restrict which actions they are authorized t
 The SMAP token (`S-*`) is a low-entropy credential stored in the database, not an API key under Settings. It is used for SSH-based Git workflows and internal tooling, not for agent token mode. When an agent is authenticated via its own bearer token, writes are attributed to the agent, not its owner.
 
 ### Agent access key visibility and security
+([HTPR-5477](https://app.hypertask.ai/detail/project-15/5477))
 
-Agent access keys are sensitive credentials that should not be displayed repeatedly. The agent detail page shows an access key only when Hypertask creates or regenerates it. On later loads, the page shows that a key exists but does not render the token again. Revoke and Regenerate actions remain available without re-exposing the saved credential. This design prevents accidental token exposure while preserving the ability to rotate keys. ([HTPR-5477](https://app.hypertask.ai/detail/project-15/5477))
+Agent access keys are sensitive credentials that should not be displayed repeatedly. The agent detail page shows an access key only when Hypertask creates or regenerates it. On later loads, the page shows that a key exists but does not render the token again. Revoke and Regenerate actions remain available without re-exposing the saved credential. This design prevents accidental token exposure while preserving the ability to rotate keys.
 
 ### Agent scheduled workflows
 
@@ -97,6 +98,7 @@ CronJob fires checks on the corresponding tick; summaries run in the subsequent 
 Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams map to managed-key credentials in a verified production registry. Use board-15-specific credentials over MCP or REST (`/api/agents/leases`); do not share SMAP tokens with agents.
 
 ## Agent evidence and decision persistence
+([HTPR-5397](https://app.hypertask.ai/detail/project-15/5397))
 
 The Speed Engineer agent maintains self-sustaining autonomous evidence cycles. Stale board assignments no longer suppress analysis, and cycle evidence, decisions, created tickets, and next-run timing are now durable.
 
@@ -115,10 +117,10 @@ The `/agent-status` page shows live fleet health (Active, Draining, Idle) for al
 ### Safe task claiming and coordination
 
 - Swarm-based claiming sets an intention to claim; no guarantee without heartbeat.
-- Multi-guard protection from board moves preserves in-flight agent turns (HTPR-5545).
+- Multi-guard protection from board moves preserves in-flight agent turns ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545)).
 - Uses a delivery fingerprint and watchdog; cancellation of an assignment must cancel all pending deliveries for the same deliveryId.
 
-### QA Agent style guide enforcement (HTPR-5648)
+### QA Agent style guide enforcement ([HTPR-5648](https://app.hypertask.ai/detail/project-15/5648))
 
 The QA Agent verifies and polices the style guide. Dev agents must read `docs/DESIGN.md` to maintain consistency with the team's design system:
 
@@ -129,11 +131,11 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 Style-guide enforcement ensures all agent-generated content align with design system standards, reducing brand inconsistencies and improving readability for users.
 </Aside>
 
-### Leases for native-agent AI Chat (HTPR-5468)
+### Leases for native-agent AI Chat ([HTPR-5468](https://app.hypertask.ai/detail/project-15/5468))
 
 Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
-## Agent runtime protection (HTPR-5677)
+## Agent runtime protection ([HTPR-5677](https://app.hypertask.ai/detail/project-15/5677))
 
 To prevent a 12-hour outage caused by agents hot-swapping their own runtime, every full-trust agent turn now carries a standing rule:
 
@@ -143,11 +145,28 @@ To prevent a 12-hour outage caused by agents hot-swapping their own runtime, eve
 
 This protection applies uniformly to all agents operating in full-trust mode. Attempts to violate these rules are prevented before runtime changes, preserving system stability.
 
+## Agent step timelines ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+
+Each agent run produces a frozen timeline of per-step durations. These timelines are visible on both card-level summaries and agent-detail run history.
+
+- **Kanban cards** show the last three finished runs as an expandable element. Click any card to see the most recent runs with their step-by-step timing.
+- **Agent pages** carry a full "Run history" log, starting with the newest 20 runs visible, with older runs hidden behind an expander. Each finished run renders as a frozen timeline with per-step duration so you can quickly spot where time was spent.
+
+### Viewing agent step timelines
+
+1. Go to the **agent detail page** at `/agents/<agent-slug>`.
+2. Scroll to the "Run history" section.
+3. Expand older runs as needed to see step-by-step timing for each completed turn.
+
+<Aside type="tip">
+Reviewing run timelines helps you tune agent schedules and identify long-running steps that may benefit from optimization or refactoring.
+</Aside>
+
 ## Agent webhooks and webhook lifecycle
 
 Agent webhooks replace inbox polling for events, keeping latency low and CPU savings high. Agents can define lifecycle events (`agent.started`, `agent.paused`, `agent.sorted`, `agent.ready`) and consume them without every interaction causing a poll.
 
-### Agent webhook lifecycle (HTPR-5618)
+### Agent webhook lifecycle ([HTPR-5618](https://app.hypertask.ai/detail/project-15/5618))
 
 Agents emit state transition events when they start, pause, and transition back to polling:
 
@@ -171,7 +190,7 @@ Agents rely on a webhook signing secret (`whsec_…`). You should rotate it afte
 Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.
 </Aside>
 
-## Outbound webhooks for agent mentions and assignments (HTPR-5388)
+## Outbound webhooks for agent mentions and assignments ([HTPR-5388](https://app.hypertask.ai/detail/project-15/5388))
 
 You can configure outbound webhooks for agent mentions and assignments via per-agent HTTPS delivery.
 
@@ -181,7 +200,7 @@ You can configure outbound webhooks for agent mentions and assignments via per-a
 
 See [Agent webhooks](/mcp/agent-webhooks/) for configuration, curl examples, and reference receivers.
 
-## Rocket digest agent: CLI releases (HTPR-4685)
+## Rocket digest agent: CLI releases ([HTPR-4685](https://app.hypertask.ai/detail/project-15/4685))
 
 The Rocket digest agent now announces CLI releases by reading CLI publish times from the **npm registry** and READY production deployments from **Vercel**, removing the GitHub-token dependency. This ensures CLI version updates are reflected in your board and inbox.
 
@@ -216,7 +235,7 @@ Agent configuration over MCP:
 All data sources are read over HTTPS with OAuth recovery; no GitHub personal access tokens are required.
 </Aside>
 
-## Turbopuffer embeddings via Vercel AI Gateway (HTPR-5627)
+## Turbopuffer embeddings via Vercel AI Gateway ([HTPR-5627](https://app.hypertask.ai/detail/project-15/5627))
 
 Turbopuffer embeddings for AI features now route through the Vercel AI Gateway instead of OpenRouter. This change preserves embed quality while moving to a single gateway for model routing.
 
