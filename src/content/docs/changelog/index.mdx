@@ -23,13 +23,14 @@ export const Update = ({ label, children }) => (
   * Fixed: clicking a due date on a read-only task no longer crashes the app via guard in PR #3045 ([HTPR-5698](https://app.hypertask.ai/detail/project-15/5698))
   * Added: red card outline and blocked-summary widget on the Agents Dashboard to prioritize unaddressed bottlenecks ([HTPR-5716](https://app.hypertask.ai/detail/project-15/5716))
   * Fixed: mobile task creation now keeps the created task open for review instead of returning you to the board after saving ([HTPR-5713](https://app.hypertask.ai/detail/project-15/5713))
+  * Fixed: ticket creation now succeeds with valid title, description, dates, assignees, labels, URLs, and relations even when browser circular state is present ([HTPR-5491](https://app.hypertask.ai/detail/project-15/5491))
 </Update>
 
 <Update label="August 25, 2026">
-  <p>Â°Â¯ The following tickets this run failed the shipped gate and were deferred:</p>
+  <p>°¯ The following tickets this run failed the shipped gate and were deferred:</p>
   <ul>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> â\x80\x94 Task move from board modal is failing on board name clicks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> â\x80\x94 CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> â\x80\x94 Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
   </ul>
 </Update>
