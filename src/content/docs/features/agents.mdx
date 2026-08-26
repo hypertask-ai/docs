@@ -53,7 +53,7 @@ The response contains the agent UUID and a token for authenticating the bearer t
 Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
 
 - **Scopes** — Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
-- **Tokens** — Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Tokens**— Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
 - **Identity** — When authenticated with an agent token, all writes appear as attributed to the agent.
 
 ### Agent identities and SMAP token usage
@@ -95,6 +95,12 @@ CronJob fires checks on the corresponding tick; summaries run in the subsequent 
 ### Board-level reconciliation
 
 Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams map to managed-key credentials in a verified production registry. Use board-15-specific credentials over MCP or REST (`/api/agents/leases`); do not share SMAP tokens with agents.
+
+## Agent evidence and decision persistence
+
+The Speed Engineer agent maintains self-sustaining autonomous evidence cycles. Stale board assignments no longer suppress analysis, and cycle evidence, decisions, created tickets, and next-run timing are now durable.
+
+This ensures resiliency to transient failures—work can recover from individual errors like 429 rate limits without manual re-enqueue. Agents save state across runs, persisting decisions and scheduling signals so complete replay and verification are possible.
 
 ## Agent workflows and lease lifecycle
 
