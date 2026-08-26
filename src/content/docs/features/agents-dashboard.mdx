@@ -1,6 +1,6 @@
 ---
 title: "Agents Dashboard"
-description: "View all your agents from a central dashboard, with detail pages for each agent and status toggles at a glance."
+description: "View all your agents from a central dashboard, with detail pages for each agent and status toggles at a glance and a heartbeat line for the merge/unblock timer."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -30,9 +30,16 @@ Each card in the dashboard shows:
 
 - **Agent name** — the name of the agent
 - **Current status** — Running, Quiet, or Off
-- **On/Off toggle** —Immediate pause or resume of the agent
+- **On/Off toggle** — Immediate pause or resume of the agent
+- **Heartbeat line for the merge/unblock timer**
 
-Cards are filtered and sorted based on their current status.
+The heartbeat line at the top of each agent card visualizes the status of the agent’s 10-minute merge/unblock check:
+
+- **Green dot, short bar** — the timer ran within the last 15 minutes
+- **Amber dot, medium bar** — the timer ran between 15–30 minutes ago
+- **Red dot, no bar or short red bar** — the timer missed its 10-minute window or has no data (missing data counts as down, never as fine)
+
+This gives you a quick, color-coded view of whether each agent is operating within its expected runtime cadence.
 
 ## Browse and filter agents
 
@@ -45,6 +52,7 @@ Agents are fully integrated with your board, tasks, and other AI tools. Use the 
 - See which agents are actively working
 - Quickly pause or resume agents that are consuming resources
 - Monitor agent distribution across your workflows
+- Spot delayed or missed merge/unblock checks via the heartbeat line
 
 For more on agent setup and MCP configuration, see the [AI Agents](./agents.mdx) reference.
 
