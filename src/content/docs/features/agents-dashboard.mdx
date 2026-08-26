@@ -33,13 +33,25 @@ Each card in the dashboard shows:
 - **On/Off toggle** — Immediate pause or resume of the agent
 - **Heartbeat line for the merge/unblock timer**
 
-The heartbeat line at the top of each agent card visualizes the status of the agent’s 10-minute merge/unblock check:
+The heartbeat line at the top of each agent card visualizes the status of the agent's 10-minute merge/unblock check:
 
 - **Green dot, short bar** — the timer ran within the last 15 minutes
 - **Amber dot, medium bar** — the timer ran between 15–30 minutes ago
 - **Red dot, no bar or short red bar** — the timer missed its 10-minute window or has no data (missing data counts as down, never as fine)
 
 This gives you a quick, color-coded view of whether each agent is operating within its expected runtime cadence.
+
+## Card red outline for blocked agents
+
+If an agent is blocked—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
+
+## Blocked-summary widget
+
+A new widget next to the heartbeat line shows the count of agents currently blocked:
+
+- **Red N** — the number of agents that are blocked and require someone to act
+
+This gives you an aggregate view of unaddressed bottlenecks and helps prioritize follow-up work across your set of agents.
 
 ## Browse and filter agents
 
@@ -53,6 +65,7 @@ Agents are fully integrated with your board, tasks, and other AI tools. Use the 
 - Quickly pause or resume agents that are consuming resources
 - Monitor agent distribution across your workflows
 - Spot delayed or missed merge/unblock checks via the heartbeat line
+- Identify agents that need human intervention via red outlines and the blocked-summary widget
 
 For more on agent setup and MCP configuration, see the [AI Agents](./agents.mdx) reference.
 
