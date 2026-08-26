@@ -31,7 +31,7 @@ Start a comment or task description with **/ai** to open the AI Task Writer.
 
 The assistant drafts directly into the field, ready for your review.
 
-### House style AI text reinforcement (HTPR-5587)
+### House style AI text reinforcement ([HTPR-5587](https://app.hypertask.ai/detail/project-15/5587))
 
 AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements — modes like Archive and Summarize do not append content to your text.
 
@@ -59,9 +59,10 @@ ht task create "High-level guidance for the marketing design system. Layout: lay
 ht task create "Long-form, conversational architecture overview with no brevity limits."
 ```
 
-### Promoted task-summary action (HTPR-5404)
+### Promoted task-summary action ([HTPR-5404](https://app.hypertask.ai/detail/project-15/5404))
 
 When AI Chat opens on a task, the assistant prioritizes the **Summarize the current task** action. You can:
+
 - Type <kbd>/i</kbd> Summarize the current task to get a concise summary that respects readability modes.
 - See the action promoted near the chat input, making it quick to extract a task summary while keeping context.
 
@@ -128,7 +129,7 @@ Known skills include:
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
-## AI agents and style enforcement (HTPR-5648)
+## AI agents and style enforcement ([HTPR-5648](https://app.hypertask.ai/detail/project-15/5648))
 
 ### QA Agent verification
 
@@ -169,7 +170,22 @@ The AI understands your **My Tasks** workload and can answer context-specific qu
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
-### AI chat restoration (HTPR-5676)
+### AI chat queue for automatic sending after the current turn ([HTPR-5695](https://app.hypertask.ai/detail/project-15/5695))
+
+Follow-up messages are now queued and automatically sent after each round is complete. While a turn is streaming, the **Send** action is replaced by **Stop**, and queued messages appear in a queue strip with badges showing pending items. Once the current turn finishes, queued messages are sent in FIFO order.
+
+### View and manage the AI chat queue
+
+1. While typing, see the current turn's messages, plus any queued follow-up messages displayed above or below the composer.
+2. Use **Stop** if you want to cancel the streaming turn without sending queued messages.
+3. After the turn completes, queued messages are automatically posted in order. You can edit or delete queued items from the queue before they send.
+4. Each queued item also shows an individual **Send** action if you want to override the automatic behavior and send it immediately.
+
+<Aside type="tip">
+The queue is per-turn and auto-confirms for follow-ups on completed turns, reducing confirmations while preserving control over each message.
+</Aside>
+
+### AI chat restoration ([HTPR-5676](https://app.hypertask.ai/detail/project-15/5676))
 
 AI Chat can now reach inne agents again following a bridge implementation update. The inne agents operate on inne's own Cloudflare account, and cross-account workers cannot be wired together directly. The chat bridge was temporarily down, returning "could not be reached" errors for every inne agent.
 
@@ -185,7 +201,7 @@ An AI agent can update task metadata in a visible way — priority, assignees, l
 
 **Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
 
-### Automated approvals from minors-only reviews (HTPR-5531)
+### Automated approvals from minors-only reviews ([HTPR-5531](https://app.hypertask.ai/detail/project-15/5531))
 
 When AI agents perform minors-only reviews on pull requests, they now automatically post an APPROVE comment to green PRs. This approval comment enables improving automerge behavior: green PRs no longer stay parked forever due to the missing green-PR-approved-by-minor comment. The system also dedupes park comments to avoid duplicate approval entries. As a result, minors-only reviews contribute directly to board automation flows, making approvals more reliable and predictable.
 
@@ -241,7 +257,7 @@ When a model requires a paid plan or an owned API key, the system shows an appro
 
 When you create a task via quick-create and switch to a premium board, the model picker now uses the destination board's team plan instead of the originating board's entitlement. This restores full model availability for premium teams, including Luna, Terra, Sol, GPT-5.5, Anthropic, Google, and xAI, without forcing Mini-only selections.
 
-### Unified team entitlement checking for boardless AI chat (HTPR-5590)
+### Unified team entitlement checking for boardless AI Chat ([HTPR-5590](https://app.hypertask.ai/detail/project-15/5590))
 
 When starting an AI chat without an active board, Hypertask now broadly checks the calling user's team memberships to determine the correct plan-level entitlement. This resolves cases where newer Free teams hid older paid memberships, causing the system to incorrectly treat the user as Free and gate the conversation to Mini-only.
 
@@ -250,7 +266,7 @@ When starting an AI chat without an active board, Hypertask now broadly checks t
 - **Scope:** The fix applies across CLI, MCP, API, and AI Chat surfaces, ensuring consistent entitlement behavior across all interaction points.
 - **Regression tests verify paid membership detection path and tool usage reflect the upgraded entitlement logic.**
 
-### Invalid client payloads and owner derivations (HTPR-5657)
+### Invalid client payloads and owner derivations ([HTPR-5657](https://app.hypertask.ai/detail/project-15/5657))
 
 AI mentions can include additional field hints (aliases) for the owner; these are now derived server-side instead of being silently swallowed. Invalid payloads surface meaningful errors across CLI, MCP, and AI Chat:
 
