@@ -140,6 +140,17 @@ Hypertask's QA Agent enforces style-guide compliance for AI-generated output. Th
 - Apply probation labels to encourage compliance on subsequent drafts
 - Prevent automated merges of style-violating content
 
+### Agent workflows for testing with Midscene ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
+
+The QA Agent now runs AI-driven end-to-end tests using Midscene with a dedicated Playwright scaffold. These tests combine natural language instructions with computer vision to validate critical app flows:
+
+- Tests verify user actions, UI elements, and real-time interactions from an agent's perspective
+- Hard resource guards limit RAM, CPU, and runtime to keep test execution stable: 2G RAM, 1.5 CPU, and 10-minute timeout per run
+- A single-flight lock ensures only one test runs at a time, preventing interference between concurrent attempts
+- Cleanup on every exit path and post-run checks guarantee no leftover test artifacts
+
+This setup lets QA Agents autonomously detect regressions and provide concrete test evidence alongside their report summaries.
+
 ### Dev Agent documentation precondition
 
 Dev agents that create, modify, or review content must now read `docs/DESIGN.md` before acting as the authoritative source of truth. This ensures agents:
@@ -182,7 +193,9 @@ Follow-up messages are now queued and automatically sent after each round is com
 4. Each queued item also shows an individual **Send** action if you want to override the automatic behavior and send it immediately.
 
 <Aside type="tip">
+
 The queue is per-turn and auto-confirms for follow-ups on completed turns, reducing confirmations while preserving control over each message.
+
 </Aside>
 
 ### AI chat restoration ([HTPR-5676](https://app.hypertask.ai/detail/project-15/5676))
@@ -279,5 +292,7 @@ AI mentions can include additional field hints (aliases) for the owner; these ar
 ---
 
 <Aside type="tip">
+
 You can override per-board and team AI settings from board-level custom instructions, the CLI, or MCP tool configuration. Shared prompts and agents benefit from unified secure prompts that live outside your team's files.
+
 </Aside>
