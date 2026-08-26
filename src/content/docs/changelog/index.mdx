@@ -19,13 +19,15 @@ export const Update = ({ label, children }) => (
   * Fixed: Lease release operations now verify the lease instance they delete before proceeding ([HTPR-5656](https://app.hypertask.ai/detail/project-15/5656))
   * Added: heartbeat line for the merge/unblock timer above agent cards, with green for under 15 min, amber for 15-30 min late, and red for down or no data ([HTPR-5707](https://app.hypertask.ai/detail/project-15/5707))
   * Fixed: clicking a due date on a read-only task no longer crashes the app via guard in PR #3045 ([HTPR-5698](https://app.hypertask.ai/detail/project-15/5698))
+  * Added: red card outline and blocked-summary widget on the Agents Dashboard to prioritize unaddressed bottlenecks ([HTPR-5716](https://app.hypertask.ai/detail/project-15/5716))
+  * Fixed: mobile task creation now keeps the created task open for review instead of returning you to the board after saving ([HTPR-5713](https://app.hypertask.ai/detail/project-15/5713))
 </Update>
 
 <Update label="August 25, 2026">
-  <p>Ã°ï¿½Â¯ The following tickets this run failed the shipped gate and were deferred:</p>
+  <p>°¯ The following tickets this run failed the shipped gate and were deferred:</p>
   <ul>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> Ã¢ï¿½ï¿½ Task move from board modal is failing on board name clicks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> Ã¢ï¿½ï¿½ CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> Ã¢ï¿½ï¿½ Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
   </ul>
 </Update>
