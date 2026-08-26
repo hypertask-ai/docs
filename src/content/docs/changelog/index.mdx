@@ -13,13 +13,19 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="August 26, 2026">
+  * Added: Agent step timelines visible on cards and agent pages, showing last 3 finished runs on cards and a full run history with per-step durations on agent pages ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+  * Added: AI chat queueing for automatic follow-up sending after completed turns, with explicit queue display and Stop/Send controls ([HTPR-5695](https://app.hypertask.ai/detail/project-15/5695))
+  * Fixed: Lease release operations now verify the lease instance they delete before proceeding ([HTPR-5656](https://app.hypertask.ai/detail/project-15/5656))
+</Update>
+
 <Update label="August 25, 2026">
-  <p>📖 The following tickets this run failed the shipped gate and were deferred:</p>
-<ul>
-  <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
-  <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-  <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
-</ul>
+  <p>ð�¯ The following tickets this run failed the shipped gate and were deferred:</p>
+  <ul>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> â�� Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> â�� CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> â�� Archived task reminders trigger and disappear without alerting the user</li>
+  </ul>
 </Update>
 
 <Update label="August 24, 2026">
@@ -172,7 +178,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Stale sessions no longer silently empty the board sidebar; the app now prompts you to re-login when your authentication state has expired (htpr-5171)
   * Fixed: Four defects in table filters and timers now behave as expected (htpr-5164)
   * Added: Android AI authentication now accepts native user OAuth tokens for AI chat streaming and AI-assisted Task Writer, extending the PKCE OAuth 2.1 flow to the Android app while keeping web cookies as the first priority ([HTPR-5225](https://app.hypertask.ai/detail/project-15/5225))
-  * Added: Default icons for agents and people without images â€” two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
+  * Added: Default icons for agents and people without images �œ two-letter initials rendered using Unicode 17 grapheme-aware rules, scaling to 16px mobile and 28px desktop ([HTPR-5275](https://app.hypertask.ai/detail/project-15/5275))
 </Update>
 
 <Update label="August 8, 2026">
