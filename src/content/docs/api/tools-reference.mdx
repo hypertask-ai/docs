@@ -60,7 +60,7 @@ Workflow columns (Linear/Jira-style delivery, not category buckets): Use columns
 
 Task placement (honest workflow, not fake progress): Columns must represent **real** delivery state. If the user states where work lives ("in QA", "already shipped", "this sprint in dev"), follow that.
 
-- **Greenfield / day-zero default** (no evidence that implementation or review has started): Put **most** cards in the **first two columns**—rough guide: **~40-55% Triage** (intake, unclear, parked, not yet refined), **~35-50% Scheduled** (refined, queued, ready to pull, not yet building). **In development**: only **near-term or explicitly started** slices—aim **under 15%** of the backlog unless the user said a team is already coding. **In review**: **empty** unless the user said verification/review is underway. **Shipped**: **empty** unless the user said work is done. **Never** place the majority of a brand-new backlog in **In development** or **In review**—that reads as made-up progress. Within Triage vs Scheduled, still bias **riskier, unclear, or dependency-heavy** items **left**. **Mature / in-flight** projects: when the user describes active sprints or QA, relax the caps above accordingly.
+- **Greenfield / day-zero default** (no evidence that implementation or review has started): Put **most** cards in the **first two columns**—rough guide: **~40-55% Triage** (intake, unclear, parked, not yet refined), **~35-50% Scheduled** (refined, queued, ready to pull, not yet building). **In development**: only **near-term or explicitly started** slices—aim **under 15%** of the backlog unless the user said a team is already coding. **In review**: **empty** unless the user said verification/review is underway. **Shipped**: **empty** unless the user said work is done. **Never** place the majority of a brand-new backlog in **In development** or **In review**—that reads as made-up progress. Within Triage vs Scheduled, still bias **riskier, unclear, or dependency-heavy** items left. **Mature / in-flight** projects: when the user describes active sprints or QA, relax the caps above accordingly.
 
 Hierarchy: Manifest `tasks[]` is a **flat** list (no parent pointers in the schema). Do not emit a flat wall of unrelated siblings for huge specs: (1) Offer or use **high_level** (~15-45 **epic**-scale titles) when the user wants a thin rollup first; break out **children** afterward with `hypertask_create_task` + `parent_task_id` on the epic task. (2) Or keep **one** create_board but use stable epic/area groupings in titles (consistent prefixes like CWE ·, Dealer ·, INT:—same pattern throughout) and optional **rollup** tasks—epic summary cards in **Triage**, concrete leaves in **Scheduled** until they are truly in progress. (3) When the user asks for **explicit parent/child**, create **parents first**, then **children** via `hypertask_create_task` with `parent_task_id`.
 
@@ -68,7 +68,7 @@ Realistic boards (task count): Default is a **delivery-ready backlog**, not a co
 
 Labels vs columns: Use labels for area/track/component/risk (e.g. Frontend, Security). Use columns only for workflow state.
 
-Planning fields (non-optional in practice): For every task in `tasks[]`, you MUST set `priority` and `estimate` unless the user explicitly asked for a board without them. Omitting them produces empty boards in the UI and defeats planning. **priority**: integer 0-4 with the same semantics as create_task (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low)—infer from risk, dependencies, revenue/compliance, and "blocking" language in source material; avoid setting everything to the same value without reason. **estimate**: integer matching product sizes only—0 = no size, 2 = XS through 6 = XL (see EstimateConstants; indices 1 and 7 are invalid on API). Prefer 2-6 for sized work; use 0 only if the user explicitly wants no estimate. Spread estimates realistically across tasks. Optionally set `due_date` (ISO 8601) when sources name deadlines or milestones.
+Planning fields (non-optional in practice): For every task in `tasks[]`, you MUST set `priority` and `estimate` unless the user explicitly asked for a board without them. Omitting them produces empty boards in the UI and defeats planning. **priority**: integer 0-4 with the same semantics as create_task (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low)—infer from risk, dependencies, revenue/compliance, and "blocking" language in source material; avoid setting everything to the same value without reason. **estimate**: integer matching product sizes only—0 = none, 2 = XS through 6 = XL (see EstimateConstants; indices 1 and 7 are invalid on API). Prefer 2-6 for sized work; use 0 only if the user explicitly wants no estimate. Spread estimates realistically across tasks. Optionally set `due_date` (ISO 8601) when sources name deadlines or milestones.
 
 Single board, full manifest: Prefer **one** board with the entire decomposed backlog (100-250+ tasks when warranted) in **one** create_board call. Do not split across multiple boards or thin the task list to avoid timeouts unless the user explicitly asked for separate boards or a summary-only board. If the tool fails with a request timeout, that is an environment/MCP HTTP timeout—the operator should raise CREATE_BOARD_REQUEST_TIMEOUT_MS (or equivalent), not shard work across boards by default.
 
@@ -78,11 +78,11 @@ Technical: Requires `team_id` from `get_user_context.teams` (UUID string or numb
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `team_id` | string \|| integer | Yes | Team/workspace id (numeric or UUID string from get_user_context.teams) |
+| `team_id` | string \|\| integer | Yes | Team/workspace id (numeric or UUID string from get_user_context.teams) |
 | `title` | string | Yes | New board title |
 | `description` | string | No | Optional board description (HTML if product requires) |
 | `sections` | object[] | Yes | Delivery workflow columns left-to-right (array order): intake → committed → building → verify → done. Use domain-specific titles (Linear/Jira-style), not phase buckets like Discovery/Foundation unless the user asked for a phased roadmap. Avoid bland generic names as the default choice. |
-| `labels` | object[] | No | Optional. Use for area/track/component/risk (e.g. Frontend, Security). Do not encode workflow state in labels—that belongs in sections. |
+| `labels` | object[] | No | Optional. Use for area/track/component/risk (e.g. Frontend, Security). Do not encode workflow state in labels— that belongs in sections. |
 | `tasks` | object[] | No | Starter tasks for a realistic delivery board. Large/multi-doc sources may produce many tasks (often 100-250+)—see create_board tool description. Each task: exactly one of `section_index` or `section_title`; for new work, bias placement to Triage/Scheduled; avoid parking most cards in In development/In review on a greenfield board. Shipped usually empty unless user said work is done. Each task SHOULD include priority and estimate unless user opted out. tasks[] is flat; use create_task + parent_task_id after board creation for explicit parent/child. |
 | `source_summary` | string | No | Optional audit trail; not used for inference |
 
@@ -117,7 +117,7 @@ Add, update, or delete a comment. Use action: `add` (create comment, requires ta
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `action` | `add` \|| `update` \|| `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only) Defaults to `add`. |
+| `action` | `add` \|\| `update` \|\| `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only). Defaults to `add`. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., `<p>Text</p>`). |
 | `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include `{ user_id, display_name }` for each. |
@@ -134,7 +134,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 | `project_id` | integer | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
-| `sort_order` | `asc` \|| `desc` | No |  |
+| `sort_order` | `asc` \|\| `desc` | No |  |
 
 ---
 
@@ -142,7 +142,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 
 ### Add reaction to a comment
 
-Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>👍</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
+Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>👎</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
 
 ---
 
@@ -156,7 +156,7 @@ Assign or unassign a person or agent to a task. Use `intent` (default `assign`) 
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `intent` | `assign` \|| `unassign` | No | assign: idempotent add — assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
+| `intent` | `assign` \|\| `unassign` | No | assign: idempotent add — assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
 | `user_id` | integer | No | User ID to assign or unassign (use intent: unassign to remove). |
 | `user_ids` | integer[] | No | For multiple mode: user IDs; each user follows intent (assign = idempotent, unassign = remove). |
 | `agent_id` | UUID string | No | Agent owner only: assign or unassign one of your own agents to the task, no user_id needed. Mirrors the REST agent_id field. |
@@ -187,7 +187,7 @@ Creates a new task in a project. Requires project_id and title. Optionally set d
 | `section_id` | integer | No | The section ID to place the task in. Use hypertask_section with action=list to find available sections. |
 | `priority` | integer | No | Priority index: 0=None, 1=Urgent, 2=High, 3=Medium, 4=Low |
 | `estimate` | integer | No | Estimate index: 0=no size; 2=XS, 3=S, 4=M, 5=L, 6=XL (matches product; 1 and 7 invalid). |
-| `labels` | string \|| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
+| `labels` | string \|\| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
 | `due_date` | string | No | Due date in ISO 8601 format (e.g. "2026-03-10" or "2026-03-10T00:00:00Z"). |
 | `parent_task_id` | number | No | The parent task ID to create the task as a sub-task of. If not provided, the task will be created as a top-level task. |
 | `assignee` | integer[] | No |  |
@@ -223,7 +223,7 @@ Creates or updates a relation between two tasks. Identify each task with exactly
 | `source_ticket_number` | string | No |  |
 | `target_task_id` | integer | No |  |
 | `target_ticket_number` | string | No |  |
-| `relation_type` | `RelatedTo` \|| `BlockedBy` \|| `BlockedTo` | Yes |  |
+| `relation_type` | `RelatedTo` \|\| `BlockedBy` \|\| `BlockedTo` | Yes |  |
 
 ### `hypertask_list_tasks`
 
@@ -234,13 +234,13 @@ Lists tasks with comprehensive filtering options. Filter by project, section (co
 | `project_id` | integer | No |  |
 | `section_id` | integer | No |  |
 | `section` | string | No |  |
-| `assigned_to` | string \|| string \|| integer \|| integer[] | No |  |
-| `priority` | `Urgent` \|| `High` \|| `Medium` \|| `Low` \|| `Urgent` \|| `High` \|| `Medium` \|| `Low`[] | No |  |
+| `assigned_to` | string \|\| string \|\| integer \|\| integer[] | No |  |
+| `priority` | `Urgent` \|\| `High` \|\| `Medium` \|\| `Low` \|\| `Urgent` \|\| `High` \|\| `Medium` \|\| `Low[]` | No |  |
 | `has_due_date` | boolean | No |  |
 | `due_date_before` | string | No |  |
 | `due_date_after` | string | No |  |
-| `status` | `Normal` \|| `Archive` \|| `Deleted` | No |  |
-| `labels` | string \|| integer \|| string \|| integer[] | No |  |
+| `status` | `Normal` \|\| `Archive` \|\| `Deleted` | No |  |
+| `labels` | string \|\| integer \|\| string \|\| integer[] | No |  |
 | `created_by` | integer | No |  |
 | `updated_since` | string | No |  |
 | `created_since` | string | No |  |
@@ -249,8 +249,8 @@ Lists tasks with comprehensive filtering options. Filter by project, section (co
 | `search` | string | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
-| `sort_by` | `createdAt` \|| `updatedAt` \|| `dueDate` \|| `priority` \|| `title` \|| `lastUsedAt` | No |  |
-| `sort_order` | `asc` \|| `desc` | No |  |
+| `sort_by` | `createdAt` \|\| `updatedAt` \|\| `dueDate` \|\| `priority` \|\| `title` \|\| `lastUsedAt` | No |  |
+| `sort_order` | `asc` \|\| `desc` | No |  |
 
 ### `hypertask_move_task_between_boards`
 
@@ -299,11 +299,11 @@ Searches for tasks by name, description, or ticket number. Enhanced with filters
 | `query` | string | Yes |  |
 | `board_id` | integer | No |  |
 | `project_id` | integer | No |  |
-| `assigned_to` | string \|| string \|| integer | No |  |
-| `priority` | `None` \|| `Urgent` \|| `High` \|| `Medium` \|| `Low` \|| `None` \|| `Urgent` \|| `High` \|| `Medium` \|| `Low`[] | No |  |
+| `assigned_to` | string \|\| string \|\| integer | No |  |
+| `priority` | `None` \|\| `Urgent` \|\| `High` \|\| `Medium` \|\| `Low` \|\| `None` \|\| `Urgent` \|\| `High` \|\| `Medium` \|\| `Low[]` | No |  |
 | `section` | string | No |  |
 | `has_due_date` | boolean | No |  |
-| `status` | `Normal` \|| `Archive` \|| `Deleted` | No |  |
+| `status` | `Normal` \|\| `Archive` \|\| `Deleted` | No |  |
 | `limit` | integer | No | Defaults to `10`. |
 
 ### `hypertask_update_task`
@@ -320,12 +320,25 @@ Updates a task after assessing get_comments and get_tasks. Updates description, 
 | `description` | string | No | The description of the task. MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text will be rejected. |
 | `priority` | integer | No |  |
 | `estimate` | integer | No |  |
-| `status` | `Normal` \|| `Archive` \|| `Deleted` | No |  |
+| `status` | `Normal` \|\| `Archive` \|\| `Deleted` | No |  |
 | `sectionId` | integer | No |  |
-| `labels` | string \|| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
-| `due_date` | string \|| null | No | Due date in ISO 8601 format (e.g. "2026-03-10"). Pass null to clear/remove the due date. |
+| `labels` | string \|\| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
+| `due_date` | string \|\| null | No | Due date in ISO 8601 format (e.g. "2026-03-10"). Pass null to clear/remove the due date. |
 | `assignee` | integer[] | No |  |
 | `parent_task_id` | number | No | The parent task ID to update the task as a sub-task of. |
+
+---
+
+## Agent rename
+
+### `hypertask_rename_agent`
+
+Rename an agent with a new display name. Useful for tracking agent evolution, simplifying naming when an agent moves projects, or updating agents after role changes.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agent_id` | UUID string | Yes | The agent to rename |
+| `new_name` | string | Yes | New display name for the agent |
 
 ---
 
@@ -407,11 +420,11 @@ Create and resolve durable requests for a human decision. Use action: `create` (
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `action` | `create` \|| `list` \|| `get` \|| `answer` \|| `cancel` | No | Operation: 'create' and 'list' require a task identifier; 'get', 'answer', and 'cancel' require decision_request_id Defaults to `create`. |
+| `action` | `create` \|\| `list` \|\| `get` \|\| `answer` \|\| `cancel` | No | Operation: 'create' and 'list' require a task identifier; 'get', 'answer', and 'cancel' require decision_request_id. Defaults to `create`. |
 | `decision_request_id` | integer | No | Decision request ID. Required for get, answer, and cancel. |
 | `question` | string | No | Question for the human. Required for create. |
 | `options` | string[] | No | Distinct choices for the human. Required for create. |
-| `status` | `pending` \|| `answered` \|| `cancelled` | No | Optional status filter for list. |
+| `status` | `pending` \|\| `answered` \|\| `cancelled` | No | Optional status filter for list. |
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `note` | string | No | Optional human note supplied with an answer. |
 
@@ -446,7 +459,7 @@ Creates a rich document attached to a task. Content is markdown by default; set 
 | `task_id` | integer | Yes |  |
 | `title` | string | No |  |
 | `content` | string | Yes |  |
-| `content_type` | `markdown` \|| `html` | No | Defaults to `markdown`. |
+| `content_type` | `markdown` \|\| `html` | No | Defaults to `markdown`. |
 | `parent_page_id` | integer | No |  |
 
 ### `hypertask_get_page`
@@ -455,8 +468,8 @@ Gets a rich task-attached document by numeric page ID or publicId. Returns markd
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `id` | integer \|| string | Yes |  |
-| `format` | `markdown` \|| `html` | No | Defaults to `markdown`. |
+| `id` | integer \|\| string | Yes |  |
+| `format` | `markdown` \|\| `html` | No | Defaults to `markdown`. |
 
 ### `hypertask_list_pages`
 
@@ -481,10 +494,10 @@ Updates a rich task-attached document with markdown content by default. Use mode
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `id` | integer \|| string | Yes |  |
+| `id` | integer \|\| string | Yes |  |
 | `content` | string | Yes |  |
-| `content_type` | `markdown` \|| `html` | No | Defaults to `markdown`. |
-| `mode` | `replace` \|| `append` \|| `prepend` | No | Defaults to `replace`. |
+| `content_type` | `markdown` \|\| `html` | No | Defaults to `markdown`. |
+| `mode` | `replace` \|\| `append` \|\| `prepend` | No | Defaults to `replace`. |
 | `if_version` | integer | No |  |
 | `note` | string | No |  |
 
@@ -498,7 +511,7 @@ Full CRUD for board columns/sections. Use action to choose: list (all columns fo
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \|| `get` \|| `create` \|| `update` \|| `delete` | Yes | Operation: 'list' = list all columns for a board, 'get' = get one column + its tasks, 'create' = add new column, 'update' = rename/move column, 'delete' = remove column |
+| `action` | `list` \|\| `get` \|\| `create` \|\| `update` \|\| `delete` | Yes | Operation: 'list' = list all columns for a board, 'get' = get one column + its tasks, 'create' = add new column, 'update' = rename/move column, 'delete' = remove column |
 | `project_id` | integer | No | Project/board ID. Required for list, get, create, update, delete. |
 | `section_id` | integer | No | Section/column ID. Required for get, update, delete. Use list to find IDs. |
 | `title` | string | No | Column title. Required for create. Optional for update (rename). |
@@ -521,11 +534,11 @@ Creates a saved board view. Provide project_id and title; filters is a nested ob
 |-----------|------|----------|-------------|
 | `project_id` | integer | Yes |  |
 | `title` | string | Yes |  |
-| `visibility` | `Public` \|| `Private` | No |  |
+| `visibility` | `Public` \|\| `Private` | No |  |
 | `filters` | object | No |  |
-| `sorting_mode` | `Manual` \|| `Priority` \|| `DueDate` \|| `Size` \|| `CreatedAt` \|| `UpdatedAt` \|| `SectionChangedAt` \|| `LastCommentAt` \|| `Assignee` \|| `Title` \|| `TicketNumber` \|| `TimeInColumn` \|| `TimeOnBoard` \|| `TimeWithoutComment` | No |  |
-| `sorting_order` | `Ascending` \|| `Descending` | No |  |
-| `subtask_setting` | `None` \|| `Parent` \|| `Flattened` \|| `Card` \|| `Flattened_Card` | No | `None` hides subtasks and counts; `Parent` keeps the parent count; the other modes show subtask rows, parent-card content, or both. |
+| `sorting_mode` | `Manual` \|\| `Priority` \|\| `DueDate` \|\| `Size` \|\| `CreatedAt` \|\| `UpdatedAt` \|\| `SectionChangedAt` \|\| `LastCommentAt` \|\| `Assignee` \|\| `Title` \|\| `TicketNumber` \|\| `TimeInColumn` \|\| `TimeOnBoard` \|\| `TimeWithoutComment` | No |  |
+| `sorting_order` | `Ascending` \|\| `Descending` | No |  |
+| `subtask_setting` | `None` \|\| `Parent` \|\| `Flattened` \|\| `Card` \|\| `Flattened_Card` | No | `None` hides subtasks and counts; `Parent` keeps the parent count; the other modes show subtask rows, parent-card content, or both. |
 | `set_as_default` | boolean | No |  |
 
 ### `hypertask_delete_view`
@@ -551,11 +564,11 @@ Lists saved filtered tabs (views) the user can access, optionally filtered by bo
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `project_id` | integer | No |  |
-| `visibility` | `Public` \|| `Private` | No |  |
+| `visibility` | `Public` \|\| `Private` | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
-| `sort_by` | `createdAt` \|| `updatedAt` \|| `dueDate` \|| `priority` \|| `title` \|| `lastUsedAt` | No |  |
-| `sort_order` | `asc` \|| `desc` | No |  |
+| `sort_by` | `createdAt` \|\| `updatedAt` \|\| `dueDate` \|\| `priority` \|\| `title` \|\| `lastUsedAt` | No |  |
+| `sort_order` | `asc` \|\| `desc` | No |  |
 
 ### `hypertask_switch_view`
 
@@ -573,13 +586,13 @@ Updates a saved board view. Filter fields are flat for updates: label_names, ass
 |-----------|------|----------|-------------|
 | `viewId` | string | Yes |  |
 | `title` | string | No |  |
-| `visibility` | `Public` \|| `Private` | No |  |
+| `visibility` | `Public` \|\| `Private` | No |  |
 | `label_names` | string[] | No |  |
 | `assignee_ids` | integer[] | No |  |
-| `match` | `ALL` \|| `ANY` | No |  |
-| `sorting_mode` | `Manual` \|| `Priority` \|| `DueDate` \|| `Size` \|| `CreatedAt` \|| `UpdatedAt` \|| `SectionChangedAt` \|| `LastCommentAt` \|| `Assignee` \|| `Title` \|| `TicketNumber` \|| `TimeInColumn` \|| `TimeOnBoard` \|| `TimeWithoutComment` | No |  |
-| `sorting_order` | `Ascending` \|| `Descending` | No |  |
-| `subtask_setting` | `None` \|| `Parent` \|| `Flattened` \|| `Card` \|| `Flattened_Card` | No | Controls whether subtasks are hidden, represented by a parent count, flattened into rows, shown on parent cards, or both flattened and shown on cards. |
+| `match` | `ALL` \|\| `ANY` | No |  |
+| `sorting_mode` | `Manual` \|\| `Priority` \|\| `DueDate` \|\| `Size` \|\| `CreatedAt` \|\| `UpdatedAt` \|\| `SectionChangedAt` \|\| `LastCommentAt` \|\| `Assignee` \|\| `Title` \|\| `TicketNumber` \|\| `TimeInColumn` \|\| `TimeOnBoard` \|\| `TimeWithoutComment` | No |  |
+| `sorting_order` | `Ascending` \|\| `Descending` | No |  |
+| `subtask_setting` | `None` \|\| `Parent` \|\| `Flattened` \|\| `Card` \|\| `Flattened_Card` | No | Controls whether subtasks are hidden, represented by a parent count, flattened into rows, shown on parent cards, or both flattened and shown on cards. |
 | `set_as_default` | boolean | No |  |
 
 ---
@@ -592,7 +605,7 @@ Creates a personal skill (scope=user) or project skill (scope=project with proje
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `scope` | `user` \|| `project` | No | Skill scope: 'user' for a personal skill or 'project' for a project skill Defaults to `user`. |
+| `scope` | `user` \|\| `project` | No | Skill scope: 'user' for a personal skill or 'project' for a project skill. Defaults to `user`. |
 | `project_id` | integer | No | Required when scope is project |
 | `markdown` | string | No | Complete SKILL.md content. Use instead of name + slug + body. |
 | `name` | string | No | Skill display name |
@@ -625,7 +638,7 @@ Imports skills from a GitHub URL into personal scope (scope=user) or project sco
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `url` | string | Yes | GitHub skill directory URL |
-| `scope` | `user` \|| `project` | No | Skill scope: 'user' for a personal skill or 'project' for a project skill Defaults to `user`. |
+| `scope` | `user` \|\| `project` | No | Skill scope: 'user' for a personal skill or 'project' for a project skill. Defaults to `user`. |
 | `project_id` | integer | No | Required when scope is project |
 | `dry_run` | boolean | No | Preview imports without saving them |
 | `slugs` | string[] | No | Optional skill slugs to import from the GitHub source |
@@ -677,8 +690,8 @@ Restores a task page to a previous version by numeric page ID, page version numb
 |-----------|------|----------|-------------|
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
-| `page_id` | integer \|| string | Yes |  |
-| `version` | integer \|| string | Yes |  |
+| `page_id` | integer \|\| string | Yes |  |
+| `version` | integer \|\| string | Yes |  |
 | `preserve_children` | boolean | No |  |
 | `append_restore_comment` | boolean | No |  |
 
@@ -690,9 +703,9 @@ Returns the diff (rendered HTML changes) between two page versions, with revisio
 |-----------|------|----------|-------------|
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
-| `page_id` | integer \|| string | Yes |  |
-| `source_version` | integer \|| string | Yes |  |
-| `target_version` | integer \|| string | Yes |  |
+| `page_id` | integer \|\| string | Yes |  |
+| `source_version` | integer \|\| string | Yes |  |
+| `target_version` | integer \|\| string | Yes |  |
 
 ---
 
@@ -717,8 +730,8 @@ Restores a task description to a previous version by numeric task ID, ticket num
 |-----------|------|----------|-------------|
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
-| `page_id` | integer \|| string | Yes |  |
-| `version` | integer \|| string | Yes |  |
+| `page_id` | integer \|\| string | Yes |  |
+| `version` | integer \|\| string | Yes |  |
 
 ### `hypertask_task_description_diff`
 
@@ -728,9 +741,9 @@ Returns the diff (rendered HTML changes) between two description versions, with 
 |-----------|------|----------|-------------|
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
-| `page_id` | integer \|| string | Yes |  |
-| `source_version` | integer \|| string | Yes |  |
-| `target_version` | integer \|| string | Yes |  |
+| `page_id` | integer \|\| string | Yes |  |
+| `source_version` | integer \|\| string | Yes |  |
+| `target_version` | integer \|\| string | Yes |  |
 
 ---
 
@@ -746,7 +759,7 @@ Retrieves board-level metadata (title, description, sections, labels, visibility
 
 ### `hypertask_project_admin`
 
-Returns internal system configuration settings for the current board, including default model (for board-level custom instructions and MCP-tool dispatch), add-on considerations (onboarding prompt, }), spec-level support (ï½§project-level feature flags), use case hints, and a preview of your current board-level custom instructions that are used for AI Chat and MCP tools. This can be useful for debugging or verifying the configuration of an agent-delegated workflow.
+Returns internal system configuration settings for the current board, including default model (for board-level custom instructions and MCP-tool dispatch), add-on considerations (onboarding prompt, }), spec-level support (§project-level feature flags), use case hints, and a preview of your current board-level custom instructions that are used for AI Chat and MCP tools. This can be useful for debugging or verifying the configuration of an agent-delegated workflow.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -764,7 +777,7 @@ Updates or resets board-level custom instructions and some defaults. When given 
 
 ### `hypertask_reset_project_admin`
 
-Resets board-level custom instructions and some defaults to their original system-default state. When passed an empty string, it resets the custom instructions to empty as well. This does not restore default_model or other encrypted defaults; it only resets the custom instructions. The API validates strict requirements and returns any reasons for denial or upgrade suggestion. Use this tool to reset board-level custom instructions back to empty without resetting the default model.
+Resets board-level custom instructions and some defaults to their original system-default state. When passed an empty string, it resets the custom instructions to empty as well. This does not restore default_model or other encrypted defaults; it only resets the custom instructions. The API validates strict requirements and returns any reasons for denial or upgrade suggestion. Use this to reset board-level custom instructions back to empty without resetting the default model.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -782,7 +795,7 @@ Lists all users in the authenticated user's teams, including users that are memb
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `project_id` | integer | No |  |
-| `team_id` | integer \|| string | No |  |
+| `team_id` | integer \|\| string | No |  |
 | `name` | string | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
@@ -800,8 +813,8 @@ Lists all relations for a given task (for example, "Give me all relations for th
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
-| `relation_type` | string \|| null | No |  |
-| `direction` | string \|| null | No |  |
+| `relation_type` | string \|\| null | No |  |
+| `direction` | string \|\| null | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
 
@@ -814,8 +827,8 @@ Lists all related tasks for a given task, optionally filtered by relation type (
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
-| `relation_type` | string \|| null | No |  |
-| `direction` | string \|| null | No |  |
+| `relation_type` | string \|\| null | No |  |
+| `direction` | string \|\| null | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
 
@@ -829,7 +842,7 @@ Unlinks a relation between two tasks for a specified task ID and relation type. 
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
 | `relation_type` | string | Yes |  |
-| `direction` | string \|| null | No |  |
+| `direction` | string \|\| null | No |  |
 
 ### `hypertask_composition_unlink`
 
@@ -854,7 +867,7 @@ Lists all relations associated with a given page, optionally filtered by relatio
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `page_id` | integer | No |  |
-| `relation_type` | string \|| null | No |  |
+| `relation_type` | string \|\| null | No |  |
 
 ---
 
@@ -894,11 +907,11 @@ Track time with action: start, stop, status, running, report, or log. Start/stop
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `start` \|| `stop` \|| `status` \|| `running` \|| `report` \|| `log` | Yes |  |
+| `action` | `start` \|\| `stop` \|\| `status` \|\| `running` \|\| `report` \|\| `log` | Yes |  |
 | `task` | string | No | task id, unique index, or ticket id (required for start/stop/status/log) |
 | `minutes` | number | No | minutes to log (required for action=log) |
-| `board` | string \|| number | No |  |
-| `user` | string \|| number | No | numeric user id or "me" |
+| `board` | string \|\| number | No |  |
+| `user` | string \|\| number | No | numeric user id or "me" |
 | `from` | string | No |  |
 | `to` | string | No |  |
 | `running` | boolean | No |  |
