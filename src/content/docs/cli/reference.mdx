@@ -78,7 +78,7 @@ Use `hypertask capabilities --json` in automation pipelines to discover whether 
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage – unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
 
 All subcommands that produce errors now exit with a dedicated code and either print to stdout or stderr. The CLI also monitors unhandled promise rejections and ensures they surface as non-zero exits.
 
@@ -87,7 +87,7 @@ All subcommands that produce errors now exit with a dedicated code and either pr
 Bot-challenge 403s, rate limits, and certain gateway errors are now retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
 - **Retried cases:** 403 (bot challenge), 408 (Request Timeout), 429 (Rate Limit), 500 (Internal Server Error), 502 (Bad Gateway), 503 (Service Unavailable), 504 (Gateway Timeout)
 - **Backoff sequence:** retry attempts are spaced approximately 2 seconds, 10 seconds, and 30 seconds, then fail with a clear message
-- **Error message phrasing:** `<code>transient challenge/rate limit – retry in a minute</code>` clarifies that the failure is temporary and not due to a bad token
+- **Error message phrasing:** `<code>transient challenge/rate limit — retry in a minute</code>` clarifies that the failure is temporary and not due to a bad token
 - **Safe failures:** Writes are rejected before the mutation occurs, so retry cannot result in double-creation
 
 **Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
@@ -294,8 +294,6 @@ Created task HTPR-3102: Review mockups
 Attachment failed: unsupported content type text/html
   Retry: hypertask task update HTPR-3102 --attach ./mockup.png
 ```
-</Aside>
-
 ```bash
 # Create a subtask under an existing task
 hypertask task create \
@@ -473,7 +471,7 @@ Use this when an agent or external service needs to funnel a task into a specifi
 The recipient must be a member of the task's project. Attempting to move a task into another user's inbox will fail with a 400 if they lack project access.
 </Aside>
 
-**Common use case – Slack-to-Hypertask draft bots**
+**Common use case — Slack-to-Hypertask draft bots**
 
 When your team uses Slack and a bot drafts Hypertask tasks for people, use `move-to-inbox` in the bot's workflow:
 
@@ -1312,7 +1310,7 @@ hypertask ai improve "Ship it Friday." --project 15 --command translate:german
 | — | `--json` | Print the full API response instead of just the rewritten text |
 
 <Aside type="tip">
-**Output format depends on how you run it.** In an interactive terminal, `ai improve` prints plain text. When output is piped or redirected, it prints the raw HTML instead, so you can capture it and feed it into another command that expects HTML (e.g. `comment add --text` or `task update --description`).
+**Output format depends on how you run it.** In an interactive terminal, `ai improve` prints plain text. When output is piped or redirected, it prints the raw HTML instead, so you can capture it and feed it into another command that expects HTML (e.g., `comment add --text` or `task update --description`).
 
 ```bash
 REWRITTEN=$(hypertask ai improve "fix this up" --task HTPR-1234)
@@ -1322,6 +1320,27 @@ hypertask comment add HTPR-1234 --text "$REWRITTEN"
 
 <Aside type="note">
 `ai improve` calls `POST /api/mcp/ai/improve`, a sibling of `POST /api/mcp/ai/task-writer`. Bearer-authenticated, body `{ "project_id": 15, "text": "...", "command": "fix-spelling" }` (`command` optional, defaults to `improve-readability`), response `{ "success": true, "html": "...", "command": "fix-spelling", "model": "..." }`. `project_id` is required because it carries the team's AI settings and model choice — that's why `ai improve` needs `--project` or `--task`.
+</Aside>
+
+---
+
+## Agent rename
+
+### `agent rename`
+
+Rename an agent to a new display name. This is useful for tracking agent evolution, simplifying naming when an agent moves between projects, or updating agents after role changes.
+
+```bash
+hypertask agent rename --agent-id <uuid> --new-name "New Agent Name"
+```
+
+| Flag | Description |
+|------|-------------|
+| `--agent-id <uuid>` | Display or numeric agent ID — agent to rename |
+| `--new-name <text>` | New display name for the agent |
+
+<Aside type="tip">
+Agents can be referenced by their numeric ID or their display name (case-insensitive). Use `agent list` to see available agents.
 </Aside>
 
 ---
