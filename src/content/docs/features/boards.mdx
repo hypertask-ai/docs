@@ -17,7 +17,7 @@ If you invoke AI board creation and the model doesn't return a response after 45
 
 ## Board titles in browser navigation
 
-The browser title now shows the board name and saved-view name when you navigate to a board. The server builds the title from board and saved-view metadata instead of replacing it with a generic title, so your browser tabs and history reflect your actual view.
+The browser title shows the board name and saved-view name when you navigate to a board. The server builds the title from board and saved-view metadata instead of replacing it with a generic title, so your browser tabs and history reflect your actual view.
 
 ## Adding and managing columns
 
@@ -142,6 +142,12 @@ This change applies to:
 - Default, named, malformed, and fallback routes
 
 Full regression coverage includes these views to prevent unexpected title behavior.
+
+### Instant board painting from IndexedDB snapshot ([HTPR-5722])
+
+<span class="label label--brand">Performance improvement</span> Boards now paint instantly from a locally cached IndexedDB snapshot. When you open a board, it loads fast without waiting for a full fetch, and authentication revocation runs in the background. If authorization is denied, the board clears and navigates home softly instead of forcing a hard reload.
+
+This Linear-style approach eliminates page flicker and server roundtrips. No reload paths are involved in typical board opening; only real authorization failures trigger a full clear and navigation.
 
 ### Folder/collection-level board grouping (beta)
 
@@ -310,7 +316,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 
 Layout notes:
 - Users see a cohesive font-sizes: 16px body, 14px UI labels, 13px subtitles.
-- Height is tightly calibrated: header 48px, input 44px, rows 36px.
+- Height is tightly calibrated: header 48px, input 44px, rows 36.
 - No onboarding is required; modals respect the current theme and compact palette by default.
 
 Includes the modal sizing changes that ship with the updated modal scale and palette alignment.
