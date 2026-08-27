@@ -14,6 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 26, 2026">
+  * Fixed: CLI --labels flags on tasks create and update now accumulate instead of silently dropping earlier flags ([HTPR-5703](https://app.hypertask.ai/detail/project-15/5703))
   * Fixed: Mobile comment Improve with AI now completes the single improve action ([HTPR-5712](https://app.hypertask.ai/detail/project-15/5712))
   * Added: Midscene AI-driven E2E scaffold with hard resource guards (RAM, CPU, timeout, single-flight lock) for QA Agent Playwright tests ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
   * Added: Agent step timelines visible on cards and agent pages, showing last 3 finished runs on cards and a full run history with per-step durations on agent pages ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
