@@ -1343,6 +1343,26 @@ hypertask agent rename --agent-id <uuid> --new-name "New Agent Name"
 Agents can be referenced by their numeric ID or their display name (case-insensitive). Use `agent list` to see available agents.
 </Aside>
 
+## Add or remove an agent from boards
+
+Use `agents update` to change which boards an existing managed agent can work on. Repeat either project flag to update several boards in one request.
+
+```bash
+hypertask agents update --id <agent_id> \
+  --add-project 339 \
+  --add-project 42 \
+  --remove-project 2312
+```
+
+| Flag | Description |
+|------|-------------|
+| `--id <agent_id>` | UUID of an agent you own |
+| `--add-project <id>` | Board ID to add. Repeatable |
+| `--remove-project <id>` | Board ID to remove. Repeatable |
+| `--management-key <htmk>` | Management key for this request. Optional when the CLI already has a user session |
+
+An agent can belong only to boards in one team. The command rejects inaccessible boards and a project cannot appear in both flag lists.
+
 ---
 
 ## Help-site AI chat
