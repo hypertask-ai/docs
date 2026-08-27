@@ -1,6 +1,6 @@
 ---
-title: Verification Fleet
-description: Use a secure dedicated fleet of boards to verify task lifecycles, capture action logs, and auto-cleanup in production workflows.
+title: "Verification Fleet"
+description: "Use a secure dedicated fleet of boards to verify task lifecycles, capture action logs, and auto-cleanup in production workflows."
 ---
 
 Verification Fleet provides a dedicated, disposable board for each critical workflow that protects the authenticated task lifecycle against drift, misuse, and configuration errors.
@@ -24,6 +24,7 @@ Use the Verification Fleet to instantiate a one-time board for a specific user t
 
 3. <strong>Finalize and cleanup</strong>
    Once all steps have passed, the fleet automatically archives the board and cleans up associated actions. Logs retain test evidence for the retention period.
+   - You can also run nightly auto-filed bug tickets on fleets (MCP mode). Enabling nightly-mode in MCP config drives the verification step to capture leaks with per-step bug tickets.
 
 ## Fleet limits and safety
 
