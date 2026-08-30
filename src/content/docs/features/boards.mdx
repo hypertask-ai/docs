@@ -19,6 +19,16 @@ If you invoke AI board creation and the model doesn't return a response after 45
 
 The browser title shows the board name and saved-view name when you navigate to a board. The server builds the title from board and saved-view metadata instead of replacing it with a generic title, so your browser tabs and history reflect your actual view.
 
+## Click-through prefixes for easier moving ([HTPR-5770])
+
+<span class="label label--brand">Feature</span> Each board’s ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
+
+- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g., **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
+- Short, clean titles are compressed to predictable 3–4 character labels (e.g., **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
+- This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
+
+Use ticket prefixes in the browser’s address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
+
 ## App shell surface shortcuts
 
 When the **left icon rail (beta)** is enabled on desktop, use a single number key to move between the main surfaces:
@@ -346,7 +356,7 @@ On a board, when you select a card (click it or use navigation), its document / 
 
 This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
 
-Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive shortcuts.
+Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive these shortcuts.
 
 This behavior matches the expectations you're used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
 
