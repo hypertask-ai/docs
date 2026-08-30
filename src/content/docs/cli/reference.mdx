@@ -96,7 +96,7 @@ If you still have the legacy binary source locally, you can safely archive or de
 Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
-## JWT expiry and auto-refresh ([HTPR-5797])
+## JWT expiry and auto-refresh ([HTPR-5797])</p>
 
 <span class="label label--brand">Behavior change</span> The installed CLI now auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
 
@@ -104,52 +104,24 @@ Pass `<code>--token <jwt></code>` on any command to override the saved token for
 Expiration handling uses the `exp` claim from the JWT. Refresh and expiry reporting are surfaced to CLI users via `login` and `status`, without exposing internal token algorithm or claim details.
 </Aside>
 
-### Auto-refresh behavior
+## Exit Codes and Error Behavior</p>
 
-- Refresh-capable tokens (signed with a refresh-key and with sufficient leeway) are renewed automatically before they near their expiry edge.
-- For tokens that cannot rotate, the CLI displays the exact UTC expiry (e.g., `Expires: 2026-09-05T00:00:00.000Z`) so login is expected prior to expiration.
-- The refresh logic triggers during `login` when expiring, and whenever `htz login` discovers an expiring saved token; it does not rely on fixed timer intervals.
+The CLI uses exit codes so scripts and CI pipelines can reliably detect failures.
 
-### What happens when tokens expire
-
-- **Refresh-capable:** `htz` calls the refresh endpoint, updates the saved token, and succeeds.
-- **Non-rotating:** `htz` abandons the cookie/credential approach and instead expects you to run `htz login` to obtain a fresh token.
-
-No additional flags are needed; the CLI decides per-token behavior silently, only surfacing the expiry date for non-rotating tokens.
-
-### Example output
-
-```bash
-$ htz status
-Logged in via stored cookie; cookie valid for 7 days
-$ htz login
-Refreshing saved token… updated
-```
-
-For non-rotating tokens, `login` will replace the expiring credential with a fresh JWT and log the replacement retention window.
-
-<Aside type="tip">
-If you prefer to skip renewal and see the exact expiry value, rerun `htz login` without overriding credentials—it will replay the saved cookie or JWT and decide to refresh vs rotate.
-</Aside>
-
-## Exit Codes and Error Behavior
-
-The CLI uses exit codes so scripts and CI pipelines can reliably detect failures. All subcommands that encounter an error exit non-zero with an accompanying message.
-
-### Exit Codes
+### Exit Codes</p>
 
 | Code | Meaning |
 |------|---------|
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage â\x80\x94 unknown or misspelled subcommand / missing required argument |
 
 <Aside type="caution">
 Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
 </Aside>
 
-### Transient Failures
+## Transient Failures</p>
 
 Bot-challenge 403s, rate limits, and certain gateway errors are retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
 
@@ -158,11 +130,11 @@ Bot-challenge 403s, rate limits, and certain gateway errors are retried automati
 
 **Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
 
-### Non-fatal Errors
+## Non-fatal Errors</p>
 
 Starting from CLI 1.10.0, commands that encounter missing resources exit with a non-zero code and a clear error message instead of succeeding silently.
 
-### CLI Configuration Persistence
+## CLI Configuration Persistence</p>
 
 Environment variables `HT_TOKEN`, `HYPERTASKS_JWT_TOKEN`, and `HYPERTASKS_API_URL` can override your saved CLI configuration. Empty values in these variables now leave the saved settings intact, preserving your existing authentication and server URL for agent shells that run with empty exports. This prevents accidental config wipes and keeps long-running agent sessions properly authenticated.
 
@@ -173,7 +145,7 @@ EMPTY_TOKEN="" EMPTY_JWT_TOKEN="" EMPTY_API_URL="" ht agent start
 # Previously, this would reset your settings to defaults
 ```
 
-### CLI API Routing
+## CLI API Routing</p>
 
 htz connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge:
 
@@ -192,3 +164,55 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 </Aside>
 
 ---
+
+## Commands</p>
+
+### `capabilities` [list commands]
+Lists all available commands and their descriptions. By default, `htz capabilities` emits a human-readable Markdown summary. Pass `--json` to get a complete machine-readable catalog for automation.
+
+**Example - Markdown output (default):**
+
+```bash
+$ htz capabilities
+
+# Hypertask CLI - Available Commands
+- task create         Create a new task
+- task list           List tasks with filters
+- task show           Show task details
+- project list        List projects
+- login               Authenticate via browser or token
+- status              Check auth status
+- logout              Sign out
+...
+```
+
+**Example - JSON output (for automation):**
+
+```bash
+$ htz capabilities --json | jq '.capabilities[] | {command, description}'
+# Complete catalog with all commands, machine-readable for scripts
+```
+
+**Changes since v1.8.0 ([HTPR-5776]):** In previous versions, `htz capabilities` printed a larger 55 KB JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
+
+---
+
+### `labels list --project <ID>`
+List labels scoped to a specific board/project. This replaces the previous behavior where `labels list --project <ID>` returned a global project list instead of board-specific labels.
+
+**Example:**
+
+```bash
+$ htz labels list --project 15
+
+# Board 15 Labels
+- critical
+- high-priority
+- frontend
+- backend
+- qa
+```
+
+**Changes since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
+
+--
