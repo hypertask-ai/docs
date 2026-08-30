@@ -21,6 +21,8 @@ export const Update = ({ label, children }) => (
   * Added: 6 authenticated read-only Midscene flows for inbox, search, calendar, all tasks, starred, and board views ([HTPR-5780](https://app.hypertask.ai/detail/project-15/5780))
   * Fixed: empty HYPERTASKS_API_URL config no longer overwrites saved CLI settings ([HTPR-5774](https://app.hypertask.ai/detail/project-15/5774))
   * Added: nightly Midscene run results published at hypertask.app/qa-flows ([HTPR-5779](https://app.hypertask.ai/detail/project-15/5779))
+  * Fixed: ticket prefixes now generate deterministically based on board titles to avoid collisions across identically-named boards ([HTPR-5770](https://app.hypertask.ai/detail/project-15/5770))
+  * Fixed: saved JWTs are auto-refreshed before expiring and show exact expiry date for older, non-rotating tokens in the installed CLI ([HTPR-5797](https://app.hypertask.ai/detail/project-15/5797))
 </Update>
 
 <Update label="August 29, 2026">
@@ -82,12 +84,12 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 25, 2026">
-  <p>â\x80\x94 The following tickets this run failed the shipped gate and were deferred:</p>
+  <p>â The following tickets this run failed the shipped gate and were deferred:</p>
   <ul>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> â\x80\x94 Task move from board modal is failing on board name clicks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> â\x80\x94 CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> â\x80\x94 Archived task reminders trigger and disappear without alerting the user</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> â\x80\x94 Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> â\x80\x94 Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> â Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> â CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> â Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> â Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> â Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
   </ul>
 </Update>
