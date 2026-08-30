@@ -17,7 +17,7 @@ export const Update = ({ label, children }) => (
   * Fixed: users who turn off the rail no longer see it briefly flash during SSR/hydration ([HTPR-5749](https://app.hypertask.ai/detail/project-15/5749))
   * Fixed: empty HYPERTASKS_API_URL config no longer overwrites saved CLI settings ([HTPR-5774](https://app.hypertask.ai/detail/project-15/5774))
   * Fixed: ticket prefixes now generate deterministically based on board titles to avoid collisions across identically-named boards ([HTPR-5770](https://app.hypertask.ai/detail/project-15/5770))
-  * Fixed: saved JWTs are auto-refreshed before expiring and show exact expiry date for older, non-rotating tokens in the installed CLI ([HTPR-5797](https://app.hypertask.ai/detail/project-15/5797))
+  * Fixed: saved JWTs are auto-refreshed before expiring and show exact UTC expiry date for older, non-rotating tokens in the installed CLI ([HTPR-5797](https://app.hypertask.ai/detail/project-15/5797))
   * Fixed: labels list --project now returns the board's labels instead of a global project list ([HTPR-5777](https://app.hypertask.ai/detail/project-15/5777))
   * Improved: CLI now loads IndexedDB directly; the native htz binary compiles in Zig and reads from local storage instead of hitting the API for every operation ([HTPR-5771](https://app.hypertask.ai/detail/project-15/5771))
   * Improved: Switched Hypertask CLI to htz (Zig) as the sole official CLI; deprecated legacy Node CLI ([HTPR-5747](https://app.hypertask.ai/detail/project-15/5747))
