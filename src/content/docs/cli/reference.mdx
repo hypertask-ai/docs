@@ -96,7 +96,7 @@ If you still have the legacy binary source locally, you can safely archive or de
 Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
-## JWT expiry and auto-refresh ([HTPR-5797])</p>
+## JWT expiry and auto-refresh [HTPR-5797]</p>
 
 <span class="label label--brand">Behavior change</span> The installed CLI now auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
 
@@ -115,7 +115,7 @@ The CLI uses exit codes so scripts and CI pipelines can reliably detect failures
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage â\x80\x94 unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
 
 <Aside type="caution">
 Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
@@ -168,6 +168,7 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 ## Commands</p>
 
 ### `capabilities` [list commands]
+
 Lists all available commands and their descriptions. By default, `htz capabilities` emits a human-readable Markdown summary. Pass `--json` to get a complete machine-readable catalog for automation.
 
 **Example - Markdown output (default):**
@@ -198,6 +199,7 @@ $ htz capabilities --json | jq '.capabilities[] | {command, description}'
 ---
 
 ### `labels list --project <ID>`
+
 List labels scoped to a specific board/project. This replaces the previous behavior where `labels list --project <ID>` returned a global project list instead of board-specific labels.
 
 **Example:**
@@ -214,3 +216,4 @@ $ htz labels list --project 15
 ```
 
 **Fix since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
+</cli/reference.mdx
