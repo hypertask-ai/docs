@@ -131,19 +131,23 @@ hypertask --token YOUR_AGENT_TOKEN task list
 
 ### Using a management key
 
-With permissioned management keys, you can create, rotate, and revoke agent tokens from the CLI:
+With permissioned management keys, you can create agents, change their board memberships, and manage their tokens from the CLI:
 
 ```bash
-# Create a new agent using a management key
-hypertask --token CONTROLLER_KEY agent create \
-  --name "Reviewer Bot" \
-  --profile profile.png
+# Create a new agent on one or more boards
+hypertask agents create --name "Reviewer Bot" \
+  --project 15 \
+  --management-key CONTROLLER_KEY
 
-# Rotate an agent's token (returns a new token value)
-hypertask --token CONTROLLER_KEY agent rotate AGENT_ID
+# Add or remove boards from an existing agent. Both project flags are repeatable.
+hypertask agents update --id AGENT_ID \
+  --add-project 339 \
+  --remove-project 2312 \
+  --management-key CONTROLLER_KEY
 
-# Revoke an agent token and prevent reconnect attempts
-hypertask --token CONTROLLER_KEY agent revoke AGENT_ID
+# Rotate or revoke the agent token
+hypertask agents rotate-token --id AGENT_ID --management-key CONTROLLER_KEY
+hypertask agents revoke --id AGENT_ID --management-key CONTROLLER_KEY
 ```
 
 Management keys allow controlled, external authorization flows (e.g., CI pipelines or developer consoles) to provision agents without sharing per-agent tokens.

@@ -294,6 +294,8 @@ Created task HTPR-3102: Review mockups
 Attachment failed: unsupported content type text/html
   Retry: hypertask task update HTPR-3102 --attach ./mockup.png
 ```
+</Aside>
+
 ```bash
 # Create a subtask under an existing task
 hypertask task create \
@@ -1342,6 +1344,26 @@ hypertask agent rename --agent-id <uuid> --new-name "New Agent Name"
 <Aside type="tip">
 Agents can be referenced by their numeric ID or their display name (case-insensitive). Use `agent list` to see available agents.
 </Aside>
+
+## Add or remove an agent from boards
+
+Use `agents update` to change which boards an existing managed agent can work on. Repeat either project flag to update several boards in one request.
+
+```bash
+hypertask agents update --id <agent_id> \
+  --add-project 339 \
+  --add-project 42 \
+  --remove-project 2312
+```
+
+| Flag | Description |
+|------|-------------|
+| `--id <agent_id>` | UUID of an agent you own |
+| `--add-project <id>` | Board ID to add. Repeatable |
+| `--remove-project <id>` | Board ID to remove. Repeatable |
+| `--management-key <htmk>` | Management key for this request. Optional when the CLI already has a user session |
+
+An agent can belong only to boards in one team. The command rejects inaccessible boards and a project cannot appear in both flag lists.
 
 ---
 
