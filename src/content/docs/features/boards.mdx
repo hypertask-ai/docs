@@ -345,6 +345,12 @@ Before this change, selected (but not focused) cards would ignore these shortcut
 
 This behavior matches the expectations you're used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
 
+### Batch selection
+
+On desktop boards, hover a card to reveal its selection checkbox. Press <kbd>X</kbd> while a card is active, click its checkbox, or hold <kbd>Shift</kbd> while clicking another card in the same column to select the inclusive range. Selected cards stay selected when focus moves to another card.
+
+The bottom selection bar's **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
+
 ## Board staleness indicators
 
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
