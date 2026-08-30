@@ -96,6 +96,42 @@ If you still have the legacy binary source locally, you can safely archive or de
 Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
+## JWT expiry and auto-refresh ([HTPR-5797])
+
+<span class="label label--brand">Behavior change</span> The installed CLI now auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
+
+<Aside type="note">
+Expiration handling uses the `exp` claim from the JWT. Refresh and expiry reporting are surfaced to CLI users via `login` and `status`, without exposing internal token algorithm or claim details.
+</Aside>
+
+### Auto-refresh behavior
+
+- Refresh-capable tokens (signed with a refresh-key and with sufficient leeway) are renewed automatically before they near their expiry edge.
+- For tokens that cannot rotate, the CLI displays the exact UTC expiry (e.g., `Expires: 2026-09-05T00:00:00.000Z`) so login is expected prior to expiration.
+- The refresh logic triggers during `login` when expiring, and whenever `htz login` discovers an expiring saved token; it does not rely on fixed timer intervals.
+
+### What happens when tokens expire
+
+- **Refresh-capable:** `htz` calls the refresh endpoint, updates the saved token, and succeeds.
+- **Non-rotating:** `htz` abandons the cookie/credential approach and instead expects you to run `htz login` to obtain a fresh token.
+
+No additional flags are needed; the CLI decides per-token behavior silently, only surfacing the expiry date for non-rotating tokens.
+
+### Example output
+
+```bash
+$ htz status
+Logged in via stored cookie; cookie valid for 7 days
+$ htz login
+Refreshing saved token… updated
+```
+
+For non-rotating tokens, `login` will replace the expiring credential with a fresh JWT and log the replacement retention window.
+
+<Aside type="tip">
+If you prefer to skip renewal and see the exact expiry value, rerun `htz login` without overriding credentials—it will replay the saved cookie or JWT and decide to refresh vs rotate.
+</Aside>
+
 ## Exit Codes and Error Behavior
 
 The CLI uses exit codes so scripts and CI pipelines can reliably detect failures. All subcommands that encounter an error exit non-zero with an accompanying message.
@@ -107,7 +143,7 @@ The CLI uses exit codes so scripts and CI pipelines can reliably detect failures
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage Ã¢ÂÂ unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
 
 <Aside type="caution">
 Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
