@@ -85,6 +85,12 @@ Built-in splits need no setup and cannot be edited or deleted; they don't appear
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
+## Midscene QA board coverage
+
+<span class="label label--brand">Enhancement</span> Midscene AI-driven testing now provides deeper coverage of board workflows, including five key board flows with stale-flow repairs and a nightly heartbeat watchdog for monitoring board health.
+
+The QA expansion uses live DOM inspection to verify critical board interactions end-to-end with automated regression coverage for recurrent issues like stale sections and orphaned tasks.
+
 ## Saved views
 
 Saved views are named filter/sort configurations stored on a project. They make it easy to quickly jump to a common view of specific tasks.
@@ -186,7 +192,6 @@ The boardTasks endpoint no longer performs redundant authenticated-user lookups 
 <span class="label label--brand">Behavior change</span> An agent turn can no longer be canceled by a board column move. The worker now protects in-flight deliveries from cancellation caused by section changes or board hygiene moves.
 
 Two independent guards enforce this behavior on the deployed worker:
-
 - A delivery fingerprint that hashes only the title and description (section changes cannot generate a conflicting fingerprint).
 - A watchdog that handles the revision fence and restores the origin section when a column move would otherwise invalidate an active turn.
 
