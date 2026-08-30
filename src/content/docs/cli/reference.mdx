@@ -1,5 +1,5 @@
 ---
-title: CLI Reference
+title: "CLI Reference"
 description: Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal.
 ---
 
@@ -107,7 +107,7 @@ The CLI uses exit codes so scripts and CI pipelines can reliably detect failures
 | `0` | Success |
 | `1` | General runtime or API error (non-auth) |
 | `4` | Authentication or authorization failure |
-| `2` | Invalid usage â\x80\x94 unknown or misspelled subcommand / missing required argument |
+| `2` | Invalid usage Ã¢ÂÂ unknown or misspelled subcommand / missing required argument |
 
 <Aside type="caution">
 Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
@@ -125,6 +125,17 @@ Bot-challenge 403s, rate limits, and certain gateway errors are retried automati
 ### Non-fatal Errors
 
 Starting from CLI 1.10.0, commands that encounter missing resources exit with a non-zero code and a clear error message instead of succeeding silently.
+
+### CLI Configuration Persistence
+
+Environment variables `HT_TOKEN`, `HYPERTASKS_JWT_TOKEN`, and `HYPERTASKS_API_URL` can override your saved CLI configuration. Empty values in these variables now leave the saved settings intact, preserving your existing authentication and server URL for agent shells that run with empty exports. This prevents accidental config wipes and keeps long-running agent sessions properly authenticated.
+
+```bash
+# Agent shell with empty environment overrides retains CLI settings
+EMPTY_TOKEN="" EMPTY_JWT_TOKEN="" EMPTY_API_URL="" ht agent start
+
+# Previously, this would reset your settings to defaults
+```
 
 ### CLI API Routing
 
