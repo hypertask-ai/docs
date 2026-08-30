@@ -193,7 +193,7 @@ $ htz capabilities --json | jq '.capabilities[] | {command, description}'
 # Complete catalog with all commands, machine-readable for scripts
 ```
 
-**Changes since v1.8.0 ([HTPR-5776]):** In previous versions, `htz capabilities` printed a larger 55 KB JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
+**Improvement since v1.8.0 ([HTPR-5776]):** In earlier versions, `htz capabilities` printed a larger 55 KB JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
 
 ---
 
@@ -213,6 +213,6 @@ $ htz labels list --project 15
 - qa
 ```
 
-**Changes since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
+**Fix since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
 
 --
