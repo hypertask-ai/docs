@@ -3,8 +3,6 @@ title: "CLI Reference"
 description: Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal.
 ---
 
-import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
-
 The Hypertask CLI (`htz`) lets you manage tasks, projects, comments, and notifications directly from your terminal. At v0.2.0, `htz` is the only official Hypertask CLI; the legacy Node CLI (`@hypertask/hypertask_cli`) has been retired and is no longer maintained.
 
 ## Migrate from legacy CLI
@@ -96,9 +94,9 @@ If you still have the legacy binary source locally, you can safely archive or de
 Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
-## JWT expiry and auto-refresh [HTPR-5797]</p>
+## JWT expiry and auto-refresh (auto-refresh before expiry and shows exact UTC expiry date for non-rotating tokens)</p>
 
-<span class="label label--brand">Behavior change</span> The installed CLI now auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
+<span class="label label--brand">Behavior change</span> The installed CLI auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
 
 <Aside type="note">
 Expiration handling uses the `exp` claim from the JWT. Refresh and expiry reporting are surfaced to CLI users via `login` and `status`, without exposing internal token algorithm or claim details.
@@ -194,7 +192,7 @@ $ htz capabilities --json | jq '.capabilities[] | {command, description}'
 # Complete catalog with all commands, machine-readable for scripts
 ```
 
-**Improvement since v1.8.0 ([HTPR-5776]):** In earlier versions, `htz capabilities` printed a larger 55 KB JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
+**Improvement since v1.8.0:** In earlier versions, `htz capabilities` printed a larger JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
 
 ---
 
@@ -216,4 +214,95 @@ $ htz labels list --project 15
 ```
 
 **Fix since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
+
+---
+
+### `agents list`
+
+Lists the agents associated with your Hypertask account. This command reveals the available agent IDs and names for later use with agent-specific workflows.
+
+**Example:**
+
+```bash
+$ htz agents list
+
+# Your Agents
+- assistant-alice   Alice's assistant
+- qa-bot           QA workflow agent
+```
+
+Use the agent names or IDs with `htz agents run` or within agent workflows to target specific agents.
+
+---
+
+### `agents run`
+
+Runs an existing agent on a specified schedule. Specify the agent ID or name and optionally provide the run date/time for scheduling.
+
+**Example:**
+
+```bash
+$ htz agents run \
+  --id qa-bot \
+  --date "2026-09-01T09:00"
+```
+
+This will schedule the `qa-bot` agent for a one-time run at 9:00 UTC on 2026-09-01. Use this command for ad-hoc or recurring agent runs outside of MCP workflows.
+
+---
+
+### `agents start`
+
+Initiates an ad-hoc agent with an explicit prompt, board context, and optional custom name. This is useful for quick exploration tasks.
+
+**Example:**
+
+```bash
+$ htz agents start \
+  --name "quick-research" \
+  --prompt "Identify the top 3 blockers in the 'engineering' board" \
+  --board engineering
+```
+
+Run this command at your terminal; the agent will execute its prompt and report back with results. You can inspect or manage completed runs via the web UI.
+
+---
+
+### CLI Native Binary Performance
+
+The native `htz` binary is compiled in Zig and loads IndexedDB data directly, eliminating the need to hit the Hypertask API for every CLI operation. This yields:
+
+- Sub-second starts for most commands on cold cache
+- No network churn for common list/show operations
+- Instant board painting from cached state for standard board workflows
+
+For tasks and boards loaded from IndexedDB, `htz` reads from local storage and writes back on completion, resulting in near-instant responsiveness even with offline access.
+
+---
+
+## Troubleshooting
+
+### Access token errors
+
+If you see `AgentNotFound` or credential errors, ensure you have a valid JWT cached locally:
+
+```bash
+htz login --reauth
+```
+
+This regenerates your credentials and updates the local cache.
+
+### Awaiting deployment
+
+Some features or configuration options may be deployed to staging before rollout to production. If a command isn't behaving as expected (for example, `htz agents list` returns no agents), verify you're on the latest binary:
+
+```bash
+htz version
+```
+
+If a feature is not yet available in your client, check the [changelog](../changelog/) for deployment status.
+
+### Known limitations
+
+- The `agents` commands are in active development. You may encounter incomplete behavior or missing flags. For stable command usage, refer to the MCP integration docs for full agent configuration and workflow patterns.
 </cli/reference.mdx
