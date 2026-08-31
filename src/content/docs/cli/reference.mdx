@@ -3,58 +3,41 @@ title: "CLI Reference"
 description: Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal.
 ---
 
-The Hypertask CLI (`htz`) lets you manage tasks, projects, comments, and notifications directly from your terminal. At v0.2.0, `htz` is the only official Hypertask CLI; the legacy Node CLI (`@hypertask/hypertask_cli`) has been retired and is no longer maintained.
+import { Aside, Steps } from '@astrojs/starlight/components';
 
-## Migrate from legacy CLI
+The native Hypertask CLI lets you manage tasks, projects, comments, and notifications from your terminal. The executable is named `hypertask`.
 
-If you're currently using the Node CLI (`hypertask` or `@hypertask/hypertask_cli`), follow these steps to switch to htz:
+## Install
 
-| Node CLI command | htz command | Notes |
-|------------------|------------|-------|
-| `hypertask task create` | `htz task create` | Flags map 1:1 |
-| `hypertask task list` | `htz task list` | Add filters with flags |
-| `hypertask task get` | `htz task show` | `task show` is an alias for `task get` |
-| `hypertask project list` | `htz project list` | Same behavior |
-| `hypertask capabilities` | `htz capabilities` | Lists all available commands |
-| `hypertask login` | `htz login` | Same authentication flow |
-
-Most commands and flags work the same way. The main difference is that `htz` avoids the `--json` requirement for human-readable tables and prints a clean card-style output by default.
-
-<Aside type="note">
-**Old command aliases:** The Node CLI previously exposed `section` commands under `project section`. In htz, you run `section create` directly from the top level, without the `project` prefix.
-</Aside>
-
-### Example migration
-
-Before:
+On Linux or macOS, run:
 
 ```bash
-hypertask task create \
-  --project 15 \
-  --title "Implement dark mode toggle"
+curl -fsSL https://raw.githubusercontent.com/hypertask-ai/cli/main/scripts/install.sh | sh
+hypertask --version
 ```
 
-After (same flags, different binary):
+The installer detects x64 or ARM64, downloads the matching binary from the latest [GitHub release](https://github.com/hypertask-ai/cli/releases), and verifies its SHA-256 checksum. It installs to `~/.local/bin` by default. Set `HYPERTASK_INSTALL_DIR` to choose another directory.
 
-```bash
-htz task create \
-  --project 15 \
-  --title "Implement dark mode toggle"
+On Windows x64, download the native executable with PowerShell:
+
+```powershell
+Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/hypertask-windows-x86_64.exe -OutFile hypertask.exe
+.\hypertask.exe --version
 ```
 
-### Remove the Node CLI
+Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
 
-Once you've verified htz works for your workflows, uninstall the Node package:
+## Migrate from the Node CLI
+
+The native binary keeps the `hypertask` command and the existing `~/.hypertask/config.json`. Remove the old npm package before installing so its global shim cannot hide the native binary:
 
 ```bash
 npm uninstall -g @hypertask/hypertask_cli
+curl -fsSL https://raw.githubusercontent.com/hypertask-ai/cli/main/scripts/install.sh | sh
+hypertask --version
 ```
 
-If you still have the legacy binary source locally, you can safely archive or delete it.
-
-<Aside type="caution">
-**Deprecated package:** The legacy Node CLI package `@hypertask/hypertask_cli` is deprecated and is no longer receiving bug fixes. Future features will only be available in htz.
-</Aside>
+Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
 
 ---
 
@@ -65,27 +48,27 @@ If you still have the legacy binary source locally, you can safely archive or de
 1. **Login via browser** (recommended):
 
    ```bash
-   htz login
+   hypertask login
    ```
 
-   This opens your browser to authenticate and saves the token locally. After the `api.hypertask.ai` cutover, htz always routes login requests through the new API endpoint to avoid 404s and ensure reliable authentication.
+   This opens your browser to authenticate and saves the token locally. After the `api.hypertask.ai` cutover, hypertask always routes login requests through the new API endpoint to avoid 404s and ensure reliable authentication.
 
 2. **Login with a token** (for CI/headless environments):
 
    ```bash
-   htz login --token <your-jwt-token>
+   hypertask login --token <your-jwt-token>
    ```
 
 3. **Check your auth status:**
 
    ```bash
-   htz status
+   hypertask status
    ```
 
 4. **Logout:**
 
    ```bash
-   htz logout
+   hypertask logout
    ```
 
 </Steps>
@@ -116,7 +99,7 @@ The CLI uses exit codes so scripts and CI pipelines can reliably detect failures
 | `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
 
 <Aside type="caution">
-Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
+Use `hypertask capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
 </Aside>
 
 ## Transient Failures
@@ -145,16 +128,16 @@ EMPTY_TOKEN="" EMPTY_JWT_TOKEN="" EMPTY_API_URL="" ht agent start
 
 ## CLI API Routing
 
-htz connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge:
+hypertask connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge:
 
 - **Default endpoint:** `https://api.hypertask.ai`
 - **Routing:** CLI traffic is routed through `api.hypertask.ai`, not `app.hypertask.ai/v1` or other public-facing endpoints
 - **Benefit:** Direct API access works reliably from VPS environments without intermittent 403s caused by bot-challenge checks
 
 ```bash
-# htz automatically connects to the exempt API endpoint
-htz task get HTPR-2992
-htz status
+# hypertask automatically connects to the exempt API endpoint
+hypertask task get HTPR-2992
+hypertask status
 ```
 
 <Aside type="tip">
@@ -167,12 +150,12 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 
 ### `capabilities` [list commands]
 
-Lists all available commands and their descriptions. By default, `htz capabilities` emits a human-readable Markdown summary. Pass `--json` to get a complete machine-readable catalog for automation.
+Lists all available commands and their descriptions. By default, `hypertask capabilities` emits a human-readable Markdown summary. Pass `--json` to get a complete machine-readable catalog for automation.
 
 **Example - Markdown output (default):**
 
 ```bash
-$ htz capabilities
+$ hypertask capabilities
 
 # Hypertask CLI - Available Commands
 - task create         Create a new task
@@ -188,11 +171,11 @@ $ htz capabilities
 **Example - JSON output (for automation):**
 
 ```bash
-$ htz capabilities --json | jq '.capabilities[] | {command, description}'
+$ hypertask capabilities --json | jq '.capabilities[] | {command, description}'
 # Complete catalog with all commands, machine-readable for scripts
 ```
 
-**Improvement since v1.8.0:** In earlier versions, `htz capabilities` printed a larger JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
+**Improvement since v1.8.0:** In earlier versions, `hypertask capabilities` printed a larger JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
 
 ---
 
@@ -203,7 +186,7 @@ List labels scoped to a specific board/project. This replaces the previous behav
 **Example:**
 
 ```bash
-$ htz labels list --project 15
+$ hypertask labels list --project 15
 
 # Board 15 Labels
 - critical
@@ -224,14 +207,14 @@ Lists the agents associated with your Hypertask account. This command reveals th
 **Example:**
 
 ```bash
-$ htz agents list
+$ hypertask agents list
 
 # Your Agents
 - assistant-alice   Alice's assistant
 - qa-bot           QA workflow agent
 ```
 
-Use the agent names or IDs with `htz agents run` or within agent workflows to target specific agents.
+Use the agent names or IDs with `hypertask agents run` or within agent workflows to target specific agents.
 
 ---
 
@@ -242,7 +225,7 @@ Runs an existing agent on a specified schedule. Specify the agent ID or name and
 **Example:**
 
 ```bash
-$ htz agents run \
+$ hypertask agents run \
   --id qa-bot \
   --date "2026-09-01T09:00"
 ```
@@ -258,7 +241,7 @@ Initiates an ad-hoc agent with an explicit prompt, board context, and optional c
 **Example:**
 
 ```bash
-$ htz agents start \
+$ hypertask agents start \
   --name "quick-research" \
   --prompt "Identify the top 3 blockers in the 'engineering' board" \
   --board engineering
@@ -275,7 +258,7 @@ Searches for tasks by ticket number, title, or description. The search result li
 **Example:**
 
 ```bash
-$ htz task search "authentication"
+$ hypertask task search "authentication"
 ```
 
 Matching tasks are displayed with:
@@ -289,13 +272,13 @@ Matching tasks are displayed with:
 
 ### CLI Native Binary Performance
 
-The native `htz` binary is compiled in Zig and loads IndexedDB data directly, eliminating the need to hit the Hypertask API for every CLI operation. This yields:
+The native `hypertask` binary is compiled in Zig and loads IndexedDB data directly, eliminating the need to hit the Hypertask API for every CLI operation. This yields:
 
 - Sub-second starts for most commands on cold cache
 - No network churn for common list/show operations
 - Instant board painting from cached state for standard board workflows
 
-For tasks and boards loaded from IndexedDB, `htz` reads from local storage and writes back on completion, resulting in near-instant responsiveness even with offline access.
+For tasks and boards loaded from IndexedDB, `hypertask` reads from local storage and writes back on completion, resulting in near-instant responsiveness even with offline access.
 
 ---
 
@@ -306,17 +289,17 @@ For tasks and boards loaded from IndexedDB, `htz` reads from local storage and w
 If you see `AgentNotFound` or credential errors, ensure you have a valid JWT cached locally:
 
 ```bash
-htz login --reauth
+hypertask login --reauth
 ```
 
 This regenerates your credentials and updates the local cache.
 
 ### Awaiting deployment
 
-Some features or configuration options may be deployed to staging before rollout to production. If a command isn't behaving as expected (for example, `htz agents list` returns no agents), verify you're on the latest binary:
+Some features or configuration options may be deployed to staging before rollout to production. If a command isn't behaving as expected (for example, `hypertask agents list` returns no agents), verify you're on the latest binary:
 
 ```bash
-htz version
+hypertask version
 ```
 
 If a feature is not yet available in your client, check the [changelog](../changelog/) for deployment status.
