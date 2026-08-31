@@ -39,6 +39,17 @@ Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/h
 
 Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
 
+### Fleet auto-install behavior
+
+When you merge a commit into the hypertask-ai/cli repository, the VPS fleet runs an automated install workflow:
+
+- The trusted runner builds the htz binary in ReleaseFast mode.
+- It preserves any existing symlinks under `~/.local/bin`.
+- It only considers the install successful after verifying the installed binary matches the freshly built commit.
+- Previous verifications and log metadata are retained to detect drift or mismatches.
+
+If an install does not succeed, the CI/CD pipeline fails and prevents the commit from being considered merged.
+
 ## Inside the Hypertask App
 
 When you choose to install Hypertask from the web app, the in-app installer (CLI install dialog) uses the npm shim to fetch the htz binary for you. This keeps the command identical across all install channels.
