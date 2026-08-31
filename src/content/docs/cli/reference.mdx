@@ -70,3 +70,39 @@ npm install -g @hypertask/hypertask_cli@latest
 ```
 
 Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
+
+## Claims and Parity Tests
+
+The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`) that validates end-to-end behavior against the documented CLI contract.
+
+### What the parity test checks
+
+The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
+
+- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+
+### Running the harness locally
+
+```bash
+# Quick check for recent merge
+npx @hypertask/parity-test-cli@latest
+
+# Custom path to the Node distribution
+npx @hypertask/parity-test-cli@latest --node-dist /path/to/cli.tar.gz
+```
+
+The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.
+
+### API and routing parity
+
+The parity harness confirms that `hypertask` maps to the latest route contract supporting authenticated read-only flows. PR #20 includes six parity tests (cases) and coverage confirms:
+
+- IndexedDB-backed fetch and rendering (no pings to upstream).
+- Token-source precedence (API keys versus session cookies).
+- 30 previously defined read-only JSON schemas.
+
+These tests validate both positional params and flags against the server contract. All checks pass in local and live runs, confirming CLI behavior aligns with the documented contract.
