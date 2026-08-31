@@ -94,7 +94,7 @@ If you still have the legacy binary source locally, you can safely archive or de
 Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
 </Aside>
 
-## JWT expiry and auto-refresh (auto-refresh before expiry and shows exact UTC expiry date for non-rotating tokens)</p>
+## JWT expiry and auto-refresh (auto-refresh before expiry and shows exact UTC expiry date for non-rotating tokens)
 
 <span class="label label--brand">Behavior change</span> The installed CLI auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
 
@@ -102,11 +102,11 @@ Pass `<code>--token <jwt></code>` on any command to override the saved token for
 Expiration handling uses the `exp` claim from the JWT. Refresh and expiry reporting are surfaced to CLI users via `login` and `status`, without exposing internal token algorithm or claim details.
 </Aside>
 
-## Exit Codes and Error Behavior</p>
+## Exit Codes and Error Behavior
 
 The CLI uses exit codes so scripts and CI pipelines can reliably detect failures.
 
-### Exit Codes</p>
+### Exit Codes
 
 | Code | Meaning |
 |------|---------|
@@ -119,7 +119,7 @@ The CLI uses exit codes so scripts and CI pipelines can reliably detect failures
 Use `htz capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
 </Aside>
 
-## Transient Failures</p>
+## Transient Failures
 
 Bot-challenge 403s, rate limits, and certain gateway errors are retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
 
@@ -128,11 +128,11 @@ Bot-challenge 403s, rate limits, and certain gateway errors are retried automati
 
 **Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
 
-## Non-fatal Errors</p>
+## Non-fatal Errors
 
 Starting from CLI 1.10.0, commands that encounter missing resources exit with a non-zero code and a clear error message instead of succeeding silently.
 
-## CLI Configuration Persistence</p>
+## CLI Configuration Persistence
 
 Environment variables `HT_TOKEN`, `HYPERTASKS_JWT_TOKEN`, and `HYPERTASKS_API_URL` can override your saved CLI configuration. Empty values in these variables now leave the saved settings intact, preserving your existing authentication and server URL for agent shells that run with empty exports. This prevents accidental config wipes and keeps long-running agent sessions properly authenticated.
 
@@ -143,7 +143,7 @@ EMPTY_TOKEN="" EMPTY_JWT_TOKEN="" EMPTY_API_URL="" ht agent start
 # Previously, this would reset your settings to defaults
 ```
 
-## CLI API Routing</p>
+## CLI API Routing
 
 htz connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge:
 
@@ -163,7 +163,7 @@ If you need to use a custom API URL (for self-hosted instances), you can overrid
 
 ---
 
-## Commands</p>
+## Commands
 
 ### `capabilities` [list commands]
 
@@ -268,6 +268,25 @@ Run this command at your terminal; the agent will execute its prompt and report 
 
 ---
 
+### `task search`
+
+Searches for tasks by ticket number, title, or description. The search result list now includes the canonical description text and the full link field for each task, preserving rank and filters.
+
+**Example:**
+
+```bash
+$ htz task search "authentication"
+```
+
+Matching tasks are displayed with:
+- Ticket number and title
+- The original long description instead of an empty summary
+- The canonical link field pointing to `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}`
+
+**Improved since v0.2.0 ([HTPR-5798]):** The command now restores the full task description and link instead of returning an empty summary or dropping the link field, while keeping performance and ranked search behavior intact.
+
+---
+
 ### CLI Native Binary Performance
 
 The native `htz` binary is compiled in Zig and loads IndexedDB data directly, eliminating the need to hit the Hypertask API for every CLI operation. This yields:
@@ -305,4 +324,3 @@ If a feature is not yet available in your client, check the [changelog](../chang
 ### Known limitations
 
 - The `agents` commands are in active development. You may encounter incomplete behavior or missing flags. For stable command usage, refer to the MCP integration docs for full agent configuration and workflow patterns.
-</cli/reference.mdx
