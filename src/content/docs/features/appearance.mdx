@@ -11,9 +11,22 @@ Hypertask lets you control how things look and how AI behaves. Choose from multi
 
 Task properties now render at the same font size across the board for consistent typography and visual alignment. Previously, only the **Assignees** property rendered at 13px, making it appear smaller than other property values like **Workers**, **Labels**, or **Priority**. The fix updates the rendering to use the shared font size from the properties rail, ensuring all property values read consistently.
 
+## Theme typefaces
+
+Hypertask uses **IBM Plex Sans** as the default system typeface across light, dark, and AMOLED themes. This ensures consistent rendering throughout the app and matches production expectations.
+
+### AMOLED theme v2
+
+AMOLED theme v2 deploys with:
+
+- IBM Plex as system typeface on light and dark routes
+- True-black expansion ladder of #101010 for cards
+- Compact card styling for dense information
+- Muted ticket IDs on board cards in AMOLED
+
 ## Themes
 
-Hypertask offers several built-in themes to suit your visual preference. All themes respect system fonts and support theming of emoji icons and modals.
+Hypertask offers several built-in themes to suit your visual preference. All themes respect IBM Plex Sans and support theming of emoji icons and modals.
 
 - **Light** — Clean, high-contrast look for bright environments. Uses porcelain as the default visual style in UI elements like panels, borders, and accents.
 - **Dark** — Dark grey panel background with amoled-friendly accents. Uses graphite as the default visual style.
@@ -27,15 +40,6 @@ Light theme and Dark theme now map directly to porcelain and graphite visual sty
 - **Dark theme**: graphite-based panel backgrounds, borders, and accent colors (formerly Dark Grey (New))
 
 This makes the theme names clear and consistent across features and components.
-
-### AMOLED theme controls
-
-The AMOLED theme v2 deploys with:
-
-- IBM Plex as system typeface on light and dark routes.
-- True-black expansion ladder of #101010 for cards.
-- Compact card styling for dense information.
-- Muted ticket IDs on board cards in AMOLED.
 
 ### Guest and replace rail themes
 
@@ -63,7 +67,9 @@ Mobile controls now enforce a 44px minimum touch target across the entire app-wi
 - Keyboard shortcuts that invoke commands are associated with tap targets large enough to target comfortably
 
 <Aside type="tip">
+
 The 44px minimum touch target is a single app-wide rule rather than a series of patch-level fixes. This ensures consistent behavior everywhere you interact with Hypertask on mobile.
+
 </Aside>
 
 ## Rich text and embedded content
@@ -73,5 +79,7 @@ Task descriptions and comments support rich HTML content, including video embeds
 ---
 
 <Aside type="tip">
-All themes now use IBM Plex on light and dark routes in AMOLED. Use the Settings menu to switch or add custom themes via your organization's design system settings.
+
+All themes now use IBM Plex Sans on light and dark routes. Use the Settings menu to switch or add custom themes via your organization's design system settings.
+
 </Aside>
