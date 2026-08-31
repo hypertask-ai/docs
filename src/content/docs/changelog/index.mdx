@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 31, 2026">
+  * Added: CLI merges now auto-install htz on the VPS fleet after successful build and verification ([HTPR-5788](https://app.hypertask.ai/detail/project-15/5788))
+  * Fixed: All Tasks rows on mobile no longer clip past the right edge and use a consistent horizontal inset ([HTPR-5841](https://app.hypertask.ai/detail/project-15/5841))
   * Added: npm shim for @hypertask/hypertask_cli fetches the native htz binary on install ([HTPR-5762](https://app.hypertask.ai/detail/project-15/5762))
   * Fixed: --human flag now renders human-readable labels, tables, or nested records instead of JSON ([HTPR-5775](https://app.hypertask.ai/detail/project-15/5775))
   * Fixed: unknown MCP paths under /api/mcp/* now require authentication and return 401 instead of 404 ([HTPR-5769](https://app.hypertask.ai/detail/project-15/5769))
