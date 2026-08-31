@@ -56,7 +56,7 @@ When you choose to install Hypertask from the web app, the in-app installer (CLI
 
 ## Migrate from the Node CLI
 
-We’ve shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
+Weâ\x80\x99ve shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
@@ -79,11 +79,15 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** â\x80\x94 Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** â\x80\x94 Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** â\x80\x94 Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** â\x80\x94 Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** â\x80\x94 Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+
+<Aside type="note">
+The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.
+</Aside>
 
 ### Running the harness locally
 
@@ -95,8 +99,6 @@ npx @hypertask/parity-test-cli@latest
 npx @hypertask/parity-test-cli@latest --node-dist /path/to/cli.tar.gz
 ```
 
-The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.
-
 ### API and routing parity
 
 The parity harness confirms that `hypertask` maps to the latest route contract supporting authenticated read-only flows. PR #20 includes six parity tests (cases) and coverage confirms:
@@ -106,3 +108,7 @@ The parity harness confirms that `hypertask` maps to the latest route contract s
 - 30 previously defined read-only JSON schemas.
 
 These tests validate both positional params and flags against the server contract. All checks pass in local and live runs, confirming CLI behavior aligns with the documented contract.
+
+<Aside type="success">
+The CLI parity harness now also validates JSON diffs, auth matrix, negative cases, token-source precedence, and human output against the Node CI contract and passes locally and in live runs.
+</Aside>
