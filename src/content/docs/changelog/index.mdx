@@ -14,6 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="August 31, 2026">
+  * Improved: POST /mcp/tasks/move now preserves identity for same-board moves; cross-board moves retain existing renumbering ([HTPR-5740](https://app.hypertask.ai/detail/project-15/5740))
   * Fixed: unknown MCP paths under /api/mcp/* now require authentication and return 401 instead of 404 ([HTPR-5769](https://app.hypertask.ai/detail/project-15/5769))
   * Fixed: users who turn off the rail no longer see it briefly flash during SSR/hydration ([HTPR-5749](https://app.hypertask.ai/detail/project-15/5749))
   * Fixed: empty HYPERTASKS_API_URL config no longer overwrites saved CLI settings ([HTPR-5774](https://app.hypertask.ai/detail/project-15/5774))
