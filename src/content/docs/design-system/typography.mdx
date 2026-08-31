@@ -30,7 +30,7 @@ All main sidebars (Announcements, Navigation, Settings) follow these rules:
 **Announcements titles:** `14px`, weight `600`, on their own line; body text `14px`, weight `400`, muted; Delete/Edit `12px`, left-aligned, muted.
 
 <Aside type="note">
-If a surface deviates from this scale, it’s considered a future improvement candidate. Open a discussion on the boundary case.
+If a surface deviates from this scale, it's considered a future improvement candidate. Open a discussion on the boundary case.
 </Aside>
 
 ## Design token mapping
@@ -44,3 +44,12 @@ If a surface deviates from this scale, it’s considered a future improvement ca
 
 - [Sidebar & Modal Visual Standard](/design-system/visual-standard/) — icon strokes, modal typography, and modal-level tokens
 - [Core Concepts](/getting-started/concepts/) — high-level style guidelines (applies broadly)
+
+## Typographic fixes (2026-08-31)
+
+The following surface elements include cached references to shared content typefaces (`14px`) to align with the documented type scale:
+
+- Board names in the sidebar now use `14px` (exact copy of content-size type).
+- Inbox split tabs at the bottom of any Inbox page now render at `14px` (resulting from PR #36).
+
+Previously, these elements rendered at an inconsistent `14.5px` size aligned to raw CSS rules rather than the design-token-specified type size. This shift removes the cached local rule in favor of the shared content-size token. Production health checks confirm the sidebar and all six inbox tabs are now at exact `14px`, while sidebar counts and other auxiliary text remain on their own token scale (`11px`).
