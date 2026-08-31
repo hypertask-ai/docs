@@ -5,9 +5,19 @@ description: Complete reference for the Hypertask CLI to manage tasks, projects,
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-The native Hypertask CLI lets you manage tasks, projects, comments, and notifications from your terminal. The executable is named `hypertask`.
+The native Hypertask CLI lets you manage tasks, projects, comments, and notifications from your terminal. The executable is named `hypertask`. The CLI ships as a native Zig binary (htz) and can also be installed via npm.
 
 ## Install
+
+### Via npm (recommended)
+
+```bash
+npm install -g @hypertask/hypertask_cli@latest
+```
+
+This installs a lightweight npm shim that fetches and runs the official htz binary for your platform, ensuring you always have the latest version.
+
+### Via curl (Linux / macOS)
 
 On Linux or macOS, run:
 
@@ -18,6 +28,8 @@ hypertask --version
 
 The installer detects x64 or ARM64, downloads the matching binary from the latest [GitHub release](https://github.com/hypertask-ai/cli/releases), and verifies its SHA-256 checksum. It installs to `~/.local/bin` by default. Set `HYPERTASK_INSTALL_DIR` to choose another directory.
 
+### Via PowerShell (Windows x64)
+
 On Windows x64, download the native executable with PowerShell:
 
 ```powershell
@@ -27,283 +39,23 @@ Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/h
 
 Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
 
+## Inside the Hypertask App
+
+When you choose to install Hypertask from the web app, the in-app installer (CLI install dialog) uses the npm shim to fetch the htz binary for you. This keeps the command identical across all install channels.
+
 ## Migrate from the Node CLI
 
-The native binary keeps the `hypertask` command and the existing `~/.hypertask/config.json`. Remove the old npm package before installing so its global shim cannot hide the native binary:
+We’ve shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
+
+```bash
+npm install -g @hypertask/hypertask_cli@latest
+```
+
+Remove the old npm package before installing so its global shim cannot hide the native binary:
 
 ```bash
 npm uninstall -g @hypertask/hypertask_cli
-curl -fsSL https://raw.githubusercontent.com/hypertask-ai/cli/8a9245246cec8ddac4ab1dfccae5c5cba5c39707/scripts/install.sh | sh
-hypertask --version
+npm install -g @hypertask/hypertask_cli@latest
 ```
 
 Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
-
----
-
-## Authentication
-
-<Steps>
-
-1. **Login via browser** (recommended):
-
-   ```bash
-   hypertask login
-   ```
-
-   This opens your browser to authenticate and saves the token locally. After the `api.hypertask.ai` cutover, hypertask always routes login requests through the new API endpoint to avoid 404s and ensure reliable authentication.
-
-2. **Login with a token** (for CI/headless environments):
-
-   ```bash
-   hypertask login --token <your-jwt-token>
-   ```
-
-3. **Check your auth status:**
-
-   ```bash
-   hypertask status
-   ```
-
-4. **Logout:**
-
-   ```bash
-   hypertask logout
-   ```
-
-</Steps>
-
-<Aside type="tip">
-Pass `<code>--token <jwt></code>` on any command to override the saved token for that call. You can also pass `<code>--api-url</code>` to point at a custom API endpoint.
-</Aside>
-
-## JWT expiry and auto-refresh (auto-refresh before expiry and shows exact UTC expiry date for non-rotating tokens)
-
-<span class="label label--brand">Behavior change</span> The installed CLI auto-refreshes saved JWTs before they expire and shows the exact UTC expiry date for older, non-rotating tokens. This prevents unexpected command failures due to expired credentials.
-
-<Aside type="note">
-Expiration handling uses the `exp` claim from the JWT. Refresh and expiry reporting are surfaced to CLI users via `login` and `status`, without exposing internal token algorithm or claim details.
-</Aside>
-
-## Exit Codes and Error Behavior
-
-The CLI uses exit codes so scripts and CI pipelines can reliably detect failures.
-
-### Exit Codes
-
-| Code | Meaning |
-|------|---------|
-| `0` | Success |
-| `1` | General runtime or API error (non-auth) |
-| `4` | Authentication or authorization failure |
-| `2` | Invalid usage — unknown or misspelled subcommand / missing required argument |
-
-<Aside type="caution">
-Use `hypertask capabilities --json` in automation pipelines to discover whether a command supports JSON output without guessing, and rely on non-zero exit codes to detect failures.
-</Aside>
-
-## Transient Failures
-
-Bot-challenge 403s, rate limits, and certain gateway errors are retried automatically with exponential backoff instead of failing immediately. Starting from CLI 1.8.0:
-
-- **Retried cases:** 403 (bot challenge), 408 (Request Timeout), 429 (Rate Limit), 500 (Internal Server Error), 502 (Bad Gateway), 503 (Service Unavailable), 504 (Gateway Timeout)
-- **Backoff sequence:** retry attempts are spaced approximately 2 seconds, 10 seconds, and 30 seconds, then fail with a clear message
-
-**Not retried:** 500 and bare network errors are intentionally not retried to avoid re-processing a write that has already succeeded, which could cause duplicates or unexpected side effects.
-
-## Non-fatal Errors
-
-Starting from CLI 1.10.0, commands that encounter missing resources exit with a non-zero code and a clear error message instead of succeeding silently.
-
-## CLI Configuration Persistence
-
-Environment variables `HT_TOKEN`, `HYPERTASKS_JWT_TOKEN`, and `HYPERTASKS_API_URL` can override your saved CLI configuration. Empty values in these variables now leave the saved settings intact, preserving your existing authentication and server URL for agent shells that run with empty exports. This prevents accidental config wipes and keeps long-running agent sessions properly authenticated.
-
-```bash
-# Agent shell with empty environment overrides retains CLI settings
-EMPTY_TOKEN="" EMPTY_JWT_TOKEN="" EMPTY_API_URL="" ht agent start
-
-# Previously, this would reset your settings to defaults
-```
-
-## CLI API Routing
-
-hypertask connects to the Hypertask API using a dedicated endpoint that is exempt from the Vercel bot challenge:
-
-- **Default endpoint:** `https://api.hypertask.ai`
-- **Routing:** CLI traffic is routed through `api.hypertask.ai`, not `app.hypertask.ai/v1` or other public-facing endpoints
-- **Benefit:** Direct API access works reliably from VPS environments without intermittent 403s caused by bot-challenge checks
-
-```bash
-# hypertask automatically connects to the exempt API endpoint
-hypertask task get HTPR-2992
-hypertask status
-```
-
-<Aside type="tip">
-If you need to use a custom API URL (for self-hosted instances), you can override it via `<code>--api-url</code>`. This overrides the default routing and should not be required for standard Hypertask.
-</Aside>
-
----
-
-## Commands
-
-### `capabilities` [list commands]
-
-Lists all available commands and their descriptions. By default, `hypertask capabilities` emits a human-readable Markdown summary. Pass `--json` to get a complete machine-readable catalog for automation.
-
-**Example - Markdown output (default):**
-
-```bash
-$ hypertask capabilities
-
-# Hypertask CLI - Available Commands
-- task create         Create a new task
-- task list           List tasks with filters
-- task show           Show task details
-- project list        List projects
-- login               Authenticate via browser or token
-- status              Check auth status
-- logout              Sign out
-...
-```
-
-**Example - JSON output (for automation):**
-
-```bash
-$ hypertask capabilities --json | jq '.capabilities[] | {command, description}'
-# Complete catalog with all commands, machine-readable for scripts
-```
-
-**Improvement since v1.8.0:** In earlier versions, `hypertask capabilities` printed a larger JSON document regardless of argument usage. Now, human-facing usage prints a compact Markdown summary. Agents that request `--json` receive the full machine-readable catalog.
-
----
-
-### `labels list --project <ID>`
-
-List labels scoped to a specific board/project. This replaces the previous behavior where `labels list --project <ID>` returned a global project list instead of board-specific labels.
-
-**Example:**
-
-```bash
-$ hypertask labels list --project 15
-
-# Board 15 Labels
-- critical
-- high-priority
-- frontend
-- backend
-- qa
-```
-
-**Fix since v1.8.0 ([HTPR-5777]):** The command now returns board-specific labels instead of a global project list, aligning with board-scoped workflows. Additionally, output is formatted as Markdown instead of truncated JSON.
-
----
-
-### `agents list`
-
-Lists the agents associated with your Hypertask account. This command reveals the available agent IDs and names for later use with agent-specific workflows.
-
-**Example:**
-
-```bash
-$ hypertask agents list
-
-# Your Agents
-- assistant-alice   Alice's assistant
-- qa-bot           QA workflow agent
-```
-
-Use the agent names or IDs with `hypertask agents run` or within agent workflows to target specific agents.
-
----
-
-### `agents run`
-
-Runs an existing agent on a specified schedule. Specify the agent ID or name and optionally provide the run date/time for scheduling.
-
-**Example:**
-
-```bash
-$ hypertask agents run \
-  --id qa-bot \
-  --date "2026-09-01T09:00"
-```
-
-This will schedule the `qa-bot` agent for a one-time run at 9:00 UTC on 2026-09-01. Use this command for ad-hoc or recurring agent runs outside of MCP workflows.
-
----
-
-### `agents start`
-
-Initiates an ad-hoc agent with an explicit prompt, board context, and optional custom name. This is useful for quick exploration tasks.
-
-**Example:**
-
-```bash
-$ hypertask agents start \
-  --name "quick-research" \
-  --prompt "Identify the top 3 blockers in the 'engineering' board" \
-  --board engineering
-```
-
-Run this command at your terminal; the agent will execute its prompt and report back with results. You can inspect or manage completed runs via the web UI.
-
----
-
-### `task search`
-
-Searches for tasks by ticket number, title, or description. The search result list now includes the canonical description text and the full link field for each task, preserving rank and filters.
-
-**Example:**
-
-```bash
-$ hypertask task search "authentication"
-```
-
-Matching tasks are displayed with:
-- Ticket number and title
-- The original long description instead of an empty summary
-- The canonical link field pointing to `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}`
-
-**Improved since v0.2.0 ([HTPR-5798]):** The command now restores the full task description and link instead of returning an empty summary or dropping the link field, while keeping performance and ranked search behavior intact.
-
----
-
-### CLI Native Binary Performance
-
-The native `hypertask` binary is compiled in Zig and loads IndexedDB data directly, eliminating the need to hit the Hypertask API for every CLI operation. This yields:
-
-- Sub-second starts for most commands on cold cache
-- No network churn for common list/show operations
-- Instant board painting from cached state for standard board workflows
-
-For tasks and boards loaded from IndexedDB, `hypertask` reads from local storage and writes back on completion, resulting in near-instant responsiveness even with offline access.
-
----
-
-## Troubleshooting
-
-### Access token errors
-
-If you see `AgentNotFound` or credential errors, ensure you have a valid JWT cached locally:
-
-```bash
-hypertask login --reauth
-```
-
-This regenerates your credentials and updates the local cache.
-
-### Awaiting deployment
-
-Some features or configuration options may be deployed to staging before rollout to production. If a command isn't behaving as expected (for example, `hypertask agents list` returns no agents), verify you're on the latest binary:
-
-```bash
-hypertask version
-```
-
-If a feature is not yet available in your client, check the [changelog](../changelog/) for deployment status.
-
-### Known limitations
-
-- The `agents` commands are in active development. You may encounter incomplete behavior or missing flags. For stable command usage, refer to the MCP integration docs for full agent configuration and workflow patterns.
