@@ -23,10 +23,6 @@ Create a free account or contact your team administrator if you don't see an opt
 3. Enter your email address and follow the password-reset link sent to your inbox
 4. If you don't receive a reset email, check your spam folder or contact support
 
-## Unable to log in after email change
-
-Notify your team administrator to remove your old email from user records and allow you to sign up or join again with the updated email.
-
 ## Account switching behavior
 
 When you start a new login for a different account from the same browser:
@@ -34,8 +30,14 @@ When you start a new login for a different account from the same browser:
 - The previous user's session is properly cleared (Max-Age=0 cookies)
 - Both Better Auth and user identity cookies are set for the new account
 - You're immediately redirected to a board as the new user
-  
+
 Your logged-in state persists across sessions; hiding or closing the browser doesn't automatically log you out unless you explicitly sign out. Authentication is verified server-side on each request via the signed `ht_session` cookie.
+
+## Sign-in security improvements (hypertask.ai login)
+
+- The sign-in email endpoint no longer returns verification codes or magic-link tokens to callers. This prevents callers from using the response to reset or take over an email account without direct access to the inbox.
+
+Your credentials and login processes otherwise remain unchanged; simply use your email and password or the password reset flow as usual. If you receive password reset emails or confirmations, verify they were sent by `hypertask.ai`; invalid or forwarded reset links are not sent by Hypertask.
 
 ---
 
