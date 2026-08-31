@@ -63,4 +63,8 @@ The calendar renders reliably in production even when a persisted user state is 
 
 If your board has historical images stored with an old S3 host configuration, the calendar no longer crashes when loading those images. Hypertask now accepts legacy bucket hosts in `next.config` remotePatterns, so old images load without bringing down the entire page. Requesting an official image migration, which will rewrite stored URLs to `files.hypertask.app`, remains a separate data cleanup effort. The calendar now works smoothly even when some images are still on an old host.
 
+## Blocked tasks
+
+Blocked tasks now stand out in Calendar. Month, week, and day views show the same red left edge as the board, making it easy to spot bottlenecks at a glance without switching to your board view.
+
 ---
