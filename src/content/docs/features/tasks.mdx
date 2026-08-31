@@ -27,7 +27,7 @@ Since All Tasks is board-wide, it aggregates tasks from all active columns and s
 
 **Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility).
 
-### Exclude tasks you don’t need
+### Exclude tasks you don't need
 
 To hide distracting or temporary tasks:
 
@@ -88,7 +88,7 @@ From a board, note the **AI Task Writer** bottom composer in columns and cards.
 
 **Mobile waveform and layout:**
 - The waveform sits full-width at the bottom of the composer; the action row stays anchored and swiping on narrow screens keeps the controls reachable.
-- On screens at 390px or narrower, the **Back pill** is removed to avoid overlapping the waveform; this eliminates the border-padding issue on small viewports where the pill would overlap the waveform controls.
+- On screens at 390px or narrower, the **Back pill** is removed to avoid overlapping the waveform; this eliminates clipping issues on small viewports.
 - Waveform buttons (mic, pause, play) are present and fully visible so you can dictate and review your draft without scrolling.
 
 **Dictation and save:**
@@ -103,6 +103,10 @@ From a board, note the **AI Task Writer** bottom composer in columns and cards.
 - The action row now features prominent **Send** (submit) and **Resend** actions; both are sized at 44px with equal prominence.
 - Sending a task pauses any in-flight request and disables the **Resend** button until the action completes, preventing rapid double-submission.
 - Resend can be used to revise the task and submit again without requiring a fresh keyboard/voice snapshot.
+
+### All Tasks on mobile rows no longer clip past right edge ([HTPR-5841](https://app.hypertask.ai/detail/project-15/5841))
+
+On small viewports, task rows in the All Tasks view previously extended past the right edge of the screen, creating visual clutter and confusing horizontal metrics. Mobile positions now use a single standardized horizontal inset (40px side padding), which matches the text constraint on the container and eliminates three distinct padding values. The All Tasks rows now render cleanly within the viewport on narrow screens.
 
 ## Editor placements and viewport behavior
 
@@ -158,7 +162,7 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 Common actions include:
 - **Move**: Relocate the task to a different section, board, or project.
-- **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the <a href="https://docs.hypertask.ai/features/boards/">Boards & Sections</a> docs).
+- **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
 - **Delete**: Permanently remove the task.
 
@@ -206,7 +210,9 @@ These are the default settings across the board UI, MCP-created views, and new d
 
 The task detail sidebar includes a rail of properties (title, priority, assignees, labels, etc.). The rail now occupies the full remaining dynamic viewport height, so it uses all available space rather than a fixed maximum and leaves no unused viewport space.
 
-**Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history[ A JSDoc-style constraint for this change: when a thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
+**Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history.
+
+[ A JSDoc-style constraint for this change: when a thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
 
 ## Time tracking
 
@@ -215,7 +221,7 @@ Track work hours on tasks via the **Times** section:
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
 
-See the <a href="https://docs.hypertask.ai/features/time-tracking/">Time Tracking</a> guide for full details.
+See the [Time Tracking](https://docs.hypertask.ai/features/time-tracking/) guide for full details.
 
 ## Status and sections
 
@@ -235,7 +241,7 @@ The system accepts a wide range of file types including APK, ZIP, gzip, tar, CSV
 
 ## Follower notifications
 
-When you mention someone on a task, they're automatically added as a follower so they receive updates (see <a href="https://docs.hypertask.ai/features/collaboration/">Collaboration</a>). If you use the follower field directly on a task page, Hypertask sends them a notification to inform them they've been added as a follower. Previously, the request used the wrong key and failed silently. Deliveries now succeed reliably.
+When you mention someone on a task, they're automatically added as a follower so they receive updates (see [Collaboration](https://docs.hypertask.ai/features/collaboration/)). If you use the follower field directly on a task page, Hypertask sends them a notification to inform them they've been added as a follower. Previously, the request used the wrong key and failed silently. Deliveries now succeed reliably.
 
 ## Notes and pages
 
@@ -243,7 +249,7 @@ Attach rich notes and full-screen notepads directly to tasks:
 - **Notes**: Inline-style notes inside the description area.
 - **Pages**: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 
-See the <a href="https://docs.hypertask.ai/features/pages/">Pages</a> feature docs for details.
+See the [Pages](https://docs.hypertask.ai/features/pages/) feature docs for details.
 
 ## AI status updates
 
