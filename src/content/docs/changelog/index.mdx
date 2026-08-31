@@ -26,6 +26,19 @@ export const Update = ({ label, children }) => (
   * Improved: Hypertask capabilities command prints a readable Markdown command list instead of a large JSON document when not using --json ([HTPR-5776](https://app.hypertask.ai/detail/project-15/5776))
 </Update>
 
+<Update label="August 31, 2026">
+  * Fixed: users who turn off the rail no longer see it briefly flash during SSR/hydration ([HTPR-5749](https://app.hypertask.ai/detail/project-15/5749))
+  * Fixed: empty HYPERTASKS_API_URL config no longer overwrites saved CLI settings ([HTPR-5774](https://app.hypertask.ai/detail/project-15/5774))
+  * Fixed: ticket prefixes now generate deterministically based on board titles to avoid collisions across identically-named boards ([HTPR-5770](https://app.hypertask.ai/detail/project-15/5770))
+  * Fixed: saved JWTs are auto-refreshed before expiring and show exact UTC expiry date for older, non-rotating tokens in the installed CLI ([HTPR-5797](https://app.hypertask.ai/detail/project-15/5797))
+  * Fixed: labels list --project now returns the board's labels instead of a global project list ([HTPR-5777](https://app.hypertask.ai/detail/project-15/5777))
+  * Improved: CLI now loads IndexedDB directly; the native htz binary compiles in Zig and reads from local storage instead of hitting the API for every operation ([HTPR-5771](https://app.hypertask.ai/detail/project-15/5771))
+  * Improved: Switched Hypertask CLI to htz (Zig) as the sole official CLI; deprecated legacy Node CLI ([HTPR-5747](https://app.hypertask.ai/detail/project-15/5747))
+  * Improved: Midscene QA board coverage expanded with five new board flows, stale-flow repairs, and a nightly heartbeat watchdog ([HTPR-5773](https://app.hypertask.ai/detail/project-15/5773))
+  * Added: 6 authenticated read-only Midscene flows for inbox, search, calendar, all tasks, starred, and board views ([HTPR-5780](https://app.hypertask.ai/detail/project-15/5780))
+  * Improved: Hypertask capabilities command prints a readable Markdown command list instead of a large JSON document when not using --json ([HTPR-5776](https://app.hypertask.ai/detail/project-15/5776))
+</Update>
+
 <Update label="August 29, 2026">
   * Fixed: archiving a notification now immediately clears sibling rows from the Inbox without a refresh ([HTPR-5745](https://app.hypertask.ai/detail/project-15/5745))
   * Added: Instant board painting from IndexedDB snapshot with background auth revocation ([HTPR-5722](https://app.hypertask.ai/detail/project-15/5722))
@@ -85,12 +98,12 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 25, 2026">
-  <p>Ã\x83Â¢ The following tickets this run failed the shipped gate and were deferred:</p>
+  <p>ÃƒƒÃ‚¢ The following tickets this run failed the shipped gate and were deferred:</p>
   <ul>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> Ã\x83Â¢ Task move from board modal is failing on board name clicks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> Ã\x83Â¢ CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> Ã\x83Â¢ Archived task reminders trigger and disappear without alerting the user</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> Ã\x83Â¢ Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> Ã\x83Â¢ Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> ÃƒƒÃ‚¢ Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> ÃƒƒÃ‚¢ CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> ÃƒƒÃ‚¢ Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> ÃƒƒÃ‚¢ Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> ÃƒƒÃ‚¢ Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
   </ul>
 </Update>
