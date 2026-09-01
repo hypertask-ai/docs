@@ -13,6 +13,10 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 1, 2026">
+  * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
+</Update>
+
 <Update label="August 31, 2026">
   * Fixed: Sidebar board names and inbox split tabs now render at the documented 14px size instead of 14.5px ([HTPR-5823](https://app.hypertask.ai/detail/project-15/5823))
   * Added: CLI parity tests now check JSON diffs, auth matrix, and negative cases instead of exit-code-only checks ([HTPR-5783](https://app.hypertask.ai/detail/project-15/5783))
@@ -114,12 +118,12 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="August 25, 2026">
-  <p>Ã\x83Â¢\\\\x80\\\\x94 The following tickets this run failed the shipped gate and were deferred:</p>
+  <p>The following tickets this run failed the shipped gate and were deferred:</p>
   <ul>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> Ã\x83Â¢\\\\x80\\\\x94 Task move from board modal is failing on board name clicks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> Ã\x83Â¢\\\\x80\\\\x94 CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> Ã\x83Â¢\\\\x80\\\\x94 Archived task reminders trigger and disappear without alerting the user</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> Ã\x83Â¢\\\\x80\\\\x94 Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
-    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> Ã\x83Â¢\\\\x80\\\\x94 Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> — Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> — Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
   </ul>
 </Update>
