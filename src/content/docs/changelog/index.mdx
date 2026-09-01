@@ -37,6 +37,7 @@ export const Update = ({ label, children }) => (
   * Improved: Agent idle watchdog now counts each tool-log write as activity, so a 15-minute silent (hax) build no longer kills the run and returns ProviderTimedOut ([HTPR-5932](https://app.hypertask.ai/detail/project-15/5932))
   * Added: When a task is archived, the worker immediately stops any running provider on it and cancels all queued deliveries for that task ([HTPR-5934](https://app.hypertask.ai/detail/project-15/5934))
   * Improved: Desktop Board/Table local reads now skip IndexedDB enumeration and unneeded local reads via a snapshot marker, saving ~80-110ms on first paint on fresh opens ([HTPR-5927](https://app.hypertask.ai/detail/project-15/5927))
+  * Improved: Command Palette now includes "Settings: Appearance" for quick access to appearance settings from any surface ([HTPR-5880](https://app.hypertask.ai/detail/project-15/5880))
 </Update>
 
 <Update label="August 31, 2026">
