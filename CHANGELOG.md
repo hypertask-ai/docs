@@ -1,0 +1,121 @@
+---
+title: Changelog
+description: Daily log of new features, bug fixes, and improvements shipped to Hypertask.
+---
+
+{/* Starlight has no Update component; local shim so the entries render as
+    labeled sections without rewriting them. */}
+
+export const Update = ({ label, children }) => (
+  <section>
+    <h3>{label}</h3>
+    {children}
+  </section>
+);
+
+<Update label="September 1, 2026">
+  * Fixed: Mobile task page: remove the clipped right-edge button stack, move Ask AI to a floating button; the chat modal opens without refocusing the composer on mobile ([HTPR-5850](https://app.hypertask.ai/detail/project-15/5850))
+  * Improved: Mobile: floating new-task button on Board, Calendar, and Inbox views ([HTPR-5848](https://app.hypertask.ai/detail/project-15/5848))
+</Update>
+
+<Update label="August 31, 2026">
+  * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
+</Update>
+
+<Update label="August 30, 2026">
+  * Fixed: Sidebar board names and inbox split tabs now render at the documented 14px size instead of 14.5px ([HTPR-5823](https://app.hypertask.ai/detail/project-15/5823))
+  * Added: CLI parity tests now check JSON diffs, auth matrix, and negative cases instead of exit-code-only checks ([HTPR-5783](https://app.hypertask.ai/detail/project-15/5783))
+  * Added: CLI merges now auto-install htz on the VPS fleet after successful build and verification ([HTPR-5788](https://app.hypertask.ai/detail/project-15/5788))
+  * Fixed: All Tasks rows on mobile no longer clip past the right edge and use a consistent horizontal inset ([HTPR-5841](https://app.hypertask.ai/detail/project-15/5841))
+  * Added: npm shim for @hypertask/hypertask_cli fetches the native htz binary on install ([HTPR-5762](https://app.hypertask.ai/detail/project-15/5762))
+  * Fixed: --human flag now renders human-readable labels, tables, or nested records instead of JSON ([HTPR-5775](https://app.hypertask.ai/detail/project-15/5775))
+  * Fixed: unknown MCP paths under /api/mcp/* now require authentication and return 401 instead of 404 ([HTPR-5769](https://app.hypertask.ai/detail/project-15/5769))
+  * Fixed: users who turn off the rail no longer see it briefly flash during SSR/hydration ([HTPR-5749](https://app.hypertask.ai/detail/project-15/5749))
+  * Fixed: empty HYPERTASKS_API_URL config no longer overwrites saved CLI settings ([HTPR-5774](https://app.hypertask.ai/detail/project-15/5774))
+  * Fixed: ticket prefixes now generate deterministically based on board titles to avoid collisions across identically-named boards ([HTPR-5770](https://app.hypertask.ai/detail/project-15/5770))
+  * Fixed: saved JWTs are auto-refreshed before expiring and show exact UTC expiry date for older, non-rotating tokens in the installed CLI ([HTPR-5797](https://app.hypertask.ai/detail/project-15/5797))
+  * Fixed: labels list --project now returns the board's labels instead of a global project list ([HTPR-5777](https://app.hypertask.ai/detail/project-15/5777))
+  * Improved: CLI now loads IndexedDB directly; the native htz binary compiles in Zig and reads from local storage instead of hitting the API for every operation ([HTPR-5771](https://app.hypertask.ai/detail/project-15/5771))
+  * Added: CLI now loads IndexedDB directly; the native htz binary compiles in Zig and reads from local storage instead of hitting the API for every operation ([HTPR-5771](https://app.hypertask.ai/detail/project-15/5771))
+  * Improved: Switched Hypertask CLI to htz (Zig) as the sole official CLI; deprecated legacy Node CLI ([HTPR-5747](https://app.hypertask.ai/detail/project-15/5747))
+  * Improved: Midscene QA board coverage expanded with five new board flows, stale-flow repairs, and a nightly heartbeat watchdog ([HTPR-5773](https://app.hypertask.ai/detail/project-15/5773))
+  * Added: 6 authenticated read-only Midscene flows for inbox, search, calendar, all tasks, starred, and board views ([HTPR-5780](https://app.hypertask.ai/detail/project-15/5780))
+  * Improved: Hypertask capabilities command prints a readable Markdown command list instead of a large JSON document when not using --json ([HTPR-5776](https://app.hypertask.ai/detail/project-15/5776))
+  * Added: task search now returns the canonical description and link field instead of an empty summary ([HTPR-5798](https://app.hypertask.ai/detail/project-15/5798))
+  * Fixed: account ownership transfer endpoint now returns 401 for unauthenticated requests before state changes ([HTPR-5808](https://app.hypertask.ai/detail/project-15/5808))
+  * Fixed: unauthenticated GET and PUT requests to the single-comment endpoint now return 404 ([HTPR-5809](https://app.hypertask.ai/detail/project-15/5809))
+  * Fixed: member removal endpoint now requires a valid signed session; forged identity cookies are rejected before deletion ([HTPR-5806](https://app.hypertask.ai/detail/project-15/5806))
+  * Fixed: sign-in email endpoint no longer exposes verification codes or magic-link tokens ([HTPR-5807](https://app.hypertask.ai/detail/project-15/5807))
+  * Fixed: production task-creation latency is now below 1.5s p75 ([HTPR-5756](https://app.hypertask.ai/detail/project-15/5756))
+  * Added: theme typefaces confirmed as IBM Plex Sans across all default themes ([HTPR-5822](https://app.hypertask.ai/detail/project-15/5822))
+  * Added: Blocked tasks now stand out with a red left edge in Calendar views (Month, Week, Day) to match the board view ([HTPR-5834](https://app.hypertask.ai/detail/project-15/5834))
+</Update>
+
+<Update label="August 29, 2026">
+  * Fixed: archiving a notification now immediately clears sibling rows from the Inbox without a refresh ([HTPR-5745](https://app.hypertask.ai/detail/project-15/5745))
+  * Added: Instant board painting from IndexedDB snapshot with background auth revocation ([HTPR-5722](https://app.hypertask.ai/detail/project-15/5722))
+  * Added: Superhuman-style Write with AI on desktop with prompt chips and draft highlighting ([HTPR-5719](https://app.hypertask.ai/detail/project-15/5719))
+  * Added: Pre-merge Vercel build gate requiring ci-tests + vercel-build status for staging ([HTPR-5737](https://app.hypertask.ai/detail/project-15/5737))
+  * Added: CLI --self flag enables self-assignment for agents, matching MCP assign_self behavior ([HTPR-4150](https://app.hypertask.ai/detail/project-15/4150))
+  * Fixed: CLI --labels flags on tasks create and update now accumulate instead of silently dropping earlier flags ([HTPR-5703](https://app.hypertask.ai/detail/project-15/5703))
+  * Fixed: Mobile comment Improve with AI now completes the single improve action ([HTPR-5712](https://app.hypertask.ai/detail/project-15/5712))
+  * Added: Midscene AI-driven E2E scaffold with hard resource guards (RAM, CPU, timeout, single-flight lock) for QA Agent Playwright tests ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
+  * Added: Agent step timelines visible on cards and agent pages, showing last 3 finished runs on cards and a full run history with per-step durations on agent pages ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+  * Added: AI chat queueing for automatic follow-up sending after completed turns, with explicit queue display and Stop/Send controls ([HTPR-5695](https://app.hypertask.ai/detail/project-15/5695))
+  * Fixed: Lease release operations now verify the lease instance they delete before proceeding ([HTPR-5656](https://app.hypertask.ai/detail/project-15/5656))
+  * Added: heartbeat line for the merge/unblock timer above agent cards, with green for under 15 min, amber for 15-30 min late, and red for down or no data ([HTPR-5707](https://app.hypertask.ai/detail/project-15/5707))
+  * Fixed: clicking a due date on a read-only task no longer crashes the app via guard in PR #3045 ([HTPR-5698](https://app.hypertask.ai/detail/project-15/5698))
+  * Added: red card outline and blocked-summary widget on the Agents Dashboard to prioritize unaddressed bottlenecks ([HTPR-5716](https://app.hypertask.ai/detail/project-15/5716))
+  * Fixed: mobile task creation now keeps the created task open for review instead of returning you to the board after saving ([HTPR-5713](https://app.hypertask.ai/detail/project-15/5713))
+  * Fixed: ticket creation now succeeds with valid title, description, dates, assignees, labels, URLs, and relations even when browser circular state is present ([HTPR-5491](https://app.hypertask.ai/detail/project-15/5491))
+  * Fixed: Mobile board does not show newly created or renamed columns until manual refresh ([HTPR-5711](https://app.hypertask.ai/detail/project-15/5711))
+  * Fixed: Mobile board flickers during column operations on add column, tap, and rename ([HTPR-5709](https://app.hypertask.ai/detail/project-15/5709))
+  * Fixed: Undoing an archiving action now restores hidden inbox notifications ([HTPR-5640](https://app.hypertask.ai/detail/project-15/5640))
+  * Improved: Mobile Board start local board read on first layout pass to reduce cold-start latency ([HTPR-5669](https://app.hypertask.ai/detail/project-15/5669))
+</Update>
+
+<Update label="August 27, 2026">
+  * Added: Instant board painting from IndexedDB snapshot with background auth revocation ([HTPR-5722](https://app.hypertask.ai/detail/project-15/5722))
+  * Added: Superhuman-style Write with AI on desktop with prompt chips and draft highlighting ([HTPR-5719](https://app.hypertask.ai/detail/project-15/5719))
+  * Added: Pre-merge Vercel build gate requiring ci-tests + vercel-build status for staging ([HTPR-5737](https://app.hypertask.ai/detail/project-15/5737))
+  * Added: CLI --self flag enables self-assignment for agents, matching MCP assign_self behavior ([HTPR-4150](https://app.hypertask.ai/detail/project-15/4150))
+  * Fixed: CLI --labels flags on tasks create and update now accumulate instead of silently dropping earlier flags ([HTPR-5703](https://app.hypertask.ai/detail/project-15/5703))
+  * Fixed: Mobile comment Improve with AI now completes the single improve action ([HTPR-5712](https://app.hypertask.ai/detail/project-15/5712))
+  * Added: Midscene AI-driven E2E scaffold with hard resource guards (RAM, CPU, timeout, single-flight lock) for QA Agent Playwright tests ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
+  * Added: Agent step timelines visible on cards and agent pages, showing last 3 finished runs on cards and a full run history with per-step durations on agent pages ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+  * Added: AI chat queueing for automatic follow-up sending after completed turns, with explicit queue display and Stop/Send controls ([HTPR-5695](https://app.hypertask.ai/detail/project-15/5695))
+  * Fixed: Lease release operations now verify the lease instance they delete before proceeding ([HTPR-5656](https://app.hypertask.ai/detail/project-15/5656))
+  * Added: heartbeat line for the merge/unblock timer above agent cards, with green for under 15 min, amber for 15-30 min late, and red for down or no data ([HTPR-5707](https://app.hypertask.ai/detail/project-15/5707))
+  * Fixed: clicking a due date on a read-only task no longer crashes the app via guard in PR #3045 ([HTPR-5698](https://app.hypertask.ai/detail/project-15/5698))
+  * Added: red card outline and blocked-summary widget on the Agents Dashboard to prioritize unaddressed bottlenecks ([HTPR-5716](https://app.hypertask.ai/detail/project-15/5716))
+  * Fixed: mobile task creation now keeps the created task open for review instead of returning you to the board after saving ([HTPR-5713](https://app.hypertask.ai/detail/project-15/5713))
+  * Fixed: ticket creation now succeeds with valid title, description, dates, assignees, labels, URLs, and relations even when browser circular state is present ([HTPR-5491](https://app.hypertask.ai/detail/project-15/5491))
+  * Fixed: Mobile board does not show newly created or renamed columns until manual refresh ([HTPR-5711](https://app.hypertask.ai/detail/project-15/5711))
+  * Fixed: Mobile board flickers during column operations on add column, tap, and rename ([HTPR-5709](https://app.hypertask.ai/detail/project-15/5709))
+  * Fixed: Undoing an archiving action now restores hidden inbox notifications ([HTPR-5640](https://app.hypertask.ai/detail/project-15/5640))
+</Update>
+
+<Update label="August 26, 2026">
+  * Fixed: CLI --labels flags on tasks create and update now accumulate instead of silently dropping earlier flags ([HTPR-5703](https://app.hypertask.ai/detail/project-15/5703))
+  * Fixed: Mobile comment Improve with AI now completes the single improve action ([HTPR-5712](https://app.hypertask.ai/detail/project-15/5712))
+  * Added: Midscene AI-driven E2E scaffold with hard resource guards (RAM, CPU, timeout, single-flight lock) for QA Agent Playwright tests ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
+  * Added: Agent step timelines visible on cards and agent pages, showing last 3 finished runs on cards and a full run history with per-step durations on agent pages ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+  * Added: AI chat queueing for automatic follow-up sending after completed turns, with explicit queue display and Stop/Send controls ([HTPR-5695](https://app.hypertask.ai/detail/project-15/5695))
+  * Fixed: Lease release operations now verify the lease instance they delete before proceeding ([HTPR-5656](https://app.hypertask.ai/detail/project-15/5656))
+  * Added: heartbeat line for the merge/unblock timer above agent cards, with green for under 15 min, amber for 15-30 min late, and red for down or no data ([HTPR-5707](https://app.hypertask.ai/detail/project-15/5707))
+  * Fixed: clicking a due date on a read-only task no longer crashes the app via guard in PR #3045 ([HTPR-5698](https://app.hypertask.ai/detail/project-15/5698))
+  * Added: red card outline and blocked-summary widget on the Agents Dashboard to prioritize unaddressed bottlenecks ([HTPR-5716](https://app.hypertask.ai/detail/project-15/5716))
+  * Fixed: mobile task creation now keeps the created task open for review instead of returning you to the board after saving ([HTPR-5713](https://app.hypertask.ai/detail/project-15/5713))
+  * Fixed: ticket creation now succeeds with valid title, description, dates, assignees, labels, URLs, and relations even when browser circular state is present ([HTPR-5491](https://app.hypertask.ai/detail/project-15/5491))
+</Update>
+
+<Update label="August 25, 2026">
+  <p>The following tickets this run failed the shipped gate and were deferred:</p>
+  <ul>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5663">HTPR-5663</a> — Task move from board modal is failing on board name clicks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5674">HTPR-5674</a> — CLI/MCP agent auto-assign fails when trying to hand off tasks</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5683">HTPR-5683</a> — Archived task reminders trigger and disappear without alerting the user</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5624">HTPR-5624</a> — Neon cost optimization improvements still in progress (root cause confirmed, pending fix decision)</li>
+    <li><a href="https://app.hypertask.ai/detail/project-15/5737">HTPR-5737</a> — Pre-merge Vercel build gate; staging gate in place, but mirror gating per evidence to be resolved; pending cross-tenant gating confirmation.</li>
+  </ul>
+</Update>
