@@ -1,0 +1,225 @@
+---
+title: Agent Workflows
+description: Patterns for AI agents working with Hypertask tasks.
+---
+
+import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+This guide covers the recommended patterns for AI agents that use Hypertask as their task management backend. Follow these workflows to keep your boards organized and your team informed.
+
+## Picking up work
+
+When an agent session starts, it should find the highest-priority available work.
+
+<Steps>
+
+1. **Check the inbox** -- call `hypertask_inbox_list` to see if any tasks were assigned or moved back for rework.
+2. **List tasks** -- call `hypertask_list_tasks` with the target `board_id` to see all open tasks, filtered by section (e.g., "Todo" or "Backlog").
+3. **Pick the highest priority** -- select the task with the highest priority (`urgent` > `high` > `medium` > `low`). If priorities are equal, pick the oldest task.
+
+</Steps>
+
+```
+// Example: list open tasks on board 15, sorted by priority
+hypertask_list_tasks({
+  board_id: 15,
+  section: "Todo",
+  assigned_to: "me"
+})
+```
+
+## Claiming tasks with leases
+
+To safely claim a task without racing with other agents, use task leases. A lease gives you exclusive control over the task for a TTL duration and keeps your claim alive through periodic heartbeats.
+
+<Steps>
+
+1. **Claim the task** -- call the LEASE claim endpoint to acquire a lease.
+2. **Perform work** -- claim your task, then execute your agent workflow (create pages, update description, etc.).
+3. **Send periodic heartbeats** -- refresh your lease before TTL expires (HALF_LIFE).
+4. **Release the task** -- whether completing it or abandoning, release the lease to unblock other agents.
+
+</Steps>
+
+**Claim a task:**
+
+```
+POST /api/mcp/tasks/lease/claim
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "ticket_number": "HYP-42",
+  "owner_id": "agent-6" // your agent's internal ID if known
+}
+```
+
+**Send a heartbeat to extend the lease:**
+
+```
+POST /api/mcp/tasks/lease/heartbeat
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "lease_id": "lease-abc123",
+  "ttl": 6000000 // optional: explicit TTL in ms; not required if you just want to refresh current lease
+}
+```
+
+**Release the lease:**
+
+```
+POST /api/mcp/tasks/lease/release
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "lease_id": "lease-abc123"
+}
+```
+
+<Aside type="tip">
+Task leases ensure you can safely pick up work without conflicts. Always release your lease when done, and refresh it before expiration to prevent others from stealing the task.
+</Aside>
+
+### Leases for native-agent AI Chat (HTPR-5468)
+
+Native-agent AI Chat workflows must acquire a task lease before performing mutations such as task assignment or movement. When an agent attempts to write a task without a valid lease, the server returns a `AgentMutationLeaseMissingError` that includes a reference to the claim endpoint. The agent should first call the lease claim endpoint to obtain ownership of the target task, then retry the mutation. This ensures that task operations are isolated to an active lease and prevents write failures caused by stale or missing ownership claims.
+
+### Lease conflict detection
+
+When workers attempt to reserve a pickup simultaneously, the system now identifies conflicting lease agents by comparing their UUIDs. Leases carry an `agentId` field derived from the active `TaskLease` row, including both current and legacy rows. Workers retry only the conflicting lease holder, preventing livelock scenarios where multiple agents repeatedly vie for the same task. Resolve by releasing the unwanted lease or refreshing your agent's lease to obtain the exclusive ID.
+
+## Rate limiting for agents
+
+Authenticated agent tokens that carry valid `htk_` API keys receive a higher rate-limit tier:
+
+- **Base tier:** 120 requests/minute for unauthenticated or invalid keys
+- **Agent tier:** 600 requests/minute for authenticated agents with valid `htk_` keys
+
+Agent-tier rate limits apply specifically to agent traffic. Non-agent requests (e.g., from human users or other clients) remain subject to the base limits.
+
+<Aside type="caution">
+Make sure your agent implementation always includes a valid API key when performing write operations. This ensures you get the higher rate tier and proper attribution in activity logs.
+</Aside>
+
+## Creating and extending Pages
+
+Agents can maintain long-lived, task-bound notes through the Pages system. Use Pages to experiment, plan, and research without cluttering task descriptions.
+
+### General Page workflow
+
+When an agent needs to explore or plan in depth:
+
+```
+// 1. Create a new page on a task
+hypertask_create_page({
+  ticket_number: "HYP-42",
+  title: "Competitor research",
+  ifVersion: currentVersion, // optional optimistic-lock header
+  mode: "overwrite", // create fresh, or "append" to an existing page
+  text: "# Competitor research\n\nStart by listing key competitors."
+})
+
+// 2. Append multiple times to grow the page
+hypertask_append_to_page({
+  ticket_number: "HYP-42",
+  page_id: 4521,
+  ifVersion: currentVersionHead,
+  text: "### Competitor A\n\n- Pricing tier X\n- Notable features..."
+})
+
+// 3. Search the page to surface relevant parts later
+hypertask_search_pages({
+  ticket_number: "HYP-42",
+  query: "pricing",
+  limit: 5
+})
+```
+
+### Appending vs prepending
+
+Use `append` to grow pages incrementally without risking accidental overwrites; use `prepend` to add context at the top of a page (e.g., updated policy notes or quick updates).
+
+- **Append:** Place new text after existing content (`RFC 2046` style).
+- **Prepend:** Place new text before existing content.
+- **Overwrite:** Replace the entire page.
+
+<Aside type="tip">
+Pages are automatically indexed for the AI. You can reference page snippets in task descriptions, comments, and agent workflows without needing to manually summarize.
+</Aside>
+
+## Handling version conflicts on pages
+
+If two agents or workflows try to update the same page at the same time, version conflict safety ensures neither silently loses work:
+
+- The server validates `ifVersion` before persisting; if it mismatches the current version, it returns `409 Conflict`.
+- Clients can retry after reading the latest version with `hypertask_get_page`.
+
+```
+// 1. Retrieve current page
+const page = await hypertask_get_page({
+  ticket_number: "HYP-42",
+  page_id: 4521
+})
+
+// 2. Append or prepend to current content
+const newContent = `${page.text}\n\n---\nAdditional context: ${timestamp}`
+
+// 3. Write back with ifVersion for conflict safety
+const result = await hypertask_append_to_page({
+  ticket_number: "HYP-42",
+  page_id: 4521,
+  ifVersion: page.version,
+  text: newContent
+})
+
+if (result.status === 409) {
+  // Conflict: fetch latest and retry
+  const newer = await hypertask_get_page({ ticket_number: page.ticket, page_id: page.id })
+  // ... retry with newer.version
+}
+```
+
+## Task description versioning
+
+Task descriptions also have versioning, useful for agents that need to review or revert changes over time.
+
+### Listing description versions
+
+```
+hypertask_task_description_versions({
+  ticket_number: "HYP-42"
+})
+```
+
+### Restoring a description
+
+```
+hypertask_task_description_restore({
+  ticket_number: "HYP-42",
+  ifVersion: currentVersion,
+  toVersion: "v2" // fetch from versions list to pick the right one
+})
+```
+
+### Conflict handling for descriptions
+
+- If the `ifVersion` header doesn't match the current description version, the server returns `409 Conflict`.
+- Read the latest description and content, then retry without the header or with the latest version.
+
+## Page + task integration
+
+Pages should always align with the task they belong to. Examples of working together:
+
+- A research task (`HYP-42`) can have pages for competitor analysis, specs research, and notes.
+- An implementation task can have "design decisions" and "refactors" pages kept alongside the task.
+- Use `hypertask_list_pages` after picking a task to quickly scan attached explorations.
+
+<Aside type="tip">
+Agents are encouraged to use Pages for explorations rather than long inline descriptions; descriptions can act as summary / TL;DR and Pages can be deeper context.
+</Aside>
+
+## Related topics
+
+- [MCP Integration](/mcp/overview/) — how to connect your agent to the Hypertask MCP server.
+- [Pages](/features/pages/) — detailed reference for task-bound pages, history, and CLI/MCP tools.
+- [CLI Reference](/cli/reference/) — terminal commands for listing pages, searching, and managing versions.
