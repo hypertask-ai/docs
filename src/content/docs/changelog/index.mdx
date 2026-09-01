@@ -14,7 +14,9 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 1, 2026">
+  * Fixed: Mobile Write with AI now uses a proper two-case design—edit draft vs generate from scratch—restoring the feature on mobile ([HTPR-5865](https://app.hypertask.ai/detail/project-15/5865))
   * Fixed: Mobile column names now open Manage board columns when tapped, fixing the long-standing tapping action ([HTPR-5710](https://app.hypertask.ai/detail/project-15/5710))
+  * Fixed: Worker idle timeout: silent agent turns now stop after 900 seconds of no output instead of waiting for the elapsed timeout, with a 7,200-second hard ceiling retained ([HTPR-5883](https://app.hypertask.ai/detail/project-15/5883))
   * Fixed: Mobile calendar agenda now displays blocker chips showing the person blocking each task, connecting agenda rows to board-level blocking state ([HTPR-5855](https://app.hypertask.ai/detail/project-15/5855))
   * Fixed: Mobile bottom sheets no longer crash when they close during drag release, handling webhook-triggered actions safely ([HTPR-5854](https://app.hypertask.ai/detail/project-15/5854))
   * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
@@ -28,7 +30,7 @@ export const Update = ({ label, children }) => (
   * Improved: Mobile undo toast now stays visible for 7.5 seconds instead of 15 seconds, matching mobile undo behavior ([HTPR-5872](https://app.hypertask.ai/detail/project-15/5872))
   * Improved: New-task modal now shows a mini dictation icon above the description field and polishes mobile layout to render in reading order ([HTPR-5877](https://app.hypertask.ai/detail/project-15/5877))
   * Fixed: Comment drafts stay with the ticket where typed rather than bleeding across other tickets ([HTPR-5868](https://app.hypertask.ai/detail/project-15/5868))
-  * Fixed: Worker treats repeated assignment observations as the same ownership, so it no longer misfires “delivery done” for the same assignment ([HTPR-5875](https://app.hypertask.ai/detail/project-15/5875))
+  * Fixed: Worker treats repeated assignment observations as the same ownership, so it no longer misfires "delivery done" for the same assignment ([HTPR-5875](https://app.hypertask.ai/detail/project-15/5875))
 </Update>
 
 <Update label="August 31, 2026">
