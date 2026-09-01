@@ -27,6 +27,8 @@ export const Update = ({ label, children }) => (
   * Fixed: Comment composer: @mention chip can now be deleted with backspace on mobile, preserving surrounding draft text ([HTPR-5867](https://app.hypertask.ai/detail/project-15/5867))
   * Improved: Mobile undo toast now stays visible for 7.5 seconds instead of 15 seconds, matching mobile undo behavior ([HTPR-5872](https://app.hypertask.ai/detail/project-15/5872))
   * Improved: New-task modal now shows a mini dictation icon above the description field and polishes mobile layout to render in reading order ([HTPR-5877](https://app.hypertask.ai/detail/project-15/5877))
+  * Fixed: Comment drafts stay with the ticket where typed rather than bleeding across other tickets ([HTPR-5868](https://app.hypertask.ai/detail/project-15/5868))
+  * Fixed: Worker treats repeated assignment observations as the same ownership, so it no longer misfires “delivery done” for the same assignment ([HTPR-5875](https://app.hypertask.ai/detail/project-15/5875))
 </Update>
 
 <Update label="August 31, 2026">
