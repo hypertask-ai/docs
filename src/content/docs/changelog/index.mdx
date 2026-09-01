@@ -14,9 +14,11 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 1, 2026">
+  * Fixed: Mobile view sorting now offers Save for unsaved view changes, allowing users to apply custom sort configurations on mobile ([HTPR-5900](https://app.hypertask.ai/detail/project-15/5900))
+  * Fixed: Worker idle timeout: silent agent turns now stop after 900 seconds of no output instead of waiting for the elapsed timeout, with a 7,200-second hard ceiling retained ([HTPR-5883](https://app.hypertask.ai/detail/project-15/5883))
+  * Fixed: Agent detail page for external hax agents no longer shows the immutable token counter; recent actions now display When, Did, and Where without misleading 0-token values ([HTPR-5884](https://app.hypertask.ai/detail/project-15/5884))
   * Fixed: Mobile Write with AI now uses a proper two-case design—edit draft vs generate from scratch—restoring the feature on mobile ([HTPR-5865](https://app.hypertask.ai/detail/project-15/5865))
   * Fixed: Mobile column names now open Manage board columns when tapped, fixing the long-standing tapping action ([HTPR-5710](https://app.hypertask.ai/detail/project-15/5710))
-  * Fixed: Worker idle timeout: silent agent turns now stop after 900 seconds of no output instead of waiting for the elapsed timeout, with a 7,200-second hard ceiling retained ([HTPR-5883](https://app.hypertask.ai/detail/project-15/5883))
   * Fixed: Mobile calendar agenda now displays blocker chips showing the person blocking each task, connecting agenda rows to board-level blocking state ([HTPR-5855](https://app.hypertask.ai/detail/project-15/5855))
   * Fixed: Mobile bottom sheets no longer crash when they close during drag release, handling webhook-triggered actions safely ([HTPR-5854](https://app.hypertask.ai/detail/project-15/5854))
   * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
