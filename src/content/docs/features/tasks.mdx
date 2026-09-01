@@ -78,7 +78,7 @@ On mobile, the new-task modal opens full screen to give you maximum vertical spa
 
 - Tap the **X** in the header to close it.
 - Swipe right to dismiss it on supported devices.
-- Use the back button on your phone to close the modal.
+- Use the back button on your phone to close it.
 
 The close control and back gesture prevent users from being stuck inside the modal ([HTPR-5518](https://app.hypertask.ai/detail/project-15/5518)). New-task drafts no longer carry over when opening a different task or switching boards; the composer state is reset on each open to prevent stale content from appearing ([HTPR-5469](https://app.hypertask.ai/detail/project-15/5469)).
 
@@ -107,6 +107,16 @@ From a board, note the **AI Task Writer** bottom composer in columns and cards.
 ### All Tasks on mobile rows no longer clip past right edge ([HTPR-5841](https://app.hypertask.ai/detail/project-15/5841))
 
 On small viewports, task rows in the All Tasks view previously extended past the right edge of the screen, creating visual clutter and confusing horizontal metrics. Mobile positions now use a single standardized horizontal inset (40px side padding), which matches the text constraint on the container and eliminates three distinct padding values. The All Tasks rows now render cleanly within the viewport on narrow screens.
+
+### Mobile floating controls ([HTPR-5850](https://app.hypertask.ai/detail/project-15/5850))
+
+On mobile devices, tasks and board views now use floating action controls instead of fixed-rail buttons. From any board or inbox on a small screen:
+
+- Tapping the floating **New task** button opens the full-screen task creator.
+- Swiping to dismiss or using back navigation keeps navigation smooth and predictable.
+- The button is prominently placed at the bottom of the screen for a thumb-friendly interaction and works consistently across Board, Calendar, and Inbox views.
+
+This change improves spacing and clarity on narrow viewports while keeping quick task creation accessible.
 
 ## Editor placements and viewport behavior
 
