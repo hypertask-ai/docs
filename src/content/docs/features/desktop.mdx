@@ -19,6 +19,7 @@ Hypertask Desktop is a native Windows application that brings the full web exper
 - **Zero dependencies**: Built as a single 24 KB native exe with direct 2D rendering.
 - **Event-driven**: Efficient CPU usage with negligible idle cost.
 - **WineD3D fallback**: Falls back to IDXGISwapChain1 when IDXGISwapChain2 isn’t available (Gate 6), preventing fatal QueryInterface crashes.
+- **Memory limits**: Desktop now flushes local mailboxes after 676 reads (p75). The system also keeps the 3 most recent board snapshots per account. This limits local storage growth and improves cold board loads by avoiding redundant full-metadata database reads.
 
 ## Design rationale
 
