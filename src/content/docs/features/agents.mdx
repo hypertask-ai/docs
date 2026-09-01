@@ -53,7 +53,7 @@ The response contains the agent UUID and a token for authenticating the bearer t
 Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
 
 - **Scopes** — Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
-- **Tokens**— Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Tokens**—Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
 - **Identity** — When authenticated with an agent token, all writes appear as attributed to the agent.
 
 ### Agent identities and SMAP token usage
@@ -158,6 +158,16 @@ To prevent a 12-hour outage caused by agents hot-swapping their own runtime, eve
 - **Agents cannot install software or modify system-level settings** on the execution environment.
 
 This protection applies uniformly to all agents operating in full-trust mode. Attempts to violate these rules are prevented before runtime changes, preserving system stability.
+
+### Idle watchdog behavior for silent builds
+([HTPR-5932](https://app.hypertask.ai/detail/project-15/5932))
+
+When an agent turn is designed to be silent (e.g., building with hax), the idle watchdog now counts each tool-log write as activity. This user-facing rule keeps the watchdog alive during long-running, low-noise builds, preventing `ProviderTimedOut` during a build where `idle_seconds` stays near `elapsed_seconds` while Tool-log writes keep occurring.
+
+### Lifecycle when a task is archived
+([HTPR-5934](https://app.hypertask.ai/detail/project-15/5934))
+
+When a task is archived, the worker immediately stops the running provider on it and cancels all queued deliveries for that task. This ensures that long-running agent tasks (e.g., builds or deployments) terminate cleanly when the task is no longer relevant, without leaving orphaned provider processes or pending deliveries.
 
 ## Agent step timelines
 ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
