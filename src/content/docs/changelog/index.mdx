@@ -34,6 +34,8 @@ export const Update = ({ label, children }) => (
   * Improved: New-task modal now shows a mini dictation icon above the description field and polishes mobile layout to render in reading order ([HTPR-5877](https://app.hypertask.ai/detail/project-15/5877))
   * Fixed: Worker treats repeated assignment observations as the same ownership, so it no longer misfires "delivery done" for the same assignment ([HTPR-5875](https://app.hypertask.ai/detail/project-15/5875))
   * Fixed: Task page 'Move task to column' dialog now correctly shows available columns on load ([HTPR-5933](https://app.hypertask.ai/detail/project-15/5933))
+  * Improved: Agent idle watchdog now counts each tool-log write as activity, so a 15-minute silent (hax) build no longer kills the run and returns ProviderTimedOut ([HTPR-5932](https://app.hypertask.ai/detail/project-15/5932))
+  * Added: When a task is archived, the worker immediately stops any running provider on it and cancels all queued deliveries for that task ([HTPR-5934](https://app.hypertask.ai/detail/project-15/5934))
 </Update>
 
 <Update label="August 31, 2026">
