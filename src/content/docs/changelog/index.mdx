@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 1, 2026">
+  * Fixed: Mobile calendar agenda now displays blocker chips showing the person blocking each task, connecting agenda rows to board-level blocking state ([HTPR-5855](https://app.hypertask.ai/detail/project-15/5855))
+  * Fixed: Mobile bottom sheets no longer crash when they close during drag release, handling webhook-triggered actions safely ([HTPR-5854](https://app.hypertask.ai/detail/project-15/5854))
   * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
   * Fixed: Mobile task page now uses a floating Ask AI control instead of a clipped rail; the chat modal opens without refocusing the comment composer on mobile ([HTPR-5850](https://app.hypertask.ai/detail/project-15/5850))
   * Improved: Repeated same-actor status flips now share one counted history entry, preventing duplicated activity notifications ([HTPR-5721](https://app.hypertask.ai/detail/project-15/5721))
