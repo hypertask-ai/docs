@@ -151,6 +151,10 @@ The QA Agent now runs AI-driven end-to-end tests using Midscene with a dedicated
 
 This setup lets QA Agents autonomously detect regressions and provide concrete test evidence alongside their report summaries.
 
+### Plan grill for complex tickets ([HTPR-5857](https://app.hypertask.ai/detail/project-15/5857))
+
+For complex tickets — new features, 3+ files, schema/auth/billing changes, new subsystems, or proposals with open design choices — agents now run a plan-grill step. The agent writes a numbered plan, then grills it once through an adversarial Codex review. This adversarial check surfaces misalignment and risks before implementation, improving stability for major tickets.
+
 ### Dev Agent documentation precondition
 
 Dev agents that create, modify, or review content must now read `docs/DESIGN.md` before acting as the authoritative source of truth. This ensures agents:
