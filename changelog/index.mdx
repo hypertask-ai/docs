@@ -14,6 +14,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 1, 2026">
+  * Fixed: Task shortcuts no longer navigate or submit when opened outside Inbox: Ctrl/Cmd+Enter stays on board-created tasks while Ctrl/Cmd+Shift+Enter no longer submits there ([HTPR-5901](https://app.hypertask.ai/detail/project-15/5901))
   * Fixed: Discovery pickup livelock where agents retry forever because the lease holder was reported as current_user for every agent, now resolving contention by checking conflicting lease agents ([HTPR-5873](https://app.hypertask.ai/detail/project-15/5873))
   * Fixed: Discovery pickups no longer fail with contenders losing the pickup mutation reservation, now using existing pickup lease for self-assignment ([HTPR-5879](https://app.hypertask.ai/detail/project-15/5879))
   * Improved: Mobile app no longer displays a rocket announcements button in the header, preferring Settings for updates, alerts, and unread markers ([HTPR-5856](https://app.hypertask.ai/detail/project-15/5856))
