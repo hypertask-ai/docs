@@ -25,7 +25,7 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 
 Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
 
-**Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility).
+**Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
 ### Exclude tasks you don't need
 
@@ -48,6 +48,14 @@ From a board or inbox, click **New task** (or use the keyboard shortcut <kbd>Ctr
 - **Estimated time**: Optionally specify hours or a low-high range if needed.
 
 Use **Write with AI** (<kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
+
+### Mini dictation icon on the description field
+
+In the task creator description field, a microphone icon appears above the text area when you tap inside. Tap the icon to open mobile dictation where you can speak your task description and pauses. Dictation automatically applies formatting like list items while you talk.
+
+### Mobile layout polish for the new-task modal
+
+On mobile devices, the new-task modal now renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly.
 
 ### Automatic title generation on save
 
@@ -205,7 +213,7 @@ Mark a ticket as waiting on one specific person (like a blocked-by relation, but
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the – in the sidebar row or by picking "Nobody" in the picker.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
 - **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
