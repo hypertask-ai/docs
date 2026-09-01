@@ -24,6 +24,9 @@ export const Update = ({ label, children }) => (
   * Fixed: Calendar cards now show the blocked person even when that person is not an accepted board member, fixing invisible blocker chips ([HTPR-5851](https://app.hypertask.ai/detail/project-15/5851))
   * Fixed: Desktop: memory limits now flush local mailboxes after 676 reads (p75) and keep the 3 most recent board snapshots, improving cold board load performance ([HTPR-5853](https://app.hypertask.ai/detail/project-15/5853))
   * Fixed: Mobile: make both mobile floating action buttons (FABs) icon-only circles, clearing the comment composer sunken area so the Ask AI pill no longer overlaps the send arrow ([HTPR-5852](https://app.hypertask.ai/detail/project-15/5852))
+  * Fixed: Comment composer: @mention chip can now be deleted with backspace on mobile, preserving surrounding draft text ([HTPR-5867](https://app.hypertask.ai/detail/project-15/5867))
+  * Improved: Mobile undo toast now stays visible for 7.5 seconds instead of 15 seconds, matching mobile undo behavior ([HTPR-5872](https://app.hypertask.ai/detail/project-15/5872))
+  * Fixed: Worker broker access now maintains broker URL and handle through mid-turn boundaries, preventing push failures ([HTPR-5878](https://app.hypertask.ai/detail/project-15/5878))
 </Update>
 
 <Update label="August 31, 2026">
