@@ -62,7 +62,6 @@ ht task create "Long-form, conversational architecture overview with no brevity 
 ### Promoted task-summary action ([HTPR-5404](https://app.hypertask.ai/detail/project-15/5404))
 
 When AI Chat opens on a task, the assistant prioritizes the **Summarize the current task** action. You can:
-
 - Type <kbd>/i</kbd> Summarize the current task to get a concise summary that respects readability modes.
 - See the action promoted near the chat input, making it quick to extract a task summary while keeping context.
 
@@ -73,7 +72,6 @@ This integration lets you generate task summaries without leaving the chat flow.
 The AI assistant requires confirmation before making wide or destructive writes across your boards. This prevents silent task creation or modification.
 
 When you invoke **Write with AI** with flags that span multiple tasks or boards (such as `--mode write-with-ai --all`), the assistant pauses and prompts you:
-
 1. The assistant previews the proposed writes (tasks, comments, or label updates).
 2. You confirm by running **Write** from the command palette or by typing **Yes** in the active confirmation dialog.
 3. Only approved writes are sent on the command. Unconfirmed requests are discarded.
@@ -83,12 +81,20 @@ This confirmation gate guards against accidental bulk operations and keeps your 
 ### Seed tasks on guest boards
 
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
-
 - Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
 - Ask the AI to build this board for you — Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
 - Run tasks/tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
+
+### Apply mobile model gauge on mobile ([HTPR-5921](https://app.hypertask.ai/detail/project-15/5921))
+
+On mobile, the AI model picker now uses a fixed 4-chip gauge selector with changes:
+- **Gauge selector** — A compact horizontal gauge shows four top models with their names, enabling quick selection without a full list.
+- **Context chips** — Each chip highlights the selected model and shows prior actions, keeping the model identity visible at a glance.
+- **Canonical radius** — Menu rows use the design-system 4px radius for consistent styling.
+
+This matches the desktop mobile model presentation and gives you fast, reliable model choice on mobile devices.
 
 ### Cap to smooth and anti-wordiness traits
 
@@ -96,7 +102,7 @@ The AI Task Writer behavior now includes two documented style traits:
 
 | Trait | What it does | You will see |
 |-------|--------------|--------------|
-| **Anti-wordiness cap** | Prevents the AI from repeatedly using high-fill phrases like "leverage," "pivotal," "seamlessly," "robust," and "I hope this helps." Only one pass of filtering is applied; further iterations may reintroduce content you type. | Misspelled intentional repetitions (e.g., "revision re-vision") are tolerated. Plain, concise language with structures like "I intend to X and Y instead of A and B." |
+| **Anti-wordiness cap** | Prevents the AI from repeatedly using high-fill phrases like "leverage," "pivotal," "seamlessly," "robust," and "I hope this helps." Only one pass of filtering is applied; further iterations may reintroduce content you type. | Plain, concise language with structures like "I intend to X and Y instead of A and B." |
 
 Note: This trait is tied to AI-generated messages that inherit default brevity. If board custom instructions or your explicit request take precedence, anti-wordiness will not be applied, consistent with the brevity precedence table.
 
@@ -122,7 +128,6 @@ Use slash commands to invoke registered skills:
 - **/skill `name`** — Run a specific skill if you know its name.
 
 Known skills include:
-
 - **Defer** — Suggest a deferral with a new due date and optional sub-task.
 - **Duplicate** — Mirror the current task into a draft that you can rename and refine.
 - **Subtask** — Generate a new subtask rooted from the current one.
@@ -134,7 +139,6 @@ Types skip over canvas or rich content blocks instead of treating them as text t
 ### QA Agent verification
 
 Hypertask's QA Agent enforces style-guide compliance for AI-generated output. The agent polices tasks and comments to ensure they follow shared house-style rules:
-
 - Verify that output avoids AI-tells and filler phrases
 - Flag non-conforming content for review
 - Apply probation labels to encourage compliance on subsequent drafts
@@ -143,7 +147,6 @@ Hypertask's QA Agent enforces style-guide compliance for AI-generated output. Th
 ### Agent workflows for testing with Midscene ([HTPR-5715](https://app.hypertask.ai/detail/project-15/5715))
 
 The QA Agent now runs AI-driven end-to-end tests using Midscene with a dedicated Playwright scaffold. These tests combine natural language instructions with computer vision to validate critical app flows:
-
 - Tests verify user actions, UI elements, and real-time interactions from an agent's perspective
 - Hard resource guards limit RAM, CPU, and runtime to keep test execution stable: 2G RAM, 1.5 CPU, and 10-minute timeout per run
 - A single-flight lock ensures only one test runs at a time, preventing interference between concurrent attempts
@@ -158,7 +161,6 @@ For complex tickets — new features, 3+ files, schema/auth/billing changes, new
 ### Dev Agent documentation precondition
 
 Dev agents that create, modify, or review content must now read `docs/DESIGN.md` before acting as the authoritative source of truth. This ensures agents:
-
 - Understand the project's design principles and patterns
 - Apply consistent terminology and approaches
 - Reference validated guidance instead of working from memory or assumptions
@@ -168,7 +170,6 @@ The QA Agent's style verification complements this pre-condition by catching mis
 ### Combined behavior
 
 Together, QA Agent verification and the dev Agent documentation precondition create a reinforcing loop:
-
 1. Dev Agents consult `docs/DESIGN.md` before creating or modifying content
 2. Content generated by Dev Agents is subject to QA Agent style verification
 3. QA Agents flag non-compliant output, suggest corrections, and inhibit automerge until compliance is achieved
@@ -178,7 +179,6 @@ This reduces reliance on manual review while preserving the intent captured in d
 ### My Tasks context
 
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
-
 - "What's on my My Tasks board?" — Generates a concise list of assigned tasks with priorities and due dates.
 - "Any overdue or blocked work?" — Flags urgent or late items for follow-up.
 - "Show me tasks due this week" — Filters and presents upcoming commitments.
@@ -211,7 +211,6 @@ After moving inne agents to inne-owned Cloudflare infrastructure, the bridge is 
 ### AI status updates
 
 An AI agent can update task metadata in a visible way — priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
-
 - The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
@@ -229,7 +228,6 @@ Hovering over an agent card now opens the agent detail page, making it quick to 
 ### Time, profile, and report parity in AI Chat
 
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
-
 - **View filtered time reports** — Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
 - **Update shared user profiles** — Update profile fields like name, role, or custom attributes with correct flag handling.
 - **Read complete saved reports** — Pull full saved report data including filters, columns, and time ranges.
@@ -259,7 +257,6 @@ Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machi
 ### Plan-aware default-model repair
 
 The gateway now maps eligible users to appropriate default models based on team entitlement:
-
 - **Paid, legacy, and comped teams** default to **Luna Standard (5.6)**, bypassing premium model selection during task creation.
 - **Free and keyless BYOK teams** default to **Mini (5.4)** with a corresponding downgrade to Mini-only allocation; BYOK teams with an owned key are eligible for Luna Standard.
 - **Eligible BYOK squads** reclaim **Luna Standard (5.6)** instead of staying on Mini, restoring Luna Standard as the design default for BYOK teams with an owned key.
@@ -277,7 +274,6 @@ When you create a task via quick-create and switch to a premium board, the model
 ### Unified team entitlement checking for boardless AI Chat ([HTPR-5590](https://app.hypertask.ai/detail/project-15/5590))
 
 When starting an AI chat without an active board, Hypertask now broadly checks the calling user's team memberships to determine the correct plan-level entitlement. This resolves cases where newer Free teams hid older paid memberships, causing the system to incorrectly treat the user as Free and gate the conversation to Mini-only.
-
 - **Behavioral change:** Previously, the plan gate evaluated only the most recently accessed or implied team context. Now, the chat backend ranks owned and accepted-member teams by current entitlement, examining all teams where the user is a member.
 - **Result:** AI chat correctly identifies paid or BYOK entitlements regardless of team ordering or last interaction, allowing premium model selection and access.
 - **Scope:** The fix applies across CLI, MCP, API, and AI Chat surfaces, ensuring consistent entitlement behavior across all interaction points.
@@ -286,7 +282,6 @@ When starting an AI chat without an active board, Hypertask now broadly checks t
 ### Invalid client payloads and owner derivations ([HTPR-5657](https://app.hypertask.ai/detail/project-15/5657))
 
 AI mentions can include additional field hints (aliases) for the owner; these are now derived server-side instead of being silently swallowed. Invalid payloads surface meaningful errors across CLI, MCP, and AI Chat:
-
 - **Server derives owner** from available hints/account data.
 - **Invalid payloads** now get a clear error (such as 400) and a descriptive message instead of being logged without response.
 - **Client side** toasts every error in addition to 403 scenarios, so users always see when a status mismatched or malformed hint was supplied.
