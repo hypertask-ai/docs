@@ -13,6 +13,11 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 2, 2026">
+  * Fixed: Ctrl/Cmd+Shift+Enter for ticket submission now works on tasks opened from the Inbox instead of being disabled globally ([HTPR-5913](https://app.hypertask.ai/detail/project-15/5913))
+  * Fixed: AI chat now validates and linkifies resolved ticket references before saving comments across task detail, Inbox, and other contexts ([HTPR-5915](https://app.hypertask.ai/detail/project-15/5915))
+</Update>
+
 <Update label="September 1, 2026">
   * Fixed: Comment drafts stay scoped to their task and do not appear in other tasks' comment composers ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))
   * Fixed: Mobile view sorting now offers Save for unsaved view changes, allowing users to apply custom sort configurations on mobile ([HTPR-5900](https://app.hypertask.ai/detail/project-15/5900))
