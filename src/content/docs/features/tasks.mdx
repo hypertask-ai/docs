@@ -55,7 +55,7 @@ In the task creator description field, a microphone icon appears above the text 
 
 ### Mobile layout polish for the new-task modal
 
-On mobile devices, the new-task modal now renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly.
+On mobile devices, the new-task modal renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly.
 
 ### Automatic title generation on save
 
@@ -66,6 +66,7 @@ When you create a new task and leave the title empty:
 - The generated title appears and is automatically saved; the field stays editable so you can refine it further.
 
 **Typical behavior:**
+
 - If your description starts with an imperative verb (e.g., "Design homepage mockup with hero section"), a title like "Design homepage mockup" is suggested.
 - For notes-style descriptions without a clear verb, the system provides a concise, suitable title.
 - The rough defaults and style controls are intentionally sensitive to length: shorter descriptions receive shorter titles, longer ones get fuller noun phrases.
@@ -95,26 +96,46 @@ The close control and back gesture prevent users from being stuck inside the mod
 From a board, note the **AI Task Writer** bottom composer in columns and cards.
 
 **Mobile waveform and layout:**
+
 - The waveform sits full-width at the bottom of the composer; the action row stays anchored and swiping on narrow screens keeps the controls reachable.
 - On screens at 390px or narrower, the **Back pill** is removed to avoid overlapping the waveform; this eliminates clipping issues on small viewports.
 - Waveform buttons (mic, pause, play) are present and fully visible so you can dictate and review your draft without scrolling.
 
 **Dictation and save:**
+
 - Tap **Dictate** to start mobile dictation via the microphone; in the composer you can say your task description and pauses.
 - Saving a dictated draft is automatic when you confirm on the action row; no extra manual save roundtrip is required.
 - The workflow cloaks distraction: check list formatting, attach links, and adjust priority before releasing a clean draft.
 
 **Create via composer:**
+
 - For quick task ideas while swiping columns on mobile, use the AI Task Writer composer directly; type, dictate, and save to instantly create the task from the same surface.
 
+**Write with AI two-case design on mobile ([HTPR-5865](https://app.hypertask.ai/detail/project-15/5865))**
+
+- The mobile Write with AI flow now clearly distinguishes between editing your draft and having AI generate content from scratch. The interface guides you through an explicit step: review your draft before accepting AI suggestions, or let AI write from your brief.
+- Drafts are preserved until you accept the AI proposal, preventing accidental loss of manual work.
+- The two-case design fixes the broken flow on mobile, restoring reliable AI-assisted writing in both modes.
+
 **Actions:**
+
 - The action row now features prominent **Send** (submit) and **Resend** actions; both are sized at 44px with equal prominence.
 - Sending a task pauses any in-flight request and disables the **Resend** button until the action completes, preventing rapid double-submission.
 - Resend can be used to revise the task and submit again without requiring a fresh keyboard/voice snapshot.
 
-### Mobile task pages with pinch zoom (HTPR-5870)
+**Full-screen mobile Write with AI ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))**
+
+- On mobile, Write with AI opens full screen for both empty fields and existing text. This gives you maximum vertical space to compose and review AI-generated drafts.
+- The draft remains fully editable while open, and the chip strip shows your action history without a distracting history line cluttering the UI.
+- Tap the edit icon or continue typing to modify the draft inline before accepting or rejecting it.
+
+**Mobile task pages with pinch zoom (HTPR-5870)**
 
 On mobile devices, task detail pages now use the full phone width and accommodate zooming without side padding. You can pinch to reduce the canvas by 50% or wider while preserving space around the content. This desktop-like zoom behavior ensures you can view full paragraphs, details, and comments without excessive scrolling.
+
+### Mobile AI task writer chips and edit mode ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))
+
+When you use Write with AI on a mobile task page, the composer provides a compact chip strip showing your recent actions. For full-screen compositions, the chip strip and edit controls sit below the editor, giving you quick access to undo, redo, regenerate, and edit actions without obscuring your draft.
 
 ### All Tasks on mobile rows no longer clip past right edge ([HTPR-5841](https://app.hypertask.ai/detail/project-15/5841))
 
@@ -164,6 +185,7 @@ When you make manual changes to a task—moving, assigning, unassigning, archivi
 ## Task detail view
 
 Open a task to see:
+
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
@@ -178,23 +200,33 @@ On mobile, swipe left across a task detail to open the next task in your current
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
 
 **Mobile dictation interaction:**
+
 - On mobile screens, posting a comment no longer spurs unintended dictation that can overlap with nearby action buttons.
 - Send and Resend are treated as semantic click-driven actions; their target remains fixed before the click event, preventing the browser's click emission from retargeting to unintended controls.
 
 **Write with AI two-case design on mobile ([HTPR-5865](https://app.hypertask.ai/detail/project-15/5865))**
+
 - The mobile Write with AI flow now clearly distinguishes between editing your draft and having AI generate content from scratch. The interface guides you through an explicit step: review your draft before accepting AI suggestions, or let AI write from your brief.
 - Drafts are preserved until you accept the AI proposal, preventing accidental loss of manual work.
 - The two-case design fixes the broken flow on mobile, restoring reliable AI-assisted writing in both modes.
 
+**Write with AI full-screen edit mode ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))**
+
+- On mobile, when you use Write with AI in a task comment or description, the composer opens full screen. This gives you maximum space to review, edit, and regenerate AI-generated text before committing.
+- The edit controls and chip strip sit below the editor, keeping your draft clearly visible while providing quick access to Undo, Redo, Regenerate, and Discard actions.
+
 **Undo prompt visibility:**
+
 - Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
 
 **Comment draft scoping ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))**
+
 - Comment drafts are scoped to a specific task and description field. AI-generated drafts from previous tasks no longer appear in other tasks' comment composers. This prevents confusion and accidental previewing of stale drafts, ensuring drafts remain task-specific.
 
 ### Actions
 
 Common actions include:
+
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
@@ -226,7 +258,7 @@ Mark a ticket as waiting on one specific person (like a blocked-by relation, but
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
 - **Board card**: A blocked task's kanban card shows a solid red chip with the blocker's avatar + name first in the tag row, plus a 3px red left accent (red focus border when selected). The tag row layout always lists the blocker chip first, followed by other tags.
-- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with the — in the sidebar row or by picking "Nobody" in the picker.
+- **Clear**: The flag clears automatically the moment the blocked-on person comments on the ticket. Clear manually with — in the sidebar row or by picking "Nobody" in the picker.
 - **Filter**: The board filter picker has a **Blocked by person** filter — pick one or more people, or **Anyone** to show every blocked task. Combine it with a saved view to keep a permanent "everything blocked" board.
 
 ## Subtasks
