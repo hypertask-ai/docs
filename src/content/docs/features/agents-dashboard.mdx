@@ -43,13 +43,13 @@ This gives you a quick, color-coded view of whether each agent is operating with
 
 ## Card red outline for blocked agents
 
-If an agent is blocked—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
+If an agent is blocke—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
 
 ## Blocked-summary widget
 
-A new widget next to the heartbeat line shows the count of agents currently blocked:
+A new widget next to the heartbeat line shows the count of agents currently blocke:
 
-- **Red N** — the number of agents that are blocked and require someone to act
+- **Red N** — the number of agents that are blocke and require someone to act
 
 This gives you an aggregate view of unaddressed bottlenecks and helps prioritize follow-up work across your set of agents.
 
@@ -67,6 +67,10 @@ Agents are fully integrated with your board, tasks, and other AI tools. Use the 
 - Spot delayed or missed merge/unblock checks via the heartbeat line
 - Identify agents that need human intervention via red outlines and the blocked-summary widget
 
+## Working with pages and task detail pages
+
+Agents can interact with task detail pages such as `/detail/project-15/<ticket>`. The production verifier validates these URLs, so agents can reference specific tasks from pages or create links to them. This makes it possible for agents to verify task lifecycles and generate pages as part of their workflows.
+
 For more on agent setup and MCP configuration, see the [AI Agents](./agents.mdx) reference.
 
 ## Troubleshooting
@@ -81,3 +85,5 @@ If you don't see an agent in the dashboard, check that:
 See the [AI Agents](./agents.mdx) and [Scheduling Agents](./scheduling.mdx) pages for detailed setup guidance.
 
 </Aside>
+
+---
