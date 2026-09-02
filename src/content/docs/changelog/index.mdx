@@ -21,4 +21,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Ctrl/Cmd+Shift+Enter for ticket submission now works on tasks opened from the Inbox instead of being disabled globally ([HTPR-5913](https://app.hypertask.ai/detail/project-15/5913))
   * Fixed: AI chat now validates and linkifies resolved ticket references before saving comments across task detail, Inbox, and other contexts ([HTPR-5915](https://app.hypertask.ai/detail/project-15/5915))
   * Fixed: Agent production verifier now accepts task detail page URLs such as `/detail/project-15/<ticket>` in agent workflows ([HTPR-5941](https://app.hypertask.ai/detail/project-15/5941))
+  * Fixed: Clicking existing due dates on mobile task pages no longer throws errors due to invalid date inputs ([HTPR-5955](https://app.hypertask.ai/detail/project-15/5955))
+  * Fixed: GitHub webhook now resolves tickets correctly to the repository-linked board instead of selecting foreign board tickets ([HTPR-5956](https://app.hypertask.ai/detail/project-15/5956))
+  * Add: Write with AI on mobile now opens full screen in both empty and existing-text cases, with an editable draft and a chip strip showing recent actions ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))
 </Update>
