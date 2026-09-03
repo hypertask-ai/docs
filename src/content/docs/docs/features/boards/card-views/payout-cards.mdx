@@ -1,0 +1,36 @@
+---
+title: Payout cards for boards
+description: Display payout information and status on sale and pulser cards.
+---
+
+# Payout cards for boards
+
+Payout cards present payout summaries and statuses directly on board card surfaces. These surfaces integrate with pulser denominations and payout pipelines to surface transaction state in real time.
+
+## Payout info on card surfaces
+
+When viewing a card for a sale:
+- Show payout summary details:
+  - Payment currencies, amounts, and timing.
+  - Payout status label (e.g., successful, pending, failed).
+  - User’s applicable commissions or bonuses.
+- For logged-in users, display payout identity (your share / partner share) if appropriate.
+- For partner deals, surface the partner payout portion and payout tracking reference.
+
+Payout layouts are card-level UI components tailored to the board section context (e.g., Pulsar, partner storefronts, merch trading). Use consistent symbols and order across sections to aid scanning.
+
+## Seeing payout status
+
+Payout status on cards:
+- **Unsettled**: Card shows "Pending" or similar status until the payment network confirms.
+- **Settled**: Card updates to "Paid" with a checkmark and summary.
+- **Overridden or failed**: Status reads "Failed" or "Overridden" where manual or system intervention applies.
+
+Cashtags and links permit deep dives into payout pipelines from the card surface itself.
+
+## Design notes
+
+- Payout card styles are a subset of the pulser-card design; they reflect the same gated-DOS language and color conventions.
+- Layout adapts to limited space on smaller sections; show key metrics first with amounts or icons as fallback.
+
+For more on payout behavior and denominations, see the [Pulser docs](/features/users/pulsers/) and [Market docs](/features/boards/marketing/).
