@@ -32,6 +32,7 @@ Each card in the dashboard shows:
 - **Current status** — Running, Quiet, or Off
 - **On/Off toggle** — Immediate pause or resume of the agent
 - **Heartbeat line for the merge/unblock timer**
+- **Avatar** — a generated robot icon that appears for each agent
 
 The heartbeat line at the top of each agent card visualizes the status of the agent's 10-minute merge/unblock check:
 
@@ -43,19 +44,31 @@ This gives you a quick, color-coded view of whether each agent is operating with
 
 ## Card red outline for blocked agents
 
-If an agent is blocke—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
+If an agent is blocked—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
 
 ## Blocked-summary widget
 
-A new widget next to the heartbeat line shows the count of agents currently blocke:
+A new widget next to the heartbeat line shows the count of agents currently blocked:
 
-- **Red N** — the number of agents that are blocke and require someone to act
+- **Red N** — the number of agents that are blocked and require someone to act
 
 This gives you an aggregate view of unaddressed bottlenecks and helps prioritize follow-up work across your set of agents.
 
 ## Browse and filter agents
 
 You can quickly scan through all your agents and filter by status sections. The dashboard scales to show all agents in your workspace, with cards laid out so you can easily compare running vs. paused agents.
+
+## Availability of avatars
+
+All agents now show generated robot avatars from their detail pages and the dashboard. Avatars provide visual recognition without relying on initials or external icons.
+
+### Agent examples
+
+| Agent | Status | Avatar |
+|---|---|---|
+| Preview Bot | Running | ![Preview Bot](https://i.sstatic.net/9aKsnRj0.webp) |
+| QA Agent | Quiet | ![QA Agent](https://i.sstatic.net/dkNW7ncJ.webp) |
+| Scheduler | Off | ![Scheduler](https://i.sstatic.net/2xM5zGJU.webp) |
 
 ## Performance and reliability
 
@@ -82,7 +95,7 @@ If you don't see an agent in the dashboard, check that:
 2. The agent schedule has the necessary permissions
 3. The agent is associated with your team and not restricted to a different scope
 
-See the [AI Agents](./agents.mdx) and [Scheduling Agents](./scheduling.mdx) pages for detailed setup guidance.
+See the [AI Agents](./agents.mdx) and [Scheduling Agents](/mcp/scheduling.mdx) pages for detailed setup guidance.
 
 </Aside>
 
