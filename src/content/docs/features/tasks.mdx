@@ -23,15 +23,15 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 
 ### Drawing from multiple streams
 
-Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what’s pinned or currently in one section.
+Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
 
 **Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
-### Exclude tasks you don’t need
+### Exclude tasks you don't need
 
 To hide distracting or temporary tasks:
 
-- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don’t match your current focus.
+- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don't match your current focus.
 - Create and pin a custom view with the exact criteria you want to see.
 - Review tasks by tag or priority and archive or move them away when no longer relevant.
 
@@ -161,6 +161,10 @@ Open a task to see:
 
 On mobile, swipe left across a task detail to open the next task in your current list, or swipe right to open the previous task. The page follows your finger and snaps back when you reach the first or last task. Swipes that start in an editor or a horizontally scrolling control do not switch tasks.
 
+### Pinned comment composer ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
+
+The comment composer in the task detail pane is now pinned to the bottom of the view. When you open a task with comments, scroll through the thread or add new comments, and compress the window, the composer remains visible and accessible at the bottom of the pane, while comments scroll above it. This keeps the composer ready for at-a-glance typing without scrolling away from the last action.
+
 ### Comments
 
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
@@ -179,7 +183,7 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 **Undo prompt visibility:**
 - Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
-- On mobile, compact undo toasts (110×54 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re‑archiving creates a fresh compact undo toast that measures and aligns the same way.
+- On mobile, compact undo toasts (110×4 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re-archiving creates a fresh compact undo toast that measures and aligns the same way.
 
 **Comment draft scoping ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))**
 - Comment drafts are scoped to a specific task and description field. AI-generated drafts from previous tasks no longer appear in other tasks' comment composers. This prevents confusion and accidental previewing of stale drafts, ensuring drafts remain task-specific.
@@ -206,7 +210,7 @@ Create relationships between tasks to surface context without leaving tasks:
 From a task detail view, open the **Relations** section to add a related task. When you create a new relation from the picker:
 
 - **Recently worked tasks**: If you've recently worked on other tasks, they appear in the picker to help you reuse prior context.
-- **Access control**: Mentions and relations are access-controlled — you can only create relationships to tasks you have access to.
+- **Access control**: Mentions and relations are access-controlled—you can only create relationships to tasks you have access to.
 
 See a task's relations in the **Relations** section of the task detail view.
 
@@ -240,7 +244,7 @@ The task detail sidebar includes a rail of properties (title, priority, assignee
 
 **Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history.
 
-[ A JSDoc-style constraint for this change: when a thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
+[ A JSDoc-style constraint for this change: when thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
 
 ## Time tracking
 
