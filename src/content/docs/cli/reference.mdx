@@ -56,7 +56,7 @@ When you choose to install Hypertask from the web app, the in-app installer (CLI
 
 ## Migrate from the Node CLI
 
-Weâ\x80\x99ve shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
+We 've shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
@@ -71,6 +71,27 @@ npm install -g @hypertask/hypertask_cli@latest
 
 Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
 
+## Trusted CLI Parity Gate
+
+Hypertask uses a CI/CD parity gate that verifies the production app and the published command-line tool still agree before marking a change as released. The gate only trusts CLI versions that have been approved by hash; all newer versions are considered untrusted until a manual approval is granted.
+
+### How releases become trusted
+
+A new CLI release becomes trusted through a manual review and pin-bump process:
+
+1. The manager reviews each CLI release diff, comparing:
+   - The npm tarball
+   - Dependency changes
+   - Published npm provenance
+2. If the diff is clean and matches expectations, the manager opens a pin-bump pull request the same hour, updating the trusted version in the parity gate configuration.
+3. The gate’s trusted pin never tracks npm automatically; a new trusted version exists only after an explicit review and pin-bump.
+
+This ensures the gate stays honestly bounded to the version the team has inspected and approved.
+
+### Worker behavior
+
+Workers must not stop at a red parity gate when their own change is deployed and verified. A red gate only means the CLI version is untrusted; it does not indicate a functional regression with the change the worker just shipped.
+
 ## Claims and Parity Tests
 
 The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`) that validates end-to-end behavior against the documented CLI contract.
@@ -79,11 +100,11 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** â\x80\x94 Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** â\x80\x94 Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** â\x80\x94 Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** â\x80\x94 Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** â\x80\x94 Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
 
 <Aside type="note">
 The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.
