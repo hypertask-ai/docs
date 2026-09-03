@@ -56,7 +56,7 @@ When you choose to install Hypertask from the web app, the in-app installer (CLI
 
 ## Migrate from the Node CLI
 
-We 've shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
+We've shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
@@ -71,6 +71,15 @@ npm install -g @hypertask/hypertask_cli@latest
 
 Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
 
+## v0.2.2 CLI Release
+
+The latest release (`v0.2.2`) is now installed on the fleet and reflects consistency fixes between the Node and Zig CLI halves. This release improves reliability of core commands and closes out the CLI-side implementation changes from HTPR-5845. To upgrade, simply reinstall the CLI using the npm shim:
+
+```bash
+npm install -g @hypertask/hypertask_cli@latest
+hypertask --version
+```
+
 ## Trusted CLI Parity Gate
 
 Hypertask uses a CI/CD parity gate that verifies the production app and the published command-line tool still agree before marking a change as released. The gate only trusts CLI versions that have been approved by hash; all newer versions are considered untrusted until a manual approval is granted.
@@ -84,7 +93,7 @@ A new CLI release becomes trusted through a manual review and pin-bump process:
    - Dependency changes
    - Published npm provenance
 2. If the diff is clean and matches expectations, the manager opens a pin-bump pull request the same hour, updating the trusted version in the parity gate configuration.
-3. The gate’s trusted pin never tracks npm automatically; a new trusted version exists only after an explicit review and pin-bump.
+3. The gate's trusted pin never tracks npm automatically; a new trusted version exists only after an explicit review and pin-bump.
 
 This ensures the gate stays honestly bounded to the version the team has inspected and approved.
 
@@ -133,3 +142,5 @@ These tests validate both positional params and flags against the server contrac
 <Aside type="tip">
 The CLI parity harness now also validates JSON diffs, auth matrix, negative cases, token-source precedence, and human output against the Node CI contract and passes locally and in live runs.
 </Aside>
+
+---
