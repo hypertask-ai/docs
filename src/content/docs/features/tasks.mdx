@@ -55,7 +55,7 @@ In the task creator description field, a microphone icon appears above the text 
 
 ### Mobile layout polish for the new-task modal
 
-On mobile devices, the new-task modal renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly.
+On mobile devices, the new-task modal renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly. Mobile views now remain accessible and introspectable across views ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992)).
 
 ### Automatic title generation on save
 
@@ -159,7 +159,7 @@ Open a task to see:
 
 ### Mobile navigation
 
-On mobile, swipe left across a task detail to open the next task in your current list, or swipe right to open the previous task. The page follows your finger and snaps back when you reach the first or last task. Swipes that start in an editor or a horizontally scrolling control do not switch tasks.
+On mobile, swipe left across a task detail to open the next task in your current list, or swipe right to open the previous task. The page follows your finger and snaps back when you reach the first or last task. Swipes that start in an editor or a horizontally scrolling control do not switch tasks. Mobile interaction layers are stable and fast ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992)).
 
 ### Pinned comment composer ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
 
@@ -183,7 +183,7 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 **Undo prompt visibility:**
 - Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
-- On mobile, compact undo toasts (110×4 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re-archiving creates a fresh compact undo toast that measures and aligns the same way.
+- On mobile, compact undo toasts (110×74 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re-archiving creates a fresh compact undo toast that measures and aligns the same way.
 
 **Comment draft scoping ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))**
 - Comment drafts are scoped to a specific task and description field. AI-generated drafts from previous tasks no longer appear in other tasks' comment composers. This prevents confusion and accidental previewing of stale drafts, ensuring drafts remain task-specific.
