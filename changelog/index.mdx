@@ -13,6 +13,27 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 4, 2026">
+  * Added: Ctrl+K "Copy current page URL" action copies the complete browser address from the command palette anywhere in the app ([HTPR-6112](https://app.hypertask.ai/detail/project-15/6112))
+  * Fixed: Task shortcuts no longer navigate or submit when opened outside Inbox: Ctrl/Cmd+Enter stays on board-created tasks while Ctrl/Cmd+Shift+Enter no longer submits there ([HTPR-5901](https://app.hypertask.ai/detail/project-15/5901))
+  * Fixed: Discovery pickup livelock where agents retry forever because the lease holder was reported as current_user for every agent, now resolving contention by checking conflicting lease agents ([HTPR-5873](https://app.hypertask.ai/detail/project-15/5873))
+  * Fixed: Discovery pickups no longer fail with contenders losing the pickup mutation reservation, now using existing pickup lease for self-assignment ([HTPR-5879](https://app.hypertask.ai/detail/project-15/5879))
+  * Improved: Mobile app no longer displays a rocket announcements button in the header, preferring Settings for updates, alerts, and unread markers ([HTPR-5856](https://app.hypertask.ai/detail/project-15/5856))
+  * Fixed: Mobile column names now open Manage board columns when tapped, fixing the long-standing tapping action ([HTPR-5710](https://app.hypertask.ai/detail/project-15/5710))
+  * Fixed: Mobile calendar agenda now displays blocker chips showing the person blocking each task, connecting agenda rows to board-level blocking state ([HTPR-5855](https://app.hypertask.ai/detail/project-15/5855))
+  * Fixed: Mobile bottom sheets no longer crash when they close during drag release, handling webhook-triggered actions safely ([HTPR-5854](https://app.hypertask.ai/detail/project-15/5854))
+  * Fixed: Mobile table view horizontal scroll behavior updated to slide away ticket and title columns, improving lateral readability ([HTPR-5862](https://app.hypertask.ai/detail/project-15/5862))
+  * Fixed: Mobile task page now uses a floating Ask AI control instead of a clipped rail; the chat modal opens without refocusing the comment composer on mobile ([HTPR-5850](https://app.hypertask.ai/detail/project-15/5850))
+  * Improved: Repeated same-actor status flips now share one counted history entry, preventing duplicated activity notifications ([HTPR-5721](https://app.hypertask.ai/detail/project-15/5721))
+  * Added: Mobile: swipe left and right on a task detail page to move between adjacent tasks ([HTPR-5849](https://app.hypertask.ai/detail/project-15/5849))
+  * Fixed: Calendar cards now show the blocked person even when that person is not an accepted board member, fixing invisible blocker chips ([HTPR-5851](https://app.hypertask.ai/detail/project-15/5851))
+  * Fixed: Desktop: memory limits now flush local mailboxes after 676 reads (p75) and keep the 3 most recent board snapshots, improving cold board load performance ([HTPR-5853](https://app.hypertask.ai/detail/project-15/5853))
+  * Fixed: Mobile: make both mobile floating action buttons (FABs) icon-only circles, clearing the comment composer sunken area so the Ask AI pill no longer overlaps the send arrow ([HTPR-5852](https://app.hypertask.ai/detail/project-15/5852))
+  * Fixed: Comment composer: @mention chip can now be deleted with backspace on mobile, preserving surrounding draft text ([HTPR-5867](https://app.hypertask.ai/detail/project-15/5867))
+  * Improved: Mobile undo toast now stays visible for 7.5 seconds instead of 15 seconds, matching mobile undo behavior ([HTPR-5872](https://app.hypertask.ai/detail/project-15/5872))
+  * Improved: New-task modal now shows a mini dictation icon above the description field and polishes mobile layout to render in reading order ([HTPR-5877](https://app.hypertask.ai/detail/project-15/5877))
+</Update>
+
 <Update label="September 1, 2026">
   * Fixed: Task shortcuts no longer navigate or submit when opened outside Inbox: Ctrl/Cmd+Enter stays on board-created tasks while Ctrl/Cmd+Shift+Enter no longer submits there ([HTPR-5901](https://app.hypertask.ai/detail/project-15/5901))
   * Fixed: Discovery pickup livelock where agents retry forever because the lease holder was reported as current_user for every agent, now resolving contention by checking conflicting lease agents ([HTPR-5873](https://app.hypertask.ai/detail/project-15/5873))
