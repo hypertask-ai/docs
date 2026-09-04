@@ -139,9 +139,7 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 - When updating task descriptions or comments, follow the documented style conventions in `docs/DESIGN.md`.
 - The QA Agent checks for style violations and can apply a "probation" label to tasks that do not meet style standards before allowing automerge.
 
-<Aside type="tip">
-Style-guide enforcement ensures all agent-generated content align with design system standards, reducing brand inconsistencies and improving readability for users.
-</Aside>
+<Aside type="tip">Style-guide enforcement ensures all agent-generated content align with design system standards, reducing brand inconsistencies and improving readability for users.</Aside>
 
 ### Leases for native-agent AI Chat
 ([HTPR-5468](https://app.hypertask.ai/detail/project-15/5468))
@@ -183,9 +181,7 @@ Each agent run produces a frozen timeline of per-step durations. These timelines
 2. Scroll to the "Run history" section.
 3. Expand older runs as needed to see step-by-step timing for each completed turn.
 
-<Aside type="tip">
-Reviewing run timelines helps you tune agent schedules and identify long-running steps that may benefit from optimization or refactoring.
-</Aside>
+<Aside type="tip">Reviewing run timelines helps you tune agent schedules and identify long-running steps that may benefit from optimization or refactoring.</Aside>
 
 ## Agent webhooks and webhook lifecycle
 
@@ -212,9 +208,7 @@ Agents emit state transition events when they start, pause, and transition back 
 
 Agents rely on a webhook signing secret (`whsec_…`). You should rotate it after every lifecycle transition or periodically; rotation is permanently masked to prevent new secrets from leaking into existing delivery payloads. Aggressive rotation does not trigger a `webhook.payment` event; events apply to the subscribed events list configured on the agent and webhook.
 
-<Aside type="caution">
-Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.
-</Aside>
+<Aside type="caution">Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.</Aside>
 
 ## Outbound webhooks for agent mentions and assignments
 ([HTPR-5388](https://app.hypertask.ai/detail/project-15/5388))
@@ -262,9 +256,7 @@ Agent configuration over MCP:
 }
 ```
 
-<Aside type="tip">
-All data sources are read over HTTPS with OAuth recovery; no GitHub personal access tokens are required.
-</Aside>
+<Aside type="tip">All data sources are read over HTTPS with OAuth recovery; no GitHub personal access tokens are required.</Aside>
 
 ## Turbopuffer embeddings via Vercel AI Gateway
 ([HTPR-5627](https://app.hypertask.ai/detail/project-15/5627))
@@ -320,6 +312,18 @@ For MPC-style requesting tasks and milestones from another task or file, run on 
 
 Agent-tier tokens receive 600 requests/minute. They are used for request-level latency (e.g., `hypertask_find_task` or milestone suggesting). For autoscaling multi-agent management, use board-15's per-task lease endpoints (`/api/agents/leases`) and avoid sharing SMAP tokens with agents.
 
+## Revoked agents remain usable through existing chat sessions
+
+When you turn off an agent via its toggle on the agents dashboard or from an agent detail page, the agent is set to Off and will no longer respond to mentions or task mentions. Existing team chat sessions that are currently open remain valid while their conversation is active. The agent continuation remains usable until the chat session is closed, after which the agent effectively stops responding to new messages in that session.
+
+This behavior means that:
+
+- If you have an open team chat with an active agent, sending a message to an already-opened session will succeed even if the agent is set to Off.
+- Clicking the session toggle to off marks the agent as Off but does not immediately interrupt the running session.
+- Once you close or switch away from a chat session, messages addressed to the agent within the previous chat window are effectively blocked.
+
+<Aside type="note">This cooperative behavior preserves ongoing agent interactions within existing sessions without forcing a state change or disconnecting the chat window.</Aside>
+
 ## Agent management
 
 ### Rename agents
@@ -346,9 +350,7 @@ Agents can be renamed from their detail page; the URL updates to the new readabl
 | CLI releases ignored | Confirm data source paths read `body.title` or appropriate top-level fields; stale flows drop production cursor mismatch (adjust `dataSources.path` accordingly). |
 | Embeddings fail | Check if the gateway resolved to the correct provider; rotating the gateway or model on Vercel AI Gateway may resolve transient failures. |
 
-<Aside type="note">
-Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.
-</Aside>
+<Aside type="note">Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.</Aside>
 
 ---
 
