@@ -6,6 +6,10 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 4, 2026">
+  * Added: CLI parity for comment add/list and task get/update options ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
+</Update>
+
+<Update label="September 3, 2026">
   * Added: Hypertask Agent SDK for building autonomous agents with TypeScript ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
   * Added: Preserve screenshot file references in AI task writer ([HTPR-6117](https://app.hypertask.ai/detail/project-15/6117))
   * Added: emoji reaction commands to CLI and API for acknowledging comments ([HTPR-6118](https://app.hypertask.ai/detail/project-15/6118))
@@ -21,7 +25,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Broken mobile All Tasks view now loads correctly and remains introspectable across views ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992))
 </Update>
 
-<Update label="September 3, 2026">
+<Update label="September 2, 2026">
   * Fixed: Due date selection in mobile new-task form no longer crashes ([HTPR-5967](https://app.hypertask.ai/detail/project-15/5967))
   * Fixed: Parity gate validates trusted CLI version; non-approved versions are untrusted and do not block workers ([HTPR-6025](https://app.hypertask.ai/detail/project-15/6025))
   * Improved: CLI parity consistency is now stable across both Node and Zig halves ([HTPR-6027](https://app.hypertask.ai/detail/project-15/6027))
@@ -29,21 +33,6 @@ export const Update = ({ label, children }) => (
   * Added: Mobile AI task writer first — dictate the task, then edit ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
   * Fixed: Compact mobile undo toasts (110x74 px) and tight bottom-aligned layout ([HTPR-5990](https://app.hypertask.ai/detail/project-15/5990))
   * Added: Comment composer pinned to bottom of task detail pane so it stays accessible while reading and posting ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
-</Update>
-
-<Update label="September 2, 2026">
-  * Added: Create /prototype skill via board AI ([HTPR-5931](https://app.hypertask.ai/detail/project-15/5931))
-  * Improved: Task creation response time using webhook payload ([HTPR-5928](https://app.hypertask.ai/detail/project-15/5928))
-  * Added: Mobile AI model gauge UI: fixed 4-choice gauge selector with context chips ([HTPR-5921](https://app.hypertask.ai/detail/project-15/5921))
-  * Fixed: Desktop: assignees render at 14px in the new task modal, matching all other properties ([HTPR-5886](https://app.hypertask.ai/detail/project-15/5886))
-  * Fixed: AI chat mobile input now uses the design system corner radius (5px panel radius, 4px shape tokens) instead of rounded corners that did not match the design system ([HTPR-5903](https://app.hypertask.ai/detail/project-15/5903))
-  * Fixed: Ctrl/Cmd+Shift+Enter for ticket submission now works on tasks opened from the Inbox instead of being disabled globally ([HTPR-5913](https://app.hypertask.ai/detail/project-15/5913))
-  * Fixed: AI chat now validates and linkifies resolved ticket references before saving comments across task detail, Inbox, and other contexts ([HTPR-5915](https://app.hypertask.ai/detail/project-15/5915))
-  * Fixed: Agent production verifier now accepts task detail page URLs such as `/detail/project-15/<ticket>` in agent workflows ([HTPR-5941](https://app.hypertask.ai/detail/project-15/5941))
-  * Fixed: Clicking existing due dates on mobile task pages no longer throws errors due to invalid date inputs ([HTPR-5955](https://app.hypertask.ai/detail/project-15/5955))
-  * Fixed: GitHub webhook now resolves tickets correctly to the repository-linked board instead of selecting foreign board tickets ([HTPR-5956](https://app.hypertask.ai/detail/project-15/5956))
-  * Add: Write with AI on mobile now opens full screen in both empty and existing-text cases, with an editable draft and a chip strip showing recent actions ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))
-  * Improved: Mobile kanban zoomed-out view now scrolls horizontally so all columns are reachable ([HTPR-5926](https://app.hypertask.ai/detail/project-15/5926))
 </Update>
 
 <Update label="September 1, 2026">
