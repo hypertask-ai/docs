@@ -104,6 +104,38 @@ hypertask tasks move <ticket> --section <section-name>
   >
   For full options, run `hypertask tasks move --help`.
 
+### hypertask comment react
+
+Add an emoji reaction to a comment from the terminal.
+
+```bash
+hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
+```
+
+**Behavior:**
+
+- React to existing comments to acknowledge them without leaving a reply.
+- Use a single emoji character (e.g., `👍`, `❤️`, `🔥`).
+- Requires authentication via API key or session cookie.
+
+### hypertask comment unreact
+
+Remove an emoji reaction from a comment.
+
+```bash
+hypertask comment unreact <ticket_number> <comment_id> --emoji <emoji>
+```
+
+**Behavior:**
+
+- Removes the specified reaction from a comment.
+- Useful for correcting mis-typed acknowledgments.
+- Requires authentication.
+
+**Reactions tab (web UI):**
+
+The web app provides a dedicated reactions tab for each comment, showing all reactions and the users who added them. The CLI complements this by enabling quick reactions from any terminal.
+
 ## Trusted CLI Release Gate (advisory, not a hard block)
 
 ### How release checks work
