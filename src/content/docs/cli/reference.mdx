@@ -215,6 +215,39 @@ hypertask comment unreact <ticket_number> <comment_id> --emoji <emoji>
 
 The web app provides a dedicated reactions tab for each comment, showing all reactions and the users who added them. The CLI complements this by enabling quick reactions from any terminal.
 
+## Webhook commands
+
+### hypertask webhook configure
+
+Configure webhook events for an agent.
+
+```bash
+hypertask webhook configure --url <webhook-url> --events <events>
+```
+
+**Behavior:**
+
+- `--url` (required): Target webhook URL to listen for notifications.
+- `--events` (required): One or more space-separated webhook events.
+- Provides immediate feedback indicating whether the configuration was accepted.
+
+**Supported events:**
+
+The latest production CLI now accepts the full set of 7 webhook events: `chat.message`, `created_bulk`, `task_updated`, `task_created`, `user_moved`, `board_updated`, and `agent_reconciled`.
+
+**Example:**
+
+```bash
+hypertask webhook configure --url https://example.com/webhook --events "chat.message task_updated"
+```
+
+**Troubleshooting:**
+
+- An invalid event string or a deprecated event will result in a rejection message.
+- If you previously used a stale client-side event list that rejected all events, make sure your current CLI release includes the updated event metadata.
+
+<Aside type="note">Webhook event validation had a stale client-side event list for some CLI releases, rejecting valid events like `chat.message`. The current production release now accepts the full set of 7 events, including `chat.message` ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114)).</Aside>
+
 ## Trusted CLI Release Gate (advisory, not a hard block)
 
 ### How release checks work
