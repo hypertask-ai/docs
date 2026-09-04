@@ -104,26 +104,68 @@ hypertask tasks move <ticket> --section <section-name>
   >
   For full options, run `hypertask tasks move --help`.
 
-## Trusted CLI Parity Gate
+## Trusted CLI Release Gate (advisory, not a hard block)
 
-Hypertask uses a CI/CD parity gate that verifies the production app and the published command-line tool still agree before marking a change as released. The gate only trusts CLI versions that have been approved by hash; all newer versions are considered untrusted until a manual approval is granted.
+### How release checks work
 
-### How releases become trusted
+Hypertask uses a CI/CD parity gate to verify that CLI release behavior aligns with the production app, but it no longer blocks production on a mismatch. Changes are handled through:
 
-A new CLI release becomes trusted through a manual review and pin-bump process:
+- **Advisory warning when the CLI's latest appears to have updated**: The CLI now warns users during release checks when the published CLI version differs from production, but continues to allow the build.
+- **Trusted version allowlist**: Trusted CLI versions must be in an allowlist; all others are treated as untrusted and receive advisory warnings.
+- **Parity inventory validation**: A parity inventory task ensures that changes to CLI behavior are recognized and tracked.
+- **Failure-tolerant npm lookup**: If an unrelated publish occurs or npm data drifts, the CLI shows a warning instead of failing.
+
+### Node half release compatibility
+
+When a change lands on the Node CLI half and is mapped straightforwardly to an htz binary behavior, the production build publishes after a passing Node parity test and an allowlist update. If the semantic difference is meaningful enough to break worker workflows, the change is handled through a separate Node-specific release and parity gating before matching to htz.
+
+This advisory release check keeps Node CLI build iterations visible to users without halting production. Trusted versions remain vetted; all others are warned but not blocked.
+
+### Worker behavior
+
+Workers must not stop at an advisory warning about the CLI version. The advisory indicates that a newer or mismatched version is available, and a warning does not mean a regression with the change the worker just shipped.
+
+It is the responsibility of the build or publish process to ensure the CLI behavior matches the expectations in the parity inventory and allowlist before marking a release as trusted.
+
+## Trusted CLI version approval
+
+Trusted CLI versions are approved through a manual review and pin-bump process:
 
 1. The manager reviews each CLI release diff, comparing:
    - The npm tarball
    - Dependency changes
    - Published npm provenance
 2. If the diff is clean and matches expectations, the manager opens a pin-bump pull request the same hour, updating the trusted version in the parity gate configuration.
-3. The gate\\\'s trusted pin never tracks npm automatically; a new trusted version exists only after an explicit review and pin-bump.
+3. The gate's trusted pin never tracks npm automatically; a new trusted version exists only after an explicit review and pin-bump.
 
-This ensures the gate stays honestly bounded to the version the team has inspected and approved.
+This ensures the gate stays bounded to the version the team has inspected and approved.
 
-### Worker behavior
+### What is allowed to change before approval
 
-Workers must not stop at a red parity gate when their own change is deployed and verified. A red gate only means the CLI version is untrusted; it does not indicate a functional regression with the change the worker just shipped.
+For a CLI version to remain trusted:
+
+- Node CLI behavior must map cleanly to the htz binary behavior (semantic parity).
+- Dependency changes must not break worker workflows.
+- New CLI commands or flags must be accompanied by documentation and intended use cases.
+- Works intended for the Node-only half (to avoid regressions with htz) can proceed with limited trust.
+
+Changes outside these bounds trigger advisory warnings and may be handled via dedicated Node-side releases.
+
+## Trusted version allowlist
+
+The trusted version allowlist captures CLI versions considered production-ready. When a new version becomes trusted:
+
+1. A parity inventory task identifies behavior differences between the new version and the previous trusted version.
+2. The allowlist is updated with the new version.
+3. Advisory warnings are cleared; future builds will no longer show the warning.
+
+CLI versions not in the allowlist receive advisory warnings but are not blocked.
+
+### Notes and friction
+
+- If build logs show an advisory warning, check that the parity inventory is up to date and that allowlist entries are correct.
+- If production was blocked previously due to a mismatch, the Node half release was either pinned out of the blockage path or shipped with a separate trusted version.
+- Unrelated npm publishes that do not match the Rust ptz signature or that represent small updates (e.g., documentation-only) surface a warning but do not stop the build.
 
 ## Claims and Parity Tests
 
@@ -133,15 +175,13 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** â\x80\x94 Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** â\x80\x94 Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** â\x80\x94 Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** â\x80\x94 Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** â\x80\x94 Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
 
-<Aside type="note">
-The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.
-</Aside>
+<Aside type="note">The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.</Aside>
 
 ### Running the harness locally
 
@@ -163,6 +203,4 @@ The parity harness confirms that `hypertask` maps to the latest route contract s
 
 These tests validate both positional params and flags against the server contract. All checks pass in local and live runs, confirming CLI behavior aligns with the documented contract.
 
-<Aside type="tip">
-The CLI parity harness now also validates JSON diffs, auth matrix, negative cases, token-source precedence, and human output against the Node CI contract and passes locally and in live runs.
-</Aside>
+<Aside type="tip">The CLI parity harness now also validates JSON diffs, auth matrix, negative cases, token-source precedence, and human output against the Node CI contract and passes locally and in live runs.</Aside>
