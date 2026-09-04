@@ -1,3 +1,8 @@
+---
+title: "Changelog"
+description: Changes. Improvements. Bug fixes.
+---
+
 export const Update = ({ label, children }) => (
   <section>
     <h3>{label}</h3>
@@ -7,6 +12,8 @@ export const Update = ({ label, children }) => (
 
 <Update label="September 4, 2026">
   * Added: CLI parity for comment add/list and task get/update options ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
+  * Fixed: CLI webhook configure now accepts chat.message and all 7 advertised webhook events ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114))
+  * Fixed: Mobile agent chat window layout now stays fully visible above the keyboard on supported browsers ([HTPR-6129](https://app.hypertask.ai/detail/project-15/6129))
 </Update>
 
 <Update label="September 3, 2026">
@@ -30,7 +37,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Parity gate validates trusted CLI version; non-approved versions are untrusted and do not block workers ([HTPR-6025](https://app.hypertask.ai/detail/project-15/6025))
   * Improved: CLI parity consistency is now stable across both Node and Zig halves ([HTPR-6027](https://app.hypertask.ai/detail/project-15/6027))
   * Fixed: Zig CLI `hypertask agent poll` no longer crashes at random ([HTPR-6030](https://app.hypertask.ai/detail/project-15/6030))
-  * Added: Mobile AI task writer first â\x80\x94 dictate the task, then edit ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
+  * Added: Mobile AI task writer first — dictate the task, then edit ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
   * Fixed: Compact mobile undo toasts (110x74 px) and tight bottom-aligned layout ([HTPR-5990](https://app.hypertask.ai/detail/project-15/5990))
   * Added: Comment composer pinned to bottom of task detail pane so it stays accessible while reading and posting ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
 </Update>
