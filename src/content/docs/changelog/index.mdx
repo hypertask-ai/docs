@@ -6,13 +6,14 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 4, 2026">
-  * Fixed: Production auto-rollback stopped firing for red unit tests; both tests now pass on production and the site serves the current build ([HTPR-6089](https://app.hypertask.ai/detail/project-15/6089))
-  * Fixed: CLI release checks are now advisory; trusted version allowlist and parity inventory validation are preserved, and npm latest lookups are failure-tolerant ([HTPR-6077](https://app.hypertask.ai/detail/project-15/6077))
-  * Fixed: Turned-off agents remain usable through existing team chat sessions until the chat is closed ([HTPR-6079](https://app.hypertask.ai/detail/project-15/6079))
+  * Added: Production auto-rollback stopped firing for red unit tests; both tests now pass on production and the site serves the current build ([HTPR-6089](https://app.hypertask.ai/detail/project-15/6089))
+  * Added: CLI release checks are now advisory; trusted version allowlist and parity inventory validation are preserved, and npm latest lookups are failure-tolerant ([HTPR-6077](https://app.hypertask.ai/detail/project-15/6077))
+  * Added: Turned-off agents remain usable through existing team chat sessions until the chat is closed ([HTPR-6079](https://app.hypertask.ai/detail/project-15/6079))
   * Improved: CLI dedupes notifications/access calls on each inbox load, reducing redundant API round trips ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063))
   * Fixed: tasks move on archived tasks now explicitly states "Archived tasks cannot move sections or change assignees" instead of a generic error ([HTPR-6062](https://app.hypertask.ai/detail/project-15/6062))
   * Fixed: Worker resume path now correctly handles a ticket moved from In Progress to Bugs, allowing recovery ([HTPR-6064](https://app.hypertask.ai/detail/project-15/6064))
   * Fixed: agent-control-poller AWS credentials restored to secure ~/.config/cloudflare.env file owned by the Acme staff user ([HTPR-6073](https://app.hypertask.ai/detail/project-15/6073))
+  * Fixed: Ctrl+K now opens the command palette on Agents overview and Agent Chat pages, so you can search and launch quickly from those views ([HTPR-6088](https://app.hypertask.ai/detail/project-15/6088))
 </Update>
 
 <Update label="September 3, 2026">
