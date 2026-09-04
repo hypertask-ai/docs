@@ -1,0 +1,418 @@
+---
+title: Agent SDK
+description: Build custom agents with the Hypertask Agent SDK, inspired by Linear and Plane's patterns.
+---
+
+import { Aside, CardGrid, Card, LinkCard, Steps, Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+The <code>@hypertask/agent-sdk</code> lets you build autonomous agents programmatically with a small TypeScript library that follows the same shape as Linear and Plane:
+
+- **Agent** = app with a bot identity
+- **Run** (AgentSession) = one session per interaction
+- **Typed activity stream** = thought, action, response, ask, error
+- **Signals** = stop, select, auth_request
+- **Fast acknowledgement** = post a thought within 10 seconds or the run becomes stale after 5 minutes
+
+This SDK is the client-side counterpart to your agent infrastructure: it handles webhooks, signature verification, and typed activity recording so you can stand up a working agent in an afternoon.
+
+## Install
+
+```bash
+npm install @hypertask/agent-sdk
+# or
+yarn add @hypertask/agent-sdk
+```
+
+## Quick Start
+
+Create a simple agent that replies when mentioned and files its responses as activity rows in the ticket thread.
+
+```tsx
+// server.ts
+import { createAgent } from '@hypertask/agent-sdk';
+import express from 'express';
+
+async function main() {
+  const app = express();
+
+  const { client, webhookHandler } = createAgent({
+    token: process.env.AGENT_TOKEN!,
+    secret: process.env.WEBHOOK_SECRET!,
+  });
+
+  // Handle all incoming webhooks
+  app.use(webhookHandler);
+
+  // Your agent logic wired into events
+  client.on('mention', async (run) => {
+    await run.thought(`Being mentioned on ticket ${run.ticket.id}`);
+
+    await run.respond(`Noted: this is ticket ${run.ticket.id}.`);
+  });
+
+  client.on('assigned', async (run) => {
+    await run.thought(`Assigned to ticket ${run.ticket.id}`);
+  });
+
+  app.listen(3000, () => {
+    console.log('Agent running on port 3000');
+  });
+}
+
+main();
+```
+
+<Aside type="tip">
+  See [Agent webhooks](/mcp/agent-webhooks/) for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
+</Aside>
+
+## Run Objects
+
+Every event handler receives a <code>run</code> object that represents the current interaction. The run tracks the ticket, thread, status, and type-safe activity stream.
+
+### Status
+
+A run has one of these statuses during its lifetime:
+
+| Status | Description |
+|--------|-------------|
+| `active` | Running and processing events |
+| `stopped` | User requested stop or error occurred |
+| `stale` | No activity for 5 minutes after start |
+| `done` | Completed successfully |
+
+### Activity Stream
+
+The run records all agent communication as typed activities in the thread, with muted styling like tool calls. Use these methods to write to the activity stream:
+
+| Method | When to Use |
+|--------|-------------|
+| [`run.thought(text)`](#runthought) | Internal reasoning or planning |
+| [`run.action(text, link)`](#runaction) | Tool execution or file attachment |
+| [`run.respond(text)`](#runrespond) | Agent response to the user |
+| [`run.error(text)`](#runerror) | Handling failures or errors |
+| [`run.ask(question, options)`](#runask) | UX flows that require user input |
+
+All activity is persisted automatically when the SDK receives the <code>mentioned</code> or <code>assigned</code> event. You can also call activity methods on <code>run</code> directly.
+
+#### run.thought(text)
+
+Record an internal reasoning step.
+
+```tsx
+client.on('mention', async (run) => {
+  await run.thought('Deciding which section to move the ticket to...');
+});
+```
+
+#### run.action(text, link)
+
+Record an external action executed by the agent, with an optional file upload link.
+
+```tsx
+await run.action('Test run started', 'https://hypertask.app/file/test-run-123.md');
+```
+
+#### run.respond(text)
+
+Record the agent's user-facing response.
+
+```tsx
+await run.respond("I'll move it to the Bug Severity 2 section.");
+```
+
+#### run.error(text)
+
+Record an error that you handled gracefully.
+
+```tsx
+try {
+  // ...
+} catch (err) {
+  await run.error('Failed to fetch from external API: ' + err.message);
+}
+```
+
+#### run.ask(question, options)
+
+Create a multi-choice prompt for user interaction. The return value is a promise that resolves to the user's choice.
+
+```tsx
+const choice = await run.ask('Which section should this go to?', {
+  options: [
+    { value: 'urgent', label: 'Urgent Priority' },
+    { value: 'normal', label: 'Standard Priority' },
+  ],
+});
+
+await run.respond(`Moving to ${choice.label}.`);
+```
+
+### Ticket Helpers
+
+The run object gives you helper methods for the current ticket. These all include built-in lease management, so you don't need to call heartbeat manually.
+
+| Helper | Description |
+|--------|-------------|
+| [`run.task.move(section)`](#runtaskmovesection) | Move the task to a different section |
+| [`run.task.assign(userId)`](#runtaskassignuserId) | Assign the task to a user |
+| [`run.task.comment(text)`](#runtaskcommenttext) | Add a comment to the ticket |
+| [`run.task.update(fields)`](#runtaskupdatefields) | Update task fields |
+| [`run.task.attach(link)`](#runtaskattachlink) | Attach a file or link |
+
+All helpers auto-heartbeat to keep your claim alive while work is in progress.
+
+#### run.task.move(section)
+
+Move the current task to a different board section.
+
+```tsx
+await run.task.move('Bug Severity 2');
+```
+
+#### run.task.assign(userId)
+
+Assign the task to a user by ID, email, or display name.
+
+```tsx
+await run.task.assign(' me ');
+await run.task.assign('john@example.com');
+```
+
+#### run.task.comment(text)
+
+Add a comment to the task, which also appears in the thread.
+
+```tsx
+await run.task.comment('Routing this through to the triage team.');
+```
+
+#### run.task.update(fields)
+
+Update any task fields by writeable property name.
+
+```tsx
+await run.task.update({
+  description: 'Updated based on the agent analysis...',
+  priority: 'High',
+});
+```
+
+#### run.task.attach(link)
+
+Attach a file or external link to the task.
+
+```tsx
+await run.task.attach('https://hypertask.app/file/analysis-123.md');
+```
+
+## Event Types
+
+Your agent can subscribe to one or more incoming events. All events provide a <code>run</code> object with ticket, thread, and helpers.
+
+<Code language="typescript">{`
+type EventHandler = (run: Run) => Promise<void>;
+
+// Subscribe to all event types
+client.on('*', handler);
+
+// Subscribe to specific events
+client.on('mention', mentionHandler);
+client.on('assigned', assignedHandler);
+client.on('chat', chatHandler);
+client.on('stop', stopHandler);
+`}</Code>
+
+### mention
+
+Triggered when the agent is <code>@mentioned</code> in any comment or chat. Includes the full thread so far, the original prompt, and all existing activity.
+
+```tsx
+client.on('mention', async (run) => {
+  // run.ticket: the ticket being mentioned
+  // run.thread: messages before this event
+  // run.prompt: the current task description or additional context
+});
+```
+
+### assigned
+
+Triggered when the agent is assigned directly to a ticket via the interface.
+
+```tsx
+client.on('assigned', async (run) => {
+  // run.ticket: the newly assigned ticket
+});
+```
+
+### chat
+
+Triggered when a message is sent in the Agent Chat. Useful for bots that respond in chat rather than on tickets.
+
+```tsx
+client.on('chat', async (run) => {
+  // run.ticket: the task chat belongs to
+  // run.thread: all messages so far
+});
+```
+
+### stop
+
+Triggered when the agent's run is explicitly stopped by the user (e.g., via the agent control panel or chat interface). Use this for cleanup actions or confirmation posts.
+
+```tsx
+client.on('stop', async (run) => {
+  await run.respond('Stopping work. Let me know if you need more.');
+});
+```
+
+<Aside type="caution">
+  If you don't post a thought within 10 seconds of receiving <code>mention</code> or <code>assigned</code>, the run becomes stale after 5 minutes. Always call <code>await run.thought(...)</code> or <code>await run.respond(...)</code> on entry.
+</Aside>
+
+## Signals
+
+The SDK automatically emits signals that your agents can respond to. These are part of the run type and include request-and-response forms.
+
+### stop
+
+Users can request the agent to halt (via the agent control panel or chat). A stop signal clears the lease and stops further activity.
+
+```tsx
+client.on('stop', async (run) => {
+  await run.respond('Stopped. No further actions.');
+});
+```
+
+### select
+
+One-shot user choice prompts. Use <code>run.ask(...)</code> explicitly to get a promise-based choice, which renders as a multi-selector in the thread.
+
+```tsx
+const choice = await run.ask(...);
+```
+
+### auth_request
+
+Requests for additional authentication (e.g., missing OAuth tokens). Handled through your custom auth logic when the SDK can't automatically authenticate.
+
+## Templates
+
+The SDK includes three ready-made templates you can use as starting points. All templates are available in the <code>@hypertask/agent-sdk/templates</code> package.
+
+### Reply-Only Assistant
+
+A minimal agent that only responds to mentions and chat, without touching tasks. Perfect for FAQs and bots that offer information but never modify state.
+
+```tsx
+// templates/replyOnly.ts
+import { createAgent } from '@hypertask/agent-sdk';
+
+export async function createReplyOnly(
+  token: string,
+  secret: string,
+  onRespond: (text: string) => void
+) {
+  const { client } = createAgent({ token, secret });
+  client.on('mention', async (run) => {
+    const response = await getBotResponse(run.prompt);
+    onRespond(response);
+    await run.respond(response);
+  });
+}
+```
+
+### Ticket Worker
+
+An agent that receives assigned tickets, updates progress, and files accurate activity. Works well for triage bots, status reporters, and project workflow helpers.
+
+```tsx
+// templates/ticketWorker.ts
+import { createAgent } from '@hypertask/agent-sdk';
+
+export async function createTicketWorker(
+  token: string,
+  secret: string,
+  onAnalyze: (ticket: Ticket) => Promise<string>
+) {
+  const { client } = createAgent({ token, secret });
+  client.on('assigned', async (run) => {
+    await run.thought(`Analyzing ticket ${run.ticket.id}`);
+
+    const summary = await onAnalyze(run.ticket);
+    await run.task.comment(summary);
+
+    await run.thought('Completed analysis');
+    await run.respond('Analysis complete. See comment for details.');
+  });
+}
+```
+
+### Scheduled Bot
+
+A bot that runs only on a cron schedule, without webhooks. Good for summaries, reports, or regular monitoring agents.
+
+```tsx
+// templates/scheduledBot.ts
+import { createAgent } from '@hypertask/agent-sdk';
+
+export async function createScheduledBot(
+  token: string,
+  secret: string,
+  onTick: (run: Run) => Promise<void>
+) {
+  const { client, schedule } = createAgent({ token, secret });
+
+  schedule('0 */6 * * *', async () => {
+    const run = await client.createRun(COMMENT_MENTION);
+    await run.thought('Scheduled bot tick');
+    await onTick(run);
+  });
+}
+```
+
+<Aside type="tip">
+  The agent-dev CLI wraps these templates and can generate boilerplate files for your project. Install the CLI with <code>npm install -g @hypertask/agent-dev</code>.
+</Aside>
+
+## Features
+
+- **Signature verification** – The SDK validates all incoming webhooks with HMAC signatures so you don't need to.
+- **Fast acknowledgement** – Always post a thought within 10 seconds after receiving <code>mention</code> or <code>assigned</code>. If the run goes stale after 5 minutes, it automatically stops.
+- **Retry-safe delivery IDs** – The SDK supports record-and-retry workflows so you can handle webhook delivery without duplicating actions.
+- **Typed activity stream** – All activity (thought, action, response, error, ask) is recorded in the thread as muted rows that look like tool calls, making the agent's reasoning visible.
+- **Built-in lease management** – All task helpers include heartbeat logic, so your agent never loses its claim to a ticket.
+- **HTTP transport flexibility** – The SDK generates a webhook handler compatible with Express, Hono, Next.js API routes, Cloudflare Workers, and plain Node.js.
+
+## Agent Lifecycle
+
+1. **Create the SDK client** – Call <code>createAgent({ token, secret })</code>. The SDK wraps your existing routes and injects signature verification.
+2. **Register event handlers** – Subscribe to <code>mention</code>, <code>assigned</code>, <code>chat</code>, and <code>stop</code> as needed.
+3. **Handle events with a run** – Each handler receives a <code>run</code> object with ticket, thread, and helpers.
+4. **Record activities** – Use <code>run.thought</code>, <code>run.action</code>, <code>run.respond</code>, <code>run.error</code>, <code>run.ask</code> to build the typed activity stream.
+5. **Update tickets with helpers** – Use <code>run.task.move</code>, <code>assign</code>, <code>comment</code>, <code>update</code>, <code>attach</code> to modify tickets without managing leases manually.
+
+The SDK automatically:
+- Starts a new run on <code>mention</code> or <code>assigned</code>
+- Checks the signature on every webhook
+- Bounces the run if no activity occurs for 5 minutes
+- Records all activity in the thread when the SDK receives the webhook
+
+## Next Steps
+
+| If you want to… | See |
+|-----------------|-----|
+| Configure webhooks | [Agent webhooks](/mcp/agent-webhooks/) |
+| Run agents on a schedule | [Schedule an agent](/mcp/scheduling/) |
+| Define patterns for multi-step workflows | [Agent Workflows](/mcp/workflows/) |
+| Learn about the infrastructure powering runs | [Agents Dashboard](/features/agents-dashboard/) |
+
+---
+
+## Known Limitations
+
+For v1, the following are out of scope:
+
+- OAuth marketplace install (create your agent using existing tokens)
+- Python SDK
+- Hosted runtime for client agents
