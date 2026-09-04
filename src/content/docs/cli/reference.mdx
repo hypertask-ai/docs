@@ -80,6 +80,85 @@ npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
 
+## Comments commands
+
+### hypertask comment add
+
+Post a comment to a ticket from the terminal.
+
+```bash
+hypertask comment add <ticket_number> --text "<comment text>"
+```
+
+**Behavior:**
+
+- Adds a new comment to the specified ticket.
+- The `--text` flag holds your comment content; keep it short so it renders cleanly.
+- Requires authentication via API key or session cookie.
+
+```bash
+hypertask comment add 12345 --text "Task should complete by EOD"
+```
+
+### hypertask comment list
+
+List comments for a ticket from the terminal.
+
+```bash
+hypertask comment list <ticket_number>
+```
+
+**Behavior:**
+
+- Returns a human-readable list of comments for the given ticket.
+- The output includes comment content, timestamps, and author information.
+- Requires authentication.
+
+```bash
+hypertask comment list 12345
+```
+
+## Task details commands
+
+### hypertask task get
+
+Display details for a task from the terminal.
+
+```bash
+hypertask task get <ticket_number>
+```
+
+**Behavior:**
+
+- Returns full task details including fields, assignees, sections, and history.
+- Useful for inspecting tasks before updating or acting on them.
+- Requires authentication.
+
+```bash
+hypertask task get 12345
+```
+
+### hypertask task update
+
+Update a task from the terminal.
+
+```bash
+hypertask task update <ticket_number> --field "<field>" --value "<value>"
+```
+
+**Behavior:**
+
+- Updates a task field without revisiting the web app.
+- Supports fields like `title`, `description`, `priority`, `assignee`, and `section`.
+- Requires authentication.
+
+```bash
+hypertask task update 12345 --field "priority" --value "high"
+hypertask task update 12345 --field "assignee" --value "user@example.com"
+```
+
+<Aside type="note">The `comment add` and `comment list` commands were previously available only on the Zig CLI. The Node CLI now matches the native CLI parity for these options ([HTPR-6125](https://app.hypertask.ai/detail/project-15/6125)).</Aside>
+
 ## Tasks commands
 
 ### hypertask tasks move
