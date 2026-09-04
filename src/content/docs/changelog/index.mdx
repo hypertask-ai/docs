@@ -16,6 +16,7 @@ export const Update = ({ label, children }) => (
 <Update label="September 4, 2026">
   * Improved: CLI dedupes notifications/access calls on each inbox load, reducing redundant API round trips ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063))
   * Fixed: tasks move on archived tasks now explicitly states "Archived tasks cannot move sections or change assignees" instead of a generic error ([HTPR-6062](https://app.hypertask.ai/detail/project-15/6062))
+  * Fixed: Worker resume path now correctly handles a ticket moved from In Progress to Bugs, allowing recovery ([HTPR-6064](https://app.hypertask.ai/detail/project-15/6064))
 </Update>
 
 <Update label="September 3, 2026">
