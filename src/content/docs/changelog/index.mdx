@@ -13,7 +13,7 @@ export const Update = ({ label, children }) => (
 <Update label="September 5, 2026">
   * Fixed: New task attachments and Retry now work reliably ([HTPR-6143](https://app.hypertask.ai/detail/project-15/6143))
   * Fixed: CLI comment URLs now use board-qualified uniqueIndex references instead of stale ticket digits when cross-board-moved ([HTPR-6113](https://app.hypertask.ai/detail/project-15/6113))
-  * Added: Hypertask Agent SDK TypeScript package for building autonomous agents with webhooks, run helpers, and templates ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
+  * Added: Automatic description drafts now ship behind a feature flag accessible only to task owner ([HTPR-6177](https://app.hypertask.ai/detail/project-15/6177))
   * Fixed: J/K keyboard navigation now opens inbox drafts on production ([HTPR-6159](https://app.hypertask.ai/detail/project-15/6159))
 </Update>
 
@@ -44,7 +44,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Parity gate validates trusted CLI version; non-approved versions are untrusted and do not block workers ([HTPR-6025](https://app.hypertask.ai/detail/project-15/6025))
   * Improved: CLI parity consistency is now stable across both Node and Zig halves ([HTPR-6027](https://app.hypertask.ai/detail/project-15/6027))
   * Fixed: Zig CLI `hypertask agent poll` no longer crashes at random ([HTPR-6030](https://app.hypertask.ai/detail/project-15/6030))
-  * Added: Mobile AI task writer first — dictate the task, then edit ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
+  * Added: Mobile AI task writer first â\x80\x94 dictate the task, then edit ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
   * Fixed: Compact mobile undo toasts (110x74 px) and tight bottom-aligned layout ([HTPR-5990](https://app.hypertask.ai/detail/project-15/5990))
   * Added: Comment composer pinned to bottom of task detail pane so it stays accessible while reading and posting ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
 </Update>
