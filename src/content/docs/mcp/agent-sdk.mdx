@@ -23,6 +23,23 @@ npm install @hypertask/agent-sdk
 yarn add @hypertask/agent-sdk
 ```
 
+## Adapters
+
+The SDK includes adapters for common web frameworks and runtime environments. Use the webhook handler compatible with your stack.
+
+| Adapter | Setup | Notes |
+|---------|-------|-------|
+| **Node** | Assign a TCP port to your Node server. | Built-in; robust for single-process deployments. |
+| **Express** | app.use(webhookHandler) on an Express app. | Classic middleware integrations. |
+| **Hono** | app.use('*', webhookHandler) on a Hono app. | Lightweight web framework. |
+| **Next.js API route** | Attach to the default export route. | Plugged into framework routing. |
+| **Cloudflare Workers** | Enable automatic route at the Worker entry. | Background support required; deduplication and buffering handled by the SDK. |
+| **Plain Node** | Route manually using raw request bytes and background support. | Fully dependency-free but more manual wiring. |
+
+<Aside type="tip">
+  Verify which adapter matches your runtime. The stamped header <code>X-Hypertask-Signature</code> is always used for verification, independent of your transport choice.
+</Aside>
+
 ## Quick Start
 
 Create a simple agent that replies when mentioned and files its responses as activity rows in the ticket thread.
@@ -56,14 +73,11 @@ async function main() {
 
   app.listen(3000, () => {
     console.log('Agent running on port 3000');
-  });
-}
-
-main();
+});
 ```
 
 <Aside type="tip">
-  See [Agent webhooks](/mcp/agent-webhooks/) for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
+  See <a href="/mcp/agent-webhooks/">Agent webhooks</a> for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
 </Aside>
 
 ## Run Objects
@@ -87,11 +101,11 @@ The run records all agent communication as typed activities in the thread, with 
 
 | Method | When to Use |
 |--------|-------------|
-| [`run.thought(text)`](#runthought) | Internal reasoning or planning |
-| [`run.action(text, link)`](#runaction) | Tool execution or file attachment |
-| [`run.respond(text)`](#runrespond) | Agent response to the user |
-| [`run.error(text)`](#runerror) | Handling failures or errors |
-| [`run.ask(question, options)`](#runask) | UX flows that require user input |
+| [`run.thought(text)`](#runthinktext) | Internal reasoning or planning |
+| [`run.action(text, link)`](#runactiontext-link) | Tool execution or file attachment |
+| [`run.respond(text)`](#runrespondtext) | Agent response to the user |
+| [`run.error(text)`](#runerrortext) | Handling failures or errors |
+| [`run.ask(question, options)`](#runaskquestion-options) | UX flows that require user input |
 
 All activity is persisted automatically when the SDK receives the <code>mentioned</code> or <code>assigned</code> event. You can also call activity methods on <code>run</code> directly.
 
@@ -210,7 +224,7 @@ await run.task.attach('https://hypertask.app/file/analysis-123.md');
 
 Your agent can subscribe to one or more incoming events. All events provide a <code>run</code> object with ticket, thread, and helpers.
 
-<Code language="typescript">{`
+<Code language="typescript">
 type EventHandler = (run: Run) => Promise<void>;
 
 // Subscribe to all event types
@@ -221,7 +235,7 @@ client.on('mention', mentionHandler);
 client.on('assigned', assignedHandler);
 client.on('chat', chatHandler);
 client.on('stop', stopHandler);
-`}</Code>
+</Code>
 
 ### mention
 
@@ -377,20 +391,20 @@ export async function createScheduledBot(
 
 ## Features
 
-- **Signature verification** – The SDK validates all incoming webhooks with HMAC signatures so you don't need to.
-- **Fast acknowledgement** – Always post a thought within 10 seconds after receiving <code>mention</code> or <code>assigned</code>. If the run goes stale after 5 minutes, it automatically stops.
-- **Retry-safe delivery IDs** – The SDK supports record-and-retry workflows so you can handle webhook delivery without duplicating actions.
-- **Typed activity stream** – All activity (thought, action, response, error, ask) is recorded in the thread as muted rows that look like tool calls, making the agent's reasoning visible.
-- **Built-in lease management** – All task helpers include heartbeat logic, so your agent never loses its claim to a ticket.
-- **HTTP transport flexibility** – The SDK generates a webhook handler compatible with Express, Hono, Next.js API routes, Cloudflare Workers, and plain Node.js.
+- **Signature verification** — The SDK validates all incoming webhooks with HMAC signatures so you don't need to.
+- **Fast acknowledgement** — Always post a thought within 10 seconds after receiving <code>mention</code> or <code>assigned</code>. If the run goes stale after 5 minutes, it automatically stops.
+- **Retry-safe delivery IDs** — The SDK supports record-and-retry workflows so you can handle webhook delivery without duplicating actions.
+- **Typed activity stream** — All activity (thought, action, response, error, ask) is recorded in the thread as muted rows that look like tool calls, making the agent's reasoning visible.
+- **Built-in lease management** — All task helpers include heartbeat logic, so your agent never loses its claim to a ticket.
+- **HTTP transport flexibility** — The SDK generates a webhook handler compatible with Express, Hono, Next.js API routes, Cloudflare Workers, and plain Node.js.
 
 ## Agent Lifecycle
 
-1. **Create the SDK client** – Call <code>createAgent({ token, secret })</code>. The SDK wraps your existing routes and injects signature verification.
-2. **Register event handlers** – Subscribe to <code>mention</code>, <code>assigned</code>, <code>chat</code>, and <code>stop</code> as needed.
-3. **Handle events with a run** – Each handler receives a <code>run</code> object with ticket, thread, and helpers.
-4. **Record activities** – Use <code>run.thought</code>, <code>run.action</code>, <code>run.respond</code>, <code>run.error</code>, <code>run.ask</code> to build the typed activity stream.
-5. **Update tickets with helpers** – Use <code>run.task.move</code>, <code>assign</code>, <code>comment</code>, <code>update</code>, <code>attach</code> to modify tickets without managing leases manually.
+1. **Create the SDK client** — Call <code>createAgent({ token, secret })</code>. The SDK wraps your existing routes and injects signature verification.
+2. **Register event handlers** — Subscribe to <code>mention</code>, <code>assigned</code>, <code>chat</code>, and <code>stop</code> as needed.
+3. **Handle events with a run** — Each handler receives a <code>run</code> object with ticket, thread, and helpers.
+4. **Record activities** — Use <code>run.thought</code>, <code>run.action</code>, <code>run.respond</code>, <code>run.error</code>, <code>run.ask</code> to build the typed activity stream.
+5. **Update tickets with helpers** — Use <code>run.task.move</code>, <code>assign</code>, <code>comment</code>, <code>update</code>, <code>attach</code> to modify tickets without managing leases manually.
 
 The SDK automatically:
 - Starts a new run on <code>mention</code> or <code>assigned</code>
@@ -402,10 +416,10 @@ The SDK automatically:
 
 | If you want to… | See |
 |-----------------|-----|
-| Configure webhooks | [Agent webhooks](/mcp/agent-webhooks/) |
-| Run agents on a schedule | [Schedule an agent](/mcp/scheduling/) |
-| Define patterns for multi-step workflows | [Agent Workflows](/mcp/workflows/) |
-| Learn about the infrastructure powering runs | [Agents Dashboard](/features/agents-dashboard/) |
+| Configure webhooks | <a href="/mcp/agent-webhooks/">Agent webhooks</a> |
+| Run agents on a schedule | <a href="/mcp/scheduling/">Schedule an agent</a> |
+| Define patterns for multi-step workflows | <a href="/mcp/workflows/">Agent Workflows</a> |
+| Learn about the infrastructure powering runs | <a href="/features/agents-dashboard/">Agents Dashboard</a> |
 
 ---
 
