@@ -152,6 +152,7 @@ When you make manual changes to a task—moving, assigning, unassigning, archivi
 ## Task detail view
 
 Open a task to see:
+
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
@@ -164,6 +165,15 @@ On mobile, swipe left across a task detail to open the next task in your current
 ### Pinned comment composer ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
 
 The comment composer in the task detail pane is now pinned to the bottom of the view. When you open a task with comments, scroll through the thread or add new comments, and compress the window, the composer remains visible and accessible at the bottom of the pane, while comments scroll above it. This keeps the composer ready for at-a-glance typing without scrolling away from the last action.
+
+### Notes and pages
+
+Attach rich notes and full-screen notepads directly to tasks:
+
+- **Notes**: Inline-style notes inside the description area.
+- **Pages**: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
+
+See the [Pages](/features/pages/) feature docs for details.
 
 ### Comments
 
@@ -188,9 +198,14 @@ The comment thread shows all comments on the task. By default, when you open a t
 **Comment draft scoping ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))**
 - Comment drafts are scoped to a specific task and description field. AI-generated drafts from previous tasks no longer appear in other tasks' comment composers. This prevents confusion and accidental previewing of stale drafts, ensuring drafts remain task-specific.
 
+### Exit behavior (HTPR-6158)
+
+On task detail and Pages, pressing <kbd>Esc</kbd> now exits via the safe return path through the Command Center, ensuring consistent, deterministic exit behavior across full-screen views.
+
 ## Actions
 
 Common actions include:
+
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
@@ -269,8 +284,8 @@ Tasks can belong to one section on a board. Changing a task's section moves it t
 Upload files to tasks to enrich them with context:
 
 - **From web UI**: Drag and drop files or use the attachment picker in the task description.
-- **From CLI**: Use `<code>hypertask comment add &lt;ticket&gt; --attach &lt;file&gt;</code>` to attach.
-- **From MCP**: Use the `<code>hypertask_attachments_add</code>` tool with file upload support.
+- **From CLI**: Use ``hypertask comment add <ticket> --attach <file>`` to attach.
+- **From MCP**: Use the ``hypertask_attachments_add`` tool with file upload support.
 
 The system accepts a wide range of file types including APK, ZIP, gzip, tar, CSV, JSON, and generic octet-stream files. Uploads are validated using a combination of file extension checking and magic-byte signatures where applicable. Non-image, non-text files are processed and stored for download via a shared URL.
 
