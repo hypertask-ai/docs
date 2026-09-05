@@ -40,9 +40,9 @@ ht task create "Design homepage overlay component with glassmorphism"
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** â\x80\x94 Generate a draft for the active text field.
-- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
-- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
+- **/ai** — Generate a draft for the active text field.
+- **/ai rewrite** — Improve or rethink what you typed.
+- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -54,7 +54,7 @@ The AI Task Writer now preserves screenshot file links pasted into your draft. T
 
 ### House style AI text reinforcement ([HTPR-5587](https://app.hypertask.ai/detail/project-15/5587))
 
-AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements â\x80\x94 modes like Archive and Summarize do not append content to your text.
+AI responses now follow shared house-style rules in both AI Chat and custom instructions to reduce "AI tells" and unnatural phrase patterns. ADHD-shaping feedback applies only to chat-level refinements — modes like Archive and Summarize do not append content to your text.
 
 Write plainly from a human-first perspective without overusing jargon, and keep your tone concise and actionable. Avoid filler phrases and contrived expressions like:
 - "Great question!", "pivotal", "seamlessly", "robust", "leverage", "I hope this helps"
@@ -102,18 +102,18 @@ This confirmation gate guards against accidental bulk operations and keeps your 
 ### Seed tasks on guest boards
 
 When you open a fresh guest showcase board, click Ctrl+K to open the board picker, then follow one of the onboarding prompts:
-- Press Ctrl+K: every action is one keystroke away â\x80\x94 Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
-- Ask the AI to build this board for you â\x80\x94 Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
-- Run tasks/tools â\x80\x94 Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
+- Press Ctrl+K: every action is one keystroke away — Tap the "New task" action, then the AI Task Writer to create a task with natural-language instructions.
+- Ask the AI to build this board for you — Paste a description like "a board for lighthearted weekly recaps with a backlog, doing, and done column" and let the AI draft the structure.
+- Run tasks/tools — Create a task that references will-be-created tasks or external actions via the Task and Tool options from within the AI Task Writer.
 
 These prompts start a simulated typing session that ends with AI Task Writer empty and ready for your own elaboration.
 
 ### Apply mobile model gauge on mobile ([HTPR-5921](https://app.hypertask.ai/detail/project-15/5921))
 
 On mobile, the AI model picker now uses a fixed 4-chip gauge selector with changes:
-- **Gauge selector** â\x80\x94 A compact horizontal gauge shows four top models with their names, enabling quick selection without a full list.
-- **Context chips** â\x80\x94 Each chip highlights the selected model and shows prior actions, keeping the model identity visible at a glance.
-- **Canonical radius** â\x80\x94 Menu rows use the design-system 4px radius for consistent styling.
+- **Gauge selector** — A compact horizontal gauge shows four top models with their names, enabling quick selection without a full list.
+- **Context chips** — Each chip highlights the selected model and shows prior actions, keeping the model identity visible at a glance.
+- **Canonical radius** — Menu rows use the design-system 4px radius for consistent styling.
 
 This matches the desktop mobile model presentation and gives you fast, reliable model choice on mobile devices.
 
@@ -145,13 +145,13 @@ The hover card only applies to agents; user-facing hover cards remain unchanged.
 
 Use slash commands to invoke registered skills:
 
-- **/skill** â\x80\x94 Open the skills menu to tap a skill by name or first letter.
-- **/skill `name`** â\x80\x94 Run a specific skill if you know its name.
+- **/skill** — Open the skills menu to tap a skill by name or first letter.
+- **/skill `name`** — Run a specific skill if you know its name.
 
 Known skills include:
-- **Defer** â\x80\x94 Suggest a deferral with a new due date and optional sub-task.
-- **Duplicate** â\x80\x94 Mirror the current task into a draft that you can rename and refine.
-- **Subtask** â\x80\x94 Generate a new subtask rooted from the current one.
+- **Defer** — Suggest a deferral with a new due date and optional sub-task.
+- **Duplicate** — Mirror the current task into a draft that you can rename and refine.
+- **Subtask** — Generate a new subtask rooted from the current one.
 
 Types skip over canvas or rich content blocks instead of treating them as text to rewrite. This avoids unintended edits to estimated time blocks or other rich media.
 
@@ -177,7 +177,7 @@ This setup lets QA Agents autonomously detect regressions and provide concrete t
 
 ### Plan grill for complex tickets ([HTPR-5857](https://app.hypertask.ai/detail/project-15/5857))
 
-For complex tickets â\x80\x94 new features, 3+ files, schema/auth/billing changes, new subsystems, or proposals with open design choices â\x80\x94 agents now run a plan-grill step. The agent writes a numbered plan, then grills it once through an adversarial Codex review. This adversarial check surfaces misalignment and risks before implementation, improving stability for major tickets.
+For complex tickets — new features, 3+ files, schema/auth/billing changes, new subsystems, or proposals with open design choices — agents now run a plan-grill step. The agent writes a numbered plan, then grills it once through an adversarial Codex review. This adversarial check surfaces misalignment and risks before implementation, improving stability for major tickets.
 
 ### Dev Agent documentation precondition
 
@@ -200,9 +200,9 @@ This reduces reliance on manual review while preserving the intent captured in d
 ### My Tasks context
 
 The AI understands your **My Tasks** workload and can answer context-specific questions about it:
-- "What's on my My Tasks board?" â\x80\x94 Generates a concise list of assigned tasks with priorities and due dates.
-- "Any overdue or blocked work?" â\x80\x94 Flags urgent or late items for follow-up.
-- "Show me tasks due this week" â\x80\x94 Filters and presents upcoming commitments.
+- "What's on my My Tasks board?" — Generates a concise list of assigned tasks with priorities and due dates.
+- "Any overdue or blocked work?" — Flags urgent or late items for follow-up.
+- "Show me tasks due this week" — Filters and presents upcoming commitments.
 
 For agents using MCP, the `/my-tasks` tool exposes your My Tasks as a structured queryable dataset, including counts and access control boundaries. This ensures agents only see the tasks they're legitimately allowed to work with.
 
@@ -231,12 +231,12 @@ After moving inne agents to inne-owned Cloudflare infrastructure, the bridge is 
 
 ### AI status updates
 
-An AI agent can update task metadata in a visible way â\x80\x94 priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
+An AI agent can update task metadata in a visible way — priority, assignees, labels, due dates, or related tasks. When an agent makes a structural or status change, an AI status update appears on the task card so you see the change instantly without opening every detail.
 - The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
 - You see the updates on the task card, in the task detail panel, and inside notification contexts.
 - This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
 
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> â\x80\x94 search for a task and use **Agent write-with-AI** to trigger the update.
+**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
 
 ### Automated approvals from minors-only reviews ([HTPR-5531](https://app.hypertask.ai/detail/project-15/5531))
 
@@ -249,10 +249,10 @@ Hovering over an agent card now opens the agent detail page, making it quick to 
 ### Time, profile, and report parity in AI Chat
 
 AI Chat now supports more of the same actions available in the web app, giving you comprehensive task and workspace control from chat. You can:
-- **View filtered time reports** â\x80\x94 Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
-- **Update shared user profiles** â\x80\x94 Update profile fields like name, role, or custom attributes with correct flag handling.
-- **Read complete saved reports** â\x80\x94 Pull full saved report data including filters, columns, and time ranges.
-- **Delete reports with confirmation** â\x80\x94 Remove saved reports and confirm the action before it happens.
+- **View filtered time reports** — Ask AI Chat to show time entries for specific projects, tasks, or date ranges.
+- **Update shared user profiles** — Update profile fields like name, role, or custom attributes with correct flag handling.
+- **Read complete saved reports** — Pull full saved report data including filters, columns, and time ranges.
+- **Delete reports with confirmation** — Remove saved reports and confirm the action before it happens.
 
 Use the same context and permissions that apply elsewhere in Hypertask. Check access, see the full report content, and clean up saved reports directly from your conversation.
 
@@ -260,7 +260,7 @@ Use the same context and permissions that apply elsewhere in Hypertask. Check ac
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows â\x80\x94 use the AI Task Writer, context menus, and panel-based chat â\x80\x94 and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ### AI access and entitlement
 
@@ -275,7 +275,7 @@ AI access is controlled through an allowance model based on team plan type. The 
 
 Free users are provisioned 100 credit-machines (web/desktop) and 30 credit-machines (mobile) at signup. Additional credits are available through verified use or contact.
 
-### Plan-aware default-model repair
+### Plan-aware default-model repair ([HTPR-6122](https://app.hypertask.ai/detail/project-15/6122))
 
 The gateway now maps eligible users to appropriate default models based on team entitlement:
 - **Paid, legacy, and comped teams** default to **Luna Standard (5.6)**, bypassing premium model selection during task creation.
