@@ -111,14 +111,12 @@ hypertask comment list <ticket_number>
 **Behavior:**
 
 - Returns a human-readable list of comments for the given ticket.
-- The output includes comment content, timestamps, and author information.
+- The output includes comment content, timestamps, and information about reference tickets/tasks (the detail URLs now use board-qualified uniqueIndexes, not stale ticket name digits).
 - Requires authentication.
 
 ```bash
 hypertask comment list 12345
 ```
-
-## Task details commands
 
 ### hypertask task get
 
@@ -194,7 +192,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `👍`, `❤️`, `🔥`).
+- Use a single emoji character (e.g., `👍`, `❤️`, `🎉`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -247,6 +245,14 @@ hypertask webhook configure --url https://example.com/webhook --events "chat.mes
 - If you previously used a stale client-side event list that rejected all events, make sure your current CLI release includes the updated event metadata.
 
 <Aside type="note">Webhook event validation had a stale client-side event list for some CLI releases, rejecting valid events like `chat.message`. The current production release now accepts the full set of 7 events, including `chat.message` ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114)).</Aside>
+
+## Comments URL behavior
+
+When listing comments or viewing task details:
+
+- Reference tickets and tasks in comment content now use board-qualified URLs (e.g., `/project/board/uniqueIndex`) rather than ephemeral ticket digit references.
+- The command automatically resolves the current board number for cross-board-moved tickets and uses the correct uniqueIndex for the detail URL, avoiding broken links and outdated references.
+- This improves link stability when moving tasks across boards or scopes.
 
 ## Trusted CLI Release Gate (advisory, not a hard block)
 
