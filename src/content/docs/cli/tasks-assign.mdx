@@ -1,0 +1,50 @@
+---
+title: "CLI Task Assignment"
+description: Use hypertask tasks assign to assign tasks to agents or users, and hypertask lease claim to claim workspace leases before batching assignments.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## hypertask tasks assign
+
+Assign tasks to agents or users from the terminal.
+
+```bash
+hypertask tasks assign <ticket> --assignee <user>
+```
+
+**Behavior:**
+
+- Atomically assigns the task to the provided `--assignee`.
+- No lease claim is required. The command handles automatic lease acquisition internally.
+- Works for both native htz CLI and npm shim.
+
+**Example:**
+
+```bash
+hypertask tasks assign 12345 --assignee user@example.com
+```
+
+<Aside type="note">The command runs without requiring prior lease claims ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185)).</Aside>
+
+## hypertask lease claim
+
+Claim an available workspace lease before performing bulk operations.
+
+```bash
+hypertask lease claim
+```
+
+**Behavior:**
+
+- Raises or requests a lease token for the current workspace.
+- Required before actions like `tasks assign` in bulk workflows to coordinate concurrency.
+
+**Example:**
+
+```bash
+hypertask lease claim
+# Response: Lease claimed: abc123
+```
+
+<Aside type="note">Use `lease claim` as a prelude for batching task assignments when multiple concurrent threads may target the same workspace ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185)).</Aside>
