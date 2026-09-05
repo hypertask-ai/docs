@@ -146,6 +146,18 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 
 Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
+### Agent Chat work context
+([HTPR-6155](https://app.hypertask.ai/detail/project-15/6155))
+
+An agent receives a short, size-capped brief before responding to chat questions. The brief includes:
+
+- The agent's current assignment (if any)
+- Up to 10 related recent tasks on the board
+- Open pull requests that reference the agent
+- Up to 5 comments on the current assignment
+
+This context helps the agent answer work-related questions accurately and keeps the brief safe and concise.
+
 ## Agent runtime protection
 ([HTPR-5677](https://app.hypertask.ai/detail/project-15/5677))
 
