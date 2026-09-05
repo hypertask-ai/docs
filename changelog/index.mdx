@@ -1,5 +1,5 @@
 ---
-title: Changelog
+title: "Changelog"
 description: Daily log of new features, bug fixes, and improvements shipped to Hypertask.
 ---
 
@@ -12,6 +12,11 @@ export const Update = ({ label, children }) => (
     {children}
   </section>
 );
+
+<Update label="September 5, 2026">
+  * Added: Agent chat: activity rows showing started, PR-opened, review, live, QA, blocked state between messages ([HTPR-6094](https://app.hypertask.ai/detail/project-15/6094))
+  * Fixed: Dedicated agent runtime installer no longer stops halfway through install; leftover cleanup for a previously-deleted file no longer triggers a delete guard ([HTPR-6172](https://app.hypertask.ai/detail/project-15/6172))
+</Update>
 
 <Update label="September 4, 2026">
   * Added: Ctrl+K "Copy current page URL" action copies the complete browser address from the command palette anywhere in the app ([HTPR-6112](https://app.hypertask.ai/detail/project-15/6112))
