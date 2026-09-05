@@ -82,6 +82,8 @@ main().catch(console.error);
   See <a href="/mcp/agent-webhooks/">Agent webhooks</a> for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
 </Aside>
 
+For a complete example that works in under 30 minutes, check out the included <code>reply-only</code> template in the templates package.
+
 ## Run Objects
 
 Every event handler receives a <code>run</code> object that represents the current interaction. The run tracks the ticket, thread, status, and type-safe activity stream.
@@ -329,8 +331,17 @@ export async function createReplyOnly(
   secret: string,
   onRespond: (text: string) => void
 ) {
-  const { client } = createAgent({ token, secret });
+  const { client, webhookHandler } = createAgent({ token, secret });
+  
+  app.use(webhookHandler);
+  
   client.on('mention', async (run) => {
+    const response = await getBotResponse(run.prompt);
+    onRespond(response);
+    await run.respond(response);
+  });
+  
+  client.on('chat', async (run) => {
     const response = await getBotResponse(run.prompt);
     onRespond(response);
     await run.respond(response);
@@ -351,13 +362,16 @@ export async function createTicketWorker(
   secret: string,
   onAnalyze: (ticket: Ticket) => Promise<string>
 ) {
-  const { client } = createAgent({ token, secret });
+  const { client, webhookHandler } = createAgent({ token, secret });
+  
+  app.use(webhookHandler);
+  
   client.on('assigned', async (run) => {
     await run.thought(`Analyzing ticket ${run.ticket.id}`);
-
+    
     const summary = await onAnalyze(run.ticket);
     await run.task.comment(summary);
-
+    
     await run.thought('Completed analysis');
     await run.respond('Analysis complete. See comment for details.');
   });
@@ -377,13 +391,15 @@ export async function createScheduledBot(
   secret: string,
   onTick: (run: Run) => Promise<void>
 ) {
-  const { client, schedule } = createAgent({ token, secret });
-
+  const { client, webhookHandler, schedule } = createAgent({ token, secret });
+  
   schedule('0 */6 * * *', async () => {
     const run = await client.createRun(COMMENT_MENTION);
     await run.thought('Scheduled bot tick');
     await onTick(run);
   });
+  
+  app.use(webhookHandler);
 }
 ```
 
