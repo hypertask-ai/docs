@@ -88,6 +88,13 @@ export default defineConfig({
         ],
         },
         {
+          label: 'CLI',
+          items: [
+            'cli/reference',
+            'cli/tasks-assign',
+          ],
+        },
+        {
           label: 'Design system',
           items: [
             'design-system/visual-standard',
