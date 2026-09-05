@@ -146,6 +146,10 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 
 Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
+### Agent chat activity rows ([HTPR-6094](https://app.hypertask.ai/detail/project-15/6094))
+
+In agent chat between normal messages, you'll now see activity rows describing key agent states (started, PR-opened, review, live, QA, blocked). These rows appear inline with chat flow so you can track the agent's active work at a glance. They are available for supported channels and are omitted when their content is not meaningful for the current thread.
+
 ### Agent Chat work context
 ([HTPR-6155](https://app.hypertask.ai/detail/project-15/6155))
 
@@ -329,7 +333,6 @@ Agent-tier tokens receive 600 requests/minute. They are used for request-level l
 When you turn off an agent via its toggle on the agents dashboard or from an agent detail page, the agent is set to Off and will no longer respond to mentions or task mentions. Existing team chat sessions that are currently open remain valid while their conversation is active. The agent continuation remains usable until the chat session is closed, after which the agent effectively stops responding to new messages in that session.
 
 This behavior means that:
-
 - If you have an open team chat with an active agent, sending a message to an already-opened session will succeed even if the agent is set to Off.
 - Clicking the session toggle to off marks the agent as Off but does not immediately interrupt the running session.
 - Once you close or switch away from a chat session, messages addressed to the agent within the previous chat window are effectively blocked.
