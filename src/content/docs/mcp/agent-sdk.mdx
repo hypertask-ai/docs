@@ -57,13 +57,12 @@ async function main() {
     secret: process.env.WEBHOOK_SECRET!,
   });
 
-  // Handle all incoming webhooks
+  // Attaches signature-verifying webhook handling to the Express app
   app.use(webhookHandler);
 
   // Your agent logic wired into events
   client.on('mention', async (run) => {
     await run.thought(`Being mentioned on ticket ${run.ticket.id}`);
-
     await run.respond(`Noted: this is ticket ${run.ticket.id}.`);
   });
 
@@ -73,7 +72,10 @@ async function main() {
 
   app.listen(3000, () => {
     console.log('Agent running on port 3000');
-});
+  });
+}
+
+main().catch(console.error);
 ```
 
 <Aside type="tip">
