@@ -11,6 +11,10 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 5, 2026">
+  * Added: Agent typed run activities endpoint in MCP returns structured thought, action, response, error, and elicitation events ([HTPR-6122](https://app.hypertask.ai/detail/project-15/6122))
+</Update>
+
+<Update label="September 5, 2026">
   * Added: CLI tasks assign command now works without a lease claim and includes optional claim command ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185))
   * Fixed: assignees/assign now safely handles null agent id ([HTPR-6187](https://app.hypertask.ai/detail/project-15/6187))
   * Fixed: Mobile task detail background update now sends one read per task instead of two; task remains usable if the update times out ([HTPR-6161](https://app.hypertask.ai/detail/project-15/6161))
