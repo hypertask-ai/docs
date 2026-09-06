@@ -65,3 +65,43 @@ When using AI chat features on server-rendered routes like task detail pages, en
 This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ---
+
+## Agent Chat interactions
+
+Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets.
+
+### Concurrent Agent Chat sessions
+
+Multiple agents can interact with a user in separate, independent chat panels. Each agent keeps track of its own thread and history within the context of the relationship.
+
+### Restarting a hung turn
+
+When an Agent Chat turn fails to finish within the timeout window, the thread restarts automatically. The new turn uses fresh context for the current agent, and the user can continue the conversation from scratch.
+
+<Aside type="note">
+This recovery replaces the previously convoluted flow for stuck threads. You no longer need to page refresh to resume work.
+</Aside>
+
+### Stop work during an active turn
+
+While an Agent Chat turn is in progress, the working indicator displays a **Stop** button. Click it to cancel the current run and return the thread to a stable state where you can send a new message.
+
+### Agents proposing tickets
+
+Agents can propose specific tickets rather than only talking about work. The proposal appears as a card in chat, targeting board and column contexts atomically with the proposal:
+
+```text
+[Propose] Create "ACME Output Report v2" in Priority / Work
+
+The model intends to draft this report immediately.
+Do you want to accept this proposal and proceed?
+```
+
+- The proposal card shows a short description and correct board/column references for your own environment.
+- Accepting the proposal creates the ticket and immediately shifts you to a comment mode where you can confirm or refine the draft.
+- This tightens the round-trip from suggestion to action, eliminating ambiguity about where the new ticket should live.
+- The proposal is accessible via the `chat.propose` MCP tool when needed in agent workflows.
+
+<Aside type="tip">
+If a proposal doesn't match intent, simply decline it. The thread moves forward without creating output that doesn't fit current needs.
+</Aside>
