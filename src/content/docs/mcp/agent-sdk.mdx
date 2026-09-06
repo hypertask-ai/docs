@@ -25,6 +25,10 @@ npm install @hypertask/agent-sdk
 yarn add @hypertask/agent-sdk
 ```
 
+<Aside type="tip">
+The SDK is published under the <code>@hypertask</code> namespace. Install globally with <code>npm install -g @hypertask/agent-sdk</code> so the CLI generates boilerplate quickly.
+</Aside>
+
 ## Adapters
 
 The SDK includes adapters for common web frameworks and runtime environments. Use the webhook handler compatible with your stack.
@@ -39,7 +43,7 @@ The SDK includes adapters for common web frameworks and runtime environments. Us
 | **Plain Node** | Route manually using raw request bytes and background support. | Fully dependency-free but more manual wiring. |
 
 <Aside type="tip">
-  Verify which adapter matches your runtime. The stamped header <code>X-Hypertask-Signature</code> is always used for verification, independent of your transport choice.
+Verify which adapter matches your runtime. The stamped header <code>X-Hypertask-Signature</code> is always used for verification, independent of your transport choice.
 </Aside>
 
 ## Quick Start
@@ -81,10 +85,15 @@ main().catch(console.error);
 ```
 
 <Aside type="tip">
-  See <a href="/mcp/agent-webhooks/">Agent webhooks</a> for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
+See <a href="/mcp/agent-webhooks/">Agent webhooks</a> for how to expose this Express app publicly, or use the agent-dev CLI's local tunnel for local development.
 </Aside>
 
-For a complete example that works in under 30 minutes, check out the included <code>reply-only</code> template in the templates package.
+For a complete example that works in under 30 minutes, check out the included <code>reply-only</code> template in the templates package:
+
+```jsx
+// templates/replyOnly.ts
+import { createAgent } from '@hypertask/agent-sdk/templates/replyOnly';
+```
 
 ## Run Objects
 
@@ -287,7 +296,7 @@ client.on('stop', async (run) => {
 ```
 
 <Aside type="caution">
-  If you don't post a thought within 10 seconds of receiving <code>mention</code> or <code>assigned</code>, the run becomes stale after 5 minutes. Always call <code>await run.thought(...)</code> or <code>await run.respond(...)</code> on entry.
+If you don't post a thought within 10 seconds of receiving <code>mention</code> or <code>assigned</code>, the run becomes stale after 5 minutes. Always call <code>await run.thought(...)</code> or <code>await run.respond(...)</code> on entry.
 </Aside>
 
 ## Signals
@@ -326,7 +335,7 @@ A minimal agent that only responds to mentions and chat, without touching tasks.
 
 ```tsx
 // templates/replyOnly.ts
-import { createAgent } from '@hypertask/agent-sdk';
+import { createAgent } from '@hypertask/agent-sdk/templates/replyOnly';
 import { Request, Response } from 'express';
 
 export async function createReplyOnly(
@@ -361,7 +370,7 @@ An agent that receives assigned tickets, updates progress, and files accurate ac
 
 ```tsx
 // templates/ticketWorker.ts
-import { createAgent } from '@hypertask/agent-sdk';
+import { createAgent } from '@hypertask/agent-sdk/templates/ticketWorker';
 import { Request, Response } from 'express';
 
 export async function createTicketWorker(
@@ -394,34 +403,35 @@ A bot that runs only on a cron schedule, without webhooks. Good for summaries, r
 
 ```tsx
 // templates/scheduledBot.ts
-import { createAgent } from '@hypertask/agent-sdk';
+import { createAgent } from '@hypertask/agent-sdk/templates/scheduledBot';
+import { MemoryDeliveryScheduler } from '@hypertask/agent-sdk';
 
 export async function createScheduledBot(
   token: string,
   secret: string,
   onTick: (run: Run) => Promise<void>
-): Promise<{ app: Express.Application; schedule: any }> {
+): Promise<{ app: Express.Application; scheduler: MemoryDeliveryScheduler }> {
   const { client, webhookHandler } = createAgent({ token, secret });
+  const scheduler = new MemoryDeliveryScheduler();
+
   const app = express();
 
   app.use(webhookHandler);
 
-  const scheduleMethod = client.schedule || client.scheduler?.schedule; // future: schedule API
-
-  if (scheduleMethod) {
-    await scheduleMethod('0 */6 * * *', async () => {
+  if (scheduler) {
+    await scheduler.schedule('0 */6 * * *', async () => {
       const run = await client.createRun(COMMENT_MENTION);
       await run.thought('Scheduled bot tick');
       await onTick(run);
     });
   }
 
-  return { app, schedule: scheduleMethod };
+  return { app, scheduler };
 }
 ```
 
 <Aside type="tip">
-  The agent-dev CLI wraps these templates and can generate boilerplate files for your project. Install the CLI with <code>npm install -g @hypertask/agent-dev</code>.
+The agent-dev CLI wraps these templates and can generate boilerplate files for your project. Install the CLI with <code>npm install -g @hypertask/agent-dev</code>.
 </Aside>
 
 ## Features
