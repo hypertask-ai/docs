@@ -1,11 +1,17 @@
 ---
-title: Appearance & AI Models
+title: "Appearance & AI Models"
 description: Customize themes, icons, fonts, and select AI models for Hypertask.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 
 Hypertask lets you control how things look and how AI behaves. Choose from multiple core themes, wave on mobile, customise the sidebar, keyboards, and dictation languages, and tailor AI options across tasks, boards, and help-site chat.
+
+## Feature flags default mode
+
+All new feature flags now default to **Owner + QA** at creation. Previously, the default set included a configuration that some flags would appear as "Only me" to the Owner. The internal `OWNER_ONLY_BY_DEFAULT` set has been removed, so flags always enable collaborative access by default and never silently restrict visibility to the Owner alone.
+
+This change makes the default behavior consistently collaborative across all boards and saved views, with no manual adjustment needed for most flags.
 
 ## Typography consistency (HTPR-5465)
 
