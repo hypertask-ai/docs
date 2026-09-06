@@ -5,6 +5,8 @@ description: Build custom agents with the Hypertask Agent SDK, inspired by Linea
 
 import { Aside, CardGrid, Card, LinkCard, Steps, Tabs, TabItem, Code } from '@astrojs/starlight/components';
 
+This SDK is behind the feature flag <code>htpr-6115-agent-sdk</code>, available by default only to your account.
+
 The <code>@hypertask/agent-sdk</code> lets you build autonomous agents programmatically with a small TypeScript library that follows the same shape as Linear and Plane:
 
 - **Agent** = app with a bot identity
@@ -325,27 +327,31 @@ A minimal agent that only responds to mentions and chat, without touching tasks.
 ```tsx
 // templates/replyOnly.ts
 import { createAgent } from '@hypertask/agent-sdk';
+import { Request, Response } from 'express';
 
 export async function createReplyOnly(
   token: string,
   secret: string,
   onRespond: (text: string) => void
-) {
+): Promise<{ app: Express.Application }> {
   const { client, webhookHandler } = createAgent({ token, secret });
-  
+  const app = express();
+
   app.use(webhookHandler);
-  
+
   client.on('mention', async (run) => {
     const response = await getBotResponse(run.prompt);
     onRespond(response);
     await run.respond(response);
   });
-  
+
   client.on('chat', async (run) => {
     const response = await getBotResponse(run.prompt);
     onRespond(response);
     await run.respond(response);
   });
+
+  return { app };
 }
 ```
 
@@ -356,25 +362,29 @@ An agent that receives assigned tickets, updates progress, and files accurate ac
 ```tsx
 // templates/ticketWorker.ts
 import { createAgent } from '@hypertask/agent-sdk';
+import { Request, Response } from 'express';
 
 export async function createTicketWorker(
   token: string,
   secret: string,
-  onAnalyze: (ticket: Ticket) => Promise<string>
-) {
+  onAnalyze: (ticket: any) => Promise<string>
+): Promise<{ app: Express.Application }> {
   const { client, webhookHandler } = createAgent({ token, secret });
-  
+  const app = express();
+
   app.use(webhookHandler);
-  
+
   client.on('assigned', async (run) => {
     await run.thought(`Analyzing ticket ${run.ticket.id}`);
-    
+
     const summary = await onAnalyze(run.ticket);
     await run.task.comment(summary);
-    
+
     await run.thought('Completed analysis');
     await run.respond('Analysis complete. See comment for details.');
   });
+
+  return { app };
 }
 ```
 
@@ -390,16 +400,23 @@ export async function createScheduledBot(
   token: string,
   secret: string,
   onTick: (run: Run) => Promise<void>
-) {
-  const { client, webhookHandler, schedule } = createAgent({ token, secret });
-  
-  schedule('0 */6 * * *', async () => {
-    const run = await client.createRun(COMMENT_MENTION);
-    await run.thought('Scheduled bot tick');
-    await onTick(run);
-  });
-  
+): Promise<{ app: Express.Application; schedule: any }> {
+  const { client, webhookHandler } = createAgent({ token, secret });
+  const app = express();
+
   app.use(webhookHandler);
+
+  const scheduleMethod = client.schedule || client.scheduler?.schedule; // future: schedule API
+
+  if (scheduleMethod) {
+    await scheduleMethod('0 */6 * * *', async () => {
+      const run = await client.createRun(COMMENT_MENTION);
+      await run.thought('Scheduled bot tick');
+      await onTick(run);
+    });
+  }
+
+  return { app, schedule: scheduleMethod };
 }
 ```
 
