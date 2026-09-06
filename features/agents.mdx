@@ -1,0 +1,384 @@
+---
+title: "AI Agents"
+description: "Create, configure, and manage autonomous agents in Hypertask with MCP, webhooks, and scheduled vs ad-hoc workflows."
+---
+
+import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Agents are autonomous workers that create, update, and manage tasks on your boards. They run as service accounts with scoped API keys and can act on their own behalf via bearer tokens.
+
+## Create and configure agents
+
+From the web UI:
+
+1. Press **Ctrl+K**, open **Manage agents**, and select **New agent**.
+2. Enter an agent name and description.
+3. Choose a project and optionally limit the agent to specific boards.
+4. Save the agent. Hypertask generates a scoped API key under the agent's profile.
+
+Over MCP:
+
+```json
+{
+  "action": "create_agent",
+  "name": "Release Agent",
+  "description": "Tracks and creates release tasks for HTPR-* tickets",
+  "projectId": 15,
+  "boards": [153, 155],
+  "scopes": {
+    "actions": ["hypertask_create_task", "hypertask_add_comment_to_task", "hypertask_link_tasks"],
+    "memberships": {
+      "projectId": 15,
+      "boards": [153, 155]
+    }
+  }
+}
+```
+
+Over REST API (`POST /api/agents`):
+
+```json
+{
+  "name": "Release Agent",
+  "description": "Tracks and creates release tasks for HTPR-* tickets",
+  "projectId": 15,
+  "boards": [153, 155]
+}
+```
+
+The response contains the agent UUID and a token for authenticating the bearer token over MCP or HTTP.
+
+### Agent credentials and scopes
+
+Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
+
+- **Scopes** — Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
+- **Tokens**—Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Identity** — When authenticated with an agent token, all writes appear as attributed to the agent.
+
+### Agent identities and SMAP token usage
+
+The SMAP token (`S-*`) is a low-entropy credential stored in the database, not an API key under Settings. It is used for SSH-based Git workflows and internal tooling, not for agent token mode. When an agent is authenticated via its own bearer token, writes are attributed to the agent, not its owner.
+
+### Agent access key visibility and security
+([HTPR-5477](https://app.hypertask.ai/detail/project-15/5477))
+([HTPR-5475](https://app.hypertask.ai/detail/project-15/5475))
+
+Agent access keys are sensitive credentials that should not be displayed repeatedly. The agent detail page shows an access key only when Hypertask creates or regenerates it. On later loads, the page shows that a key exists but does not render the token again. Revoke and Regenerate actions remain available without re-exposing the saved credential. This design prevents accidental token exposure while preserving the ability to rotate keys.
+
+#### Manage board membership from the agent detail view
+
+The agent detail page also lets you manage board membership for the agent directly. Each board this agent can access is listed with a toggle. You can add and remove board access on the fly:
+
+- Click a board card to navigate to that board.
+- Toggle board membership on and off to update access.
+- Changes save immediately and apply to all agent operations.
+
+This control surface is built from the same pattern as other management cards on the page, so the transition is consistent across features.
+
+### Agent scheduled workflows
+
+Agents can run on a schedule via CronJob pattern (JSON cron expression) or gravity (check interval). Choose sync where you want low latency, async where you want low variance.
+
+### Gravity (async, interval)
+
+```json
+{
+  "name": "Sync Agent",
+  "type": "gravity",
+  "checkIntervalMinutes": 10
+}
+```
+
+Gravity runs summaries at distinct intervals; sync runs tasks at the same tick as checks.
+
+### CronJob (sync, cron)
+
+```json
+{
+  "name": "Daily Checks",
+  "type": "cronjob",
+  "cron": "0 * 5 * *"
+}
+```
+
+CronJob fires checks on the corresponding tick; summaries run in the subsequent tick.
+
+### Board-level reconciliation
+
+Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams map to managed-key credentials in a verified production registry. Use board-15-specific credentials over MCP or REST (`/api/agents/leases`); do not share SMAP tokens with agents.
+
+## Agent evidence and decision persistence
+([HTPR-5397](https://app.hypertask.ai/detail/project-15/5397))
+
+The Speed Engineer agent maintains self-sustaining autonomous evidence cycles. Stale board assignments no longer suppress analysis, and cycle evidence, decisions, created tickets, and next-run timing are now durable.
+
+This ensures resiliency to transient failures—work can recover from individual errors like 429 rate limits without manual re-enqueue. Agents save state across runs, persisting decisions and scheduling signals so complete replay and verification are possible.
+
+## Agent workflows and lease lifecycle
+
+Lease-based claiming is used on board-15 to coordinate workers. Use standard lease endpoints; background tasks can claim tasks autonomously.
+
+1. **Claim** — `POST /api/mcp/tasks/lease/claim` to get an available task.
+2. **Heartbeat** — `POST /api/mcp/tasks/lease/heartbeat` broadcasting ongoing work.
+3. **Release** — `POST /api/mcp/tasks/lease/release` when done.
+
+The `/agent-status` page shows live fleet health (Active, Draining, Idle) for all agents.
+
+### Safe task claiming and coordination
+
+- Swarm-based claiming sets an intention to claim; no guarantee without heartbeat.
+- Multi-guard protection from board moves preserves in-flight agent turns ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545)).
+- Uses a delivery fingerprint and watchdog; cancellation of an assignment must cancel all pending deliveries for the same deliveryId.
+
+### QA Agent style guide enforcement
+([HTPR-5648](https://app.hypertask.ai/detail/project-15/5648))
+
+The QA Agent verifies and polices the style guide. Dev agents must read `docs/DESIGN.md` to maintain consistency with the team's design system:
+
+- When updating task descriptions or comments, follow the documented style conventions in `docs/DESIGN.md`.
+- The QA Agent checks for style violations and can apply a "probation" label to tasks that do not meet style standards before allowing automerge.
+
+<Aside type="tip">Style-guide enforcement ensures all agent-generated content align with design system standards, reducing brand inconsistencies and improving readability for users.</Aside>
+
+### Leases for native-agent AI Chat
+([HTPR-5468](https://app.hypertask.ai/detail/project-15/5468))
+
+Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
+
+### Agent chat activity rows
+([HTPR-6094](https://app.hypertask.ai/detail/project-15/6094))
+
+In agent chat between normal messages, you'll now see activity rows describing key agent states (started, PR-opened, review, live, QA, blocked). These rows appear inline with chat flow so you can track the agent's active work at a glance. They are available for supported channels and are omitted when their content is not meaningful for the current thread.
+
+### Agent Chat work context
+([HTPR-6155](https://app.hypertask.ai/detail/project-15/6155))
+
+An agent receives a short, size-capped brief before responding to chat questions. The brief includes:
+
+- The agent's current assignment (if any)
+- Up to 10 related recent tasks on the board
+- Open pull requests that reference the agent
+- Up to 5 comments on the current assignment
+
+This context helps the agent answer work-related questions accurately and keeps the brief safe and concise.
+
+## Agent runtime protection
+([HTPR-5677](https://app.hypertask.ai/detail/project-15/5677))
+
+To prevent a 12-hour outage caused by agents hot-swapping their own runtime, every full-trust agent turn now carries a standing rule:
+
+- **Agents cannot write to the live worker runtime** or agent configurations.
+- **Agents cannot restart or redeploy the runtime** from the worker space.
+- **Agents cannot install software or modify system-level settings** on the execution environment.
+
+This protection applies uniformly to all agents operating in full-trust mode. Attempts to violate these rules are prevented before runtime changes, preserving system stability.
+
+### Governance gates for open PRs
+([HTPR-6190](https://app.hypertask.ai/detail/project-15/6190))
+
+To prevent agents from operating on boards while developers maintain an open pull request, workers now enforce a mechanical "finish your PR first" gate. The gate reads two small marker files (`wip.lock` and `wip.tickets`) that code now writes before attempting any non-readonly work. If either file exists or references the current worker's ticket, the worker is blocked by the runtime and cannot start or continue tasks that mutate the board.
+
+<Aside type="caution">This gate operates at the runtime level, independent of the prompt-based guidance, and will block all write operations by workers on affected tickets until the open PR is closed or the marker files are removed.</Aside>
+
+### Idle watchdog behavior for silent builds
+([HTPR-5932](https://app.hypertask.ai/detail/project-15/5932))
+
+When an agent turn is designed to be silent (e.g., building with hax), the idle watchdog now counts each tool-log write as activity. This user-facing rule keeps the watchdog alive during long-running, low-noise builds, preventing `ProviderTimedOut` during a build where `idle_seconds` stays near `elapsed_seconds` while Tool-log writes keep occurring.
+
+### Lifecycle when a task is archived
+([HTPR-5934](https://app.hypertask.ai/detail/project-15/5934))
+
+When a task is archived, the worker immediately stops the running provider on it and cancels all queued deliveries for that task. This ensures that long-running agent tasks (e.g., builds or deployments) terminate cleanly when the task is no longer relevant, without leaving orphaned provider processes or pending deliveries.
+
+## Agent step timelines
+([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
+
+Each agent run produces a frozen timeline of per-step durations. These timelines are visible on both card-level summaries and agent-detail run history.
+
+- **Kanban cards** show the last three finished runs as an expandable element. Click any card to see the most recent runs with their step-by-step timing.
+- **Agent pages** carry a full "Run history" log, starting with the newest 20 runs visible, with older runs hidden behind an expander. Each finished run renders as a frozen timeline with per-step duration so you can quickly spot where time was spent.
+
+### Viewing agent step timelines
+
+1. Go to the **agent detail page** at `/agents/<agent-slug>`.
+2. Scroll to the "Run history" section.
+3. Expand older runs as needed to see step-by-step timing for each completed turn.
+
+<Aside type="tip">Reviewing run timelines helps you tune agent schedules and identify long-running steps that may benefit from optimization or refactoring.</Aside>
+
+## Agent webhooks and webhook lifecycle
+
+Agent webhooks replace inbox polling for events, keeping latency low and CPU savings high. Agents can define lifecycle events (`agent.started`, `agent.paused`, `agent.sorted`, `agent.ready`) and consume them without every interaction causing a poll.
+
+### Agent webhook lifecycle
+([HTPR-5618](https://app.hypertask.ai/detail/project-15/5618))
+
+Agents emit state transition events when they start, pause, and transition back to polling:
+
+| Event | Trigger | Persistence | Delivery |
+|---|---|---|---|
+| `agent.started` | First delivery after a pause, or first delivery after restart | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.startTime`, `agentId`, `actor` |
+| `agent.paused` | User pauses webhook deliveries or stops the agent | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.pausedAt`, `agentId`, `actor` |
+| `agent.sorted` | User sorts agents (e.g., ordered by `lastDeliveredAt` to have the last event first) | Included in delivery history | HTTP POST; includes `event`, `event.sortedAt`, `agentId`, `actor` |
+| `agent.ready` | User resumes webhook deliveries (unpause) | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.readyAt`, `agentId`, `actor` |
+
+**Important notes:**
+- Each event is emitted once per transition. Do not rely on duplicate deliveries.
+- Events are persisted and accessible via delivery history; you can replay state transitions if needed.
+- `event.startTime`, `event.pausedAt`, `event.sortedAt`, and `event.readyAt` include timezone offsets.
+
+### Secret rotation and webhook lifecycle updates
+
+Agents rely on a webhook signing secret (`whsec_…`). You should rotate it after every lifecycle transition or periodically; rotation is permanently masked to prevent new secrets from leaking into existing delivery payloads. Aggressive rotation does not trigger a `webhook.payment` event; events apply to the subscribed events list configured on the agent and webhook.
+
+<Aside type="caution">Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.</Aside>
+
+## Outbound webhooks for agent mentions and assignments
+([HTPR-5388](https://app.hypertask.ai/detail/project-15/5388))
+([HTPR-5854](https://app.hypertask.ai/detail/project-15/5854))
+
+You can configure outbound webhooks for agent mentions and assignments via per-agent HTTPS delivery.
+
+- **Events:** `comment.mention`, `task.assigned`, `task.unassigned`.
+- **Signed requests:** Include `X-Hypertask-Signature` and `X-Hypertask-Timestamp`.
+- **Stable IDs:** Every delivery carries a unique `X-Hypertask-Delivery` header for idempotency.
+
+When a mobile user opens a task detail page and taps an agent mention or assignment action that triggers a webhook, mobile bottom sheets now tolerate closing during drag release. This prevents the crash caused by trying to access `getBoundingClientRect` on a non-existent DOM node.
+
+See [Agent webhooks](/mcp/agent-webhooks/) for configuration, curl examples, and reference receivers.
+
+## Rocket digest agent: CLI releases
+([HTPR-4685](https://app.hypertask.ai/detail/project-15/4685))
+
+The Rocket digest agent now announces CLI releases by reading CLI publish times from the **npm registry** and READY production deployments from **Vercel**, removing the GitHub-token dependency. This ensures CLI version updates are reflected in your board and inbox.
+
+Agent configuration over MCP:
+
+```json
+{
+  "name": "Rocket Digest",
+  "type": "gravity",
+  "checkIntervalMinutes": 5,
+  "webhook": {
+    "url": "https://rocket.hypertask.ai/digest",
+    "events": ["repository.deployed", "repository.ready"],
+    "secret": "{{WEBHOOK_SECRET}}"
+  },
+  "dataSources": [
+    {
+      "type": "npm",
+      "package": "hypertask-cli",
+      "path": "body.title"
+    },
+    {
+      "type": "vercel",
+      "url": "https://hypertask.vercel.app/deployments",
+      "path": "body.recipeTitle"
+    }
+  ]
+}
+```
+
+<Aside type="tip">All data sources are read over HTTPS with OAuth recovery; no GitHub personal access tokens are required.</Aside>
+
+## Turbopuffer embeddings via Vercel AI Gateway
+([HTPR-5627](https://app.hypertask.ai/detail/project-15/5627))
+
+Turbopuffer embeddings for AI features now route through the Vercel AI Gateway instead of OpenRouter. This change preserves embed quality while moving to a single gateway for model routing.
+
+Example configuration to apply embeddings via the gateway:
+
+```json
+{
+  "name": "Embeddings Agent",
+  "type": "gravity",
+  "checkIntervalMinutes": 5,
+  "gateway": {
+    "provider": "vercel",
+    "model": "openai/text-embedding-3-small"
+  },
+  "actions": ["hypertask_update_task", "hypertask_link_tasks"],
+  "scopes": {
+    "memberships": {
+      "projectId": 15,
+      "boards": [153, 155]
+    }
+  }
+}
+```
+
+POST embeddings to OpenAI model variants delivered by the Vercel AI Gateway; no OpenRouter keys are used.
+
+## Agent basic actions and workflow examples
+
+For typical tasks (summarize, buffer, schedule), use CLI or MCP `hypertask_find_task` and `hypertask_update_task` — no agent token is required. Agent tokens are reserved for autoscaling teams and rate-limited workflows.
+
+### Typical agent workflow
+
+```bash
+# Step 1: Claim a task
+hypertask task claim --ticket-number HTPR-1234
+
+# Step 2: Capture its context
+hypertask task annotate HTPR-1234
+
+# Step 3: Summarize if needed (free)
+hypertask task summarize HTPR-1234
+
+# Step 4: Suggest a next step (optional milestone)
+hypertask milestone suggest --task-input-file steps.json
+```
+
+For MPC-style requesting tasks and milestones from another task or file, run on the local machine with MCP tools; no backend proxy is needed.
+
+### Rate-limited and autoscaling agent token mode
+
+Agent-tier tokens receive 600 requests/minute. They are used for request-level latency (e.g., `hypertask_find_task` or milestone suggesting). For autoscaling multi-agent management, use board-15's per-task lease endpoints (`/api/agents/leases`) and avoid sharing SMAP tokens with agents.
+
+## Revoked agents remain usable through existing chat sessions
+
+When you turn off an agent via its toggle on the agents dashboard or from an agent detail page, the agent is set to Off and will no longer respond to mentions or task mentions. Existing team chat sessions that are currently open remain valid while their conversation is active. The agent continuation remains usable until the chat session is closed, after which the agent effectively stops responding to new messages in that session.
+
+This behavior means that:
+- If you have an open team chat with an active agent, sending a message to an already-opened session will succeed even if the agent is set to Off.
+- Clicking the session toggle to off marks the agent as Off but does not immediately interrupt the running session.
+- Once you close or switch away from a chat session, messages addressed to the agent within the previous chat window are effectively blocked.
+
+<Aside type="note">This cooperative behavior preserves ongoing agent interactions within existing sessions without forcing a state change or disconnecting the chat window.</Aside>
+
+## Agent management
+
+### Rename agents
+
+Agents can be renamed from their detail page; the URL updates to the new readable slug on save.
+
+### Agent health and deletion
+
+- Hover over an agent to open the agent detail page.
+- Archive or delete actions are available per agent.
+
+### Agent identity and custom instructions
+
+- Agents can inherit board-level AI custom instructions via MCP (`GET /api/mcp/projects/[projectId]/instructions`).
+- Personal dictation language is per-user; agents do not need a language override.
+
+## Troubleshooting
+
+| Symptom | Check |
+|---|---|
+| Agent stops updating tasks | Heartbeats might be interrupted; verify heartbeat frequency equals or exceeds `checkIntervalMinutes`. |
+| Webhooks not reaching endpoint | Verify the receiver is public HTTPS and marks all confirmed deliveries in your webhook state. |
+| `401` on webhook signatures | Validate against raw request body using `timestamp + "." + rawBody` and HMAC-SHA256. |
+| CLI releases ignored | Confirm data source paths read `body.title` or appropriate top-level fields; stale flows drop production cursor mismatch (adjust `dataSources.path` accordingly). |
+| Embeddings fail | Check if the gateway resolved to the correct provider; rotating the gateway or model on Vercel AI Gateway may resolve transient failures. |
+
+<Aside type="note">Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.</Aside>
+
+---
+
+<CardGrid>
+  <Card title="Agent Workflows" description="Patterns for how AI agents pick up and complete work." />
+  <Card title="MCP Tools Reference" description="Complete parameter reference for all MCP tools." />
+  <Card title="CLI Reference" description="Install the CLI to create, update, and complete tasks from your shell." />
+</CardGrid>
