@@ -1,5 +1,5 @@
 ---
-title: Table View
+title: "Table View"
 description: Work with tasks in a responsive, adaptive Kanban-style table layout that matches Notion and Linear.
 ---
 
@@ -12,6 +12,8 @@ Table view gives you a grid-based way to organize and manage tasks, similar to N
 **Horizontal scrolling across all columns:** When a table's columns exceed the available width on your device (for example on narrow windows or very wide column sets), a visible horizontal scrollbar appears. This lets you scroll to see remaining columns in the grid without obscured headers or black space, ensuring you can reach every column in the row set.
 
 **Unsaved sort states and saved views:** Sorting the table creates an unsaved view. An "orange Save view + Reset" indication appears in the header. Press Save to capture the sort configuration as a saved view, or Reset to discard it. Existing saved views reopen the table pre-sorted.
+
+**Multiselect via Shift+E:** Press Shift+E to select the current row and add it to the selection set. From any multi-selected row, press Shift+E repeatedly to accumulate or extend the selection for bulk actions.
 
 ## Mouse-Accessible New Task Control
 
@@ -105,7 +107,7 @@ This Excel-style resize behavior ensures clearer feedback and deliberate resizin
 Open the Configure table modal for more control over your table setup:
 
 1. Press <kbd>Ctrl+K</kbd> and search for "Configure table".
-2. In the column picker, click the ∇ or **edit** icon next to "Columns" to open advanced options.
+2. In the column picker, click the ⋮ or **edit** icon next to "Columns" to open advanced options.
 3. Choose from additional columns:
 
 **Visibility options**
@@ -130,6 +132,15 @@ Open the Configure table modal for more control over your table setup:
 
 </Aside>
 
+### Sort-Driven Columns
+
+While sorting, the View engine adds columns to improve clarity:
+
+- **Status column:** Appears immediately after Title, matching the board column name (e.g., Done, In Progress, Review). It hides when the sort is cleared.
+- **Stale column (optional):** Only appears in the headers when sorting by staleness and the board staleness toggle is on. It hides again when staleness sorting is cleared or the toggle is off.
+
+These additions keep the table focused around the sorted criteria without overwhelming you with every board field.
+
 ## Keyboard shortcuts
 
 | Shortcut | Action |
@@ -138,6 +149,7 @@ Open the Configure table modal for more control over your table setup:
 | <kbd>Shift+F</kbd> | Toggle focused search on the board |
 | <kbd>W</kbd> | Start or stop the timer for the selected task |
 | <kbd>Enter</kbd> | Open task focused on description and keep the table layout |
+| <kbd>Shift+E</kbd> | Select (or extend selection of) the current table row for bulk actions |
 
 ## Sorting behavior
 
@@ -157,10 +169,8 @@ Table view is great for:
 - **Comparing priorities:** Side-by-side visibility of priority, size, and due dates.
 - **Quick filtering:** Combine visibility filters with your column choices to surface the exact set of tasks you need.
 - **Tracking staleness:** Use the Stale column to identify tasks that haven't been updated recently, especially on boards with staleness detection enabled.
-- **Drag and reorder columns:** Drag columns to match your workflow; see them right after switching views.
+- **Bulk work:** Combine multiselect with bulk actions (e.g., Move, Archive) for rapid processing.
 
 ## Scroll positions
 
 **Full-height scroll container:** The scroll container reaches the bottom of the window, so the horizontal scrollbar stays pinned at the bottom regardless of row count. This ensures stable navigation when working with rows of any size.
-
----
