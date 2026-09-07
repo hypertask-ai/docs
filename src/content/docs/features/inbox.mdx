@@ -65,6 +65,10 @@ Board data is deferred until Inbox is usable to improve startup performance. Whe
 
 Each inbox load now dedupes notifications and access calls to a single round trip instead of multiple concurrent calls ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063)). This reduces redundant requests and improves load times when many notifications or assignments are present, particularly on slower network connections.
 
+## Inbox row selection and bulk archiving
+
+You can now select multiple rows in the Inbox and archive them in bulk using **Shift+E**. This works across filtered lists and views. The multiple selection allows you to quickly clear out large batches of notifications without opening them individually, mirroring the bulk-archive behavior in Saved views. Selected rows are persisted until you commit the action, ensuring you can review the working set before archiving ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206)).
+
 ## Inbox boundary jumps (HTPR-5431)
 
 When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg</kbd> and <kbd>GG</kbd> to jump to the top or bottom of the list. This fix ensures that:
@@ -183,6 +187,10 @@ Inbox notifications now update in real-time using WebSocket connections. As noti
 Sibling-rows cleanup after archiving now propagates in real-time. When you archive a notification, its sibling rows in the Reactions split are immediately cleared in the local view without needing to refresh. This mirrors the server-side sibling cleanup and keeps the inbox UI in sync with your actions.
 
 This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
+
+## Active split highlighting
+
+The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views — ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
 
 ## Keyboard shortcuts
 
