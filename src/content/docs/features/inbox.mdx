@@ -30,7 +30,11 @@ The inbox can be grouped into multiple views:
 | **Search** | Search icon | Text-based search across all boards |
 | **Notifications** | Notification icon | List of all notification types |
 
-### Action icons
+### Saved views and sorting
+
+Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g., top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what’s visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
+
+## Action icons
 
 Task completion and inbox-archive now use distinct icons to avoid visual confusion.
 - **Task completion**: Uses a circle-check icon when marking a task as done from task details, boards, or lists
@@ -38,35 +42,35 @@ Task completion and inbox-archive now use distinct icons to avoid visual confusi
 
 This distinction makes it clearer which action applies to tasks versus inbox notifications, even when both icons may resemble a checkmark or tray in some contexts.
 
-### Mobile inbox bottom dock
+## Mobile inbox bottom dock
 
 On mobile, the Inbox uses a bottom thumb zone for navigation and splits:
 - **Inbox splits** (such as **Important**, **Blocked by you**, and others) now appear in the bottom thumb zone. The regular five-tab navigation bar is hidden while the Inbox is open, so your attention stays focused on the current view and its actions.
 - Split filtering is preserved; you can still switch or filter splits within the dock without losing context.
 - On narrow screens, the thumb zone accommodates splits cleanly, keeping key actions and switches within hand-reach.
 
-### Mobile inbox notification nudge
+## Mobile inbox notification nudge
 
 On mobile, the inbox now explicitly surfaces a notification nudge when your notifications are switched off. This provides clear context at a glance, similar to the desktop experience, and encourages users to re-enable notifications for timely updates.
 
-### Mobile inbox sender alignment
+## Mobile inbox sender alignment
 
 On narrow screens, the Inbox displays rows on a single line with sender information clearly visible. Read rows no longer show an empty status gutter that previously pushed sender names to the right. The status indicator now renders only for unread, saved-content, or blocked-by-me states, keeping sender names aligned without unintended indentation.
 
-### Inbox prefetch timing
+## Inbox prefetch timing
 
 Board data is deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This ensures that on signed-in reloads, no Board request occurs before usable data, and warm-up of the previous-board query waits for stable IndexedDB and network readiness ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431)).
 
-### Inbox prefetch and API call deduping
+## Inbox prefetch and API call deduping
 
 Each inbox load now dedupes notifications and access calls to a single round trip instead of multiple concurrent calls ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063)). This reduces redundant requests and improves load times when many notifications or assignments are present, particularly on slower network connections.
 
-### Inbox boundary jumps (HTPR-5431)
+## Inbox boundary jumps (HTPR-5431)
 
 When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg</kbd> and <kbd>GG</kbd> to jump to the top or bottom of the list. This fix ensures that:
 - Pressing <kbd>gg</kbd> moves focus to the first item and scrolls the list to center that row on screen.
 - Pressing <kbd>GG</kbd> moves focus to the last item and scrolls the list to center that row on screen.
-- The list viewport updates alongside the focused row, so the jump stays visualized and you don\'t lose your place in scrolling.
+- The list viewport updates alongside the focused row, so the jump stays visualized and you don't lose your place in scrolling.
 
 This change addresses the case where moving to the last item (via <kbd>G</kbd><kbd>G</kbd>) changed which inbox row was highlighted, but the long list stayed in its old position on screen. Now top and bottom jumps center the matching row and handle filtered and empty inboxes safely.
 
@@ -79,7 +83,7 @@ Use **Snack bar** buttons on inbox rows to quickly consume notifications or undo
 | Button | Action |
 |--------|--------|
 | **Snooze** | Temporarily hide from your feed |
-| **Dismiss** | Remove and ensure future updates don\'t surface |
+| **Dismiss** | Remove and ensure future updates don't surface |
 | **Undo** | Revert a dismissed notification or undone action |
 | **Undo all / Dismiss all** | Apply the action to visible rows matching the filter |
 
@@ -96,7 +100,7 @@ Inbox Zero counts only items that are:
 - **Unarchived**
 - **Unique** within each row scope (one count per task or invite)
 
-This means hidden rows (e.g., notifications from tasks you\'ve archived, filtered-out boards, or rows censored by privacy rules) are excluded from the count and will not be archived by Inbox Zero, even if they\'re currently visible in some other view.
+This means hidden rows (e.g., notifications from tasks you've archived, filtered-out boards, or rows censored by privacy rules) are excluded from the count and will not be archived by Inbox Zero, even if they're currently visible in some other view.
 
 ### Preview before commit
 
@@ -107,15 +111,15 @@ This means hidden rows (e.g., notifications from tasks you\'ve archived, filtere
 
 ### Reconfirmation on preview changes
 
-If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what\'s included in the visible scope.
+If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
-**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don\'t lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
 
 ### Limitations
 
 - Inbox Zero only sees the **visible** portion of the All tab at the moment you open it; items hidden by board filters, privacy settings, or a previous archiving action are out of scope.
-- It\'s available from the Inbox page\'s All tab and from the action menu on any inbox row.
-- Preview and execution respect your current view filters; if you filter out certain notifications, they won\'t appear in the preview.
+- It's available from the Inbox page's All tab and from the action menu on any inbox row.
+- Preview and execution respect your current view filters; if you filter out certain notifications, they won't appear in the preview.
 
 ## Archived inbox
 
@@ -131,7 +135,7 @@ Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. Wh
 
 ## OpenWiki
 
-OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they\'re versioned and can be queried by agents whenever they investigate that task.
+OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
 - **View** — Open the OpenWiki page for the associated task
@@ -193,7 +197,7 @@ This ensures your inbox always reflects the latest state of mentions, assignment
 - <kbd>K</kbd> — Move focus up
 - <kbd>Ctrl</kbd> + <kbd>A</kbd> — Select all from current split
 - <kbd>Ctrl</kbd> + <kbd>X</kbd> — Select message
-- <kbd>Shift</kbd> + <kbd>E</kbd> — Bulk Archive
+- <kbd>Shift</kbd> + <kbd>E</kbd> — Bulk Archive (select rows or visible set)
 
 ### J/K navigation to inbox drafts
 
