@@ -10,6 +10,11 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 7, 2026">
+  * Fixed: Bare URLs in task descriptions and comments now render as live links on desktop and automatically become clickable on mobile after reload ([HTPR-6205](https://app.hypertask.ai/detail/project-15/6205))
+  * Fixed: Task comments now reveal a team agent only when the viewer has access to the comment’s task board (no cross-board leakage) ([HTPR-6080](https://app.hypertask.ai/detail/project-15/6080))
+</Update>
+
 <Update label="September 6, 2026">
   * Improved: All new feature flags now default to Owner + QA visibility, never "Only me" ([HTPR-6192](https://app.hypertask.ai/detail/project-15/6192))
   * Added: Agent Chat queueing and refined patterns while the agent works ([HTPR-6038](https://app.hypertask.ai/detail/project-15/6038))
