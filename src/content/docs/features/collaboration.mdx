@@ -3,6 +3,10 @@ title: "Collaboration"
 description: "Work together with team workspaces, real-time editing, mentions, reactions, and activity logs."
 ---
 
+<aside class="tip">
+This page describes how team agents (agents associated with your team) are scoped. For information about individual agents, see <a href="/features/agents/">AI Agents</a>.
+</aside>
+
 import { Aside, Steps } from '@astrojs/starlight/components';
 
 Hypertask is built for teams — whether that's two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
@@ -90,9 +94,9 @@ Invite team members to a project by generating an **invite link**. Invite links 
 | **Usage limit** | Cap how many people can join via this link |
 | **Domain restriction** | Limit invites to specific email domains (e.g. `@yourcompany.com`) |
 
-<Aside type="tip">
+<aside type="tip">
 Domain restrictions are useful when you want to share an invite link broadly (in Slack, for example) but limit access to people within your organization.
-</Aside>
+</aside>
 
 ### Roles and permissions
 
@@ -126,9 +130,9 @@ Hypertask uses **Better Auth** for server-led authentication. When you log in vi
    - **ht_session** — Server-validated signature for cookie integrity.
 4. **Redirect to board** — You're redirected to a board in the app.
 
-<Aside type="note">
+<aside type="note">
 All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
-</Aside>
+</aside>
 
 ### BYOK and API keys
 
@@ -144,9 +148,9 @@ The **Settings → Team** navigation shows team-scoped panels. In typical teams,
 - **Discount** — The discount amount applied if your team is eligible (e.g. for long-term commitments or enterprise pricing)
 - **Amount due** — The final amount you pay after applying the discount
 
-<Aside type="tip">
+<aside type="tip">
 This billing view makes the effective cost of your plan more transparent, especially for discounted enterprise or long-term pricing tiers.
-</Aside>
+</aside>
 ### Settings footer
 
 On every settings page, the viewport is now terminated by a **sticky footer** with quick access links and a labeled Sign out button:
@@ -160,9 +164,9 @@ The previously misleading **Profile > Account** section is no longer displayed. 
 - **Sign out behavior** is updated with visual feedback when hovered
 - **Last-visible anchor details** appear only when the user intentionally scrolls into view
 
-<Aside type="tip">
+<aside type="tip">
 The sticky settings footer ensures you can quickly reach feedback tools and sign out, no matter which settings panel you're in.
-</Aside>
+</aside>
 
 ### Switching accounts without logout
 
@@ -181,9 +185,9 @@ After login, your session persists until you explicitly sign out. Hiding or clos
 
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
 
-<Aside type="caution">
+<aside type="caution">
 If you persist LocalStorage across sign-ins or sessions (e.g. in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
-</Aside>
+</aside>
 
 ## Scope-aware agents and membership
 
@@ -203,6 +207,15 @@ This scoping applies when:
 - Configuring an agent's permissions in Settings
 - Using the agent in MCP tools or interactive sessions
 
+### Local team agent visibility in comments
+
+Team agents appear in comments in a team-scoped way to prevent unauthorized access. Hypertask now ensures that a team agent's name is only visible to users who have access to the task board on which the comment was posted.
+
+- **Before:** team agents were visible in comments even when the viewer did not have access to that specific board, which could lead to data leakage.
+- **Fix:** Comments now use the task board as the access gate, so the agent name is only revealed when the viewer can access that exact board.
+
+This ensures that team-agent attribution cannot leak across boards and respects the access controls of each task.
+
 ### Platform-level team membership
 
 Team membership controls what agents you can create and configure:
@@ -216,9 +229,9 @@ Membership visibility is scoped per section:
 - **Team tab** — Displays Members / Agents / Skills for each team you're a member of.
 - **Board tab** — Shows that board's Members and Agents alongside their roles and association checkboxes if applicable.
 
-<Aside type="tip">
+<aside type="tip">
 Agents are scoped by team, so you can safely reuse agents across projects in the same client or department without exposing agents to unrelated teams.
-</Aside>
+</aside>
 
 ## AI Agents
 
@@ -238,9 +251,9 @@ Agents added to a board are treated as members of that board. This means:
 - Agents can be @mentioned in comments and will receive notifications
 - Agents can read and update tasks on that board via MCP
 
-<Aside type="note">
+<aside type="note">
 Agents do not count as team seats toward your subscription limit. You can add as many agents as you need without affecting your seat count.
-</Aside>
+</aside>
 
 ### Agent access scope
 
@@ -261,9 +274,9 @@ Give feedback directly from the app with a prominent call-to-action. The feedbac
 - Clear category selection to route your feedback to the right teams
 - Direct posting to the Feedback board with auto-assignment
 
-<Aside type="tip">
+<aside type="tip">
 Use the feedback button to share ideas, report bugs, or suggest improvements. Your input shapes future releases and directly affects the UX improvements we ship.
-</Aside>
+</aside>
 
 ## @mentions
 
@@ -274,14 +287,14 @@ Type `@` in any comment to mention a team member. Mentions do two things:
 
 Mentions work in comments and task descriptions, and support native and external agents:
 
-<Aside type="tip">
+<aside type="tip">
 If you receive a mention that looks suspicious, report it to your workspace owner. All mentions are sanitized to prevent potential injection attacks.
-</Aside>
+</aside>
 
 ### Agent @mentions
-<Aside type="note">
+<aside type="note">
 Agent owners are not notified of their own agent's comments.
-</Aside>
+</aside>
 @mentioning an agent (native or external) triggers a **Mentioned notification** in that agent's inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
 
 This means you can @mention external agents in comments and task descriptions to trigger automation; the agent's inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
@@ -291,8 +304,6 @@ If an external agent isn't receiving @mentions, verify that it has board-level a
 ## Emoji reactions
 
 React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
-
-Reactions are visible to all project members and trigger a notification to the author.
 
 ### Fast like button
 
@@ -375,9 +386,9 @@ This applies to:
 
 There are no save buttons — changes persist as you type.
 
-<Aside>
+<aside>
 Real-time sync means AI agents editing task descriptions via MCP won't overwrite human edits. Changes are merged automatically.
-</Aside>
+</aside>
 
 ## Managing comments
 
@@ -471,9 +482,9 @@ The GIFs tab is powered by **Giphy** and offers two modes:
 
 Click a GIF to insert it into your comment. Inserted GIFs render as **resizable media** — drag the corner handles to adjust the size, and the chosen dimensions are preserved when the comment is posted.
 
-<Aside type="note">
+<aside type="note">
 GIF search requires a Giphy API key configured on the Hypertask deployment. If GIFs are not loading, contact your workspace admin.
-</Aside>
+</aside>
 
 ## Comment edit mode
 
@@ -519,6 +530,6 @@ To reveal history events:
 
 Both controls toggle history events on and off. You can also access **Show/Hide history** and **Expand/Collapse all comments** from the command palette (`Ctrl+K`).
 
-<Aside type="tip">
+<aside type="tip">
 If you need a full audit trail of every change on a task, use **Show history** (`Ctrl+Shift+H`) to surface all activity events inline with the comment thread.
-</Aside>
+</aside>
