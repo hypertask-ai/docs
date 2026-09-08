@@ -26,6 +26,12 @@ Use the Verification Fleet to instantiate a one-time board for a specific user t
    Once all steps have passed, the fleet automatically archives the board and cleans up associated actions. Logs retain test evidence for the retention period.
    - You can also run nightly auto-filed bug tickets on fleets (MCP mode). Enabling nightly-mode in MCP config drives the verification step to capture leaks with per-step bug tickets.
 
+### QA web-path evidence gate
+
+- QA agents and other verification workflows verify production routes through web browser screenshots, never the CLI or MCP tools.
+- Each UI-level check must include a production browser screenshot; each route-level check must include a redacted POST/GET request result from the same web route.
+- Routes that return a dev instruction (e.g., "development build active") are treated as failed and require reaging in dev environment before QA passes with web-path evidence.
+
 ## Fleet limits and safety
 
 - Each fleet run creates a separate disposable board under the configured user scope
@@ -38,3 +44,7 @@ Use the Verification Fleet to instantiate a one-time board for a specific user t
 - You must have write access to the target user's task scope
 - The verification board must be created under a user that has permission to execute the critical task workflow (create, assign, move, comment, mark Done, reopen)
 - Nothing can be merged into the primary board during a verification run
+
+## Changelog
+
+- Fixed: QA agents now require production browser screenshots and redacted request results to pass evidence gates, never CLI or MCP-only checks ([HTPR-6240](https://app.hypertask.ai/detail/project-15/6240))
