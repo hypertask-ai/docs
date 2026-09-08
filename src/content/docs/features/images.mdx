@@ -1,0 +1,43 @@
+---
+title: "Images and Attachments"
+description: "Send HEIC/HEIF photos, view them everywhere (thumbnails, inline, galleries, lightboxes), force or exempt from preview, manage low-res fallbacks."
+---
+
+We treat HEIC and HEIF images like any other file: they render consistently across thumbnails, inline previews, galleries, and lightbox views. If a preview isn’t suitable, exclude the format from previews or use a low-res fallback.
+
+## Supported formats
+
+| Format | Default behavior |
+|--------|------------------|
+| HEIC/HEIF | Convert to browser-compatible JPEG for preview; uploaded as-is (or after lossless conversion if enabled) |
+| JPEG/PNG/WebP | Render at full quality |
+
+## Viewing HEIC/HEIF
+
+1. Attach a photo from an iPhone or Mac.
+2. The platform converts it to a browser-supported format before serving it.
+3. See it in the same places as regular images:
+   - **Attachment thumbnails** below comments and email bubbles
+   - **Inline embed** inside a comment or task description
+   - **Board gallery** or gallery views that show attachments
+   - **Task detail lightbox** with a thumbnail strip at the bottom
+
+## Excluding previews
+
+To prevent HEIC/HEIF from generating previews (e.g., if the file is too large for preview generation):
+
+1. Open the attachment’s context menu (three dots).
+2. Select **Excluded from previews** to disable automatic preview generation.
+3. Uploaders still receive the file; observers only see the original format and a download link.
+
+## Warnings for unexpected content
+
+If a file exhibits preview or display issues (broken icons, no thumbnail, or an unexpected format shown), check:
+
+- The file is flagged as excluded from previews (if the goal was to prevent preview).
+- The file is a HEIC/HEIF image under preview logic (historically, some browsers rendered these as named files before conversion completed).
+
+## Upload tips
+
+- **Keep resolution manageable:** Very large HEIC images can lead to longer preview conversion times.
+- **Review lightbox strip:** If a thumbnail seems wrong after a HEIC upload, the browser might still be loading a placeholder until conversion finishes.
