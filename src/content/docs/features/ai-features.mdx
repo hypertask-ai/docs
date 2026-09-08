@@ -68,7 +68,20 @@ This is automatically handled for standard flows — use the AI Task Writer, con
 
 ## Agent Chat interactions
 
-Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets.
+Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets. Model selection is chosen by the agent's engine (Claude or Codex) and should not be overridden by the chat lane.
+
+### Model selection per engine
+
+Agent Chat respects the engine configured on an agent when selecting a model:
+
+- **Claude-based agents** use Claude models (for example, claude-sonnet-5). The chat lane does not inject Codex-style model names or IDs for Claude agents.
+- **Codex-based agents** use Codex models (for example, gpt-5.6-luna). The chat lane does not inject Claude-style model names for Codex agents.
+
+If an agent's engine and model match during configuration, Agent Chat uses that pairing directly. Mismatches in model naming between the configuration and runtime (for example, legacy Codex-style names on Claude engines) are resolved server-side; chat must operationalize the correct model per engine.
+
+<Aside type="tip">
+Chat lane configuration must align with the agent's engine. Changes to engine/model requirements should be made in the agent's settings first, then propagated to the chat lane to avoid operational conflicts.
+</Aside>
 
 ### Concurrent Agent Chat sessions
 
