@@ -30,17 +30,22 @@ Errors with codes matching known patterns are automatically filed in the issue q
 2. Extract common error scenarios (401/403/404 false positives).
 3. Prioritize the entry by severity and recurrence.
 
-## Notification-read authorization regression tests (HTPR-5378)
+## Fleet status heartbeat
 
-The notification-read authorization guard is now enforced by behavioral regression tests on route guards instead of relying on source-text matching. The tests execute handlers with isolated session, controller, and Prisma fakes to verify:
+The fleet status heartbeat now persists on the Agents dashboard even when processes exit mid-scan. The agent-runtime collector uses a retry pattern to handle cold-start ENOENT conditions, keeping the fleet status view available continuously.
 
-- Malicious body identities are ignored.
-- Anonymous calls produce no writes.
-- Notification/comment read-state persistence is scoped to the session.
+### What changed
 
-This ensures consistent per-board read authorization and preserves expected access-control behavior across updates.
+- Collector retries on `/proc` ENOENT race conditions, so the fleet status refreshes on schedule regardless of process churn.
+- The Agents dashboard rights panel shows a stable heartbeat line when collectors are scanning; the line no longer drops unexpectedly.
+
+### Updated references
+
+- Integration validation per HTPR-6253 confirms 20 non-failed scans during 800 process exits; every scan returned usable data and the combined fleet view stayed visible.
 
 ---
+
+
 
 <Aside type="tip">
 If you encounter persistent errors in production, open the error link in your issue tracker and attach relevant context from the dashboard that you collected at the time of the error.
