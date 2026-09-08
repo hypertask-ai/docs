@@ -5,7 +5,7 @@ description: "Organize work with Kanban-style boards, customizable sections, and
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** â\x80\x94 a visual workspace where tasks flow through customizable columns called **sections**. If youâ\x80\x99ve used Kanban boards before, this will feel familiar. If you havenâ\x80\x99t, think of it as a whiteboard with columns that represent stages of work.
 
 ## Creating a board
 
@@ -13,7 +13,7 @@ From the web UI, click **New board** to create a blank board. You can also gener
 
 From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your board structure and sections. The AI generates sections and optionally pre-seeds tasks.
 
-If you invoke AI board creation and the model doesn't return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
+If you invoke AI board creation and the model doesnâ\x80\x99t return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
 
 ## Board titles in browser navigation
 
@@ -21,13 +21,13 @@ The browser title shows the board name and saved-view name when you navigate to 
 
 ## Click-through prefixes for easier moving ([HTPR-5770])
 
-<span class="label label--brand">Feature</span> Each board’s ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
+<span class="label label--brand">Feature</span> Each boardâ\x80\x99s ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
 
-- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g., **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
-- Short, clean titles are compressed to predictable 3–4 character labels (e.g., **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
+- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g. **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
+- Short, clean titles are compressed to predictable 3â\x80\x934 character labels (e.g. **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
-Use ticket prefixes in the browser’s address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
+Use ticket prefixes in the browserâ\x80\x99s address bar or AI prompts to reliably target tasks. The stable prefixâ\x80\x94paired with a predictable numeric suffixâ\x80\x94makes task references understandable and consistent.
 
 ## App shell surface shortcuts
 
@@ -41,7 +41,7 @@ When the **left icon rail (beta)** is enabled on desktop, use a single number ke
 | <kbd>4</kbd> | Calendar |
 | <kbd>5</kbd> | Toggle AI chat |
 
-These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings → Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
+These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings â\x86\x92 Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
 
 ## Adding and managing columns
 
@@ -84,16 +84,16 @@ This ensures that tasks moved into a new section appear in all view contexts (bu
 
 ## Built-in splits
 
-Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
+Every board ships with four built-in views, on by default. A splitâ\x80\x99s tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
-- **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
-- **Overdue** — tasks whose due date has passed and are not in a done column.
-- **Blocked** — tasks blocked by another task or waiting on a person.
-- **Agents** — tasks assigned to an AI agent.
+- **My Tasks** â\x80\x94 tasks assigned to you. Each member sees their own slice of the board.
+- **Overdue** â\x80\x94 tasks whose due date has passed and are not in a done column.
+- **Blocked** â\x80\x94 tasks blocked by another task or waiting on a person.
+- **Agents** â\x80\x94 tasks assigned to an AI agent.
 
-Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice — it never changes the board's saved default view.
+Built-in splits need no setup and cannot be edited or deleted; they donâ\x80\x99t appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice â\x80\x94 it never changes the boardâ\x80\x99s saved default view.
 
-For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
+For agents (CLI/MCP): these views are client-side filters over the boardâ\x80\x99s tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
 ## Midscene QA board coverage
 
@@ -107,11 +107,11 @@ Saved views are named filter/sort configurations stored on a project. They make 
 
 ### The views bar
 
-Saved views appear as pills in a **single row above the board**, with the board's own name as the first pill.
+Saved views appear as pills in a **single row above the board**, with the boardâ\x80\x99s own name as the first pill:
 
 - The row **scrolls sideways** rather than wrapping. A board with many views no longer pushes the columns down the page.
 - **Edge arrows** appear at either end once the pills overflow, and the active view is scrolled into position on load, so the current view is always visible.
-- Drag a pill to reorder your views. The board's own pill cannot be moved.
+- Drag a pill to reorder your views. The boardâ\x80\x99s own pill cannot be moved.
 
 ### Create a saved view
 
@@ -214,7 +214,7 @@ When you open the board picker or switch boards on mobile:
 - Search starts with focus, so you can begin typing immediately.
 - Arrow keys and <kbd>Enter</kbd> navigate and select filtered results.
 - Boards are ordered by latest activity with your current board pinned at the top:
-  - The board you're currently looking at appears first.
+  - The board youâ\x80\x99re currently looking at appears first.
   - Followed by boards with the most recent task updates.
   - Ordering logic is preserved between opens without reshuffling the list.
 - Empty boards sort alphabetically and appear at the end.
@@ -233,7 +233,7 @@ In addition to the ordering behavior above, the mobile board switcher supports f
 
 ## Board sidebar behavior
 
-The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
+The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the groupâ\x80\x99s accordion. Within a teamâ\x80\x99s group, the boards are sorted so that your most-used teams appear first.
 
 - Boards are ranked by the most recently opened board inside a team.
 - This ensures teams you actively use (for example, Inne or Hypertask) rise to the top of the list.
@@ -243,11 +243,11 @@ The left sidebar organizes your boards into collapsible teams. When you group bo
 
 When you use **Shift+M** (board picker) or the board switcher, boards now appear based on their last activity rather than creation order:
 
-1. The board you're currently looking at is shown first.
+1. The board youâ\x80\x99re currently looking at is shown first.
 2. Followed by boards with the most recent task updates.
 3. Boards without recent tasks fall to the end and are sorted alphabetically.
 
-This aligns with the agents page's activity-based sorting and ensures your most active boards are always prioritized when navigating.
+This aligns with the agents pageâ\x80\x99s activity-based sorting and ensures your most active boards are always prioritized when navigating.
 
 ### Mobile board switcher search and ordering ([HTPR-5625])
 
@@ -268,13 +268,13 @@ When you open the board picker or switch boards on mobile, search is focused on 
 
 Guest demo boards provide a guided onboarding experience:
 
-- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g. create their first task or explore the board).
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chatâ\x80\x94all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
 
-If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
+If you log in or sign up to Hypertask and donâ\x80\x99t have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
 
 The empty state:
 - Explains what boards are and how to create one
@@ -315,19 +315,19 @@ This occurred in four onboarding scenes before the fix was applied:
 - Scene 17: Archive section prompt
 - Scene 25: Onboarding completion confirmation
 
-The fix ensures that every interactive modal in the demo onboarding path receives a proper boolean toggle value instead of a non-callable placeholder. The correction eliminates crash crashes during the guided onboarding flow and provides a stable, incremental start to a user's first Hypertask session.
+The fix ensures that every interactive modal in the demo onboarding path receives a proper boolean toggle value instead of a non-callable placeholder. The correction eliminates crash crashes during the guided onboarding flow and provides a stable, incremental start to a userâ\x80\x99s first Hypertask session.
 
 Regression tests in this release verify modal toggle behavior across these four key onboarding scenes, ensuring future changes to the onboarding UI cannot reintroduce the same crash pattern.
 
 ## Compact modal palette
 
-Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g., the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
+Hypertaskâ\x80\x99s components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the themeâ\x80\x99s typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g. the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
 
 **Default behavior (compact)**
 
 ```jsx
 // flowsProps.tsx or shared-modal.jsx
-// legacySizing omitted — uses compact tokens
+// legacySizing omitted â\x80\x94 uses compact tokens
 <Modal title="Task Details" open={isModalOpen}>
   <div className="modal-content">
     <Input label="Title" />
@@ -354,17 +354,17 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the boardâ\x80\x94after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive these shortcuts.
 
-This behavior matches the expectations you're used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
+This behavior matches the expectations youâ\x80\x99re used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
 
 ### Batch selection
 
 On desktop boards, hover a card to reveal its selection checkbox. Press <kbd>X</kbd> while a card is active, click its checkbox, or hold <kbd>Shift</kbd> while clicking another card in the same column to select the inclusive range. Selected cards stay selected when focus moves to another card.
 
-The bottom selection bar's **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
+The bottom selection barâ\x80\x99s **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
 
 ## Board staleness indicators
 
@@ -372,19 +372,42 @@ Once a task moves into a section, it ages in view over time. To avoid visual noi
 
 ## In-app feedback routing
 
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**â\x80\x94instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
 
 ## Board access for writes
 
 Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
+
 - CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
 
 The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+-\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
 
-Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
+Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target boardâ\x80\x99s membership and the editorâ\x80\x99s access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
 
 This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board or task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
+
+## Manage board columns panel ([HTPR-6217])
+
+The **Manage board columns** panel in every board now correctly lists all existing columns, including columns added after the last time the panel was opened.
+
+Previously, the panel would show an empty list or stale data if the current boardâ\x80\x99s column state hadnâ\x80\x99t been refreshed.
+
+### How it works
+
+- **Refresh on open:** When you click the Manage board columns button, the panel loads the latest column state from the server for that board.
+- **Edit safely:** Each column row remains editable, and changes (renames, reordering) are persisted when you confirm the panel.
+- **Cross-board state isolation:** Columns for another board are not mixed in; each board maintains its own column set.
+
+### How to verify
+
+1. Open any board with several columns and note their names (e.g., Doing → Review → Done).
+2. Click the **Manage board columns** button.
+3. Confirm you see all the expected columns listed.
+4. Hover on one column to reveal the pencil icon, edit its name, and save.
+5. Open a second board on the same account and verify the Manage board columns panel shows only its columns.
+
+This change ensures that managing columns is reliable regardless of how recently the board was edited or when you last opened the panel.
