@@ -10,6 +10,11 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 8, 2026">
+  * Fixed: People and agents no longer disappear from the @mention picker after typing characters; the picker now scopes to the open ticketâ\x80\x99s board, not the last-visited board ([HTPR-6221](https://app.hypertask.ai/detail/project-15/6221))
+  * Fixed: Manage board columns panel now lists all board columns correctly and accepts edits in all boards ([HTPR-6217](https://app.hypertask.ai/detail/project-15/6217))
+</Update>
+
 <Update label="September 7, 2026">
   * Improved: Inbox now supports row multiselect via **Shift+E** for bulk archiving, with Saved views preserved and order-shuffled cluster-archiving when many top clusters are visible ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206))
   * Improved: Table View now supports row multiselect via Shift+E for bulk actions, with Saved views + sorting reflected in row visibility ([HTPR-6160](https://app.hypertask.ai/detail/project-15/6160))
@@ -20,7 +25,7 @@ export const Update = ({ label, children }) => (
   * Improved: All new feature flags now default to Owner + QA visibility, never "Only me" ([HTPR-6192](https://app.hypertask.ai/detail/project-15/6192))
   * Added: Agent Chat queueing and refined patterns while the agent works ([HTPR-6038](https://app.hypertask.ai/detail/project-15/6038))
   * Added: Agent SDK TypeScript package @hypertask/agent-sdk with webhook handler, run helpers, and ready-made templates ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
-  * Improved: Agent SDK hello-world example now runs in under 30 minutes; the SDK ships MemoryDeliveryScheduler so the README's scheduler is concrete ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
+  * Improved: Agent SDK hello-world example now runs in under 30 minutes; the SDK ships MemoryDeliveryScheduler so the READMEâ\x80\x99s scheduler is concrete ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
   * Fixed: Agent Chat threads that hang on a single turn now restart automatically, with a Stop button available during work ([HTPR-6154])
 </Update>
 
