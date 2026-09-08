@@ -57,6 +57,8 @@ export default defineConfig({
           'features/slack',
           'features/agents',
           'features/desktop',
+          'features/images',
+          'docs/features/images',
         ],
         },
         {
