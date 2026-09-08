@@ -14,7 +14,8 @@ From the web UI:
 1. Press **Ctrl+K**, open **Manage agents**, and select **New agent**.
 2. Enter an agent name and description.
 3. Choose a project and optionally limit the agent to specific boards.
-4. Save the agent. Hypertask generates a scoped API key under the agent's profile.
+4. Optionally enable **Team mode** by providing a provider billing API key to enable shared access. Agents default to **Private** mode.
+5. Save the agent. Hypertask generates a scoped API key under the agent's profile.
 
 Over MCP:
 
@@ -59,6 +60,19 @@ Agents use scoped API keys that can restrict which actions they are authorized t
 ### Agent identities and SMAP token usage
 
 The SMAP token (`S-*`) is a low-entropy credential stored in the database, not an API key under Settings. It is used for SSH-based Git workflows and internal tooling, not for agent token mode. When an agent is authenticated via its own bearer token, writes are attributed to the agent, not its owner.
+
+### Agent privacy modes: Private vs Team
+
+Each agent can be configured with one of two privacy modes, controlling whether it can be shared and accessed by other team members:
+
+- **Private** — The default mode. The agent is not shared with the team. Only the agent owner or users explicitly granted access can work with this agent. Subscription-backed agents cannot be shared in Private mode.
+- **Team** — The agent can be shared with the team. Required for subscription-backed agents at the plan tier that supports shared access. This mode requires a provider billing API key to enable shared billing.
+
+Enforcement of privacy mode occurs server-side, and the interface matches the server state. Changes to an agent’s mode are reflected immediately across all surfaces (board, table, AI Chat, and MCP tools).
+
+#### Subscription-backed agents
+
+When the board or plan requires subscription-backed agents, they must be in Team mode to be shared. Hypertask validates mode and billing integration before allowing a shared agent to be created or assigned. Attempting to share a subscription-backed agent in Private mode fails at create time.
 
 ### Agent access key visibility and security
 ([HTPR-5477](https://app.hypertask.ai/detail/project-15/5477))
@@ -154,7 +168,6 @@ In agent chat between normal messages, you'll now see activity rows describing k
 ([HTPR-6155](https://app.hypertask.ai/detail/project-15/6155))
 
 An agent receives a short, size-capped brief before responding to chat questions. The brief includes:
-
 - The agent's current assignment (if any)
 - Up to 10 related recent tasks on the board
 - Open pull requests that reference the agent
@@ -166,7 +179,6 @@ This context helps the agent answer work-related questions accurately and keeps 
 ([HTPR-5677](https://app.hypertask.ai/detail/project-15/5677))
 
 To prevent a 12-hour outage caused by agents hot-swapping their own runtime, every full-trust agent turn now carries a standing rule:
-
 - **Agents cannot write to the live worker runtime** or agent configurations.
 - **Agents cannot restart or redeploy the runtime** from the worker space.
 - **Agents cannot install software or modify system-level settings** on the execution environment.
@@ -192,9 +204,8 @@ Managed agent deletion completes reliably across the board's verified fleet. The
 ([HTPR-5701](https://app.hypertask.ai/detail/project-15/5701))
 
 Each agent run produces a frozen timeline of per-step durations. These timelines are visible on both card-level summaries and agent-detail run history.
-
-- **Kanban cards** show the last three finished runs as an expandable element. Click any card to see the most recent runs with their step-by-step timing.
-- **Agent pages** carry a full "Run history" log, starting with the newest 20 runs visible, with older runs hidden behind an expander. Each finished run renders as a frozen timeline with per-step duration so you can quickly spot where time was spent.
+Kanban cards show the last three finished runs as an expandable element. Each card can be expanded to see the most recent runs with their step-by-step timing.
+Agent pages carry a full "Run history" log, starting with the newest 20 runs visible, with older runs hidden behind an expander. Each finished run renders as a frozen timeline with per-step duration so you can quickly spot where time was spent.
 
 ### Viewing agent step timelines
 
@@ -337,7 +348,7 @@ Agent-tier tokens receive 600 requests/minute. They are used for request-level l
 
 When you turn off an agent via its toggle on the agents dashboard or from an agent detail page, the agent is set to Off and will no longer respond to mentions or task mentions. Existing team chat sessions that are currently open remain valid while their conversation is active. The agent continuation remains usable until the chat session is closed, after which the agent effectively stops responding to new messages in that session.
 
-This behavior means that:
+This behavior means:
 - If you have an open team chat with an active agent, sending a message to an already-opened session will succeed even if the agent is set to Off.
 - Clicking the session toggle to off marks the agent as Off but does not immediately interrupt the running session.
 - Once you close or switch away from a chat session, messages addressed to the agent within the previous chat window are effectively blocked.
@@ -361,6 +372,10 @@ Agents can be renamed from their detail page; the URL updates to the new readabl
 - Agents can inherit board-level AI custom instructions via MCP (`GET /api/mcp/projects/[projectId]/instructions`).
 - Personal dictation language is per-user; agents do not need a language override.
 
+### Agent privacy mode permissions
+
+Users can create an agent with the default **Private** mode. To enable **Team** mode, the creator must provide a provider billing API key. Agents in Team mode can be accessed by other team members, while Private agents remain accessible only to their owner or explicitly granted users. Setting the privacy mode is enforced server-side and reflected on the agent detail page and in all client interactions (web, CLI, MCP tools, AI Chat).
+
 ## Troubleshooting
 
 | Symptom | Check |
@@ -370,6 +385,7 @@ Agents can be renamed from their detail page; the URL updates to the new readabl
 | `401` on webhook signatures | Validate against raw request body using `timestamp + "." + rawBody` and HMAC-SHA256. |
 | CLI releases ignored | Confirm data source paths read `body.title` or appropriate top-level fields; stale flows drop production cursor mismatch (adjust `dataSources.path` accordingly). |
 | Embeddings fail | Check if the gateway resolved to the correct provider; rotating the gateway or model on Vercel AI Gateway may resolve transient failures. |
+| Privacy mode enforcement | Verify you're using the latest version; changes to private/team settings are applied server-side and reflected immediately across all surfaces. |
 
 <Aside type="note">Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.</Aside>
 
