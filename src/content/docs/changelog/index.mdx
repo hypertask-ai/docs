@@ -11,6 +11,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 8, 2026">
+  * Improved: Agent mentions now reach the worker on production; you can @mention agents to trigger notifications ([HTPR-6256](https://app.hypertask.ai/detail/project-15/6256))
+  * Fixed: Fleet status page no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
   * Added: QA agents now require a distinct web-path evidence gate to pass QA checks, with UIs checked via screenshots and route checks via redacted browser requests ([HTPR-6240](https://app.hypertask.ai/detail/project-15/6240))
   * Fixed: Managed agent deletion no longer fails with transaction errors; the cleanup window is extended and a regression assertion verifies reclaimable fleet health ([HTPR-6228](https://app.hypertask.ai/detail/project-15/6228))
 </Update>
