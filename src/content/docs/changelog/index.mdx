@@ -11,6 +11,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 9, 2026">
+  * Fixed: Task move now succeeds and reloads correctly on production, after a deploy added a loading guard that crashed the moveTask handler and required a rollback ([HTPR-6227](https://app.hypertask.ai/detail/project-15/6227))
+  * Fixed: Adding labels via CLI now preserves all existing labels on a task, no previous partial replacement or lost labels ([HTPR-6234](https://app.hypertask.ai/detail/project-15/6234))
   * Added: Agent token accountability with per-launch ledger and hard budget floors, ht-usage page, and cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
   * Added: Subscription-relative budgets with fair share allocation, idle parking, overrun protection, and calibrated brake mechanism ([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
   * Fixed: Agent pickup prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
