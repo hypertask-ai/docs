@@ -17,6 +17,7 @@ hypertask tasks assign <ticket> --assignee <user>
 
 - Atomically assigns the task to the provided `--assignee`.
 - No lease claim is required. The command handles automatic lease acquisition internally.
+- If the task is already assigned to the specified user, the server responds with `already-assigned` and the assignee list is unchanged ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279)). Re-running the command does not create a duplicate assignment row.
 - Works for both native htz CLI and npm shim.
 
 **Example:**
