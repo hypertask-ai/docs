@@ -18,6 +18,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Agent pickup prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
   * Fixed: GLM quota fallback now successfully passes credentials to the OpenRouter provider, preventing HTTP 401 errors on quota switch ([HTPR-6248](https://app.hypertask.ai/detail/project-15/6248))
   * Fixed: GLM full-trust environment no longer strips OPENROUTER_GLM_API_KEY, so squad lane quotas work correctly ([HTPR-6252](https://app.hypertask.ai/detail/project-15/6252))
+  * Fixed: Re-assigning the same user now returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279))
 </Update>
 
 <Update label="September 8, 2026">
