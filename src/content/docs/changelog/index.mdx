@@ -42,6 +42,10 @@ export const Update = ({ label, children }) => (
 
 * Fixed <strong>Managed agent deletion</strong>: no longer fails with transaction errors; the cleanup window is extended and a regression assertion verifies reclaimable fleet health ([HTPR-6228](https://app.hypertask.ai/detail/project-15/6228))
 
+* Added <strong>Agent Chat keyboard shortcuts</strong>: cycle agents with ctrl+Tab/shft+ctrl+Tab, search tasks with @, add agents with +, send with ctrl+Enter, open links with ctrl+O, and focus the input with ctrl+Q. Agent bubbles now use the theme's primary color ([HTPR-6033](https://app.hypertask.ai/detail/project-15/6033))
+
+* Fixed <strong>CLI board paging</strong>: no longer crashes or segfaults when paginating large boards with `tasks list --offset`. A clean error message is shown instead of a silent crash mid-page ([HTPR-6170](https://app.hypertask.ai/detail/project-15/6170))
+
 </Update>
 
 <Update label="September 8, 2026">
