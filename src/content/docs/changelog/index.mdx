@@ -36,17 +36,27 @@ export const Update = ({ label, children }) => (
 
 * Fixed <strong>Re-assign same user</strong>: returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279))
 
-</Update>
-
-<Update label="September 8, 2026">
-
 * Improved <strong>Agent mentions</strong>: reach the worker on production; you can @mention agents to trigger notifications ([HTPR-6256](https://app.hypertask.ai/detail/project-15/6256))
-
-* Fixed <strong>Fleet status page</strong>: no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
 
 * Added <strong>QA agents</strong>: require a distinct web-path evidence gate to pass QA checks, with UIs checked via screenshots and route checks via redacted browser requests ([HTPR-6240](https://app.hypertask.ai/detail/project-15/6240))
 
 * Fixed <strong>Managed agent deletion</strong>: no longer fails with transaction errors; the cleanup window is extended and a regression assertion verifies reclaimable fleet health ([HTPR-6228](https://app.hypertask.ai/detail/project-15/6228))
+
+</Update>
+
+<Update label="September 8, 2026">
+
+* Improved <strong>Agent mentions on boards</strong>: @mention groups all matching board agents together in alphabetical order, and the group column shows every matching agent when there are more than five ([HTPR-6261](https://app.hypertask.ai/detail/project-15/6261))
+
+* Fixed <strong>Fleet status page</strong>: no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
+
+* Fixed <strong>Agent pickup</strong>: prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
+
+* Fixed <strong>GLM quota fallback</strong>: passes credentials to the OpenRouter provider, preventing HTTP 401 errors on quota switch ([HTPR-6248](https://app.hypertask.ai/detail/project-15/6248))
+
+* Fixed <strong>GLM full-trust</strong>: environment no longer strips OPENROUTER_GLM_API_KEY, so squad lane quotas work correctly ([HTPR-6252](https://app.hypertask.ai/detail/project-15/6252))
+
+* Fixed <strong>GLM lanes</strong>: configure 1800-second idle timeout instead of 300 seconds, allowing long-running completions without interruption ([HTPR-6251](https://app.hypertask.ai/detail/project-15/6251))
 
 </Update>
 
