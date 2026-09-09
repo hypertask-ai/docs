@@ -54,7 +54,7 @@ The response contains the agent UUID and a token for authenticating the bearer t
 Agents use scoped API keys that can restrict which actions they are authorized to perform. Restrictions apply consistently across MCP tools, CLI mode, and HTTP API calls.
 
 - **Scopes** — Limit the agent to specific projects, boards, agents, or actions. Missing scope results in a 403 Access Denied.
-- **Tokens**—Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
+- **Tokens** — Generated and rotated over MCP via `hypertask_agent_scopes`; external rotation is not supported.
 - **Identity** — When authenticated with an agent token, all writes appear as attributed to the agent.
 
 ### Agent identities and SMAP token usage
@@ -68,7 +68,7 @@ Each agent can be configured with one of two privacy modes, controlling whether 
 - **Private** — The default mode. The agent is not shared with the team. Only the agent owner or users explicitly granted access can work with this agent. Subscription-backed agents cannot be shared in Private mode.
 - **Team** — The agent can be shared with the team. Required for subscription-backed agents at the plan tier that supports shared access. This mode requires a provider billing API key to enable shared billing.
 
-Enforcement of privacy mode occurs server-side, and the interface matches the server state. Changes to an agent’s mode are reflected immediately across all surfaces (board, table, AI Chat, and MCP tools).
+Enforcement of privacy mode occurs server-side, and the interface matches the server state. Changes to an agent's mode are reflected immediately across all surfaces (board, table, AI Chat, and MCP tools).
 
 #### Subscription-backed agents
 
@@ -118,6 +118,70 @@ Gravity runs summaries at distinct intervals; sync runs tasks at the same tick a
 
 CronJob fires checks on the corresponding tick; summaries run in the subsequent tick.
 
+### Agent token account and usage
+([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
+
+Each agent launch is logged with per-call token usage, enabling fine-grained tracking and cost control. Launches are stored in a per-launch ledger and can be queried programmatically via the `ht-usage` endpoint.
+
+**Per-launch ledger**
+
+- Every agent turn launches a new ledger entry with slug, provider, model, input token count, output token count, image count, and cost.
+- Ledger is stored in the local filesystem at `~/.local/state/hypertask-fleet/ledger.sqlite3`.
+- The `/token-burn` page (`HTPR-6272`) reads your ledger directly for visual accounting, regardless of column naming, as long as the standard set of columns is present.
+
+**Hard budgets**
+
+Agents have hard budget floors, ensuring predictable token consumption even during unexpected workload spikes. Floor budgets are independent of subscription-relative adjustments.
+
+**Usage Page**
+
+- The `ht-usage` page shows per-agent, per-day token usage with cost-per-ticket breakdown.
+- This view helps you understand spend patterns and identify expensive workloads.
+
+**Cost per ticket**
+
+- Cost breakdowns are visible per-launch, so you can attribute spending to specific turns or tasks.
+- Helps with quota planning and budget enforcement.
+
+#### Subscription-relative budgets
+([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
+([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
+
+Subscription-relative budgets complement hard floors by allocating agent allowances as a fair share of your subscription's remaining capacity.
+
+**Fair share allocation**
+
+- Each agent receives a dynamic daily allowance based on your subscription's remaining tokens.
+- Uses elapsed percentage of the day and budget history to compute a fair share.
+- Configurable via the agent's budget settings.
+
+**Idle parking and vehicle airflow**
+
+- Idle agents at 100% of their allowance auto-park until midnight, freeing tokens for active peers.
+- Hot agents sitting at 101% of their allowance trigger brake signals, reducing their traffic transfer.
+- Self-park applies per-agent, while brake is a fleet-level cooldown for overutilized agents.
+
+**Overrun protection**
+
+- Warn at 80% of your daily allowance to preempt runaway usage.
+- Stop accepting new turns over 10% of your day to cap sustained overruns.
+- Weekly window caps (e.g., Codex-labeled agents) respect subscription constraints while ensuring moderate-duty GLM units keep the queue fed.
+
+**Boost mechanism**
+
+- Boost is a fleet-wide schedule signal that temporarily increases allocations for all agents during low-usage windows.
+- Comes with measured runaway caps (raised to 30 from 20 after QA false-trips) to prevent permanent damage while validating burst scaling.
+
+#### Budget enforcement flow
+
+1. **Healthy usage** — Agent at or below 80% of allowance operates normally.
+2. **Warning threshold** — Agent hits 80%; system sends a warning.
+3. **Overrun** — Agent exceeds 100% (up to ~106%);
+   - Self-park: Idle peers in parking lot return to queue.
+   - Brake: Fleet cooldown applied.
+4. **Emergency cap** — Agent passes 106% (brake threshold is over the daily 100%");
+   - Turn is allowed to complete, then agent stalls until midnight.
+
 ### Board-level reconciliation
 Board-15 uses `S-r2` for agent initialization and reconciliation; internal teams map to managed-key credentials in a verified production registry. Use board-15-specific credentials over MCP or REST (`/api/agents/leases`); do not share SMAP tokens with agents.
 
@@ -141,7 +205,7 @@ The `/agent-status` page shows live fleet health (Active, Draining, Idle) for al
 ### Safe task claiming and coordination
 
 - Swarm-based claiming sets an intention to claim; no guarantee without heartbeat.
-- Multi-guard protection from board moves preserves in-flight agent turns ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545)).
+- Multi-guard protection from board moves preserves in-flight agent turns ([HTPR-5545]( https://app.hypertask.ai/detail/project-15/5545)).
 - Uses a delivery fingerprint and watchdog; cancellation of an assignment must cancel all pending deliveries for the same deliveryId.
 
 ### QA Agent style guide enforcement
@@ -159,6 +223,27 @@ The QA Agent verifies and polices the style guide. Dev agents must read `docs/DE
 
 Native-agent AI Chat must acquire a task lease before performing write operations. When a native agent attempts to assign or move tasks without a valid lease, the server returns an `AgentMutationLeaseMissingError` and directs the agent to first claim a lease via the claim endpoint. This prevents write failures caused by missing or expired task ownership claims.
 
+### Excluded labels for agent pickup
+([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
+
+Agents respect label exclusions on pickup. When a task has a label configured in the `HT_EXCLUDE_LABELS` list, the agent will skip it on all paths, including direct mentions.
+
+**How it works**
+
+- Direct mentions are an edge case where a task is explicitly addressed to an agent (e.g., `@agent-name this ticket`).
+- The `HT_EXCLUDE_LABELS` check is now applied before pickup, even for direct mentions.
+- This prevents agents from being assigned to tasks they are configured to ignore.
+
+**Example**
+
+```bash
+# Task is sol-labeled (excluded)
+@agent-name HTPR-9999
+
+# Agent attempts to pick up the task
+# Result: pickup is blocked; agent logs a safe refusal
+```
+
 ### Agent chat activity rows
 ([HTPR-6094](https://app.hypertask.ai/detail/project-15/6094))
 
@@ -168,6 +253,7 @@ In agent chat between normal messages, you'll now see activity rows describing k
 ([HTPR-6155](https://app.hypertask.ai/detail/project-15/6155))
 
 An agent receives a short, size-capped brief before responding to chat questions. The brief includes:
+
 - The agent's current assignment (if any)
 - Up to 10 related recent tasks on the board
 - Open pull requests that reference the agent
@@ -179,6 +265,7 @@ This context helps the agent answer work-related questions accurately and keeps 
 ([HTPR-5677](https://app.hypertask.ai/detail/project-15/5677))
 
 To prevent a 12-hour outage caused by agents hot-swapping their own runtime, every full-trust agent turn now carries a standing rule:
+
 - **Agents cannot write to the live worker runtime** or agent configurations.
 - **Agents cannot restart or redeploy the runtime** from the worker space.
 - **Agents cannot install software or modify system-level settings** on the execution environment.
@@ -232,6 +319,7 @@ Agents emit state transition events when they start, pause, and transition back 
 | `agent.ready` | User resumes webhook deliveries (unpause) | Retained in delivery history for 30 days | HTTP POST; includes `event`, `event.readyAt`, `agentId`, `actor` |
 
 **Important notes:**
+
 - Each event is emitted once per transition. Do not rely on duplicate deliveries.
 - Events are persisted and accessible via delivery history; you can replay state transitions if needed.
 - `event.startTime`, `event.pausedAt`, `event.sortedAt`, and `event.readyAt` include timezone offsets.
@@ -349,6 +437,7 @@ Agent-tier tokens receive 600 requests/minute. They are used for request-level l
 When you turn off an agent via its toggle on the agents dashboard or from an agent detail page, the agent is set to Off and will no longer respond to mentions or task mentions. Existing team chat sessions that are currently open remain valid while their conversation is active. The agent continuation remains usable until the chat session is closed, after which the agent effectively stops responding to new messages in that session.
 
 This behavior means:
+
 - If you have an open team chat with an active agent, sending a message to an already-opened session will succeed even if the agent is set to Off.
 - Clicking the session toggle to off marks the agent as Off but does not immediately interrupt the running session.
 - Once you close or switch away from a chat session, messages addressed to the agent within the previous chat window are effectively blocked.
@@ -386,6 +475,8 @@ Users can create an agent with the default **Private** mode. To enable **Team** 
 | CLI releases ignored | Confirm data source paths read `body.title` or appropriate top-level fields; stale flows drop production cursor mismatch (adjust `dataSources.path` accordingly). |
 | Embeddings fail | Check if the gateway resolved to the correct provider; rotating the gateway or model on Vercel AI Gateway may resolve transient failures. |
 | Privacy mode enforcement | Verify you're using the latest version; changes to private/team settings are applied server-side and reflected immediately across all surfaces. |
+| Agent pickup on direct mention | Verify `HT_EXCLUDE_LABELS` is set correctly; excluded labels block pickup even on direct mentions. |
+| Runaway token usage | Check budget settings; ensure subscription-relative budgets are enabled and thresholds are appropriate. |
 
 <Aside type="note">Agent-token mode always creates separate write logs from human users, ensuring activity logs and notifications correctly attribute work to the agent.</Aside>
 
