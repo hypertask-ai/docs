@@ -11,81 +11,145 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 9, 2026">
-  * Fixed: Fleet ledger now closes orphaned rows after worker restarts, so launches killed by a systemd longh go clean on the fleet ledger ([HTPR-6310](https://app.hypertask.ai/detail/project-15/6310))
-  * Fixed: Lockfile-only PRs no longer trigger false CONCERNS for unchanged files, making review easier to navigate on dependency-update PRs ([HTPR-6295](https://app.hypertask.ai/detail/project-15/6295))
-  * Fixed: Task move now succeeds and reloads correctly on production, after a deploy added a loading guard that crashed the moveTask handler and required a rollback ([HTPR-6227](https://app.hypertask.ai/detail/project-15/6227))
-  * Fixed: Adding labels via CLI now preserves all existing labels on a task, no previous partial replacement or lost labels ([HTPR-6234](https://app.hypertask.ai/detail/project-15/6234))
-  * Added: Agent token accountability with per-launch ledger and hard budget floors, ht-usage page, and cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
-  * Added: Subscription-relative budgets with fair share allocation, idle parking, overrun protection, and calibrated brake mechanism ([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
-  * Fixed: Agent pickup prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
-  * Fixed: GLM quota fallback now successfully passes credentials to the OpenRouter provider, preventing HTTP 401 errors on quota switch ([HTPR-6248](https://app.hypertask.ai/detail/project-15/6248))
-  * Fixed: GLM full-trust environment no longer strips OPENROUTER_GLM_API_KEY, so squad lane quotas work correctly ([HTPR-6252](https://app.hypertask.ai/detail/project-15/6252))
-  * Fixed: GLM lanes now configure 1800-second idle timeout instead of 300 seconds, allowing long-running completions without interruption ([HTPR-6251](https://app.hypertask.ai/detail/project-15/6251))
-  * Fixed: Re-assigning the same user now returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279))
+
+* Fixed <strong>Kanban cards</strong>: only the selected card shows a border on dark themes; other cards now render transparently ([HTPR-6298](https://app.hypertask.ai/detail/project-15/6298))
+
+* Fixed <strong>Fleet ledger</strong>: closes orphaned rows after worker restarts, so launches killed by a systemd longh go clean on the fleet ledger ([HTPR-6310](https://app.hypertask.ai/detail/project-15/6310))
+
+* Fixed <strong>Lockfile-only PRs</strong>: no longer trigger false CONCERNS for unchanged files, making review easier to navigate on dependency-update PRs ([HTPR-6295](https://app.hypertask.ai/detail/project-15/6295))
+
+* Fixed <strong>Task move</strong>: succeeds and reloads correctly on production, after a deploy added a loading guard that crashed the moveTask handler and required a rollback ([HTPR-6227](https://app.hypertask.ai/detail/project-15/6227))
+
+* Fixed <strong>Add labels via CLI</strong>: preserves all existing labels on a task, no partial replacement or lost labels ([HTPR-6234](https://app.hypertask.ai/detail/project-15/6234))
+
+* Added <strong>Agent token accountability</strong>: per-launch ledger and hard budget floors with cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
+
+* Added <strong>Subscription-relative budgets</strong>: fair share allocation, idle parking, overrun protection, and calibrated brake mechanism ([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
+
+* Fixed <strong>Agent pickup</strong>: prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
+
+* Fixed <strong>GLM quota fallback</strong>: passes credentials to the OpenRouter provider, preventing HTTP 401 errors on quota switch ([HTPR-6248](https://app.hypertask.ai/detail/project-15/6248))
+
+* Fixed <strong>GLM full-trust</strong>: environment no longer strips OPENROUTER_GLM_API_KEY, so squad lane quotas work correctly ([HTPR-6252](https://app.hypertask.ai/detail/project-15/6252))
+
+* Fixed <strong>GLM lanes</strong>: configure 1800-second idle timeout instead of 300 seconds, allowing long-running completions without interruption ([HTPR-6251](https://app.hypertask.ai/detail/project-15/6251))
+
+* Fixed <strong>Re-assign same user</strong>: returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279))
+
 </Update>
 
 <Update label="September 8, 2026">
-  * Improved: Agent mentions now reach the worker on production; you can @mention agents to trigger notifications ([HTPR-6256](https://app.hypertask.ai/detail/project-15/6256))
-  * Fixed: Fleet status page no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
-  * Added: QA agents now require a distinct web-path evidence gate to pass QA checks, with UIs checked via screenshots and route checks via redacted browser requests ([HTPR-6240](https://app.hypertask.ai/detail/project-15/6240))
-  * Fixed: Managed agent deletion no longer fails with transaction errors; the cleanup window is extended and a regression assertion verifies reclaimable fleet health ([HTPR-6228](https://app.hypertask.ai/detail/project-15/6228))
+
+* Improved <strong>Agent mentions</strong>: reach the worker on production; you can @mention agents to trigger notifications ([HTPR-6256](https://app.hypertask.ai/detail/project-15/6256))
+
+* Fixed <strong>Fleet status page</strong>: no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
+
+* Added <strong>QA agents</strong>: require a distinct web-path evidence gate to pass QA checks, with UIs checked via screenshots and route checks via redacted browser requests ([HTPR-6240](https://app.hypertask.ai/detail/project-15/6240))
+
+* Fixed <strong>Managed agent deletion</strong>: no longer fails with transaction errors; the cleanup window is extended and a regression assertion verifies reclaimable fleet health ([HTPR-6228](https://app.hypertask.ai/detail/project-15/6228))
+
 </Update>
 
 <Update label="September 7, 2026">
-  * Improved: Inbox now supports row multiselect via **Shift+E** for bulk archiving, with Saved views preserved and order-shuffled cluster-archiving when many top clusters are visible ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206))
-  * Improved: Table View now supports row multiselect via Shift+E for bulk actions, with Saved views + sorting reflected in row visibility ([HTPR-6160](https://app.hypertask.ai/detail/project-15/6160))
-  * Improved: Active split tabs across Inbox, Notifications, and Saved views now use stronger bolding on the light theme for clearer active-state indication ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207))
+
+* Improved <strong>Inbox</strong>: supports row multiselect via Shift+E for bulk archiving, with Saved views preserved and order-shuffled cluster-archiving when many top clusters are visible ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206))
+
+* Improved <strong>Table View</strong>: supports row multiselect via Shift+E for bulk actions, with Saved views + sorting reflected in row visibility ([HTPR-6160](https://app.hypertask.ai/detail/project-15/6160))
+
+* Improved <strong>Active split tabs</strong>: across Inbox, Notifications, and Saved views, use stronger bolding on the light theme for clearer active-state indication ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207))
+
 </Update>
 
 <Update label="September 6, 2026">
-  * Improved: All new feature flags now default to Owner + QA visibility, never "Only me" ([HTPR-6192](https://app.hypertask.ai/detail/project-15/6192))
-  * Added: Agent Chat queueing and refined patterns while the agent works ([HTPR-6038](https://app.hypertask.ai/detail/project-15/6038))
-  * Added: Agent SDK TypeScript package @hypertask/agent-sdk with webhook handler, run helpers, and ready-made templates ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
-  * Improved: Agent SDK hello-world example now runs in under 30 minutes; the SDK ships MemoryDeliveryScheduler so the README's scheduler is concrete ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
-  * Fixed: Agent Chat threads that hang on a single turn now restart automatically, with a Stop button available during work ([HTPR-6154])
+
+* Improved <strong>Feature flags</strong>: all new feature flags now default to Owner + QA visibility, never "Only me" ([HTPR-6192](https://app.hypertask.ai/detail/project-15/6192))
+
+* Added <strong>Agent Chat</strong>: queueing and refined patterns while the agent works ([HTPR-6038](https://app.hypertask.ai/detail/project-15/6038))
+
+* Added <strong>Agent SDK</strong>: TypeScript package @hypertask/agent-sdk with webhook handler, run helpers, and ready-made templates ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
+
+* Improved <strong>Agent SDK</strong>: hello-world example now runs in under 30 minutes; the SDK ships MemoryDeliveryScheduler so the README's scheduler is concrete ([HTPR-6123](https://app.hypertask.ai/detail/project-15/6123))
+
+* Fixed <strong>Agent Chat threads</strong>: those hanging on a single turn now restart automatically, with a Stop button available during work ([HTPR-6154])
+
 </Update>
 
 <Update label="September 5, 2026">
-  * Added: Agent typed run activities endpoint in MCP returns structured thought, action, response, error, and elicitation events ([HTPR-6122](https://app.hypertask.ai/detail/project-15/6122))
-  * Added: CLI tasks assign command now works without a lease claim and includes optional claim command ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185))
-  * Fixed: assignees/assign now safely handles null agent id ([HTPR-6187](https://app.hypertask.ai/detail/project-15/6187))
-  * Fixed: Mobile task detail background update now sends one read per task instead of two; task remains usable if the update times out ([HTPR-6161](https://app.hypertask.ai/detail/project-15/6161))
-  * Fixed: Esc now exits Pages via the safe return path through the Command Center ([HTPR-6158](https://app.hypertask.ai/detail/project-15/6158))
+
+* Added <strong>Agent run activities endpoint</strong>: in MCP returns structured thought, action, response, error, and elicitation events ([HTPR-6122](https://app.hypertask.ai/detail/project-15/6122))
+
+* Added <strong>CLI tasks assign</strong>: command now works without a lease claim and includes optional claim command ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185))
+
+* Fixed <strong>assignees/assign</strong>: safely handles null agent id ([HTPR-6187](https://app.hypertask.ai/detail/project-15/6187))
+
+* Fixed <strong>Mobile task detail background update</strong>: sends one read per task instead of two; task remains usable if the update times out ([HTPR-6161](https://app.hypertask.ai/detail/project-15/6161))
+
+* Fixed <strong>Esc</strong>: exits Pages via the safe return path through the Command Center ([HTPR-6158](https://app.hypertask.ai/detail/project-15/6158))
+
 </Update>
 
 <Update label="September 4, 2026">
-  * Added: CLI parity for comment add/list and task get/update options ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
-  * Fixed: CLI webhook configure now accepts chat.message and all 7 advertised webhook events ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114))
-  * Fixed: Mobile agent chat window layout now stays fully visible above the keyboard on supported browsers ([HTPR-6129](https://app.hypertask.ai/detail/project-15/6129))
+
+* Added <strong>CLI parity</strong>: for comment add/list and task get/update options ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
+
+* Fixed <strong>CLI webhook configure</strong>: accepts chat.message and all 7 advertised webhook events ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114))
+
+* Fixed <strong>Mobile agent chat window</strong>: layout stays fully visible above the keyboard on supported browsers ([HTPR-6129](https://app.hypertask.ai/detail/project-15/6129))
+
 </Update>
 
 <Update label="September 3, 2026">
-  * Added: Hypertask Agent SDK for building autonomous agents with TypeScript ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
-  * Added: Preserve screenshot file references in AI task writer ([HTPR-6117](https://app.hypertask.ai/detail/project-15/6117))
-  * Added: emoji reaction commands to CLI and API for acknowledging comments ([HTPR-6118](https://app.hypertask.ai/detail/project-15/6118))
-  * Added: Production auto-rollback stopped firing for red unit tests; both tests now pass on production and the site serves the current build ([HTPR-6089](https://app.hypertask.ai/detail/project-15/6089))
-  * Added: CLI release checks are now advisory; trusted version allowlist and parity inventory validation are preserved, and npm latest lookups are failure-tolerant ([HTPR-6077](https://app.hypertask.ai/detail/project-15/6077))
-  * Added: Turned-off agents remain usable through existing team chat sessions until the chat is closed ([HTPR-6079](https://app.hypertask.ai/detail/project-15/6079))
-  * Improved: CLI dedupes notifications/access calls on each inbox load, reducing redundant API round trips ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063))
-  * Fixed: tasks move on archived tasks now explicitly states "Archived tasks cannot move sections or change assignees" instead of a generic error ([HTPR-6062](https://app.hypertask.ai/detail/project-15/6062))
-  * Fixed: Worker resume path now correctly handles a ticket moved from In Progress to Bugs, allowing recovery ([HTPR-6064](https://app.hypertask.ai/detail/project-15/6064))
-  * Fixed: agent-control-poller AWS credentials restored to secure ~/.config/cloudflare.env file owned by the Acme staff user ([HTPR-6073](https://app.hypertask.ai/detail/project-15/6073))
-  * Fixed: Ctrl+K now opens the command palette on Agents overview and Agent Chat pages, so you can search and launch quickly from those views ([HTPR-6088](https://app.hypertask.ai/detail/project-15/6088))
-  * Fixed: Agent reconcile now respects excluded labels and keeps each worker to at most two tickets ([HTPR-6105](https://app.hypertask.ai/detail/project-15/6105))
-  * Fixed: Broken mobile All Tasks view now loads correctly and remains introspectable across views ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992))
+
+* Added <strong>Hypertask Agent SDK</strong>: for building autonomous agents with TypeScript ([HTPR-6115](https://app.hypertask.ai/detail/project-15/6115))
+
+* Added <strong>Preserve screenshot file references</strong> in AI task writer ([HTPR-6117](https://app.hypertask.ai/detail/project-15/6117))
+
+* Added <strong>emoji reaction commands</strong> to CLI and API for acknowledging comments ([HTPR-6118](https://app.hypertask.ai/detail/project-15/6118))
+
+* Added <strong>Production auto-rollback</strong>: stopped firing for red unit tests; both tests now pass on production and the site serves the current build ([HTPR-6089](https://app.hypertask.ai/detail/project-15/6089))
+
+* Added <strong>CLI release checks</strong>: now advisory; trusted version allowlist and parity inventory validation are preserved, and npm latest lookups are failure-tolerant ([HTPR-6077](https://app.hypertask.ai/detail/project-15/6077))
+
+* Added <strong>Turned-off agents</strong>: remain usable through existing team chat sessions until the chat is closed ([HTPR-6079](https://app.hypertask.ai/detail/project-15/6079))
+
+* Improved <strong>CLI dedupes notifications/access calls</strong>: on each inbox load, reducing redundant API round trips ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063))
+
+* Fixed <strong>tasks move on archived tasks</strong>: now explicitly states "Archived tasks cannot move sections or change assignees" instead of a generic error ([HTPR-6062](https://app.hypertask.ai/detail/project-15/6062))
+
+* Fixed <strong>Worker resume path</strong>: correctly handles a ticket moved from In Progress to Bugs, allowing recovery ([HTPR-6064](https://app.hypertask.ai/detail/project-15/6064))
+
+* Fixed <strong>agent-control-poller AWS credentials</strong>: restored to secure ~/.config/cloudflare.env file owned by the Acme staff user ([HTPR-6073](https://app.hypertask.ai/detail/project-15/6073))
+
+* Fixed <strong>Ctrl+K</strong>: opens the command palette on Agents overview and Agent Chat pages, so you can search and launch quickly from those views ([HTPR-6088](https://app.hypertask.ai/detail/project-15/6088))
+
+* Fixed <strong>Agent reconcile</strong>: respects excluded labels and keeps each worker to at most two tickets ([HTPR-6105](https://app.hypertask.ai/detail/project-15/6105))
+
+* Fixed <strong>Broken mobile All Tasks view</strong>: loads correctly and remains introspectable across views ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992))
+
 </Update>
 
 <Update label="September 2, 2026">
-  * Fixed: Due date selection in mobile new-task form no longer crashes ([HTPR-5967](https://app.hypertask.ai/detail/project-15/5967))
-  * Fixed: Parity gate validates trusted CLI version; non-approved versions are untrusted and do not block workers ([HTPR-6025](https://app.hypertask.ai/detail/project-15/6025))
-  * Improved: CLI parity consistency is now stable across both Node and Zig halves ([HTPR-6027](https://app.hypertask.ai/detail/project-15/6027))
-  * Fixed: Zig CLI `hypertask agent poll` no longer crashes at random ([HTPR-6030](https://app.hypertask.ai/detail/project-15/6030))
-  * Added: Mobile AI task writer first "dictate the task, then edit" ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
-  * Fixed: Compact mobile undo toasts (110x74 px) and tight bottom-aligned layout ([HTPR-5990](https://app.hypertask.ai/detail/project-15/5990))
-  * Added: Comment composer pinned to bottom of task detail pane so it stays accessible while reading and posting ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
+
+* Fixed <strong>Due date selection</strong>: in mobile new-task form no longer crashes ([HTPR-5967](https://app.hypertask.ai/detail/project-15/5967))
+
+* Fixed <strong>Parity gate</strong>: validates trusted CLI version; non-approved versions are untrusted and do not block workers ([HTPR-6025](https://app.hypertask.ai/detail/project-15/6025))
+
+* Improved <strong>CLI parity consistency</strong>: is now stable across both Node and Zig halves ([HTPR-6027](https://app.hypertask.ai/detail/project-15/6027))
+
+* Fixed <strong>Zig CLI `hypertask agent poll`</strong>: no longer crashes at random ([HTPR-6030](https://app.hypertask.ai/detail/project-15/6030))
+
+* Added <strong>Mobile AI task writer</strong>: first "dictate the task, then edit" ([HTPR-5860](https://app.hypertask.ai/detail/project-15/5860))
+
+* Fixed <strong>Compact mobile undo toasts</strong>: (110x74 px) and tight bottom-aligned layout ([HTPR-5990](https://app.hypertask.ai/detail/project-15/5990))
+
+* Added <strong>Comment composer pinned</strong> to bottom of task detail pane so it stays accessible while reading and posting ([HTPR-6037](https://app.hypertask.ai/detail/project-15/6037))
+
 </Update>
 
 <Update label="September 1, 2026">
-  * Fixed: Description-only task creation now generates and saves a title on mobile ([HTPR-5988](https://app.hypertask.ai/detail/project-15/5988))
-  * Fixed: Mobile title generation status text now stays fully visible ([HTPR-5994](https://app.hypertask.ai/detail/project-15/5994))
+
+* Fixed <strong>Description-only task creation</strong>: on mobile, now generates and saves a title ([HTPR-5988](https://app.hypertask.ai/detail/project-15/5988))
+
+* Fixed <strong>Mobile title generation status text</strong>: now stays fully visible ([HTPR-5994](https://app.hypertask.ai/detail/project-15/5994))
+
 </Update>
