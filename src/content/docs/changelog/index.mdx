@@ -14,6 +14,8 @@ export const Update = ({ label, children }) => (
   * Added: Agent token accountability with per-launch ledger and hard budget floors, ht-usage page, and cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
   * Added: Subscription-relative budgets with fair share allocation, idle parking, overrun protection, and calibrated brake mechanism ([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
   * Fixed: Agent pickup prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
+  * Fixed: GLM quota fallback now successfully passes credentials to the OpenRouter provider, preventing HTTP 401 errors on quota switch ([HTPR-6248](https://app.hypertask.ai/detail/project-15/6248))
+  * Fixed: GLM full-trust environment no longer strips OPENROUTER_GLM_API_KEY, so squad lane quotas work correctly ([HTPR-6252](https://app.hypertask.ai/detail/project-15/6252))
 </Update>
 
 <Update label="September 8, 2026">
