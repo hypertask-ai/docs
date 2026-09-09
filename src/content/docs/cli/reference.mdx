@@ -157,7 +157,24 @@ hypertask task update 12345 --field "assignee" --value "user@example.com"
 
 <Aside type="note">The `comment add` and `comment list` commands were previously available only on the Zig CLI. The Node CLI now matches the native CLI parity for these options ([HTPR-6125](https://app.hypertask.ai/detail/project-15/6125)).</Aside>
 
-## Tasks commands
+## Labels commands
+
+### hypertask labels create
+
+Create a new label.
+
+```bash
+hypertask labels create --project <project> --name <label-name>
+```
+
+**Behavior:**
+
+- Creates a new label with the given name in the specified project.
+- Requires authentication via API key or session cookie.
+
+```bash
+hypertask labels create --project 15 --name sol
+```
 
 ### hypertask tasks move
 
@@ -192,7 +209,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `👍`, `❤️`, `🔥`).
+- Use a single emoji character (e.g., `👍`, `🤝`, `🎉`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
