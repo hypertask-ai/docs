@@ -30,6 +30,16 @@ To prevent HEIC/HEIF from generating previews (e.g., if the file is too large fo
 2. Select **Excluded from previews** to disable automatic preview generation.
 3. Uploaders still receive the file; observers only see the original format and a download link.
 
+## Lightbox image strip
+
+In the task detail lightbox, the thumbnail strip shows all attachments in that task. Supported formats and non-preview status appear consistently across all attachments.
+
+## Handling malformed previews in the lightbox strip
+
+If the lightbox shows a broken image icon for a non-decodable file:
+
+- A file icon now appears instead of a broken icon, making it clear the image content could not be decoded.
+
 ## Warnings for unexpected content
 
 If a file exhibits preview or display issues (broken icons, no thumbnail, or an unexpected format shown), check:
@@ -41,3 +51,5 @@ If a file exhibits preview or display issues (broken icons, no thumbnail, or an 
 
 - **Keep resolution manageable:** Very large HEIC images can lead to longer preview conversion times.
 - **Review lightbox strip:** If a thumbnail seems wrong after a HEIC upload, the browser might still be loading a placeholder until conversion finishes.
+
+[Learn more about keyboard shortcuts for superhuman-style snippets in the Superhuman-Style Snippets documentation.](/features/superhuman-snippets/)
