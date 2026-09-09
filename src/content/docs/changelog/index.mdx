@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 9, 2026">
+  * Fixed: Lockfile-only PRs no longer trigger false CONCERNS for unchanged files, making review easier to navigate on dependency-update PRs ([HTPR-6295](https://app.hypertask.ai/detail/project-15/6295))
   * Fixed: Task move now succeeds and reloads correctly on production, after a deploy added a loading guard that crashed the moveTask handler and required a rollback ([HTPR-6227](https://app.hypertask.ai/detail/project-15/6227))
   * Fixed: Adding labels via CLI now preserves all existing labels on a task, no previous partial replacement or lost labels ([HTPR-6234](https://app.hypertask.ai/detail/project-15/6234))
   * Added: Agent token accountability with per-launch ledger and hard budget floors, ht-usage page, and cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
