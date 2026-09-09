@@ -10,6 +10,12 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 9, 2026">
+  * Added: Agent token accountability with per-launch ledger and hard budget floors, ht-usage page, and cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
+  * Added: Subscription-relative budgets with fair share allocation, idle parking, overrun protection, and calibrated brake mechanism ([HTPR-6273](https://app.hypertask.ai/detail/project-15/6273))
+  * Fixed: Agent pickup prevention for direct mentions when a task has an excluded label ([HTPR-6250](https://app.hypertask.ai/detail/project-15/6250))
+</Update>
+
 <Update label="September 8, 2026">
   * Improved: Agent mentions now reach the worker on production; you can @mention agents to trigger notifications ([HTPR-6256](https://app.hypertask.ai/detail/project-15/6256))
   * Fixed: Fleet status page no longer goes blank when processes exit mid-scan; the agent-runtime collector handles /proc ENOENT race conditions with retries, keeping fleet visibility stable on the Agents dashboard ([HTPR-6253](https://app.hypertask.ai/detail/project-15/6253))
