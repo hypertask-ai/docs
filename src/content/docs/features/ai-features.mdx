@@ -40,9 +40,9 @@ ht task create "Design homepage overlay component with glassmorphism"
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** — Generate a draft for the active text field.
-- **/ai rewrite** — Improve or rethink what you typed.
-- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
+- **/ai** â\x80\x94 Generate a draft for the active text field.
+- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
+- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -62,7 +62,7 @@ This separation prevents context from bleeding between unrelated tasks and keeps
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flows â\x80\x94 use the AI Task Writer, context menus, and panel-based chat â\x80\x94 and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ---
 
@@ -117,4 +117,35 @@ Do you want to accept this proposal and proceed?
 
 <Aside type="tip">
 If a proposal doesn't match intent, simply decline it. The thread moves forward without creating output that doesn't fit current needs.
+</Aside>
+
+## Keyboard shortcuts in Agent Chat
+
+Agent Chat provides several keyboard shortcuts for navigation, interaction, and composition. These shortcuts streamline your workflow when working with AI agents in panels and side-by-side views.
+
+### Navigate the agent roster
+
+Use the following shortcuts to cycle between available agents in the left-pane roster:
+
+- **<kbd>Ctrl+Tab</kbd>** — Move to the next agent.
+- **<kbd>Shift+Ctrl+Tab</kbd>** — Move to the previous agent.
+- **<kbd>Alt+Left/Right</kbd>** — Navigate through agents one step at a time.
+
+### Send a message and compose focus
+
+- **<kbd>Ctrl+Enter</kbd>** — Send the current message in the chat input.
+- **<kbd>Ctrl+O</kbd>** — Open links from the latest reply in a new tab, when available.
+- **<kbd>Ctrl+Q</kbd>** — Focus the chat input field (works on boards and chat-specific views).
+
+### Search tasks and add agents
+
+- **<kbd>@</kbd>** inside the chat input to search for tasks by name and start a context-aware conversation.
+- **<kbd>+</kbd>** — Add a new agent using an existing creation flow, if the roster button is present or you’ve enabled the relevant settings.
+
+### Speaker bubbles and theme
+
+- Agent reply bubbles now use the theme’s primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
+
+<Aside type="tip">
+These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when you’re in a compatible view.
 </Aside>
