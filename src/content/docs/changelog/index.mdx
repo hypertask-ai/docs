@@ -12,7 +12,9 @@ export const Update = ({ label, children }) => (
 
 <Update label="September 10, 2026">
 
-* Fixed <strong>CLI inbox list</strong>: notification rows now appear in responses from `hypertask inbox list --json`, and human output shows row data correctly ([HTPR-6366](https://app.hypertask.ai/detail/project-15/6366))
+* Fixed <strong>Ops agents page health check</strong>: the automatic health checker now correctly reports the count of durable agents on hypertask.app/agents instead of 0. Before this, a page redesign introduced extra style scoping that broke the checker. The fix restores the 200 OK reads and proper agent visibility ([HTPR-6323](https://app.hypertask.ai/detail/project-15/6323))
+* Improved <strong>Parked agent messages</strong>: when you send a message to a disconnect agent, the thread is answered at once with a short status line explaining that the agent is parked and why ([HTPR-6322](https://app.hypertask.ai/detail/project-15/6322))
+* Fixed <strong>Hy4 agent replies</strong>: after runtime hold cleanup, Hy4 messages now get a response instead of remaining unanswered ([HTPR-6322](https://app.hypertask.ai/detail/project-15/6322))
 
 </Update>
 
