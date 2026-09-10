@@ -9,10 +9,41 @@ Use the board filter in AI Chat to quickly focus on chats from one board, or vie
 
 ## Board filter behavior
 
-- <strong>All boards</strong> — shows every chat across all your accessible boards.
-- <strong>One board</strong> — shows only chats from that board.
-- Default is <strong>All boards</strong>, so all your chats appear by default when you open the chat.
+- **All boards** — shows every chat across all your accessible boards.
+- **One board** — shows only chats from that board.
+- Default is **All boards**, so all your chats appear by default when you open the chat.
 
 <Aside type="tip">
 Run /chat or switch to the Chat view to start a conversation. Then use the board filter above the chat list to switch between "All boards" and a specific board.
 </Aside>
+
+## Agent Chat sidebar status
+
+When you open an agent chat with an agent that supports status visibility, the chat sidebar displays real-time per-agent status instead of a static green dot.
+
+### Available status indicators
+
+- **Active** — the agent is currently processing a task or message.
+- **Idle** — the agent is idle but available, with an optional duration indicating how long it has been idle.
+- **Idle with duration** — same as Idle, but explicitly shows the elapsed time (in minutes) since the last activity.
+- **Out of tokens** — the agent has exhausted its token budget and cannot process further requests until refreshed.
+- **Inactive** — the agent has been turned off or has no recent activity; it is not responding.
+
+### How status changes are shown
+
+- The status is computed server-side at request time and shown as text immediately next to the agent name.
+- Changing from one status to another updates in real time without needing to refresh the page.
+- If an agent is explicitly turned off, it always shows Inactive until you restore the agent or the chat session closes.
+
+## Agent Chat auto-scroll behavior
+
+Agent Chat automatically scrolls to the most recent messages as new content arrives, including queued and typing indicators, so you never miss updates during active conversations.
+
+### Scrolling behavior
+
+- When you are already at the bottom of the chat list and new messages arrive or queued statuses appear, the window follows them.
+- If you scroll up to view earlier messages and new messages arrive, the scroll position stays where you left it until you scroll back down.
+- When a new message appears while at the bottom, Chat immediately follows to keep the latest message in view.
+
+<Aside type="tip">
+This behavior applies across all supported channels and helps you stay aligned with agent progress without manually paging through the thread.</Aside>
