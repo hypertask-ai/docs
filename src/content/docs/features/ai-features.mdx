@@ -61,7 +61,9 @@ The AI Task Writer now preserves screenshot file links pasted into your draft. T
 When you open the AI chat panel on a task that hasn't been visited before, the assistant starts with a clean slate. The system ignores any existing chat history from previous tickets and begins a fresh conversation, so each unopened ticket gets its own independent chat session.
 
 <Aside type="tip">
+
 This separation prevents context from bleeding between unrelated tasks and keeps each chat focused on the work at hand.
+
 </Aside>
 
 ### ChatProvider and hooks
@@ -92,7 +94,9 @@ Agent Chat respects the engine configured on an agent when selecting a model:
 If an agent's engine and model match during configuration, Agent Chat uses that pairing directly. Mismatches in model naming between the configuration and runtime (for example, legacy Codex-style names on Claude engines) are resolved server-side; chat must operationalize the correct model per engine.
 
 <Aside type="tip">
+
 Chat lane configuration must align with the agent's engine. Changes to engine/model requirements should be made in the agent's settings first, then propagated to the chat lane to avoid operational conflicts.
+
 </Aside>
 
 ### @mention agents to route messages
@@ -108,7 +112,9 @@ To route a message to a specific agent, prefix it with their @handle and space i
 The assistant transforms this into a direct message routing request and delivers it to the mentioned agent's chat lane. The reply appears in the sidebar chat under the agent's name, including their profile context and available tools.
 
 <Aside type="tip">
+
 Agent mentions work on both board and inbox sidechat contexts. Use @mention formatting to switch from default AI assistant routing to a targeted agent thread.
+
 </Aside>
 
 ### Concurrent Agent Chat sessions
@@ -120,7 +126,9 @@ Multiple agents can interact with a user in separate, independent chat panels. E
 When an Agent Chat turn fails to finish within the timeout window, the thread restarts automatically. The new turn uses fresh context for the current agent, and the user can continue the conversation from scratch.
 
 <Aside type="note">
+
 This recovery replaces the previously convoluted flow for stuck threads. You no longer need to page refresh to resume work.
+
 </Aside>
 
 ### Stop work during an active turn
@@ -144,7 +152,9 @@ Do you want to accept this proposal and proceed?
 - The proposal is accessible via the `chat.propose` MCP tool when needed in agent workflows.
 
 <Aside type="tip">
+
 If a proposal doesn't match intent, simply decline it. The thread moves forward without creating output that doesn't fit current needs.
+
 </Aside>
 
 ## Keyboard shortcuts in Agent Chat
@@ -155,25 +165,60 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
 
-- **<kbd>Ctrl+Tab</kbd>** — Move to the next agent.
-- **<kbd>Shift+Ctrl+Tab</kbd>** — Move to the previous agent.
-- **<kbd>Alt+Left/Right</kbd>** — Navigate through agents one step at a time.
+- **Ctrl+Tab** — Move to the next agent.
+- **Shift+Ctrl+Tab** — Move to the previous agent.
+- **Alt+Left/Right** — Navigate through agents one step at a time.
 
 ### Send a message and compose focus
 
-- **<kbd>Ctrl+Enter</kbd>** — Send the current message in the chat input.
-- **<kbd>Ctrl+O</kbd>** — Open links from the latest reply in a new tab, when available.
-- **<kbd>Ctrl+Q</kbd>** — Focus the chat input field (works on boards and chat-specific views).
+- **Ctrl+Enter** — Send the current message in the chat input.
+- **Ctrl+O** — Open links from the latest reply in a new tab, when available.
+- **Ctrl+Q** — Focus the chat input field (works on boards and chat-specific views).
 
 ### Search tasks and add agents
 
-- **<kbd>@</kbd>** inside the chat input to search for tasks by name and start a context-aware conversation.
-- **<kbd>+</kbd>** — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
+- **@** inside the chat input to search for tasks by name and start a context-aware conversation.
+- **+** — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
 - Agent reply bubbles now use the theme's primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
 
 <Aside type="tip">
-These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when you're in a compatible view.
+
+These controls apply when Agent Chat is open. Some shortcuts, such as Ctrl+Enter for sending and Ctrl+Q for focusing the input, also function in the main command palette when you're in a compatible view.
+
 </Aside>
+
+## AI dev agents
+
+Hypertask supports dev agents that run via OpenRouter. These agents are modeled after a clean, evidence-based adoption pattern: start with a limited test lane, monitor spending and lift-off, and then expose it more broadly.
+
+### How dev agents work
+
+- **Provider backend**: All out-of-model completions go through OpenRouter. The provider is abstracted in your agent's runtime configuration, and SDK templates include minimal telemetry (launch timestamp, provider, model, duration, tokens, cost).
+- **Spending visibility**: The FLEET LEDGER page (under Account > Agent Manager) shows a per-launch line with launch timestamp, provider, model, tokens-in, tokens-out, and cost. Historically paid models are listed as $0.00. Cost tracking reflects the billing and quota model in use.
+- **Idle parking**: When an agent's lane isn't being used during its configured idle window (such as 1800 seconds), the working indicator becomes parked and no new tasks are fetched from that lane. This prevents drift when there's no active work.
+- **Overrun protection**: Lane budgets are relative to subscription tiers. A lower-tier lane incurs a calibrated brake when it fluctuates above that tier's fair share, which can throttle lift-off until it calibrates back under the threshold.
+- **Web-path evidence**: Agents that act as QA workers include a web-path evidence gate. Requests to the agent will pattern-match against a curated redaction set and collect screenshots for QA review. This gate ensures the UI is checked before a lane is considered healthy.
+
+### Hy4 (Tencent) dev agent on OpenRouter
+
+A dev agent configured to use OpenRouter with the model name **Hy4** is now available. This agent can serve as a drop-in teammate for general-purpose dev work that benefits from model diversity. It follows the same idle-parking, overrun-protection, and spending-demarcation rules as other agent lanes.
+
+**To use Hy4:**
+
+1. Open <strong>Account > Agent Manager</strong>.
+2. Select the managed lane you want to attach Hy4 to.
+3. Choose "Add dev agent" and set the provider to <strong>OpenRouter</strong> and the model name to <strong>Hy4</strong>.
+4. Adjust the lane's idle timeout and max budget if needed for your cadence and safety tolerance.
+
+Once deployed, the agent will start pulling tasks from its lane once the idle timer has completed since its last active turn. Monitor launch rows on the ledger to validate that the Hy4 launch is listed and active.
+
+<Aside type="info">
+
+You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handle the exchange of credentials and model mapping. If you plan to autofill other OpenRouter lanes beyond Hy4, include OPENROUTER_GLM_API_KEY for squad-based workflows.
+
+</Aside>
+
+---
