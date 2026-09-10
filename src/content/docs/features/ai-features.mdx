@@ -21,6 +21,17 @@ In the UI, use the AI Task Writer from the New Task flow. The editor is context-
 
 When a ticket already has a title or description, opening Task Writer starts the draft immediately. It uses the title, description, tags, priority, and size as context. Empty tickets still open with the prompt, and your original wording remains available for follow-up edits.
 
+### Automatic drafts in the New Task modal
+
+In the New Task modal, typing a title of at least three words triggers the AI Task Writer to auto-draft a description while you continue typing. The draft appears under the description field with actions to **Take over**, **Regenerate**, or **Turn off** the drafting behavior.
+
+```bash
+# CLI: Create a task; AI will generate a draft if enabled for your account
+ht task create "Design homepage overlay component with glassmorphism"
+```
+
+The auto-draft feature respects board-level style rules and board-level AI instructions.
+
 ### Automatic draft drafts behind owner-specific flag
 
 By default, AI Task Writer generates automatic draft descriptions in the task creator. These drafts respect board-level style rules. To control who sees automatic drafts, owners can enable a per-user feature flag:
@@ -31,18 +42,13 @@ By default, AI Task Writer generates automatic draft descriptions in the task cr
 
 This flag toggles behavior server-side and in the UI, and a corresponding setting in your profile hides the feature toggle entirely for your account. Manual task writers remain fully functional for all users.
 
-```bash
-# CLI: Create a task; AI will generate a draft if enabled for your account
-ht task create "Design homepage overlay component with glassmorphism"
-```
-
 ### Write with AI in comments and descriptions
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** â\x80\x94 Generate a draft for the active text field.
-- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
-- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
+- **/ai** — Generate a draft for the active text field.
+- **/ai rewrite** — Improve or rethink what you typed.
+- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -62,13 +68,19 @@ This separation prevents context from bleeding between unrelated tasks and keeps
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows â\x80\x94 use the AI Task Writer, context menus, and panel-based chat â\x80\x94 and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ---
 
 ## Agent Chat interactions
 
 Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets. Model selection is chosen by the agent's engine (Claude or Codex) and should not be overridden by the chat lane.
+
+### Sort the chat list by recent activity
+
+The Agent Chat list now sorts rows by real chat activity rather than the last board comment. This means your most recent interactions appear at the top, regardless of any board posts on the ticket.
+
+If you sorted the list previously, you may notice the ordering has changed to better reflect active conversations.
 
 ### Model selection per engine
 
@@ -143,25 +155,25 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
 
-- **<kbd>Ctrl+Tab</kbd>** â\x80\x94 Move to the next agent.
-- **<kbd>Shift+Ctrl+Tab</kbd>** â\x80\x94 Move to the previous agent.
-- **<kbd>Alt+Left/Right</kbd>** â\x80\x94 Navigate through agents one step at a time.
+- **<kbd>Ctrl+Tab</kbd>** — Move to the next agent.
+- **<kbd>Shift+Ctrl+Tab</kbd>** — Move to the previous agent.
+- **<kbd>Alt+Left/Right</kbd>** — Navigate through agents one step at a time.
 
 ### Send a message and compose focus
 
-- **<kbd>Ctrl+Enter</kbd>** â\x80\x94 Send the current message in the chat input.
-- **<kbd>Ctrl+O</kbd>** â\x80\x94 Open links from the latest reply in a new tab, when available.
-- **<kbd>Ctrl+Q</kbd>** â\x80\x94 Focus the chat input field (works on boards and chat-specific views).
+- **<kbd>Ctrl+Enter</kbd>** — Send the current message in the chat input.
+- **<kbd>Ctrl+O</kbd>** — Open links from the latest reply in a new tab, when available.
+- **<kbd>Ctrl+Q</kbd>** — Focus the chat input field (works on boards and chat-specific views).
 
 ### Search tasks and add agents
 
 - **<kbd>@</kbd>** inside the chat input to search for tasks by name and start a context-aware conversation.
-- **<kbd>+</kbd>** â\x80\x94 Add a new agent using an existing creation flow, if the roster button is present or youâ\x80\x99ve enabled the relevant settings.
+- **<kbd>+</kbd>** — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
-- Agent reply bubbles now use the themeâ\x80\x99s primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
+- Agent reply bubbles now use the theme's primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
 
 <Aside type="tip">
-These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when youâ\x80\x99re in a compatible view.
+These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when you're in a compatible view.
 </Aside>
