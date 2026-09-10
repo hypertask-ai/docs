@@ -38,14 +38,16 @@ The fleet status heartbeat now persists on the Agents dashboard even when proces
 
 - Collector retries on `/proc` ENOENT race conditions, so the fleet status refreshes on schedule regardless of process churn.
 - The Agents dashboard rights panel shows a stable heartbeat line when collectors are scanning; the line no longer drops unexpectedly.
+- CLI `task assign` attaches the requested agent after the prior mutation succeeds and reloads correctly.
+- The fleet ledger closes orphaned rows after worker restarts, so launches killed by a `systemd long` go clean.
 
 ### Updated references
 
 - Integration validation per HTPR-6253 confirms 20 non-failed scans during 800 process exits; every scan returned usable data and the combined fleet view stayed visible.
+- CLI task assignment clarity per HTPR-6185, 6187: assign works without a lease claim and includes an optional claim step.
+- Fleet ledger cleanup per HTPR-6310 closes orphaned rows after worker restarts, so launches killed by a systemd long go clean.
 
 ---
-
-
 
 <Aside type="tip">
 If you encounter persistent errors in production, open the error link in your issue tracker and attach relevant context from the dashboard that you collected at the time of the error.
