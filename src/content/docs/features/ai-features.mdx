@@ -83,6 +83,22 @@ If an agent's engine and model match during configuration, Agent Chat uses that 
 Chat lane configuration must align with the agent's engine. Changes to engine/model requirements should be made in the agent's settings first, then propagated to the chat lane to avoid operational conflicts.
 </Aside>
 
+### @mention agents to route messages
+
+You can route a message to a specific fleet agent instead of the AI assistant by mentioning them in the chat input. This replaces the default behavior where all messages go to the AI assistant directly.
+
+To route a message to a specific agent, prefix it with their @handle and space it from the rest of the text:
+
+```
+@dev-bot Could you review this security change check for the resubmission queue?
+```
+
+The assistant transforms this into a direct message routing request and delivers it to the mentioned agent's chat lane. The reply appears in the sidebar chat under the agent's name, including their profile context and available tools.
+
+<Aside type="tip">
+Agent mentions work on both board and inbox sidechat contexts. Use @mention formatting to switch from default AI assistant routing to a targeted agent thread.
+</Aside>
+
 ### Concurrent Agent Chat sessions
 
 Multiple agents can interact with a user in separate, independent chat panels. Each agent keeps track of its own thread and history within the context of the relationship.
@@ -127,25 +143,25 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
 
-- **<kbd>Ctrl+Tab</kbd>** — Move to the next agent.
-- **<kbd>Shift+Ctrl+Tab</kbd>** — Move to the previous agent.
-- **<kbd>Alt+Left/Right</kbd>** — Navigate through agents one step at a time.
+- **<kbd>Ctrl+Tab</kbd>** â\x80\x94 Move to the next agent.
+- **<kbd>Shift+Ctrl+Tab</kbd>** â\x80\x94 Move to the previous agent.
+- **<kbd>Alt+Left/Right</kbd>** â\x80\x94 Navigate through agents one step at a time.
 
 ### Send a message and compose focus
 
-- **<kbd>Ctrl+Enter</kbd>** — Send the current message in the chat input.
-- **<kbd>Ctrl+O</kbd>** — Open links from the latest reply in a new tab, when available.
-- **<kbd>Ctrl+Q</kbd>** — Focus the chat input field (works on boards and chat-specific views).
+- **<kbd>Ctrl+Enter</kbd>** â\x80\x94 Send the current message in the chat input.
+- **<kbd>Ctrl+O</kbd>** â\x80\x94 Open links from the latest reply in a new tab, when available.
+- **<kbd>Ctrl+Q</kbd>** â\x80\x94 Focus the chat input field (works on boards and chat-specific views).
 
 ### Search tasks and add agents
 
 - **<kbd>@</kbd>** inside the chat input to search for tasks by name and start a context-aware conversation.
-- **<kbd>+</kbd>** — Add a new agent using an existing creation flow, if the roster button is present or you’ve enabled the relevant settings.
+- **<kbd>+</kbd>** â\x80\x94 Add a new agent using an existing creation flow, if the roster button is present or youâ\x80\x99ve enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
-- Agent reply bubbles now use the theme’s primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
+- Agent reply bubbles now use the themeâ\x80\x99s primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
 
 <Aside type="tip">
-These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when you’re in a compatible view.
+These controls apply when Agent Chat is open. Some shortcuts, such as <kbd>Ctrl+Enter</kbd> for sending and <kbd>Ctrl+Q</kbd> for focusing the input, also function in the main command palette when youâ\x80\x99re in a compatible view.
 </Aside>
