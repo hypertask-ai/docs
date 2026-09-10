@@ -238,7 +238,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f¤\x9d`, `ð\x9f\x8e\x89`).
+- Use a single emoji character (e.g., `👍`, `🙏`, `👷`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -258,6 +258,35 @@ hypertask comment unreact <ticket_number> <comment_id> --emoji <emoji>
 **Reactions tab (web UI):**
 
 The web app provides a dedicated reactions tab for each comment, showing all reactions and the users who added them. The CLI complements this by enabling quick reactions from any terminal.
+
+## Inbox commands
+
+### hypertask inbox list
+
+Display your inbox and notifications.
+
+```bash
+hypertask inbox list [--human | --json] [options]
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--json` | Return results as JSON, including notification rows first (id, type, ticket, seen). |
+| `--human` | Return plain tab-separated rows by default. |
+
+**Behavior:**
+
+- Returns a list of notifications and tasks in your inbox.
+- Use `--json` to get structured output for scripts and tooling.
+- Use `--human` for quick shell inspections.
+
+```bash
+hypertask inbox list --json | jq '.user_notifications | length'
+```
+
+<Aside type="note">Fixed missing inbox rows so `hypertask inbox list` now correctly returns notification rows ([HTPR-6366](https://app.hypertask.ai/detail/project-15/6366)).</Aside>
 
 ## Webhook commands
 
@@ -371,11 +400,11 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** â\x80\x94 Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** â\x80\x94 Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** â\x80\x94 Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** â\x80\x94 Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** â\x80\x94 Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
 
 <Aside type="note">The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.</Aside>
 
