@@ -12,11 +12,11 @@ export const Update = ({ label, children }) => (
 
 <Update label="September 10, 2026">
 
-* Fixed <strong>QA worker restarts</strong>: Sol QA workers can now be stopped reliably after an external actor intervention, as fleet-watchdog no longer resurrects parked slugs ([HTPR-6308](https://app.hypertask.ai/detail/project-15/6308))
-
 </Update>
 
 <Update label="September 9, 2026">
+
+* Fixed <strong>QA worker restarts</strong>: Sol QA workers can now be stopped reliably after an external actor intervention, as fleet-watchdog no longer resurrects parked slugs ([HTPR-6308](https://app.hypertask.ai/detail/project-15/6308))
 
 * Fixed <strong>Kanban cards</strong>: only the selected card shows a border on dark themes; other cards now render transparently ([HTPR-6298](https://app.hypertask.ai/detail/project-15/6298))
 
@@ -27,6 +27,8 @@ export const Update = ({ label, children }) => (
 * Fixed <strong>Task move</strong>: succeeds and reloads correctly on production, after a deploy added a loading guard that crashed the moveTask handler and required a rollback ([HTPR-6227](https://app.hypertask.ai/detail/project-15/6227))
 
 * Fixed <strong>Add labels via CLI</strong>: preserves all existing labels on a task, no partial replacement or lost labels ([HTPR-6234](https://app.hypertask.ai/detail/project-15/6234))
+
+* Fixed <strong>GLM share brake</strong>: OpenRouter fallback launches while the z.ai brake is enforced, allowing deliveries through alternative providers ([HTPR-6325](https://app.hypertask.ai/detail/project-15/6325))
 
 * Added <strong>Agent token accountability</strong>: per-launch ledger and hard budget floors with cost-per-ticket reporting ([HTPR-6271](https://app.hypertask.ai/detail/project-15/6271))
 
