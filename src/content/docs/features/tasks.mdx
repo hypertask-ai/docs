@@ -145,6 +145,21 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 - **Ctrl+O** / **Cmd+O**: Open the link picker when in a task detail view or comment.
 - **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation.
 
+## Task Reporter
+
+With the <strong>Task Reporter</strong>, anyone on the task can update the task description directly. The Task Reporter indicator visually appears alongside comment headers, making it clear who has opened the description for editing just like comments.
+
+### Permissions
+
+- <strong>Task Reporter</strong> is available to any human assignee or worker on a task. The feature is not available for closed tasks.
+- When you open the description in edit mode, you become the <strong>Task Reporter</strong> for that task.
+- Only the Task Reporter can edit the task description. This prevents concurrent edits and restores the semantic meaning of "owner of the description field."
+- If you close the description without saving any changes, the status clears and the next person to open it becomes the Task Reporter.
+
+This model ensures a clear ownership of the description field, similar to comment ownership, which helps teams coordinate around tasks without stepping on each other's work.
+
+Note: While you are the Task Reporter, you cannot switch to another task description edit until the current edit state closes, preserving a single active description edit at a time.
+
 ## Agent lease interactions
 
 When you make manual changes to a task—moving, assigning, unassigning, archiving, or deleting—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
@@ -156,6 +171,7 @@ Open a task to see:
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
+- Task Reporter indicator marking who can edit the description.
 - Top bar with quick actions like Move, Duplicate, Archive, or Delete.
 
 ### Mobile navigation
