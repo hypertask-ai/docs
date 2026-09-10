@@ -176,6 +176,35 @@ hypertask labels create --project <project> --name <label-name>
 hypertask labels create --project 15 --name sol
 ```
 
+### hypertask tasks list
+
+List tasks with optional filtering.
+
+```bash
+hypertask tasks list [options]
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--filter <key:value>` | Apply a filter on a field (e.g., `--filter assignee:user`). |
+| `--labels <label1,label2,...>` | Filter tasks by one or more labels. Returns only tasks that have all specified labels. |
+| `--offset <num>` | Start listing from the Nth item (for paginated results). |
+
+**Behavior:**
+
+- Returns a paginated list of tasks matching the specified filters.
+- Use `--offset` to navigate through large collections.
+- The `--labels` option correctly filters tasks by the specified labels, returning only tasks that have all the provided labels applied.
+
+```bash
+hypertask tasks list --labels cli,urgent
+hypertask tasks list --filter assignee juan --offset 0
+```
+
+<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6275](https://app.hypertask.ai/detail/project-15/6275)).</Aside>
+
 ### hypertask tasks move
 
 Move a task from one section to another.
@@ -209,7 +238,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `👍`, `🤝`, `🎉`).
+- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f¤\x9d`, `ð\x9f\x8e\x89`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
