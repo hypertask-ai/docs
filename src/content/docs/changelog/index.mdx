@@ -10,6 +10,12 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 11, 2026">
+
+* Fixed <strong>CLI task creator attribution</strong>: when an agent creates a task via CLI with `--token`, the agent is now recorded under createdBy .agent instead of the human owner ([HTPR-6362](https://app.hypertask.ai/detail/project-15/6362))
+
+</Update>
+
 <Update label="September 10, 2026">
 
 * Fixed <strong>Ops agents page health check</strong>: the automatic health checker now correctly reports the count of durable agents on hypertask.app/agents instead of 0. Before this, a page redesign introduced extra style scoping that broke the checker. The fix restores the 200 OK reads and proper agent visibility ([HTPR-6323](https://app.hypertask.ai/detail/project-15/6323))
