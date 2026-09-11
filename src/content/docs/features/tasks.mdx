@@ -334,6 +334,45 @@ Hypertask uses a per-seat billing model based on the number of members with team
 
 Administrators can configure repository integrations that auto-create tasks or sync status changes.
 
+## AI Task Writer
+
+The AI Task Writer is a prompt-based task creation flow that generates complete, shippable tickets from paste inputs.
+
+### How it works today
+
+The Task Writer writes tasks in your team's style. It uses board-aware prompts, pulls task templates from boards, and uses search to find related tickets instead of inventing them.
+
+#### Required sections
+
+When generating a task, the Task Writer always includes sections for:
+
+- **User problem**: The end-user need or behavior the task addresses.
+- **Acceptance criteria**: Concrete conditions that define when the task is considered done.
+- **Where in the product**: The specific UI surface (board column, screen, or view) where users interact with this work.
+- **Out of scope**: Explicitly state what this task does NOT cover.
+
+#### Related tickets
+
+When you paste a brief or use commands like "Related issues X and Y...", the Task Writer searches your current board and nearby projects for matching tickets. If matches are found, it creates a "Related tickets" section in the generated task with concrete links to those issues.
+
+#### Prompt-only model
+
+The Task Writer is a prompt-based generator, not a chat. The flow is:
+
+- **Step 1: Paste or dictate** — Provide a brief description, use dictation, or include Issue references.
+- **Step 2: Receive a task proposal** — The Task Writer responds with a full task draft including required sections and related tickets.
+- **Step 3: Accept or refine** — You can accept the proposal as-is, or type further instructions to refine it (for example, "add 3 more acceptance criteria") and click **Refine** to generate a revised draft.
+
+This three-step pattern prevents hallucinations and keeps output grounded in your team's prior work and style.
+
+### Using the Task Writer
+
+- From a board: <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd> and select **Create with AI** → **Task Writer**.
+- From the command palette: <kbd>Ctrl+K</kbd> — search for "Task Write" and select it.
+- From a task: Click the AI icon in the task header and select **Task Writer**.
+
+After the Task Writer generates a draft, you can refine it just like any other AI-generated comment or description.
+
 ## Keyboard shortcuts summary
 
 Shortcuts are global by default, but some vary by context:
