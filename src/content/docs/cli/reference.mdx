@@ -238,7 +238,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `👍`, `🙏`, `👷`).
+- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f\x99\x8f`, `ð\x9f\x91·`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -321,6 +321,38 @@ hypertask webhook configure --url https://example.com/webhook --events "chat.mes
 
 <Aside type="note">Webhook event validation had a stale client-side event list for some CLI releases, rejecting valid events like `chat.message`. The current production release now accepts the full set of 7 events, including `chat.message` ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114)).</Aside>
 
+## Agent-created task commands
+
+### hypertask task create
+
+Create a new task on your board. When called with an agent bearer token, the creating agent is recorded as the creator and visible in the `createdBy` field.
+
+```bash
+hypertask task create --title "<title>" [--section <section-name>] [--assignee <user-email>]
+```
+
+**Behavior:**
+
+- Accepts `--title` (required), `--section` (optional), and `--assignee` (optional).
+- Uses the bearer token passed via `--token` for authentication as an agent.
+- Records the authenticated agent under `createdBy.agent` instead of the top-level owner.
+- The agent's visibility rules apply to `createdBy.agent` the same way they apply to the `assignees` field.
+
+```bash
+# Create a task as an agent
+hypertask task create --title "Review pull request" --section Review --assignee valentin@team.com --token "ey..."
+
+# View the task to confirm creator attribution
+hypertask task get <ticket-number>
+```
+
+```bash
+# Create a task with just a title
+hypertask task create --title "Add documentation for API" --section Documentation
+```
+
+<Aside type="note">When an agent creates a task via CLI, the agent is now correctly recorded under `createdBy.agent` instead of the human owner, providing accurate attribution for agent-generated work ([HTPR-6362](https://app.hypertask.ai/detail/project-15/6362)).</Aside>
+
 ## Comments URL behavior
 
 When listing comments or viewing task details:
@@ -400,11 +432,11 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** â\x80\x94 Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** â\x80\x94 Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** â\x80\x94 Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** â\x80\x94 Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** â\x80\x94 Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** ≅ Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** ≅ Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** ≅ Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** ≅ Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** ≅ Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
 
 <Aside type="note">The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.</Aside>
 
