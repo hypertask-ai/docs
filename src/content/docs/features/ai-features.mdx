@@ -78,6 +78,21 @@ This is automatically handled for standard flows — use the AI Task Writer, con
 
 Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets. Model selection is chosen by the agent's engine (Claude or Codex) and should not be overridden by the chat lane.
 
+### Key selection for agents without a board
+
+When you start a chat session on a task or board without a dedicated AI key, the system uses a fallback key selection strategy:
+
+1. **Session board key**: If a session board exists for the context, the system uses that board's AI key.
+2. **User team key**: If no session board key is available, the system uses your team's default AI key.
+
+This allows direct chats to succeed even when chat lanes don't have their own dedicated AI provider configured. The system falls back gracefully across these levels rather than failing completely.
+
+<Aside type="info">
+
+You must have at least one valid AI key configured for your team to use AI Chat. If your team and all session boards lack an active AI key, the chat fails with a clear access error and does not trigger an incident ticket.
+
+</Aside>
+
 ### Sort the chat list by recent activity
 
 The Agent Chat list now sorts rows by real chat activity rather than the last board comment. This means your most recent interactions appear at the top, regardless of any board posts on the ticket.
@@ -208,9 +223,9 @@ A dev agent configured to use OpenRouter with the model name **Hy4** is now avai
 
 **To use Hy4:**
 
-1. Open <strong>Account > Agent Manager</strong>.
+1. Open **Account > Agent Manager**.
 2. Select the managed lane you want to attach Hy4 to.
-3. Choose "Add dev agent" and set the provider to <strong>OpenRouter</strong> and the model name to <strong>Hy4</strong>.
+3. Choose "Add dev agent" and set the provider to **OpenRouter** and the model name to **Hy4**.
 4. Adjust the lane's idle timeout and max budget if needed for your cadence and safety tolerance.
 
 Once deployed, the agent will start pulling tasks from its lane once the idle timer has completed since its last active turn. Monitor launch rows on the ledger to validate that the Hy4 launch is listed and active.
@@ -220,5 +235,4 @@ Once deployed, the agent will start pulling tasks from its lane once the idle ti
 You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handle the exchange of credentials and model mapping. If you plan to autofill other OpenRouter lanes beyond Hy4, include OPENROUTER_GLM_API_KEY for squad-based workflows.
 
 </Aside>
-
 ---
