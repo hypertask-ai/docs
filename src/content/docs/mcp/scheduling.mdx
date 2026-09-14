@@ -1,6 +1,6 @@
 ---
 title: Scheduling Agents
-description: Run Hypertask agents on a schedule using any external scheduler — GitHub Actions, crontab, Cloudflare Workers, or Vercel cron.
+description: Run Hypertask agents on a schedule using any external scheduler â\x80\x94 GitHub Actions, crontab, Cloudflare Workers, or Vercel cron.
 ---
 
 import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
@@ -17,7 +17,7 @@ A scheduled agent run is any workflow that:
 
 1. Fires on a schedule (daily, weekly, every 15 minutes, etc.)
 2. Invokes the `hypertask` CLI (or calls the MCP server directly)
-3. Asks the agent to do something against your board — triage inbox, post a daily standup, summarise last week's shipped tickets, auto-close stale bugs, etc.
+3. Asks the agent to do something against your board â\x80\x94 triage inbox, post a daily standup, summarise last week's shipped tickets, auto-close stale bugs, etc.
 
 </Steps>
 
@@ -32,7 +32,7 @@ If you can write a one-liner shell command that does what you want, you can sche
 You need:
 
 - The `hypertask` CLI installed on the machine (or runner) that will execute the schedule
-- A Hypertask API token — export as `HYPERTASK_API_TOKEN`
+- A Hypertask API token â\x80\x94 export as `HYPERTASK_API_TOKEN`
 - A project ID to act on
 
 Install the CLI:
@@ -47,7 +47,7 @@ Verify:
 hypertask tasks list --project <your-project-id>
 ```
 
-## Example 1 — GitHub Actions
+## Example 1 â\x80\x94 GitHub Actions
 
 Best for teams already on GitHub. Free for public repos, generous free tier for private.
 
@@ -80,7 +80,11 @@ jobs:
 
 Store the API token as a repository secret named `HYPERTASK_API_TOKEN`.
 
-## Example 2 — crontab on a Linux server
+<Aside type="note">
+GitHub schedules are now bound to the repository's <strong>default branch</strong>. The schedule file on the default branch (production) is the one that fires each run. You no longer need a separate schedule copy on another branch.
+</Aside>
+
+## Example 2 â\x80\x94 crontab on a Linux server
 
 Best if you already have a VPS or home server running 24/7.
 
@@ -118,7 +122,7 @@ Then in cron:
 0 9 * * 1 /home/you/hypertask-cron/weekly-summary.sh
 ```
 
-## Example 3 — Cloudflare Workers cron
+## Example 3 â\x80\x94 Cloudflare Workers cron
 
 Best if you want zero-infra, run-anywhere scheduling and already use Cloudflare. Free tier covers 100k invocations per day.
 
@@ -171,7 +175,7 @@ wrangler deploy
 Cloudflare Workers cron runs on Cloudflare's infrastructure, so you do not ship the Hypertask CLI to the worker. Call the HTTP endpoint directly or use the MCP server.
 </Aside>
 
-## Example 4 — Vercel cron
+## Example 4 â\x80\x94 Vercel cron
 
 Best if your app already runs on Vercel. Free tier covers 2 cron jobs.
 
@@ -267,20 +271,19 @@ In addition to general-purpose agent workflows, you can configure agents to pull
 To schedule a dedicated next-task queue agent:
 
 - Set up an external scheduler (GitHub Actions, cron, Cloudflare Worker, Vercel cron, etc.).
-- Have the scheduler disable the agent’s ability to create unlimited tasks, and instead provide only a single-purpose command or endpoint for conditional next-task pulls (examples using the `hypertask` CLI or MCP are included in the other workflow patterns above).
+- Have the scheduler disable the agentâ\x80\x99s ability to create unlimited tasks, and instead provide only a single-purpose command or endpoint for conditional next-task pulls (examples using the `hypertask` CLI or MCP are included in the other workflow patterns above).
 - On each run, the scheduler invokes an endpoint that:
   - Pulls ranked candidate tasks from the next-task queue for this board,
   - Checks that tasks are claimable by this agent (not already assigned),
   - If one or more candidate tasks are available, the scheduler creates a conditional task or comment for the agent:
     - With a conditional, the agent can pick up and claim one task from the queue on demand (default is the highest-priority available).
-- In the MCP or CLI flow, wrap the queue endpoint call to honor the scheduler’s condition. Use a Context (via `hypertask_get_user_context`) or an explicit owner ID to ensure the agent is authorized to claim the returned tasks. Treat the queue response as authoritative; update or close the created/conditional task as soon as the agent completes the work.
+- In the MCP or CLI flow, wrap the queue endpoint call to honor the schedulerâ\x80\x99s condition. Use a Context (via `hypertask_get_user_context`) or an explicit owner ID to ensure the agent is authorized to claim the returned tasks. Treat the queue response as authoritative; update or close the created/conditional task as soon as the agent completes the work.
 
 **Recommended pattern on the MCP side**
 
-On every scheduled run, the scheduler calls a tool like `hypertask_next_task_pull` with filtering options that ensure the results are claimable by this agent, then applies the scheduler’s schema (e.g., `agent_id` or `team_id`). If the tool returns candidates, the routine for that agent creates a temporary task or comment to indicate it is ready to claim before it gets claimed; if the tool returns empty, the scheduler can sleep and retry on the next interval.
+On every scheduled run, the scheduler calls a tool like `hypertask_next_task_pull` with filtering options that ensure the results are claimable by this agent, then applies the schedulerâ\x80\x99s schema (e.g., `agent_id` or `team_id`). If the tool returns candidates, the routine for that agent creates a temporary task or comment to indicate it is ready to claim before it gets claimed; if the tool returns empty, the scheduler can sleep and retry on the next interval.
 
 When using code:
-
 - From the scheduler: call the endpoint; from an agent context: invoke the MCP tool.
 - After picking a task, the subsequent workflow should mark it as claimed (assign the agent owner) and transition the task to its normal workflow section; once the agent finishes, it can update the task, close the conditional slot, or delete the task as appropriate, then return to the queue endpoint for the next candidate.
 
@@ -306,10 +309,9 @@ hypertask next-task pull \
 ```
 
 This ensures:
-
 - Only tasks not already claimed are visible,
 - Priorities guide which tasks first,
-- The scheduler’s condition gates behavior,
+- The schedulerâ\x80\x99s condition gates behavior,
 - Agents run from an explicit, manageable queue.
 
 ---
