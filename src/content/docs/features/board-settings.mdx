@@ -1,6 +1,6 @@
 ---
 title: "Board Settings"
-description: "Manage planning, notifications, auto-archive, staleness detection, time tracking, and per-column auto-assign rules."
+description: "Manage cycles, planning, notifications, auto-archive, staleness detection, time tracking, and per-column auto-assign rules."
 ---
 
 import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
@@ -12,7 +12,7 @@ Use board settings to plan one board and control its automatic behavior. Set its
 Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
 
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
-- **Project planning** — Set a target date, track milestones, and post the board's current health.
+- **Project planning** — Optionally organize work into two-week cycles, set a target date, track milestones, and post the board's current health.
 - **Board notifications** — Mute ordinary inbox, email, and push notifications from this board only.
 - **Staleness rules** — Automatically detect tasks that have been idle for a set period and take action.
 - **Auto-assign rules** — Set per-column rules so new or unassigned tasks get attention where they belong.
@@ -71,9 +71,17 @@ Open **Settings → Board → Planning** to keep the board's outcome and current
 - Post a short health update as **On track**, **At risk**, or **Off track**.
 - Review the 20 most recent updates with their author and timestamp.
 
-Any board member can read planning and post a health update. Only the board owner or an admin can change the target date or milestones.
+Any board member can read planning and post a health update. Only the board owner or an admin can change cycles, the target date, or milestones.
 
 Target and milestone changes save immediately. Press **Ctrl+Enter** or **Cmd+Enter** to post a health update from the message field.
+
+### Two-week cycles
+
+Turn on **Enable cycles** to add Monday-based **Current cycle** and **Next cycle** views to the existing board. Kanban remains the default view. Each cycle lasts exactly two weeks, and the planning panel shows the current start date and next date range.
+
+Open a task and select **Cycle** in its property rail to assign it to the current or next cycle. Search by cycle number to find older cycles. Older cycles are read-only history, but you can always clear a task's cycle.
+
+When a cycle ends, Hypertask moves its assigned, unfinished, active tasks into the next cycle automatically. It leaves completed, archived, and unassigned tasks where they are. Turning cycles off hides the cycle views and blocks new assignments without deleting cycle history or existing task assignments. Turning cycles on again starts from the current Monday without rolling stale assignments from an earlier period.
 
 ## Auto-archive
 
