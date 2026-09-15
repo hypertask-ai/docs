@@ -54,26 +54,21 @@ If an install does not succeed, the CI/CD pipeline fails and prevents the commit
 
 When you choose to install Hypertask from the web app, the in-app installer (CLI install dialog) uses the npm shim to fetch the htz binary for you. This keeps the command identical across all install channels.
 
-## Migrate from the Node CLI
+## General behavior
 
-We've shipped the native htz CLI and published an npm shim so you can install it the same way you did before:
+### Unknown flags
 
-```bash
-npm install -g @hypertask/hypertask_cli@latest
-```
-
-Remove the old npm package before installing so its global shim cannot hide the native binary:
+The CLI fails out loud for unrecognized flags and options. An unknown flag results in an error message and an exit code of 2 (non-zero), indicating a configuration or usage error.
 
 ```bash
-npm uninstall -g @hypertask/hypertask_cli
-npm install -g @hypertask/hypertask_cli@latest
+hypertask task get HYFA-70 --zzznotaflag 9
+# unknown option: --zzznotaflag
+# exit code: 2
 ```
 
-Most commands and flags stay the same. The native CLI also accepts direct top-level section commands such as `hypertask section create`.
+### v0.2.2 CLI Release
 
-## v0.2.2 CLI Release
-
-The latest release (`v0.2.2`) is now installed on the fleet and reflects consistency fixes between the Node and Zig CLI halves. This release improves reliability of core commands and closes out the CLI-side implementation changes from HTPR-5845. To upgrade, simply reinstall the CLI using the npm shim:
+The latest release (`v0.2.2`) is now installed on the fleet and reflects version consistency fixes between the Node and Zig CLI halves. To upgrade, simply reinstall the CLI using the npm shim:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
@@ -240,7 +235,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `😀`, `👍`, `✅`).
+- Use a single emoji character (e.g., `ð\x9f\x98\x80`, `ð\x9f\x91\x8d`, `â\x9c\x85`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
