@@ -87,7 +87,7 @@ When you start a chat session on a task or board without a dedicated AI key, the
 
 This allows direct chats to succeed even when chat lanes don't have their own dedicated AI provider configured. The system falls back gracefully across these levels rather than failing completely.
 
-<Aside type="info">
+<Aside type="note">
 
 You must have at least one valid AI key configured for your team to use AI Chat. If your team and all session boards lack an active AI key, the chat fails with a clear access error and does not trigger an incident ticket.
 
@@ -230,7 +230,7 @@ A dev agent configured to use OpenRouter with the model name **Hy4** is now avai
 
 Once deployed, the agent will start pulling tasks from its lane once the idle timer has completed since its last active turn. Monitor launch rows on the ledger to validate that the Hy4 launch is listed and active.
 
-<Aside type="info">
+<Aside type="note">
 
 You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handle the exchange of credentials and model mapping. If you plan to autofill other OpenRouter lanes beyond Hy4, include OPENROUTER_GLM_API_KEY for squad-based workflows.
 

@@ -239,7 +239,7 @@ await run.task.attach('https://hypertask.app/file/analysis-123.md');
 
 Your agent can subscribe to one or more incoming events. All events provide a <code>run</code> object with ticket, thread, and helpers.
 
-<Code language="typescript">
+```typescript
 type EventHandler = (run: Run) => Promise<void>;
 
 // Subscribe to all event types
@@ -250,7 +250,7 @@ client.on('mention', mentionHandler);
 client.on('assigned', assignedHandler);
 client.on('chat', chatHandler);
 client.on('stop', stopHandler);
-</Code>
+```
 
 ### mention
 
@@ -445,7 +445,7 @@ The agent-dev CLI wraps these templates and can generate boilerplate files for y
 
 ## Agent Lifecycle
 
-1. **Create the SDK client** — Call <code>createAgent({ token, secret })</code>. The SDK wraps your existing routes and injects signature verification.
+1. **Create the SDK client** — Call `createAgent({ token, secret })`. The SDK wraps your existing routes and injects signature verification.
 2. **Register event handlers** — Subscribe to <code>mention</code>, <code>assigned</code>, <code>chat</code>, and <code>stop</code> as needed.
 3. **Handle events with a run** — Each handler receives a <code>run</code> object with ticket, thread, and helpers.
 4. **Record activities** — Use <code>run.thought</code>, <code>run.action</code>, <code>run.respond</code>, <code>run.error</code>, <code>run.ask</code> to build the typed activity stream.
