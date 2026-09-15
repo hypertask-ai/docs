@@ -196,7 +196,7 @@ hypertask tasks list [options]
 
 - Returns a paginated list of tasks matching the specified filters.
 - Use `--offset` to navigate through large collections.
-- The `--labels` option correctly filters tasks by the specified labels, returning only tasks that have all the provided labels applied.
+- The `--labels` option correctly filters tasks by the specified labels, returning only tasks that have all the provided labels.
 
 ```bash
 hypertask tasks list --labels cli,urgent
@@ -238,7 +238,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f\x99\x8f`, `ð\x9f\x91·`).
+- Use a single emoji character (e.g., `😀`, `👍`, `✨`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -320,6 +320,41 @@ hypertask webhook configure --url https://example.com/webhook --events "chat.mes
 - If you previously used a stale client-side event list that rejected all events, make sure your current CLI release includes the updated event metadata.
 
 <Aside type="note">Webhook event validation had a stale client-side event list for some CLI releases, rejecting valid events like `chat.message`. The current production release now accepts the full set of 7 events, including `chat.message` ([HTPR-6114](https://app.hypertask.ai/detail/project-15/6114)).</Aside>
+
+## Task unassignment
+
+### hypertask task unassign
+
+Unassign a person or multiple people from tasks. Use the numeric list id that `tasks list` returns to operate on a specific task, or the `--all` flag to clear a person from a whole board.
+
+```bash
+hypertask tasks unassign <ticket_number> --assignee <user-id>
+```
+
+```bash
+hypertask tasks unassign --project <board> --assignee <user-id> --all
+```
+
+**Behavior:**
+
+- Removes the specified assignee from one or more tasks.
+- When using `--all`, removes the person from all tasks on the board.
+- On archived tasks, the assignee is cleared, along with any agent-attributed assignee rows that showed under that person.
+- Requires authentication via API key or session cookie.
+
+**Examples:**
+
+Unassign one person from a specific task listed from `tasks list`:
+
+```bash
+hypertask tasks unassign 40451 --assignee valentin
+```
+
+Unassign a person from the entire board:
+
+```bash
+hypertask tasks unassign --project 15 --assignee valentin@team.com --all
+```
 
 ## Agent-created task commands
 
@@ -432,11 +467,11 @@ The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`)
 
 The `hypertask parity_test.py` harness performs comprehensive comparison against the served Node implementation:
 
-- **JSON schema verification** ≅ Compares output against 30 read-only JSON schemas for list, create, and detail operations.
-- **Authentication matrix** ≅ Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
-- **Human-output parity** ≅ Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
-- **Negative case coverage** ≅ Rejects unauthenticated access for operations that require authentication using the documented error contract.
-- **Exit-code and finally output** ≅ Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
+- **JSON schema verification** — Compares output against 30 read-only JSON schemas for list, create, and detail operations.
+- **Authentication matrix** — Verifies correct response for each supported token flow (API key, session cookie, auth header combination).
+- **Human-output parity** — Includes tests for `--human` (human-oriented label rendering) and human-oriented tables.
+- **Negative case coverage** — Rejects unauthenticated access for operations that require authentication using the documented error contract.
+- **Exit-code and finally output** — Validates that the installed htz CLI yields documented exit codes and fallback messages compared to the Node CLI.
 
 <Aside type="note">The parity test ensures that any change to `hypertask list`, `hypertask get`, `hypertask create`, `hypertask update`, or any other command does not introduce regressions compared to the published contract.</Aside>
 
