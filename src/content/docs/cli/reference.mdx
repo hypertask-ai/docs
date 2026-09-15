@@ -157,6 +157,8 @@ hypertask task update 12345 --field "assignee" --value "user@example.com"
 
 <Aside type="note">The `comment add` and `comment list` commands were previously available only on the Zig CLI. The Node CLI now matches the native CLI parity for these options ([HTPR-6125](https://app.hypertask.ai/detail/project-15/6125)).</Aside>
 
+<Aside type="note">`comment add` supports `--file <path>` to post long HTML comments from a file. Unlike `comment add`, `comment update` does not support `--file`. Use a temporary file wrapper or embed content inline instead.</Aside>
+
 ## Labels commands
 
 ### hypertask labels create
@@ -238,7 +240,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `😀`, `👍`, `✨`).
+- Use a single emoji character (e.g., `😀`, `👍`, `✅`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -459,7 +461,7 @@ CLI versions not in the allowlist receive advisory warnings but are not blocked.
 
 - If build logs show an advisory warning, check that the parity inventory is up to date and that allowlist entries are correct.
 - If production was blocked previously due to a mismatch, the Node half release was either pinned out of the blockage path or shipped with a separate trusted version.
-- Unrelated npm publishes that do not match the Rust ptz signature or that represent small updates (e.g., documentation-only) surface a warning but do not stop the build.
+- Unrelated npm publishes that do not match the Rust htz signature or that represent small updates (e.g., documentation-only) surface a warning but do not stop the build.
 
 ## Claims and Parity Tests
 
