@@ -11,6 +11,8 @@ A task represents a unit of work that can be assigned, progressed, and tracked. 
 
 **My Tasks** is your personal task list across boards. By default it shows tasks assigned to you.
 
+The list groups by due time: <strong>Overdue</strong>, <strong>Today</strong>, <strong>This week</strong>, <strong>Later</strong>, and <strong>No due date</strong>. Overdue stays at the top. Use <strong>Group</strong> to switch back to board groups. Saved My Tasks views remember the choice ([HTPR-6455](https://app.hypertask.ai/detail/project-15/6455)). Board split tabs still filter inside a time group.
+
 ### Saved views
 
 You can create and manage saved views on My Tasks to customize what you see. These views support:
@@ -157,7 +159,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 - **Assignees**: Current human assignees with ability to add or remove. Added assignees trigger notifications.
 - **Workers**: Agent nodes and nodes can have their own assignee field, tracked separately from human assignees. Workers appear in the Relationships section under the *Workers* relation type.
 - **Sections**: Drag tasks between sections to change their column. This can trigger auto-assign rules if configured.
-- **Table view**: In Table view, you can also drag any row onto another section's card and the task moves into that section. The row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views. (Note: this only works when no column sort is active; on /my-tasks, rows are grouped by board, so dragging doesn't target a section.)
+- **Table view**: In Table view, you can also drag any row onto another section's card and the task moves into that section. The row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views. (Note: this only works when no column sort is active; on /my-tasks, rows are grouped by time or board, so dragging doesn't target a section.)
 - **Due date**: Click a date to pick another date or remove it. The date affects due date pickers and filter views.
 - **Priority**: Change priority to reflect updated urgency.
 - **Estimated time**: Type hours or a low-high range for time-tracking integration.
