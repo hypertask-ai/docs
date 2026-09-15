@@ -339,8 +339,8 @@ hypertask tasks unassign --project <board> --assignee <user-id> --all
 
 - Removes the specified assignee from one or more tasks.
 - When using `--all`, removes the person from all tasks on the board.
-- On archived tasks, the assignee is cleared, along with any agent-attributed assignee rows that showed under that person.
-- Requires authentication via API key or session cookie.
+- On archived or deleted tasks, the assignee is cleared, along with any agent-attributed assignee rows that showed under that person.
+- No longer fails with errors on tasks in Archive or Deleted status—unassignment succeeds and cleans up agent rows consistently, whether the task is archived or still normal.
 
 **Examples:**
 
@@ -355,6 +355,8 @@ Unassign a person from the entire board:
 ```bash
 hypertask tasks unassign --project 15 --assignee valentin@team.com --all
 ```
+
+<Aside type="note">Unassign now clears agent-attributed assignee rows and works on tasks in Archive/Deleted status rather than block with errors ([HTPR-6428](https://app.hypertask.ai/detail/project-15/6428)).</Aside>
 
 ## Agent-created task commands
 
