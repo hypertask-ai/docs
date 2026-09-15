@@ -11,7 +11,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 15, 2026">
-  * Fixed: Board owners again see <strong>Delete board</strong> in Settings (instead of only Leave board) ([HTPR-6471](https://app.hypertask.ai/detail/project-15/6471))
+  * Fixed: Wrong CLI flags now fail out loud instead of looking like success ([HTPR-6449](https://app.hypertask.ai/detail/project-15/6449))
+  * Board owners again see <strong>Delete board</strong> in Settings (instead of only Leave board) ([HTPR-6471](https://app.hypertask.ai/detail/project-15/6471))
   * Fixed: Reply-by-ticket email now receives and handles incoming replies properly ([HTPR-6420](https://app.hypertask.ai/detail/project-15/6420))
   * Fixed: Mobile Agent Chat fills the phone screen with the AI chat mic and send controls, without the bottom tabs or app top bar ([HTPR-6476](https://app.hypertask.ai/detail/project-15/6476))
   * <strong>My Tasks live updates</strong>: rows refresh when another tab, the CLI, or an agent changes a task, without reloading the page ([HTPR-6458](https://app.hypertask.ai/detail/project-15/6458))
@@ -24,6 +25,7 @@ export const Update = ({ label, children }) => (
 <Update label="September 14, 2026">
   * Improved <strong>GitHub Actions schedule location</strong>: GitHub schedules now fire from the repository's default branch (instead of requiring a separate branch-specific schedule copy) ([HTPR-6267](https://app.hypertask.ai/detail/project-15/6267))
   * Improved <strong>CLI unassign</strong>: `tasks unassign` now accepts the numeric list id from `tasks list` and supports bulk unassigning from an entire board with the `--all` flag ([HTPR-6429](https://app.hypertask.ai/detail/project-15/6429))
+  * <strong>My Tasks saved views</strong>: save custom filters, sorting, board selection, done column hidden by default ([HTPR-6422](https://app.hypertask.ai/detail/project-15/6422))
 </Update>
 
 <Update label="September 13, 2026">
