@@ -7,7 +7,38 @@ description: Create, assign, and manage tasks with rich fields, priorities, rela
 
 A task represents a unit of work that can be assigned, progressed, and tracked. It supports rich fields, priority levels, relationships, and subtasks.
 
-## All Tasks view
+## My Tasks
+
+<strong>My Tasks</strong> is your personal task list across boards. By default it shows tasks assigned to you.
+
+### Saved views
+
+You can create and manage saved views on My Tasks to customize what you see. These views support:
+
+- **Full filtering**: Filter by title, assignee, priority, due date, labels, and more.
+- **Sorting**: Sort by any of the same fields, with priority as the primary sort key.
+- **Board selection**: Show tasks from one board or across multiple boards.
+- **Done columns hidden by default**: Done columns are hidden within each view to focus on active work.
+
+Saved views are persisted to your account and can be shared with other members of your team.
+
+### How it works
+
+When you toggle a filter, sort order, or board, your selection is saved with the view. The next time you open that view, the settings are applied automatically. You can create multiple views—one for active prioritized tasks, one for a specific project, or any combination that matches your workflow.
+
+To create a saved view, open My Tasks and use the view toolbar to pick filters and sorting options, then select **Save view**. The view appears in the saved views list alongside system views like **Involvement** and **All tasks**.
+
+### Excluding tasks you don't need
+
+To hide distracting or temporary tasks:
+
+- Use **View filters** to show or hide assignments, priorities, or tags that don't match your current focus.
+- Create and pin a custom view with the exact criteria you want to see.
+- Review tasks by tag or priority and archive or move them away when no longer relevant.
+
+> **Note:** Saved views are scoped to the current team. Cross-board filters and sorting are supported, so you can see, for example, "all high-priority inbox tasks across all boards" in a single custom view.
+
+### All Tasks view
 
 The <strong>All Tasks</strong> view provides an at-a-glance overview of every active task across the board. It builds split views for each board section (To Do, In Progress, Done, etc.) from a single source of truth.
 
@@ -25,27 +56,7 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 
 Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
 
-**Note:** Unlike <strong>My Tasks</strong>, All Tasks does not automatically filter out onboarding, demo, template, or staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
-
-## My Tasks
-
-<strong>My Tasks</strong> is your personal list across boards. By default it shows tasks assigned to you.
-
-Use <strong>Involvement</strong> to also include tasks you created, tasks where you were mentioned, or tasks you watch. You can turn on more than one option at a time. The choice is saved with the active My Tasks view ([HTPR-6457](https://app.hypertask.ai/detail/project-15/6457)).
-
-When someone else changes a task (another tab, the CLI, or an agent), the matching My Tasks row updates without a page reload: priority, assignees, column, due date, title, and archive. A new assignment to you appears as a new row ([HTPR-6458](https://app.hypertask.ai/detail/project-15/6458)).
-
-### Quick add
-
-At the top of My Tasks, type a title and press Enter to create a task on that view's default board, assigned to you. The first time a view has no default board, My Tasks asks you to pick one and remembers it for next time ([HTPR-6460](https://app.hypertask.ai/detail/project-15/6460)).
-
-### Exclude tasks you don't need
-
-To hide distracting or temporary tasks:
-
-- Use <strong>View filters</strong> to show or hide assignments, priorities, or tags that don't match your current focus.
-- Create and pin a custom view with the exact criteria you want to see.
-- Review tasks by tag or priority and archive or move them away when no longer relevant.
+**Note:** Unlike <strong>My Tasks</strong> saved views, All Tasks does not automatically filter out onboarding, demo, template, and staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
 ## Creating a task
 
@@ -78,6 +89,7 @@ When you create a new task and leave the title empty:
 - The generated title appears and is automatically saved; the field stays editable so you can refine it further.
 
 **Typical behavior:**
+
 - If your description starts with an imperative verb (e.g., "Design homepage mockup with hero section"), a title like "Design homepage mockup" is suggested.
 - For notes-style descriptions without a clear verb, the system provides a concise, suitable title.
 - The rough defaults and style controls are intentionally sensitive to length: shorter descriptions receive shorter titles, longer ones get fuller noun phrases.
@@ -204,22 +216,27 @@ See the [Pages](/features/pages/) feature docs for details.
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
 
 **Mobile dictation interaction:**
+
 - On mobile screens, posting a comment no longer spurs unintended dictation that can overlap with nearby action buttons.
 - Send and Resend are treated as semantic click-driven actions; their target remains fixed before the click event, preventing the browser's click emission from retargeting to unintended controls.
 
 **Write with AI two-case design on mobile ([HTPR-5865](https://app.hypertask.ai/detail/project-15/5865))**
+
 - The mobile Write with AI flow now clearly distinguishes between editing your draft and having AI generate content from scratch. The interface guides you through an explicit step: review your draft before accepting AI suggestions, or let AI write from your brief.
 - Drafts are preserved until you accept the AI proposal, preventing accidental loss of manual work.
 
 **Write with AI full-screen edit mode ([HTPR-5920](https://app.hypertask.ai/detail/project-15/5920))**
+
 - On mobile, when you use Write with AI in a task comment or description, the composer opens full screen. This gives you maximum space to review, edit, and regenerate AI-generated text before committing.
 - The edit controls and chip strip sit below the editor, keeping your draft clearly visible while providing quick access to Undo, Redo, Regenerate, and Discard actions.
 
 **Undo prompt visibility:**
+
 - Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
 - On mobile, compact undo toasts (110×74 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re-archiving creates a fresh compact undo toast that measures and aligns the same way.
 
 **Comment draft scoping ([HTPR-5907](https://app.hypertask.ai/detail/project-15/5907))**
+
 - Comment drafts are scoped to a specific task and description field. AI-generated drafts from previous tasks no longer appear in other tasks' comment composers. This prevents confusion and accidental previewing of stale drafts, ensuring drafts remain task-specific.
 
 ### Exit behavior (HTPR-6158)
