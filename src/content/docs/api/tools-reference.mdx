@@ -41,10 +41,15 @@ _Takes no parameters._
 
 ### `hypertask_list_projects`
 
-Lists all projects/boards the user has access to with filtering and pagination. Use this when you need to filter by status (Normal/Archive), search by title/description, or paginate through large lists. For initial context setup, use get_user_context instead (which includes projects).
+Lists all projects/boards the user has access to with filtering and pagination. Use this when you need to filter by status (Normal/Archive), search by title/description, or paginate through large lists. For initial context setup, use get_user_context instead (which includes projects). Shared list params: `query`, `filter`, `sort`, `fields`, `limit`, `cursor`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
+| `query` | string | No | Free-text search |
+| `filter` | object | No | Structured filters (`status`, `label`, `updated_since`) |
+| `sort` | string | No | Sort field, optionally `field:asc` or `field:desc` |
+| `fields` | string[] | No | Return only these columns |
+| `cursor` | string | No | Next page token from a previous response |
 | `status` | `Normal` | `Archive` | `Deleted` | No | Filter by project/board status |
 | `search` | string | No | Search by title or description |
 | `limit` | integer | No | Number of results to return |
@@ -124,7 +129,7 @@ Add, update, or delete a comment. Use action: `add` (create comment, requires ta
 
 ### `hypertask_get_comments_for_task`
 
-Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-1") to identify the task. Supports pagination and sorting by creation date.
+Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-1") to identify the task. Supports pagination and sorting by creation date. Shared list params: `query`, `filter`, `sort`, `fields`, `limit`, `cursor`.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -132,6 +137,11 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
+| `query` | string | No | Free-text search in comment body |
+| `filter` | object | No | Structured filters (`updated_since`) |
+| `sort` | string | No | Sort field |
+| `fields` | string[] | No | Return only these columns |
+| `cursor` | string | No | Next page token |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
 | `sort_order` | `asc` \| `desc` | No |  |
@@ -227,10 +237,15 @@ Creates or updates a relation between two tasks. Identify each task with exactly
 
 ### `hypertask_list_tasks`
 
-Lists tasks with comprehensive filtering options. Filter by project, section (column title or section_id), assignee, priority, due date, status, labels, and more. Supports pagination and sorting. Results are automatically limited to boards/projects the user has access to. Prefer section_id (positive integer) when known; otherwise use section with the exact section_title from hypertask_section action=list. The CLI resolves section names to section_id per project. Each task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
+Lists tasks with comprehensive filtering options. Filter by project, section (column title or section_id), assignee, priority, due date, status, labels, and more. Supports pagination and sorting. Results are automatically limited to boards/projects the user has access to. Prefer section_id (positive integer) when known; otherwise use section with the exact section_title from hypertask_section action=list. The CLI resolves section names to section_id per project. Shared list params: `query`, `filter` (`section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`), `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
+| `query` | string | No | Free-text search |
+| `filter` | object | No | Structured filters (`section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`) |
+| `sort` | string | No | Sort field, optionally `field:asc` or `field:desc` |
+| `fields` | string[] | No | Return only these columns, for example `title,url` |
+| `cursor` | string | No | Next page token from a previous response |
 | `project_id` | integer | No |  |
 | `section_id` | integer | No |  |
 | `section` | string | No |  |
@@ -292,11 +307,15 @@ Gets the highest-priority unleased tasks from one accessible board. Optionally l
 
 ### `hypertask_search_tasks`
 
-Searches for tasks by name, description, or ticket number. Enhanced with filters for assignee (me/unassigned/user ID), priority, section, due date, and status. Results are automatically limited to boards/projects the user has access to. Use this to find tasks before adding comments or performing other actions. Each task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
+Searches for tasks by name, description, or ticket number. Enhanced with filters for assignee (me/unassigned/user ID), priority, section, due date, and status. Results are automatically limited to boards/projects the user has access to. Use this to find tasks before adding comments or performing other actions. Shared list params: `query`, `filter`, `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `query` | string | Yes |  |
+| `filter` | object | No | Structured filters (`section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`) |
+| `sort` | string | No | Sort field |
+| `fields` | string[] | No | Return only these columns |
+| `cursor` | string | No | Next page token |
 | `board_id` | integer | No |  |
 | `project_id` | integer | No |  |
 | `assigned_to` | string \| integer | No |  |
