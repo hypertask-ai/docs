@@ -15,7 +15,7 @@ MCP uses a tool-based architecture: the server advertises available operations (
 
 ## Transport
 
-Hypertask's MCP server uses <strong>stateless Streamable HTTP</strong>. Every request carries its own bearer token. The server does not keep a session per client, so any instance can answer any call. No sticky load-balancer session is required.
+Hypertask's MCP server uses Streamable HTTP at the URL below. Every request carries its own bearer token. A limited Owner + QA rollout answers without a server-side session. Other clients still use the existing session-backed path until that flag is released.
 
 The endpoint is:
 
@@ -23,7 +23,7 @@ The endpoint is:
 https://mcp.hypertask.ai/mcp
 ```
 
-A session id, if a client sends one, is ignored. Server-Sent Events are used only when a long call streams progress, or as a fallback at <code>/sse</code> for older clients.
+On the limited rollout, a session id is ignored if a client still sends one. Server-Sent Events are used when a long call streams progress, or as a fallback at <code>/sse</code> for older clients.
 
 ### Endpoints
 
@@ -31,7 +31,7 @@ Once connected, the following endpoints are available:
 
 | Endpoint | Type | Description |
 |----------|------|-------------|
-| `/mcp` | Stateless Streamable HTTP | Primary MCP endpoint. Bearer token per request, no server-side session |
+| `/mcp` | Streamable HTTP | Primary MCP endpoint. Bearer token per request. Stateless no-session handling is a limited Owner + QA rollout |
 | `/sse` | SSE | Fallback for older clients that cannot speak Streamable HTTP |
 | `/message` | SSE | Companion path for the SSE fallback |
 | `/openapi.json` | OpenAPI schema | Auto-generated OpenAPI spec for ChatGPT and other clients |
