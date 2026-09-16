@@ -19,6 +19,8 @@ export const Update = ({ label, children }) => (
   * <strong>MCP client eval</strong>: the agents dashboard can show success rate and token cost for 20 Hypertask tasks run through MCP and the CLI on Claude, Cursor, and Codex ([HTPR-6533](https://app.hypertask.ai/detail/project-15/6533))
   * Fixed: Mobile Agent Chat uses the same TipTap composer as AI chat, not a textarea ([HTPR-6476](https://app.hypertask.ai/detail/project-15/6476))
   * Fixed: Agent Chat and the team agent list no longer stay empty when a team has no agents you can see. Hypertask adds a Hyper AI agent on a board of that team, including when you can use the team but are not yet on a board ([HTPR-6512](https://app.hypertask.ai/detail/project-15/6512))
+  * Fixed <strong>CLI empty assignee</strong>: passing an empty string to `--assignee` or `--clear-assignees` now properly clears all assignees instead of being rejected ([HTPR-6520](https://app.hypertask.ai/detail/project-15/6520))
+  * Fixed <strong>CLI agent details</strong>: the `hypertask agents get --id` command no longer returns UnknownCommand ([HTPR-6473](https://app.hypertask.ai/detail/project-15/6473))
 </Update>
 
 <Update label="September 15, 2026">
