@@ -23,7 +23,7 @@ When an agent session starts, it should find the highest-priority available work
 // Example: open tickets in AI Review with a red PR, title and url only
 hypertask_list_tasks({
   project_id: 15,
-  filter: { section: "AI Review", has_pr: "red", status: "Normal" },
+  filter: { section: "AI Review", has_pr: "red", status: "open" },
   fields: ["title", "url"],
   limit: 20
 })
