@@ -80,6 +80,14 @@ Agents are fully integrated with your board, tasks, and other AI tools. Use the 
 - Spot delayed or missed merge/unblock checks via the heartbeat line
 - Identify agents that need human intervention via red outlines and the blocked-summary widget
 
+## MCP versus CLI eval
+
+When the MCP client eval is on for your account, the agents page also shows a table of 20 real Hypertask tasks run through the MCP server and through the CLI from Claude, Cursor, and Codex.
+
+Each row shows pass or fail, tokens in, tokens out, wall time, and the number of tool calls. Use it to see where MCP is cheaper or more reliable than the CLI, and to catch regressions when the MCP server changes.
+
+The first published numbers are today's baseline, so later MCP server work can be compared against them.
+
 ## Working with pages and task detail pages
 
 Agents can interact with task detail pages such as `/detail/project-15/<ticket>`. The production verifier validates these URLs, so agents can reference specific tasks from pages or create links to them. This makes it possible for agents to verify task lifecycles and generate pages as part of their workflows.
