@@ -3,24 +3,27 @@ title: "Images and Attachments"
 description: "Send HEIC/HEIF photos, view them everywhere (thumbnails, inline, galleries, lightboxes), force or exempt from preview, manage low-res fallbacks."
 ---
 
-We treat HEIC and HEIF images like any other file: they render consistently across thumbnails, inline previews, galleries, and lightbox views. If a preview isn’t suitable, exclude the format from previews or use a low-res fallback.
+HEIC and HEIF photos can be picked, dragged, or pasted into a comment or task description. Hypertask keeps the original file for downloads and creates a JPEG copy for browser previews.
 
 ## Supported formats
 
 | Format | Default behavior |
 |--------|------------------|
-| HEIC/HEIF | Convert to browser-compatible JPEG for preview; uploaded as-is (or after lossless conversion if enabled) |
+| HEIC/HEIF | Upload the original unchanged and create a browser-compatible JPEG preview |
 | JPEG/PNG/WebP | Render at full quality |
 
 ## Viewing HEIC/HEIF
 
-1. Attach a photo from an iPhone or Mac.
-2. The platform converts it to a browser-supported format before serving it.
-3. See it in the same places as regular images:
+1. Pick, drag, or paste a photo from an iPhone or Mac.
+2. Hypertask uploads the original and generates a JPEG copy in the browser.
+3. See the JPEG copy in the same places as regular images:
    - **Attachment thumbnails** below comments and email bubbles
    - **Inline embed** inside a comment or task description
    - **Board gallery** or gallery views that show attachments
    - **Task detail lightbox** with a thumbnail strip at the bottom
+4. Download the attachment to receive the original HEIC or HEIF with its original file name.
+
+If the browser cannot create the JPEG copy, the original still uploads and appears as a named download tile.
 
 ## Excluding previews
 
