@@ -1,6 +1,6 @@
 ---
-title: Tasks
-description: Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks.
+title: "Tasks"
+description: "Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks."
 ---
 
 # Tasks
@@ -13,10 +13,17 @@ A task represents a unit of work that can be assigned, progressed, and tracked. 
 
 The list groups by due time: <strong>Overdue</strong>, <strong>Today</strong>, <strong>This week</strong>, <strong>Later</strong>, and <strong>No due date</strong>. Overdue stays at the top. Use <strong>Group</strong> to switch back to board groups. Saved My Tasks views remember the choice ([HTPR-6455](https://app.hypertask.ai/detail/project-15/6455)). Board split tabs still filter inside a time group.
 
+### Tasks you're snoozed on
+
+To temporarily hide tasks from your My Tasks view, set a <strong>snooze</strong>. When you snooze until a date:
+- The task no longer appears in My Tasks until that date passes
+- The snooze date sets a calendar reminder so you can resurface the task later
+
+A snooze is per task and independent of other views. Tasks remain otherwise accessible from boards, calendars, and saved views.
+
 ### Saved views
 
 You can create and manage saved views on My Tasks to customize what you see. These views support:
-
 - **Full filtering**: Filter by title, assignee, priority, due date, labels, and more. Filter options match the Kanban board filter menu, so you can use familiar screen-level controls directly on My Tasks.
 - **Sorting**: Sort by any of the same fields, with priority as the primary sort key.
 - **Board selection**: Show tasks from one board or across multiple boards.
@@ -33,7 +40,6 @@ To create a saved view, open My Tasks and use the view toolbar to pick filters a
 ### Excluding tasks you don't need
 
 To hide distracting or temporary tasks:
-
 - Use **View filters** to show or hide assignments, priorities, or tags that don't match your current focus.
 - Create and pin a custom view with the exact criteria you want to see.
 - Review tasks by tag or priority and archive or move them away when no longer relevant.
@@ -49,7 +55,6 @@ To access this view, navigate to the board and select <strong>All Tasks</strong>
 ### How All Tasks works
 
 All Tasks uses a single fetch pass that loads rows once and builds board splits from those rows. As a result:
-
 - Each board sees its own split of the task list.
 - Quiet boards do not lose splits in favor of busy boards.
 - The view is stable and deterministic across sessions.
@@ -63,7 +68,6 @@ Since All Tasks is board-wide, it aggregates tasks from all active columns and s
 ## Creating a task
 
 From a board or inbox, click **New task** (or use the keyboard shortcut <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>). This opens the task creator with the following top-level sections:
-
 - **Title**: The name or headline of the work.
 - **Description**: Optional text explaining what to do.
 - **Assignees**: One or more members to get notified and held accountable.
@@ -85,13 +89,11 @@ On mobile devices, the new-task modal renders in reading order without replacing
 ### Automatic title generation on save
 
 When you create a new task and leave the title empty:
-
 - Save the task by clicking **Save**, pressing <kbd>Ctrl+Enter</kbd>, or using the Command palette.
 - The system quickly generates a title based on your description and updates the task with "Generating title…" status.
 - The generated title appears and is automatically saved; the field stays editable so you can refine it further.
 
 **Typical behavior:**
-
 - If your description starts with an imperative verb (e.g., "Design homepage mockup with hero section"), a title like "Design homepage mockup" is suggested.
 - For notes-style descriptions without a clear verb, the system provides a concise, suitable title.
 - The rough defaults and style controls are intentionally sensitive to length: shorter descriptions receive shorter titles, longer ones get fuller noun phrases.
@@ -101,7 +103,6 @@ This hidden generation runs silently on every empty-title save, keeping your tas
 ### Bottom-of-column composer
 
 You can also add tasks directly in any column via the bottom-of-column quick-entry composer. In Trello-style batch quick-entry:
-
 - Type a task title and press **Enter**.
 - The task is created, and the composer stays open for another title so you can add multiple tasks in row.
 - Press **Escape** or click outside to close the composer. Top add + full-screen task creator remain unchanged.
@@ -109,7 +110,6 @@ You can also add tasks directly in any column via the bottom-of-column quick-ent
 #### Mobile new-task modal
 
 On mobile, the new-task modal opens full screen to give you maximum vertical space. To exit the modal:
-
 - Tap the **X** in the header to close it.
 - Swipe right to dismiss it on supported devices.
 - Use the back button on your phone to close it.
@@ -137,7 +137,6 @@ On mobile devices, task detail pages now use the full phone width and accommodat
 ### Mobile floating controls ([HTPR-5850](https://app.hypertask.ai/detail/project-15/5850))
 
 On mobile devices, tasks and board views now use floating action controls instead of fixed-rail buttons. From any board or inbox on a small screen:
-
 - Tapping the floating **New task** button opens the full-screen task creator.
 - Swiping to dismiss or using back navigation keeps navigation smooth and predictable.
 - The button is prominently placed at the bottom of the screen for a thumb-friendly interaction and works consistently across Board, Calendar, and Inbox views.
@@ -168,7 +167,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 
 - **Ctrl+K** / **Cmd+K**: Open the command palette with AI-assisted task editing and Quick Actions.
 - **Ctrl+N** / **Cmd+N**: Create a new task from anywhere on a board.
-- **Ctrl+O** / **Cmd+O**: Open the link picker when in a task detail view or comment.
+- **Ctrl+O** / **Cmd+O**: Open the link or auto-save picker when in a task detail view or comment.
 - **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation.
 
 ## Task Reporter
@@ -193,7 +192,6 @@ When you make manual changes to a task—moving, assigning, unassigning, archivi
 ## Task detail view
 
 Open a task to see:
-
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
@@ -207,7 +205,6 @@ On mobile, swipe left across a task detail to open the next task in your current
 ### Notes and pages
 
 Attach rich notes and full-screen notepads directly to tasks:
-
 - **Notes**: Inline-style notes inside the description area.
 - **Pages**: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 
@@ -218,7 +215,6 @@ See the [Pages](/features/pages/) feature docs for details.
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
 
 **Mobile dictation interaction:**
-
 - On mobile screens, posting a comment no longer spurs unintended dictation that can overlap with nearby action buttons.
 - Send and Resend are treated as semantic click-driven actions; their target remains fixed before the click event, preventing the browser's click emission from retargeting to unintended controls.
 
@@ -233,7 +229,6 @@ The comment thread shows all comments on the task. By default, when you open a t
 - The edit controls and chip strip sit below the editor, keeping your draft clearly visible while providing quick access to Undo, Redo, Regenerate, and Discard actions.
 
 **Undo prompt visibility:**
-
 - Undo prompts now dismiss automatically after 5 seconds on desktop and mobile. The built-in undo remains available until <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd> is pressed, which keeps the undo available for an additional 15 seconds.
 - On mobile, compact undo toasts (110×74 px) appear on the left along the bottom edge next to actions. They feature a 44px Dismiss target for quick dismissal, and re-archiving creates a fresh compact undo toast that measures and aligns the same way.
 
@@ -248,7 +243,6 @@ On task detail and Pages, pressing <kbd>Esc</kbd> now exits via the safe return 
 ## Actions
 
 Common actions include:
-
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
@@ -257,7 +251,6 @@ Common actions include:
 ## Relations between tasks
 
 Create relationships between tasks to surface context without leaving tasks:
-
 - **Block**: Mark a task as blocking another task.
 - **Blocked by**: Identify what indirectly holds a task back.
 - **Duplicate**: Link to other tasks that represent the same work item.
@@ -266,7 +259,6 @@ Create relationships between tasks to surface context without leaving tasks:
 ### Adding a related task
 
 From a task detail view, open the **Relations** section to add a related task. When you create a new relation from the picker:
-
 - **Recently worked tasks**: If you've recently worked on other tasks, they appear in the picker to help you reuse prior context.
 - **Access control**: Mentions and relations are access-controlled—you can only create relationships to tasks you have access to.
 
@@ -275,7 +267,6 @@ See a task's relations in the **Relations** section of the task detail view.
 ## Blocked by a person
 
 Mark a ticket as waiting on one specific person (like a blocked-by relation, but for a person instead of a ticket):
-
 - **Set**: Press <kbd>Shift</kbd>+<kbd>B</kbd> on an open ticket, or run <kbd>Ctrl+K</kbd> — "Blocked by person...", then pick the person. One blocker per ticket.
 - **See it**: The ticket sidebar shows a **Waiting on** row under Assignees with the person and how long they have been the blocker (red past 24 hours).
 - **Inbox**: Tickets waiting on you appear in a **Blocked by you** inbox split (second, right after Important) and are flagged with a red BLOCKED badge inside Important, pinned to the top, oldest first.
@@ -290,7 +281,6 @@ Break down a task into smaller units. Subtasks appear in the task detail under t
 ### Default subtask visibility
 
 When a board or view is created, or when you create a parent task without selecting a subtask style:
-
 - **Flattened list**: Subtasks appear as a flat list in the parent task detail row.
 - **Card elements**: Subtasks appear as mini cards aligned in a grid beneath the parent task.
 
@@ -307,7 +297,6 @@ The task detail sidebar includes a rail of properties (title, priority, assignee
 ## Time tracking
 
 Track work hours on tasks via the **Times** section:
-
 - <kbd>B</kbd> opens the time entry modal from the task, or use the command palette ("Log time").
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
@@ -317,7 +306,6 @@ See the [Time Tracking](https://docs.hypertask.ai/features/time-tracking/) guide
 ## Status and sections
 
 Tasks can belong to one section on a board. Changing a task's section moves it to the new column. Some sections have special behaviors:
-
 - **Auto-filing**: Certain pipeline tasks are auto-filed from CI or monitoring systems as new tickets. These appear fresh on the board as soon as they're created.
 
 **Note:** Temporary typecast changes for webhook status handling (e.g., internal Stripe SDK version bumps) do not surface as user-visible settings or toggles; they are infrastructure-level fixes and apply silently under the hood.
@@ -325,41 +313,15 @@ Tasks can belong to one section on a board. Changing a task's section moves it t
 ## Attachments
 
 Upload files to tasks to enrich them with context:
-
 - **From web UI**: Drag and drop files or use the attachment picker in the task description.
 - **From CLI**: Use ``hypertask comment add <ticket> --attach <file>`` to attach.
 - **From MCP**: Use the ``hypertask_attachments_add`` tool with file upload support.
 
 The system accepts a wide range of file types including APK, ZIP, gzip, tar, CSV, JSON, and generic octet-stream files. Uploads are validated using a combination of file extension checking and magic-byte signatures where applicable. Non-image, non-text files are processed and stored for download via a shared URL.
 
-## Follower notifications
+## Billable seats and assignees
 
-When you mention someone on a task, they're automatically added as a follower so they receive updates (see [Collaboration](https://docs.hypertask.ai/features/collaboration/). If you use the follower field directly on a task page, Hypertask sends them a notification to inform them they've been added as a follower. Previously, the request used the wrong key and failed silently. Deliveries now succeed reliably.
-
-## Notes and pages
-
-Attach rich notes and full-screen notepads directly to tasks:
-
-- **Notes**: Inline-style notes inside the description area.
-- **Pages**: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
-
-See the [Pages](https://docs.hypertask.ai/features/pages/) feature docs for details.
-
-## AI status updates
-
-AI status updates appear on task cards when an AI agent updates task metadata in a visible way. This includes fields like priority, assignees, labels, due dates, and related tasks. You can see these changes via the task detail panel, the board cards, and notification contexts without opening every detail.
-
-- The agent runs **Write with AI** with the `--mode write-with-ai` flag, posting updates as real comments.
-- You see the updates on the task card, in the task detail panel, and inside notification contexts.
-- This enables agents to keep tasks current (e.g., promote high-priority work, clear blockers) while keeping manual edits to structural work visible and auditable.
-
-**Leverage it from the command palette:** <kbd>Ctrl+K</kbd> — search for a task and use **Agent write-with-AI** to trigger the update.
-
-## Billing and seats
-
-Hypertask uses a per-seat billing model based on the number of members with team memberships and project access. Seats are reserved for active members, and the system ensures seats are correctly allocated and reconciled.
-
-**Seat loss prevention**: The system now uses per-team leases with duplicate-membership protection during joins and access grants, and daily reconciliation runs to correct discrepancies. This prevents users from losing seats due to concurrent invites or race conditions.
+Hypertask uses a per-seat billing model and reserves seats for active human members. Seat loss prevention: the system now uses per-team leases with duplicate-membership protection during joins and access grants, and daily reconciliation runs to correct discrepancies. This prevents users from losing seats due to concurrent invites or race conditions.
 
 ## Exports and integration
 
@@ -376,7 +338,6 @@ The Task Writer writes tasks in your team's style. It uses board-aware prompts, 
 #### Required sections
 
 When generating a task, the Task Writer always includes sections for:
-
 - **User problem**: The end-user need or behavior the task addresses.
 - **Acceptance criteria**: Concrete conditions that define when the task is considered done.
 - **Where in the product**: The specific UI surface (board column, screen, or view) where users interact with this work.
@@ -389,7 +350,6 @@ When you paste a brief or use commands like "Related issues X and Y...", the Tas
 #### Prompt-only model
 
 The Task Writer is a prompt-based generator, not a chat. The flow is:
-
 - **Step 1: Paste or dictate** — Provide a brief description, use dictation, or include Issue references.
 - **Step 2: Receive a task proposal** — The Task Writer responds with a full task draft including required sections and related tickets.
 - **Step 3: Accept or refine** — You can accept the proposal as-is, or type further instructions to refine it (for example, "add 3 more acceptance criteria") and click **Refine** to generate a revised draft.
@@ -407,10 +367,15 @@ After the Task Writer generates a draft, you can refine it just like any other A
 ## Keyboard shortcuts summary
 
 Shortcuts are global by default, but some vary by context:
-
 - <kbd>Ctrl+N</kbd> / <kbd>Cmd+N</kbd>: Create a new task.
 - <kbd>Ctrl+O</kbd> / <kbd>Cmd+O</kbd>: Open the link or auto-save picker.
 - <kbd>Ctrl+B</kbd> / <kbd>Cmd+B</kbd>: Open the board palette (account switcher).
 - <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>: Command palette with AI-assisted actions.
 - <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd>: Open AI Task Writer while creating a new task.
 - <kbd>Shift</kbd>+<kbd>B</kbd> or the command palette: Set/block someone as current blocker for the ticket.
+- <kbd>Space</kbd>: Mark current item as read/unread.
+- <kbd>E</kbd>: Archive notification.
+- <kbd>Enter</kbd>: Open task or draft.
+- <kbd>J</kbd>: Move focus down.
+- <kbd>K</kbd>: Move focus up.
+- <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd>: Create a new task while opening the AI Task Writer for instant text generation.
