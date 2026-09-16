@@ -1,13 +1,74 @@
 ---
-title: Scheduling
-description: Start dates, repeating tasks, task templates, and the My tasks planning view.
+title: "Scheduling"
+description: "Start dates, repeating tasks, task templates, and the My tasks planning view."
 ---
 
 # Scheduling
 
-Four related capabilities for planning work over time: **start dates**, **repeating tasks**, **task templates**, and the **My tasks** view that ties them together.
+Plan when work starts, set up recurring tasks, or reuse common task structures. Scheduling features help you align work with deadlines, keep deliverables on track, and streamline repetitive project workflows.
 
-Every one of them is reached through the command palette (<kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>). None of them adds a button or panel to the interface, and none of them has a dedicated keyboard shortcut — search for the command by name.
+## Due dates
+
+Set when a task should be completed:
+- **Pick a date**: Click the due date field on a task or in the New task form, then choose from the calendar.
+- **Predictive phrases**: Enter phrases like "tomorrow," "next week," or "in 3 days" to set relative dates.
+- **Remove a due date**: Click today's date or select "No due date" to clear it.
+
+### Snoozed tasks in My Tasks
+
+To temporarily hide a task from your My Tasks list, set a snooze until a specific date:
+- Open the task and use the snooze option in the edit panel, or
+- Use the command palette (<kbd>Ctrl</kbd> + <kbd>K</kbd>) and search for "Snooze this task"
+- The task will no longer appear in My Tasks until that date passes
+- The snooze date sets a calendar reminder so you can resurface the task later
+
+A snooze is per task and independent of other views. Tasks remain otherwise accessible from boards, calendars, and saved views.
+
+### Grouping by due time
+
+My Tasks lists tasks by due time by default:
+- **Overdue**: Due dates in the past, always at the top
+- **Today**: Due date is today
+- **This week**: Due date is within the next 7 days
+- **Later**: Due date is any time in the future
+- **No due date**: Tasks without a set due date
+
+Use the **Group** toggle or saved view settings to show board groups instead.
+
+## My Tasks planning view
+
+The **My Tasks** view gives you a personal planning dashboard for work assigned to you:
+- Groups by due time (Overdue, Today, This week, Later, No due date)
+- Full Kanban board filters available across all time groups
+- Custom columns you've defined on your boards are preserved in My Tasks
+- Real-time live updates: rows refresh automatically when changes happen from other tabs, the CLI, or agents, without reloading the page
+- Quick-add at the top: type a task title and press <kbd>Enter</kbd> to create a task on the view's default board, assigned to you
+
+### Saved views
+
+Save custom filters, sorting, board selection, and hidden columns to create personalized My Tasks views:
+- **Full filtering**: Filter by title, assignee, priority, due date, labels, and more
+- **Sorting**: Sort by any of the same fields, with priority as the primary sort key
+- **Board selection**: Show tasks from one board or across multiple boards
+- **Done columns hidden by default**: Keep focused on active work
+
+Saved views persist at the account level and can be reused or deleted from the view toolbar.
+
+## Repeating tasks
+
+Configure a task to repeat on a schedule:
+- Set a due date and enable repeat
+- Choose a frequency (daily, weekly, biweekly, monthly)
+- Specify repeat until (date or count)
+
+When a repeat task is marked complete, a new instance appears with the next due date.
+
+## Task templates
+
+Task templates save task structures for reuse:
+- Create a template from a completed task's fields, due date, and subtasks
+- Apply templates to new tasks to keep formatting consistent
+- Manage templates from the Board Settings or task detail "Templates" section
 
 ## Start dates
 
