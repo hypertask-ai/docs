@@ -1,51 +1,123 @@
 ---
 title: "CLI Task Assignment"
-description: Use hypertask tasks assign to assign tasks to agents or users, and hypertask lease claim to claim workspace leases before batching assignments.
+description: "Use hypertask tasks assign to assign tasks to agents or users, and hypertask lease claim to claim workspace leases before batching assignments."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-## hypertask tasks assign
+Assign users and agents to tasks, clear assignments, and manage workspace leases from the command line.
 
-Assign tasks to agents or users from the terminal.
+## Assign a task
+
+### hypertask tasks assign
+
+Assign a person or multiple people to tasks. Use the numeric list id that `tasks list` returns to operate on a specific task, or the `--all` flag to assign to an entire board.
 
 ```bash
-hypertask tasks assign <ticket> --assignee <user>
+hypertask tasks assign <ticket_number> --assignee <user-id>
+```
+
+```bash
+hypertask tasks assign --project <board> --assignee <user-id> --all
 ```
 
 **Behavior:**
 
-- Atomically assigns the task to the provided `--assignee`.
-- No lease claim is required. The command handles automatic lease acquisition internally.
-- If the task is already assigned to the specified user, the server responds with `already-assigned` and the assignee list is unchanged ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279)). Re-running the command does not create a duplicate assignment row.
-- Works for both native htz CLI and npm shim.
+- Adds the specified assignee to one or more tasks.
+- When using `--all`, the assignee is added to every task on the board.
 
-**Example:**
+**Examples:**
+
+Assign one person to a specific task listed from `tasks list`:
 
 ```bash
-hypertask tasks assign 12345 --assignee user@example.com
+hypertask tasks assign 40451 --assignee valentin
 ```
 
-<Aside type="note">The command runs without requiring prior lease claims ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185)).</Aside>
-
-## hypertask lease claim
-
-Claim an available workspace lease before performing bulk operations.
+Assign a person to the entire board:
 
 ```bash
-hypertask lease claim
+hypertask tasks assign --project 15 --assignee valentin@team.com --all
+```
+
+<Aside type="note">Re-assigning the same user returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279)).</Aside>
+
+## Clear all assignments
+
+### Empty assignee
+
+Clear a task's assignees by passing an empty string to `--assignee`.
+
+**Behavior:**
+
+- Removes every assignee from the specified task.
+- Works with `--all` to clear all assignments from a board.
+- Previously rejected as malformed input; now walks the existing unassign path.
+
+**Examples:**
+
+Clear a task's assignees:
+
+```bash
+hypertask task update 40451 --field "assignee" --value ""
+```
+
+Clear all assignments on a board:
+
+```bash
+hypertask tasks assign --project 15 --assignee "" --all
+```
+
+**Related:** `--clear-assignees` (see below).
+
+### --clear-assignees flag
+
+Clear a task's assignees using a explicit flag.
+
+```bash
+hypertask task update <ticket> --clear-assignees
 ```
 
 **Behavior:**
 
-- Raises or requests a lease token for the current workspace.
-- Required before actions like `tasks assign` in bulk workflows to coordinate concurrency.
+- Removes all assignees from the ticket.
+- Useful when you want to explicitly signal an unassignment.
+- Performs the same operation as passing empty `--assignee`.
 
-**Example:**
+<Aside type="note">HTPR-6520 shipped support for empty `--assignee` and `--clear-assignees` to clear all assignees on a task or board ([HTPR-6520](https://app.hypertask.ai/detail/project-15/6520)).</Aside>
+
+## Agent details
+
+### hypertask agents get
+
+Show details for a specific agent.
 
 ```bash
-hypertask lease claim
-# Response: Lease claimed: abc123
+hypertask agents get --id <agent-id>
 ```
 
-<Aside type="note">Use `lease claim` as a prelude for batching task assignments when multiple concurrent threads may target the same workspace ([HTPR-6185](https://app.hypertask.ai/detail/project-15/6185)).</Aside>
+**Behavior:**
+
+- Prints the agent's mission text, boards, creation time, and revoked state.
+- Returns an error if no matching agent is found.
+- Requires authentication.
+
+<Aside type="note">HTPR-6473 fixed the `UnknownCommand` error for `hypertask agents get --id`, allowing you to retrieve agent details from the CLI ([HTPR-6473](https://app.hypertask.ai/detail/project-15/6473)).</Aside>
+
+## Workspace leases
+
+### hypertask lease claim
+
+Claim a workspace lease before batching assignments or moves.
+
+```bash
+hypertask lease claim --workspace <workspace-id>
+```
+
+**Behavior:**
+
+- Secures a lease for the specified workspace during batch operations.
+- Required when performing bulk assignments or moves to prevent race conditions.
+- Automatically releases the lease after the operation completes.
+
+<Aside type="note">Assignment and move-request leases now drop immediately after completing, so the next worker can claim and run tasks without a five-minute hold ([HTPR-6388](https://app.hypertask.ai/detail/project-15/6388), [HTPR-6391](https://app.hypertask.ai/detail/project-15/6391)).</Aside>
