@@ -29,6 +29,8 @@ hypertask_list_tasks({
 })
 ```
 
+`filter.has_pr=red` matches the red PR badge on the board: failing checks or a closed pull request. `fields` returns only those columns, so this call stays small.
+
 ## Claiming tasks with leases
 
 To safely claim a task without racing with other agents, use task leases. A lease gives you exclusive control over the task for a TTL duration and keeps your claim alive through periodic heartbeats.
