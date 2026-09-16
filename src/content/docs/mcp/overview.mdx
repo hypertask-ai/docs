@@ -15,11 +15,15 @@ MCP uses a tool-based architecture: the server advertises available operations (
 
 ## Transport
 
-Hypertask's MCP server runs on Vercel and uses SSE (Server-Sent Events) transport. The endpoint is:
+Hypertask's MCP server uses <strong>stateless Streamable HTTP</strong>. Every request carries its own bearer token. The server does not keep a session per client, so any instance can answer any call. No sticky load-balancer session is required.
+
+The endpoint is:
 
 ```
-https://mcp.hypertask.ai/sse
+https://mcp.hypertask.ai/mcp
 ```
+
+A session id, if a client sends one, is ignored. Server-Sent Events are used only when a long call streams progress, or as a fallback at <code>/sse</code> for older clients.
 
 ### Endpoints
 
@@ -27,9 +31,9 @@ Once connected, the following endpoints are available:
 
 | Endpoint | Type | Description |
 |----------|------|-------------|
-| `/mcp` | Streamable HTTP | Primary MCP communications via HTTP streaming |
-| `/sse` | SSE | Server-Sent Events endpoint connected to `/message` |
-| `/message` | SSE | Redis-backed event stream for real-time state updates |
+| `/mcp` | Stateless Streamable HTTP | Primary MCP endpoint. Bearer token per request, no server-side session |
+| `/sse` | SSE | Fallback for older clients that cannot speak Streamable HTTP |
+| `/message` | SSE | Companion path for the SSE fallback |
 | `/openapi.json` | OpenAPI schema | Auto-generated OpenAPI spec for ChatGPT and other clients |
 | `/health` | HTTP | Health check endpoint |
 | `/` | HTTP | Root 307 redirect to the main app for OAuth flows |
@@ -46,7 +50,7 @@ https://mcp.hypertask.ai/llms.txt
 
 The file returns a human-readable instructions block that includes:
 - **Connect-An-AI-Assistant block** with instructions and steps for Claude, ChatGPT, Claude Code, and CLI environments
-- **MCP endpoint URL** (`https://mcp.hypertask.ai/sse`) for direct connection
+- **MCP endpoint URL** (`https://mcp.hypertask.ai/mcp`) for direct connection
 - **Authentication instructions** using JWT bearer tokens
 
 This enables AI assistants to self-discover and connect to Hypertask without manual configuration. For environments that support `llms.txt` parsing (such as Claude Desktop and ChatGPT's current and future releases), the protocol automatically applies the connection details.
@@ -155,8 +159,8 @@ Add to your Claude Desktop config file (`claude_desktop_config.json`):
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -169,14 +173,14 @@ Add to your Claude Desktop config file (`claude_desktop_config.json`):
 
 <TabItem label="Claude Code">
 
-Add to your project's `.mcp.json` or global `~/.claude/mcp.json`:
+Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run <code>claude mcp add --transport http hypertask https://mcp.hypertask.ai/mcp</code>:
 
 ```json
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -195,8 +199,8 @@ Open **Settings > MCP Servers** and add a new server:
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -304,7 +308,7 @@ Creating labels and managing saved views used to be listed here as unsupported. 
 **"Failed to Connect to MCP"** — If your client cannot connect:
 
 1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
-2. Confirm the URL is exactly `https://mcp.hypertask.ai/sse` (including `/sse`).
+2. Confirm the URL is exactly `https://mcp.hypertask.ai/mcp` (including `/mcp`). Older clients can still use `https://mcp.hypertask.ai/sse`.
 3. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
 4. Restart your MCP client after updating the configuration.
 
