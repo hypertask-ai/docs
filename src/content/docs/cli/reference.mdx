@@ -185,19 +185,24 @@ hypertask tasks list [options]
 
 | Option | Description |
 |--------|-------------|
-| `--filter <key:value>` | Apply a filter on a field (e.g., `--filter assignee:user`). |
-| `--labels <label1,label2,...>` | Filter tasks by one or more labels. Returns only tasks that have all specified labels. |
+| `--query <text>` | Free-text search. Same flag on every list command. |
+| `--filter <key=value>` | Repeatable structured filter. Keys: `section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`. |
+| `--sort <field[:dir]>` | Sort, for example `updatedAt:desc`. |
+| `--fields <a,b>` | Return only these columns, for example `title,url`. |
+| `--limit <num>` | Max rows. |
+| `--cursor <token>` | Next page from the previous response. |
+| `--labels <label1,label2,...>` | Filter tasks by one or more labels. |
 | `--offset <num>` | Start listing from the Nth item (for paginated results). |
 
 **Behavior:**
 
 - Returns a paginated list of tasks matching the specified filters.
-- Use `--offset` to navigate through large collections.
-- The `--labels` option correctly filters tasks by the specified labels, returning only tasks that have all the provided labels.
+- Prefer `--query`, `--filter`, `--fields`, and `--limit` so one call stays small.
+- Use `--offset` or `--cursor` to walk large collections.
 
 ```bash
+hypertask tasks list --project 15 --filter section=AI Review --filter has_pr=red --fields title,url --limit 20
 hypertask tasks list --labels cli,urgent
-hypertask tasks list --filter assignee juan --offset 0
 ```
 
 <Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6275](https://app.hypertask.ai/detail/project-15/6275)).</Aside>

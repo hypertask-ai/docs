@@ -14,17 +14,18 @@ When an agent session starts, it should find the highest-priority available work
 <Steps>
 
 1. **Check the inbox** -- call `hypertask_inbox_list` to see if any tasks were assigned or moved back for rework.
-2. **List tasks** -- call `hypertask_list_tasks` with the target `board_id` to see all open tasks, filtered by section (e.g., "Todo" or "Backlog").
+2. **List tasks** -- call `hypertask_list_tasks` with `query`, `filter`, `fields`, and `limit` so you get only the rows you need. Do not pull a whole board and filter it in context.
 3. **Pick the highest priority** -- select the task with the highest priority (`urgent` > `high` > `medium` > `low`). If priorities are equal, pick the oldest task.
 
 </Steps>
 
 ```
-// Example: list open tasks on board 15, sorted by priority
+// Example: open tickets in AI Review with a red PR, title and url only
 hypertask_list_tasks({
-  board_id: 15,
-  section: "Todo",
-  assigned_to: "me"
+  project_id: 15,
+  filter: { section: "AI Review", has_pr: "red", status: "Normal" },
+  fields: ["title", "url"],
+  limit: 20
 })
 ```
 
