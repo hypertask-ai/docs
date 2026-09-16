@@ -25,6 +25,12 @@ https://mcp.hypertask.ai/mcp
 
 On the limited rollout, a session id is ignored if a client still sends one. Server-Sent Events are used when a long call streams progress, or as a fallback at <code>/sse</code> for older clients.
 
+## Cheap connect (Owner + QA)
+
+A limited Owner + QA rollout keeps the first tool list small. Each tool arrives as one short line that says what it returns. The full argument list and output shape load only when the client asks, through <code>hypertask_describe_tool</code>. Clients that cannot hide unused tools (Cursor, Codex) can keep just <code>hypertask_search_tools</code> and <code>hypertask_describe_tool</code> enabled, search for a name, then load that one schema.
+
+Turn the flag on at <a href="https://app.hypertask.ai/admin/flags">https://app.hypertask.ai/admin/flags</a> with key <code>htpr-6531-deferred-mcp-tools</code>. Other accounts still receive the full catalog on connect.
+
 ### Endpoints
 
 Once connected, the following endpoints are available:
@@ -193,7 +199,7 @@ Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run <code>c
 
 <TabItem label="Cursor">
 
-Open **Settings > MCP Servers** and add a new server:
+Open **Settings > MCP Servers** and add a new server. If you want a small first load, keep only <code>hypertask_search_tools</code> and <code>hypertask_describe_tool</code> enabled after you connect (Owner + QA flag above).
 
 ```json
 {
