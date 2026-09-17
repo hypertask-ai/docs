@@ -69,7 +69,7 @@ Each inbox load now dedupes notifications and access calls to a single round tri
 
 You can now select multiple rows in the Inbox and archive them in bulk using **Shift+E**. This works across filtered lists and views. The multiple selection allows you to quickly clear out large batches of notifications without opening them individually, mirroring the bulk-archive behavior in Saved views. Selected rows are persisted until you commit the action, ensuring you can review the working set before archiving ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206)).
 
-## Unundoing inbox items safely ([HTPR-6527](https://app.hypertask.ai/detail/project-15/6527))
+## Undo inbox items safely
 
 Undoing an inbox item now safely handles empty row slots. Previously, undoing an item with a missing row slot could trigger a `waitingOnSynthetic` error and crash the inbox list. When the undo path encounters a hole in the data structure, the system now skips the empty slot instead of blocking, and the inbox list remains stable after the undo completes.
 
@@ -80,6 +80,12 @@ Undoing an inbox item now safely handles empty row slots. Previously, undoing an
 - **List stays alive**: The inbox page continues to function correctly even when undoing items with irregular row data.
 
 If you undo an inbox item and notice it didn't revert as expected, the item may have been in a separate cluster or split that was excluded from the undo scope.
+
+### Undo on the inbox
+
+On narrow screens, the undo button appears on inbox rows under undoable items. Undoing an item gracefully skips empty row slots instead of crashing the list ([HTPR-6527](https://app.hypertask.ai/detail/project-15/6527)).
+
+<Aside type="note">The undo action is available via snack bar buttons on inbox rows on mobile, or by selecting an undo action from the row's action menu on desktop.</Aside>
 
 ## Inbox boundary jumps (HTPR-5431)
 
@@ -204,7 +210,7 @@ This ensures your inbox always reflects the latest state of mentions, assignment
 
 The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views — ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
 
-## Mobile inbox icon behavior (HTPR-6365)
+## Mobile inbox icon behaviour (HTPR-6365)
 
 When viewing tasks on mobile, the blue remove-from-inbox control now correctly displays only for tasks that belong to your inbox. Tasks opened from the Kanban board that are not in your inbox will no longer show this icon, matching the same logic used on the Inbox screen.
 
