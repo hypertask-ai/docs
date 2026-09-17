@@ -10,6 +10,11 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 17, 2026">
+  * Improved <strong>Undo inbox items</strong>: undoing now safely handles empty row slots instead of throwing a crash-inducing error. Page stability preserved ([HTPR-6527](https://app.hypertask.ai/detail/project-15/6527))
+  * Added <strong>Rename agents via CLI</strong>: use `hypertask agents update --id <id> --name "<name>"` to rename agents from the terminal. Works alongside renaming from the web prompt ([HTPR-6472](https://app.hypertask.ai/detail/project-15/6472))
+</Update>
+
 <Update label="September 16, 2026">
   * Added <strong>My Tasks snooze</strong>: hide a task from your My Tasks list until a specific date ([HTPR-6461](https://app.hypertask.ai/detail/project-15/6461))
   * Improved <strong>HEIC/HEIF attachments</strong>: keep the original file format for downloads while generating JPEG previews for everywhere else ([HTPR-6264](https://app.hypertask.ai/detail/project-15/6264))
