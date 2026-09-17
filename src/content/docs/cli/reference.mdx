@@ -54,7 +54,7 @@ If an install does not succeed, the CI/CD pipeline fails and prevents the commit
 
 When you choose to install Hypertask from the web app, the in-app installer (CLI install dialog) uses the npm shim to fetch the htz binary for you. This keeps the command identical across all install channels.
 
-## General behavior
+## General behaviour
 
 ### Unknown flags
 
@@ -85,7 +85,7 @@ Rename agents from the terminal:
 hypertask agents update --id <agent-id> --name "<new-name>"
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Updates the agent's display name.
 - The agent's detail page URL and slug update to the new readable name on save.
@@ -97,7 +97,7 @@ hypertask agents update --id <agent-id> --name "<new-name>"
 hypertask agents update --id 12345 --name "Release Agent"
 ```
 
-<Aside type="note">Agents can also be renamed from the agent detail page in the web app ([HTPR-6472](https://app.hypertask.ai/detail/project-15/6472)).</Aside>
+<Aside type="note">Agents can also be renamed from their detail page in the web app ([HTPR-6472](https://app.hypertask.ai/detail/project-15/6472)).</Aside>
 
 ### Get agent details
 
@@ -113,7 +113,7 @@ hypertask agents get --id <agent-id>
 |--------|-------------|
 | `--id` | Agent UUID (required) |
 
-**Behavior:**
+**Behaviour:**
 
 - Returns agent metadata including name, description, scopes, and status.
 - Requires authentication.
@@ -133,7 +133,7 @@ Post a comment to a ticket from the terminal.
 hypertask comment add <ticket_number> --text "<comment text>"
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Adds a new comment to the specified ticket.
 - The `--text` flag holds your comment content; keep it short so it renders cleanly.
@@ -151,7 +151,7 @@ List comments for a ticket from the terminal.
 hypertask comment list <ticket_number>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Returns a human-readable list of comments for the given ticket.
 - The output includes comment content, timestamps, and information about reference tickets/tasks (the detail URLs now use board-qualified uniqueIndexes, not stale ticket name digits).
@@ -169,7 +169,7 @@ Display details for a task from the terminal.
 hypertask task get <ticket_number>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Returns full task details including fields, assignees, sections, and history.
 - Useful for inspecting tasks before updating or acting on them.
@@ -187,7 +187,7 @@ Update a task from the terminal.
 hypertask task update <ticket_number> --field "<field>" --value "<value>"
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Updates a task field without revisiting the web app.
 - Supports fields like `title`, `description`, `priority`, `assignee`, and `section`.
@@ -212,7 +212,7 @@ Create a new label.
 hypertask labels create --project <project> --name <label-name>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Creates a new label with the given name in the specified project.
 - Requires authentication via API key or session cookie.
@@ -242,7 +242,7 @@ hypertask tasks list [options]
 | `--labels <label1,label2,...>` | Filter tasks by one or more labels. |
 | `--offset <num>` | Start listing from the Nth item (for paginated results). |
 
-**Behavior:**
+**Behaviour:**
 
 - Returns a paginated list of tasks matching the specified filters.
 - Prefer `--query`, `--filter`, `--fields`, and `--limit` so one call stays small.
@@ -263,7 +263,7 @@ Move a task from one section to another.
 hypertask tasks move <ticket> --section <section-name>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - If the task is archived, the command will fail with the error:
   >
@@ -285,7 +285,7 @@ Add an emoji reaction to a comment from the terminal.
 hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - React to existing comments to acknowledge them without leaving a reply.
 - Use a single emoji character (e.g., `👍`, `😆`, `👍`).
@@ -299,7 +299,7 @@ Remove an emoji reaction from a comment.
 hypertask comment unreact <ticket_number> <comment_id> --emoji <emoji>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Removes the specified reaction from a comment.
 - Useful for correcting mis-typed acknowledgments.
@@ -326,7 +326,7 @@ hypertask inbox list [--human | --json] [options]
 | `--json` | Return results as JSON, including notification rows first (id, type, ticket, seen). |
 | `--human` | Return plain tab-separated rows by default. |
 
-**Behavior:**
+**Behaviour:**
 
 - Returns a list of notifications and tasks in your inbox.
 - Use `--json` to get structured output for scripts and tooling.
@@ -348,7 +348,7 @@ Configure webhook events for an agent.
 hypertask webhook configure --url <webhook-url> --events <events>
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - `--url` (required): Target webhook URL to listen for notifications.
 - `--events` (required): One or more space-separated webhook events.
@@ -385,7 +385,7 @@ hypertask tasks unassign <ticket_number> --assignee <user-id>
 hypertask tasks unassign --project <board> --assignee <user-id> --all
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Removes the specified assignee from one or more tasks.
 - When using `--all`, removes the person from all tasks on the board.
@@ -418,7 +418,7 @@ Create a new task on your board. When called with an agent bearer token, the cre
 hypertask task create --title "<title>" [--section <section-name>] [--assignee <user-email>]
 ```
 
-**Behavior:**
+**Behaviour:**
 
 - Accepts `--title` (required), `--section` (optional), and `--assignee` (optional).
 - Uses the bearer token passed via `--token` for authentication as an agent.
@@ -440,7 +440,7 @@ hypertask task create --title "Add documentation for API" --section Documentatio
 
 <Aside type="note">When an agent creates a task via CLI, the agent is now correctly recorded under `createdBy.agent` instead of the human owner, providing accurate attribution for agent-generated work ([HTPR-6362](https://app.hypertask.ai/detail/project-15/6362)).</Aside>
 
-## Comments URL behavior
+## Comments URL behaviour
 
 When listing comments or viewing task details:
 
@@ -452,24 +452,24 @@ When listing comments or viewing task details:
 
 ### How release checks work
 
-Hypertask uses a CI/CD parity gate to verify that CLI release behavior aligns with the production app, but it no longer blocks production on a mismatch. Changes are handled through:
+Hypertask uses a CI/CD parity gate to verify that CLI release behaviour aligns with the production app, but it no longer blocks production on a mismatch. Changes are handled through:
 
 - **Advisory warning when the CLI's latest appears to have updated**: The CLI now warns users during release checks when the published CLI version differs from production, but continues to allow the build.
 - **Trusted version allowlist**: Trusted CLI versions must be in an allowlist; all others are treated as untrusted and receive advisory warnings.
-- **Parity inventory validation**: A parity inventory task ensures that changes to CLI behavior are recognized and tracked.
+- **Parity inventory validation**: A parity inventory task ensures that changes to CLI behaviour are recognized and tracked.
 - **Failure-tolerant npm lookup**: If an unrelated publish occurs or npm data drifts, the CLI shows a warning instead of failing.
 
 ### Node half release compatibility
 
-When a change lands on the Node CLI half and is mapped straightforwardly to an htz binary behavior, the production build publishes after a passing Node parity test and an allowlist update. If the semantic difference is meaningful enough to break worker workflows, the change is handled through a separate Node-specific release and parity gating before matching to htz.
+When a change lands on the Node CLI half and is mapped straightforwardly to an htz binary behaviour, the production build publishes after a passing Node parity test and an allowlist update. If the semantic difference is meaningful enough to break worker workflows, the change is handled through a separate Node-specific release and parity gating before matching to htz.
 
 This advisory release check keeps Node CLI build iterations visible to users without halting production. Trusted versions remain vetted; all others are warned but not blocked.
 
-### Worker behavior
+### Worker behaviour
 
 Workers must not stop at an advisory warning about the CLI version. The advisory indicates that a newer or mismatched version is available, and a warning does not mean a regression with the change the worker just shipped.
 
-It is the responsibility of the build or publish process to ensure the CLI behavior matches the expectations in the parity inventory and allowlist before marking a release as trusted.
+It is the responsibility of the build or publish process to ensure the CLI behaviour matches the expectations in the parity inventory and allowlist before marking a release as trusted.
 
 ## Trusted CLI version approval
 
@@ -488,7 +488,7 @@ This ensures the gate stays bounded to the version the team has inspected and ap
 
 For a CLI version to remain trusted:
 
-- Node CLI behavior must map cleanly to the htz binary behavior (semantic parity).
+- Node CLI behaviour must map cleanly to the htz binary behaviour (semantic parity).
 - Dependency changes must not break worker workflows.
 - New CLI commands or flags must be accompanied by documentation and intended use cases.
 - Works intended for the Node-only half (to avoid regressions with htz) can proceed with limited trust.
@@ -499,7 +499,7 @@ Changes outside these bounds trigger advisory warnings and may be handled via de
 
 The trusted version allowlist captures CLI versions considered production-ready. When a new version becomes trusted:
 
-1. A parity inventory task identifies behavior differences between the new version and the previous trusted version.
+1. A parity inventory task identifies behaviour differences between the new version and the previous trusted version.
 2. The allowlist is updated with the new version.
 3. Advisory warnings are cleared; future builds will no longer show the warning.
 
@@ -513,7 +513,7 @@ CLI versions not in the allowlist receive advisory warnings but are not blocked.
 
 ## Claims and Parity Tests
 
-The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`) that validates end-to-end behavior against the documented CLI contract.
+The Hypertask CLI includes an automated parity test (`hypertask parity_test.py`) that validates end-to-end behaviour against the documented CLI contract.
 
 ### What the parity test checks
 
@@ -545,6 +545,6 @@ The parity harness confirms that `hypertask` maps to the latest route contract s
 - Token-source precedence (API keys versus session cookies).
 - 30 previously defined read-only JSON schemas.
 
-These tests validate both positional params and flags against the server contract. All checks pass in local and live runs, confirming CLI behavior aligns with the documented contract.
+These tests validate both positional params and flags against the server contract. All checks pass in local and live runs, confirming CLI behaviour aligns with the documented contract.
 
 <Aside type="tip">The CLI parity harness now also validates JSON diffs, auth matrix, negative cases, token-source precedence, and human output against the Node CI contract and passes locally and in live runs.</Aside>
