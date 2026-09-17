@@ -75,6 +75,54 @@ npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
 
+## Agent management
+
+### Rename agents
+
+Rename agents from the terminal:
+
+```bash
+hypertask agents update --id <agent-id> --name "<new-name>"
+```
+
+**Behavior:**
+
+- Updates the agent's display name.
+- The agent's detail page URL and slug update to the new readable name on save.
+- Requires authentication and valid agent ID.
+
+**Examples:**
+
+```bash
+hypertask agents update --id 12345 --name "Release Agent"
+```
+
+<Aside type="note">Agents can also be renamed from the agent detail page in the web app ([HTPR-6472](https://app.hypertask.ai/detail/project-15/6472)).</Aside>
+
+### Get agent details
+
+View details for an agent:
+
+```bash
+hypertask agents get --id <agent-id>
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--id` | Agent UUID (required) |
+
+**Behavior:**
+
+- Returns agent metadata including name, description, scopes, and status.
+- Requires authentication.
+- Requires a valid agent ID.
+
+```bash
+hypertask agents get --id 12345
+```
+
 ## Comments commands
 
 ### hypertask comment add
@@ -240,7 +288,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behavior:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `ð\x9f\x98\x80`, `ð\x9f\x91\x8d`, `â\x9c\x85`).
+- Use a single emoji character (e.g., `👍`, `😆`, `👍`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
