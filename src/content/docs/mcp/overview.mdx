@@ -25,7 +25,7 @@ https://mcp.hypertask.ai/mcp
 
 ### Stateless transport (Owner + QA only)
 
-When the <code>htpr-6532-stateless-mcp</code> flag is on for your account, the server treats each request as stateless: it answers JSON-RPC calls from the bearer token on that request and ignores any session ID. A limited set of tool responses is returned without a persistent connection, and null JSON-RPC entries no longer crash the handler. This stateless path is available to Owner and QA users only.
+When the <code>htpr-6532-stateless-mcp</code> flag is on for your account, the server treats each request as stateless: it answers JSON-RPC calls from the bearer token on that request and ignores any session ID. A limited set of tool responses is returned without a persistent connection. Null JSON-RPC entries no longer crash the stateless MCP handler; a gap / Fix / Status A batch such as <code>[null, ping]</code> returns -32600 for the bad entry and still answers ping. This stateless path is available to Owner and QA users only.
 
 ### Session-backed transport (all other users)
 
