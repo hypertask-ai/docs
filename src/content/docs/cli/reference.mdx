@@ -191,7 +191,7 @@ hypertask task update <ticket_number> --field "<field>" --value "<value>"
 
 - Updates a task field without revisiting the web app.
 - Supports fields like `title`, `description`, `priority`, `assignee`, and `section`.
-- Plain-text descriptions and comments are saved as paragraphs. HTML and structural Markdown keep their formatting.
+- During staged rollout, enabled accounts can send plain-text descriptions and comments, which are saved as paragraphs. Other accounts must send HTML or structural Markdown.
 - Requires authentication.
 
 ```bash
