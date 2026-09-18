@@ -52,7 +52,7 @@ Once connected, the following endpoints are available:
 
 ## Cheap connect (Owner + QA)
 
-A limited Owner + QA rollout keeps the first tool list small. Each tool arrives as one short line that says what it returns. The full argument list and output shape load only when the client asks, through <code>hypertask_describe_tool</code>. Clients that cannot hide unused tools (Cursor, Codex) can keep just <code>hypertask_search_tools</code> and <code>hypertask_describe_tool</code> enabled, search for a name, then load that one schema.
+A limited Owner + QA rollout keeps the first tool list small. Clients with native tool deferral receive one short line per tool and load the full argument list and output shape through <code>hypertask_describe_tool</code>. Cursor and Codex can connect to <code>https://mcp.hypertask.ai/mcp?tools=meta</code> to receive only <code>hypertask_search_tools</code> and <code>hypertask_describe_tool</code>, search for a tool, and load its schema before calling it.
 
 Turn the flag on at https://app.hypertask.ai/admin/flags with key <code>htpr-6531-deferred-mcp-tools</code>. Other accounts still receive the full catalog on connect.
 
@@ -224,14 +224,14 @@ Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run <code>c
 
 <TabItem label="Cursor">
 
-Open **Settings > MCP Servers** and add a new server. If you want a small first load, keep only <code>hypertask_search_tools</code> and <code>hypertask_describe_tool</code> enabled after you connect (Owner + QA flag above).
+Open **Settings > MCP Servers** and add a new server. Use the <code>?tools=meta</code> URL below for a small first load (Owner + QA flag above).
 
 ```json
 {
   "mcpServers": {
     "hypertasks": {
       "type": "http",
-      "url": "https://mcp.hypertask.ai/mcp",
+      "url": "https://mcp.hypertask.ai/mcp?tools=meta",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
