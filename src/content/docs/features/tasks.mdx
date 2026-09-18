@@ -82,9 +82,11 @@ Use **Write with AI** (<kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>, or the command pale
 
 In the task creator description field, a microphone icon appears above the text area when you tap inside. Tap the icon to open mobile dictation where you can speak your task description and pauses. Dictation automatically applies formatting like list items while you talk.
 
-### Mobile layout polish for the new-task modal
+### Description-first mobile task creation
 
-On mobile devices, the new-task modal renders in reading order without replacing the underlying stateful editor. The mobile form shows the title, then the description with the mini dictation icon, followed by metadata fields (assignees, sections, etc.). This layout keeps the task state synced between surfaces and prevents the composer from resetting unexpectedly. Mobile views now remain accessible and introspectable across views ([HTPR-5992](https://app.hypertask.ai/detail/project-15/5992)).
+On mobile, the new-task screen gives most of its space to the description so you can type or dictate the task without filling out a full form first. The current board stays visible at the top for quick switching. Title and task properties start collapsed behind two buttons and remain available when you need them.
+
+After adding a description, choose **Save with task writer** to turn it into a structured ticket and open the finished task. Choose the secondary **Save** action to keep your wording as entered. Images and other attachments remain available beside dictation.
 
 ### Automatic title generation on save
 
