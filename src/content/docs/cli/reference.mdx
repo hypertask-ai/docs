@@ -75,6 +75,18 @@ npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
 
+## Project commands
+
+### hypertask projects delete
+
+Permanently delete a board and its tasks from the terminal.
+
+```bash
+hypertask projects delete <project-id> --yes
+```
+
+Only a board owner or admin can delete it. The command refuses to run without `--yes` because deletion also removes the board's notifications and memberships. Use `hypertask projects archive <project-id>` when you need a reversible option.
+
 ## Task listing with label filters
 
 ### hypertask tasks list
