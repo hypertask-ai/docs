@@ -296,6 +296,8 @@ The task detail sidebar includes a rail of properties (title, priority, assignee
 
 **Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history.
 
+When another browser, the CLI, or an agent changes a task, its open detail page refreshes the title, section, assignees, labels, priority, dates, status, attachments, and linked pull requests without a reload. If the live connection is unavailable, the page checks for changes every 10 seconds.
+
 [ A JSDoc-style constraint for this change: when thread content exceeds the available screen, the property rail should remain adjacent and accessible without vertical scrolling—instead of scrolling with the main content](https://app.hypertask.ai/detail/project-15/5513).
 
 ## Time tracking
