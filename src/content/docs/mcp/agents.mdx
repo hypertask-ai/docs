@@ -152,6 +152,25 @@ hypertask agents revoke --id AGENT_ID --management-key CONTROLLER_KEY
 
 Management keys allow controlled, external authorization flows (e.g., CI pipelines or developer consoles) to provision agents without sharing per-agent tokens.
 
+#### Limit a management key to one team
+
+Team-scoped management keys are available during the Owner + QA rollout. Open **Settings > Management keys**, create a key, and choose a team instead of **Whole account**. The generated key starts with <code>httk_</code>; existing account-wide keys continue to start with <code>htmk_</code>.
+
+A team-scoped management key can:
+
+- List and manage only agents whose boards all belong to the selected team.
+- Create agents only when at least one selected board belongs to that team.
+- Read AI usage only for the selected team when you own it.
+- Create or revoke other management keys only within the same team.
+
+It cannot use account-wide token, connection, gateway-key, or data routes. **Full access** remains available only for whole-account keys.
+
+<Aside type="caution">
+
+Team access is bound to the exact owner account or accepted membership that created the key. Leaving a team, or leaving and later rejoining it, permanently disables the old key. Create a new key after access changes.
+
+</Aside>
+
 ## Working with agents
 
 Once the agent is created and successfully connected, you can integrate it into your team's workflow:
