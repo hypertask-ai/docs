@@ -34,7 +34,7 @@ On Windows x64, download the native executable with PowerShell:
 
 ```powershell
 Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/hypertask-windows-x86_64.exe -OutFile hypertask.exe
-.\hypertask.exe --version
+.\\hypertask.exe --version
 ```
 
 Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
@@ -74,6 +74,69 @@ The latest release (`v0.2.2`) is now installed on the fleet and reflects version
 npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
+
+## Task listing with label filters
+
+### hypertask tasks list
+
+List tasks with optional filtering.
+
+```bash
+hypertask tasks list [options]
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--query <text>` | Free-text search. Same flag on every list command. |
+| `--filter <key=value>` | Repeatable structured filter. Keys: `section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`. |
+| `--sort <field[:dir]>` | Sort, for example `updatedAt:desc`. |
+| `--fields <a,b>` | Return only these columns, for example `title,url`. |
+| `--limit <num>` | Max rows. |
+| `--cursor <token>` | Next page from the previous response. |
+| `--labels <label1,label2,...>` | Filter tasks by one or more labels. |
+| `--offset <num>` | Start listing from the Nth item (for paginated results). |
+
+**Behaviour:**
+
+- Returns a paginated list of tasks matching the specified filters.
+- Prefer `--query`, `--filter`, `--fields`, and `--limit` so one call stays small.
+- Use `--offset` or `--cursor` to walk large collections.
+
+```bash
+hypertask tasks list --project 15 --filter section=AI Review --filter has_pr=red --fields title,url --limit 20
+hypertask tasks list --labels cli,urgent
+```
+
+<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
+
+## Task move validation
+
+### hypertask tasks move
+
+Move a task from one section to another.
+
+```bash
+hypertask tasks move <ticket> --section <section-name>
+```
+
+**Behaviour:**
+
+- If the task is archived, the command will fail with the error:
+  >
+  > "Archived tasks cannot move sections or change assignees"
+  >
+- This message clarifies that archived tasks are immutable for moves; attempt to restore the task first, or create a new task.
+
+---
+
+You can also change assignees with:
+
+>
+`hypertask tasks move <ticket> --assignee <user>`
+>
+For full options, run `hypertask tasks move --help`.
 
 ## Agent management
 
@@ -253,7 +316,7 @@ hypertask tasks list --project 15 --filter section=AI Review --filter has_pr=red
 hypertask tasks list --labels cli,urgent
 ```
 
-<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6275](https://app.hypertask.ai/detail/project-15/6275)).</Aside>
+<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
 
 ### hypertask tasks move
 
@@ -269,13 +332,13 @@ hypertask tasks move <ticket> --section <section-name>
   >
   > "Archived tasks cannot move sections or change assignees"
   >
-  This message clarifies that archived tasks are immutable for moves; attempt to restore the task first, or create a new task.
+This message clarifies that archived tasks are immutable for moves; attempt to restore the task first, or create a new task.
 
 - You can also change assignees with:
   >
-  `hypertask tasks move <ticket> --assignee <user>`
-  >
-  For full options, run `hypertask tasks move --help`.
+`hypertask tasks move <ticket> --assignee <user>`
+>
+For full options, run `hypertask tasks move --help`.
 
 ### hypertask comment react
 
@@ -288,7 +351,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behaviour:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `👍`, `😆`, `👍`).
+- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f\x98\x86`, `ð\x9f\x91\x8d`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
