@@ -8,7 +8,7 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 Hypertask's public REST API is available at `https://app.hypertask.ai/api/v1`. Use it to list projects, create and update tasks, manage comments, assign users, read inbox notifications, and manage task drafts.
 
 <Aside type="note">
-All requests and responses use JSON. Query parameters use `snake_case`. Some request body fields keep their existing API names, including `sectionId` and `userToAdd`; use the names shown in this reference. Task descriptions, comments, and drafts are **HTML**, not Markdown.
+All requests and responses use JSON. Query parameters use `snake_case`. Some request body fields keep their existing API names, including `sectionId` and `userToAdd`; use the names shown in this reference. Task descriptions and comments accept plain text, HTML, or structural Markdown. Plain text is saved as HTML paragraphs. Drafts use HTML.
 </Aside>
 
 ## Authentication
