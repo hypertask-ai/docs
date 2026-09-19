@@ -193,6 +193,14 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 
 When you make manual changes to a task—moving, assigning, unassigning, archiving, or deleting—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
 
+### Agent attribution and Done guard ([HTPR-6376](https://app.hypertask.ai/detail/project-15/6376))
+
+- <strong>Tree actions</strong> (move, assign, assignees update): Actions preserve the authenticated agent identity even if the request omits <code>agentId</code>. The omit now behaves like an explicit agent omission rather than bypassing agent attribution.
+- <strong>Direct archive/delete</strong> of Done tasks: Agents cannot directly archive or delete Done tasks. A task marked <strong>Done</strong> cannot be archived or deleted, even by direct agent actions or omission of <code>agentId</code>.
+- <strong>Done descendants</strong>: The guard applies recursively to all Done tasks and their descendants.
+
+This ensures Done marks are a final, human-mediated state and not overturnable by direct agent actions.
+
 ## Task detail view
 
 Open a task to see:
