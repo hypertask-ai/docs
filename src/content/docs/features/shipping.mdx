@@ -1,0 +1,76 @@
+---
+title: "Shipping Page"
+description: "View production merge activity in real time with a backdrop showing each board's shipped tickets and corrected daily counts."
+---
+
+import { Aside, Card, CardGrid, LinkCard, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Shipping Page
+
+The **Shipping Page** gives you a high-level view of production activity across your workspace, with a backdrop highlighting recent merges and accurate daily counts.
+
+## Navigate to the shipping page
+
+- **URL**: `https://hypertask.app/shipping`
+- From any page, use `Cmd+K` (Mac), `Ctrl+K` (Windows/Linux) and search for **"Go to Shipping"** to jump there.
+
+## Whetting daily counts
+
+The page displays the total number of production merges—an aggregate across the whole fleet—with the daily weight corrected to exclude non-production merges like Dependabot PRs. For example, if GitHub reports 32 production merges on September 18 UTC (including 2 Dependabot PRs), the shipping page shows 30, excluding those Dependabot items from the daily sum.
+
+The count is updated as follows:
+
+- The page pulls from GitHub's production merge activity.
+- Dependabot and similar automation PRs are excluded from the displayed aggregate.
+- Exclusions are drawn from GitHub's merge events and PR labels/tags, so the total reflects non-automation production merges.
+
+## Backdrop showing each board's shipped tickets
+
+The backdrop lists each board's recently shipped tickets, which you can expand to see PR links, labels, and context.
+
+For each board, the backdrop shows:
+
+- **Board name** — the board identifier.
+- **Count** — number of production merges attributed to that board.
+- **Sorted rows** — merged tickets ordered as they appear in GitHub, with PR links and key metadata where available.
+
+You can scroll through the backdrop and expand entries to inspect PR details without leaving the shipping page.
+
+<Aside type="tip">
+Each board reads its repository configuration, branch setup, and agent list from a shared configuration, so updates to configuration propagate to the shipping backdrop automatically.
+</Aside>
+
+## Working with the shipping backdrop
+
+You can interact with the backdrop to understand recent production merges:
+
+| Action | What happens |
+|---|---|
+| **Scroll** | The backdrop expands as you scroll, showing more of the per-board merge list. |
+| **Expand an entry** | Click to reveal the PR link, labels, and related ticket IDs for that merge. |
+| **Read the daily count** | The top-level heading shows the weighted daily total (e.g., 30). |
+
+The backdrop is refreshed as production merges land, so you have a current snapshot of what shipped on each board.
+
+## Use cases for the Shipping Page
+
+Use the shipping page to:
+
+- Spot what's shipping per board at a glance.
+- Spot regressions or unusual patterns when merges are clustered.
+- Track automation vs. human work by seeing how many Dependabot PRs are excluded from the daily count.
+
+<Aside type="note">
+The shipping backdrop is shared across the workspace's board ecosystem. If you're missing a board from the list, the board's configuration or GitHub integration may need adjustment.
+</Aside>
+
+## Related resources
+
+- **Agent access and workspace fleets** — Understand board-level agent setups and how configuration affects shipping tracking.
+- **Observability & Error Tracking** — Monitor system health alongside shipping metrics.
+
+<CardGrid>
+  <Card title="Observability" description="Monitor application health and auto-file production errors." />
+  <Card title="AI Agents" description="Create, configure, and manage autonomous agents." />
+  <Card title="CLI Reference" description="Manage tasks, projects, and workflows from your terminal." />
+</CardGrid>
