@@ -55,7 +55,9 @@ If you open Agent Chat or list a team's agents and that team has none you can se
 
 Open [Agent Chat](https://app.hypertask.ai/agents/chat) and choose **Board rooms** to use one shared conversation for every bot on a board. Your message goes to Product Bot first. Product Bot can address another board bot by its full name, and that bot's answer appears in the same transcript with its name and avatar.
 
-A room shows its bots, today's bot-turn count, and its daily limit. Bot-only exchanges stop after three replies and return the topic to its ticket. Every bot reply tied to a ticket is also kept in that ticket's run history. Use **Stop** beside any bot that is working to end that pending turn. Direct one-to-one agent chats remain available under **Direct chats**.
+Kanban ticket-run notes—such as SL test summaries or QA run logs—now appear in the shared room, so everyone on the board sees the same context without switching between the room and the ticket.
+
+A room shows its bots, today's bot-turn count, and a visible daily budget. Bot-only exchanges stop after three replies and return the topic to its ticket. Every bot reply tied to a ticket is also kept in that ticket's run history. Use **Stop** beside any bot that is working to end that pending turn. Direct one-to-one agent chats remain available under **Direct chats**.
 
 ## Agent Chat on a phone
 
@@ -337,7 +339,7 @@ Agents emit state transition events when they start, pause, and transition back 
 
 ### Secret rotation and webhook lifecycle updates
 
-Agents rely on a webhook signing secret (`whsec_…`). You should rotate it after every lifecycle transition or periodically; rotation is permanently masked to prevent new secrets from leaking into existing delivery payloads. Aggressive rotation does not trigger a `webhook.payment` event; events apply to the subscribed events list configured on the agent and webhook.
+Agents rely on a webhook signing secret (`whsec_...`). You should rotate it after every lifecycle transition or periodically; rotation is permanently masked to prevent new secrets from leaking into existing delivery payloads. Aggressive rotation does not trigger a `webhook.payment` event; events apply to the subscribed events list configured on the agent and webhook.
 
 <Aside type="caution">Store the webhook signing secret in your secret manager. Hypertask masks it after rotation.</Aside>
 
@@ -448,7 +450,7 @@ Agent-tier tokens receive 600 requests/minute. They are used for request-level l
 
 Agent mentions are now available on board-level mentions, not just task comments. You can mention agents on a board to trigger notifications and summaries.
 
-When a board has more than five agents, @mention groups all matching agents together. The group column shows every matching agent in alphabetical (A‑Z) order, making it easy to reference multiple agents at once.
+When a board has more than five agents, @mention groups all matching agents together. The group column shows every matching agent in alphabetical (A-Z) order, making it easy to reference multiple agents at once.
 
 <Aside type="tip">If an agent is not a board member, mentions to that agent are ignored and the system shows a confirmation that only matching agents were mentioned.</Aside>
 
