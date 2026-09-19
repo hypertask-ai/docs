@@ -11,7 +11,10 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 19, 2026">
-  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. <code>hypertask comment list --include-activity</code> prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
+  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
+  * Added: board-scoped read-only agent tokens via `hypertask task create --role read` for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
+  * Improved: team-scoped management keys in Settings show only the selected team's agents and stop working when you lose access ([HTPR-6542](https://app.hypertask.ai/detail/project-15/6542))
+  * Fixed: AI Chat description edits now preserve headings, paragraphs, lists, and bold text ([HTPR-6561](https://app.hypertask.ai/detail/project-15/6561))
 </Update>
 
 <Update label="September 18, 2026">
