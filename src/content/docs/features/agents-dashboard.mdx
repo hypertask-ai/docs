@@ -54,6 +54,22 @@ A new widget next to the heartbeat line shows the count of agents currently bloc
 
 This gives you an aggregate view of unaddressed bottlenecks and helps prioritize follow-up work across your set of agents.
 
+## Per-agent activity modules
+
+For each agent on your board, the dashboard now shows:
+
+- **Current state** — whether the agent is running, quiet, or off
+- **Time-windowed history** — recent bugs and features merged to production within configurable windows (e.g., last 7 days, last 30 days)
+- **Working agents** — a working-now headline, with links to the related ticket
+
+This makes it easy to spot which agents are actively shipping features or settling recent bugs, without deeper dig-through.
+
+<Aside type="note">
+
+For the Agents dashboard, **fixed bugs and features are shown per time window, on top** of each row. This grouping surfaces the most recent production activity first so you can evaluate agent impact at a glance.
+
+</Aside>
+
 ## Browse and filter agents
 
 You can quickly scan through all your agents and filter by status sections. The dashboard scales to show all agents in your workspace, with cards laid out so you can easily compare running vs. paused agents.
