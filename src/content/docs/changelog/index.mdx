@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 19, 2026">
+  * Fixed: changing a board filter updates the visible tasks immediately. Save view keeps the change, but is no longer needed to preview it ([HTPR-6595](https://app.hypertask.ai/detail/project-15/6595))
   * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. <code>hypertask comment list --include-activity</code> prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
 </Update>
 
