@@ -10,6 +10,10 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="September 19, 2026">
+  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. <code>hypertask comment list --include-activity</code> prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
+</Update>
+
 <Update label="September 18, 2026">
   * On mobile, press Enter to send from the comment bar and Ctrl / Cmd+Enter to save; the task stays open when Kanban-opened after saving, while inbox-opened tasks still advance ([HTPR-6559](https://app.hypertask.ai/detail/project-15/6559))
   * Fixed: Agent Chat no longer incorrectly reports that runtime has not enabled chat for bots that poll ([HTPR-6553](https://app.hypertask.ai/detail/project-15/6553))
