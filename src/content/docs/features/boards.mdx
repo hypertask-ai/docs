@@ -88,6 +88,16 @@ hypertask view create --name "Doing" --project 15
 
 This ensures that tasks moved into a new section appear in all view contexts (built-in splits, Saved Views, and per-browser preferences) without extra setup.
 
+## Board hide-empty-columns clearing on last ticket removal
+
+Before this behavior change, when the last ticket was removed from a board that had columns with all tasks in that removed ticket, those columns disappeared. The board appeared to have no columns, even though the board still had sections that were hidden.
+
+The system now clears the `hide-empty-columns` state for that board when the last ticket leaves. Empty columns remain visible, showing you all sections where you can drop new tickets, and the "no columns to show" help screen is not displayed because the board still has sections.
+
+This change prevents getting stuck in a no-columns state and ensures empty columns show as a normal empty state where you can continue adding tasks.
+
+See HTPR-6550 ([link](https://app.hypertask.ai/detail/project-15/6550)).
+
 ## Built-in splits
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
