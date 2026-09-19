@@ -11,11 +11,12 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 19, 2026">
-  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
-  * Fixed: Weekly Strix scans now retry failures via the fixed proxy and runner, and the subscription proxy no longer duplicates tool calls across runs ([HTPR-6598](https://app.hypertask.ai/detail/project-15/6598))
-  * Added: board-scoped read-only agent tokens via `hypertask task create --role read` for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
+  * Added shipping page at /shipping showing a backdrop of each board's shipped tickets and a daily count corrected for Dependabot PRs ([HTPR-6592](https://app.hypertask.ai/detail/project-15/6592))
+  * Added board-scoped read-only agent tokens via `hypertask task create --role read` for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
   * Improved: board agent rooms now show ticket-run notes and a visible daily budget in the shared transcript ([HTPR-6557](https://app.hypertask.ai/detail/project-15/6557))
   * Improved: team-scoped management keys in Settings show only the selected team's agents and stop working when you lose access ([HTPR-6542](https://app.hypertask.ai/detail/project-15/6542))
+  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
+  * Fixed: Weekly Strix scans now retry failures via the fixed proxy and runner, and the subscription proxy no longer duplicates tool calls across runs ([HTPR-6598](https://app.hypertask.ai/detail/project-15/6598))
   * Fixed: AI Chat description edits now preserve headings, paragraphs, lists, and bold text ([HTPR-6561](https://app.hypertask.ai/detail/project-15/6561))
   * Fixed: Light-theme comments now show a subtle outline on phones and desktop, so adjacent comments are easier to distinguish ([HTPR-6554](https://app.hypertask.ai/detail/project-15/6554))
   * Fixed: Slack settings on mobile had mismatched shadows; the Default project dropdown is now flat like other controls ([HTPR-6558](https://app.hypertask.ai/detail/project-15/6558))
