@@ -1,82 +1,74 @@
 ---
 title: "Agents Dashboard"
-description: "View all your agents from a central dashboard, with detail pages for each agent and status toggles at a glance and a heartbeat line for the merge/unblock timer."
+description: "View all your agents from a central dashboard, with detail pages for each agent, board-scoped view, and status toggles at a glance."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
 # Agents Dashboard
 
-The **Agents Dashboard** gives you a full-screen view of all your AI agents in Hypertask, organized by status. Instead of only viewing agents through modals, you now have a dedicated page at `/agents`.
+The **Agents Dashboard** gives you a central view of your agents, including summary statistics, per-agent details, and board-scoped dashboards.
 
-## Navigate to the dashboard
+## Access the Agents Dashboard
 
 - **URL**: `https://app.hypertask.ai/agents`
-- From any page, use `Cmd+K` (Mac), `Ctrl+K` (Windows/Linux) and search for **"Go to Agents"** to jump there.
+- From any page, use `Cmd+K` (Mac), `Ctrl+K` (Windows/Linux) and search for **"Go to Agents"**.
 
-## View agents by status
+## Agent list by status
 
-The dashboard groups your agents into three top-level sections:
+The overview page (`/agents`) groups your agents into three top-level sections:
 
-- **Running** — agents currently active and executing tasks
-- **Quiet** — agents not currently running, but ready to start
-- **Off** — agents paused or stopped
+- **Running** — agents currently active and executing tasks.
+- **Quiet** — agents not currently running, but ready to start.
+- **Off** — agents paused or stopped.
 
-Each group displays agent cards that show key information at a glance.
+Each group displays agent cards showing key information.
 
 ## Agent cards
 
-Each card in the dashboard shows:
+Each agent card shows:
 
-- **Agent name** — the name of the agent
-- **Current status** — Running, Quiet, or Off
-- **On/Off toggle** — Immediate pause or resume of the agent
-- **Heartbeat line for the merge/unblock timer**
-- **Avatar** — a generated robot icon that appears for each agent
+- **Agent name** — the agent identifier.
+- **Status** — Running, Quiet, or Off.
+- **On/Off toggle** — pause or resume the agent.
+- **Heartbeat line** for the merge/unblock timer.
+- **Avatar** — a generated robot icon for each agent.
 
-The heartbeat line at the top of each agent card visualizes the status of the agent's 10-minute merge/unblock check:
+### Heartbeat line
 
-- **Green dot, short bar** — the timer ran within the last 15 minutes
-- **Amber dot, medium bar** — the timer ran between 15–30 minutes ago
-- **Red dot, no bar or short red bar** — the timer missed its 10-minute window or has no data (missing data counts as down, never as fine)
+The heartbeat line visualizes the agent's 10-minute merge/unblock check:
 
-This gives you a quick, color-coded view of whether each agent is operating within its expected runtime cadence.
+- **Green dot, short bar** — timer ran within the last 15 minutes.
+- **Amber dot, medium bar** — timer ran between 15–30 minutes ago.
+- **Red dot, no bar** — timer missed its 10-minute window or no data available.
 
-## Card red outline for blocked agents
+### Card outlines
 
-If an agent is blocked—meaning no one is actively working on it—the card displays a red outline to signal immediate action required. The blocked state is determined by an agent's configuration and its interaction with tasks on the board.
+A red outline signals a **blocked** agent — no one is actively working on it. This helps you spot bottlenecks at a glance.
 
-## Blocked-summary widget
+### Blocked-summary widget
 
-A new widget next to the heartbeat line shows the count of agents currently blocked:
+A blocked-summary widget shows the number of agents currently blocked, helping you prioritize follow-up work.
 
-- **Red N** — the number of agents that are blocked and require someone to act
+## Board-scoped agent pages
 
-This gives you an aggregate view of unaddressed bottlenecks and helps prioritize follow-up work across your set of agents.
+Each board has its own dedicated agent page showing the agents configured for that board:
 
-## Per-agent activity modules
+- **URL format**: `https://app.hypertask.ai/agents/<board-number>`
+- Example: Board 5500 is available at `https://app.hypertask.ai/agents/5500`.
 
-For each agent on your board, the dashboard now shows:
+The board page includes:
 
-- **Current state** — whether the agent is running, quiet, or off
-- **Time-windowed history** — recent bugs and features merged to production within configurable windows (e.g., last 7 days, last 30 days)
-- **Working agents** — a working-now headline, with links to the related ticket
+- Board-specific agent list.
+- Toolkit bug totals, including AGTE tickets tagged as bug.
+- Configuration source: board, repository, branch, and agent list read from a shared setup.
+- Main merge counts or reference links for the board.
 
-This makes it easy to spot which agents are actively shipping features or settling recent bugs, without deeper dig-through.
+Use board pages to inspect board-level agent health and bug tracking per board.
 
-<Aside type="note">
+## Per-agent availability
 
-For the Agents dashboard, **fixed bugs and features are shown per time window, on top** of each row. This grouping surfaces the most recent production activity first so you can evaluate agent impact at a glance.
-
-</Aside>
-
-## Browse and filter agents
-
-You can quickly scan through all your agents and filter by status sections. The dashboard scales to show all agents in your workspace, with cards laid out so you can easily compare running vs. paused agents.
-
-## Availability of avatars
-
-All agents now show generated robot avatars from their detail pages and the dashboard. Avatars provide visual recognition without relying on initials or external icons.
+All agents show generated robot avatars from their detail pages and the dashboard. This provides visual recognition without relying on initials or external icons.
 
 ### Agent examples
 
@@ -88,38 +80,32 @@ All agents now show generated robot avatars from their detail pages and the dash
 
 ## Performance and reliability
 
-Agents are fully integrated with your board, tasks, and other AI tools. Use the dashboard to:
+Use the agents page to:
 
-- See which agents are actively working
-- Quickly pause or resume agents that are consuming resources
-- Monitor agent distribution across your workflows
-- Spot delayed or missed merge/unblock checks via the heartbeat line
-- Identify agents that need human intervention via red outlines and the blocked-summary widget
+- Spot which agents are actively working.
+- Pause or resume agents consuming resources.
+- Monitor agent distribution across workflows.
+- Identify blocked agents via red outlines and the blocked-summary widget.
 
-## MCP versus CLI eval
+## MCP client evaluation frame
 
-When the MCP client eval is on for your account, the agents page also shows a table of 20 real Hypertask tasks run through the MCP server and through the CLI from Claude, Cursor, and Codex.
-
-Each row shows pass or fail, tokens in, tokens out, wall time, and the number of tool calls. Use it to see where MCP is cheaper or more reliable than the CLI, and to catch regressions when the MCP server changes.
-
-The first published numbers are today's baseline, so later MCP server work can be compared against them.
+When the MCP client eval is enabled, the agents page displays a table of 20 real Hypertask tasks run through the MCP server and CLI. Each row shows pass/fail, token in/out, wall time, and tool call count. This helps you compare MCP to the CLI and catch regressions.
 
 ## Working with pages and task detail pages
 
-Agents can interact with task detail pages such as `/detail/project-15/<ticket>`. The production verifier validates these URLs, so agents can reference specific tasks from pages or create links to them. This makes it possible for agents to verify task lifecycles and generate pages as part of their workflows.
-
-For more on agent setup and MCP configuration, see the [AI Agents](./agents.mdx) reference.
+Agents can reference task detail pages (e.g., `/detail/project-15/<ticket>`) via the production verifier, enabling them to verify lifecycles and create links as part of workflows.
 
 ## Troubleshooting
 
 <Aside type="note">
 
 If you don't see an agent in the dashboard, check that:
-1. The agent is properly connected to an active board
-2. The agent schedule has the necessary permissions
-3. The agent is associated with your team and not restricted to a different scope
 
-See the [AI Agents](./agents.mdx) and [Scheduling Agents](/mcp/scheduling.mdx) pages for detailed setup guidance.
+1. The agent is connected to an active board.
+2. The agent schedule has necessary permissions.
+3. The agent is associated with your team or scope.
+
+See [AI Agents](./agents.mdx) and [Scheduling Agents](/mcp/scheduling.mdx) for setup details.
 
 </Aside>
 
