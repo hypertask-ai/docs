@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="September 19, 2026">
+  * Fixed: `hypertask task list --filter updated_since=<timestamp>` returns every matching active and archived ticket instead of stopping after the first page ([HTPR-6584](https://app.hypertask.ai/detail/project-15/6584))
   * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
   * Added: board-scoped read-only agent tokens via `hypertask task create --role read` for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
   * Improved: board agent rooms now show ticket-run notes and a visible daily budget in the shared transcript ([HTPR-6557](https://app.hypertask.ai/detail/project-15/6557))
