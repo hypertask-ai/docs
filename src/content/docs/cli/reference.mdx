@@ -212,16 +212,19 @@ List comments for a ticket from the terminal.
 
 ```bash
 hypertask comment list <ticket_number>
+hypertask comment list <ticket_number> --include-activity
 ```
 
 **Behaviour:**
 
-- Returns a human-readable list of comments for the given ticket.
+- Returns comments for the given ticket, including the agent name and id when a bot wrote the comment.
+- `--include-activity` also returns moves, assignments, label changes, and edits. Each of those rows includes the same agent fields.
 - The output includes comment content, timestamps, and information about reference tickets/tasks (the detail URLs now use board-qualified uniqueIndexes, not stale ticket name digits).
 - Requires authentication.
 
 ```bash
 hypertask comment list 12345
+hypertask comment list HTPR-6516 --include-activity
 ```
 
 ### hypertask task get
