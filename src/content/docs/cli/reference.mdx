@@ -101,6 +101,7 @@ hypertask tasks list [options]
 **Behaviour:**
 
 - Returns a paginated list of tasks matching the specified filters.
+- `--filter updated_since=<ISO timestamp>` returns every matching active and archived task unless you also pass `--limit`, `--cursor`, `--offset`, or a status filter.
 - Prefer `--query`, `--filter`, `--fields`, and `--limit` so one call stays small.
 - Use `--offset` or `--cursor` to walk large collections.
 
@@ -311,6 +312,7 @@ hypertask tasks list [options]
 **Behaviour:**
 
 - Returns a paginated list of tasks matching the specified filters.
+- `--filter updated_since=<ISO timestamp>` returns every matching active and archived task unless you also pass `--limit`, `--cursor`, `--offset`, or a status filter.
 - Prefer `--query`, `--filter`, `--fields`, and `--limit` so one call stays small.
 - Use `--offset` or `--cursor` to walk large collections.
 
