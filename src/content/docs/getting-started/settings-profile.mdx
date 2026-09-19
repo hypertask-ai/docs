@@ -1,5 +1,5 @@
 ---
-title: Profile & Settings
+title: "Profile & Settings"
 description: Manage your identity, appearance, and preferences in Hypertask.
 ---
 
@@ -13,10 +13,10 @@ Your Profile page in Hypertask is split into three dedicated sections: **General
 
 The **General** tab contains your identity settings:
 
-- **Avatar** â\x80\x94 Upload or change your profile picture.
-- **Display name** â\x80\x94 The name shown to others in tasks, comments, and activity feeds.
-- **Email** â\x80\x94 Your primary email address; used for notifications and logins.
-- **Bio** (optional) â\x80\x94 A short description shown in your profile card.
+- **Avatar** — Upload or change your profile picture.
+- **Display name** — The name shown to others in tasks, comments, and activity feeds.
+- **Email** — Your primary email address; used for notifications and logins.
+- **Bio** (optional) — A short description shown in your profile card.
 
 Use these fields to manage how you appear across the platform.
 
@@ -24,9 +24,9 @@ Use these fields to manage how you appear across the platform.
 
 Hypertask uses Better Auth server-side authentication with configurable login session duration:
 
-- **Session length** â\x80\x94 Choose between 7 days and 30 days when signing in. This controls how long your session stays active before requiring re-authentication.
-- **Persistent sign-in links** â\x80\x94 Access a persistent sign-in link that doesn't expire until used.
-- **Clean sign-out** â\x80\x94 All flows support immediate session invalidation and cookie clearing.
+- **Session length** — Choose between 7 days and 30 days when signing in. This controls how long your session stays active before requiring re-authentication.
+- **Persistent sign-in links** — Access a persistent sign-in link that doesn't expire until used.
+- **Clean sign-out** — All flows support immediate session invalidation and cookie clearing.
 
 ---
 
@@ -34,9 +34,9 @@ Hypertask uses Better Auth server-side authentication with configurable login se
 
 The **Appearance** tab controls the visual look of your interface:
 
-- **Theme** â\x80\x94 Choose between Light, Dark, or System theme (automatically follows your OS preference).
-- **Font size** â\x80\x94 Adjust text size across the app for better readability.
-- **Reduced motion** â\x80\x94 Reduce animations for a calmer environment.
+- **Theme** — Choose between Light, Dark, or System theme (automatically follows your OS preference).
+- **Font size** — Adjust text size across the app for better readability.
+- **Reduced motion** — Reduce animations for a calmer environment.
 
 ---
 
@@ -44,9 +44,9 @@ The **Appearance** tab controls the visual look of your interface:
 
 The **Task page** tab configures behavior specific to how tasks display:
 
-- **Show task scroll** (on/off) â\x80\x94 When enabled, Hypertask automatically scrolls to the full task description and details when opening a task.
-- **Subtask depth** â\x80\x94 Control how many levels of subtasks are visible by default.
-- **Expand inline details** â\x80\x94 Show fields like due date, assignee, and labels inline on the task card.
+- **Show task scroll** (on/off) — When enabled, Hypertask automatically scrolls to the full task description and details when opening a task.
+- **Subtask depth** — Control how many levels of subtasks are visible by default.
+- **Expand inline details** — Show fields like due date, assignee, and labels inline on the task card.
 
 These settings apply to the task detail view and the task editor across all boards.
 
@@ -56,7 +56,7 @@ These settings apply to the task detail view and the task editor across all boar
 
 The **AI Settings** tab in the Task page section allows you to configure how the AI assistant behaves across your tasks and comments:
 
-- **Custom instructions** â\x80\x94 Provide board-level instructions that the AI follows when helping with tasks on that board. Enter your instructions directly into the text box, which fills the page to give you maximum writing space and easy visibility of full context.
+- **Custom instructions** — Provide board-level instructions that the AI follows when helping with tasks on that board. Enter your instructions directly into the text box, which fills the page to give you maximum writing space and easy visibility of full context.
 
 These instructions are applied automatically when the AI drafts responses, edits descriptions, or proposes next steps in chat or comments.
 
@@ -64,9 +64,50 @@ These instructions are applied automatically when the AI drafts responses, edits
 
 ## User profile caching
 
-On authenticated startup, Hypertask reuses a fresh account-scoped user profile cached at the app shell layer. The cached profile remains valid for about 5 minutes, reducing repeated <code>/api/users/getById</code> refetches and improving cold start performance. The cache is automatically invalidated and refreshed as needed.
+On authenticated startup, Hypertask reuses a fresh account-scoped user profile cached at the app shell layer. The cached profile remains valid for about 5 minutes, reducing repeated `/api/users/getById` refetches and improving cold start performance. The cache is automatically invalidated and refreshed as needed.
 
 ---
+
+## Management keys
+
+Management keys are credentials you create for programmatic access via the API. You can use them to integrate Hypertask with CI pipelines, automation scripts, or other tools.
+
+### Account-scoped keys
+
+Account-scoped keys grant access to everything in your account:
+
+1. Open your Profile page in the app.
+2. Switch to the **General** tab.
+3. Click **Create new management key**.
+4. Give the key a description (e.g., "CI pipeline") and click **Save**.
+5. The key is displayed only once — save it immediately.
+
+These keys are attached to your account and can access all boards and tasks.
+
+### Team-scoped keys
+
+Team-scoped keys restrict access to a single team:
+
+1. Open your Profile page in the app.
+2. Switch to the **General** tab.
+3. Click **Create team-scoped key**.
+4. Select the team the key should manage from the dropdown.
+5. Give the key a description and click **Save**.
+6. The key is displayed only once — save it immediately.
+
+**Behaviour:**
+
+- Only the selected team's eligible agents and usage are managed with this key.
+- Losing access to that team permanently disables its team-scoped keys.
+- When the feature is turned off in Settings, the key is removed and no longer usable.
+
+**Use cases:**
+
+- Provide read-only access to a CI bot that only needs to monitor one team.
+- Share keys with external contractors who only need access to a specific team.
+
+---
+
 
 ## Common Actions
 
