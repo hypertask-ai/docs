@@ -1,91 +1,99 @@
 ---
 title: "Appearance & AI Models"
-description: Customize themes, icons, fonts, and select AI models for Hypertask.
+description: "Customize themes, icons, fonts, and select AI models for Hypertask."
 ---
 
-import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
-Hypertask lets you control how things look and how AI behaves. Choose from multiple core themes, wave on mobile, customise the sidebar, keyboards, and dictation languages, and tailor AI options across tasks, boards, and help-site chat.
+## Appearance Settings
 
-## Feature flags default mode
+### Light and dark themes
 
-All new feature flags now default to **Owner + QA** at creation. Previously, the default set included a configuration that some flags would appear as "Only me" to the Owner. The internal `OWNER_ONLY_BY_DEFAULT` set has been removed, so flags always enable collaborative access by default and never silently restrict visibility to the Owner alone.
+Hypertask supports both light and dark themes, controlled from your profile or the Command Center.
 
-This change makes the default behavior consistently collaborative across all boards and saved views, with no manual adjustment needed for most flags.
+- **Dark theme** — reduces eye strain when working in low-light environments and is ideal for long coding sessions.
+- **Light theme** — provides high contrast for collaborative reviews and when sharing your screen.
 
-## Typography consistency (HTPR-5465)
+You can toggle themes instantly from the settings menu. Preferences are saved per-user.
 
-Task properties now render at the same font size across the board for consistent typography and visual alignment. Previously, only the **Assignees** property rendered at 13px, making it appear smaller than other property values like **Workers**, **Labels**, or **Priority**. The fix updates the rendering to use the shared font size from the properties rail, ensuring all property values read consistently.
+## Keyboard shortcuts
 
-## Theme typefaces
+From the Command Center, use **Ctrl+K** to open the global command palette. While focusing on a task detail, you can also use:
 
-Hypertask uses **IBM Plex Sans** as the default system typeface across light, dark, and AMOLED themes. This ensures consistent rendering throughout the app and matches production expectations.
+- **Ctrl+O** — Open links from the latest reply in a new tab (Agent Chat and board comments).
+- **Alt+Left/Right** — Navigate through tasks or agents in increasing or decreasing order.
 
-### AMOLED theme v2
-
-AMOLED theme v2 deploys with:
-
-- IBM Plex as system typeface on light and dark routes
-- True-black expansion ladder of #101010 for cards
-- Compact card styling for dense information
-- Muted ticket IDs on board cards in AMOLED
-
-## Themes
-
-Hypertask offers several built-in themes to suit your visual preference. All themes respect IBM Plex Sans and support theming of emoji icons and modals.
-
-- **Light** — Clean, high-contrast look for bright environments. Uses porcelain as the default visual style in UI elements like panels, borders, and accents.
-- **Dark** — Dark grey panel background with amoled-friendly accents. Uses graphite as the default visual style.
-- **AMOLED** — True black (#000) panel backgrounds with dense card styling and muted ticket IDs across boards.
-
-### Light and Dark theme style
-
-Light theme and Dark theme now map directly to porcelain and graphite visual styles:
-
-- **Light theme**: porcelain-based panel backgrounds, borders, and accent colors (formerly Light (New))
-- **Dark theme**: graphite-based panel backgrounds, borders, and accent colors (formerly Dark Grey (New))
-
-This makes the theme names clear and consistent across features and components.
-
-### Guest and replace rail themes
-
-Guest demo boards and the expanded sidebar rail use the inverse theme for visual consistency, ensuring labels and controls stay legible even when the base theme is light or dark.
-
-### Where themes apply
-
-Themes in Hypertask apply across:
-
-- Board and column backgrounds
-- Task and comment surface colors
-- Chart and graph surfaces
-- Modals and dropdowns
-- AI chat input and model selector
-- Portrait rail icons and navigation labels
-
-## Mobile touch targets
-
-Mobile controls now enforce a 44px minimum touch target across the entire app-wide standard. This rule applies to all icon buttons, tool buttons, navigation items, header controls, and interactive shortcuts, making touch interactions uniform and reliable regardless of device size. This change simplifies gesture patterns and improves usability for touch-based workflows.
-
-### Touch target checklist
-
-- All icon buttons and commands meet or exceed 44×44 px
-- Header and rail icons respect the larger base size
-- Keyboard shortcuts that invoke commands are associated with tap targets large enough to target comfortably
+These shortcuts are available across boards, chat panels, and the Agents overview.
 
 <Aside type="tip">
 
-The 44px minimum touch target is a single app-wide rule rather than a series of patch-level fixes. This ensures consistent behavior everywhere you interact with Hypertask on mobile.
+Some shortcuts are also active in the main command palette when a compatible view is loaded.
 
 </Aside>
 
-## Rich text and embedded content
+## Text editor preferences
 
-Task descriptions and comments support rich HTML content, including video embeds. Hypertask's editor and API now preserve embeds from supported sources like YouTube, Loom, Vimeo, and Figma. When you add a video embed, it's rendered directly in task cards and view summaries, and the embedded content is retained across API reads and writes. This makes it easier to keep context about recordings, demos, and design specs without manually linking to external sites.
+### Comments and descriptions
 
----
+When composing comments or editing task descriptions, you can:
+
+- Dictate **Ctrl+K**, **Ctrl+Space** (on supported browsers): Start voice dictation from the text field.
+- Save **Ctrl+Enter**: Send the comment; the task may stay or advance depending on context.
+- Open links **Ctrl+O**: When a reply includes a clickable link, open it in a new tab.
+
+The comment composer is pinned to the bottom of task detail panels, keeping it accessible while you read and compose.
+
+## AI models
+
+### Model selection
+
+Hypertask supports multiple AI providers and models. During configuration, agents operate with provider-specific model names. Agent Chat respects the engine configured on an agent:
+
+- **Claude-based agents** use Claude models (for example, claude-sonnet-5).
+- **Codex-based agents** use Codex models (for example, gpt-5.6-luna).
+
+The chat lane configuration must align with the agent's engine.
+
+<Aside type="note">
+
+You do not need OpenRouter-specific keys in Hypertask; the runtime handles exchange of credentials and model mapping. If you plan to use OpenRouter lanes beyond the default provider, include OPENROUTER_GLM_API_KEY for squad-based workflows.
+
+</Aside>
+
+### Quiet mode
+
+Quiet mode controls how agent activity appears in run activities and thread comments. It applies to agents in active runs:
+
+- **Run activity** — by default, agents write detailed progress chatter to the run activity tab. Quiet mode suppresses most run activity logs.
+- **Thread comments** — quiet mode disables comment generation. Comments are only posted for specific actions:
+  - Question
+  - Decision
+  - Handoff
+  - Done
+
+When running in quiet mode, agents remain fully engaged, but their directional footprint in the task history is streamlined. To enable quiet mode, use the `quiet-run-activity` token or configure it via board-level agent settings.
 
 <Aside type="tip">
 
-All themes now use IBM Plex Sans on light and dark routes. Use the Settings menu to switch or add custom themes via your organization's design system settings.
+Quiet mode is useful for workflow histories where you want to review agent behavior via structured run logs, but keep thread conversations focused on human decisions and actions.
 
 </Aside>
+
+## Icons, fonts, and visual tokens
+
+### Sidebar icons
+
+Icon visual standards are managed in the Typography & Sidebar Visuals page. Controlled strokes and consistent spacing ensure icons are legible across light and dark modes.
+
+### Font scale
+
+Typography uses a defined type scale for headlines, descriptions, and UI labels. Choose consistent weights and sizes from the standard set to maintain visual hierarchy.
+
+---
+
+| Setting | Location | Notes |
+|---------|----------|-------|
+| Theme toggle | Profile settings | Light/Dark switch |
+| Keyboard shortcuts | Command Center (Ctrl+K) | Grid view above |
+| AI provider | Agent manager | Per-agent configuration |
+| Quiet mode | Agent runs | Token or board-level setting |
