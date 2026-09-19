@@ -157,6 +157,17 @@ This change improves spacing and clarity on narrow viewports while keeping quick
 
 Open a task to view and edit all its fields. Unsupported columns or fields may be hidden based on your team's board configuration.
 
+### Description editing preserves structure
+
+When you edit a task's description using AI Chat, the system preserves rich formatting:
+
+- **Headings** (level 1–6)
+- **Paragraphs**
+- **Lists** (ordered and unordered)
+- **Bold text**
+
+This applies to both task descriptions and notes. Bare-text normalization now affects only the Owner and QA levels to encourage structure preservation ([HTPR-6561](https://app.hypertask.ai/detail/project-15/6561)).
+
 ### Related fields
 
 - **Assignees**: Current human assignees with ability to add or remove. Added assignees trigger notifications.
