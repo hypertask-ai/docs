@@ -34,7 +34,7 @@ On Windows x64, download the native executable with PowerShell:
 
 ```powershell
 Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/hypertask-windows-x86_64.exe -OutFile hypertask.exe
-.\\hypertask.exe --version
+\\hypertask.exe --version
 ```
 
 Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
@@ -141,6 +141,38 @@ For full options, run `hypertask tasks move --help`.
 
 ## Agent management
 
+### Create agents with role
+
+Create a board-scoped agent token for CI or other automation needs:
+
+```bash
+hypertask task create --title "<title>" [--section <section-name>] [--assignee <user-email>] --role <read|write>
+```
+
+**`--role` option:**
+
+- `read` - Create a board-scoped read-only agent. The agent can only view tasks and limited information on the specified board. This is suitable for CI tools and monitoring.
+- `write` - Create a standard agent with write access to the specified board. Only an agent that belongs to a board can use this role.
+
+**Behaviour:**
+
+- Requires authentication via API key or session cookie.
+- When `--role read` is used, the agent is limited to board-scoped read operations only.
+- When `--role write` is used, the agent can create, update, and archive tasks on its board.
+- Agents with `read` role cannot create stronger or account-wide access; they are scoped exclusively to the board they belong to.
+
+**Examples:**
+
+```bash
+# Create a CI monitor agent with read-only access
+hypertask task create --title "CI Monitor Bot" --role read
+
+# Create a release agent with write access to the board it belongs to
+hypertask task create --title "Release Agent" --role write
+```
+
+<Aside type="note">Read-only agents do not require provider billing API keys; they are only bound to the boards they manage. This aligns with least-privilege CI token requirements ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513)).</Aside>
+
 ### Rename agents
 
 Rename agents from the terminal:
@@ -179,7 +211,7 @@ hypertask agents get --id <agent-id>
 
 **Behaviour:**
 
-- Returns agent metadata including name, description, scopes, and status.
+- Returns agent metadata including name, description, scopes, status, and role.
 - Requires authentication.
 - Requires a valid agent ID.
 
@@ -356,7 +388,7 @@ hypertask comment react <ticket_number> <comment_id> --emoji <emoji>
 **Behaviour:**
 
 - React to existing comments to acknowledge them without leaving a reply.
-- Use a single emoji character (e.g., `ð\x9f\x91\x8d`, `ð\x9f\x98\x86`, `ð\x9f\x91\x8d`).
+- Use a single emoji character (e.g., `🤔`, `👍`, `❤️`).
 - Requires authentication via API key or session cookie.
 
 ### hypertask comment unreact
@@ -489,19 +521,16 @@ hypertask task create --title "<title>" [--section <section-name>] [--assignee <
 **Behaviour:**
 
 - Accepts `--title` (required), `--section` (optional), and `--assignee` (optional).
+- When used with `--role read`, creates a board-scoped read-only agent token that can only view tasks and limited information on the board.
+- When used with `--role write`, creates a standard agent with write access to the board.
 - Uses the bearer token passed via `--token` for authentication as an agent.
 - Records the authenticated agent under `createdBy.agent` instead of the top-level owner.
 - The agent's visibility rules apply to `createdBy.agent` the same way they apply to the `assignees` field.
 
 ```bash
 # Create a task as an agent
-hypertask task create --title "Review pull request" --section Review --assignee valentin@team.com --token "ey..."
+hypertask task create --title "Review pull request" --role read --token "ey..."
 
-# View the task to confirm creator attribution
-hypertask task get <ticket-number>
-```
-
-```bash
 # Create a task with just a title
 hypertask task create --title "Add documentation for API" --section Documentation
 ```

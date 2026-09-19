@@ -1,48 +1,55 @@
 ---
 title: Reports
-description: Create, explore, and manage reports for your projects, plus agent-created reports from AI and MCP tools.
+description: Review live analytics for your current board and manage reports created by AI and MCP tools.
 ---
 
-import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
 
-The **Reports hub** (`/report`) gives you a dedicated place to view and create summaries of your work. Reports include:
-- Board velocity metrics (flow, speed, people patterns)
-- Time reporting and resource use
-- Filtered and scoped views for cross‑board analysis
-- AI‑generated summaries supported by agent tools
+The **Reports hub** (`/report`) combines two kinds of reporting:
 
-Agents can create reports via Conductor (AI chat), CLI, or MCP. This page covers using the hub, controlling reports, and agent authoring.
+- **Board analytics** for the board you opened most recently
+- Saved reports created by AI chat, agents, CLI, or MCP
 
-## Create a report
+The hub shows one live analytics dashboard for the current board instead of a card for every board you can access. Saved reports remain available even when they belong to another board.
 
-1. Go to **Reports** (`/report`). A default report is pre-created; copy it or create from scratch.
-2. Click **Create report**. The modal lists available report types:
-   - **Velocity** — tasks, cycles, throughput, and bottlenecks
-   - **Schedule** — task dates, dependencies, and slack
-   - **Filter summary** — based on a board filter (section, priority, assignee)
-3. Choose a type, customize filters (time range, sources, sections), and click **Create**.
-4. Reports save as named items in the hub. Click a saved report to reopen its shared state.
+## Review board analytics
 
-## Open specific report types
+Open **Reports**, then choose **Board analytics** under **Current board**. The dashboard reads the board's current data each time it loads and refreshes when you return to the browser tab.
 
-From the **Ctrl+K** command palette:
+Choose a period at the top of the dashboard:
 
-| Command | Opens |
-|---------|-------|
-| **Report: Velocity** | Velocity report |
-| **Report: Schedule** | Schedule report |
-| **Report: Filtered summary** | Modal to pick board, section, and filters |
+- **Today**
+- **Yesterday**
+- **Last 7 days**
+- **Custom range**, with From and To dates
 
-Agents invoked via `Conductor: Create report` combine these patterns.
+The dashboard shows:
 
-## Customize shared reports
+- Tickets worked on during the period, including tickets that were updated, commented on, moved, or linked to a merged pull request
+- The median time to finish a ticket and tickets finished per week
+- Finished work and comments by board member
+- Created versus finished tickets
+- Open and stale tickets by column
 
-Each report becomes a shareable object with:
-- Name and description
-- Filters (board, section, date range, priority, assignee)
-- View mode (velocity, schedule, or custom)
+Ticket names open the ticket. Merged pull request names open the pull request in a new tab.
 
-Copy a report link from the hub to share it with teammates. Opening the link loads the same report view without repeating configuration.
+<Aside type="note">
+If **Current board** is empty, open the board you want to review and return to Reports.
+</Aside>
+
+## Review current task counts
+
+When Native Reports is available for your account, the Reports hub lists **Current tasks** under **Current board** for the board you opened most recently. Open it to see the board's current, non-archived tasks grouped by section and assignee.
+
+The report recalculates whenever you load it. A task appears once in its current section. A task with more than one assignee appears once under each assignee, and unassigned tasks have their own row.
+
+The report is responsive and read-only on a phone.
+
+## Open reports from the command palette
+
+From the **Ctrl+K** command palette, use **Go to Reports** to open the hub or **Board analytics report** to open analytics for the active board.
+
+Saved reports are listed separately in the hub. Opening one loads its saved content and board context.
 
 ## Agent-authored reports
 
@@ -73,9 +80,7 @@ The hub loads the report at `/report` with the associated filters.
 
 ## Integration with boards
 
-Reports combine data across your projects:
-- You can scope reports to a single board or multiple boards.
-- Shared filters sync across tools: board search, saved views, and report filters map to the same underlying rules.
+Board analytics always follows one board: the board you opened most recently. Agent-authored reports can still be saved for any board you can access and remain listed in the Reports hub.
 
 Use reports as a basis for:
 - Weekly standup summaries
