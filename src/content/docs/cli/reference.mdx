@@ -139,3 +139,28 @@ You can also change assignees with:
 For full options, run `hypertask tasks move --help`.
 
 <span class="label label--brand">Behavior change</span> All `hypertask <subcommand>` commands now use their own `--help` output instead of falling back to the top-level banner. Each command shows its usage, required and optional flags with descriptions, and one example. Combined with improved flag validation, this makes it easier to discover what a command does and how to use it. ([HTPR-6481](https://app.hypertask.ai/detail/project-15/6481))
+
+## Comment improvements
+
+### hypertask comment add
+
+Add a comment to a task. Supports plain text and the `--improve` flag:
+
+```bash
+hypertask comment add HYFA-123 --improve
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--improve` | Improve comment readability by applying a rewrite. No value required; uses a default readability improvement by default. |
+| `--improve-command <command>` | Apply a specific rewrite command instead of the default readability improvement. Useful for manual fixes like correcting deliberate spelling errors. |
+
+**Behaviour:**
+
+- The `--improve` flag accepts a bare flag without a value.
+- Without a specific `--improve-command`, the flag defaults to applying a readability improvement.
+- If a rewrite command is needed, use `--improve-command <command>` to apply the exact formatting or style change.
+
+<Aside type="note">The `comment add --improve` flag previously required a value independent of the `--improve-command` option. The flag now correctly accepts a bare flag and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
