@@ -89,11 +89,14 @@ Icon visual standards are managed in the Typography & Sidebar Visuals page. Cont
 
 Typography uses a defined type scale for headlines, descriptions, and UI labels. Choose consistent weights and sizes from the standard set to maintain visual hierarchy.
 
----
+### Component reuse checklist
 
-| Setting | Location | Notes |
-|---------|----------|-------|
-| Theme toggle | Profile settings | Light/Dark switch |
-| Keyboard shortcuts | Command Center (Ctrl+K) | Grid view above |
-| AI provider | Agent manager | Per-agent configuration |
-| Quiet mode | Agent runs | Token or board-level setting |
+When adding UI controls to the app, define the existing component being reused or provide a specific reason. This checklist applies to all UI pull requests and is enforced via the canonical guide and required gate. Each new control must be mapped to an underlying component or documented with a no-reuse justification.
+
+<Aside type="note">
+
+Requests that reference or implement reusable components should include a mapping for each control added. Reviewers use the checklist to verify reusability claims and avoid unnecessary component proliferation.
+
+</Aside>
+
+---
