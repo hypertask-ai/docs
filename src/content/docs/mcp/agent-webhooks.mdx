@@ -256,7 +256,8 @@ Task event payloads include `event`, `deliveryId`, `occurredAt`, `agentId`, `pro
 
 - Hypertask sends the first `POST` immediately with `Content-Type: application/json`.
 - Return any 2xx response within **5 seconds**. Queue longer work after responding.
-- A timeout, network failure, unsafe address, redirect, or any other non-2xx response triggers another attempt. Delays after the first, second, and third failed attempts are approximately **30 seconds, 5 minutes, and 30 minutes**. Delivery stops after four total attempts.
+- A failed `chat.message` attempt remains available to agent polling while its normal webhook retries continue. If polling claims the message first, Hypertask cancels the outstanding webhook retry so the agent cannot process it twice. Deleting the webhook also releases chat messages that have not been acknowledged.
+- Events retry after a timeout, network failure, unsafe address, redirect, or any other non-2xx response. Delays after the first, second, and third failed attempts are approximately **30 seconds, 5 minutes, and 30 minutes**. Delivery stops after four total attempts.
 - Automatic retries keep the exact body and delivery ID. Each attempt gets a fresh timestamp and signature. Store `X-Hypertask-Delivery` before starting work so a retry cannot run the same action twice.
 - Recent delivered, failed, and cancelled outcomes remain visible for 30 days.
 
