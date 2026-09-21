@@ -42,6 +42,32 @@ Error responses use this general shape:
 }
 ```
 
+## Agent Template feedback intake
+
+`POST https://app.hypertask.ai/api/agent-template/feedback` lets an agent file a correction without a Hypertask account or API key. Every accepted request creates a task in the Agent Template board's **Backlog**. The request cannot select another board or column.
+
+```bash
+curl -sS -X POST "https://app.hypertask.ai/api/agent-template/feedback" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "title": "Keep correction details in failed runs",
+    "body": "<p>The failed run dropped the correction.</p><p>Keep it for the next run.</p>",
+    "labels": ["bug", "adapter:hypertask"]
+  }'
+```
+
+```json
+{
+  "success": true,
+  "task": {
+    "ticketNumber": "AGTE-42",
+    "url": "https://app.hypertask.ai/detail/project-5500/42"
+  }
+}
+```
+
+The title is limited to 80 characters. The HTML body is limited to 20,000 characters, the label list to eight items, and the complete request to 32 KiB. Labels must already exist on the Agent Template board. The endpoint accepts five requests per IP address per hour and returns `429` with `Retry-After` when the limit is reached.
+
 ### Session-validated identity
 
 Previously, several public API routes accepted an unsigned `nookies_user` cookie as the authenticated user identity. This has been tightened to prevent account takeover via forged cookies:
