@@ -164,3 +164,21 @@ hypertask comment add HYFA-123 --improve
 - If a rewrite command is needed, use `--improve-command <command>` to apply the exact formatting or style change.
 
 <Aside type="note">The `comment add --improve` flag previously required a value independent of the `--improve-command` option. The flag now correctly accepts a bare flag and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
+
+## Project membership errors are clear ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486))
+
+<span class="label label--brand">Bug fix</span> Task creation now reports project membership failures clearly instead of blaming labels or showing an internal server error when the token lacks access to the target project.
+
+Previously, if you used a non-member token to create a task (`hypertask task create --project 5156 --section Backlog --labels Infra`), the CLI would output a generic internal failure ("hypertask: the server could not complete the command") and exit with a non-zero status. This obscured the real issue: the token wasn't authorized for project membership.
+
+With this fix, the same command now returns exit code 4 with a clear message that guides you to either sign in with a valid account or restrict operations to tasks you have access to:
+
+```bash
+hypertask task create --project 5156 --section Backlog
+# error: you are not a project member. Sign in with a valid account or use a token that has access to project 5156.
+# exit code: 4
+```
+
+This change makes CLI errors actionable and improves debugging when working with out-of-scope or bots.
+
+---
