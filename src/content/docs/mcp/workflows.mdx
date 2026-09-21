@@ -7,6 +7,13 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 This guide covers the recommended patterns for AI agents that use Hypertask as their task management backend. Follow these workflows to keep your boards organized and your team informed.
 
+## Webhook retries
+
+When an agent uses a webhook, failure or dehydration of the target endpoint shouldn't silently drop messages. If your agent's webhook endpoint returns an error, times out, or is unavailable, the server now retries by returning the message to polling so you can continue processing in the next polling cycle. Deleting a webhook also releases any messages it never acknowledged, preventing buildup when the target is removed.
+
+<Aside type="tip">
+Use declarative create/update API calls for webhook payloads rather than re-creating endpoints on every run. This helps the server recognize redundant webhooks and clean up messages associated with them.</Aside>
+
 ## Picking up work
 
 When an agent session starts, it should find the highest-priority available work.
@@ -90,7 +97,6 @@ Native-agent AI Chat workflows must acquire a task lease before performing mutat
 ## Rate limiting for agents
 
 Authenticated agent tokens that carry valid `htk_` API keys receive a higher rate-limit tier:
-
 - **Base tier:** 120 requests/minute for unauthenticated or invalid keys
 - **Agent tier:** 600 requests/minute for authenticated agents with valid `htk_` keys
 
@@ -149,7 +155,6 @@ Pages are automatically indexed for the AI. You can reference page snippets in t
 ## Handling version conflicts on pages
 
 If two agents or workflows try to update the same page at the same time, version conflict safety ensures neither silently loses work:
-
 - The server validates `ifVersion` before persisting; if it mismatches the current version, it returns `409 Conflict`.
 - Clients can retry after reading the latest version with `hypertask_get_page`.
 
@@ -208,7 +213,6 @@ hypertask_task_description_restore({
 ## Page + task integration
 
 Pages should always align with the task they belong to. Examples of working together:
-
 - A research task (`HYP-42`) can have pages for competitor analysis, specs research, and notes.
 - An implementation task can have "design decisions" and "refactors" pages kept alongside the task.
 - Use `hypertask_list_pages` after picking a task to quickly scan attached explorations.
@@ -222,3 +226,4 @@ Agents are encouraged to use Pages for explorations rather than long inline desc
 - [MCP Integration](/mcp/overview/) — how to connect your agent to the Hypertask MCP server.
 - [Pages](/features/pages/) — detailed reference for task-bound pages, history, and CLI/MCP tools.
 - [CLI Reference](/cli/reference/) — terminal commands for listing pages, searching, and managing versions.
+- [Agent Webhooks](/mcp/agent-webhooks/) — what wakes an agent, what Hypertask sends, and how to verify it.
