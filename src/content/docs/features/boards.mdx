@@ -5,7 +5,7 @@ description: "Organize work with Kanban-style boards, customizable sections, and
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Every project in Hypertask has a **board** â€“ a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
 ## Creating a board
 
@@ -27,7 +27,7 @@ The browser title shows the board name and saved-view name when you navigate to 
 - Short, clean titles are compressed to predictable 3-4 character labels (e.g. **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
-Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefixâ€”paired with a predictable numeric suffixâ€”makes task references understandable and consistent.
+Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
 
 ## App shell surface shortcuts
 
@@ -41,7 +41,7 @@ When the **left icon rail (beta)** is enabled on desktop, use a single number ke
 | <kbd>4</kbd> | Calendar |
 | <kbd>5</kbd> | Toggle AI chat |
 
-These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings Ã¢ÂˆÂ² Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
+These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings → Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
 
 ## Fast task entry
 
@@ -102,12 +102,12 @@ See HTPR-6550 ([link](https://app.hypertask.ai/detail/project-15/6550)).
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
-- **My Tasks** â€“ tasks assigned to you. Each member sees their own slice of the board.
-- **Overdue** â€“ tasks whose due date has passed and are not in a done column.
-- **Blocked** â€“ tasks blocked by another task or waiting on a person.
-- **Agents** â€“ tasks assigned to an AI agent.
+- **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
+- **Overdue** — tasks whose due date has passed and are not in a done column.
+- **Blocked** — tasks blocked by another task or waiting on a person.
+- **Agents** — tasks assigned to an AI agent.
 
-Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice â€“ it never changes the board's saved default view.
+Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice — it never changes the board's saved default view.
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
@@ -119,7 +119,45 @@ From the **Ctrl+K** command palette, you can still use **Save view as** to creat
 
 This change makes view management across My Tasks and other board views more consistent.
 
-## Midscene QA board coverage
+## Public intake endpoint for the Agent Template board ([HTPR-6502](https://app.hypertask.ai/detail/project-15/6502))
+
+<span class="label label--brand">Feature</span> External agents and users can now file corrections on the Agent Template board without signing in or using an API key.
+
+**POST https://app.hypertask.ai/api/agent-template/feedback** accepts requests to create tasks in the Agent Template board's **Backlog** section. Each submission is:
+
+- Cleaned and size-capped (title to 80 characters, body to 20,000 characters, full request to 32 KiB).
+- Limited to five requests per IP address per hour.
+- Checked for pre-existing labels to minimize duplicate feedback.
+
+Requests that exceed the limit receive `429` with a `Retry-After` header.
+
+**Example request:**
+
+```bash
+curl -sS -X POST "https://app.hypertask.ai/api/agent-template/feedback" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "title": "Keep correction details in failed runs",
+    "body": "<p>The failed run dropped the correction.</p><p>Keep it for the next run.</p>",
+    "labels": ["bug", "adapter:hypertask"]
+  }'
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "task": {
+    "ticketNumber": "AGTE-42",
+    "url": "https://app.hypertask.ai/detail/project-5500/42"
+  }
+}
+```
+
+All labels must already exist on the Agent Template board before use. This endpoint is ideal for automated pipelines, scoping bots, or human users who want to report issues without navigating authentication flows.
+
+### Midscene QA board coverage
 
 <span class="label label--brand">Enhancement</span> Midscene AI-driven testing now provides deeper coverage of board workflows, including five key board flows with stale-flow repairs and a nightly heartbeat watchdog for monitoring board health.
 
@@ -235,7 +273,7 @@ With these guards in place, board moves by the Agent Manager or Board Maintainer
 
 <span class="label label--brand">Behavior change</span> When you switch between views (such as My Tasks, Overdue, or Agents), the board now scrolls horizontally so that any focused card is fully visible from the left edge when possible. If the focused card would stay partially off-screen, the board moves enough to keep the card visible.
 
-Previously, switching views could leave the board persistently scrolled to the right without bringing the focused card into view. With this change, focus restoration is more predictable and match-adjacent behavior: the primary view re-positions horizontally for the focused card, and subsequent view switches follow the same rule.
+Previously, switching views could leave the board persistently scrolled to the right without bringing the focused card into view. With this change, focus restoration is more predictable and matches adjacent behavior: the primary view re-positions horizontally for the focused card, and subsequent view switches follow the same rule.
 
 ## Mobile board switcher ordering ([HTPR-5654])
 
@@ -299,7 +337,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g. create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chatâ€”all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
@@ -345,7 +383,7 @@ This occurred in four onboarding scenes before the fix was applied:
 - Scene 17: Archive section prompt
 - Scene 25: Onboarding completion confirmation
 
-The fix ensures that every interactive modal in the demo onboarding path receives a proper boolean toggle value instead of a non-callable placeholder. The correction eliminates crash crashes during the guided onboarding flow and provides a stable, incremental start to a user's first Hypertask session.
+The fix ensures that every interactive modal in the demo onboarding path receives a proper boolean toggle value instead of a non-callable placeholder. The correction eliminates crashes during the guided onboarding flow and provides a stable, incremental start to a user's first Hypertask session.
 
 Regression tests in this release verify modal toggle behavior across these four key onboarding scenes, ensuring future changes to the onboarding UI cannot reintroduce the same crash pattern.
 
@@ -357,7 +395,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 
 ```jsx
 // flowsProps.tsx or shared-modal.jsx
-// legacySizing omitted â€“ uses compact tokens
+// legacySizing omitted — uses compact tokens
 <Modal title="Task Details" open={isModalOpen}>
   <div className="modal-content">
     <Input label="Title" />
@@ -384,7 +422,7 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the boardâ€“after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive these shortcuts.
 
@@ -402,14 +440,13 @@ Once a task moves into a section, it ages in view over time. To avoid visual noi
 
 ## In-app feedback routing
 
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**â€“instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
 
 ## Board access for writes
 
 Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
-
 - CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
@@ -434,7 +471,7 @@ Previously, the panel would show an empty list or stale data if the current boar
 
 ### How to verify
 
-1. Open any board with several columns and note their names (e.g. Doing Ã¢ÂˆÂ² Review Ã¢ÂˆÂ² Done).
+1. Open any board with several columns and note their names (e.g. Doing → Review → Done).
 2. Click the **Manage board columns** button.
 3. Confirm you see all the expected columns listed.
 4. Hover on one column to reveal the pencil icon, edit its name, and save.
