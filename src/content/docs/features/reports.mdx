@@ -45,6 +45,34 @@ The report recalculates whenever you load it. A task appears once in its current
 
 The report is responsive and read-only on a phone.
 
+## Create native reports ([HTPR-5815](https://app.hypertask.ai/detail/project-15/5815))
+
+When native reports behind NATIVE_REPORTS_ENABLED, use the command palette to create contextual native reports at a board: in the app, press <kbd>Ctrl+K</kbd> > **Create native report**; embed a create interaction via MCP board + writers. Walked through board identifiers, useful for templates (board/kanban/agents/related). Exported via /report?mode=CREATE or body with /report/filter, publish(show) preview. No native dashboard yet; native create and templates are additive to the hub.
+
+Example:
+
+```bash
+# CLI-based (if available)
+ht report create --board-id 15 --mode native --template kanban
+```
+
+Example MCP tool call:
+
+```bash
+# Not a real stub; illustrative call
+hypertask board_update_task --board-id 15 --task-id 5815 --body '
+{
+  "nativeReport": {
+    "create": {
+      "boardId": 15,
+      "mode": "board",
+      "template": "kanban",
+      "label": "Board Kanban Report"
+    }
+  }
+}'
+```
+
 ## Open reports from the command palette
 
 From the **Ctrl+K** command palette, use **Go to Reports** to open the hub or **Board analytics report** to open analytics for the active board.
@@ -54,14 +82,16 @@ Saved reports are listed separately in the hub. Opening one loads its saved cont
 ## Agent-authored reports
 
 Agents can author reports by:
+
 1. Using the **Conductor: Create report** tool on a board, with a prompt defining structure and filters.
 2. Calling **Report authoring** via CLI (`hypertask report create --agent`).
 3. Using MCP `hypertask_report_create` to build programmatic reports.
 
 Report templates often include:
+
 - Board and section selection
 - Required pivot fields (status, assignee, due date)
-- Optional dimension (size,.priority, tags)
+- Optional dimension (size,.priority, tags
 
 Example: hourly team velocity snapshots collected by an agent.
 
@@ -83,6 +113,7 @@ The hub loads the report at `/report` with the associated filters.
 Board analytics always follows one board: the board you opened most recently. Agent-authored reports can still be saved for any board you can access and remain listed in the Reports hub.
 
 Use reports as a basis for:
+
 - Weekly standup summaries
 - Release retrospectives
 - Resource planning and overcommitment checks
@@ -95,12 +126,12 @@ A **status update** is an AI-written summary of what has happened on a board, sa
 
 The update has four parts:
 
-- **Headline** — one sentence on where the board stands
-- **Shipped** — work that reached a done column or was archived
-- **In flight** — work moving through the other columns
-- **Risks and blockers** — tickets sitting still or otherwise worth attention
+- **Headline** â€” one sentence on where the board stands
+- **Shipped** â€” work that reached a done column or was archived
+- **In flight** â€” work moving through the other columns
+- **Risks and blockers** â€” tickets sitting still or otherwise worth attention
 
-It is written from the same board data the velocity report uses — ticket movement over the window, per-column counts, staleness thresholds — so the figures it quotes are computed rather than generated. Ticket titles are passed to the model as data, not instructions, so a task title cannot steer what the summary claims.
+It is written from the same board data the velocity report uses â€” ticket movement over the window, per-column counts, staleness thresholds â€” so the figures it quotes are computed rather than generated. Ticket titles are passed to the model as data, not instructions, so a task title cannot steer what the summary claims.
 
 Each board keeps **one** status update, at a fixed address:
 
@@ -116,11 +147,11 @@ The slug `status-update` is reserved for this feature on every board. A report y
 
 ## Best practices
 
-- **Name consistently**: use pattern `Board/Project – Report Type – Period` for easy navigation.
+- **Name consistently**: use pattern `Board/Project â€“ Report Type â€“ Period` for easy navigation.
 - **Re-use filters**: pin board filters to quick-access wells and reference those wells when generating reports.
 - **Refresh timely**: set agents to update reports daily or on board changes, depending on cadence needs.
 - **Lock stable templates**: freeze stable filters in saved report templates so agents can invoke them reliably.
 
 Related:
-- [Board Settings](./board-settings.mdx) — auto‑assign, staleness, etc.
-- [Calendar view](./calendar.mdx) — task dates, dates, scheduling
+- [Board Settings](./board-settings.mdx) â€” autoâ€¹assign, staleness, etc.
+- [Calendar view](./calendar.mdx) â€” task dates, dates, scheduling
