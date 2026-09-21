@@ -30,22 +30,20 @@ Errors with codes matching known patterns are automatically filed in the issue q
 2. Extract common error scenarios (401/403/404 false positives).
 3. Prioritize the entry by severity and recurrence.
 
-## Fleet status heartbeat
+## Production Watchdog gate
 
-The fleet status heartbeat now persists on the Agents dashboard even when processes exit mid-scan. The agent-runtime collector uses a retry pattern to handle cold-start ENOENT conditions, keeping the fleet status view available continuously.
+A strict production Watchdog gate and build deployment gate now monitors production health on every deploy. When the Watchdog detects that an existing, unhandled hydration error is present in production, the build deployment is blocked. This prevents the erroneous build from being deployed, preserving incident stability and reducing error surface for users. To proceed, you must address the outstanding hydration errors and rerun the Watchdog verification.
 
 ### What changed
 
-- Collector retries on `/proc` ENOENT race conditions, so the fleet status refreshes on schedule regardless of process churn.
-- The Agents dashboard rights panel shows a stable heartbeat line when collectors are scanning; the line no longer drops unexpectedly.
-- CLI `task assign` attaches the requested agent after the prior mutation succeeds and reloads correctly.
-- The fleet ledger closes orphaned rows after worker restarts, so launches killed by a `systemd long` go clean.
+- New Watchdog and build deployment gate actively monitor production on every deploy.
+- If an existing, unhandled hydration error is present in production, the build deployment is blocked.
+- This prevents erroneous builds from being deployed.
+- Address the outstanding hydration errors and rerun Watchdog verification to clear the gate.
 
 ### Updated references
 
-- Integration validation per HTPR-6253 confirms 20 non-failed scans during 800 process exits; every scan returned usable data and the combined fleet view stayed visible.
-- CLI task assignment clarity per HTPR-6185, 6187: assign works without a lease claim and includes an optional claim step.
-- Fleet ledger cleanup per HTPR-6310 closes orphaned rows after worker restarts, so launches killed by a systemd long go clean.
+- Production Watchdog and build deployment gate: HTPR-6609; provides blocking on existing hydration errors.
 
 ---
 
