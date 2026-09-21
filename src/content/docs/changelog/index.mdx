@@ -13,6 +13,7 @@ export const Update = ({ label, children }) => (
 <Update label="September 21, 2026">
   * Added native reports at a board via Ctrl+K > Create native report ([HTPR-5815](https://app.hypertask.ai/detail/project-15/5815))
   * Improved My Tasks toolbar to use the same Save view and Reset controls as Kanban ([HTPR-6572](https://app.hypertask.ai/detail/project-15/6572))
+  * Assignee tooltip now waits for an intentional hover before opening, so opening a task leaves Add Description clear and the first click works ([HTPR-6578](https://app.hypertask.ai/detail/project-15/6578))
   * Fixed CLI to report project membership failures clearly instead of generic internal errors ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486))
   * Added public Agent Template feedback endpoint for external corrections without authentication ([HTPR-6502](https://app.hypertask.ai/detail/project-15/6502))
   * Fixed webhook retries: messages to dead webhooks now return to polling, and deleting a webhook releases any messages it never acknowledged ([HTPR-6566](https://app.hypertask.ai/detail/project-15/6566))
