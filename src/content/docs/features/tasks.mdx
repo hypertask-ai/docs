@@ -86,6 +86,36 @@ Since All Tasks is board-wide, it aggregates tasks from all active columns and s
 
 **Note:** Unlike <strong>My Tasks</strong> saved views, All Tasks does not automatically filter out onboarding, demo, template, and staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
+### Search filters
+
+When searching within a board or in saved views, you can now narrow results using search operators on fields:
+
+- **from:** Restrict to tasks created by a specific user.
+- **assignee:** Restrict to tasks assigned to a specific person.
+- **in:** Restrict to tasks in a board, section, or column.
+- **label:** Restrict to tasks with a specific label.
+- **is:** Narrow by task type; for example, `is:card` to show only standard cards.
+- **dates:** Show tasks with dates matching a condition (by default, <strong>by due</strong>), or filter by due date ranges.
+  - `dates:2026-09-30` For tasks with that exact due date.
+  - `dates:<2026-09-30` For tasks with a due date before.
+  - `dates:>2026-09-30` For tasks with a due date after.
+  - `dates:in-range 2026-09-01..2026-09-30` For tasks with a due date within the range.
+  - `dates:overdue` For tasks marked overdue.
+  - `dates:today` For tasks due today.
+  - `dates:this-week` For tasks due within the current week.
+  - `dates:later` For tasks due later than the current week.
+  - `dates:todays` For tasks due on today and the day prior.
+- **has:** Show tasks that have a value in a field; for example, `has:due-date` for tasks that have a due date (including empty values) or `has:assignee` for tasks that have someone assigned.
+- Combining multiple operators is supported—for example, `from:alice label:urgent dates:>2026-09-30` to find urgent tasks created by Alice after a certain date.
+
+To apply search filters:
+1. Open <strong>Kanban</strong> or <strong>Table View</strong>.
+2. On the board header (or in the saved view toolbar), select <strong>Filter</strong>.
+3. Choose a field and an operator, then enter a value or pick from the options.
+4. Repeat for additional filters to narrow the list.
+
+Search filters apply at the board level in Kanban and in saved views. The available operators depend on the board's configuration.
+
 ## My Tasks toolbar
 
 <span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses the same controls as the Kanban board: **Save view** and **Reset**. The previous separate Save button was removed while saving and resetting continue to work as before.
