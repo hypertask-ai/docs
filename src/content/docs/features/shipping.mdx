@@ -24,6 +24,15 @@ The count is updated as follows:
 - Dependabot and similar automation PRs are excluded from the displayed aggregate.
 - Exclusions are drawn from GitHub's merge events and PR labels/tags, so the total reflects non-automation production merges.
 
+### Real bugfix gate behavior
+
+A real bugfix (a bug fix that is visible to users) can ship without a feature flag. Previously, any fix visible to customers, even a real bugfix, could only ship via a flag. Shipping now distinguishes between:
+
+- **Feature flags**: For new, visible functionality.
+- **Real bugfix gate**: For bug fixes that are already live in production. These ship without a flag and are not treated as features.
+
+This change allows engineers to move real bugfixes directly to production without the overhead of a gate flag.
+
 ## Backdrop showing each board's shipped tickets
 
 The backdrop lists each board's recently shipped tickets, which you can expand to see PR links, labels, and context.
