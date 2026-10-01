@@ -11,11 +11,14 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 1, 2026">
+  * Added: Auto-link plain web addresses in ticket descriptions and comments ([HTPR-6802](https://app.hypertask.ai/detail/project-15/6802))
   * Added: Search operators in Kanban and saved views — filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: ([HTPR-6369](https://app.hypertask.ai/detail/project-15/6369))
   * Improved: **Real bugfix gate** now ships without a flag for fixable bugs visible to customers, distinguishing them from features ([HTPR-6638](https://app.hypertask.ai/detail/project-15/6638))
+  * Fixed: Marking a task as read no longer returns a 500 error when multiple requests arrive together or on recently deleted tasks ([HTPR-6821](https://app.hypertask.ai/detail/project-15/6821))
   * Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue ([HTPR-6623](https://app.hypertask.ai/detail/project-15/6623))
   * Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load ([HTPR-6626](https://app.hypertask.ai/detail/project-15/6626))
   * Fixed: The removable Quick add a task row has been removed from the My Tasks view ([HTPR-6570](https://app.hypertask.ai/detail/project-15/6570))
+  * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
   * Added: Search bar chips plus @ people picker and # board picker with value autocomplete ([HTPR-6370](https://app.hypertask.ai/detail/project-15/6370))
   * Fixed: Boards rendered blank with no columns or tasks when opening a saved view; saved views now correctly load columns and tasks on HTPR-6603 ([HTPR-6603](https://app.hypertask.ai/detail/project-15/6603))
 </Update>
