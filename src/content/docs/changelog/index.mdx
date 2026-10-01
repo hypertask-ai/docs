@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 1, 2026">
+  * Added: Search operators in Kanban and saved views—filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: ([HTPR-6369](https://app.hypertask.ai/detail/project-15/6369))
   * Improved: **Real bugfix gate** now ships without a flag for fixable bugs visible to customers, distinguishing them from features ([HTPR-6638](https://app.hypertask.ai/detail/project-15/6638))
   * Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue ([HTPR-6623](https://app.hypertask.ai/detail/project-15/6623))
   * Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load ([HTPR-6626](https://app.hypertask.ai/detail/project-15/6626))
@@ -84,7 +85,7 @@ export const Update = ({ label, children }) => (
   * <strong>My Tasks live updates</strong>: rows refresh when another tab, the CLI, or an agent changes a task, without reloading the page ([HTPR-6458](https://app.hypertask.ai/detail/project-15/6458))
   * <strong>My Tasks quick add</strong>: type a title at the top of My Tasks and press Enter to create a task on the view's default board, assigned to you ([HTPR-6460](https://app.hypertask.ai/detail/project-15/6460))
   * Fixed <strong>Fix settings opening when the sidebar is expanded</strong>: the Settings panel no longer opens unexpectedly when the sidebar is expanded ([HTPR-6495](https://app.hypertask.ai/detail/project-15/6495))
-  * Fixed <strong>Fix comment attachment uploads and prevent pending uploads carrying across tickets</strong>: attachments now upload correctly and do not carry across unrelated tickets ([HTPR-6494](https://app.hypertask.ai/detail/project-15/6494))
+  * Fixed <strong>Fix comment attachment uploads and prevent pending uploads carrying across tickets</strong>: attachments now upload correctly and do not carry across unrelated tasks ([HTPR-6494](https://app.hypertask.ai/detail/project-15/6494))
   * Fixed <strong>Fix kanban drag auto-scroll and unexpected page reloads</strong>: dragging cards now scrolls smoothly and no longer triggers unexpected page reloads ([HTPR-6493](https://app.hypertask.ai/detail/project-15/6493))
   * <strong>My Tasks filters</strong>: all Kanban board filters are now available on My Tasks ([HTPR-6447](https://app.hypertask.ai/detail/project-15/6447))
   * <strong>My Tasks columns</strong>: custom columns are now saved in the My Tasks view ([HTPR-6456](https://app.hypertask.ai/detail/project-15/6456))
