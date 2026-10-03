@@ -33,11 +33,13 @@ export const Update = ({ label, children }) => (
   * Improved: Long task pages and comment threads now load their initial snapshot once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
   * Improved: Boards now load lighter and faster by fetching long text fields and subscription history only when needed, reducing initial payload size while preserving all visible functionality ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
   * Improved: First ticket open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm (0.10 s delta vs 0.25 to 0.33 s, HTPR-6853)
+  * Added: Page image gallery: click real images on normal/sub/canvas pages to view them full-size in the ticket-style gallery, with next/previous navigation, Esc/to-outside close, download, and ignore helper images and resize gestures ([HTPR-6872](https://app.hypertask.ai/detail/project-15/6872))
 </Update>
 
 <Update label="October 3, 2026">
   <div style="aspect-ratio: 16/9; margin: 0.75rem 0;"><iframe style="width: 100%; height: 100%;" src="https://www.youtube-nocookie.com/embed/kGtgDdp3DvM" title="Update: Auto-fill Blank Stripe Customer Names" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-  * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864)) and ([HTPR-6869](https://app.hypertask.ai/detail/project-15/6869))\n  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
+  * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864)) and ([HTPR-6869](https://app.hypertask.ai/detail/project-15/6869))
+  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
 </Update>
 
 <Update label="October 2, 2026">
