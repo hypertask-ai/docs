@@ -51,6 +51,14 @@ The response contains the agent UUID and a token for authenticating the bearer t
 
 If you open Agent Chat or list a team's agents and that team has none you can see, Hypertask adds a Hyper AI agent on a board of that team so the list is not empty. This also works when you can use the team but are not yet a member of a board.
 
+## Agent status
+
+Agent pages now show a single, consistent status across the agent detail page. When Hyper AI agents are targeted via chat, they reflect **On demand** rather than **Offline**, because Hypertask launches them on demand to handle your request instead of running as background workers that report a status.
+
+<Aside type="tip">
+Built-in Hyper AI agents are always **On demand** when you message them—they run for that interaction and return to idle immediately. You won't see a background "Offline" status because they never run continuously.
+</Aside>
+
 ## Board agent rooms
 
 Open [Agent Chat](https://app.hypertask.ai/agents/chat) and choose **Board rooms** to use one shared conversation for every bot on a board. Your message goes to Product Bot first. Product Bot can address another board bot by its full name, and that bot's answer appears in the same transcript with its name and avatar.
@@ -61,7 +69,11 @@ A room shows its bots, today's bot-turn count, and a visible daily budget. Bot-o
 
 ## Agent Chat on a phone
 
-Open [Agent Chat](https://app.hypertask.ai/agents/chat). Pick an agent. On a phone the chat fills the screen: the usual bottom tabs and top bar hide, the header keeps only a back control and the agent name, and the composer is the same TipTap box, mic, and send as AI chat so the keyboard does not cover your message.
+Open [Agent Chat](https://app.hypertask.ai/agents/chat). Pick an agent. On a phone the chat fills the screen: the usual bottom tabs and top bar hide, the header shows only a back control and the full agent name (not just the first letter), and the composer is the same TipTap box, mic, and send as AI chat so the keyboard does not cover your message.
+
+<Aside type="tip">
+The agent name and key actions in the header—including the Chat button, status indicator, and toggle switch—stack on a separate line, giving you more space for content and preventing truncation on small screens.
+</Aside>
 
 ### Agent credentials and scopes
 
@@ -93,6 +105,8 @@ When the board or plan requires subscription-backed agents, they must be in Team
 ([HTPR-5475](https://app.hypertask.ai/detail/project-15/5475))
 
 Agent access keys are sensitive credentials that should not be displayed repeatedly. The agent detail page shows an access key only when Hypertask creates or regenerates it. On later loads, the page shows that a key exists but does not render the token again. Revoke and Regenerate actions remain available without re-exposing the saved credential. This design prevents accidental token exposure while preserving the ability to rotate keys.
+
+<Aside type="caution">Store the agent access key in your secrets manager. Hypertask masks it after rotation.</Aside>
 
 #### Manage board membership from the agent detail view
 
