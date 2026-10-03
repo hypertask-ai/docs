@@ -1,5 +1,5 @@
 ---
-title: Pages
+title: "Pages"
 description: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 ---
 
@@ -23,6 +23,16 @@ Think of a Page as a full-screen notepad for thinking, planning, and research th
 ## Mobile pinch zoom
 
 On mobile, ticket page content supports native two-finger pinch zoom up to 5×. This lets you read embedded screenshots and other content on iPhone Safari and Android Chrome without making the page unusably small. Other app surfaces keep their current zoom behavior.
+
+---
+
+## Mobile page navigation (Owner+QA preview)
+
+On mobile pages, the header row follows the same Settings-style pattern: the back button "← Back to task" has normal side padding, and only "Save" remains visible. Version and Delete are moved into the Commands menu. Delete still prompts for confirmation before executing. This change is live on production for Owner and QA behind the mobile page back row flag, and will roll out more broadly separately.
+
+<Aside type="tip">
+This mobile header behavior is captured on ticket [HTPR-6861](https://app.hypertask.ai/detail/project-15/6861) for tracking.
+</Aside>
 
 ---
 
