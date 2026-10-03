@@ -15,6 +15,14 @@ Before this fix, URLs like `https://app.hypertask.ai/detail/project-5515` would 
 
 Real ticket links retain their normal behavior and open the ticket detail page as expected.
 
+### Ticket links after moves ([HTPR-6839])
+
+<span class="label label--brand">Fixed</span> When you move a ticket between boards, old links like `https://app.hypertask.ai/detail/project-15/6641` now redirect you to the ticket under its new number instead of showing an unavailable page.
+
+Before this fix, moving a ticket would assign it a new number and leave old links broken. Now, tickets store their old number at move time and the app follows the redirect, so shares and bookmarks continue to work. The CLI also follows redirects when resolving ticket IDs, so commands like `hypertask task show <old-number>` open the correct ticket.
+
+Some extremely old links from before this feature was available may still show unavailable. Those links require a separate backfill and do not receive redirects for privacy reasons.
+
 ## Creating a board
 
 From the web UI, click **New board** to create a blank board. You can also generate a board with AI-powered content:
@@ -231,7 +239,7 @@ Or from the app: use **Ctrl+K**, search for the view name, and select it from th
 
 ## Board interactions and state
 
-### Board titles in browser navigation ([HTPR-5420])
+### Board titles in browser navigation ([HTPR-5420](https://app.hypertask.ai/detail/project-15/5420))
 
 The browser title reflects the board and saved-view name when you navigate to a board. The server builds the title from authorized board and saved-view metadata, so Next.js no longer replaces it with a generic title during navigation.
 
@@ -243,7 +251,7 @@ This change applies to:
 
 Full regression coverage includes these views to prevent unexpected title behavior.
 
-### Instant board painting from IndexedDB snapshot ([HTPR-5722])
+### Instant board painting from IndexedDB snapshot ([HTPR-5722](https://app.hypertask.ai/detail/project-15/5722))
 
 <span class="label label--brand">Performance improvement</span> Boards now paint instantly from a locally cached IndexedDB snapshot. When you open a board, it loads fast without waiting for a full fetch, and authentication revocation runs in the background. If authorization is denied, the board clears and navigates home softly instead of forcing a hard reload.
 
@@ -251,7 +259,7 @@ This Linear-style approach eliminates page flicker and server roundtrips. No rel
 
 ### Board stability on load
 
-<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After the fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
+<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
 
 - Columns appear once and remain visible across desktop and mobile, light and dark.
 - 8 successful board loads on test accounts, 0 instances of column flickering (down from 4 blinks in 5 loads before the fix).
@@ -263,7 +271,7 @@ This Linear-style approach eliminates page flicker and server roundtrips. No rel
 
 No documented API is available for remote collections yet; they are managed from the web UI.
 
-### Board focus after saving a view ([HTPR-5201])
+### Board focus after saving a view ([HTPR-5201](https://app.hypertask.ai/detail/project-15/5201))
 
 When you save a board view, the keyboard focus stays on your current card instead of jumping to the last card in the active column. This matches the behavior observed when other modals (command palette, board manager, column manager, search) close: the board restores focus to the card you were on, keeping your focus consistent across interactions.
 
@@ -271,11 +279,11 @@ When you save a board view, the keyboard focus stays on your current card instea
 
 The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
-### Faster boardTasks responses ([HTPR-5449])
+### Faster boardTasks responses ([HTPR-5449](https://app.hypertask.ai/detail/project-15/5449))
 
 The boardTasks endpoint no longer performs redundant authenticated-user lookups after the board access guard completes. This reduces unnecessary work and improves response times on desktop, with consistent behavior across views.
 
-### Board columns and in-flight agent turns ([HTPR-5545])
+### Board columns and in-flight agent turns ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545))
 
 <span class="label label--brand">Behavior change</span> An agent turn can no longer be canceled by a board column move. The worker now protects in-flight deliveries from cancellation caused by section changes or board hygiene moves.
 
@@ -285,13 +293,13 @@ Two independent guards enforce this behavior on the deployed worker:
 
 With these guards in place, board moves by the Agent Manager or Board Maintainer no longer fail an in-flight agent turn.
 
-### View focus restoration after switching ([HTPR-6333])
+### View focus restoration after switching ([HTPR-6333](https://app.hypertask.ai/detail/project-15/6333))
 
 <span class="label label--brand">Behavior change</span> When you switch between views (such as My Tasks, Overdue, or Agents), the board now scrolls horizontally so that any focused card is fully visible from the left edge when possible. If the focused card would stay partially off-screen, the board moves enough to keep the card visible.
 
 Previously, switching views could leave the board persistently scrolled to the right without bringing the focused card into view. With this change, focus restoration is more predictable and matches adjacent behavior: the primary view re-positions horizontally for the focused card, and subsequent view switches follow the same rule.
 
-## Mobile board switcher ordering ([HTPR-5654])
+## Mobile board switcher ordering ([HTPR-5654](https://app.hypertask.ai/detail/project-15/5654))
 
 When you open the board picker or switch boards on mobile:
 
@@ -305,7 +313,7 @@ When you open the board picker or switch boards on mobile:
 
 This behavior uses the same ordering logic as the desktop board switcher while maintaining a stable MRU order session-wide on mobile devices. ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625)).
 
-## Mobile board switcher search ([HTPR-5625])
+### Mobile board switcher search ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625))
 
 In addition to the ordering behavior above, the mobile board switcher supports focused search on launch:
 
@@ -323,7 +331,7 @@ The left sidebar organizes your boards into collapsible teams. When you group bo
 - This ensures teams you actively use (for example, Inne or Hypertask) rise to the top of the list.
 - The sorting is applied consistently across collapsed and expanded sections, keeping high-activity teams easily accessible.
 
-### Board switcher sort order ([HTPR-5476])
+### Board switcher sort order ([HTPR-5476](https://app.hypertask.ai/detail/project-15/5476))
 
 When you use **Shift+M** (board picker) or the board switcher, boards now appear based on their last activity rather than creation order:
 
@@ -333,7 +341,7 @@ When you use **Shift+M** (board picker) or the board switcher, boards now appear
 
 This aligns with the agents page's activity-based sorting and ensures your most active boards are always prioritized when navigating.
 
-### Mobile board switcher search and ordering ([HTPR-5625])
+### Mobile board switcher search and ordering ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625))
 
 When you open the board picker or switch boards on mobile, search is focused on launch. Boards are ordered by latest activity with your current board pinned at the top, using the same desktop ordering logic as the board switcher:
 
@@ -473,7 +481,7 @@ Legacy comment endpoints previously trusted the `botUserId` or `userId` from a c
 
 This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board or task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
 
-## Manage board columns panel ([HTPR-6217])
+## Manage board columns panel ([HTPR-6217](https://app.hypertask.ai/detail/project-15/6217))
 
 The **Manage board columns** panel in every board now correctly lists all existing columns, including columns added after the last time the panel was opened.
 
