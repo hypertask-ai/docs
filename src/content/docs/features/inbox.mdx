@@ -34,6 +34,20 @@ The inbox can be grouped into multiple views:
 
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g., top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
 
+## Inbox row hover behavior
+
+On desktop (light and dark mode), hovering over an inbox row now shows the **archive** and **snooze** icons in exactly where the timestamp used to be. This prevents the row content from shifting or wobbling as you move your mouse across the list:
+
+- The timestamp is replaced by the archive and snooze icons on hover
+- **No other content moves**: message previews, ticket titles, labels, and the checkbox stay at the same positions
+- Moving your mouse down the list no longer causes rows to jump or wiggle
+- The phone inbox is unchanged
+- The check box may still appear on hover, but it doesn't push other content around
+
+<Aside type="tip">This behavior matches the hover fix previously applied to board cards to give you a stable, pixel-perfect inbox experience when scrolling or mousing over rows.</Aside>
+
+<Aside type="important">If you're not seeing the time stamp being replaced by icons on hover, ensure you're on the desktop app and not the mobile inbox, which remains unchanged.</Aside>
+
 ## Action icons
 
 Task completion and inbox-archive now use distinct icons to avoid visual confusion.
@@ -149,7 +163,7 @@ This means hidden rows (e.g., notifications from tasks you've archived, filtered
 
 If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
-**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K ↦ "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
 
 ### Limitations
 
