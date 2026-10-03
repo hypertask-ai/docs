@@ -475,7 +475,7 @@ Hypertask ensures all write paths gate the target board or task before mutations
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
 
-The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+-\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
+The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+\-\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
 
 Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
 
@@ -518,6 +518,12 @@ After this fix ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)):
 - Keyboard navigation feels responsive and local to the column.
 
 This behavior applies throughout board and table views, including My Tasks, Overdue, Blocked, and any custom saved views.
+
+## Click rows in Layout command palette pop-ups ([HTPR-6848](https://app.hypertask.ai/detail/project-15/6848))
+
+<span class="label label--brand">Fixed</span> When you open the <kbd>Ctrl+K</kbd> Layout command palette, click <strong>Rename board</strong>, and type a new name, clicking any row in the pop-up (for example, <strong>"Change name to [new name]"</strong>) now saves the board and doesn’t crash the page.
+
+Before this fix, clicking a row that had no click handler threw an error, so only pressing <kbd>Enter</kbd> worked. Now every row in these pop-ups is protected, so clicking safely renames the board just like pressing Enter.
 
 ## Boards load lighter and faster ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
 
