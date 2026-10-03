@@ -45,11 +45,37 @@ Keep data in sync across browsers by default for authenticated board and table r
 </CardGrid>
 ```
 
+## Ticket prefix
+Each board has a deterministic ticket prefix (e.g., HTPR, YPER4, HYFA). Owners can rename the prefix from board settings without changing existing ticket numbers. Prefixes are 2–5 letters or digits, unique within the team, and appear as live previews (e.g., **HTPR-6839** becomes **NEW-6839**).
+
+### How to change a prefix
+From the app:
+1. Open a board.
+2. Click **Settings** > **Board** > **General**.
+3. Find **Ticket prefix**.
+4. Enter a new prefix (2–5 characters, letters or digits) and press Enter.
+5. Old ticket IDs continue to resolve, so links, comments, and PRs that reference them stay accurate.
+
+From the CLI:
+```bash
+hypertask project update --prefix NEWXY --project 15
+```
+
+The prefix is editable on the **Create board** screen (defaulted to the automatic suggestion) and available to agents via the same `project update --prefix` flag.
+
+### Rationale
+- **Instant updates:** The displayed ID is built from the board's current prefix and the ticket's number, so changing the prefix is a quick update instead of rewriting every ticket.
+- **Backwards compatibility:** Old ticket IDs keep resolving via aliases, just like old numbers already do (e.g., `https://app.hypertask.ai/detail/project-15/6839`).
+- **Avoid clashes:** Moved tickets take the next free number, so prefixes and numbers never conflict, even after deleting tickets or changing prefixes.
+
+<Aside type="tip">
+Prefixes are currently limited to these known values: HTPR, YPER4, and HYFA, which are used by existing agents. Changing those prefixes will require updating agent checks accordingly.
+</Aside>
+
 ## Board notifications
 Open **Settings → Board → General**, then turn **Board notifications** off to mute one board. The change applies immediately and persists across refreshes.
 
 Muting a board stops its ordinary:
-
 - Inbox notifications, including snoozed items returning later.
 - Push notifications.
 - Immediate and digest emails.
@@ -76,7 +102,6 @@ Configure automatic archival of tasks that no longer require attention. Archive 
 
 ### Available options
 Rules you can set per board:
-
 - **Enable auto-archive** — Turn the rule on/off.
 - **Archive after** — Choose how many days tasks remain before archival.
   - Common presets: 90, 120, 180, 365.
@@ -84,7 +109,6 @@ Rules you can set per board:
 
 ### How it behaves
 When a task crosses your configured threshold:
-
 - The board removes the task from column counts.
 - Tasks are moved to the board's Archive section.
 - History (comments, attachments, subtasks) remains intact.
@@ -99,7 +123,6 @@ Use the **Archive after** setting on columns you keep as a long-running backlog.
 Staleness rules keep track of active tasks that have not been moved, updated, or interacted with in a defined window. This helps surface forgotten items that might need re-evaluation or removal.
 
 Configuration:
-
 - **Stale after** — Number of days since the last change/due date.
   - Suggested ranges: 30, 60, 90.
 - **Auto-assign stale tasks** (Optional) — Toggle the rule that moves or re-assigns stale tasks to a specific column or assignee.
@@ -109,7 +132,6 @@ When staleness is enabled, stale Kanban cards show the task's age on the board b
 
 ### Filtering stale vs healthy
 Every staleness filter is named so that typing **stale** in the filter menu finds all of them:
-
 - **Stale in column** — days since the task last changed column, falling back to its creation date if it has never moved.
 - **Stale without comment** — days since the last comment, falling back to creation if nobody has ever commented.
 - **Stale on board** — days since the task was created, regardless of activity (not affected by column moves or comments).
@@ -128,7 +150,6 @@ Define rules that automatically assign or re-assign tasks to specific members. T
 In addition to setting a default for the entire board when a task is created or is unassigned, you can configure a per-column auto-assign rule: whenever a task is moved into this column, it will be assigned to the specified person or group. Ctrl+K "Auto-assign for this column" opens the per-column configuration.
 
 To configure per-column auto-assign:
-
 1. From the board or section header, open the context menu (or use Ctrl+K "Auto-assign for this column") and select the section where you want the rule.
 2. Pick an assignee (group or individual) to apply as tasks are moved into that column. The assignment is additive and idempotent—moving a task back into another column and then into this column again respects the rule.
 3. When the rule applies, all tenants receive a notification and the assignee is messaged in the source channel if notifications are set up for the board.
@@ -155,13 +176,11 @@ Pair auto-assign rules with open notifications (e.g., open issue in Slack team) 
 
 ## Autosave drafts
 Changes to board settings are saved automatically. If you navigate away or refresh the page, your settings persist:
-
 - **No manual save needed** — All toggles, number inputs, and column mappings are applied instantly.
 - **Revert behavior** — If you make a mistake, the board defaults (detected from project/staleness rules) can be used as a backup; update the offending rule and save again.
 
 ## Logging and history
 Hypertask tracks rule executions at the board level for review:
-
 - **Rule runs** — Historically, Hypertask logged rule runs to a log table (Admin role visible).
 - **Rule hygiene** — To keep logs manageable, Hypertask retains only recent rule executions (e.g., last 14–30 days) on the log table, while preserving a full backup in a more extensive repository for administrative use.
 
@@ -171,7 +190,6 @@ Hygiene protects performance and schema stability over time. Project owners shou
 
 ## Synced IndexedDB defaults (HTPR-5260)
 You can choose between two read models for Boards and Tables:
-
 - **Synchronized IndexedDB (default)** — Active when no `<code>?local_db=0</code>` in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
 - **Local IndexedDB (optional)** — Activated by appending `<code>?local_db=0</code>` to the URL. Reads and writes stay in the local browser state, giving high performance with less CPU and a smaller footprint. Data may not reflect changes from other tabs or browsers until you reload.
 
