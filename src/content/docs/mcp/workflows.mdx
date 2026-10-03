@@ -12,7 +12,8 @@ This guide covers the recommended patterns for AI agents that use Hypertask as t
 When an agent uses a webhook, failure or dehydration of the target endpoint shouldn't silently drop messages. If your agent's webhook endpoint returns an error, times out, or is unavailable, the server now retries by returning the message to polling so you can continue processing in the next polling cycle. Deleting a webhook also releases any messages it never acknowledged, preventing buildup when the target is removed.
 
 <Aside type="tip">
-Use declarative create/update API calls for webhook payloads rather than re-creating endpoints on every run. This helps the server recognize redundant webhooks and clean up messages associated with them.</Aside>
+Use declarative create/update API calls for webhook payloads rather than re-creating endpoints on every run. This helps the server recognize redundant webhooks and clean up messages associated with them.
+</Aside>
 
 ## Picking up work
 
