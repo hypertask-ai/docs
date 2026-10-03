@@ -241,6 +241,14 @@ Full regression coverage includes these views to prevent unexpected title behavi
 
 This Linear-style approach eliminates page flicker and server roundtrips. No reload paths are involved in typical board opening; only real authorization failures trigger a full clear and navigation.
 
+### Board stability on load
+
+<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After the fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
+
+- Columns appear once and remain visible across desktop and mobile, light and dark.
+- 8 successful board loads on test accounts, 0 instances of column flickering (down from 4 blinks in 5 loads before the fix).
+- Loading actions like opening a ticket and returning, or reloading the page, continue to work correctly.
+
 ### Folder/collection-level board grouping (beta)
 
 <span class="label label--info">Beta feature</span> Boards can now be grouped into collections (formerly called folders) to keep your workspace organized. Collections are rendered in a collapsible section of the board switcher.
@@ -389,7 +397,7 @@ Regression tests in this release verify modal toggle behavior across these four 
 
 ## Compact modal palette
 
-Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g. the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
+Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g., the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
 
 **Default behavior (compact)**
 
