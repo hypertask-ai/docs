@@ -7,6 +7,10 @@ import { Card, CardGrid, TabItem, Tabs } from '@astrojs/starlight/components';
 
 Hypertask billing controls license capacity, seat limits, and access tiers. Manage seats, track costs, and safely test billing changes in production without risking database side effects.
 
+## Your billing label in Stripe
+
+Stripe uses your team name or your email as the display name on invoices and in the billing portal. Hypertask never shows internal IDs or the word “undefined” in that field. For new teams, we display the team name; if no team name exists, the owner’s email appears instead. For customers created before this update, we have repaired any malformatted names so they now match the readable policy as well.
+
 ## Seats
 
 Seats represent active users with individual access to Hypertask. Each seat corresponds to a user with login credentials and full access to the platform features.
