@@ -12,7 +12,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="October 3, 2026">
   * Added: Search screen now uses a Superhuman-style aligned full-width suggestions list under the search box, with recents shown once and tips below them, and grey inline value completion for operator names and values; results fetch only after accepting a suggestion or pressing Enter. Visible only for Owner and QA behind the existing search flags ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
-  * Improved: Inbox row hover now replaces the timestamp with archive and snooze icons without shifting message previews, ticket titles, or labels ([HTPR-6883](https://app.hypertask.ai/detail/project-15/6883))
+  * Improved: Inbox row hover now replaces the timestamp with archive and snooze icons without shifting message previews, ticket titles, labels, or labels ([HTPR-6883](https://app.hypertask.ai/detail/project-15/6883))
   * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864))
   * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
   * Improved: Inbox details now load concurrently (who-did-what, unread counts, rewards) so the inbox opens faster on populated inboxes ([HTPR-6845](https://app.hypertask.ai/detail/project-15/6845))
