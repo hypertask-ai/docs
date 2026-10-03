@@ -8,7 +8,6 @@ import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 Use board settings to plan one board and control its automatic behavior. Set its target and milestones, post health updates, mute notifications, or configure archival, staleness, time tracking, and assignment rules.
 
 ## What this affects
-
 Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
 
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
@@ -24,10 +23,9 @@ Board settings are stored at the board level, so you can tailor behaviors per wo
 </Aside>
 
 ## Reach
-
 You can open board settings from:
 
-- **Ctrl+K command palette** — Search for **"Board settings"** and select your board.
+- **Ctrl+K command palette** — Search for **"Board settings"** and select your board. The board and team you opened from are now preselected.
 - **Board menu** — Open a board's menu and choose **Settings**.
 
 ```markdown
@@ -48,7 +46,6 @@ Keep data in sync across browsers by default for authenticated board and table r
 ```
 
 ## Board notifications
-
 Open **Settings → Board → General**, then turn **Board notifications** off to mute one board. The change applies immediately and persists across refreshes.
 
 Muting a board stops its ordinary:
@@ -63,7 +60,6 @@ Your global notification channel settings stay unchanged, and other boards conti
 Turn **Board notifications** on again whenever you want to resume delivery.
 
 ## Project planning
-
 Open **Settings → Board → Planning** to keep the board's outcome and current health in one place.
 
 - Set the board's **target date**.
@@ -76,11 +72,9 @@ Any board member can read planning and post a health update. Only the board owne
 Target and milestone changes save immediately. Press **Ctrl+Enter** or **Cmd+Enter** to post a health update from the message field.
 
 ## Auto-archive
-
 Configure automatic archival of tasks that no longer require attention. Archive is different from deletion—it keeps history while removing items from the active view so you don't have to manually clean up stale columns.
 
 ### Available options
-
 Rules you can set per board:
 
 - **Enable auto-archive** — Turn the rule on/off.
@@ -89,7 +83,6 @@ Rules you can set per board:
 - **Archive unused** — Automatically archive tasks that have not been touched recently (see Staleness).
 
 ### How it behaves
-
 When a task crosses your configured threshold:
 
 - The board removes the task from column counts.
@@ -103,7 +96,6 @@ Use the **Archive after** setting on columns you keep as a long-running backlog.
 </Aside>
 
 ## Staleness detection
-
 Staleness rules keep track of active tasks that have not been moved, updated, or interacted with in a defined window. This helps surface forgotten items that might need re-evaluation or removal.
 
 Configuration:
@@ -116,7 +108,6 @@ Configuration:
 When staleness is enabled, stale Kanban cards show the task's age on the board before its age in the current column. Use Ctrl+K to toggle staleness for the board or the current view.
 
 ### Filtering stale vs healthy
-
 Every staleness filter is named so that typing **stale** in the filter menu finds all of them:
 
 - **Stale in column** — days since the task last changed column, falling back to its creation date if it has never moved.
@@ -131,11 +122,9 @@ Staleness only accounts for updates to the task record. Activities like commenti
 </Aside>
 
 ## Auto-assign rules
-
 Define rules that automatically assign or re-assign tasks to specific members. This is useful for ensuring that new pull requests, backlog items, or triage items land with the right people without manual overhead.
 
 ### Per-column auto-assign on column move
-
 In addition to setting a default for the entire board when a task is created or is unassigned, you can configure a per-column auto-assign rule: whenever a task is moved into this column, it will be assigned to the specified person or group. Ctrl+K "Auto-assign for this column" opens the per-column configuration.
 
 To configure per-column auto-assign:
@@ -145,11 +134,9 @@ To configure per-column auto-assign:
 3. When the rule applies, all tenants receive a notification and the assignee is messaged in the source channel if notifications are set up for the board.
 
 ### Auto-assign on task creation (HTPR-5488)
-
 The per-column auto-assign rule now also applies to tasks created directly in a column. Previously, auto-assign only ran when tasks were moved; tickets filed straight into a column (via the bottom-of-column composer, from an inbox, or through CLI) would not be assigned. Now, any new task that lands in a column respects the column's auto-assign rule, whether it's moved in or created there directly.
 
 ### How to configure (defaults)
-
 - **Target columns** — Specify which columns should apply auto-assign triggers:
   - Any column that can receive tasks (e.g., In Progress, Review).
 - **Assign to** — Select a project member or a role-based assignment:
@@ -158,7 +145,6 @@ The per-column auto-assign rule now also applies to tasks created directly in a 
 - **Optional priority filter** — Apply only to tasks with certain priority levels (e.g., Urgent, High).
 
 ### Scenarios
-
 - **Backlog channel** — Assign new backlog items to reviewers or maintainers.
 - **Review overload** — Auto-assign completed items to QA reviewers when they become "In Review".
 - **Slack alerts** — Combine with board notifications to alert assignees when auto-assign runs.
@@ -168,14 +154,12 @@ Pair auto-assign rules with open notifications (e.g., open issue in Slack team) 
 </Aside>
 
 ## Autosave drafts
-
 Changes to board settings are saved automatically. If you navigate away or refresh the page, your settings persist:
 
 - **No manual save needed** — All toggles, number inputs, and column mappings are applied instantly.
 - **Revert behavior** — If you make a mistake, the board defaults (detected from project/staleness rules) can be used as a backup; update the offending rule and save again.
 
 ## Logging and history
-
 Hypertask tracks rule executions at the board level for review:
 
 - **Rule runs** — Historically, Hypertask logged rule runs to a log table (Admin role visible).
@@ -186,7 +170,6 @@ Hygiene protects performance and schema stability over time. Project owners shou
 </Aside>
 
 ## Synced IndexedDB defaults (HTPR-5260)
-
 You can choose between two read models for Boards and Tables:
 
 - **Synchronized IndexedDB (default)** — Active when no `<code>?local_db=0</code>` in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
@@ -195,7 +178,6 @@ You can choose between two read models for Boards and Tables:
 This defaults to the synchronized model for authenticated Board and Table routes. The system preserves the opt-out via URL flags, so local flow can still be opted into for testing or performance-sensitive workflows.
 
 ## Auto-error routing targeting Bugs (HTPR-5386)
-
 When auto-error tickets are routed to sections, Hypertask now targets the exact Bugs section by default instead of the board's default column. This applies globally for boards with a specific Bugs section. Boards without a clearly defined Bugs section fall back to the current default section behavior. Changes take effect after board settings are saved.
 
 <Aside type="tip">
