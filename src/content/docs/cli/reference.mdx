@@ -111,7 +111,7 @@ hypertask tasks list --labels cli,urgent
 
 <Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
 
-<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0–4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
+<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0‑4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
 
 ## Task move validation
 
@@ -127,7 +127,6 @@ hypertask tasks move <ticket> --section <section-name>
 
 - If the task is archived, the command will fail with the error:
   >
-
   > "Archived tasks cannot move sections or change assignees"
 
 - This message clarifies that archived tasks are immutable for moves; attempt to restore the task first, or create a new task.
@@ -137,7 +136,6 @@ hypertask tasks move <ticket> --section <section-name>
 You can also change assignees with:
 
 >
-
 `hypertask tasks move <ticket> --assignee <user>`
 
 For full options, run `hypertask tasks move --help`.
@@ -191,7 +189,7 @@ This change makes CLI errors actionable and improves debugging when working with
 
 ### hypertask project update
 
-Update a project (board) by ID. This command supports renaming boards, updating descriptions, and other metadata. To rename a board, use the `--title` flag.
+Update a project (board) by ID. To rename a board, use the `--title` flag:
 
 ```bash
 hypertask project update <id> --title "<new title>"
