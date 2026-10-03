@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 3, 2026">
+  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
   * Improved: Inbox details now load concurrently (who-did-what, unread counts, rewards) so the inbox opens faster on populated inboxes ([HTPR-6845](https://app.hypertask.ai/detail/project-15/6845))
   * Fixed: Pull request panel on tickets now refreshes status from GitHub when a ticket opens, so merged pull requests (app repo and linked repos) show as Merged instead of staying Open ([HTPR-6837](https://app.hypertask.ai/detail/project-15/6837))
   * Fixed: Agent detail page shows one consistent status instead of "Running" vs "Offline" mismatch, and phone header displays full agent name without truncation ([HTPR-6836](https://app.hypertask.ai/detail/project-15/6836))
