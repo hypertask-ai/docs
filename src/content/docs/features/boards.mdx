@@ -3,23 +3,23 @@ title: "Boards & Sections"
 description: "Organize work with Kanban-style boards, customizable sections, and multiple views."
 ---
 
-import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
-
-Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
+<aside>
+The shipping gate for this page was on 2026-10-03 (owner+QA preview on you and QA only) and the bottom board/Calendar/Inbox/AI/Search dock is initially hidden on ticket pages on mobile under flags like <strong>htpr-6860-mobile-page-hide-dock</strong>. Other screens keep the dock; leave a ticket page via <strong>Back to task</strong>.
+</aside>
 
 ### Ticket links without a ticket number ([HTPR-6818])
 
 <span class="label label--brand">Bug fix</span> Links to ticket pages that omit the ticket number are now redirected to the board before any page renders, avoiding React error #419 (hydration mismatch from render state issues).
 
-Before this fix, URLs like `https://app.hypertask.ai/detail/project-5515` would attempt to render a page and partially display content before jumping to the board, triggering a React error in the browser. After the fix, the request is redirected directly to the board page without rendering the intermediate state, preventing the error across desktop, mobile, light and dark themes for both test and production users.
+Before this fix, URLs like <code>https://app.hypertask.ai/detail/project-5515</code> would attempt to render a page and partially display content before jumping to the board, triggering a React error in the browser. After the fix, the request is redirected directly to the board page without rendering the intermediate state, preventing the error across desktop, mobile, light and dark themes for both test and production users.
 
 Real ticket links retain their normal behavior and open the ticket detail page as expected.
 
 ### Ticket links after moves ([HTPR-6839])
 
-<span class="label label--brand">Fixed</span> When you move a ticket between boards, old links like `https://app.hypertask.ai/detail/project-15/6641` now redirect you to the ticket under its new number instead of showing an unavailable page.
+<span class="label label--brand">Fixed</span> When you move a ticket between boards, old links like <code>https://app.hypertask.ai/detail/project-15/6641</code> now redirect you to the ticket under its new number instead of showing an unavailable page.
 
-Before this fix, moving a ticket would assign it a new number and leave old links broken. Now, tickets store their old number at move time and the app follows the redirect, so shares and bookmarks continue to work. The CLI also follows redirects when resolving ticket IDs, so commands like `hypertask task show <old-number>` open the correct ticket.
+Before this fix, moving a ticket would assign it a new number and leave old links broken. Now, tickets store their old number at move time and the app follows the redirect, so shares and bookmarks continue to work. The CLI also follows redirects when resolving ticket IDs, so commands like <code>hypertask task show &lt;old-number&gt;</code> open the correct ticket.
 
 Some extremely old links from before this feature was available may still show unavailable. Those links require a separate backfill and do not receive redirects for privacy reasons.
 
@@ -71,7 +71,7 @@ Every board starts with a single default section. To add more:
 
 1. From the view tab bar, use **Ctrl+K**, search for **"Add column"** (or **"Add section"**), and follow the dialog prompts.
 2. Or use **Ctrl+K > Create view > Add column**.
-3. In the CLI: `hypertask view create --section "Section name" --project 15`.
+3. In the CLI: <code>hypertask view create --section "Section name" --project 15</code>.
 
 **From the app:**
 
@@ -140,7 +140,6 @@ This change makes view management across My Tasks and other board views more con
 <span class="label label--brand">Feature</span> External agents and users can now file corrections on the Agent Template board without signing in or using an API key.
 
 **POST https://app.hypertask.ai/api/agent-template/feedback** accepts requests to create tasks in the Agent Template board's **Backlog** section. Each submission is:
-
 - Cleaned and size-capped (title to 80 characters, body to 20,000 characters, full request to 32 KiB).
 - Limited to five requests per IP address per hour.
 - Checked for pre-existing labels to minimize duplicate feedback.
@@ -521,7 +520,7 @@ This behavior applies throughout board and table views, including My Tasks, Over
 
 ## Click rows in Layout command palette pop-ups ([HTPR-6848](https://app.hypertask.ai/detail/project-15/6848))
 
-<span class="label label--brand">Fixed</span> When you open the <kbd>Ctrl+K</kbd> Layout command palette, click <strong>Rename board</strong>, and type a new name, clicking any row in the pop-up (for example, <strong>"Change name to [new name]"</strong>) now saves the board and doesn’t crash the page.
+<span class="label label--brand">Fixed</span> When you open the <kbd>Ctrl+K</kbd> Layout command palette, click **Rename board**, and type a new name, clicking any row in the pop-up (for example, **"Change name to [new name]"**) now saves the board and doesn't crash the page.
 
 Before this fix, clicking a row that had no click handler threw an error, so only pressing <kbd>Enter</kbd> worked. Now every row in these pop-ups is protected, so clicking safely renames the board just like pressing Enter.
 
