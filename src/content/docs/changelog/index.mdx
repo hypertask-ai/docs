@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 3, 2026">
+  * Fixed: Ctrl+K board settings from a ticket or board now preselects that board and team rather than using an unrelated team from settings ([HTPR-6863](https://app.hypertask.ai/detail/project-15/6863))
   * Fixed: Boards no longer blink empty after loading; board stays steady from first paint ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644))
   * Fixed: Stripe displays readable customer names (team name or owner email) on billing and invoices, without internal IDs or the word "undefined" ([HTPR-6862](https://app.hypertask.ai/detail/project-15/6862))
   * Fixed: Images now retry through the app when your network blocks the image host instead of staying broken ([HTPR-6716](https://app.hypertask.ai/detail/project-15/6716))
