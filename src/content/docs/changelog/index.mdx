@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 3, 2026">
+  * Fixed: Login and boards now load in browsers where add-ons lock built-in Error objects (previously showed an error screen) ([HTPR-6876](https://app.hypertask.ai/detail/project-15/6876))
   * Fixed: Logged-in pages no longer throw React error #418 (hydration mismatch) after reload for Free and BYOK customers ([HTPR-6643](https://app.hypertask.ai/detail/project-15/6643))
   * Fixed: Ctrl+K board settings from a ticket or board now preselects that board and team rather than using an unrelated team from settings ([HTPR-6863](https://app.hypertask.ai/detail/project-15/6863))
   * Fixed: Boards no longer blink empty after loading; board stays steady from first paint ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644))
@@ -39,7 +40,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="October 1, 2026">
   * Added: Auto-link plain web addresses in ticket descriptions and comments ([HTPR-6802](https://app.hypertask.ai/detail/project-15/6802))
-  * Added: Search operators in Kanban and saved views — filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: ([HTPR-6369](https://app.hypertask.ai/detail/project-15/6369))
+  * Added: Search operators in Kanban and saved views â\x80\x94 filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: ([HTPR-6369](https://app.hypertask.ai/detail/project-15/6369))
   * Improved: **Real bugfix gate** now ships without a flag for fixable bugs visible to customers, distinguishing them from features ([HTPR-6638](https://app.hypertask.ai/detail/project-15/6638))
   * Fixed: Marking a task as read no longer returns a 500 error when multiple requests arrive together or on recently deleted tasks ([HTPR-6821](https://app.hypertask.ai/detail/project-15/6821))
   * Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue ([HTPR-6623](https://app.hypertask.ai/detail/project-15/6623))
