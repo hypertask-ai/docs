@@ -3,7 +3,7 @@ title: Pages
 description: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 ---
 
-import { Aside, Card, LinkCard } from '@astrojs/starlight/components';
+import { Aside, Card, CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface — CLI, MCP, REST, or AI Chat.
 
@@ -72,7 +72,7 @@ A shared page is a read-only view of a task’s page and description, deployed a
 ## Editing vs undoing
 
 - Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>Z</kbd> (Mac) while editing a page for editor-level undo—the same behavior you expect in any text editor.
-- Outside editors, the same shortcut restores the latest pending global action (task creation, comment, star, pin) while that action’s undo notification is visible.
+- Outside editors, the same shortcut restores the latest pending global action (task creation, comment, star, pin) while that action's undo notification is visible.
 - This makes Undo predictable whether you're fixing a typo inside a page or stepping back through board-level actions.
 
 ---
