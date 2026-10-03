@@ -174,7 +174,9 @@ On mobile, start with dictation and tap *Improve with AI* to refine your comment
 </Aside>
 
 ## Mobile in-app gestures
+
 - On mobile, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
+
 
 ## Image & Media
 Keyboard controls for media insertions and pickers in comments and task descriptions.
@@ -289,7 +291,7 @@ The Command Palette lists board and section actions, including "Hide column", "S
 </Aside>
 
 ### Board settings from Ctrl+K (HTPR-6863)
-When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view—even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
+When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view— even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
 
 <Aside type="tip">
 Try it: open any ticket, press <kbd>Ctrl+K</kbd>, type "board", pick **"Board settings"**. The board picker shows that ticket's board and preselects the right team.
@@ -375,7 +377,24 @@ When you open the Command Palette with <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, th
 The action is owner-only by default. It can be configured to be available to all users via the rollout switch feature flag.
 </Aside>
 
+## Use everywhere, including Settings (HTPR-6871)
+<kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) now opens the Command Palette on every signed-in page. This includes:
+
+- Boards, tickets, inbox, and search (existing behavior)
+- My Tasks view
+- All settings pages, such as Settings & General, Board general, and Appearance
+
+On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> also works in addition to <kbd>Cmd</kbd> + <kbd>K</kbd>.
+
+Public/sign-in pages, including the sign-in page, still ignore this shortcut.
+
+Escape behavior in Settings:
+- First <kbd>Esc</kbd> closes the command menu and keeps you in Settings
+- A second <kbd>Esc</kbd> exits Settings as usual
+
+This makes the command palette consistently available for board actions, views, and shortcuts throughout the app.
+
 ## Mobile in-app gestures
-- On a phone, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
+- On mobile, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
 - Dictation remains the primary input method on mobile; Tap *Improve with AI* to refine your comments without leaving the input flow
 - On mobile, pressing <kbd>Esc</kbd> from the full-screen Pages view now exits via the safe return path through the Command Center (HTPR-6158), ensuring a consistent exit experience across application views
