@@ -57,6 +57,14 @@ On mobile, the inbox now explicitly surfaces a notification nudge when your noti
 
 On narrow screens, the Inbox displays rows on a single line with sender information clearly visible. Read rows no longer show an empty status gutter that previously pushed sender names to the right. The status indicator now renders only for unread, saved-content, or blocked-by-me states, keeping sender names aligned without unintended indentation.
 
+## Signed-in page hydration
+
+**Logged-in pages no longer throw React error #418** on next.js hydration mismatches for Free and BYOK customers. Previously, Settings, Inbox, and other logged-in surfaces would throw a mismatch error on every load after a server state extraction bug. The fix ensures that saved state and cached lists are kept at their server-rendered values during client hydration, aligning what you see when you reload with what the server prepared the first time.
+
+<Aside type="tip">
+This fix eliminates console hydration mismatches on reload for all signed-in users, including Free and BYOK. You can verify the fix is live by opening [https://app.hypertask.ai/settings](https://app.hypertask.ai/settings) or [https://app.hypertask.ai/inbox](https://app.hypertask.ai/inbox) and confirming no error appears after the first page load.
+</Aside>
+
 ## Inbox prefetch timing
 
 Board data is deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This ensures that on signed-in reloads, no Board request occurs before usable data, and warm-up of the previous-board query waits for stable IndexedDB and network readiness ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431)).
