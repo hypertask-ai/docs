@@ -119,7 +119,7 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 ### Chips in the search bar
 
 <span class="label label--brand">New</span> The search bar includes:
-- **Chips**: Select or refine filters after your search, then click to apply chips. Click the ï ¿½ on a chip to remove it.
+- **Chips**: Select or refine filters after your search, then click to apply chips. Click the × on a chip to remove it.
 - @ people picker: Start typing the @ symbol to select or create people.
 - # board picker: Start typing # to select or create boards.
 
@@ -197,7 +197,9 @@ Open a task to see:
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
 - Task Reporter indicator marking who can edit the description.
-- Top bar with quick actions like Move, Duplicate, Archive, or Delete.
+- <strong>Top bar</strong> with instant navigation and actions:
+  - <kbd>← Back to task</kbd> — Settings-style back button for navigation.
+  - <strong>Save</strong> — Only right-aligned action remaining in the top bar; <strong>Delete</strong> is now moved to the Commands menu in the description or toolbar.
 
 ### Linked pull requests
 
@@ -222,16 +224,18 @@ The comment thread shows all comments on the task. By default, when you open a t
 ### Actions
 
 Common actions include:
+- **Back**: Navigate back to the board using the ← Back to task button.
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
-- **Delete**: Permanently remove the task.
+- **Delete**: Permanently remove the task. Delete is now available via the <strong>Commands</strong> menu in the task toolbar or description.
 
 <span class="label label--brand">Undo for archive</span> When you archive a task, undo appears on the notification. Clicking **Undo** immediately restores the task to its original column without refreshing the page. The task stays restored after reloads and across archiving variants like archiving via the task menu or with the Ctrl+E keyboard shortcut.
 
 ## Relations between tasks
 
 Create relationships between tasks to surface context without leaving tasks:
+
 - **Block**: Mark a task as blocking another task.
 - **Blocked by**: Identify what indirectly holds a task back.
 - **Duplicate**: Link to other tasks that represent the same work item.
@@ -254,6 +258,7 @@ When another browser, the CLI, or an agent changes a task, its open detail page 
 ## Time tracking
 
 Track work hours on tasks via the **Times** section:
+
 - <kbd>B</kbd> opens the time entry modal from the task, or use the command palette ("Log time").
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
@@ -306,6 +311,7 @@ This lets you browse through tasks inside the app while the rest of your session
 QA pass on 2026-10-03 confirms that for all users (not just those behind a feature flag), tickets appear instantly with no loading animation, back/forward work correctly, suggested questions show immediately in the AI panel, and there are no console errors.
 
 We recommend using keyboard shortcuts to navigate:
+
 - <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd> to jump to a task or open it with the Task Writer.
 - <kbd>Ctrl+O</kbd> / <kbd>Cmd+O</kbd> to jump to a task or link from within the task detail.
 
