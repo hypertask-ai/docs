@@ -219,7 +219,9 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 <span class="label label--brand">Link handling</span> Plain web addresses in ticket descriptions and comments (http:// or https://) are automatically transformed into clickable links. Detects addresses based on recognized URL patterns, ensuring links in work notes and teammate discussions remain navigable on both desktop and mobile.
 
-<span class="label label--brand">Performance improvement</span> When you open a task, comments now load once instead of twice. The initial SSR data used as the starting point, with React Query configured to skip a second fetch if the data is fresh. This eliminates redundant API calls and speeds up task loads: first visits are now ~2.2 seconds (down from ~5.1 seconds), and repeat visits ~1.7 seconds (down from ~2.1 seconds). New and edited comments still appear automatically without a reload, and realtime invalidation, reconnect reconciliation, and window-focus refresh continue to work as expected.
+<span class="label label--brand">Performance improvement</span> When you open a task, comments now load once instead of twice. The initial SSR data used as the starting point, with React Query configured to skip a second fetch if the data is fresh. This eliminates redundant data handling and speeds up task loads: repeat visits are now approximately 0.6 seconds faster. New and edited comments still appear automatically without a reload, and realtime invalidation, reconnect reconciliation, and window-focus refresh continue to work as expected.
+
+<span class="label label--brand">Improvement</span> Long task pages and comment threads now send their initial snapshot only once, reducing data copies and decoding passes. Repeat visit times drop from roughly 2.2 seconds to about 0.6 seconds. The change applies to tasks with many comments or long descriptions and focuses on the initial load speed, preserving all existing behavior for navigation, real-time updates, and comment handling.
 
 ### Actions
 
