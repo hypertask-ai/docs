@@ -22,6 +22,8 @@ export const Update = ({ label, children }) => (
   * Improved: Tasks with linked GitHub pull requests now show the last-known PR status immediately, while refreshing the status in the background (avoiding up to 3 seconds of wait time) ([HTPR-6841](https://app.hypertask.ai/detail/project-15/6841))
   * Improved: Search screen now shows a Superhuman-style aligned list with recent searches and tips below, and grey value completions as you type ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
   * Improved: Ticket pages on mobile now use a Settings-style back button and keep only "Save" in the top toolbar, with delete moved to the Commands menu ([HTPR-6861](https://app.hypertask.ai/detail/project-15/6861))
+  * Fixed: Moving a task with J or K now scrolls only its column while the board and column headers stay fixed ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
+  * Fixed: Search by person name now matches exactly; from:valentin finds only tickets created by "Valentin" ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
 </Update>
 
 <Update label="October 2, 2026">
