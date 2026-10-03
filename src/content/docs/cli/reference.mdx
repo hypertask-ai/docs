@@ -182,3 +182,46 @@ hypertask task create --project 5156 --section Backlog
 This change makes CLI errors actionable and improves debugging when working with out-of-scope or bots.
 
 ---
+
+## Project management
+
+### hypertask project update
+
+Update a project (board) by ID. This command supports renaming boards, updating descriptions, and other metadata. To rename a board, use the `--title` flag.
+
+```bash
+hypertask project update <id> --title "<new title>"
+```
+
+**Options:**
+
+| Option | Description |
+|--------|-------------|
+| `--title <title>` | New board title. The title will be trimmed to non-empty and max 200 characters. |
+| `--description <description>` | Optional board description (HTML). |
+
+**Behaviour:**
+
+- Board members with write access can rename the board; non-members are blocked with a clear error.
+- Empty or overly long titles are rejected locally with a helpful message.
+- Only board members are allowed to update the board: an unknown board ID returns "not found", while a non-member receives "Not allowed to rename this board".
+
+```bash
+# Rename a board by ID
+hypertask project update 4060 --title "Agents & Infra"
+
+# Update the description as well
+hypertask project update 4060 --title "Agents & Infra" --description "<p>Infrastructure-related tasks and boards.</p>"
+```
+
+<span class="label label--brand">Behavior change</span> Renaming a board from the app previously did not check board membership; agents and users could rename boards they were not members of. Board updates now require write access to the board. Only board members are allowed to update the board. ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
+
+---
+
+You can also manage board columns and saved views with:
+
+- `hypertask view create` — Create a saved view.
+- `hypertask view list` — List saved views for a project.
+- `hypertask view switch <view-id>` — Switch to a saved view.
+
+For more options, run `hypertask project --help`, `hypertask view --help`, or `hypertask tasks --help`.
