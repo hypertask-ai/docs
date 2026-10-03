@@ -28,6 +28,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Ticket page content on mobile now supports native two-finger pinch zoom up to 5x, making embedded screenshots readable ([HTPR-6840](https://app.hypertask.ai/detail/project-15/6840))
   * Improved: Long task pages and comment threads now load their initial snapshot once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
   * Improved: Boards now load lighter and faster by fetching long text fields and subscription history only when needed, reducing initial payload size while preserving all visible functionality ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
+  * Improved: First ticket open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm (0.10 s delta vs 0.25 to 0.33 s, HTPR-6853)
 </Update>
 
 <Update label="October 2, 2026">
