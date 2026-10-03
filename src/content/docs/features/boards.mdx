@@ -7,6 +7,14 @@ import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Every project in Hypertask has a **board** — a visual workspace where tasks flow through customizable columns called **sections**. If you've used Kanban boards before, this will feel familiar. If you haven't, think of it as a whiteboard with columns that represent stages of work.
 
+### Ticket links without a ticket number ([HTPR-6818])
+
+<span class="label label--brand">Bug fix</span> Links to ticket pages that omit the ticket number are now redirected to the board before any page renders, avoiding React error #419 (hydration mismatch from render state issues).
+
+Before this fix, URLs like `https://app.hypertask.ai/detail/project-5515` would attempt to render a page and partially display content before jumping to the board, triggering a React error in the browser. After the fix, the request is redirected directly to the board page without rendering the intermediate state, preventing the error across desktop, mobile, light and dark themes for both test and production users.
+
+Real ticket links retain their normal behavior and open the ticket detail page as expected.
+
 ## Creating a board
 
 From the web UI, click **New board** to create a blank board. You can also generate a board with AI-powered content:
