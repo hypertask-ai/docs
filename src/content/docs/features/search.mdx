@@ -54,6 +54,8 @@ When the search bar is empty or focused, a <strong>tips panel</strong> lists eve
   - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
 - **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
 - **Escape**: Closes suggestions and drops focus from the search bar.
+  - On search results, <kbd>Esc</kbd> returns you to your previous search term and its results, or to recent searches and tips when there is no previous search.
+  - Esc never leaves you on a blank results page.
 - **Open a result**: Put focus on a result row with arrows, then press <kbd>Enter</kbd> to open the task.
 
 ## Results while typing
@@ -63,6 +65,8 @@ Results appear while you type via debounced search. No need to press <kbd>Enter<
 ## Chips
 
 After applying filters, clickable chips appear in the search bar. Click a chip's × to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
+
+**Board chips** now display the board icon and name (e.g., `board:inne`), with no extra `#` prefix.
 
 ## People and board pickers
 
