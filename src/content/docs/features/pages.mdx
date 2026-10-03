@@ -5,7 +5,7 @@ description: Full-screen notepads attached to tasks, RAG-fed, versioned, and wor
 
 import { Aside, Card, CardGrid, LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface â\x80\x94 CLI, MCP, REST, or AI Chat.
+Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface — CLI, MCP, REST, or AI Chat.
 
 ## What is a Page?
 
@@ -22,7 +22,22 @@ Think of a Page as a full-screen notepad for thinking, planning, and research th
 
 ## Mobile pinch zoom
 
-On mobile, ticket page content supports native two-finger pinch zoom up to 5Ã\x97. This lets you read embedded screenshots and other content on iPhone Safari and Android Chrome without making the page unusably small. Other app surfaces keep their current zoom behavior.
+On mobile, ticket page content supports native two-finger pinch zoom up to 5×. This lets you read embedded screenshots and other content on iPhone Safari and Android Chrome without making the page unusably small. Other app surfaces keep their current zoom behavior.
+
+---
+
+## Viewing images on Pages
+
+Click any image on a page, ticket sub-page, or canvas page to open the full-size gallery.
+
+- Use **Next** and **Previous** buttons to browse through every image on that page in order.
+- Tap outside the image or press **Escape** to close the gallery on the same page.
+- Click **Download** to retrieve the original high-resolution file.
+- Gallery behavior ignores blank editor helper images and resizing gestures.
+
+<Aside type="tip">
+The gallery behaves the same way as the gallery in tickets. Check out the [Images and Attachments](/features/images/) documentation to see all the ways you can work with images in Hypertask.
+</Aside>
 
 ---
 
@@ -51,13 +66,13 @@ Legacy explorations on hypertask.app are not migrated; new writing uses the Page
 <Tabs>
 
 <TabItem label="What shared pages are">
-A shared page is a read-only view of a taskâ\x80\x99s page and description, deployed as a public URL. It bypasses task detail navigation, simplifying short links, external sharing, or embedding. Shared pages are stateless: opening them again loads the latest content without re-hydrating task details.
+A shared page is a read-only view of a task's page and description, deployed as a public URL. It bypasses task detail navigation, simplifying short links, external sharing, or embedding. Shared pages are stateless: opening them again loads the latest content without re-hydrating task details.
 </TabItem>
 
 <TabItem label="Create a shared page">
 1. Open the task detail.
 2. Find the page you want to share.
-3. In the page header, select Share â\x86\x92 Copy URL.
+3. In the page header, select Share → Copy URL.
 4. Paste the URL anywhere.
 </TabItem>
 
@@ -71,7 +86,7 @@ A shared page is a read-only view of a taskâ\x80\x99s page and description, dep
 
 ## Editing vs undoing
 
-- Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>Z</kbd> (Mac) while editing a page for editor-level undoâ\x80\x94the same behavior you expect in any text editor.
+- Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>Z</kbd> (Mac) while editing a page for editor-level undo—the same behavior you expect in any text editor.
 - Outside editors, the same shortcut restores the latest pending global action (task creation, comment, star, pin) while that action's undo notification is visible.
 - This makes Undo predictable whether you're fixing a typo inside a page or stepping back through board-level actions.
 
@@ -83,7 +98,7 @@ You can create three kinds of pages on a task. They differ only in how you creat
 
 | Type | How to create | Where to write | When to use |
 |------|---------------|----------------|-------------|
-| **Page** | Click New page on the task detail â\x86\x92 choose a name | In a new, untitled page | General thinking, notes, and exploration |
+| **Page** | Click New page on the task detail → choose a name | In a new, untitled page | General thinking, notes, and exploration |
 | **Description page** | Type a blank title and choose Description mode from the command palette | In an auto-renamed page with prefix `#` (e.g., `#TaskNewPage`) | You want the page to act like an extended description for the task |
 | **Exploration page** | Type a title containing the word Exploration or choose the Exploration preset from the command palette | Will show `#Exploration` in the title | You want explicit context that this is a formal exploration / research page |
 
@@ -126,8 +141,8 @@ Every page has a version history. Restrict updates to safe versions and restore 
 
 Version history and restore are REST-only today. There is no MCP tool and no CLI command for them yet:
 
-- `GET /api/pages/versions` â\x80\x94 lists all versions with timestamps and author.
-- `POST /api/pages/restore` â\x80\x94 restores a page to a chosen version.
+- `GET /api/pages/versions` — lists all versions with timestamps and author.
+- `POST /api/pages/restore` — restores a page to a chosen version.
 
 ---
 
@@ -145,8 +160,8 @@ Task descriptions also gain version history to help you track contributions, rev
 
 As with page history, this is REST-only for now:
 
-- `GET /api/tasks/description-versions` â\x80\x94 list the snapshots of a task description.
-- `POST /api/tasks/description-restore` â\x80\x94 restore one of them.
+- `GET /api/tasks/description-versions` — list the snapshots of a task description.
+- `POST /api/tasks/description-restore` — restore one of them.
 
 ### Conflict safety for task descriptions
 
@@ -176,7 +191,7 @@ For agents and AI workflows, the Pages system provides a reliable, tracked surfa
 
 Pages commands live under the new pages command group (CLI & MCP tools). They are fully available from the terminal to manage pages programmatically.
 
-Pages are addressed by **numeric page id**, and created against a **numeric task id** â\x80\x94 not a ticket number. Get a task id with `hypertask task list --json`.
+Pages are addressed by **numeric page id**, and created against a **numeric task id** — not a ticket number. Get a task id with `hypertask task list --json`.
 
 ### Commands
 
@@ -233,11 +248,11 @@ hypertask pages search "competitor"
 
 Five MCP tools cover pages. Full parameters are in the [MCP Tools Reference](/api/tools-reference/), which is generated from the server itself.
 
-- `hypertask_create_page` â\x80\x94 Create a page on a task.
-- `hypertask_get_page` â\x80\x94 Read a page.
-- `hypertask_update_page` â\x80\x94 Write to a page. Its `mode` parameter (`replace`, `append`, `prepend`) covers all three write shapes, so there is no separate append or prepend tool.
-- `hypertask_list_pages` â\x80\x94 List the pages on a task.
-- `hypertask_search_pages` â\x80\x94 Search page content.
+- `hypertask_create_page` — Create a page on a task.
+- `hypertask_get_page` — Read a page.
+- `hypertask_update_page` — Write to a page. Its `mode` parameter (`replace`, `append`, `prepend`) covers all three write shapes, so there is no separate append or prepend tool.
+- `hypertask_list_pages` — List the pages on a task.
+- `hypertask_search_pages` — Search page content.
 
 Archiving, version history and restore have no MCP tool yet; use the REST endpoints listed above.
 
