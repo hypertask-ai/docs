@@ -9,7 +9,11 @@ Hypertask billing controls license capacity, seat limits, and access tiers. Mana
 
 ## Your billing label in Stripe
 
-Stripe uses your team name or your email as the display name on invoices and in the billing portal. Hypertask never shows internal IDs or the word “undefined” in that field. For new teams, we display the team name; if no team name exists, the owner’s email appears instead. For customers created before this update, we have repaired any malformatted names so they now match the readable policy as well.
+Stripe uses your team name as the display name on invoices and in the billing portal. Hypertask never shows internal IDs or the word "undefined". For customers without a team name in the app, the owner's email appears instead. Previously blank or malformatted names are now filled from the team name or owner email; customers that have neither team name nor matching owner remain blank.
+
+{% callout type="note" %}
+You can verify the fix by opening your Stripe billing page for the QA pro team: the customer name now appears as "MyTeam" instead of undefined.
+{% endcallout %}
 
 ## Seats
 
