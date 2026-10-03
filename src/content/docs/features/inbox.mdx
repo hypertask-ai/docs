@@ -69,6 +69,12 @@ This fix eliminates console hydration mismatches on reload for all signed-in use
 
 Board data is deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This ensures that on signed-in reloads, no Board request occurs before usable data, and warm-up of the previous-board query waits for stable IndexedDB and network readiness ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431)).
 
+## Parallel inbox detail loading
+
+**Inbox details now load concurrently** instead of sequentially to reduce wait times. Previously, who-did-what, unread counts, and rewards fetched in separate sequential stages—waiting for each to complete before starting the next. Now these operations start together where their dependencies allow, cutting waits particularly in populated inboxes. The improvement applies across desktop and mobile, light and dark, for both first visits and repeat loads.
+
+<Aside type="tip">You'll notice faster inboxes especially with many notifications and/or slower network connections.</Aside>
+
 ## Inbox prefetch and API call deduping
 
 Each inbox load now dedupes notifications and access calls to a single round trip instead of multiple concurrent calls ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063)). This reduces redundant requests and improves load times when many notifications or assignments are present, particularly on slower network connections.
