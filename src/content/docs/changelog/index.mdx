@@ -11,26 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 3, 2026">
-  * Fixed: Images now retry through the app when your network blocks the image host instead of staying broken ([HTPR-6716](https://app.hypertask.ai/detail/project-15/6716))
-  * Fixed: Boards no longer blink empty after loading; board stays steady from first paint ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644))
-  * Fixed: Stripe displays readable customer names (team name or owner email) on billing and invoices, without internal IDs or the word "undefined" ([HTPR-6862](https://app.hypertask.ai/detail/project-15/6862))
-  * Fixed: Ctrl+K board settings from a ticket or board now preselects that board and team rather than using an unrelated team from settings ([HTPR-6863](https://app.hypertask.ai/detail/project-15/6863))
-  * Fixed: Logged-in pages no longer throw React error #418 (hydration mismatch) after reload for Free and BYOK customers ([HTPR-6643](https://app.hypertask.ai/detail/project-15/6643))
-  * Fixed: Login and boards now load in browsers where add-ons lock built-in Error objects (previously showed an error screen) ([HTPR-6876](https://app.hypertask.ai/detail/project-15/6876))
-  * Fixed: Undo after archiving a task now correctly restores the task to its original column without page reload ([HTPR-6646](https://app.hypertask.ai/detail/project-15/6646))
-  * Improved: Search autocomplete with operator and value suggestions, colour per filter, framed input, tips panel, and arrow/j/k keyboard navigation for results suggestions ([HTPR-6688](https://app.hypertask.ai/detail/project-15/6688))
-  * Improved: Search bar suggestion lists now align full-width, place recents before tips, and show Ask AI first; people, labels, and board completions accept with Tab; results fetch after picking a suggestion or Enter ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
-  * Improved: Board-scoped label suggestions show open+done nonarchived counts, place zero-count labels last, deduplicate same-name labels per board, and keep board names readable for Ask AI ([HTPR-6878](https://app.hypertask.ai/detail/project-15/6878))
-  * Improved: CLI tasks list now accepts `--filter priority={urgent|high|medium|low|none|0-4}/<value>` and matches priorities by number or name, case-insensitive ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799))
-  * Added: Board rename via CLI with same permission checks as the app ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
-  * Added: Boards can be renamed via AI chat ("rename this board to X") and MCP tool ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
-  * Added: PATCH /api/mcp/projects/ now supports renaming boards; only board members can rename them ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
-  * Added: Auto-link plain web addresses in ticket descriptions and comments ([HTPR-6802](https://app.hypertask.ai/detail/project-15/6802))
-  * Added: Search operators in Kanban and saved views — filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: ([HTPR-6369](https://app.hypertask.ai/detail/project-15/6369))
-  * Added: App board rename now requires board membership ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
-  * Added: Search bar chips plus @ people picker and # board picker with value autocomplete ([HTPR-6370](https://app.hypertask.ai/detail/project-15/6370))
-  * Added: Boards can show live Figma embeds instead of orange placeholders for accounts with feature eligibility and without a failed connection, so Figma design previews appear in tickets while the integration is under review ([HTPR-6690](https://app.hypertask.ai/detail/project-15/6690))
-  * Fixed: Ticket links without a ticket number redirect to the board before rendering, preventing React error #419 ([HTPR-6818](https://app.hypertask.ai/detail/project-15/6818))
+  * Fixed: Pull request panel on tickets now refreshes status from GitHub when a ticket opens, so merged pull requests (app repo and linked repos) show as Merged instead of staying Open ([HTPR-6837](https://app.hypertask.ai/detail/project-15/6837))
 </Update>
 
 <Update label="October 2, 2026">
