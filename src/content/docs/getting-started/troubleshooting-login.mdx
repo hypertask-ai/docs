@@ -10,7 +10,13 @@ If the page appears stuck or doesn't finish loading, check these conditions:
 - **Browser cookies are blocked**: Clear cookies or open the site in an incognito window to test if the issue resolves
 - **Popup blockers are enabled**: Allow popups for `hypertask.ai` to ensure authentication flows complete
 - **Network proxy or VPN**: Temporarily disable your proxy and try again
-- **Cached credentials in a browser**: Use a different browser or clear saved credentials
+
+[Some privacy-focused browser extensions and add-ons lock built-in Error objects to protect you from JavaScript errors. In rare cases this blocks Hypertask from properly creating error messages.](https://app.hypertask.ai/detail/project-15/6876)
+
+To work around this, try one of the following:
+
+- Disable privacy extensions during login, then re-enable them once you’ve signed in
+- Open Hypertask in an Incognito window with extensions disabled — this is the quickest way to verify the issue is related to an extension
 
 ## "Email not found" or "Invalid email"
 
