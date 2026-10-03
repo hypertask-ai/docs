@@ -1,0 +1,93 @@
+---
+title: "Search Screen"
+description: "Superhuman-style aligned search result list with tips, grey value completions, and keyboard shortcuts."
+---
+
+# Search Screen
+
+The search screen provides a focused, keyboard-first way to find tasks across your board. It adopts a Superhuman-inspired design: a single aligned list of recent searches, a tips panel below, and keyboard-driven completion with grey value previews.
+
+## Layout and structure
+
+Top-level search shows your:
+
+- **Recent searches**: A single list of your most recent searches.
+- **Tips**: Helpful hints or shortcuts displayed below recent searches.
+- **Navigation**: A list of actionable buttons for quick access.
+
+The AI panel stays fixed on the right side, leaving the core search interface on the left and ensuring the chat is always visible while you search without needing to scroll to re-open it.
+
+## Empty state
+
+When there are no recent searches and the search field is empty:
+
+- A single list shows recent searches (or none, if you have none yet).
+- Tips appear below the list, guiding you on:
+  - Opening the command palette via <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd>
+  - Using field modifiers like <code>from:</code> and <code>assignee:</code>
+  - Filtering by dates and labels
+
+Nothing floats or gets cut off. The layout cleanly separates input, actions, and AI support without forcing scrolling or overlays.
+
+## Browsing recent searches
+
+Recent searches are displayed in a consistent list:
+
+- Each item is left-aligned with the search field, following the same spacing as other controls.
+- The first item is your most recent search; next items are ordered from newest to oldest.
+- Click a recent search to re-run it.
+
+## Suggestions and value completion
+
+As you search, Hypertask suggests:
+
+- Field-aware suggestions (task titles, assignees, labels, sections).
+- Greyed-out value previews for common completions (for example, if you type <code>assigne:</code>, possible assignee names appear in grey).
+
+The suggestions update in real time as you type, staying in sync with your board's live data.
+
+## Keyboard shortcuts
+
+Common keyboard shortcuts in search:
+
+- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> — Open the command palette from any field.
+- <kbd>Escape</kbd> — Clear the search field or dismiss panels (depending on the context).
+- <kbd>Tab</kbd> — Accept the next suggested value and grey it out; hit <kbd>Tab</kbd> again to move to the next suggestion.
+- <kbd>Shift+Tab</kbd> — Accept the previous suggestion.
+
+## Supported operators
+
+Search operators help you be precise:
+
+- <code>from:</code> — Restrict by creator (e.g., <code>from:alice label:urgent</code>).
+- <code>assignee:</code> — Restrict by assignee.
+- <code>in:</code> — Restrict by board, section, or column.
+- <code>label:</code> — Restrict by label.
+- <code>is:</code> — Narrow by task type (e.g., <code>is:card</code> for standard cards).
+- <code>dates:</code> — Filter by due date ranges or states (e.g., <code>dates:todays</code>, <code>dates:overdue</code>).
+- <code>has:</code> — Filter by presence of a field value (e.g., <code>has:due-date</code>).
+
+Combine multiple operators for powerful queries:
+
+- <code>from:alice label:urgent dates:>2026-09-30</code>
+
+Tips panel explains these operators the first time you open search, making it easy to learn through use.
+
+## Prerequisite: enabling enhanced search
+
+If you don't see this search screen yet:
+
+- You must be in a board that has reached a minimum monthly activity threshold (owner-configured soft limit).
+- The search feature flag is enabled for your account or team.
+
+No additional configuration is required; if eligible, the screen appears automatically in search.
+
+## Example workflows
+
+<Steps>
+<Step>Press <kbd>/</kbd> or click the search box to focus.</Step>
+<Step>Start typing a partial title or modifier (e.g., <code>assignee:</code>).</Step>
+<Step>Watch a list of suggestions appear below your search input, highlighted in grey.</Step>
+<Step>Select the desired suggestion using <kbd>Tab</kbd> or click it directly.</Step>
+<Step>Observe aligned results aligned with your search box and below, with tips available if you clear the field again.</Step>
+</Steps>
