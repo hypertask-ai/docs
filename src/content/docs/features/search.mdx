@@ -1,0 +1,72 @@
+---
+title: "Search"
+description: "Search across tasks with operator autocomplete, filter suggestions, and a rich tips panel."
+---
+
+# Search
+
+Search across your board to find tasks fast. Type to filter by people, boards, labels, statuses, dates, and more, with autocomplete that suggests operators and values as you type.
+
+## Search filters
+
+Use operators to filter tasks by specific fields:
+
+- **from:** Restrict to tasks created by a specific person.
+- **assignee:** Restrict to tasks assigned to a specific person.
+- **in:** Restrict to tasks in a board, section, or column.
+- **label:** Restrict to tasks with a specific label.
+- **is:** Narrow by type; for example, `is:card` to show only standard cards.
+- **dates:** Show tasks matching a date condition.
+  - `dates:2026-10-03` Tasks with this exact due date.
+  - `dates:<2026-10-03` Tasks due before.
+  - `dates:>2026-10-03` Tasks due after.
+  - `dates:in-range 2026-10-01..2026-10-07` Tasks within a date range.
+  - `dates:overdue` Overdue tasks.
+  - `dates:today` Tasks due today.
+  - `dates:this-week` Tasks due in the current week.
+  - `dates:later` Tasks due beyond the current week.
+  - `dates:todays` Tasks due today or yesterday.
+- **has:** Show tasks that have a value in a field.
+  - `has:due-date` Tasks with a due date.
+  - `has:attachment` Tasks with at least one attachment.
+  - `has:comment` Tasks with at least one comment.
+
+Combine multiple operators, for example `from:alice label:urgent dates:>2026-10-03` to find urgent tasks created by Alice after a specific date.
+
+## Autocomplete
+
+As you type, Hypertask suggests:
+
+- **Filter names**: Type `la`, `fr`, or `is` to reveal `label:`, `from:`, and `is:` with ghost text. Press <kbd>Tab</kbd> or <kbd>Enter</kbd> to accept.
+- **Filter values**: After typing `from:` or `label:`, a dropdown shows people or labels. After typing `is:`, a dropdown shows states like `open`, `done`, and `archived`.
+  - `has:` shows `attachment`, `comment`, and `due-date` options.
+  - `dates:` shows presets: `today`, `this-week`, `last 7 days`, plus a date picker.
+- **Filter types have unique colours**: People (blue), boards (green), labels (amber), status (violet), dates (coral).
+
+## Tips panel
+
+When the search bar is empty or focused, a <strong>tips panel</strong> lists every operator with an example and plain meaning. Click any tip to insert it. Saved searches and recent searches also appear inside the tips panel.
+
+## Keyboard navigation in search
+
+- **Navigate suggestions**: Use <kbd>↑</kbd> and <kbd>↓</kbd> (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
+  - In empty search, <kbd>j</kbd>/<kbd>k</kbd> moves through tips.
+  - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
+- **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
+- **Escape**: Closes suggestions and drops focus from the search bar.
+- **Open a result**: Put focus on a result row with arrows, then press <kbd>Enter</kbd> to open the task.
+
+## Results while typing
+
+Results appear while you type via debounced search. No need to press <kbd>Enter</kbd> to see matching tasks.
+
+## Chips
+
+After applying filters, clickable chips appear in the search bar. Click a chip's × to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
+
+## People and board pickers
+
+- <strong>@ people picker</strong>: Start typing `@` to select or create people.
+- <strong># board picker</strong>: Start typing `#` to select or create boards.
+
+Pickers appear when typing a people or board-related operator such as `from:`, `assignee:`, or `in:`.
