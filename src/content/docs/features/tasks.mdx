@@ -54,7 +54,7 @@ Saved views persist at the account level and can be used as templates for board 
 
 ### How it works
 
-When you toggle a filter, sort order, or board, your selection is saved with the view. The next time you open that view, the settings are applied automatically. You can create multiple views—for example, one for active prioritized tasks, one for a specific project, or any combination that matches your workflow.
+When you toggle a filter, sort order, or board, your selection is saved with the view. The next time you open that view, the settings are applied automatically. You can create multiple viewsâ\x80\x94for example, one for active prioritized tasks, one for a specific project, or any combination that matches your workflow.
 
 To create a saved view, open My Tasks and use the view toolbar to pick filters and sorting options, then select **Save view**. The view appears in the saved views list alongside system views like **Involvement** and **All tasks**.
 
@@ -82,7 +82,7 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 
 ### Drawing from multiple streams
 
-Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
+Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that mattersâ\x80\x94not just what's pinned or currently in one section.
 
 **Note:** Unlike <strong>My Tasks</strong> saved views, All Tasks does not automatically filter out onboarding, demo, template, and staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
@@ -106,7 +106,7 @@ When searching within a board or in saved views, you can now narrow results usin
   - `dates:later` For tasks due later than the current week.
   - `dates:todays` For tasks due on today and the day prior.
 - **has:** Show tasks that have a value in a field; for example, `has:due-date` for tasks that have a due date (including empty values) or `has:assignee` for tasks that have someone assigned.
-- Combining multiple operators is supported—for example, `from:alice label:urgent dates:>2026-09-30` to find urgent tasks created by Alice after a certain date.
+- Combining multiple operators is supportedâ\x80\x94for example, `from:alice label:urgent dates:>2026-09-30` to find urgent tasks created by Alice after a certain date.
 
 To apply search filters:
 1. Open <strong>Kanban</strong> or <strong>Table View</strong>.
@@ -119,7 +119,7 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 ### Chips in the search bar
 
 <span class="label label--brand">New</span> The search bar includes:
-- **Chips**: Select or refine filters after your search, then click to apply chips. Click the × on a chip to remove it.
+- **Chips**: Select or refine filters after your search, then click to apply chips. Click the Ã\x97 on a chip to remove it.
 - @ people picker: Start typing the @ symbol to select or create people.
 - # board picker: Start typing # to select or create boards.
 
@@ -127,7 +127,7 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 
 <span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses the same controls as the Kanban board: **Save view** and **Reset**. The previous separate Save button was removed while saving and resetting continue to work as before.
 
-From the **Ctrl+K** command palette, you can still use **Save view as** to create a Saved view, and **Reset view** to revert My Tasks to its default set of built-in filters. Keyboard shortcuts like <kbd>Ctrl+S</kbd> and <kbd>Ctrl+R</kbd> no longer open popovers on the board; they open the Save view and Reset dialogs respectively.
+From the **Ctrl+K** command palette, you can still use **Save view as** to create aSaved view, and **Reset view** to revert My Tasks to its default set of built-in filters. Keyboard shortcuts like <kbd>Ctrl+S</kbd> and <kbd>Ctrl+R</kbd> no longer open popovers on the board; they open the Save view and Reset dialogs respectively.
 
 This change makes view management across My Tasks and other board views more consistent, and ensures My Tasks mirrors the primary board interface.
 
@@ -188,7 +188,7 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 
 ## Agent lease interactions
 
-When you make manual changes to a task—"moving, assigning, unassigning, archiving, or deleting"—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
+When you make manual changes to a taskâ\x80\x94"moving, assigning, unassigning, archiving, or deleting"â\x80\x94Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
 
 ## Task detail view
 
@@ -198,8 +198,8 @@ Open a task to see:
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
 - Task Reporter indicator marking who can edit the description.
 - <strong>Top bar</strong> with instant navigation and actions:
-  - <kbd>← Back to task</kbd> — Settings-style back button for navigation.
-  - <strong>Save</strong> — Only right-aligned action remaining in the top bar; <strong>Delete</strong> is now moved to the Commands menu in the description or toolbar.
+  - <kbd>← Back to task</kbd> â\x80\x94 Settings-style back button for navigation. On mobile, the back control matches the app's mobile back style with normal side spacing, making it easy to tap and fully visible up to 390px wide.
+  - <strong>Save</strong> â\x80\x94 Only right-aligned action remaining in the top bar; <strong>Delete</strong> is now moved to the Commands menu in the description or toolbar.
 
 ### Linked pull requests
 
@@ -209,7 +209,7 @@ Tasks can link to GitHub pull requests. The pull request section displays each l
 - <strong>Last observed</strong>: The last-known status before the page loads.
 - <strong>Fetching...</strong>: Indicates a background refresh is in progress.
 
-<span class="label label--brand">Improvement</span> Tasks with linked PRs now show any saved PR status immediately—Open, Merged, or Closed—without waiting for GitHub to respond. Queries to GitHub run in parallel in the background and update the panel once the fetch completes, keeping the page fast and responsive. If you navigate away and come back, the PR panel refreshes again to stay current.
+<span class="label label--brand">Improvement</span> Tasks with linked PRs now show any saved PR status immediatelyâ\x80\x94Open, Merged, or Closedâ\x80\x94without waiting for GitHub to respond. Queries to GitHub run in parallel in the background and update the panel once the fetch completes, keeping the page fast and responsive. If you navigate away and come back, the PR panel refreshes again to stay current.
 
 This change eliminates wait times for tasks with linked PRs and provides an instant-open experience even when GitHub fetches are slower than usual.
 
@@ -226,7 +226,7 @@ The comment thread shows all comments on the task. By default, when you open a t
 ### Actions
 
 Common actions include:
-- **Back**: Navigate back to the board using the ← Back to task button.
+- **Back**: Navigate back to the board using the â\x86\x90 Back to task button.
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
@@ -276,8 +276,8 @@ The Task Writer writes tasks in your team's style. It uses board-aware prompts, 
 
 ### Using the Task Writer
 
-- From a board: <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd> and select **Create with AI** → **Task Writer**.
-- From the command palette: <kbd>Ctrl+K</kbd> — search for "Task Write" and select it.
+- From a board: <kbd>Ctrl+J</kbd> / <kbd>Cmd+J</kbd> and select **Create with AI** â\x86\x92 **Task Writer**.
+- From the command palette: <kbd>Ctrl+K</kbd> â\x80\x94 search for "Task Write" and select it.
 - From a task: Click the AI icon in the task header and select **Task Writer**.
 
 After the Task Writer generates a draft, you can refine it just like any other AI-generated comment or description.
@@ -290,7 +290,7 @@ After the Task Writer generates a draft, you can refine it just like any other A
 
 - **Click to open**: When you tap or click a task, it appears in about 0.15 to 0.3 seconds on both desktop and mobile.
 - **No loading animation**: No full-screen spinner, no pulsing grey bars, no brief placeholder state.
-- **Suggested questions right away**: If the AI panel is open, suggested questions appear immediately—no waiting for the API response.
+- **Suggested questions right away**: If the AI panel is open, suggested questions appear immediatelyâ\x80\x94no waiting for the API response.
 
 ### Browser history
 
@@ -305,7 +305,7 @@ This lets you browse through tasks inside the app while the rest of your session
 
 - Median open times are ~0.15 seconds on desktop and ~0.17 seconds on mobile.
 - The first open after a board loads takes about 0.25 to 0.33 seconds; subsequent opens are closer to 0.13 to 0.18 seconds.
-- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before (HTPR-6853).
+- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 secondsâ\x80\x94considerably faster than before (HTPR-6853).
 
 ### QA findings
 
