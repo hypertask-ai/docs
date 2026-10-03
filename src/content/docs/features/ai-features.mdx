@@ -8,6 +8,7 @@ import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
 The **Hypertask AI assistant** lives at your fingertips. Use it to create tasks, enhance descriptions, draft code, summarize threads, or prescribe actions throughout your workflow.
 
 ## AI Task Writer and Write with AI
+
 ### Create tasks from prompts
 
 The AI Task Writer instantly turns text into structured tasks. Just ask in natural language, and the assistant fills in title, description, due date, and assignee if you include that context.
@@ -32,13 +33,13 @@ ht task create "Design homepage overlay component with glassmorphism"
 
 The auto-draft feature respects board-level style rules and board-level AI instructions.
 
-### Automatic draft drafts behind owner-specific flag
+### Automatic drafts behind an owner-specific flag
 
 By default, AI Task Writer generates automatic draft descriptions in the task creator. These drafts respect board-level style rules. To control who sees automatic drafts, owners can enable a per-user feature flag:
 
-**For owners**, automatic drafts are enabled and visible in the New Task flow. The system generates clear, concise drafts based on the prompt and your task instructions.
+**For owners:** automatic drafts are enabled and visible in the New Task flow. The system generates clear, concise drafts based on the prompt and your task instructions.
 
-**For non-owners**, automatic drafts are not rendered. The AI Task Writer opens with a blank prompt so you can compose from scratch or paste an existing description.
+**For non-owners:** automatic drafts are not rendered. The AI Task Writer opens with a blank prompt so you can compose from scratch or paste an existing description.
 
 This flag toggles behavior server-side and in the UI, and a corresponding setting in your profile hides the feature toggle entirely for your account. Manual task writers remain fully functional for all users.
 
@@ -56,6 +57,16 @@ The assistant drafts directly into the field, ready for your review.
 
 The AI Task Writer now preserves screenshot file links pasted into your draft. The assistant recognizes screenshot URLs and keeps them clickable after saving and reloading, without converting them into `HT_MEDIA` placeholders.
 
+### Start a fresh AI chat session on unopened tickets
+
+When you open the AI chat panel on a task that hasn't been visited before, the assistant starts with a clean slate. The system ignores any existing chat history from previous tickets and begins a fresh conversation, so each unopened ticket gets its own independent chat session.
+
+<Aside type="tip">
+
+This separation prevents context from bleeding between unrelated tasks and keeps each chat focused on the work at hand.
+
+</Aside>
+
 ### ChatProvider and hooks
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
@@ -64,9 +75,198 @@ This is automatically handled for standard flows — use the AI Task Writer, con
 
 ---
 
-## Chat persistence across pages and reloads
+## Mobile dictation flow
 
-The AI chat panel respects your last viewed state: when you close it on any page (boards, ticket pages, My Tasks, Inbox, Calendar, etc.), it remains closed across reloads. Your choice is remembered until you reopen it, regardless of where you navigate. To control default opening behavior, use the **Open AI chat by default** setting in your profile or on a board-specific menu.
-
-### Mobile dictation flow
 ### Create tasks by voice on mobile
+
+On mobile, the New Task flow focuses on description input via voice dictation. You can dictate your task directly into a single text box and attach images if needed.
+
+After dictating, two save buttons appear:
+
+- **Save with task writer (primary)** — Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
+- **Save (ghost)** — Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
+
+Title and task properties are collapsed behind two pill buttons. Select them to reveal title and property fields after you've saved your words.
+
+---
+
+## Agent Chat interactions
+
+Agent Chat use cases rely on several native behaviors: running in multiple views, handling long-running turns, stopping work in progress, and agents proposing tickets. Model selection is chosen by the agent's engine (Claude or Codex) and should not be overridden by the chat lane.
+
+### Key selection for agents without a board
+
+When you start a chat session on a task or board without a dedicated AI key, the system uses a fallback key selection strategy:
+
+1. **Session board key:** If a session board exists for the context, the system uses that board's AI key.
+2. **User team key:** If no session board key is available, the system uses your team's default AI key.
+
+This allows direct chats to succeed even when chat lanes don't have their own dedicated AI provider configured. The system falls back gracefully across these levels rather than failing completely.
+
+<Aside type="note">
+
+You must have at least one valid AI key configured for your team to use AI Chat. If your team and all session boards lack an active AI key, the chat fails with a clear access error and does not trigger an incident ticket.
+
+</Aside>
+
+### Sort the chat list by recent activity
+
+The Agent Chat list now sorts rows by real chat activity rather than the last board comment. This means your most recent interactions appear at the top, regardless of any board posts on the ticket.
+
+If you sorted the list previously, you may notice the ordering has changed to better reflect active conversations.
+
+### Model selection per engine
+
+Agent Chat respects the engine configured on an agent when selecting a model:
+
+- **Claude-based agents** use Claude models (for example, claude-sonnet-5). The chat lane does not inject Codex-style model names or IDs for Claude agents.
+- **Codex-based agents** use Codex models (for example, gpt-5.6-luna). The chat lane does not inject Claude-style model names for Codex agents.
+
+If an agent's engine and model match during configuration, Agent Chat uses that pairing directly. Mismatches in model naming between the configuration and runtime (for example, legacy Codex-style names on Claude engines) are resolved server-side; chat must operationalize the correct model per engine.
+
+<Aside type="tip">
+
+Chat lane configuration must align with the agent's engine. Changes to engine/model requirements should be made in the agent's settings first, then propagated to the chat lane to avoid operational conflicts.
+
+</Aside>
+
+### @mention agents to route messages
+
+You can route a message to a specific fleet agent instead of the AI assistant by mentioning them in the chat input. This replaces the default behavior where all messages go to the AI assistant directly.
+
+To route a message to a specific agent, prefix it with their @handle and space it from the rest of the text:
+
+```
+@dev-bot Could you review this security change check for the resubmission queue?
+```
+
+The assistant transforms this into a direct message routing request and delivers it to the mentioned agent's chat lane. The reply appears in the sidebar chat under the agent's name, including their profile context and available tools.
+
+<Aside type="tip">
+
+Agent mentions work on both board and inbox sidechat contexts. Use @mention formatting to switch from default AI assistant routing to a targeted agent thread.
+
+</Aside>
+
+### Concurrent Agent Chat sessions
+
+Multiple agents can interact with a user in separate, independent chat panels. Each agent keeps track of its own thread and history within the context of the relationship.
+
+### Restarting a hung turn
+
+When an Agent Chat turn fails to finish within the timeout window, the thread restarts automatically. The new turn uses fresh context for the current agent, and the user can continue the conversation from scratch.
+
+<Aside type="note">
+
+This recovery replaces the previously convoluted flow for stuck threads. You no longer need to page refresh to resume work.
+
+</Aside>
+
+### Stop work during an active turn
+
+While an Agent Chat turn is in progress, the working indicator displays a **Stop** button. Click it to cancel the current run and return the thread to a stable state where you can send a new message.
+
+### Agents proposing tickets
+
+Agents can propose specific tickets rather than only talking about work. The proposal appears as a card in chat, targeting board and column contexts atomically with the proposal:
+
+```text
+[Propose] Create "ACME Output Report v2" in Priority / Work
+
+The model intends to draft this report immediately.
+Do you want to accept this proposal and proceed?
+```
+
+- The proposal card heading says **Ticket proposed, nothing done yet** until you press Create ticket. After the ticket exists, that heading says **Ticket created** and the ticket number is a link.
+- The card also shows a short description and the board and column the ticket will land in.
+- Pressing Create ticket creates the ticket. Keep discussing leaves the thread going without creating one.
+- This tightens the round-trip from suggestion to action, eliminating ambiguity about where the new ticket should live.
+- The proposal is accessible via the `chat.propose` MCP tool when needed in agent workflows.
+
+<Aside type="tip">
+
+If a proposal doesn't match intent, simply decline it. The thread moves forward without creating output that doesn't fit current needs.
+
+</Aside>
+
+## Keyboard shortcuts in Agent Chat
+
+Agent Chat provides several keyboard shortcuts for navigation, interaction, and composition. These shortcuts streamline your workflow when working with AI agents in panels and side-by-side views.
+
+### Navigate the agent roster
+
+Use the following shortcuts to cycle between available agents in the left-pane roster:
+
+- **Ctrl+Tab** — Move to the next agent.
+- **Shift+Ctrl+Tab** — Move to the previous agent.
+- **Alt+Left/Right** — Navigate through agents one step at a time.
+
+### Send a message and compose focus
+
+- **Ctrl+Enter** — Send the current message in the chat input.
+- **Ctrl+O** — Open links from the latest reply in a new tab, when available.
+- **Ctrl+Q** — Focus the chat input field (works on boards and chat-specific views).
+
+### Search tasks and add agents
+
+- **@** inside the chat input to search for tasks by name and start a context-aware conversation.
+- **+** — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
+
+### Speaker bubbles and theme
+
+- Agent reply bubbles now use the theme's primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
+
+<Aside type="tip">
+
+These controls apply when Agent Chat is open. Some shortcuts, such as Ctrl+Enter for sending and Ctrl+Q for focusing the input, also function in the main command palette when you're in a compatible view.
+
+</Aside>
+
+## AI dev agents
+
+Hypertask supports dev agents that run via OpenRouter. These agents are modeled after a clean, evidence-based adoption pattern: start with a limited test lane, monitor spending and lift-off, and then expose it more broadly.
+
+### How dev agents work
+
+- **Provider backend:** All out-of-model completions go through OpenRouter. The provider is abstracted in your agent's runtime configuration, and SDK templates include minimal telemetry (launch timestamp, provider, model, duration, tokens, cost).
+- **Spending visibility:** The FLEET LEDGER page (under Account > Agent Manager) shows a per-launch line with launch timestamp, provider, model, tokens-in, tokens-out, and cost. Historically paid models are listed as $0.00. Cost tracking reflects the billing and quota model in use.
+- **Idle parking:** When an agent's lane isn't being used during its configured idle window (such as 1800 seconds), the working indicator becomes parked and no new tasks are fetched from that lane. This prevents drift when there's no active work.
+- **Overrun protection:** Lane budgets are relative to subscription tiers. A lower-tier lane incurs a calibrated brake when it fluctuates above that tier's fair share, which can throttle lift-off until it calibrates back under the threshold.
+- **Web-path evidence:** Agents that act as QA workers include a web-path evidence gate. Requests to the agent will pattern-match against a curated redaction set and collect screenshots for QA review. This gate ensures the UI is checked before a lane is considered healthy.
+
+### Hy4 (Tencent) dev agent on OpenRouter
+
+A dev agent configured to use OpenRouter with the model name **Hy4** is now available. This agent can serve as a drop-in teammate for general-purpose dev work that benefits from model diversity. It follows the same idle-parking, overrun-protection, and spending-demarcation rules as other agent lanes.
+
+**To use Hy4:**
+
+1. Open **Account > Agent Manager**.
+2. Select the managed lane you want to attach Hy4 to.
+3. Choose "Add dev agent" and set the provider to **OpenRouter** and the model name to **Hy4**.
+4. Adjust the lane's idle timeout and max budget if needed for your cadence and safety tolerance.
+
+Once deployed, the agent will start pulling tasks from its lane once the idle timer has completed since its last active turn. Monitor launch rows on the ledger to validate that the Hy4 launch is listed and active.
+
+<Aside type="note">
+
+You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handle the exchange of credentials and model mapping. If you plan to autofill other OpenRouter lanes beyond Hy4, include OPENROUTER_GLM_API_KEY for squad-based workflows.
+
+</Aside>
+
+---
+
+## Chat persistence across reloads
+
+### Persistent state after closing
+
+You can close the AI chat panel on any page — boards, ticket pages, My Tasks, Inbox, or Calendar — and the client-side preference becomes stable across reloads. After closing, reloading keeps it closed until you reopen it. The setting **Open AI chat by default** is preserved, so the default behavior applies only on first visits and non-persisted states.
+
+### Respecting the default setting
+
+When you open a fresh board or task that you haven't visited before, the panel opens by default if you have the **Open AI chat by default** setting enabled. Once you close it and reload, your manual choice becomes sticky and overrides the default for the current session.
+
+<Aside type="tip">
+
+This makes it easier to settle into Chat for each context without repeatedly opening it on reloads that you only want to skim.
+
+</Aside>
