@@ -260,7 +260,6 @@ When another browser, the CLI, or an agent changes a task, its open detail page 
 ## Time tracking
 
 Track work hours on tasks via the **Times** section:
-
 - <kbd>B</kbd> opens the time entry modal from the task, or use the command palette ("Log time").
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
@@ -306,7 +305,7 @@ This lets you browse through tasks inside the app while the rest of your session
 
 - Median open times are ~0.15 seconds on desktop and ~0.17 seconds on mobile.
 - The first open after a board loads takes about 0.25 to 0.33 seconds; subsequent opens are closer to 0.13 to 0.18 seconds.
-- Direct ticket links, My Tasks, and the inbox all open without any lags or UI locks.
+- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before (HTPR-6853).
 
 ### QA findings
 
