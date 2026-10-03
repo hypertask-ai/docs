@@ -39,8 +39,8 @@ The browser title shows the board name and saved-view name when you navigate to 
 
 <span class="label label--brand">Feature</span> Each board's ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
 
-- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g. **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
-- Short, clean titles are compressed to predictable 3-4 character labels (e.g. **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
+- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g., **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
+- Short, clean titles are compressed to predictable 3-4 character labels (e.g., **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
 Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
@@ -518,3 +518,24 @@ After this fix ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)):
 - Keyboard navigation feels responsive and local to the column.
 
 This behavior applies throughout board and table views, including My Tasks, Overdue, Blocked, and any custom saved views.
+
+## Boards load lighter and faster ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
+
+<span class="label label--brand">Performance improvement</span> Boards now fetch long text fields (description, playbook) and subscription history only when those UI components open.
+
+Before this change, opening a board would eagerly load all project scalars, team data, Google accounts, activity metadata, and the complete subscription-history list. These fields are usually not needed to paint cards or display the current plan.
+
+After this fix:
+- Board load payloads shrink (6.2 KB → 5.8 KB on small QA boards). Larger boards save proportionally more.
+- First visits open in about 1.5 seconds (was 1.6 seconds). Repeat visits are about 1.2 seconds (was 1.3 seconds).
+- All board functionality remains unchanged: cards, sidebar, filters, plan badges, and permissions work the same.
+- Long text and billing history are loaded lazily as you interact with those UI elements.
+
+### Technical notes
+
+- The project and team queries now use minimal, UI-specific selects instead of broad `include` clauses.
+- Subscription history is loaded only when plan or billing details are displayed.
+- Activity metadata and playbook are fetched when those views open.
+- No impact on existing API contracts or MCP tools—only the internal query strategy changed.
+
+---
