@@ -3,7 +3,7 @@ title: Pages
 description: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
 ---
 
-import { Aside, Steps, LinkCard, Card, CardGrid, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Aside, Card, LinkCard } from '@astrojs/starlight/components';
 
 Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface — CLI, MCP, REST, or AI Chat.
 
@@ -22,7 +22,7 @@ Think of a Page as a full-screen notepad for thinking, planning, and research th
 
 ## Mobile pinch zoom
 
-On mobile, ticket page content supports native two-finger pinch zoom up to **5x**. This lets you read embedded screenshots and other content on iPhone Safari and Android Chrome without making the page unusably small. Other app surfaces keep their current zoom behavior.
+On mobile, ticket page content supports native two-finger pinch zoom up to 5x. This lets you read embedded screenshots and other content on iPhone Safari and Android Chrome without making the page unusably small. Other app surfaces keep their current zoom behavior.
 
 ---
 
@@ -33,13 +33,13 @@ This feature is now live on production, so you can start using it right away fro
 ### In the Web UI
 
 1. Open any task detail.
-2. Look for the **Pages** row under the main task fields (below subtasks).
-3. Click the **Pages** header to expand and see all pages for that task.
-4. Click **New page** to create an empty page, or open an existing page.
+2. Look for the Pages row under the main task fields (below subtasks).
+3. Click the Pages header to expand and see all pages for that task.
+4. Click New page to create an empty page, or open an existing page.
 5. The editor opens full-screen; create, edit, and save normally.
 
 <Aside type="tip">
-Use <kbd>Ctrl+K</kbd> from any task and type **"Pages"** to open the command palette entry for that task's pages.
+Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) from any task and type "Pages" to open the command palette entry for that task's pages.
 </Aside>
 
 <Aside type="note">
@@ -57,7 +57,7 @@ A shared page is a read-only view of a task’s page and description, deployed a
 <TabItem label="Create a shared page">
 1. Open the task detail.
 2. Find the page you want to share.
-3. In the page header, select **Share** → **Copy URL**.
+3. In the page header, select Share → Copy URL.
 4. Paste the URL anywhere.
 </TabItem>
 
@@ -69,15 +69,23 @@ A shared page is a read-only view of a task’s page and description, deployed a
 
 ---
 
+## Editing vs undoing
+
+- Press <kbd>Ctrl</kbd> + <kbd>Z</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>Z</kbd> (Mac) while editing a page for editor-level undo—the same behavior you expect in any text editor.
+- Outside editors, the same shortcut restores the latest pending global action (task creation, comment, star, pin) while that action’s undo notification is visible.
+- This makes Undo predictable whether you're fixing a typo inside a page or stepping back through board-level actions.
+
+---
+
 ## Types of Pages
 
 You can create three kinds of pages on a task. They differ only in how you create them and, for humans, where in the editor you start typing:
 
 | Type | How to create | Where to write | When to use |
 |------|---------------|----------------|-------------|
-| **Page** | Click **New page** on the task detail → choose a name | In a new, untitled page | General thinking, notes, and exploration |
-| **Description page** | Type a blank title and choose **Description** mode from the command palette | In an auto-renamed page with prefix `#` (e.g., `#TaskNewPage`) | You want the page to act like an extended description for the task |
-| **Exploration page** | Type a title containing the word **Exploration** or choose the **Exploration** preset from the command palette | Will show `#Exploration` in the title | You want explicit context that this is a formal exploration / research page |
+| **Page** | Click New page on the task detail → choose a name | In a new, untitled page | General thinking, notes, and exploration |
+| **Description page** | Type a blank title and choose Description mode from the command palette | In an auto-renamed page with prefix `#` (e.g., `#TaskNewPage`) | You want the page to act like an extended description for the task |
+| **Exploration page** | Type a title containing the word Exploration or choose the Exploration preset from the command palette | Will show `#Exploration` in the title | You want explicit context that this is a formal exploration / research page |
 
 ---
 
@@ -96,9 +104,9 @@ Use the full-screen editor attached to the task:
 
 Pages support an append/prepend/replace model for agent workflows. When creating or updating a page programmatically, you can choose mode:
 
-- **overwrite:** Replaces the entire current page content.
-- **append:** Adds content after the existing text (RFC 2046-style).
-- **prepend:** Adds content before the existing text.
+- `replace`: Replaces the entire current page content.
+- `append`: Adds content after the existing text (RFC 2046-style).
+- `prepend`: Adds content before the existing text.
 
 This is especially useful for agents that progressively build a page over time without risking accidental clobbering of previous work.
 
@@ -110,7 +118,7 @@ Every page has a version history. Restrict updates to safe versions and restore 
 
 ### In the editor
 
-- Click **History** in the editor header to view all versions of the page.
+- Click History in the editor header to view all versions of the page.
 - Each version shows the timestamp, author, and a copy of the content at that point.
 - Click a version to view what the page looked like at that time.
 
@@ -130,8 +138,8 @@ Task descriptions also gain version history to help you track contributions, rev
 ### In the web UI
 
 - Open any task.
-- Click **Description** in the top area to open the description editor.
-- Click **History** in the description header to view revisions.
+- Click Description in the top area to open the description editor.
+- Click History in the description header to view revisions.
 
 ### Via the REST API
 
@@ -144,7 +152,7 @@ As with page history, this is REST-only for now:
 
 If two agents or users edit the same task description at the same time, Hypertask uses optimistic locking to detect the conflict:
 
-- First write wins, second write returns a **409 conflict**.
+- First write wins, second write returns a 409 conflict.
 - View the current text in the conflict response and retry your update with the updated content.
 
 <Aside type="caution">
@@ -158,7 +166,7 @@ Do not retry blindly after a 409 without inspecting the returned current content
 For agents and AI workflows, the Pages system provides a reliable, tracked surface to experiment and plan:
 
 - **Exploration depth:** Agents can maintain multi-page explorations for complex tasks without relying on external, untracked tools.
-- **Incremental building:** Use `append` or `prepend` modes to grow pages over time.
+- **Incremental building:** Use append or prepend modes to grow pages over time.
 - **Conflict handling:** Use the version semantics to implement safe concurrent writes for agents that work on the same pages.
 - **AI context:** Since pages are RAG-indexed, the AI can always see your latest exploration content in chats, summaries, and task planning.
 
@@ -166,7 +174,7 @@ For agents and AI workflows, the Pages system provides a reliable, tracked surfa
 
 ## CLI reference
 
-Pages commands live under the new `pages` command group (CLI & MCP tools). They are fully available from the terminal to manage pages programmatically.
+Pages commands live under the new pages command group (CLI & MCP tools). They are fully available from the terminal to manage pages programmatically.
 
 Pages are addressed by **numeric page id**, and created against a **numeric task id** — not a ticket number. Get a task id with `hypertask task list --json`.
 
@@ -192,7 +200,8 @@ Pages are addressed by **numeric page id**, and created against a **numeric task
 | `--mode replace|append|prepend` | update | How to apply the content. `replace` by default. |
 | `--if-version <n>` | update | Only write if the page is still at this version. Returns a conflict otherwise. |
 | `--note <text>` | update | A note attached to this revision. |
-| `--html` / `--canvas` | create, append, update | Treat the content as HTML, or as an HTML canvas page. |
+| `--html` | create, append, update | Treat the content as HTML. |
+| `--canvas` | create, append, update | Treat the content as an HTML canvas page. |
 | `--parent <id>` | create | Nest under another page. |
 
 ### Examples
@@ -281,6 +290,30 @@ Pages run full-width on desktop with a thin 12px gutter inside the editor when t
 
 <Aside type="note">
 On mobile, pages have the same full-width layout as desktop, with the app rail collapsed to preserve screen space.
+</Aside>
+
+---
+
+## Commands in Command Palette (HTPR-6871)
+
+Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) from any sign-in page, including all settings pages (General, Board general, Appearance) to open the Command Palette. Press <kbd>Esc</kbd> once to close the menu and stay in Settings; a second <kbd>Esc</kbd> exits Settings as usual.
+
+<Aside type="tip">
+From any settings page, use page- or task-level commands via the Command Palette to create or open pages, or search your pages.
+</Aside>
+
+---
+
+## File navigation
+
+Open the Office view and use the top-level breadcrumb in the blue command bar:
+
+- Switch between tasks.
+- Switch between workspaces.
+- Switch between boards.
+
+<Aside type="tip">
+Combine <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>Arrow keys</kbd> (Windows/Linux) or <kbd>Ctrl</kbd> + <kbd>Option</kbd> + <kbd>Arrow keys</kbd> (Mac) for strict keyboard-only navigation between tasks.
 </Aside>
 
 ---
