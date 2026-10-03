@@ -26,6 +26,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Search by person name now matches exactly; from:valentin finds only tickets created by "Valentin" ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
   * Fixed: Ticket page content on mobile now supports native two-finger pinch zoom up to 5x, making embedded screenshots readable ([HTPR-6840](https://app.hypertask.ai/detail/project-15/6840))
   * Improved: Long task pages and comment threads now load their initial snapshot once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
+  * Improved: Boards now load lighter and faster by fetching long text fields and subscription history only when needed, reducing initial payload size while preserving all visible functionality ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
 </Update>
 
 <Update label="October 2, 2026">
