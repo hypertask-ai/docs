@@ -87,7 +87,7 @@ Technical: Requires `team_id` from `get_user_context.teams` (UUID string or numb
 | `title` | string | Yes | New board title |
 | `description` | string | No | Optional board description (HTML if product requires) |
 | `sections` | object[] | Yes | Delivery workflow columns left-to-right (array order): intake → committed → building → verify → done. Use domain-specific titles (Linear/Jira-style), not phase buckets like Discovery/Foundation unless the user asked for a phased roadmap. Avoid bland generic names as the default choice. |
-| `labels` | object[] | No | Optional. Use for area/track/component/risk (e.g. Frontend, Security). Do not encode workflow state in labels— that belongs in sections. |
+| `labels` | object[] | No | Optional. Use for area/track/component/risk (e.g. Frontend, Security). Do not encode workflow state in labels—that belongs in sections. |
 | `tasks` | object[] | No | Starter tasks for a realistic delivery board. Large/multi-doc sources may produce many tasks (often 100-250+)—see create_board tool description. Each task: exactly one of `section_index` or `section_title`; for new work, bias placement to Triage/Scheduled; avoid parking most cards in In development/In review on a greenfield board. Shipped usually empty unless user said work is done. Each task SHOULD include priority and estimate unless user opted out. tasks[] is flat; use create_task + parent_task_id after board creation for explicit parent/child. |
 | `source_summary` | string | No | Optional audit trail; not used for inference |
 
@@ -107,6 +107,31 @@ Lists project/team members for a given project. Also includes all agents created
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `project_id` | integer | Yes |  |
+
+### `hypertask_rename_board`
+
+Renames an existing board for a project. Use this to rename a board, since renaming through `hypertask_project_update` has been disabled. Requires board write access; only board members can rename the board. The new title is trimmed and must be non-empty, with a maximum of 200 characters.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | integer | Yes | Project/board ID |
+| `title` | string | Yes | New board title (without HTML; will be trimmed) |
+
+**Behavior:**
+
+- Board members with write access can rename the board; non-members receive "Not allowed to rename this board".
+- Removing the project_id or passing an unknown board ID returns "not found" with no mutation.
+- Empty or whitespace-only titles are rejected locally with `Error: Title must not be empty`.
+
+**Examples:**
+
+```typescript
+// Rename a board by ID
+const { board } = await hypertask_rename_board({
+  project_id: 4060,
+  title: "Agents & Infra"
+});
+```
 
 ---
 
@@ -144,7 +169,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 | `cursor` | string | No | Next page token |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
-| `sort_order` | `asc` \| `desc` | No |  |
+| `sort_order` | `asc` | `desc` | No |  |
 
 ---
 
@@ -152,7 +177,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 
 ### Add reaction to a comment
 
-Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>ð\x9f\x91\x8e</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
+Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>🎯</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
 
 ---
 
@@ -319,10 +344,10 @@ Searches for tasks by name, description, or ticket number. Enhanced with filters
 | `board_id` | integer | No |  |
 | `project_id` | integer | No |  |
 | `assigned_to` | string \| integer | No |  |
-| `priority` | `None` \| `Urgent` \| `High` \| `Medium` \| `Low` | No |  |
+| `priority` | `None` | `Urgent` | `High` | `Medium` | `Low` | No |  |
 | `section` | string | No |  |
 | `has_due_date` | boolean | No |  |
-| `status` | `Normal` \| `Archive` \| `Deleted` | No |  |
+| `status` | `Normal` | `Archive` | `Deleted` | No |  |
 | `limit` | integer | No | Defaults to `10`. |
 
 ### `hypertask_update_task`
@@ -339,7 +364,7 @@ Updates a task after assessing get_comments and get_tasks. Updates description, 
 | `description` | string | No | The description of the task. MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text will be rejected. |
 | `priority` | integer | No |  |
 | `estimate` | integer | No |  |
-| `status` | `Normal` \| `Archive` \| `Deleted` | No |  |
+| `status` | `Normal` | `Archive` | `Deleted` | No |  |
 | `sectionId` | integer | No |  |
 | `labels` | string \| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
 | `due_date` | string \| null | No | Due date in ISO 8601 format (e.g. "2026-03-10"). Pass null to clear/remove the due date. |
