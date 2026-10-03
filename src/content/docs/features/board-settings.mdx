@@ -63,6 +63,9 @@ hypertask project update --prefix NEWXY --project 15
 
 The prefix is editable on the **Create board** screen (defaulted to the automatic suggestion) and available to agents via the same `project update --prefix` flag.
 
+### Discovering ticket prefix settings
+From the command palette, type **"ticket prefix"** to jump to this setting. The search returns **"Settings: Ticket prefix (board)"** for the current board. Use this to quickly locate the prefix configuration when you need to update it.
+
 ### Rationale
 - **Instant updates:** The displayed ID is built from the board's current prefix and the ticket's number, so changing the prefix is a quick update instead of rewriting every ticket.
 - **Backwards compatibility:** Old ticket IDs keep resolving via aliases, just like old numbers already do (e.g., `https://app.hypertask.ai/detail/project-15/6839`).
