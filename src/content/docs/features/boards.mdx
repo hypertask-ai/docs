@@ -360,7 +360,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 
 Guest demo boards provide a guided onboarding experience:
 
-- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g. create their first task or explore the board).
+- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
 - **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
@@ -504,3 +504,17 @@ Previously, the panel would show an empty list or stale data if the current boar
 This change ensures that managing columns is reliable regardless of how recently the board was edited or when you last opened the panel.
 
 <span class="label label--brand">Behavior change</span> The **Manage board columns** dialog now keeps keyboard focus inside it. <kbd>Tab</kbd> and <kbd>Enter</kbd> no longer reach tasks behind the panel. Reorder, edit, visibility, add, and back controls work by keyboard, so you can manage columns without leaving the keyboard.
+
+## Board-column scrolling with J/K keyboard shortcuts ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
+
+<span class="label label--brand">Fixed</span> In Kanban board or table views, pressing <kbd>J</kbd> or <kbd>K</kbd> to navigate a column now scrolls only that column, leaving the board and column headers in place.
+
+Before this change, repeated <kbd>J</kbd> or <kbd>K</kbd> presses would scroll the entire board, causing headers to move out of view and making long columns difficult to navigate.
+
+After this fix ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)):
+
+- The column itself scrolls smoothly with the focused card.
+- The board surface and column headers remain fixed (stable headers).
+- Keyboard navigation feels responsive and local to the column.
+
+This behavior applies throughout board and table views, including My Tasks, Overdue, Blocked, and any custom saved views.
