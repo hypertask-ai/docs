@@ -7,9 +7,9 @@ description: "Superhuman-style aligned search result list with tips, grey value 
 
 The search screen provides a focused, keyboard-first way to find tasks across your board. It adopts a Superhuman-inspired design: a single aligned list of recent searches and tips, grey value completions (operator and values), and keyboard-driven workflows while deferring results until selection or Enter.
 
-## Prerequisite: enhanced search preview
+## Enhanced search preview: Owner+QA only
 
-If you see the normal search UI, ensure you are on a checked board and the search preview flag is enabled for your account or team.
+This enhanced search screen is a strict preview available to the Owner and QA roles. It is not a general release and does not require any minimum activity threshold. If you see the normal search UI, ensure you are on a checked board and the search preview flag is enabled for your account or team.
 
 ## Layout and structure
 
@@ -42,28 +42,26 @@ This applies to common value types: people (names + emails), labels, boards. Res
 
 Under recent searches, tips explain operators the first time you open search:
 
-- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> — open command palette.
-- <code>from:</code>, <code>assignee:</code>, <code>in:</code>, <code>label:</code>, <code>is:</code>, <code>dates:</code>, <code>has:</code> — field modifiers.
+- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> â\x80\x94 open command palette.
+- <code>from:</code>, <code>assignee:</code>, <code>in:</code>, <code>label:</code>, <code>is:</code>, <code>dates:</code>, <code>has:</code> â\x80\x94 field modifiers.
 - Press <kbd>Tab</kbd> on an inline value to accept it; choose Ask AI, operators, people, labels, or boards.
 
 ## Keyboard shortcuts (search UI)
 
-- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> — open command palette.
-- <kbd>Enter</kbd> — apply selected suggestion and load results.
-- <kbd>Tab</kbd> — accept and grey the top inline suggestion and load results.
-- <kbd>Shift+Tab</kbd> — previous suggestion.
-- <kbd>Esc</kbd> — clear or dismiss panels.
+- <kbd>Ctrl+K</kbd> / <kbd>Cmd+K</kbd> â\x80\x94 open command palette.
+- <kbd>Enter</kbd> â\x80\x94 apply selected suggestion and load results.
+- <kbd>Tab</kbd> â\x80\x94 accept and grey the top inline suggestion and load results.
+- <kbd>Shift+Tab</kbd> â\x80\x94 previous suggestion.
+- <kbd>Esc</kbd> â\x80\x94 clear or dismiss panels.
+
+## Sample workflows
+
+1. Click the search box or press <kbd>/</kbd>. Empty state: recent searches and tips appear.
+2. Type a partial term or operator (e.g., <code>from:mal</code>). Inline completion shows the top value in grey. Results do not load yet.
+3. Select a suggestion with <kbd>Tab</kbd> (or hover & click). Results load under the suggestions list.
+4. Press <kbd>Esc</kbd> to clear and return to the recents/tips layout; results are removed.
 
 ## Status notes
 
 - This new search screen replaces the live results from the previous iconic live-results approach and works behind the existing search flags.
 - Verified live for Owner and QA; full release plan to widen the flag is out of scope for this documentation.
-
-## Sample workflows
-
-<Steps>
-<Step>Click the search box or press <kbd>/</kbd>. Empty state: recent searches and tips appear.</Step>
-<Step>Type a partial term or operator (e.g., <code>from:mal</code>). Inline completion shows the top value in grey. Results do not load yet.</Step>
-<Step>Select a suggestion with <kbd>Tab</kbd> (or hover & click). Results load under the suggestions list.</Step>
-<Step>Press <kbd>Esc</kbd> to clear and return to the recents/tips layout; results are removed.</Step>
-</Steps>
