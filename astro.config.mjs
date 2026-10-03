@@ -35,6 +35,7 @@ export default defineConfig({
           items: [
           'features/ai-features',
           'features/boards',
+          'features/search-screen',
           'features/tasks',
           'features/scheduling',
           'features/inbox',
