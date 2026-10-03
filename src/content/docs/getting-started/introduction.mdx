@@ -8,16 +8,16 @@ import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/
 # What is Hypertask?
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card title="AI-native collaboration" icon="ð9f¤96">
+  <Card title="AI-native collaboration" icon="🔐">
     Built with agents first. Hypertask comes with an intelligent co-worker that can read your board, create tasks, and respond to comments—all via Chat, CLI, MCP, or REST.
   </Card>
-  <Card title="Full control, no lock-in" icon="ð9f9493">
-    Use the built-in email login, or integrate programmatically. The CLI, MCP and REST APIs cover every piece of your workflow, so you own the experience.
+  <Card title="Full control, no lock-in" icon="📧">
+    Use built-in or programmatic auth. The CLI, MCP and REST APIs cover every piece of your workflow, so you own the experience.
   </Card>
-  <Card title="Workspace-ready" icon="ð9f91¥">
+  <Card title="Workspace-ready" icon="🏢">
     Multi-tenant workspaces with optional boards per workspace, team invites, role-based permissions, and real-time collaboration for many teams.
   </Card>
-  <Card title="Modern UX" icon="â9c¨">
+  <Card title="Modern UX" icon="⚡">
     Clean Kanban boards, calendar views, a unified Inbox for mentions and updates, and a Theme picker supporting Light, Dark, AMOLED, and custom Paper theme.
   </Card>
 </div>
@@ -88,6 +88,8 @@ It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and yo
 <Steps>
 <ol>
 <li>Create an account or sign in with email/app password at <a href="https://app.hypertask.ai">app.hypertask.ai</a>.</li>
+<li>Request a new sign-in link if your browser session expires or is shared; links are single-use, so each click gives you a fresh sign-in.</li>
+<li>Request a new verification link when creating a new account; never reuse old verification emails.</li>
 <li>Set your preferred theme using the <kbd>Ctrl+K</kbd> command palette or the Theme picker in Settings (Light, Dark, System, AMOLED, Paper).</li>
 <li>Invite teammates to your workspace and create your first board (Kanban, Table, List, or Calendar).</li>
 <li>Start adding tasks, tagging them for organization, and assigning them.</li>
@@ -103,13 +105,13 @@ Hypertask has a rich set of keyboard shortcuts across surfaces. Press <kbd>Ctrl+
 
 <Aside>
 
-Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and `â8c98` on macOS.
+Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and 👆 on macOS.
 
 </Aside>
 
-<code>Ctrl+K</code> â" Open command palette for shortcuts and actions.
+<code>Ctrl+K</code> — Open command palette for shortcuts and actions.
 
-<code>Ctrl+G</code> â" Navigate surfaces (Inbox ââ positions Bo... hold: em leads &
+<code>Ctrl+G</code> — Navigate surfaces (Inbox → Boards → My Tasks → Chat), as needed.
 
 ### Live shortcuts
 
@@ -136,6 +138,7 @@ Hypertask uses server-side authentication and ensures that other users' data nev
 - <strong>PostHog cross-domain visitor identity</strong>: Signin and load attribution between <code>hypertask.ai</code> and <code>app.hypertask.ai</code> use signed ht_session cookies, avoiding client-side cookie dependency.
 - <strong>Strict account linking</strong>: Linking a Google login to an unverified local account is blocked, ensuring verified local accounts are not orphaned.
 - <strong>Multi-tenant isolation</strong>: By design, boards, views, and tasks belong to the user. Archive and other features show only your data unless explicitly shared.
+- <strong>Single-use login and verification links</strong>: When you request a new sign-in link or account verification email, the link is valid for one use only. Attempting to reuse a link shows an "invalid or expired" message and does not grant a session.
 
 <Aside type="tip">
 
