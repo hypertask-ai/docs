@@ -43,13 +43,22 @@ As you type, Hypertask suggests:
   - `dates:` shows presets: `today`, `this-week`, `last 7 days`, plus a date picker.
 - **Filter types have unique colours**: People (blue), boards (green), labels (amber), status (violet), dates (coral).
 
+## Person name matching behavior ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
+
+When filtering by people using the `from:` or `assignee:` operators, Hypertask now matches pitch-and-cased names exactly.
+
+- **Before:** `from:valentin` would match every user named "Valentin" regardless of capitalization or diacritics.
+- **After:** `from:valentin` finds only tasks created by a person named exactly "Valentin" (case-sensitive).
+
+This makes search results more predictable when you know the exact name you're looking for. A person picked from the autocomplete list is still matched exactly, ensuring search results stay in sync with the people picker.
+
 ## Tips panel
 
 When the search bar is empty or focused, a <strong>tips panel</strong> lists every operator with an example and plain meaning. Click any tip to insert it. Saved searches and recent searches also appear inside the tips panel.
 
 ## Keyboard navigation in search
 
-- **Navigate suggestions**: Use <kbd>↑</kbd> and <kbd>↓</kbd> (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
+- **Navigate suggestions**: Use ← and → (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
   - In empty search, <kbd>j</kbd>/<kbd>k</kbd> moves through tips.
   - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
 - **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
@@ -70,7 +79,7 @@ After applying filters, clickable chips appear in the search bar. Click a chip's
 
 ## People and board pickers
 
-- <strong>@ people picker</strong>: Start typing `@` to select or create people.
-- <strong># board picker</strong>: Start typing `#` to select or create boards.
+- **@ people picker**: Start typing `@` to select or create people.
+- **# board picker**: Start typing `#` to select or create boards.
 
 Pickers appear when typing a people or board-related operator such as `from:`, `assignee:`, or `in:`.
