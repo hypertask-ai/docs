@@ -119,9 +119,9 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 ### Chips in the search bar
 
 <span class="label label--brand">New</span> The search bar includes:
-- **Chips**: Select or refine filters after your search, then click to apply chips. Click the Ã— on a chip to remove it.
-- **@ people picker**: Start typing the @ symbol to select or create people.
-- **# board picker**: Start typing # to select or create boards.
+- **Chips**: Select or refine filters after your search, then click to apply chips. Click the ï ¿½ on a chip to remove it.
+- @ people picker: Start typing the @ symbol to select or create people.
+- # board picker: Start typing # to select or create boards.
 
 ## My Tasks toolbar
 
@@ -198,6 +198,18 @@ Open a task to see:
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
 - Task Reporter indicator marking who can edit the description.
 - Top bar with quick actions like Move, Duplicate, Archive, or Delete.
+
+### Linked pull requests
+
+Tasks can link to GitHub pull requests. The pull request section displays each linked PR with its status:
+
+- <strong>Open, Merged, Closed</strong>: Show the current status as reported by GitHub.
+- <strong>Last observed</strong>: The last-known status before the page loads.
+- <strong>Fetching...</strong>: Indicates a background refresh is in progress.
+
+<span class="label label--brand">Improvement</span> Tasks with linked PRs now show any saved PR status immediately—Open, Merged, or Closed—without waiting for GitHub to respond. Queries to GitHub run in parallel in the background and update the panel once the fetch completes, keeping the page fast and responsive. If you navigate away and come back, the PR panel refreshes again to stay current.
+
+This change eliminates wait times for tasks with linked PRs and provides an instant-open experience even when GitHub fetches are slower than usual.
 
 ### Comments
 
