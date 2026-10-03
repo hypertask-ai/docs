@@ -30,6 +30,7 @@ export const Update = ({ label, children }) => (
   * Added: App board rename now requires board membership ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
   * Added: Search bar chips plus @ people picker and # board picker with value autocomplete ([HTPR-6370](https://app.hypertask.ai/detail/project-15/6370))
   * Added: Boards can show live Figma embeds instead of orange placeholders for accounts with feature eligibility and without a failed connection, so Figma design previews appear in tickets while the integration is under review ([HTPR-6690](https://app.hypertask.ai/detail/project-15/6690))
+  * Fixed: Ticket links without a ticket number redirect to the board before rendering, preventing React error #419 ([HTPR-6818](https://app.hypertask.ai/detail/project-15/6818))
 </Update>
 
 <Update label="October 2, 2026">
@@ -69,7 +70,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="September 19, 2026">
   * Fixed: Weekly Strix scans now retry failures via the fixed proxy and runner, and the subscription proxy no longer duplicates tool calls across runs ([HTPR-6598](https://app.hypertask.ai/detail/project-15/6598))
-  * Fixed:  Light-theme comments now show a subtle outline on phones and desktop, so adjacent comments are easier to distinguish ([HTPR-6554](https://app.hypertask.ai/detail/project-15/6554))
+  * Fixed: Light-theme comments now show a subtle outline on phones and desktop, so adjacent comments are easier to distinguish ([HTPR-6554](https://app.hypertask.ai/detail/project-15/6554))
   * Fixed: AI Chat description edits now preserve headings, paragraphs, lists, and bold text ([HTPR-6561](https://app.hypertask.ai/detail/project-15/6561))
   * Fixed: Slack settings on mobile had mismatched shadows; the Default project dropdown is now flat like other controls ([HTPR-6558](https://app.hypertask.ai/detail/project-15/6558))
   * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
