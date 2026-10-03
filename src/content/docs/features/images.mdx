@@ -51,7 +51,6 @@ If the lightbox shows a broken image icon for a non-decodable file:
 ## Warnings for unexpected content
 
 If a file exhibits preview or display issues (broken icons, no thumbnail, or an unexpected format shown), check:
-
 - The file is flagged as excluded from previews (if the goal was to prevent preview).
 - The file is a HEIC/HEIF image under preview logic (historically, some browsers rendered these as named files before conversion completed).
 
@@ -69,3 +68,33 @@ You can paste photos directly into comments and task descriptions. The system ha
 This gives you a single paste workflow whether you're uploading from Photos via copy-paste or dragging and dropping files.
 
 [Learn more about keyboard shortcuts for superhuman-style snippets in the Superhuman-Style Snippets documentation.](/features/superhuman-snippets/)
+
+## Handling blocked image hosts
+
+<span class="label label--brand">New</span> If your network or a firewall blocks the image server domain, attachments now retry through the app domain and display instead of staying broken.
+
+### How it works
+
+- Images usually load directly from `files.hypertask.app`.
+- When a request to `files.hypertask.app` fails (for example, due to network restrictions or a firewall), the app retries once through `app.hypertask.ai`.
+- On successful retry, the image displays in comments, task descriptions, attachments, and the task detail lightbox.
+- This happens automatically; no configuration is required on your side.
+- Normal networks that can reach `files.hypertask.app` continue to load images straight from the image server, so performance is unchanged.
+
+### When this helps
+
+This change helps users on restrictive networks (including some corporate Wi‑Fi and VPNs) where:
+- The image host is blocked, resulting in broken images or connection errors.
+- You cannot easily unblock the domain.
+- You don't have control over network policy.
+
+Example scenario: A comment includes an image attachment, but your network blocks `files.hypertask.app`. Previously the image would appear broken. Now the app retries through `app.hypertask.ai`, and the image loads as expected.
+
+### Reloading for browsers that blocked images before
+
+If you saw broken images on a previous visit and still use a network that blocks the image server:
+
+- <strong>Refresh the ticket page</strong> and the attachments with retry behavior will load properly.
+- After the initial load, the images are cached by your browser, so you should not need to re-enter restrictive network conditions to see them.
+
+[Learn more about keyboard shortcuts in the Keyboard Shortcuts documentation.](/features/keyboard-shortcuts/)</content>
