@@ -163,7 +163,6 @@ These controls apply when one or more cards are selected on a desktop board. Use
 
 
 ## Mobile comment composer gesture actions
-
 On mobile devices, the comment composer keeps dictation as the primary input method with simplified controls:
 
 - Dictate first, then refine with the *Improve with AI* option (opens a focused bottom sheet on mobile)
@@ -175,7 +174,6 @@ On mobile, start with dictation and tap *Improve with AI* to refine your comment
 </Aside>
 
 ## Mobile in-app gestures
-
 - On mobile, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
 
 ## Image & Media
@@ -290,8 +288,14 @@ Focus chat input via <kbd>Ctrl+Q</kbd> now works on <strong>/chat</strong> and o
 The Command Palette lists board and section actions, including "Hide column", "Show columns", "Archive board", "Delete board", and more. Use <kbd>Ctrl+K</kbd> and type keywords like "hide", "show", "archive", or "delete" to quickly access relevant actions.
 </Aside>
 
-## Hiding and Showing Columns
+### Board settings from Ctrl+K (HTPR-6863)
+When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view—even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
 
+<Aside type="tip">
+Try it: open any ticket, press <kbd>Ctrl+K</kbd>, type "board", pick **"Board settings"**. The board picker shows that ticket's board and preselects the right team.
+</Aside>
+
+## Hiding and Showing Columns
 To hide a column using the Command Palette:
 
 1. Open the Command Palette: <kbd>Ctrl</kbd> + <kbd>K</kbd>
@@ -310,7 +314,6 @@ To show previously hidden columns:
 </Aside>
 
 ## Board palette (HTPR-4522)
-
 Press <kbd>Ctrl</kbd> + <kbd>B</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>B</kbd> (Mac) to show the board palette overlay. On the left rail, the board palette displays your user account row with:
 
 - **Email or handle** — Click to open the account switcher dialog
@@ -323,11 +326,9 @@ The board palette joins <kbd>Ctrl+K</kbd> as a non-intrusive way to access works
 </Aside>
 
 ## Open Latest Updates (HTPR-4813)
-
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) then search for **"Latest Updates"** in the board palette or command palette to open the Latest Updates panel from any route in the app. This provides quick access to see recent activity across your boards without leaving your current view.
 
 ## Global Alt+Number board shortcuts (HTPR-5126)
-
 **Before:** On the table view or any board view, <kbd>Alt</kbd> + <kbd>1-7</kbd> shortcuts did nothing even when the app-shell rail was supposed to be active, causing them to behave as no-ops.
 
 **After:** When the rail is enabled, <kbd>Alt</kbd> + <kbd>2-7</kbd> now correctly switch to their corresponding surfaces (Board = 2, Table = 3, Calendar = 4, AI Chat dock = 5, and Search = 6) from any view. On Mac, the global board switcher uses <kbd>Ctrl</kbd> + <kbd>2-7</kbd> instead of <kbd>Cmd</kbd> to avoid interfering with tab switching.
@@ -337,7 +338,6 @@ The app-shell rail and global Alt+Number shortcuts were designed to provide tact
 </Aside>
 
 ## Time reports quick-log (HTPR-4329)
-
 Quick-log time directly from the board or a task card using <kbd>Ctrl</kbd> + <kbd>K</kbd>:
 
 - **On a board or task card** — Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the quick-log dialog preconfigured for the selected card.
@@ -352,7 +352,6 @@ The quick-log interface supports Hours and Minutes fields, board and user filter
 | Quick-log time on a selected board card | <kbd>Ctrl</kbd> + <kbd>K</kbd> | <kbd>Cmd</kbd> + <kbd>K</kbd> |
 
 ## Timer shortcuts (HTPR-4414)
-
 Time tracking shortcuts are available when time tracking is enabled for your board or task:
 
 - **App shell rail** — Press <kbd>7</kbd> on the rail to open the running-timers view
@@ -363,7 +362,6 @@ The timer indicator appears in the task card and task detail, showing whether a 
 See the <a href="/features/time-tracking/">Time Tracking</a> page for full details.
 
 ## System-theme prediction (HTPR-5422)
-
 When you open the Command Palette with <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd> on Mac), theme-related options now display context-appropriate labels to make system-theme mode predictable. Retired numeric theme modes (1–5) redirect safely to the Appearance settings with your in-session command state preserved.
 
 <Aside type="tip">
@@ -371,7 +369,6 @@ Theme options in the command palette now adapt to your system theme and graceful
 </Aside>
 
 ## Copy current page URL (HTPR-6112)
-
 When you open the Command Palette with <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the action **"Copy current page URL"** copies the complete browser address, including the board, view, task, filters, and section. The action is available everywhere <kbd>Ctrl+K</kbd> opens, including task detail, calendar, and inbox views.
 
 <Aside type="note">
@@ -379,7 +376,6 @@ The action is owner-only by default. It can be configured to be available to all
 </Aside>
 
 ## Mobile in-app gestures
-
 - On a phone, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
 - Dictation remains the primary input method on mobile; Tap *Improve with AI* to refine your comments without leaving the input flow
-- On mobile, pressing <kbd>Esc</kbd> from the full-screen Pages view now exits via the safe return path through the Command Center (HTPR-6158), ensuring a consistent exit experience across applicatiion views
+- On mobile, pressing <kbd>Esc</kbd> from the full-screen Pages view now exits via the safe return path through the Command Center (HTPR-6158), ensuring a consistent exit experience across application views
