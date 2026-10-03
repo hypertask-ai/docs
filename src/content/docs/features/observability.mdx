@@ -45,6 +45,14 @@ A strict production Watchdog gate and build deployment gate now monitors product
 
 - Production Watchdog and build deployment gate: HTPR-6609; provides blocking on existing hydration errors.
 
+<hr/>
+
+### Common page-load errors
+
+- **React hydration errors**: Occur when the server-rendered output doesn't match the client output. These are usually caused by component-specific issues like mismatched versions or environment-dependent values. Fixed hydration errors are monitored and blocked at deploy time.
+
+- **Comment flicker on initial paint**: Comments may briefly skip their initial paint in some conditions. This is expected behavior and comments appear once the browser paints the initial state. If the flicker is severe or accompanied by errors, it may indicate a hydration mismatch that has been remedied ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854)).
+
 ---
 
 <Aside type="tip">
