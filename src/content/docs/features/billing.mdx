@@ -11,78 +11,12 @@ Hypertask billing controls license capacity, seat limits, and access tiers. Mana
 
 Stripe uses your team name as the display name on invoices and in the billing portal. Hypertask never shows internal IDs or the word "undefined". For customers without a team name in the app, the owner's email appears instead. Previously blank or malformatted names are now filled from the team name or owner email; customers that have neither team name nor matching owner remain blank.
 
-{% callout type="note" %}
-You can verify the fix by opening your Stripe billing page for the QA pro team: the customer name now appears as "MyTeam" instead of undefined.
+{% callout type="info" %}
+Verify customer names in your Stripe billing portal. If a name appears blank, check that its owning team has a name and that a matching owner email exists.
 {% endcallout %}
 
 ## Seats
 
 Seats represent active users with individual access to Hypertask. Each seat corresponds to a user with login credentials and full access to the platform features.
 
-**Seat limits by plan:**
-- Free tier: No active seat limit
-- Paid and team plans: Active seat limits per plan
-- Enterprise: Custom seat limits
-
-When you create or add accounts, new seats are allocated automatically. Upgrading your plan increases your seat capacity, unrestricted reassignments are tracked for billing reconciliation.
-
-## Cost forecasting
-
-The cost forecast shows estimated consumption for GitHub repositories connected to Hypertask. This view helps you anticipate file storage and integration costs before they hit your budget.
-
-**View your forecast:**
-1. Go to the **Cost Forecast** page
-2. See per-repository estimates broken down by usage type
-3. Compare projections against your current subscriptions
-
-## Testing billing changes safely
-
-Stripe test-mode harness lets you safely test billing flows in production without risking database writes or production incidents.
-
-The test harness:
-- Runs **guarded seat billing logic** in a controlled environment
-- Uses **in-memory application state** so tests don't affect live data
-- Implements **bounded cleanup** to discard test states after execution
-- **Never writes to the Hypertask database** during test runs
-
-This means you can safely iterate on seat-loss logic, billing entitlement checks, and upgrade/downgrade flows in production-like conditions without creating cross-tenant leakage or corrupting live seats.
-
-## Seat loss and automatic repair
-
-Automatic repair of lost seats is available in production for affected teams. This feature prevents silent seat loss when users pool in from other teams, and helps maintain billing accuracy.
-
-**How automatic repair works:**
-- Detects when active teams have fewer seats than their current plan supports
-- Verifies that the team has a valid Stripe payment method on file
-- Requires billing-owner input if the active subscription cannot identify a single safe replacement Stripe item, to avoid modifying the wrong subscription item
-- Blocks automatic repair and prompts for billing-owner review if:
-  - A Stripe item is stored but no longer valid
-  - The active subscription does not contain exactly one safe replacement at the stored price
-  - Automatic selection could modify the wrong subscription item
-
-Only teams with a payment method on file are eligible for automatic repair, and repair operations are guarded against unsafe mutations to subscriptions.
-
-## License management
-
-Seat allocation follows consistent rules across surfaces:
-
-- New user creation adds a seat to your allocation
-- Adding teammates in the app, via CLI, or through API all respect the same capacity checks
-- Free-tier users may add teams and the first seat without restrictions
-- Upgrading your plan increases your tracked capacity and adds seats automatically within the new tier bounds
-
-## Team ownership verification
-
-All billing-affected endpoints now verify team ownership server-side before performing mutations:
-
-| Endpoint | Change |
-|----------|--------|
-| Checkout session creation | Verifies the authenticated user has billing access to the team before creating a checkout URL |
-| Task mutations | Reads billing authority from the authenticated user and enforces access checks before state changes |
-| Comment operations | Validates the requesting user's access to the target board and task before posting |
-
-This prevents client-controlled parameter mismatches from bypassing authorization and ensures operations are scoped only to the intended team's resources.
-
-## Stripe customer operations
-
-Stripe customer creation for new accounts now surfaces all errors rather than silently swallowing them. Previously, certain paths returned null on failure without indicating the underlying issue, making debugging difficult. All customer creation paths now properly report errors to help you identify and resolve account or payment configuration problems.
+**Seat limits by plan:**\n- Free tier: No active seat limit\n- Paid and team plans: Active seat limits per plan\n- Enterprise: Custom seat limits\n\nWhen you create or add accounts, new seats are allocated automatically. Upgrading your plan increases your seat capacity, unrestricted reassignments are tracked for billing reconciliation.\n\n## Cost forecasting\n\nThe cost forecast shows estimated consumption for GitHub repositories connected to Hypertask. This view helps you anticipate file storage and integration costs before they hit your budget.\n\n**View your forecast:**\n1. Go to the **Cost Forecast** page\n2. See per-repository estimates broken down by usage type\n3. Compare projections against your current subscriptions\n\n## Testing billing changes safely\n\nStripe test-mode harness lets you safely test billing flows in production without risking database writes or production incidents.\n\nThe test harness:\n- Runs **guarded seat billing logic** in a controlled environment\n- Uses **in-memory application state** so tests don't affect live data\n- Implements **bounded cleanup** to discard test states after execution\n- **Never writes to the Hypertask database** during test runs\n\nThis means you can safely iterate on seat-loss logic, billing entitlement checks, and upgrade/downgrade flows in production-like conditions without creating cross-tenant leakage or corrupting live seats.\n\n## Seat loss and automatic repair\n\nAutomatic repair of lost seats is available in production for affected teams. This feature prevents silent seat loss when users pool in from other teams, and helps maintain billing accuracy.\n\n**How automatic repair works:**\n- Detects when active teams have fewer seats than their current plan supports\n- Verifies that the team has a valid Stripe payment method on file\n- Requires billing-owner input if the active subscription cannot identify a single safe replacement Stripe item, to avoid modifying the wrong subscription item\n- Blocks automatic repair and prompts for billing-owner review if:\n  - A Stripe item is stored but no longer valid\n  - The active subscription does not contain exactly one safe replacement at the stored price\n  - Automatic selection could modify the wrong subscription item\n\nOnly teams with a payment method on file are eligible for automatic repair, and repair operations are guarded against unsafe mutations to subscriptions.\n\n## License management\n\nSeat allocation follows consistent rules across surfaces:\n\n- New user creation adds a seat to your allocation\n- Adding teammates in the app, via CLI, or through API all respect the same capacity checks\n- Free-tier users may add teams and the first seat without restrictions\n- Upgrading your plan increases your tracked capacity and adds seats automatically within the new tier bounds\n\n## Team ownership verification\n\nAll billing-affected endpoints now verify team ownership server-side before performing mutations:\n\n| Endpoint | Change |\n|----------|--------|\n| Checkout session creation | Verifies the authenticated user has billing access to the team before creating a checkout URL |\n| Task mutations | Reads billing authority from the authenticated user and enforces access checks before state changes |\n| Comment operations | Validates the requesting user's access to the target board and task before posting |\n\nThis prevents client-controlled parameter mismatches from bypassing authorization and ensures operations are scoped only to the intended team's resources.\n\n## Stripe customer operations\n\nStripe customer creation for new accounts now surfaces all errors rather than silently swallowing them. Previously, certain paths returned null on failure without indicating the underlying issue, making debugging difficult. All customer creation paths now properly report errors to help you identify and resolve account or payment configuration problems.
