@@ -35,6 +35,11 @@ export const Update = ({ label, children }) => (
   * Improved: First ticket open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm (0.10 s delta vs 0.25 to 0.33 s, HTPR-6853)
 </Update>
 
+<Update label="October 3, 2026">
+  <div style="aspect-ratio: 16/9; margin: 0.75rem 0;"><iframe style="width: 100%; height: 100%;" src="https://www.youtube-nocookie.com/embed/kGtgDdp3DvM" title="Update: Auto-fill Blank Stripe Customer Names" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+  * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864)) and ([HTPR-6869](https://app.hypertask.ai/detail/project-15/6869))\n  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
+</Update>
+
 <Update label="October 2, 2026">
   * Fixed: Logged-out requests can no longer read board data or make unauthorized API calls; legacy routes now require authenticated sessions ([HTPR-6801](https://app.hypertask.ai/detail/project-15/6801))
   * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
