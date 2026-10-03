@@ -1,6 +1,6 @@
 ---
 title: "Images and Attachments"
-description: "Send HEIC/HEIF photos, view them everywhere (thumbnails, inline, galleries, lightboxes), force or exempt from preview, manage low-res fallbacks."
+description: "Send HEIC/HEIF photos, view them everywhere (thumbnails, inline, galleries, lightboxes), force or exempt from preview, and resize images on pages."
 ---
 
 We treat HEIC and HEIF images like any other file: they render consistently across thumbnails, inline previews, galleries, and lightbox views. If a preview isn't suitable, exclude the format from previews or use a low-res fallback.
@@ -97,4 +97,32 @@ If you saw broken images on a previous visit and still use a network that blocks
 - <strong>Refresh the ticket page</strong> and the attachments with retry behavior will load properly.
 - After the initial load, the images are cached by your browser, so you should not need to re-enter restrictive network conditions to see them.
 
-[Learn more about keyboard shortcuts in the Keyboard Shortcuts documentation.](/features/keyboard-shortcuts/)</content>
+[Learn more about keyboard shortcuts in the Keyboard Shortcuts documentation.](/features/keyboard-shortcuts/)
+
+## Resizing images on pages and ticket descriptions
+
+You can manually adjust image size on pages and in ticket descriptions.
+
+### Auto-fit vs manual resize
+
+- <strong>Auto-fit:</strong> Images without a saved size automatically adjust to fit the context (mobile, desktop layout, and container width).
+- <strong>Manual resize:</strong> Drag the handle on any image to set a custom width. When you type text nearby and the edit is saved, the new size is persisted.
+
+### Persisted size
+
+- After you drag an image's resize handle and see “Saved,” the image's width is saved to that page or ticket description.
+- Reloading the page or ticket keeps the image at the custom size instead of reverting to auto-fit.
+- Using multiple sizes on the same page works as expected: each one stays where you set it.
+
+### Mobile experience
+
+- On mobile, resized images still respect screen width and remain readable.
+- Auto-fit images respond to pinch-to-zoom; resized images follow the set width.
+
+### Common use cases
+
+- <strong>Bulleted lists with images:</strong> Size images consistently (e.g., 50% width) so they look uniform in lists.
+- <strong>Diagrams on pages:</strong> Grow or shrink diagrams on a page to finer steps.
+- <strong>Ticket descriptions:</strong> Include screenshots at a consistent scale along with typed text.
+
+[Learn more about creating pages in the Pages documentation.](/features/pages/)
