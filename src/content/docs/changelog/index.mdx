@@ -11,6 +11,7 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 3, 2026">
+  * Fixed: Stripe displays readable customer names (team name or owner email) on billing and invoices, without internal IDs or the word “undefined” ([HTPR-6862](https://app.hypertask.ai/detail/project-15/6862))
   * Fixed: Images now retry through the app when your network blocks the image host instead of staying broken ([HTPR-6716](https://app.hypertask.ai/detail/project-15/6716))
   * Improved: Search autocomplete with operator and value suggestions, colour per filter, framed input, tips panel, and arrow/j/k keyboard navigation for results suggestions ([HTPR-6688](https://app.hypertask.ai/detail/project-15/6688))
   * Improved: Search bar suggestion lists now align full-width, place recents before tips, and show Ask AI first; people, labels, and board completions accept with Tab; results fetch after picking a suggestion or Enter ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
