@@ -209,8 +209,8 @@ Use the following shortcuts to cycle between available agents in the left-pane r
 
 ### Search tasks and add agents
 
-- **@** inside the chat input to search for tasks by name and start a context-aware conversation.
-- **+** — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
+- @ inside the chat input to search for tasks by name and start a context-aware conversation.
+- + — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
@@ -270,3 +270,15 @@ When you open a fresh board or task that you haven't visited before, the panel o
 This makes it easier to settle into Chat for each context without repeatedly opening it on reloads that you only want to skim.
 
 </Aside>
+
+### Handling local fix verification
+
+Browser and local development environments are permitted to fail to persist AI chat state after reloads. The fix applies only on production deployments (e.g., hypertask.app) where client-side state is persisted correctly. In local environments, reloads are expected to reset state as the local site is not persisted.
+
+<Aside type="note">
+
+If you test on production and notice reloads aren't respecting your manual close, ensure your browser opts out of persistent state clearing (for example, disabling the actual History API and regular session storage): these are admin-controlled behaviors not documented here.
+
+</Aside>
+
+---
