@@ -37,6 +37,9 @@ export const Update = ({ label, children }) => (
   * Improved: My Tasks Scope button and Ctrl+K Scope command now open the same board picker list with search and standard keyboard navigation; redesigned panel matches the board picker used elsewhere in the app. The previous custom implementation has been replaced with the consistent board picker experience [HTPR-6567](https://app.hypertask.ai/detail/project-15/6567)
   * Added: AI clients connected with the restriction flag on now see 20 documented Hypertask tools instead of 76, with no regression. Flag `htpr-6804-mcp-tools` controls tool count for system and conventional connector tool guidance parity across MCP surfaces, and chain to CLI and chat accordingly. Base documentation refers to HTPR-6804 ([HTPR-6804](https://app.hypertask.ai/detail/project-15/6804))
   * Improved: My Tasks now reuses the kanban save view, sort and Ctrl+K picker flows for Scope, Involvement, Detail and Group ([HTPR-6930](https://app.hypertask.ai/detail/project-15/6930))
+  * Improved: Boards load lighter and faster on mobile, with startup code removed and first open on phones reduced to 8.6 seconds; repeat opens on phones are about 4.6 seconds ([HTPR-6858](https://app.hypertask.ai/detail/project-15/6858))
+  * Improved: Inbox loads faster on mobile, with startup code reduced and first open on phones now 9.7 seconds; repeat opens on phones are about 4.3 seconds ([HTPR-6859](https://app.hypertask.ai/detail/project-15/6859))
+  * Fixed: In the My Tasks view, pressing Tab now moves one split at a time and stays there instead of jumping back to the previous split ([HTPR-6904](https://app.hypertask.ai/detail/project-15/6904))
 </Update>
 
 <Update label="October 3, 2026">
