@@ -111,61 +111,51 @@ hypertask tasks list --labels cli,urgent
 
 <Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
 
-<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0‑4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
+<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0‒4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
 
-## Task move validation
+## Task move
 
 ### hypertask tasks move
 
-Move a task from one section to another.
+Move a task from one section to another. This works within a board or across boards.
 
 ```bash
 hypertask tasks move <ticket> --section <section-name>
-```
-
-**Behaviour:**
-
-- If the task is archived, the command will fail with the error:
-  >
-  > "Archived tasks cannot move sections or change assignees"
-
-- This message clarifies that archived tasks are immutable for moves; attempt to restore the task first, or create a new task.
-
----
-
-You can also change assignees with:
-
->
-`hypertask tasks move <ticket> --assignee <user>`
-
-For full options, run `hypertask tasks move --help`.
-
-<span class="label label--brand">Behavior change</span> All `hypertask <subcommand>` commands now use their own `--help` output instead of falling back to the top-level banner. Each command shows its usage, required and optional flags with descriptions, and one example. Combined with improved flag validation, this makes it easier to discover what a command does and how to use it. ([HTPR-6481](https://app.hypertask.ai/detail/project-15/6481))
-
-## Comment improvements
-
-### hypertask comment add
-
-Add a comment to a task. Supports plain text and the `--improve` flag:
-
-```bash
-hypertask comment add HYFA-123 --improve
+hypertask tasks move <ticket> --to <board-id>
+hypertask tasks move <ticket> --to <board-id> --to-section <section-id>
 ```
 
 **Options:**
 
 | Option | Description |
 |--------|-------------|
-| `--improve` | Improve comment readability by applying a rewrite. No value required; uses a default readability improvement by default. |
-| `--improve-command <command>` | Apply a specific rewrite command instead of the default readability improvement. Useful for manual fixes like correcting deliberate spelling errors. |
+| `--section <section-name>` | Move the task to this section within the same board. |
+| `--to <board-id>` | Move the task to this board. Use `--to-section` to specify the target section in the new board. |
+| `--to-section <section-id>` | Specify the target section in the board given by `--to`. If omitted, the section defaults to "Backlog". |
+| `--assignee <user>` | Change the task's assignee instead of moving it. |
 
 **Behaviour:**
 
-- The `--improve` flag accepts a bare flag without a value.
-- Without a specific `--improve-command`, the flag defaults to applying a readability improvement.
-- If a rewrite command is needed, use `--improve-command <command>` to apply the exact formatting or style change.
+- If the task is archived, the command fails with:
+  > "Archived tasks cannot move sections or change assignees"
+- Use `--to <board-id>` to move a task to a different board, optionally with `--to-section` to specify a target section in the new board.
+- Use `--assignee <user>` to change the task's assignee without moving boards.
 
-<Aside type="note">The `comment add --improve` flag previously required a value independent of the `--improve-command` option. The flag now correctly accepts a bare flag and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
+```bash
+# Move a task to another board (defaults to Backlog in the target board)
+hypertask tasks move INFRA-123 --to 15
+
+# Move a task to another board and specific section
+hypertask tasks move INFRA-123 --to 15 --to-section 4060
+
+# Move a task to a different section in the same board
+hypertask tasks move PRODUCT-456 --section "In Review"
+
+# Move a task and change its assignee
+hypertask tasks move PRODUCT-456 --assignee @valentin
+```
+
+<Aside type="note">The `comments add --improve` flag now correctly accepts a bare flag without a value and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
 
 ## Project membership errors are clear ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486))
 
@@ -221,7 +211,6 @@ hypertask project update 4060 --title "Agents & Infra" --description "<p>Infrast
 ---
 
 You can also manage board columns and saved views with:
-
 - `hypertask view create` — Create a saved view.
 - `hypertask view list` — List saved views for a project.
 - `hypertask view switch <view-id>` — Switch to a saved view.
