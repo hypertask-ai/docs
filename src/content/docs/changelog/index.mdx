@@ -11,53 +11,43 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 4, 2026">
-  * Fixed: Ticket pages no longer log server errors from the text-cleaner module since the jsdom default-stylesheet.css update went live; ticket pages load cleanly on desktop and mobile, and PostHog shows zero errors of that type since the same-day fix ([HTPR-6847](https://app.hypertask.ai/detail/project-15/6847))
-  * Fixed: Duplicate ticket-pages server errors that previously appeared via the module-loading error; now only the suppressed text-cleaner log remains, and PostHog shows zero of these errors since 19:04 UTC ([HTPR-6850](https://app.hypertask.ai/detail/project-15/6850))
-</Update>
-
-<Update label="October 3, 2026">
-  * Added: Search screen now uses a Superhuman-style aligned full-width suggestions list under the search box, with recents shown once and tips below them, and grey inline value completion for operator names and values; results fetch only after accepting a suggestion or pressing Enter. Visible only for Owner and QA behind the existing search flags ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
-  * Improved: Inbox row hover now replaces the timestamp with archive and snooze icons without shifting message previews, ticket titles, labels, or labels ([HTPR-6883](https://app.hypertask.ai/detail/project-15/6883))
-  * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864))
-  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
-  * Improved: Inbox details now load concurrently (who-did-what, unread counts, rewards) so the inbox opens faster on populated inboxes ([HTPR-6845](https://app.hypertask.ai/detail/project-15/6845))
-  * Fixed: Pull request panel on tickets now refreshes status from GitHub when a ticket opens, so merged pull requests (app repo and linked repos) show as Merged instead of staying Open ([HTPR-6837](https://app.hypertask.ai/detail/project-15/6837))
-  * Fixed: Agent detail page shows one consistent status instead of "Running" vs "Offline" mismatch, and phone header displays full agent name without truncation ([HTPR-6836](https://app.hypertask.ai/detail/project-15/6836))
-  * Added: Tickets now open instantly from cached board data without any spinner or loading animation ([HTPR-6752](https://app.hypertask.ai/detail/project-15/6752))
-  * Fixed: Resized image on a page or in a ticket description now keeps its custom size after reload ([HTPR-6887](https://app.hypertask.ai/detail/project-15/6887))
-  * Improved: Search now stays on your last search when you press Esc on results; Esc shows recent searches and tips instead of leaving you on a blank page ([HTPR-6879](https://app.hypertask.ai/detail/project-15/6879))
+  * Added: Search screen now uses a Superhuman-style aligned full-width suggestions list under the search box, with recents shown once and tips below them, and grey inline value completion for operator names and values; results fetch only after accepting a suggestion or pressing Enter. Visible only for Owner and QA behind the existing search flags ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865)) ([HTPR-6883](https://app.hypertask.ai/detail/project-15/6883)) ([HTPR-6845](https://app.hypertask.ai/detail/project-15/6845)) ([HTPR-6841](https://app.hypertask.ai/detail/project-15/6841)) ([HTPR-6861](https://app.hypertask.ai/detail/project-15/6861)) ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)) ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881)) ([HTPR-6840](https://app.hypertask.ai/detail/project-15/6840)) ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843)) ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844)) ([HTPR-6853](https://app.hypertask.ai/detail/project-15/6853)) ([HTPR-6872](https://app.hypertask.ai/detail/project-15/6872)) ([HTPR-6897](https://app.hypertask.ai/detail/project-15/6897))
+  * Fixed: Search now stays on your last search when you press Esc on results; Esc shows recent searches and tips instead of leaving you on a blank page ([HTPR-6879](https://app.hypertask.ai/detail/project-15/6879))
   * Fixed: Board chips display the board icon and name without an extra # prefix ([HTPR-6879](https://app.hypertask.ai/detail/project-15/6879))
   * Fixed: Card hover on Kanban boards no longer wobbles or pushes lower cards down; cards stay anchored while showing hover actions and quick actions remain visible in light and dark themes ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
-  * Added: Board owners can now update a board's ticket prefix in settings; IDs stay accurate by building them from the current prefix and ticket number, and old IDs continue to resolve ([HTPR-6868](https://app.hypertask.ai/detail/project-15/6868))
-  * Fixed: Email sign-in and verification links now work only once; subsequent clicks show an "expired" message and require a new link ([HTPR-6632](https://app.hypertask.ai/detail/project-15/6632))
-  * Improved: Tasks with linked GitHub pull requests now show the last-known PR status immediately, while refreshing the status in the background (avoiding up to 3 seconds of wait time) ([HTPR-6841](https://app.hypertask.ai/detail/project-15/6841))
-  * Improved: Search screen now shows a Superhuman-style aligned list with recent searches and tips below, and grey value completions as you type ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
-  * Improved: Ticket pages on mobile now use a Settings-style back button and keep only "Save" in the top toolbar, with delete moved to the Commands menu ([HTPR-6861](https://app.hypertask.ai/detail/project-15/6861))
   * Fixed: Moving a task with J or K now scrolls only its column while the board and column headers stay fixed ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
-  * Fixed: Search by person name now matches exactly; from:valentin finds only tickets created by "Valentin" ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
   * Fixed: Ticket page content on mobile now supports native two-finger pinch zoom up to 5x, making embedded screenshots readable ([HTPR-6840](https://app.hypertask.ai/detail/project-15/6840))
   * Improved: Long task pages and comment threads now load their initial snapshot once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
   * Improved: Boards now load lighter and faster by fetching long text fields and subscription history only when needed, reducing initial payload size while preserving all visible functionality ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
   * Improved: First ticket open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm (0.10 s delta vs 0.25 to 0.33 s, HTPR-6853)
   * Added: Page image gallery: click real images on normal/sub/canvas pages to view them full-size in the ticket-style gallery, with next/previous navigation, Esc/to-outside close, download, and ignore helper images and resize gestures ([HTPR-6872](https://app.hypertask.ai/detail/project-15/6872))
-  * Fixed: Core-action smoke probe now runs health checks on all core actions (board, comment, move, assign, search, inbox) and restores test data after each check ([HTPR-6897](https://app.hypertask.ai/detail/project-15/6897))
+  * Fixed: Logged-out requests can no longer read board data or make unauthorized API calls; legacy routes now require authenticated sessions ([HTPR-6801](https://app.hypertask.ai/detail/project-15/6801))
+  * Fixed: Duplicate ticket-pages server errors that previously appeared via the module-loading error; now only the suppressed text-cleaner log remains, and PostHog shows zero of these errors since 19:04 UTC ([HTPR-6850](https://app.hypertask.ai/detail/project-15/6850))
+  * Fixed: Previously blank Stripe customer names are now filled with their team name or owner email; customers without a matching team or owner remain blank ([HTPR-6864](https://app.hypertask.ai/detail/project-15/6864))
+  * Fixed: Token pages no longer throw page-load React errors; loading a ticket directly now shows 0 errors, and opening a ticket from the board stays instant. Comments can briefly follow initial paint ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854))
+  * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
+</Update>
+
+<Update label="October 3, 2026">
+  * Fixed: Agent detail page shows one consistent status instead of "Running" vs "Offline" mismatch, and phone header displays full agent name without truncation ([HTPR-6836](https://app.hypertask.ai/detail/project-15/6836))
+  * Fixed: Pull request panel on tickets now refreshes status from GitHub when a ticket opens, so merged pull requests (app repo and linked repos) show as Merged instead of staying Open ([HTPR-6837](https://app.hypertask.ai/detail/project-15/6837))
+  * Added: Tickets now open instantly from cached board data without any spinner or loading animation ([HTPR-6752](https://app.hypertask.ai/detail/project-15/6752))
+  * Fixed: Resized image on a page or in a ticket description now keeps its custom size after reload ([HTPR-6887](https://app.hypertask.ai/detail/project-15/6887))
+  * Fixed: Email sign-in and verification links now work only once; subsequent clicks show an "expired" message and require a new link ([HTPR-6632](https://app.hypertask.ai/detail/project-15/6632))
 </Update>
 
 <Update label="October 2, 2026">
+  * Fixed: CLI bug where `task move --to` failed cross-board with "Section must belong to same project"; tasks can now be moved to another board with `--to <board-id>` or `--to <board-id> --to-section <section-id>` ([HTPR-6813](https://app.hypertask.ai/detail/project-15/6813))
   * Fixed: Logged-out requests can no longer read board data or make unauthorized API calls; legacy routes now require authenticated sessions ([HTPR-6801](https://app.hypertask.ai/detail/project-15/6801))
   * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
-  * Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue ([HTPR-6623](https://app.hypertask.ai/detail/project-15/6623))
-  * Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load ([HTPR-6626](https://app.hypertask.ai/detail/project-15/6626))
-  * Fixed: The removable Quick add a task row has been removed from the My Tasks view ([HTPR-6570](https://app.hypertask.ai/detail/project-15/6570))
-  * Fixed: Boards rendered blank with no columns or tasks when opening a saved view; saved views now correctly load columns and tasks on HTPR-6603 ([HTPR-6603](https://app.hypertask.ai/detail/project-15/6603))
 </Update>
 
 <Update label="October 1, 2026">
   * Fixed: Production Watchdog and build deployment gate now blocks any deploy when existing, unhandled hydration errors are present in production ([HTPR-6609](https://app.hypertask.ai/detail/project-15/6609))
   * Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue ([HTPR-6623](https://app.hypertask.ai/detail/project-15/6623))
   * Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load ([HTPR-6626](https://app.hypertask.ai/detail/project-15/6626))
-  * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
   * Fixed: The removable Quick add a task row has been removed from the My Tasks view ([HTPR-6570](https://app.hypertask.ai/detail/project-15/6570))
+  * Fixed: Boards rendered blank with no columns or tasks when opening a saved view; saved views now correctly load columns and tasks on HTPR-6603 ([HTPR-6603](https://app.hypertask.ai/detail/project-15/6603))
   * Added: Boards can show live Figma embeds instead of orange placeholders for accounts with feature eligibility and without a failed connection, so Figma design previews appear in tickets while the integration is under review ([HTPR-6690](https://app.hypertask.ai/detail/project-15/6690))
 </Update>
 
