@@ -10,6 +10,11 @@ export const Update = ({ label, children }) => (
   </section>
 );
 
+<Update label="October 4, 2026">
+  * Fixed: Ticket pages no longer log server errors from the text-cleaner module since the jsdom default-stylesheet.css update went live; ticket pages load cleanly on desktop and mobile, and PostHog shows zero errors of that type since the same-day fix ([HTPR-6847](https://app.hypertask.ai/detail/project-15/6847))
+  * Fixed: Duplicate ticket-pages server errors that previously appeared via the module-loading error; now only the suppressed text-cleaner log remains, and PostHog shows zero of these errors since 19:04 UTC ([HTPR-6850](https://app.hypertask.ai/detail/project-15/6850))
+</Update>
+
 <Update label="October 3, 2026">
   * Added: Search screen now uses a Superhuman-style aligned full-width suggestions list under the search box, with recents shown once and tips below them, and grey inline value completion for operator names and values; results fetch only after accepting a suggestion or pressing Enter. Visible only for Owner and QA behind the existing search flags ([HTPR-6865](https://app.hypertask.ai/detail/project-15/6865))
   * Improved: Inbox row hover now replaces the timestamp with archive and snooze icons without shifting message previews, ticket titles, labels, or labels ([HTPR-6883](https://app.hypertask.ai/detail/project-15/6883))
