@@ -10,7 +10,6 @@ The **Observability** panel no longer surfaces internal stack traces. Instead, i
 ## Error endpoint
 
 When an unexpected error occurs, Hypertask logs a structured entry with minimal details:
-
 - **Code**: The internal error code (e.g., `503`).
 - **Message**: A user-friendly explanation.
 - **Context**: A JSON snippet highlighting the route, user, and request parameters.
@@ -25,7 +24,6 @@ A websocket connection to `/api/observability/stream` pushes new errors to conne
 ## Auto-filing errors
 
 Errors with codes matching known patterns are automatically filed in the issue queue. The system tries to:
-
 1. Identify the affected route or controller.
 2. Extract common error scenarios (401/403/404 false positives).
 3. Prioritize the entry by severity and recurrence.
@@ -47,11 +45,13 @@ A strict production Watchdog gate and build deployment gate now monitors product
 
 <hr/>
 
-### Common page-load errors
+## Common page-load errors
 
 - **React hydration errors**: Occur when the server-rendered output doesn't match the client output. These are usually caused by component-specific issues like mismatched versions or environment-dependent values. Fixed hydration errors are monitored and blocked at deploy time.
 
 - **Comment flicker on initial paint**: Comments may briefly skip their initial paint in some conditions. This is expected behavior and comments appear once the browser paints the initial state. If the flicker is severe or accompanied by errors, it may indicate a hydration mismatch that has been remedied ([HTPR-6854](https://app.hypertask.ai/detail/project-15/6854)).
+
+- **Ticket page server errors ([HTPR-6847](https://app.hypertask.ai/detail/project-15/6847))**: Sentry and console no longer show server errors from the text-cleaner during ticket page load. On both desktop and mobile, ticket pages now load without noise, and PostHog shows zero errors of that type since the fix went live the same day.
 
 ---
 
