@@ -12,7 +12,7 @@ export const Update = ({ label, children }) => (
 
 <Update label="October 4, 2026">
   * Added: One official Slack app ships behind its flag for Owner and QA, with validation to reject unsigned, stale, and wrongly signed requests ([HTPR-6817](https://app.hypertask.ai/detail/project-15/6817))
-  * Fixed: Search on phone now shows board tabs right under the search box, so they’re maintained above the bottom navigation and are easier to tap ([HTPR-6916](https://app.hypertask.ai/detail/project-15/6916))
+  * Fixed: Search on phone now shows board tabs right under the search box, so they're maintained above the bottom navigation and are easier to tap ([HTPR-6916](https://app.hypertask.ai/detail/project-15/6916))
   * Fixed: Search screen selected row now stays highlighted when the mouse leaves or clicking away, keeping the list and selection visible after interaction ([HTPR-6912](https://app.hypertask.ai/detail/project-15/6912))
   * Fixed: Search row highlight now uses the inbox styling—full-width background with an accent bar on the far left—same as the inbox for all search results, suggestions, mouse hover states, themes, and device sizes ([HTPR-6911](https://app.hypertask.ai/detail/project-15/6911))
   * Improved: AI Chat now sends bounded Manager alerts for activity after tracking ships on selected boards, reducing noise while keeping owners and QAs informed of AI-driven work ([HTPR-6354](https://app.hypertask.ai/detail/project-15/6354))
@@ -23,7 +23,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Card hover on Kanban boards no longer wobbles or pushes lower cards down; cards stay anchored while showing hover actions and quick actions remain visible in light and dark themes ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
   * Fixed: Moving a task with J or K now scrolls only its column while the board and column headers stay fixed ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
   * Fixed: Ticket page content on mobile now supports native two-finger pinch zoom up to 5x, making embedded screenshots readable ([HTPR-6840](https://app.hypertask.ai/detail/project-15/6840))
-  * Improved: Long task pages and comment threads now load their initial snapshot once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
+  * Improved: Long task pages and comment threads now load their initial snapshot only once instead of twice, and open ~0.6 seconds faster on repeat visits ([HTPR-6843](https://app.hypertask.ai/detail/project-15/6843))
   * Improved: Boards now load lighter and faster by fetching long text fields and subscription history only when needed, reducing initial payload size while preserving all visible functionality ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
   * Improved: First ticket open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm (0.10 s delta vs 0.25 to 0.33 s, HTPR-6853)
   * Added: Page image gallery: click real images on normal/sub/canvas pages to view them full-size in the ticket-style gallery, with next/previous navigation, Esc/to-outside close, download, and ignore helper images and resize gestures ([HTPR-6872](https://app.hypertask.ai/detail/project-15/6872))
@@ -36,6 +36,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Clicking a card on a board now reliably opens its detail view across desktop and mobile without broken interactions ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
   * Improved: My Tasks Scope button and Ctrl+K Scope command now open the same board picker list with search and standard keyboard navigation; redesigned panel matches the board picker used elsewhere in the app. The previous custom implementation has been replaced with the consistent board picker experience [HTPR-6567](https://app.hypertask.ai/detail/project-15/6567)
   * Added: AI clients connected with the restriction flag on now see 20 documented Hypertask tools instead of 76, with no regression. Flag `htpr-6804-mcp-tools` controls tool count for system and conventional connector tool guidance parity across MCP surfaces, and chain to CLI and chat accordingly. Base documentation refers to HTPR-6804 ([HTPR-6804](https://app.hypertask.ai/detail/project-15/6804))
+  * Improved: My Tasks now reuses the kanban save view, sort and Ctrl+K picker flows for Scope, Involvement, Detail and Group ([HTPR-6930](https://app.hypertask.ai/detail/project-15/6930))
 </Update>
 
 <Update label="October 3, 2026">
