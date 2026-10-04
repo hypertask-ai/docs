@@ -52,6 +52,10 @@ Save custom filters, sorting, board selection, and hidden columns to create pers
 - **Board selection**: Show tasks from one board or across multiple boards
 - **Done columns hidden by default**: Keep focused on active work
 
+<span class="label label--brand">Behavior change</span> Saved views now use the same save, reset, and Ctrl+K picker flows that you use on the Kanban board for deep controls. The Scope button (including Involvement, Detail, and Group scope) and its corresponding command now open the consistent board picker panel you see throughout the app, with search and standard keyboard navigation for "up to scope" actions. This keeps your palette familiar across inbox and board surfaces (HTPR-6930).
+
+> **Tip**: Create a My Tasks saved view to align on active priorities; at any time you can reorder the view's filters, sorting, or board selection without losing them.
+
 Saved views persist at the account level and can be reused or deleted from the view toolbar.
 
 ## Repeating tasks
@@ -112,7 +116,6 @@ Choose **Don't repeat** to stop a task repeating. The option only appears when a
 The next occurrence is created when you **move the task into a done column**, or **archive it yourself**. It carries over the title, description, priority, size, labels and assignees, with the date advanced by one period.
 
 Two cases deliberately do *not* create a new occurrence:
-
 - **Auto-archive.** A board's auto-archive sweep fires because nobody touched a task, which is abandonment rather than completion. Repeating there would regenerate neglected tasks indefinitely.
 - **Moving the task to another board**, including into that board's done column. Relocating work is not completing it.
 
