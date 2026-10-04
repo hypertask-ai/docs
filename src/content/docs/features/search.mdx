@@ -58,7 +58,7 @@ When the search bar is empty or focused, a <strong>tips panel</strong> lists eve
 
 ## Keyboard navigation in search
 
-- **Navigate suggestions**: Use ← and → (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
+- **Navigate suggestions**: Use â\x86\x90 and â\x86\x92 (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
   - In empty search, <kbd>j</kbd>/<kbd>k</kbd> moves through tips.
   - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
 - **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
@@ -73,9 +73,13 @@ Results appear while you type via debounced search. No need to press <kbd>Enter<
 
 ## Chips
 
-After applying filters, clickable chips appear in the search bar. Click a chip's × to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
+After applying filters, clickable chips appear in the search bar. Click a chip's Ã\x97 to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
 
 **Board chips** now display the board icon and name (e.g., `board:inne`), with no extra `#` prefix.
+
+{{#if (or board-tabs-flags.search-hide-when-singular boardTabs.borderless-flags.search-hide-when-all-from-one-board)}}
+**Board tabs behavior**: When you search a board and all search results come from that same board—either because you filtered to one board or because results naturally returned from a single board—the row of board tabs at the top of the results is hidden to keep your attention focused on that board. If the search returns tasks from multiple boards, the tabs remain visible so you can switch between them from search results.
+{{/if}}
 
 ## People and board pickers
 
