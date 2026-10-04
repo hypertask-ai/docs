@@ -13,6 +13,8 @@ The Slack integration closes the gap between where decisions happen and where wo
 
 **Tickets created from a thread.** Write `@Hypertask create a task for this` in any thread. The bot reads the whole conversation, writes a ticket with a plain-English summary of the ask plus the relevant context, files it on your team's default project, and replies in the thread with the link. That thread is then watched, so later discussion is summarized onto the new ticket automatically.
 
+**Official Slack app**. The in-product Slack integration is live behind its flag for Owner and QA roles, with validation to reject unsigned, stale, and wrongly signed Slack requests (401). The flag `htpr-6817-slack-app` controls availability.
+
 **Commands and chat.** `/ht` runs slash commands, and mentioning or DMing the bot works in plain language.
 
 <Aside type="note">
