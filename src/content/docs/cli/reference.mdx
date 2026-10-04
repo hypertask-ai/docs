@@ -66,9 +66,14 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
-### v0.2.2 CLI Release
+### v0.2.11 CLI Release
 
-The latest release (`v0.2.2`) is now installed on the fleet and reflects version consistency fixes between the Node and Zig CLI halves. To upgrade, simply reinstall the CLI using the npm shim:
+The latest release (`v0.2.11`) is now installed on the fleet and reflects CLI connectivity improvements:
+
+- **Deduped JSON accessors**: JSON accessor calls are now deduped across command trees, reducing redundant data fetching.
+- **Consolidated HTTP checks**: HTTP reachability checks are pooled and reused, making repeated commands more efficient.
+- **Per-request connection management**: Connection allocation per-request instead of globally ensures clearer ownership and resource tracking for each CLI command.
+- **No behavioral change**: v0.2.11 behaves exactly like 0.2.10 for all read commands (ticket get, list, search, projects, comments, time, inbox, agents, missing ticket lookups). To upgrade, reinstall the CLI using the npm shim:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
@@ -111,7 +116,7 @@ hypertask tasks list --labels cli,urgent
 
 <Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
 
-<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0‒4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
+<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0–4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
 
 ## Task move
 
@@ -157,21 +162,20 @@ hypertask tasks move PRODUCT-456 --assignee @valentin
 
 <Aside type="note">The `comments add --improve` flag now correctly accepts a bare flag without a value and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
 
-## Project membership errors are clear ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486))
+## Project management errors are informative
 
-<span class="label label--brand">Bug fix</span> Task creation now reports project membership failures clearly instead of blaming labels or showing an internal server error when the token lacks access to the target project.
+<span class="label label--brand">Bug fix</span> Task creation now reports project membership failures with clear guidance instead of showing an internal server error or generic failure when the token lacks access.
 
-Previously, if you used a non-member token to create a task (`hypertask task create --project 5156 --section Backlog --labels Infra`), the CLI would output a generic internal failure ("hypertask: the server could not complete the command") and exit with a non-zero status. This obscured the real issue: the token wasn't authorized for project membership.
-
-With this fix, the same command now returns exit code 4 with a clear message that guides you to either sign in with a valid account or restrict operations to tasks you have access to:
+Previously, using a non-member token to create a task resulted in a generic "hypertask: the server could not complete the command" exit code 4. After this fix ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486)), the same command returns:
 
 ```bash
+# Using a token without project 5156 access
 hypertask task create --project 5156 --section Backlog
 # error: you are not a project member. Sign in with a valid account or use a token that has access to project 5156.
 # exit code: 4
 ```
 
-This change makes CLI errors actionable and improves debugging when working with out-of-scope or bots.
+This makes CLI errors actionable for debugging out-of-scope work and bot configurations.
 
 ---
 
