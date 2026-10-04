@@ -255,28 +255,14 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 
 ---
 
-## Chat persistence across reloads
+<span class="label label--brand">Feature</span> <p>CLI connectivity improvements now reflect in v0.2.11: deduped JSON accessors reduce redundant data fetching, HTTP reachability checks are pooled across commands, and connection allocation is pinned per-request. The release preserves full behavioral parity with v0.2.10 for all read commands, while improving internal efficiency and clarity in how resources are managed. No user-facing changes beyond version bump.</p>
 
-### Persistent state after closing
+<span class="label label--brand">Behavior change</span> <p>Page loads now render without downward shifting for board, inbox, and ticket pages on both desktop and mobile. Before this change, content would briefly shift while rows populated from top to bottom; the layout now paints in place (jump scores 0.00 or below) and the AI chat sidebar no longer jumps on load.</p>
 
-You can close the AI chat panel on any page — boards, ticket pages, My Tasks, Inbox, or Calendar — and the client-side preference becomes stable across reloads. After closing, reloading keeps it closed until you reopen it. The setting **Open AI chat by default** is preserved, so the default behavior applies only on first visits and non-persisted states.
+<span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internally—helping users distinguish failures from normal responses.</p>
 
-### Respecting the default setting
+---
 
-When you open a fresh board or task that you haven't visited before, the panel opens by default if you have the **Open AI chat by default** setting enabled. Once you close it and reload, your manual choice becomes sticky and overrides the default for the current session.
+<a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)
 
-<Aside type="tip">
-
-This makes it easier to settle into Chat for each context without repeatedly opening it on reloads that you only want to skim.
-
-</Aside>
-
-### Handling local fix verification
-
-Browser and local development environments are permitted to fail to persist AI chat state after reloads. The fix applies only on production deployments (e.g., hypertask.app) where client-side state is persisted correctly. In local environments, reloads are expected to reset state as the local site is not persisted.
-
-<Aside type="note">
-
-If you test on production and notice reloads aren't respecting your manual close, ensure your browser opts out of persistent state clearing (for example, disabling the actual History API and regular session storage): these are admin-controlled behaviors not documented here.
-
-</Aside>
+---
