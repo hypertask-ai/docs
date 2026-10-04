@@ -189,6 +189,16 @@ If a proposal doesn't match intent, simply decline it. The thread moves forward 
 
 </Aside>
 
+### Bounded Manager alerts after tracking ships
+
+Owners and QAs on selected boards can now receive bounded alerts for AI Chat activity after tracking ships. These alerts surface key interactions—such as new proposals, agent actions, or terminal states—only after a ticket has shipped, reducing noise while keeping managers informed of AI-driven work. Alerts are behind a per-user flag (`htpr-6354-ai-chat-alerts`) and scoped to boards where tracking is enabled, ensuring relevance and alignment with the board’s post-ship workflow.
+
+<Aside type="tip">
+
+These alerts are currently available behind the Owner/QA flag and are not a general release. Contact your administrator to enable the flag on your board.
+
+</Aside>
+
 ## Keyboard shortcuts in Agent Chat
 
 Agent Chat provides several keyboard shortcuts for navigation, interaction, and composition. These shortcuts streamline your workflow when working with AI agents in panels and side-by-side views.
@@ -255,7 +265,7 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 
 ---
 
-<span class="label label--brand">Feature</span> <p>CLI connectivity improvements now reflect in v0.2.11: deduped JSON accessors reduce redundant data fetching, HTTP reachability checks are pooled across commands, and connection allocation is pinned per-request. The release preserves full behavioral parity with v0.2.10 for all read commands, while improving internal efficiency and clarity in how resources are managed. No user-facing changes beyond version bump.</p>
+<span class="label label--brand">Feature</span> <p>CLI connectivity improvements now reflect in v0.2.11: deduped JSON accessors reduce redundant data fetching, HTTP reachability checks are pooled across commands, and connection allocation is pinned per-request. The release preserves full behavioral parity with v0.2.10 for all read commands, while improving internal efficiency and clarity in how resources are managed.</p>
 
 <span class="label label--brand">Behavior change</span> <p>Page loads now render without downward shifting for board, inbox, and ticket pages on both desktop and mobile. Before this change, content would briefly shift while rows populated from top to bottom; the layout now paints in place (jump scores 0.00 or below) and the AI chat sidebar no longer jumps on load.</p>
 
@@ -264,5 +274,3 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 ---
 
 <a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)
-
----
