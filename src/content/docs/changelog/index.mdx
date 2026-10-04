@@ -33,6 +33,7 @@ export const Update = ({ label, children }) => (
   * Fixed: Ticket parts no longer fill in and shift for half a second after an instant open; visual elements appear as part of the cached board data, keeping the title, description, and controls in place ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899))
   * Fixed: Clicking a card on a board now reliably opens its detail view across desktop and mobile without broken interactions ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
   * Improved: My Tasks Scope button and Ctrl+K Scope command now open the same board picker list with search and standard keyboard navigation; redesigned panel matches the board picker used elsewhere in the app. The previous custom implementation has been replaced with the consistent board picker experience [HTPR-6567](https://app.hypertask.ai/detail/project-15/6567)
+  * Added: AI clients connected with the restriction flag on now see 20 documented Hypertask tools instead of 76, with no regression. Flag `htpr-6804-mcp-tools` controls tool count for system and conventional connector tool guidance parity across MCP surfaces, and chain to CLI and chat accordingly. Base documentation refers to HTPR-6804 ([HTPR-6804](https://app.hypertask.ai/detail/project-15/6804))
 </Update>
 
 <Update label="October 3, 2026">
