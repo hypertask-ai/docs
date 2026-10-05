@@ -11,6 +11,8 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 5, 2026">
+  * Fixed: AI question suggestions now require fixed response shape to prevent display issues from stray quote marks or syntax errors, keeping suggestions reliable ([HTPR-6953](https://app.hypertask.ai/detail/project-15/6953))
+  * Fixed: AI Chat now gracefully handles columns that load before their tasks, preventing crashes and keeping the welcome screen available ([HTPR-6947](https://app.hypertask.ai/detail/project-15/6947))
   * Improved: New Task modal now shows its writing steps and keeps its window size during save, so you see progress and modify layout as you type ([HTPR-6934](https://app.hypertask.ai/detail/project-15/6934))
   * Added: New Task window is now live for everyone, can be opened with Ctrl+J from any view, and is renamed Compose → New Task ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937))
   * Added: My Tasks toolbar uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group; active controls turn blue like Kanban and Group shows current choice ([HTPR-6938](https://app.hypertask.ai/detail/project-15/6938))
