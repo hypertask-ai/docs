@@ -133,7 +133,7 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 
 ## My Tasks toolbar
 
-<span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses the same controls as the Kanban board: **Save view** and **Reset**. The previous separate Save button was removed while saving and resetting continue to work as before.
+<span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group. Active controls turn blue like Kanban, and Group shows its current choice ([HTPR-6938](https://app.hypertask.ai/detail/project-15/6938)). Overdue tooltips on red counts now appear over each overdue item. The toolbar also uses the same Save view and Reset controls as Kanban board views.
 
 From the **Ctrl+K** command palette, you can still use **Save view as** to create a saved view, and **Reset view** to revert My Tasks to its default set of built-in filters. Keyboard shortcuts like **Ctrl+S** and **Ctrl+R** no longer open popovers on the board; they open the Save view and Reset dialogs respectively.
 
@@ -152,6 +152,10 @@ From a board or inbox, click **New task** (or use the keyboard shortcut **Ctrl+N
 - **Estimated time**: Optionally specify hours or a low-high range if needed.
 
 Use **Write with AI** (**Ctrl+K** / **Cmd+K**, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
+
+### New Task creator
+
+<span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / **Cmd+J** and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
 
 ## OAuth connection flow
 
@@ -178,7 +182,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 - **Ctrl+K** / **Cmd+K**: Open the command palette with AI-assisted task editing and Quick Actions.
 - **Ctrl+N** / **Cmd+N**: Create a new task from anywhere on a board.
 - **Ctrl+O** / **Cmd+O**: Open the link or auto-save picker when in a task detail view or comment.
-- **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation.
+- **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
 
 ## Task Reporter
 
