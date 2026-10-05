@@ -43,7 +43,7 @@ The browser title shows the board name and saved-view name when you navigate to 
 - Short, clean titles are compressed to predictable 3-4 character labels (e.g., **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
-Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefixâ\x80\x94paired with a predictable numeric suffixâ\x80\x94makes task references understandable and consistent.
+Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
 
 ## App shell surface shortcuts
 
@@ -57,7 +57,7 @@ When the **left icon rail (beta)** is enabled on desktop, use a single number ke
 | <kbd>4</kbd> | Calendar |
 | <kbd>5</kbd> | Toggle AI chat |
 
-These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings â\x86\x92 Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
+These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings → Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
 
 ## Fast task entry
 
@@ -118,12 +118,12 @@ See HTPR-6550 ([link](https://app.hypertask.ai/detail/project-15/6550)).
 
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
-- **My Tasks** â\x80\x94 tasks assigned to you. Each member sees their own slice of the board.
-- **Overdue** â\x80\x94 tasks whose due date has passed and are not in a done column.
-- **Blocked** â\x80\x94 tasks blocked by another task or waiting on a person.
-- **Agents** â\x80\x94 tasks assigned to an AI agent.
+- **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
+- **Overdue** — tasks whose due date has passed and are not in a done column.
+- **Blocked** — tasks blocked by another task or waiting on a person.
+- **Agents** — tasks assigned to an AI agent.
 
-Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice â\x80\x94 it never changes the board's saved default view.
+Built-in splits need no setup and cannot be edited or deleted; they don't appear in Manage Views. They work in both kanban and table layout, and the usual view-cycling shortcut moves through them like any other view tab. Selecting one is a per-browser choice — it never changes the board's saved default view.
 
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
@@ -258,7 +258,7 @@ This Linear-style approach eliminates page flicker and server roundtrips. No rel
 
 ### Board stability on load
 
-<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loadingâ\x80\x94a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
+<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
 
 - Columns appear once and remain visible across desktop and mobile, light and dark.
 - 8 successful board loads on test accounts, 0 instances of column flickering (down from 4 blinks in 5 loads before the fix).
@@ -360,7 +360,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chatâ\x80\x94all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
@@ -418,7 +418,7 @@ Hypertask's components now respect the compact visual scale by default, includin
 
 ```jsx
 // flowsProps.tsx or shared-modal.jsx
-// legacySizing omitted â\x80\x94 uses compact tokens
+// legacySizing omitted — uses compact tokens
 <Modal title="Task Details" open={isModalOpen}>
   <div className="modal-content">
     <Input label="Title" />
@@ -445,7 +445,7 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the boardâ\x80\x94after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive these shortcuts.
 
@@ -455,7 +455,7 @@ This behavior matches the expectations you're used to in similar Kanban tools an
 
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
-Before this fix ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874)), the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover endedâ\x80\x94visible as a slight wobble as you slid your mouse across the board.
+Before this fix ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874)), the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
 
 After the fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
@@ -473,7 +473,7 @@ Once a task moves into a section, it ages in view over time. To avoid visual noi
 
 ## In-app feedback routing
 
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**â\x80\x94instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
 
@@ -484,7 +484,7 @@ Hypertask ensures all write paths gate the target board or task before mutations
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
 
-The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+\\\\-\\\\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
+The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+\\-\\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
 
 Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
 
@@ -504,7 +504,7 @@ Previously, the panel would show an empty list or stale data if the current boar
 
 ### How to verify
 
-1. Open any board with several columns and note their names (e.g. Doing â\x86\x92 Review â\x86\x92 Done).
+1. Open any board with several columns and note their names (e.g. Doing → Review → Done).
 2. Click the **Manage board columns** button.
 3. Confirm you see all the expected columns listed.
 4. Hover on one column to reveal the pencil icon, edit its name, and save.
@@ -540,7 +540,7 @@ Before this fix, clicking a row that had no click handler threw an error, so onl
 Before this change, opening a board would eagerly load all project scalars, team data, Google accounts, activity metadata, and the complete subscription-history list. These fields are usually not needed to paint cards or display the current plan.
 
 After this fix:
-- Board load payloads shrink (6.2 KB â\x86\x92 5.8 KB on small QA boards). Larger boards save proportionally more.
+- Board load payloads shrink (6.2 KB – 5.8 KB on small QA boards). Larger boards save proportionally more.
 - First visits open in about 1.5 seconds (was 1.6 seconds). Repeat visits are about 1.2 seconds (was 1.3 seconds).
 - All board functionality remains unchanged: cards, sidebar, filters, plan badges, and permissions work the same.
 - Long text and billing history are loaded lazily as you interact with those UI elements.
@@ -550,7 +550,7 @@ After this fix:
 - The project and team queries now use minimal, UI-specific selects instead of broad `include` clauses.
 - Subscription history is loaded only when plan or billing details are displayed.
 - Activity metadata and playbook are fetched when those views open.
-- No impact on existing API contracts or MCP toolsâ\x80\x94only the internal query strategy changed.
+- No impact on existing API contracts or MCP tools—only the internal query strategy changed.
 
 ### Ticket selection and clicking ([HTPR-6915])
 
@@ -563,11 +563,11 @@ After this change:
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
-- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows <kbd>â\x86\x90</kbd> / <kbd>â\x86\x92</kbd> still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
+- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows ← / → still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
 - Tap or click any card on Kanban to open it.
-- Use arrows <kbd>â\x86\x90</kbd> / <kbd>â\x86\x92</kbd> or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
+- Use arrows ← / → or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
 - Card-related keyboard shortcuts (add, edit, comment, move…) work on both focused and selected cards.
 
@@ -575,7 +575,7 @@ This means you can rely on the consistent board-selection UI across all surfaces
 
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
-Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover endedâ\x80\x94visible as a slight wobble as you slid your mouse across the board.
+Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
 
 After the fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
@@ -593,6 +593,6 @@ Once a task moves into a section, it ages in view over time. To avoid visual noi
 
 ## In-app feedback routing
 
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**â\x80\x94instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
