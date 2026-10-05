@@ -35,11 +35,13 @@ export const Update = ({ label, children }) => (
   * Fixed: Ticket parts no longer fill in and shift for half a second after an instant open; visual elements appear as part of the cached board data, keeping the title, description, and controls in place ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899))
   * Fixed: Clicking a card on a board now reliably opens its detail view across desktop and mobile without broken interactions ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
   * Improved: My Tasks Scope button and Ctrl+K Scope command now open the same board picker list with search and standard keyboard navigation; redesigned panel matches the board picker used elsewhere in the app. The previous custom implementation has been replaced with the consistent board picker experience [HTPR-6567](https://app.hypertask.ai/detail/project-15/6567)
-  * Added: AI clients connected with the restriction flag on now see 20 documented Hypertask tools instead of 76, with no regression. Flag `htpr-6804-mcp-tools` controls tool count for system and conventional connector tool guidance parity across MCP surfaces, and chain to CLI and chat accordingly. Base documentation refers to HTPR-6804 ([HTPR-6804](https://app.hypertask.ai/detail/project-15/6804))
+  * Added: AI clients connected with the restriction flag on now see 20 documented Hypertask tools instead of 76, with no regression. Flag htpr-6804-mcp-tools controls tool count for system and conventional connector tool guidance parity across MCP surfaces, and chain to CLI and chat accordingly. Base documentation refers to HTPR-6804 ([HTPR-6804](https://app.hypertask.ai/detail/project-15/6804))
   * Improved: My Tasks now reuses the kanban save view, sort and Ctrl+K picker flows for Scope, Involvement, Detail and Group ([HTPR-6930](https://app.hypertask.ai/detail/project-15/6930))
   * Improved: Boards load lighter and faster on mobile, with startup code removed and first open on phones reduced to 8.6 seconds; repeat opens on phones are about 4.6 seconds ([HTPR-6858](https://app.hypertask.ai/detail/project-15/6858))
   * Improved: Inbox loads faster on mobile, with startup code reduced and first open on phones now 9.7 seconds; repeat opens on phones are about 4.3 seconds ([HTPR-6859](https://app.hypertask.ai/detail/project-15/6859))
   * Fixed: In the My Tasks view, pressing Tab now moves one split at a time and stays there instead of jumping back to the previous split ([HTPR-6904](https://app.hypertask.ai/detail/project-15/6904))
+  * Fixed: If you select a person from autocomplete after typing an operator such as `from:` or `assignee:`, the operator is now absorbed into the chip. For example, typing `from valentin` and selecting the person merges both into the single chip `from: Valentin Yeo`, so you see only one filter chip instead of `from` and the person both visible ([HTPR-6935](https://app.hypertask.ai/detail/project-15/6935))
+  * Improved: On mobile pages, Escape now exits the full-screen editor just like other views. With unsaved draft text, Escape clears it; without text, a single Escape closes the page and stays on the task ([HTPR-6903](https://app.hypertask.ai/detail/project-15/6903))
 </Update>
 
 <Update label="October 3, 2026">
@@ -51,7 +53,7 @@ export const Update = ({ label, children }) => (
 </Update>
 
 <Update label="October 2, 2026">
-  * Fixed: CLI bug where `task move --to` failed cross-board with "Section must belong to same project"; tasks can now be moved to another board with `--to <board-id>` or `--to <board-id> --to-section <section-id>` ([HTPR-6813](https://app.hypertask.ai/detail/project-15/6813))
+  * Fixed: CLI bug where task move --to failed cross-board with "Section must belong to same project"; tasks can now be moved to another board with --to <board-id> or --to <board-id> --to-section <section-id> ([HTPR-6813](https://app.hypertask.ai/detail/project-15/6813))
   * Fixed: Logged-out requests can no longer read board data or make unauthorized API calls; legacy routes now require authenticated sessions ([HTPR-6801](https://app.hypertask.ai/detail/project-15/6801))
   * Fixed: Missing browser stylesheet error in production ([HTPR-6824](https://app.hypertask.ai/detail/project-15/6824))
 </Update>
@@ -87,9 +89,9 @@ export const Update = ({ label, children }) => (
   * Fixed: Light-theme comments now show a subtle outline on phones and desktop, so adjacent comments are easier to distinguish ([HTPR-6554](https://app.hypertask.ai/detail/project-15/6554))
   * Fixed: AI Chat description edits now preserve headings, paragraphs, lists, and bold text ([HTPR-6561](https://app.hypertask.ai/detail/project-15/6561))
   * Fixed: Slack settings on mobile had mismatched shadows; the Default project dropdown is now flat like other controls ([HTPR-6558](https://app.hypertask.ai/detail/project-15/6558))
-  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. `hypertask comment list --include-activity` prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
+  * Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. hypertask comment list --include-activity prints that same bot on the history ([HTPR-6516](https://app.hypertask.ai/detail/project-15/6516))
   * Improved: team-scoped management keys in Settings show only the selected team's agents and stop working when you lose access ([HTPR-6542](https://app.hypertask.ai/detail/project-15/6542))
   * Improved: board agent rooms now show ticket-run notes and a visible daily budget in the shared transcript ([HTPR-6557](https://app.hypertask.ai/detail/project-15/6557))
-  * Added: board-scoped read-only agent tokens via `hypertask task create --role read` for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
+  * Added: board-scoped read-only agent tokens via hypertask task create --role read for CI and other automation ([HTPR-6513](https://app.hypertask.ai/detail/project-15/6513))
   * Added: shipping page at /shipping showing a backdrop of each board's shipped tickets and a daily count corrected for Dependabot PRs ([HTPR-6592](https://app.hypertask.ai/detail/project-15/6592))
 </Update>
