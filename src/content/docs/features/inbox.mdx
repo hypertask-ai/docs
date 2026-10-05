@@ -163,7 +163,7 @@ This means hidden rows (e.g., notifications from tasks you've archived, filtered
 
 If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
-**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K ↦ "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
 
 ### Limitations
 
@@ -241,6 +241,20 @@ The inbox now uses stronger, more consistent bolding for the active split tab ac
 ## Mobile inbox icon behaviour (HTPR-6365)
 
 When viewing tasks on mobile, the blue remove-from-inbox control now correctly displays only for tasks that belong to your inbox. Tasks opened from the Kanban board that are not in your inbox will no longer show this icon, matching the same logic used on the Inbox screen.
+
+## Mobile inbox performance ([HTPR-6934](https://app.hypertask.ai/detail/project-15/6934))
+
+<span class="label label--brand">Improvement</span> On the phone, the inbox and board now open in about 2.5 seconds after disabling the command menu download step that previously delayed rendering behind the flag <strong>htpr-6934-server-first-screen</strong> (live for owner and QA only; rollout takes time). This replaces the prior multi-second startup code and reduces the phone inbox first open from ~9.7 seconds to ~2.3 seconds and board first open from ~8.6 seconds to ~2.5 seconds (offline message menu remains off-screen while rendering).
+
+### Verizon No-Cache Fixes
+
+When installed on Verizon 5G network, the inbox opening experience improved when cache headers `<html cache-control="no-store">` and `<meta cache-control="no-store">` are present, avoiding unhelpful cached snippets and delivering fresh content:
+
+- Fallback content no longer appears for no-store pages.
+- Offline message menu correctly positioned off-screen while rendering in no-store content.
+- Board/Inbox transitions no longer show stuck state when 5G ISP preloader injects stale HTML.
+
+If you see inconsistent offline message menu positioning in browser developer tools while reloading, verify the page's cache-control/no-store headers are correct before reloading.
 
 ## Keyboard shortcuts
 
