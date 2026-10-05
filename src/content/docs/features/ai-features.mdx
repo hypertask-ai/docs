@@ -189,15 +189,15 @@ If a proposal doesn't match intent, simply decline it. The thread moves forward 
 
 </Aside>
 
-### Bounded Manager alerts after tracking ships
+### Handling incomplete board columns
 
-Owners and QAs on selected boards can now receive bounded alerts for AI Chat activity after tracking ships. These alerts surface key interactions—such as new proposals, agent actions, or terminal states—only after a ticket has shipped, reducing noise while keeping managers informed of AI-driven work. Alerts are behind a per-user flag (`htpr-6354-ai-chat-alerts`) and scoped to boards where tracking is enabled, ensuring relevance and alignment with the board’s post-ship workflow.
+If a board column loads before its associated tasks, AI Chat gracefully treats the empty column as normal and continues without errors. This prevents crashes when data arrives out of expected order, keeping the welcome screen and assistant available while column data completes.
 
-<Aside type="tip">
+### Suggestion response parsing
 
-These alerts are currently available behind the Owner/QA flag and are not a general release. Contact your administrator to enable the flag on your board.
+AI question suggestions are now validated against a fixed response shape to ensure reliable parsing. The assistant extracts suggestions only when responses match the expected format, preventing display issues from stray quote marks or syntax errors in the model's output.
 
-</Aside>
+---
 
 ## Keyboard shortcuts in Agent Chat
 
