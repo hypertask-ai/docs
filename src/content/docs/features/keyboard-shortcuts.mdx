@@ -291,7 +291,7 @@ The Command Palette lists board and section actions, including "Hide column", "S
 </Aside>
 
 ### Board settings from Ctrl+K (HTPR-6863)
-When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view— even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
+When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view—even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
 
 <Aside type="tip">
 Try it: open any ticket, press <kbd>Ctrl+K</kbd>, type "board", pick **"Board settings"**. The board picker shows that ticket's board and preselects the right team.
@@ -389,6 +389,7 @@ On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> also works in addition to <kbd>Cmd</kbd> 
 Public/sign-in pages, including the sign-in page, still ignore this shortcut.
 
 Escape behavior in Settings:
+
 - First <kbd>Esc</kbd> closes the command menu and keeps you in Settings
 - A second <kbd>Esc</kbd> exits Settings as usual
 
@@ -397,4 +398,16 @@ This makes the command palette consistently available for board actions, views, 
 ## Mobile in-app gestures
 - On mobile, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
 - Dictation remains the primary input method on mobile; Tap *Improve with AI* to refine your comments without leaving the input flow
-- On mobile, pressing <kbd>Esc</kbd> from the full-screen Pages view now exits via the safe return path through the Command Center (HTPR-6158), ensuring a consistent exit experience across application views
+
+## Mobile page exit gesture (HTPR-6903)
+On mobile, pressing **<kbd>Esc</kbd>** in the full-screen Pages view now exits via the back action—just like other views in the app. With text typed but unsaved, <kbd>Esc</kbd> clears the unsaved draft. Without text, a single <kbd>Esc</kbd> closes the page and stays on the task.
+
+## Related topics
+<CardGrid>
+  <LinkCard title="Tasks" description="Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks." href="/features/tasks/" />
+  <LinkCard title="Search" description="Search across tasks with operators, suggestions, and a tips panel." href="/features/search/" />
+  <LinkCard title="Pages" description="Full-screen notepads attached to tasks, RAG-fed, and workable by agents and humans." href="/features/pages/" />
+  <LinkCard title="MCP Integration" description="Connect AI agents to Hypertask via the Model Context Protocol." href="/mcp/overview/" />
+  <LinkCard title="CLI Reference" description="Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal." href="/cli/reference/" />
+  <LinkCard title="AI Features" description="AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow." href="/features/ai-features/" />
+</CardGrid>
