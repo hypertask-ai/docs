@@ -6,6 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "check:changelog": "node scripts/check-changelog.mjs",
+    "test:changelog": "node scripts/test-changelog-legacy.mjs && node scripts/test-changelog-legacy-build.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

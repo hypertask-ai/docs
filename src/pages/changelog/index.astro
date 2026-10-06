@@ -1,0 +1,69 @@
+---
+import ChangelogLayout from '../../layouts/ChangelogLayout.astro';
+import { getChanges, changeUrl, formatDate } from '../../lib/changelog';
+
+const entries = await getChanges();
+const areas = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort();
+const months = Map.groupBy(entries, (entry) => entry.data.date.toISOString().slice(0, 7));
+---
+
+<ChangelogLayout title="Changelog" description="New features, improvements, and fixes in Hypertask.">
+  <p class="changelog-intro">New features, improvements, and fixes in Hypertask.</p>
+  <div class="changelog-toolbar">
+    <div class="changelog-filter" hidden>
+      <label for="area-filter">Filter by area</label>
+      <select id="area-filter">
+        <option value="">All areas</option>
+        {areas.map((area) => <option value={area}>{area}</option>)}
+      </select>
+    </div>
+    <a class="changelog-rss" href="/changelog.xml">Subscribe to RSS <span aria-hidden="true">↗</span></a>
+  </div>
+  <p class="changelog-count" role="status" aria-live="polite" aria-atomic="true">{entries.length} updates</p>
+  <div class="changelog-months">
+    {[...months].map(([month, changes]) => (
+      <section class="changelog-month" data-month={month} aria-labelledby={`month-${month}`}>
+        <h2 id={`month-${month}`}>{formatDate(changes[0].data.date, true)}</h2>
+        <div class="changelog-cards">
+          {changes.map((entry) => (
+            <article class="changelog-card" data-tags={JSON.stringify(entry.data.tags)}>
+              <time datetime={entry.data.date.toISOString().slice(0, 10)}>{formatDate(entry.data.date)}</time>
+              <h3><a href={changeUrl(entry.id)}>{entry.data.title}</a></h3>
+              <ul class="changelog-tags" aria-label="Areas">
+                {entry.data.tags.map((tag) => <li>{tag}</li>)}
+              </ul>
+              <p>{entry.data.summary}</p>
+              <a class="changelog-more" href={changeUrl(entry.id)} aria-label={`Read more: ${entry.data.title}`}>
+                Read more <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</ChangelogLayout>
+
+<script>
+  const filter = document.querySelector<HTMLSelectElement>('#area-filter');
+  const filterWrapper = document.querySelector<HTMLElement>('.changelog-filter');
+  const count = document.querySelector<HTMLElement>('.changelog-count');
+  const cards = [...document.querySelectorAll<HTMLElement>('.changelog-card')];
+  const months = [...document.querySelectorAll<HTMLElement>('.changelog-month')];
+
+  if (filter && filterWrapper && count) {
+    filterWrapper.hidden = false;
+    filter.addEventListener('change', () => {
+      let visible = 0;
+      for (const card of cards) {
+        const tags: string[] = JSON.parse(card.dataset.tags!);
+        card.hidden = !!filter.value && !tags.includes(filter.value);
+        if (!card.hidden) visible++;
+      }
+      for (const month of months) {
+        month.hidden = !month.querySelector('.changelog-card:not([hidden])');
+      }
+      count.textContent = `${visible} ${visible === 1 ? 'update' : 'updates'}${filter.value ? ` in ${filter.value}` : ''}`;
+    });
+  }
+</script>

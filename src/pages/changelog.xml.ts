@@ -1,19 +1,20 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
-import { parseChangelogEntries } from '../lib/changelog-parser';
+import { getChanges, changeUrl } from '../lib/changelog';
 
 export async function GET(context: APIContext) {
-  const entries = await parseChangelogEntries();
+  const entries = await getChanges();
 
   return rss({
     title: 'Hypertask Changelog',
-    description: 'Daily log of new features, bug fixes, and improvements shipped to Hypertask.',
-    site: context.site!.toString(),
+    description: 'New features, improvements, and fixes in Hypertask.',
+    site: context.site!,
     items: entries.map((entry) => ({
-      title: `Changelog — ${entry.date}`,
-      description: entry.html,
-      pubDate: new Date(entry.date),
-      link: `${context.site}changelog/`,
+      title: entry.data.title,
+      description: entry.data.summary,
+      pubDate: entry.data.date,
+      categories: entry.data.tags,
+      link: changeUrl(entry.id),
     })),
     customData: '<language>en-us</language>',
   });

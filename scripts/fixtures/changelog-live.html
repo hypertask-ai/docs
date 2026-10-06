@@ -1,0 +1,58 @@
+<main data-pagefind-body class="astro-bguv2lll" lang="en" dir="ltr">    <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <h1 id="_top" class="astro-j6tvhyss">Changelog</h1> </div> </div> <div class="content-panel astro-7nkwcw3z"> <div class="sl-container astro-7nkwcw3z"> <div class="sl-markdown-content"> <section><h3>October 3, 2026</h3><ul>
+<li>Improved: Search autocomplete with operator and value suggestions, colour per filter, framed input, tips panel, and arrow/j/k keyboard navigation for results suggestions (<a href="https://app.hypertask.ai/detail/project-15/6688">HTPR-6688</a>)</li>
+<li>Improved: Search bar suggestion lists now align full-width, place recents before tips, and show Ask AI first; people, labels, and board completions accept with Tab; results fetch after picking a suggestion or Enter (<a href="https://app.hypertask.ai/detail/project-15/6865">HTPR-6865</a>)</li>
+<li>Improved: Board-scoped label suggestions show open+done nonarchived counts, place zero-count labels last, deduplicate same-name labels per board, and keep board names readable for Ask AI (<a href="https://app.hypertask.ai/detail/project-15/6878">HTPR-6878</a>)</li>
+<li>Added: Board rename via CLI with same permission checks as the app (<a href="https://app.hypertask.ai/detail/project-15/6846">HTPR-6846</a>)</li>
+<li>Added: Boards can be renamed via AI chat (“rename this board to X”) and MCP tool (<a href="https://app.hypertask.ai/detail/project-15/6846">HTPR-6846</a>)</li>
+<li>Added: PATCH /api/mcp/projects/ now supports renaming boards; only board members can rename them (<a href="https://app.hypertask.ai/detail/project-15/6846">HTPR-6846</a>)</li>
+<li>Improved: App board rename now requires board membership (<a href="https://app.hypertask.ai/detail/project-15/6846">HTPR-6846</a>)</li>
+<li>Improved: CLI tasks list now accepts <code dir="auto">--filter priority={urgent|high|medium|low|none|0-4}/&#x3C;value></code> and matches priorities by number or name, case-insensitive (<a href="https://app.hypertask.ai/detail/project-15/6799">HTPR-6799</a>)</li>
+<li>Fixed: Undo after archiving a task now correctly restores the task to its original column without page reload (<a href="https://app.hypertask.ai/detail/project-15/6646">HTPR-6646</a>)</li>
+</ul></section>
+<section><h3>October 2, 2026</h3><ul>
+<li>Fixed: Logged-out requests can no longer read board data or make unauthorized API calls; legacy routes now require authenticated sessions (<a href="https://app.hypertask.ai/detail/project-15/6801">HTPR-6801</a>)</li>
+<li>Fixed: Marking a task as read no longer returns a 500 error when multiple requests arrive together or on recently deleted tasks (<a href="https://app.hypertask.ai/detail/project-15/6821">HTPR-6821</a>)</li>
+<li>Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue (<a href="https://app.hypertask.ai/detail/project-15/6623">HTPR-6623</a>)</li>
+<li>Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load (<a href="https://app.hypertask.ai/detail/project-15/6626">HTPR-6626</a>)</li>
+<li>Fixed: The removable Quick add a task row has been removed from the My Tasks view (<a href="https://app.hypertask.ai/detail/project-15/6570">HTPR-6570</a>)</li>
+<li>Fixed: Missing browser stylesheet error in production (<a href="https://app.hypertask.ai/detail/project-15/6824">HTPR-6824</a>)</li>
+<li>Fixed: Boards rendered blank with no columns or tasks when opening a saved view; saved views now correctly load columns and tasks on HTPR-6603 (<a href="https://app.hypertask.ai/detail/project-15/6603">HTPR-6603</a>)</li>
+</ul></section>
+<section><h3>October 1, 2026</h3><ul>
+<li>Added: Auto-link plain web addresses in ticket descriptions and comments (<a href="https://app.hypertask.ai/detail/project-15/6802">HTPR-6802</a>)</li>
+<li>Added: Search operators in Kanban and saved views  -  filter tasks by from:, assignee:, in:, label:, is:, dates (by due, overdue, today, this-week, later, and date ranges), and has: (<a href="https://app.hypertask.ai/detail/project-15/6369">HTPR-6369</a>)</li>
+<li>Improved: <strong>Real bugfix gate</strong> now ships without a flag for fixable bugs visible to customers, distinguishing them from features (<a href="https://app.hypertask.ai/detail/project-15/6638">HTPR-6638</a>)</li>
+<li>Fixed: Marking a task as read no longer returns a 500 error when multiple requests arrive together or on recently deleted tasks (<a href="https://app.hypertask.ai/detail/project-15/6821">HTPR-6821</a>)</li>
+<li>Fixed: Agent chat webhook deliveries re-queue forever; successful webhook chats are no longer marked undelivered, and webhook agents are excluded from the polling queue (<a href="https://app.hypertask.ai/detail/project-15/6623">HTPR-6623</a>)</li>
+<li>Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load (<a href="https://app.hypertask.ai/detail/project-15/6626">HTPR-6626</a>)</li>
+<li>Fixed: The removable Quick add a task row has been removed from the My Tasks view (<a href="https://app.hypertask.ai/detail/project-15/6570">HTPR-6570</a>)</li>
+<li>Fixed: Missing browser stylesheet error in production (<a href="https://app.hypertask.ai/detail/project-15/6824">HTPR-6824</a>)</li>
+<li>Added: Search bar chips plus @ people picker and # board picker with value autocomplete (<a href="https://app.hypertask.ai/detail/project-15/6370">HTPR-6370</a>)</li>
+<li>Fixed: Boards rendered blank with no columns or tasks when opening a saved view; saved views now correctly load columns and tasks on HTPR-6603 (<a href="https://app.hypertask.ai/detail/project-15/6603">HTPR-6603</a>)</li>
+</ul></section>
+<section><h3>September 30, 2026</h3><ul>
+<li>Fixed: QA runner now switches boards correctly on production; board switching no longer triggers page reloads, and columns remain visible while AI chat prompts load (<a href="https://app.hypertask.ai/detail/project-15/6648">HTPR-6648</a>)</li>
+</ul></section>
+<section><h3>September 21, 2026</h3><ul>
+<li>Added native reports at a board via Ctrl+K > Create native report (<a href="https://app.hypertask.ai/detail/project-15/5815">HTPR-5815</a>)</li>
+<li>Improved My Tasks toolbar to use the same Save view and Reset controls as Kanban (<a href="https://app.hypertask.ai/detail/project-15/6572">HTPR-6572</a>)</li>
+<li>Assignee tooltip now waits for an intentional hover before opening, so opening a task leaves Add Description clear and the first click works (<a href="https://app.hypertask.ai/detail/project-15/6578">HTPR-6578</a>)</li>
+<li>Fixed CLI to report project membership failures clearly instead of generic internal errors (<a href="https://app.hypertask.ai/detail/project-15/6486">HTPR-6486</a>)</li>
+<li>Added public Agent Template feedback endpoint for external corrections without authentication (<a href="https://app.hypertask.ai/detail/project-15/6502">HTPR-6502</a>)</li>
+<li>Fixed webhook retries: messages to dead webhooks now return to polling, and deleting a webhook releases any messages it never acknowledged (<a href="https://app.hypertask.ai/detail/project-15/6566">HTPR-6566</a>)</li>
+<li>Fixed: Production Watchdog and build deployment gate now blocks any deploy when existing, unhandled hydration errors are present in production (<a href="https://app.hypertask.ai/detail/project-15/6609">HTPR-6609</a>)</li>
+</ul></section>
+<section><h3>September 20, 2026</h3><ul>
+<li>Fixed: CLI comment add  - improve now correctly accepts a bare flag without a value and defaults to readability improvement (<a href="https://app.hypertask.ai/detail/project-15/6574">HTPR-6574</a>)</li>
+</ul></section>
+<section><h3>September 19, 2026</h3><ul>
+<li>Added shipping page at /shipping showing a backdrop of each board’s shipped tickets and a daily count corrected for Dependabot PRs (<a href="https://app.hypertask.ai/detail/project-15/6592">HTPR-6592</a>)</li>
+<li>Added board-scoped read-only agent tokens via <code dir="auto">hypertask task create --role read</code> for CI and other automation (<a href="https://app.hypertask.ai/detail/project-15/6513">HTPR-6513</a>)</li>
+<li>Improved: board agent rooms now show ticket-run notes and a visible daily budget in the shared transcript (<a href="https://app.hypertask.ai/detail/project-15/6557">HTPR-6557</a>)</li>
+<li>Improved: team-scoped management keys in Settings show only the selected team’s agents and stop working when you lose access (<a href="https://app.hypertask.ai/detail/project-15/6542">HTPR-6542</a>)</li>
+<li>Fixed: a bot comment, assignment, move, label change, or blocked-by edit shows the bot name, not the account owner. <code dir="auto">hypertask comment list --include-activity</code> prints that same bot on the history (<a href="https://app.hypertask.ai/detail/project-15/6516">HTPR-6516</a>)</li>
+<li>Fixed: Weekly Strix scans now retry failures via the fixed proxy and runner, and the subscription proxy no longer duplicates tool calls across runs (<a href="https://app.hypertask.ai/detail/project-15/6598">HTPR-6598</a>)</li>
+<li>Fixed: AI Chat description edits now preserve headings, paragraphs, lists, and bold text (<a href="https://app.hypertask.ai/detail/project-15/6561">HTPR-6561</a>)</li>
+<li>Fixed: Light-theme comments now show a subtle outline on phones and desktop, so adjacent comments are easier to distinguish (<a href="https://app.hypertask.ai/detail/project-15/6554">HTPR-6554</a>)</li>
+<li>Fixed: Slack settings on mobile had mismatched shadows; the Default project dropdown is now flat like other controls (<a href="https://app.hypertask.ai/detail/project-15/6558">HTPR-6558</a>)</li>
+</ul></section> </div> <footer class="sl-flex astro-3yyafb3n"> <div class="meta sl-flex astro-3yyafb3n">   </div> <div class="pagination-links print:hidden astro-u2l5gyhi" dir="ltr">   </div>  </footer> </div> </div>  </main>

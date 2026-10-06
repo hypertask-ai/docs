@@ -1,6 +1,6 @@
 # HypertaskDocs
 
-Documentation site for [Hypertask](https://hypertask.ai) — built with [Astro Starlight](https://starlight.astro.build/).
+Documentation site for [Hypertask](https://hypertask.ai) - built with [Astro Starlight](https://starlight.astro.build/).
 
 **Live:** https://docs.hypertask.ai
 
@@ -68,14 +68,14 @@ npm run build
 CLOUDFLARE_ACCOUNT_ID=6031a7dff0d4a6469414cfa8a6dedddf npx wrangler pages deploy dist --project-name hypertask-docs --branch main
 ```
 
-The daily changelog cron (`scripts/daily-changelog.sh`) handles this automatically — it runs `npm run build` + `wrangler pages deploy` after a successful git push, then purges the CF edge cache.
+The daily changelog cron (`scripts/daily-changelog.sh`) handles this automatically - it runs `npm run build` + `wrangler pages deploy` after a successful git push, then purges the CF edge cache.
 
 ## Remote MCP Server (for coworkers)
 
 A Cloudflare Worker at `hypertask-docs-mcp.valentin-603.workers.dev` provides remote MCP access to create/update docs from any Claude Code session.
 
 ### Worker location
-`workers/docs-mcp/` — deployed as `hypertask-docs-mcp` on the Hypertask Cloudflare account.
+`workers/docs-mcp/` - deployed as `hypertask-docs-mcp` on the Hypertask Cloudflare account.
 
 ### Available tools
 | Tool | Description |
@@ -104,21 +104,24 @@ A Cloudflare Worker at `hypertask-docs-mcp.valentin-603.workers.dev` provides re
 ```
 
 ### Secrets (configured via `wrangler secret put` in `workers/docs-mcp/`)
-- `GITHUB_TOKEN` — GitHub PAT with repo write access
-- `JWT_SECRET` — Must match Hypertask app's JWT_SECRET from Vercel
-- `CF_PAGES_DEPLOY_HOOK` — Cloudflare Pages deploy hook URL
+- `GITHUB_TOKEN` - GitHub PAT with repo write access
+- `JWT_SECRET` - Must match Hypertask app's JWT_SECRET from Vercel
+- `CF_PAGES_DEPLOY_HOOK` - Cloudflare Pages deploy hook URL
 
 ### Pending setup
-- Custom domain `docs-mcp.hypertask.ai` needs a Worker Route added (API token lacks zone Workers Route permission — do manually from Cloudflare dashboard)
-- `JWT_SECRET` currently set to a temporary value — needs to be updated to match Hypertask app's secret from Vercel
+- Custom domain `docs-mcp.hypertask.ai` needs a Worker Route added (API token lacks zone Workers Route permission - do manually from Cloudflare dashboard)
+- `JWT_SECRET` currently set to a temporary value - needs to be updated to match Hypertask app's secret from Vercel
 
 ## Changelog
 
-The changelog lives at `src/content/docs/changelog/index.mdx` and is updated daily.
+Create one `src/content/changelog/YYYY-MM-DD-short-title.md` (or `.mdx`) file per change.
+Use frontmatter `date: "YYYY-MM-DD"`, `title`, `tags: [Board, Search]`, and `summary` (one or two plain sentences).
+Write the fuller explanation below the frontmatter using verified facts and full ticket URLs; no index, feed, or sidebar edits are needed.
+Run `npm run check:changelog` and `npm run build`; the index, detail page, filters, and feeds are generated automatically.
 
 ### Source: Hypertask Product board ONLY
 - **Project ID 15** ("Hypertask Product") is the single source of truth
-- **ONLY include HTPR-* tickets** — ignore all other ticket prefixes (ANAL-*, BBAB-*, VETS-*, IKNO-*, INNE-*, etc.)
+- **ONLY include HTPR-* tickets** - ignore all other ticket prefixes (ANAL-*, BBAB-*, VETS-*, IKNO-*, INNE-*, etc.)
 - Query: `hypertask task list --project 15 --section Review` (or API: `projectId=15&sectionName=Review`)
 
 ### Content filtering rules
@@ -129,7 +132,9 @@ The changelog lives at `src/content/docs/changelog/index.mdx` and is updated dai
 - **Categories:** Bug Fixes, Improvements, New Features, Infrastructure (infra only if user-relevant like MCP server, not internal tooling)
 
 ### Format
-Each day gets an `## {Month} {Day}, {Year}` heading. Newest entries at the top. Each item links to the Hypertask ticket: `[HTPR-XXXX](https://app.hypertask.ai/detail/project-15/{numericId})`
+One file represents one change, not a whole day's updates. Use a short plain title, relevant area tags, and a one- or two-sentence summary; expand only verified facts in the body. Link tickets using their full visible URL, for example `[https://app.hypertask.ai/detail/project-15/6977](https://app.hypertask.ai/detail/project-15/6977)`. The index groups entries by month, newest first. RSS is at `/changelog.xml`, and JSON Feed is at `/changelog.json`.
+
+`inventory.json` records the original-source-to-entry migration. `scripts/check-changelog.mjs` independently reads the baseline Git sources and the saved live-page fixture to verify text and ticket preservation. It checks the migrated entries while allowing new entries without inventory changes.
 
 ### Telegram notification
 After deploying changelog updates, send a Telegram notification that includes:

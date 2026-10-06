@@ -79,9 +79,7 @@ After applying filters, clickable chips appear in the search bar. Click a chip's
 
 When you type a filter operator such as `from:` or `assignee:` and select a person from the dropdown, the operator character is now absorbed into the chip itself. For example, selecting a person after typing `from valentin` results in a `from: Valentin Yeo` chip instead of leaving `from` and the person both visible.
 
-{{#if (or board-tabs-flags.search-hide-when-singular boardTabs.borderless-flags.search-hide-when-all-from-one-board)}}
-**Board tabs behavior**: When you search a board and all search results come from that same board—either because you filtered to one board or because results naturally returned from a single board—the row of board tabs at the top of the results is hidden to keep your attention focused on that board. If the search returns tasks from multiple boards, the tabs remain visible so you can switch between them from search results.
-{{/if}}
+**Board tabs behavior**: When the board-tab flags are enabled and all search results come from the same board, either because you filtered to one board or because results naturally returned from a single board, the row of board tabs is hidden to keep your attention focused on that board. If the search returns tasks from multiple boards, the tabs remain visible so you can switch between them from search results.
 
 ## People and board pickers
 
