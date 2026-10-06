@@ -118,7 +118,6 @@ Renames an existing board for a project. Use this to rename a board, since renam
 | `title` | string | Yes | New board title (without HTML; will be trimmed) |
 
 **Behavior:**
-
 - Board members with write access can rename the board; non-members receive "Not allowed to rename this board".
 - Removing the project_id or passing an unknown board ID returns "not found" with no mutation.
 - Empty or whitespace-only titles are rejected locally with `Error: Title must not be empty`.
@@ -177,9 +176,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 
 ### Add reaction to a comment
 
-Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>🎯</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
-
----
+Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>🆗</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
 
 ### `hypertask_assign_user`
 
@@ -402,6 +399,27 @@ Alias for `hypertask_run`; use the same parameters and returns the same activity
 | `after` | string | No | Cursor for pagination. |
 
 **Response:** `{ runId, createdAt, activities, nextCursor }`.
+
+---
+
+## Tool annotations and update pipeline
+
+Each tool exposed by the MCP server now includes an annotation indicating whether it is read-only or allows modification (can modify and delete). This annotation surfaces in the Server's `tools/list` response and can be used by agents and client libraries to safely select operations based on the type of intent.
+
+**Read-only tools** — functions marked read-only cannot change or delete data. Examples include search, retrieval, and query operations. Callers must rely on separate write tools for mutation.
+
+**Mutable tools** — functions marked mutable can change data, and some can also delete data. This includes create, update, delete, and move operations on tasks, projects, sections, comments, and notifications.
+
+### Simplified task update pipeline
+
+The tool update pipeline has been simplified to reduce duplication and improve reliability:
+
+- The new update pipeline is now exclusively exposed at `/api/v1/tasks` (for create/update) and `/api/v1/tasks/:taskId` (for put/patch/updates), under the `flag:api_router_migration` feature flag.
+- The test catalog now uses the schema from the typed client, sharing contracts with the server.
+- Tool annotations have been audited, and any missing labels or incorrect categories have been corrected.
+- The comment tool now correctly reports that it can edit or delete existing comments (not just add).
+
+During this work, the legacy MCP server handling older clients has been deleted as part of expected refactor scope, cleaning up outdated code paths and allowing clients to rely directly on the new structure.
 
 ---
 
