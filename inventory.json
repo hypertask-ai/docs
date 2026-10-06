@@ -1,12 +1,14 @@
 {
   "version": 1,
   "baseline": "c75e9329db124c86abf88c9adac075973130ed25",
+  "upstream": "c75e9329db124c86abf88c9adac075973130ed25",
   "liveUrl": "https://docs.hypertask.ai/changelog/",
   "liveSnapshot": "scripts/fixtures/changelog-live.html",
   "notes": [
     "Entries are unique by original date and normalized announcement text. Repeated announcements on different dates remain separate.",
     "Only markup, escaped newlines/quotes, whitespace, and long-dash punctuation are normalized. Original text, dates (including the recorded August 2016 date), and ticket references are retained.",
-    "Deferred items retain their deferred status. An inventory update is not needed when contributing a new entry."
+    "Deferred items retain their deferred status. An inventory update is not needed when contributing a new entry.",
+    "Upstream is the fetched main revision verified during the legacy-intake follow-up. It matches the baseline, so there are no additional occurrences to migrate. Retired sources are accepted at build time and deduplicated against per-entry files."
   ],
   "sources": [
     {

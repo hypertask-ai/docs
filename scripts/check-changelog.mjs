@@ -48,13 +48,12 @@ function parseSource(source, raw, live = false) {
       [...match[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map((item) => item[1]),
     ]);
   } else {
-    blocks = [...raw.matchAll(/<Update\s+label=["']([^"']+)["'][^>]*>([\s\S]*?)<\/Update>/g)].map((match) => [match[1], match[2]]);
-    if (!blocks.length) {
-      const headings = [...raw.matchAll(/^## (\w+ \d+, \d{4})\s*$/gm)];
-      blocks = headings.map((match, i) => [match[1], raw.slice(match.index + match[0].length, headings[i + 1]?.index ?? raw.length)]);
-    }
-    blocks = blocks.map(([label, body]) => [label, body.replace(/\\+n/g, '\n').split('\n')
-      .map((line) => line.trim()).filter((line) => /^[*-] /.test(line) || /^<(p|li)>/.test(line))
+    const normalized = raw.replace(/<Update\s+label=["']([^"']+)["'][^>]*>/g, '\n## $1\n')
+      .replace(/<\/Update>/g, '\n').replace(/\\+n/g, '\n');
+    const headings = [...normalized.matchAll(/^## (\w+ \d+, \d{4})\s*$/gm)];
+    blocks = headings.map((match, i) => [match[1], normalized.slice(match.index + match[0].length, headings[i + 1]?.index ?? normalized.length)]);
+    blocks = blocks.map(([label, body]) => [label, body.split('\n')
+      .map((line) => line.trim()).filter((line) => /^[*-] /.test(line) || /^<(p|li)>/.test(line) || /^(Added|Fixed|Improved|Changed|Removed|New):/i.test(line))
       .filter((line) => !line.includes('following tickets this run'))
       .map((line) => line.replace(/^[*-] /, ''))]);
   }
@@ -121,11 +120,26 @@ for (const entry of inventory.entries) {
   }
 }
 
+// Verify the fetched upstream independently so a rebase cannot hide new announcements.
+assert(inventory.upstream, 'Missing verified upstream revision');
+execFileSync('git', ['merge-base', '--is-ancestor', inventory.upstream, 'HEAD'], { cwd: root });
+const upstreamFiles = execFileSync('git', ['ls-tree', '-r', '--name-only', inventory.upstream], { cwd: root, encoding: 'utf8' }).trim().split('\n');
+let upstreamCount = 0;
+for (const file of upstreamFiles.filter((file) => /(?:\.mdx?$|changelog\/index$)/.test(file))) {
+  const raw = execFileSync('git', ['show', `${inventory.upstream}:${file}`], { cwd: root, encoding: 'utf8' });
+  for (const original of parseSource(file, raw)) {
+    upstreamCount++;
+    const migrated = inventory.entries.find((entry) => entry.date === original.date && entry.old.some((old) => old.text === original.text));
+    assert(migrated && plain(read(migrated.new)).includes(original.text), `Unmigrated upstream entry: ${file}: ${original.text}`);
+  }
+}
+assert.equal(parseSource('hybrid fixture', '<Update label="January 1, 2099">\n* Added: First\n</Update>\n## January 2, 2099\nImproved: Second').length, 2);
+
 // Positive controls ensure missing source entries, text, and ticket links are detectable.
 const control = record('fixture', '2026-10-01', 1, 'Fixed: Keep data ([HTPR-123](https://app.hypertask.ai/detail/project-15/123))');
 assert.throws(() => assert(plain('different announcement').includes(control.text)));
 assert.throws(() => assert('HTPR-123'.includes(`[${control.urls[0]}](${control.urls[0]})`)));
 assert.throws(() => assert.deepEqual([], [canonical(control)]));
 
-console.log(`Old occurrences: ${originals.length}; distinct dated entries: ${unique.size}; migrated files: ${inventory.entries.length}; collection files: ${files.length}; live entries: ${originals.filter((entry) => entry.source === inventory.liveUrl).length}`);
+console.log(`Old occurrences: ${originals.length}; distinct dated entries: ${unique.size}; migrated files: ${inventory.entries.length}; collection files: ${files.length}; live entries: ${originals.filter((entry) => entry.source === inventory.liveUrl).length}; upstream occurrences: ${upstreamCount}`);
 console.log('CHANGELOG INVENTORY VERIFIED');
