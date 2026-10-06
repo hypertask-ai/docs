@@ -1,6 +1,13 @@
 # Hypertask Docs - README
 
-This is a placeholder.
+Astro 6 and Starlight documentation for https://docs.hypertask.ai.
+
+## How to contribute a changelog entry
+
+Create one `src/content/changelog/YYYY-MM-DD-short-title.md` (or `.mdx`) file per change.
+Set frontmatter `date: "YYYY-MM-DD"`, `title`, `tags: [Board, Search]`, and `summary` (one or two plain sentences).
+Add a fuller, factual explanation and full ticket URL links below; the monthly index, detail page, filter, and RSS generate automatically.
+Run `npm run check:changelog` and `npm run build`; no index, feed, sidebar, or inventory edit is needed.
 
 ---
 
@@ -32,9 +39,9 @@ All merged & shipped entries were validated before documenting. Only HTPR non-te
 **ADD-ONS:** Markdown + MDX only; no new sidecar (board-settings.mdx already covers staleness detection behavior but isn’t the primary spec for the Table Stale column itself).
 
 **COMMENTS:**
-<p>📚 Documented on <a href="https://docs.hypertask.ai/features/table-view/">Table View</a>. Stakeholders — please review and reply with corrections or missing context.</p>
+<p>📚 Documented on <a href="https://docs.hypertask.ai/features/table-view/">Table View</a>. Stakeholders - please review and reply with corrections or missing context.</p>
 
-### HTPR-4601 — HTPR-4602
+### HTPR-4601 - HTPR-4602
 **Title:** Mobile AI chat: tapping a ticket link should close the chat and show the ticket
 
 **CHANGE TYPE:** Feature (Category A; integrated Mobile Chat Behavior with HTPR-4601)
@@ -71,7 +78,7 @@ All three were confirmed archived or merged and eligible for documentation.
 
 ## Deferred (Not yet worth documenting)
 
-- N/A — no new wide-impact items pending shipped evidence or in code/design phase.
+- N/A - no new wide-impact items pending shipped evidence or in code/design phase.
 
 ---
 

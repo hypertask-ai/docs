@@ -4,6 +4,7 @@ import starlight from '@astrojs/starlight';
 // https://docs.astro.dev/en/reference/configuration/#configuration-reference
 export default defineConfig({
   site: 'https://docs.hypertask.ai',
+  markdown: { smartypants: false },
   integrations: [
     starlight({
       title: 'Hypertask Docs',
@@ -30,6 +31,7 @@ export default defineConfig({
         },
       ],
       sidebar: [
+        { label: 'Changelog', link: '/changelog/' },
         {
           label: 'Features',
           items: [

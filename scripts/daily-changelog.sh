@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ============================================================================
-# DEPRECATED 2026-05-14 — DO NOT RUN.
+# DEPRECATED 2026-05-14 - DO NOT RUN.
 # Superseded by the `hypertask-docs-agent` Cloudflare Worker in the agent-fleet
 # repo (~/projects/agent-fleet/workers/docs-agent). The VPS cron that invoked
 # this script was disabled in the crontab on 2026-05-14; the worker now does
@@ -21,7 +21,7 @@
 
 set -euo pipefail
 
-echo "DEPRECATED: this script is disabled — see hypertask-docs-agent CF Worker. Exiting." >&2
+echo "DEPRECATED: this script is disabled - see hypertask-docs-agent CF Worker. Exiting." >&2
 exit 0
 
 # ---------------------------------------------------------------------------
@@ -88,7 +88,7 @@ command -v jq        >/dev/null || fail "jq not in PATH"
 
 cd "$REPO"
 
-# Bail if the working tree is dirty — we don't want to overwrite manual edits
+# Bail if the working tree is dirty - we don't want to overwrite manual edits
 if [[ -n "$(git status --porcelain)" ]]; then
   fail "working tree is dirty, not running automated changelog. Clean $REPO then retry."
 fi
@@ -119,9 +119,9 @@ SHA_BEFORE="$(git rev-parse HEAD)"
 PROMPT=$(cat <<EOF
 You are running in a cron job inside the HypertaskDocs repo. Today is ${DATE_STAMP}.
 
-Your job: keep the documentation pages COMPLETE and CURRENT based on tickets in the "Review" section of Hypertask project 15. The pages are the product spec — they must always reflect what Hypertask can do today. The changelog is secondary, used only for noteworthy launches and user-visible fixes.
+Your job: keep the documentation pages COMPLETE and CURRENT based on tickets in the "Review" section of Hypertask project 15. The pages are the product spec - they must always reflect what Hypertask can do today. The changelog is secondary, used only for noteworthy launches and user-visible fixes.
 
-MENTAL MODEL — pages first, changelog second:
+MENTAL MODEL - pages first, changelog second:
 - Pages = canonical, complete reference (CLI, MCP tools, features). If we ship something, the relevant page MUST describe it.
 - Changelog = highlights reel. Only entries that a user would care about: new features worth announcing, behavior changes, user-visible bug fixes. Internal refactors, perf tweaks, and tiny bug fixes do NOT belong in the changelog (but may still update a page if they change documented behavior).
 
@@ -148,9 +148,9 @@ RULES:
 1. Read CLAUDE.md in this repo for format, categories, filtering, and style. Follow it exactly.
 2. Ticket list JSON: ${TICKETS_FILE}
 3. Only HTPR-* tickets.
-4. Check src/content/docs/changelog/index.mdx — do not duplicate existing entries.
-5. Changelog entries go under today's date heading ("Month Day, Year"), newest at the top.
-6. When updating a page, integrate the change into the relevant section — don't append a "recent changes" block. The page should read as if the feature was always there. Match existing voice and structure.
+4. Check src/content/changelog/ to avoid duplicate announcements. Add one YYYY-MM-DD-short-title.md file per change with date, title, tags, and summary frontmatter plus a fuller explanation and full ticket URL links. The index and feeds are generated automatically. Run npm run check:changelog before building.
+5. Use today's YYYY-MM-DD date in each new changelog file's frontmatter. Do not edit a date heading or any retired index file.
+6. When updating a page, integrate the change into the relevant section - don't append a "recent changes" block. The page should read as if the feature was always there. Match existing voice and structure.
 7. For every category-A ticket, you MUST touch at least one page. If you can't decide which page, default to the closest match and note it in the commit message.
 8. After changes: \`git add -A\`, \`git commit -m "Docs sync: N pages, M changelog entries (YYYY-MM-DD)"\`, \`git push origin main\`.
 9. If nothing worth adding (all tickets are category C/D), do NOT commit. Skip to the RESULT line.
@@ -159,17 +159,17 @@ AFTER the push succeeds, for EACH HTPR ticket you touched (page update OR change
 
 Examples:
 - Page-only (category A, not changelog-worthy):
-  hypertask comment add HTPR-XXXX --text '<p>📚 Documented on <a href="https://docs.hypertask.ai/cli/reference/">CLI Reference</a>. Stakeholders — please review and reply with corrections or missing context.</p>'
+  hypertask comment add HTPR-XXXX --text '<p>📚 Documented on <a href="https://docs.hypertask.ai/cli/reference/">CLI Reference</a>. Stakeholders - please review and reply with corrections or missing context.</p>'
 - Page + changelog:
   hypertask comment add HTPR-XXXX --text '<p>📚 Documented on <a href="https://docs.hypertask.ai/cli/reference/">CLI Reference</a> and announced in the <a href="https://docs.hypertask.ai/changelog/">changelog</a>. Please review and reply with corrections.</p>'
 - Changelog-only (category B, no page change needed):
   hypertask comment add HTPR-XXXX --text '<p>📚 Logged in the <a href="https://docs.hypertask.ai/changelog/">public changelog</a>. Please review and reply with corrections.</p>'
 
-Hypertask comments MUST be HTML (not Markdown). Do not embed images — use plain anchor tags only.
+Hypertask comments MUST be HTML (not Markdown). Do not embed images - use plain anchor tags only.
 
 If a comment post fails for one ticket, log the failure and continue with the others. Do not abort the whole run.
 
-OUTPUT — at the very end, print one machine-readable line:
+OUTPUT - at the very end, print one machine-readable line:
 RESULT: changed=<0|1> entries=<n> pages_updated=<comma-separated paths or "none"> tickets=<comma-separated HTPR-IDs or "none"> comments=<n_posted> summary=<short human line>
 
 Do not print anything else on that RESULT line. Do not omit it.
@@ -237,7 +237,7 @@ if [[ "$CHANGED" == "1" && "$SHA_BEFORE" != "$SHA_AFTER" ]]; then
 fi
 
 # ---------------------------------------------------------------------------
-# Telegram notify — only when something actually landed
+# Telegram notify - only when something actually landed
 # ---------------------------------------------------------------------------
 if [[ "$CHANGED" == "1" && "$SHA_BEFORE" != "$SHA_AFTER" ]]; then
   MSG="📚 <b>HypertaskDocs updated</b>%0A"

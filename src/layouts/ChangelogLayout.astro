@@ -1,0 +1,27 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import '../styles/changelog.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+---
+
+<StarlightPage
+  hasSidebar={false}
+  frontmatter={{
+    title,
+    description,
+    tableOfContents: false,
+    prev: false,
+    next: false,
+    head: [{ tag: 'link', attrs: {
+      rel: 'alternate', type: 'application/rss+xml',
+      title: 'Hypertask Changelog', href: '/changelog.xml',
+    } }],
+  }}
+>
+  <div class="changelog"><slot /></div>
+</StarlightPage>

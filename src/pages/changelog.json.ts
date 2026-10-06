@@ -1,22 +1,23 @@
 import type { APIContext } from 'astro';
-import { parseChangelogEntries } from '../lib/changelog-parser';
+import { getChanges, changeUrl } from '../lib/changelog';
 
 export async function GET(context: APIContext) {
-  const entries = await parseChangelogEntries();
-
+  const entries = await getChanges();
   const feed = {
     version: 'https://jsonfeed.org/version/1.1',
     title: 'Hypertask Changelog',
-    description: 'Daily log of new features, bug fixes, and improvements shipped to Hypertask.',
+    description: 'New features, improvements, and fixes in Hypertask.',
     home_page_url: `${context.site}changelog/`,
     feed_url: `${context.site}changelog.json`,
     language: 'en',
     items: entries.map((entry) => ({
-      id: `${context.site}changelog/#${entry.date}`,
-      title: `Changelog — ${entry.date}`,
-      content_html: entry.html,
-      date_published: new Date(entry.date).toISOString(),
-      url: `${context.site}changelog/`,
+      id: new URL(changeUrl(entry.id), context.site).href,
+      title: entry.data.title,
+      content_text: entry.body,
+      summary: entry.data.summary,
+      tags: entry.data.tags,
+      date_published: entry.data.date.toISOString(),
+      url: new URL(changeUrl(entry.id), context.site).href,
     })),
   };
 
