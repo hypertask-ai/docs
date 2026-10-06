@@ -11,14 +11,16 @@ export const Update = ({ label, children }) => (
 );
 
 <Update label="October 6, 2026">
-  * Fixed: Opening a task from the board now loads it once, and one Back returns to the board, on desktop and phone ([HTPR-6944](https://app.hypertask.ai/detail/project-15/6944)) ([HTPR-6945](https://app.hypertask.ai/detail/project-15/6945)) ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955))
-  * Fixed: AI question suggestions now require fixed response shape to prevent display issues from stray quote marks or syntax errors, keeping suggestions reliable ([HTPR-6158](https://app.hypertask.ai/detail/project-15/6158)) ([HTPR-6159](https://app.hypertask.ai/detail/project-15/6159)) ([HTPR-6950](https://app.hypertask.ai/detail/project-15/6950))
+  * Fixed: Opening a task from the board now loads it once, and one Back returns to the board, on desktop and phone ([HTPR-6944](https://app.hypertask.ai/detail/project-15/6944)) ([HTPR-6945](https://app.hypertask.ai/detail/project-15/6945))
+  * Fixed: AI question suggestions now require fixed response shape to prevent display issues from stray quote marks or syntax errors, keeping suggestions reliable ([HTPR-6158](https://app.hypertask.ai/detail/project-15/6158)) ([HTPR-6159](https://app.hypertask.ai/detail/project-15/6159))
   * Fixed: AI Chat now gracefully handles columns that load before their tasks, preventing crashes and keeping the welcome screen available ([HTPR-6159](https://app.hypertask.ai/detail/project-15/6159))
   * Fixed: Task renaming now saves on Enter without reverting to the old title, keeping changes persistent across reloads on desktop and mobile ([HTPR-6160](https://app.hypertask.ai/detail/project-15/6160)) ([HTPR-6161](https://app.hypertask.ai/detail/project-15/6161))
   * Fixed: Search shows results after pressing Enter even before boards have loaded, so you can quickly find tasks regardless of initial load timing ([HTPR-6161](https://app.hypertask.ai/detail/project-15/6161))
   * Improved: New Task modal now shows its writing steps and keeps its window size during save, so you see progress and modify layout as you type ([HTPR-6162](https://app.hypertask.ai/detail/project-15/6162))
   * Added: New Task window is now live for everyone, can be opened with Ctrl+J from any view, and is renamed Compose â\x86\x92 New Task ([HTPR-6163](https://app.hypertask.ai/detail/project-15/6163))
   * Added: My Tasks toolbar uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group; active controls turn blue like Kanban and Group shows current choice ([HTPR-6164](https://app.hypertask.ai/detail/project-15/6164))
+  * Fixed: The comment box on ticket pages is now positioned below the last comment instead of appearing in the middle, ensuring comments appear in the expected location on desktop and mobile ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899)) ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955))
+  * Fixed: Choosing a Remind option from a notification now clears the notification and leaves you in the Inbox view instead of immediately opening the associated task ([HTPR-6946](https://app.hypertask.ai/detail/project-15/6946))
 </Update>
 
 <Update label="October 5, 2026">
@@ -30,7 +32,7 @@ export const Update = ({ label, children }) => (
   * Improved: New Task modal now shows its writing steps and keeps its window size during save, so you see progress and modify layout as you type ([HTPR-6162](https://app.hypertask.ai/detail/project-15/6162))
   * Added: New Task window is now live for everyone, can be opened with Ctrl+J from any view, and is renamed Compose â\x86\x92 New Task ([HTPR-6163](https://app.hypertask.ai/detail/project-15/6163))
   * Added: My Tasks toolbar uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group; active controls turn blue like Kanban and Group shows current choice ([HTPR-6164](https://app.hypertask.ai/detail/project-15/6164))
-  * Fixed: Choosing a Remind option from a notification now clears the notification and leaves you in the Inbox ([HTPR-6946](https://app.hypertask.ai/detail/project-15/6946))
+  * Fixed: Choosing a Remind option from a notification now clears the notification and leaves you in the Inbox view instead of immediately opening the associated task ([HTPR-6946](https://app.hypertask.ai/detail/project-15/6946))
 </Update>
 
 <Update label="October 4, 2026">
