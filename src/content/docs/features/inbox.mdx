@@ -12,7 +12,7 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
-- **Important tasks** â\x80\x94 rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
+- **Important tasks** — rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
 
 ### Replying to notification emails
 
@@ -85,7 +85,7 @@ Board data is deferred until Inbox is usable to improve startup performance. Whe
 
 ## Parallel inbox detail loading
 
-**Inbox details now load concurrently** instead of sequentially to reduce wait times. Previously, who-did-what, unread counts, and rewards fetched in separate sequential stagesâ\x80\x94waiting for each to complete before starting the next. Now these operations start together where their dependencies allow, cutting waits particularly in populated inboxes. The improvement applies across desktop and mobile, light and dark, for both first visits and repeat loads.
+**Inbox details now load concurrently** instead of sequentially to reduce wait times. Previously, who-did-what, unread counts, and rewards fetched in separate sequential stages—waiting for each to complete before starting the next. Now these operations start together where their dependencies allow, cutting waits particularly in populated inboxes. The improvement applies across desktop and mobile, light and dark, for both first visits and repeat loads.
 
 <Aside type="tip">You'll notice faster inboxes especially with many notifications and/or slower network connections.</Aside>
 
@@ -106,6 +106,7 @@ Undoing an inbox item now safely handles empty row slots. Previously, undoing an
 - **No crashes on undo**: Undoing an inbox item will never cause the page to die or throw `waitingOnSynthetic`.
 - **Row holes are safe**: Empty slots in the data structure are now ignored during undo operations.
 - **List stays alive**: The inbox page continues to function correctly even when undoing items with irregular row data.
+- **Bulk undo works reliably**: Undo after bulk archiving now correctly restores all selected items, not just one ([HTPR-6989](https://app.hypertask.ai/detail/project-15/6989)). QA verified that archived 3 items at once with <kbd>E</kbd>, pressed <kbd>Ctrl</kbd> + <kbd>Z</kbd>, all 3 came back and stayed after a reload on both QA and normal accounts.
 
 If you undo an inbox item and notice it didn't revert as expected, the item may have been in a separate cluster or split that was excluded from the undo scope.
 
@@ -163,7 +164,7 @@ This means hidden rows (e.g., notifications from tasks you've archived, filtered
 
 If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
-**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K â\x86\x92 "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
 
 ### Limitations
 
@@ -192,10 +193,10 @@ When you open a notification card on the Inbox page, the Remind panel options no
 OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
-- **View** â\x80\x94 Open the OpenWiki page for the associated task
-- **Refresh** â\x80\x94 Pull the latest RAG content from connected documentation
-- **Dismiss** â\x80\x94 Remove the notification from your inbox without affecting the underlying task
-- **Undo** â\x80\x94 Re-add a dismissed OpenWiki notification
+- **View** — Open the OpenWiki page for the associated task
+- **Refresh** — Pull the latest RAG content from connected documentation
+- **Dismiss** — Remove the notification from your inbox without affecting the underlying task
+- **Undo** — Re-add a dismissed OpenWiki notification
 
 To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
 
@@ -240,7 +241,7 @@ This ensures your inbox always reflects the latest state of mentions, assignment
 
 ## Active split highlighting
 
-The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views â\x80\x94 ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
+The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views — ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
 
 ## Mobile inbox icon behaviour (HTPR-6365)
 
@@ -260,20 +261,26 @@ When installed on Verizon 5G network, the inbox opening experience improved when
 
 If you see inconsistent offline message menu positioning in browser developer tools while reloading, verify the page's cache-control/no-store headers are correct before reloading.
 
+## Fixed: Narrow window comments crash ([HTPR-6990](https://app.hypertask.ai/detail/project-15/6990))
+
+Comments are now always readable at every window width, including narrow desktop windows and the mobile desktop site mode. Previously, the AI sidebar could squeeze a ticket to zero width, making comments disappear or appear unreadable. The fix ensures that ticket content never collapses to an unreadable state due to layout constraints on narrow windows (390, 768, and 1024px tested).
+
+<Aside type="note">The fix applies to both desktop web and the mobile "Desktop site" mode when trails to conditional desktop rendering were active.</Aside>
+
 ## Keyboard shortcuts
 
-- <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
-- <kbd>Ctrl</kbd> + <kbd>F</kbd> â\x80\x94 Search across all notifications
-- <kbd>N</kbd> â\x80\x94 Create a new task from the active board
-- <kbd>Space</kbd> â\x80\x94 Mark current item as read/unread
-- <kbd>Esc</kbd> â\x80\x94 Close modal, draft error, or focused search
-- <kbd>E</kbd> â\x80\x94 Archive notification
-- <kbd>Enter</kbd> â\x80\x94 Open task or draft
-- <kbd>J</kbd> â\x80\x94 Move focus down
-- <kbd>K</kbd> â\x80\x94 Move focus up
-- <kbd>Ctrl</kbd> + <kbd>A</kbd> â\x80\x94 Select all from current split
-- <kbd>Ctrl</kbd> + <kbd>X</kbd> â\x80\x94 Select message
-- <kbd>Shift</kbd> + <kbd>E</kbd> â\x80\x94 Bulk Archive (select rows or visible set)
+- <kbd>Ctrl</kbd> + <kbd>K</kbd> — Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> — Search across all notifications
+- <kbd>N</kbd> — Create a new task from the active board
+- <kbd>Space</kbd> — Mark current item as read/unread
+- <kbd>Esc</kbd> — Close modal, draft error, or focused search
+- <kbd>E</kbd> — Archive notification
+- <kbd>Enter</kbd> — Open task or draft
+- <kbd>J</kbd> — Move focus down
+- <kbd>K</kbd> — Move focus up
+- <kbd>Ctrl</kbd> + <kbd>A</kbd> — Select all from current split
+- <kbd>Ctrl</kbd> + <kbd>X</kbd> — Select message
+- <kbd>Shift</kbd> + <kbd>E</kbd> — Bulk Archive (select rows or visible set)
 
 ### J/K navigation to inbox drafts
 
@@ -281,6 +288,6 @@ If you see inconsistent offline message menu positioning in browser developer to
 
 ### Merge actions
 
-Use <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 **Merge into inbox** to consolidate multiple activities into a single notification entry.
+Use <kbd>Ctrl</kbd> + <kbd>K</kbd> — **Merge into inbox** to consolidate multiple activities into a single notification entry.
 
 <Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</Aside>
