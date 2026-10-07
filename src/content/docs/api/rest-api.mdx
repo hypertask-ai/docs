@@ -50,7 +50,7 @@ Hypertask's REST API is gradually being rewritten from the legacy Pages Router t
 
 A typed client for the REST API is now available behind a feature flag. This client is generated from Zod schemas (and from the OpenAPI spec) and provides full TypeScript types for all API inputs and outputs. Access is initially limited to Owners and QAs, then gradually rolled out more broadly.
 
-*Slice 1 is deployed and available behind its flag: Skills list reads and Board memory reads use the new typed client.*
+*Slice 1 and slices 2–5 are deployed and available behind the flag: Skills list reads and board/sessions task reads, paged reads, writes, and the OpenAPI description now use the new typed client for selected resources (Owners and QAs).*
 
 **Benefits:**
 - Full type safety across client implementations.
@@ -79,46 +79,7 @@ POST /api/v1/notifications
 
 When the flag is off, the legacy Routes are used; the schema and response shapes remain the same, so clients can continue to work without changes.
 
-### Deprecated and removed endpoints
-
-As part of the migration and cleanup, several endpoints have been deprecated in favor of newer alternatives or deleted entirely because they were unused:
-
-- `GET /api/comments/getAll` — use `GET /api/v1/comments` instead.
-- `GET /api/comments/single` — use `GET /api/v1/comments` with a specific `ticket_number` or `task_id`.
-- `POST /api/notifications/oneOffUpdateScript` — use the standard notification management endpoints under `/api/v1/notifications/` or the app's ability to schedule notification preferences.
-- `GET /api/agent-template/feedback` — now routed through `/api/agent-template` (legacy route deprecated).
-- Any top-level `/api/tasks`, `/api/projects`, `/api/sections`, `/api/notifications` writes — these write operations are now only available under `/api/v1/...` when `flag:api_router_migration` is on.
-- Additional legacy ends points with zero live usage were removed as part of scope stabilization.
-
-Knowing these endpoints were already unused or in the process of being migrated, this change does not affect existing integrations.
-
-## Agent Template feedback intake
-
-`POST https://app.hypertask.ai/api/agent-template/feedback` lets an agent file a correction without a Hypertask account or API key. Every accepted request creates a task in the Agent Template board's **Backlog**. The request cannot select another board or column.
-
-```bash
-curl -sS -X POST "https://app.hypertask.ai/api/agent-template/feedback" \
-  -H "Content-Type: application/json" \
-  --data '{
-    "title": "Keep correction details in failed runs",
-    "body": "<p>The failed run dropped the correction.</p><p>Keep it for the next run.</p>",
-    "labels": ["bug", "adapter:hypertask"]
-  }'
-```
-
-```json
-{
-  "success": true,
-  "task": {
-    "ticketNumber": "AGTE-42",
-    "url": "https://app.hypertask.ai/detail/project-5500/42"
-  }
-}
-```
-
-The title is limited to 80 characters. The HTML body is limited to 20,000 characters, the label list to eight items, and the complete request to 32 KiB. Labels must already exist on the Agent Template board. The endpoint accepts five requests per IP address per hour and returns `429` with `Retry-After` when the limit is reached.
-
-### Session-validated identity
+### Session validated identity
 
 Previously, several public API routes accepted an unsigned `nookies_user` cookie as the authenticated user identity. This has been tightened to prevent account takeover via forged cookies:
 
@@ -140,25 +101,12 @@ Compatibility: The consensus across the auth, MCP, public, webhook, logged-out, 
 
 If your pattern relies on unsigned `nookies_user` outside these call sites, see [`/api/session/verify`](https://app.hypertask.ai/api/session/verify) to validate the signed session instead.
 
-### createMention API
+### Session paging (Rows)
 
-The `createMention` API endpoint now requires a verified authentication session. Mentions are no longer an open push channel that trusts caller-supplied identifiers:
+When fetching sessions via the Sessions rows API and using `?prefer=paged=true`, response deltas are now computed from a session history paging key rather than from a historic row snapshot. This ensures accurate incremental updates across large session histories and makes pagination consistent with subsequent API changes on session detail and parent/subtask payloads. The same session history paging key is used to fetch selected transcripts via the `.transcripts` endpoint.
 
-- All requests to `POST /api/v1/comments` with a `mentions` array now require verification against the signed `ht_session`.
-- The `mentionedBy` field in the request is ignored; it is derived automatically from the authenticated user's session.
-- The endpoint validates that the task, the initiator, and the recipient all belong to the same board before creating the mention.
-- Attempting to forge mentions or cross-board mentions returns an `401 Unauthorized` response.
+### Board detail and parent/subtask payloads
 
-### API user routes require authentication
-
-The following API routes have been secured to require authentication:
-
-- `POST /api/resetUser` — admin tool for resetting user state. Takes the same `x-admin-password` header check as the `reset-trial` endpoint.
-- `GET /api/users/search` — searches available users by name or email. Requires a signed `ht_session` cookie.
-- `GET /api/users/getByEmails` — returns users matching one or more email addresses. Requires a signed `ht_session` cookie.
-- `DELETE /api/v1/projects/{projectId}/members` — removes a project member. Now requires a signed `ht_session` cookie (not available without authentication).
-- Account ownership transfer endpoint that previously accepted unauthenticated requests is now blocked: unauthenticated requests return 401 before any ownership change is attempted.
-
-These routes were previously accessible without an authenticated session. Requests made without valid authentication now receive `401 Unauthorized`.
+The board detail responses for the Sessions rows API and session detail endpoints now include parent and child subtask payloads directly in the board-level response. This makes it easier for clients to compute relationships and summaries without additional follow-up calls. Parent and child lists are arrays of child task objects (subtasks) always attached to the applicable session and board.
 
 ---
