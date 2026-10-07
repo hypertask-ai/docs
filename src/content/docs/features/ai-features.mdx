@@ -53,6 +53,19 @@ Start a comment or task description with **/ai** to open the AI Task Writer.
 
 The assistant drafts directly into the field, ready for your review.
 
+### Apply view defaults with Ctrl+J
+
+When you write a ticket with Ctrl+J inside a saved view, the system now respects the view's filters and defaults. The new ticket automatically inherits:
+
+- Filters (labels, assignees, priority, size, etc.)
+- Column assignment from the view
+- Visibility in the view immediately upon creation
+
+```bash
+# Keyboard shortcut: Ctrl+J creates a ticket with view defaults
+# The task opens in the same view and adopts its filters and defaults
+```
+
 ### Preserve screenshot references
 
 The AI Task Writer now preserves screenshot file links pasted into your draft. The assistant recognizes screenshot URLs and keeps them clickable after saving and reloading, without converting them into `HT_MEDIA` placeholders.
@@ -271,6 +284,4 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 
 <span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internally—helping users distinguish failures from normal responses.</p>
 
----
-
-<a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)
+<a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)</a>
