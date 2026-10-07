@@ -39,8 +39,8 @@ The browser title shows the board name and saved-view name when you navigate to 
 
 <span class="label label--brand">Feature</span> Each board's ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
 
-- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g., **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
-- Short, clean titles are compressed to predictable 3-4 character labels (e.g., **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
+- Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g. **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
+- Short, clean titles are compressed to predictable 3-4 character labels (e.g. **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
 Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
@@ -484,7 +484,7 @@ Hypertask ensures all write paths gate the target board or task before mutations
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
 
-The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+\\-\\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
+The shared command validator in the CLI normalizes ticket references. Accepted ticket formats obey the regular expression `^[A-Za-z0-9]+\-\\d+$` and, when parsed, are used to look up the target board and task. If the current identity lacks access, the write fails safely rather than silently creating or updating across a board boundary.
 
 Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
 
@@ -552,7 +552,7 @@ After this fix:
 - Activity metadata and playbook are fetched when those views open.
 - No impact on existing API contracts or MCP tools—only the internal query strategy changed.
 
-### Ticket selection and clicking ([HTPR-6915])
+### Ticket selection and clicking ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
 
 <span class="label label--brand">Fixed</span> Clicking a card on a board now reliably opens its detail view across desktop and mobile, with no broken interactions or silent failures.
 
@@ -563,15 +563,15 @@ After this change:
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
-- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows ← / → still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
+- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows → / ← still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
 - Tap or click any card on Kanban to open it.
-- Use arrows ← / → or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
+- Use arrows → / ← or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
 - Card-related keyboard shortcuts (add, edit, comment, move…) work on both focused and selected cards.
 
-### Card hover behavior ([HTPR-6874])
+### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
 
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
@@ -591,8 +591,14 @@ The bottom selection bar's **Open actions** button opens the command palette for
 
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
 
+## Board scroll position on back navigation ([HTPR-6998])
+
+<span class="label label--brand">Fixed</span> When you move from a board to a search result or open a ticket from a board and then return with the browser's Back button or a Back link, the board now preserves your scroll position instead of resetting to the top.
+
+Before this fix, navigating away and back would restore the board view at the top, forcing you to scroll and re-find your place. Now, the board remembers where you left off and continues from there, matching the expected scroll restoration behavior across search, task detail pages, and browser navigation.
+
+<Aside type="note">The fix applies to tall boards where scrolling is common, such as detailed project help boards, release notes trackers, or inspection-style Kanban columns.</Aside>
+
 ## In-app feedback routing
 
 In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
-
----
