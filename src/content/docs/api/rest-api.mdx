@@ -44,7 +44,7 @@ Error responses use this general shape:
 
 ## REST API structure and migration
 
-Hypertask's REST API is gradually being rewritten from the legacy Pages Router to the App Router. Writes for key resources (tasks, projects, sections, notifications) are already shipping behind feature flags, with the old Routes and path structure preserved when the flags are off to maintain compatibility until clients are fully migrated. A typed API client is also under development, currently shipped in slices behind its own feature flag.
+Hypertask's REST API is gradually being rewritten from the legacy Pages Router to the App Router. Writes for key resources (tasks, projects, sections, and notifications) are already shipping behind feature flags, with the old Routes and path structure preserved when the flags are off to maintain compatibility until clients are fully migrated. A typed API client is also under development, currently shipped in slices behind its own feature flag.
 
 ### Typed API client
 
@@ -79,6 +79,15 @@ POST /api/v1/notifications
 
 When the flag is off, the legacy Routes are used; the schema and response shapes remain the same, so clients can continue to work without changes.
 
+### Sections and notifications (typed writes)
+
+A typed writer now handles `sectionId` and `notificationId` parameters for sections and notifications. These writes are behind the same `flag:api_router_migration` switch used by other App Router writes:
+
+- **Sections:** Section creates, renames, moves, and deletes use the typed writer.
+- **Notifications:** Reading, marking as unread, archiving, and unarchiving flows use the typed writer.
+
+When the flag is off, sections and notifications continue to use legacy Routes with the same schemas and response shapes.
+
 ### Session validated identity
 
 Previously, several public API routes accepted an unsigned `nookies_user` cookie as the authenticated user identity. This has been tightened to prevent account takeover via forged cookies:
@@ -107,4 +116,4 @@ When fetching sessions via the Sessions rows API and using `?prefer=paged=true`,
 
 ### Board detail and parent/subtask payloads
 
-The board detail responses for the Sessions rows API and session detail endpoints now include parent and child subtask payloads directly in the board-level response. This makes it easier for clients to compute relationships and summaries without additional follow-up calls. Parent and child lists are arrays of child task objects (subtasks) always attached to the applicable session and board.
+The board detail responses for the Sessions rows API and session detail endpoints now include parent and child subtask payloads directly in the board-level response. This makes it easier for clients to compute relationships and summaries without additional follow-up calls. Parent and child lists are arrays of child task objects (subtasks) always attached to the applicable session and board.'
