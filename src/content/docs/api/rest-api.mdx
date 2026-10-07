@@ -1,5 +1,5 @@
 ---
-title: REST API
+title: "REST API"
 description: Complete reference for Hypertask's public REST API endpoints.
 ---
 
@@ -50,15 +50,15 @@ Hypertask's REST API is gradually being rewritten from the legacy Pages Router t
 
 A typed client for the REST API is now available behind a feature flag. This client is generated from Zod schemas (and from the OpenAPI spec) and provides full TypeScript types for all API inputs and outputs. Access is initially limited to Owners and QAs, then gradually rolled out more broadly.
 
-*Slice 1 and slices 2–5 are deployed and available behind the flag: Skills list reads and board/sessions task reads, paged reads, writes, and the OpenAPI description now use the new typed client for selected resources (Owners and QAs).*
+Chat session paging, writes, and the OpenAPI description now use the typed client for selected resources (Owners and QAs) behind the `flag:typed_client` switch. This provides type safety and automatic validation via Zod, and the OpenAPI spec is synchronized in real time from the same schemas.
 
 **Benefits:**
 - Full type safety across client implementations.
 - Automatic validation via Zod, reducing runtime errors.
 - Generated from a single source of truth (OpenAPI).
 
-**Egress/ingress flags:**
-- `flag:typed_client` — controls typed client exposure.
+**Flags:**
+- `flag:typed_client` — controls typed client exposure (chat session paging and writes, plus OpenAPI).
 - `flag:api_router_migration` — controls task/product/section/notification writes behind new routes.
 
 **Notes:**
@@ -108,5 +108,3 @@ When fetching sessions via the Sessions rows API and using `?prefer=paged=true`,
 ### Board detail and parent/subtask payloads
 
 The board detail responses for the Sessions rows API and session detail endpoints now include parent and child subtask payloads directly in the board-level response. This makes it easier for clients to compute relationships and summaries without additional follow-up calls. Parent and child lists are arrays of child task objects (subtasks) always attached to the applicable session and board.
-
----
