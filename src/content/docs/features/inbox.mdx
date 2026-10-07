@@ -76,7 +76,9 @@ On narrow screens, the Inbox displays rows on a single line with sender informat
 **Logged-in pages no longer throw React error #418** on next.js hydration mismatches for Free and BYOK customers. Previously, Settings, Inbox, and other logged-in surfaces would throw a mismatch error on every load after a server state extraction bug. The fix ensures that saved state and cached lists are kept at their server-rendered values during client hydration, aligning what you see when you reload with what the server prepared the first time.
 
 <Aside type="tip">
+
 This fix eliminates console hydration mismatches on reload for all signed-in users, including Free and BYOK. You can verify the fix is live by opening [https://app.hypertask.ai/settings](https://app.hypertask.ai/settings) or [https://app.hypertask.ai/inbox](https://app.hypertask.ai/inbox) and confirming no error appears after the first page load.
+
 </Aside>
 
 ## Inbox prefetch timing
@@ -124,6 +126,16 @@ When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg
 - The list viewport updates alongside the focused row, so the jump stays visualized and you don't lose your place in scrolling.
 
 This change addresses the case where moving to the last item (via <kbd>G</kbd><kbd>G</kbd>) changed which inbox row was highlighted, but the long list stayed in its old position on screen. Now top and bottom jumps center the matching row and handle filtered and empty inboxes safely.
+
+## Keyboard navigation (HTPR-7000)
+
+- <kbd>J</kbd> — Move focus down
+- <kbd>K</kbd> — Move focus up
+- <kbd>Enter</kbd> — Open task or draft
+
+Previously, pressing <kbd>J</kbd> or the next arrow while viewing an Inbox item would display the wrong ticket for more than 15 seconds, making intentional sound-based navigation unpredictable. Now, these shortcuts reliably open and move focus to the correct item, synchronizing visual focus with keyboard interaction.
+
+<Aside type="note"><kbd>J</kbd> and <kbd>K</kbd> also navigate draft items under the hood, mirroring the pattern across mixed inbox content.</Aside>
 
 ## Collaborate on the inbox
 
