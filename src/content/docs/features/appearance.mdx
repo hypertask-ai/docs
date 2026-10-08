@@ -11,8 +11,8 @@ import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
 Hypertask supports both light and dark themes, controlled from your profile or the Command Center.
 
-- **Dark theme** — reduces eye strain when working in low-light environments and is ideal for long coding sessions.
-- **Light theme** — provides high contrast for collaborative reviews and when sharing your screen.
+- **Dark theme** â\x80\x94 reduces eye strain when working in low-light environments and is ideal for long coding sessions.
+- **Light theme** â\x80\x94 provides high contrast for collaborative reviews and when sharing your screen.
 
 You can toggle themes instantly from the settings menu. Preferences are saved per-user.
 
@@ -20,8 +20,8 @@ You can toggle themes instantly from the settings menu. Preferences are saved pe
 
 From the Command Center, use **Ctrl+K** to open the global command palette. While focusing on a task detail, you can also use:
 
-- **Ctrl+O** — Open links from the latest reply in a new tab (Agent Chat and board comments).
-- **Alt+Left/Right** — Navigate through tasks or agents in increasing or decreasing order.
+- **Ctrl+O** â\x80\x94 Open links from the latest reply in a new tab (Agent Chat and board comments).
+- **Alt+Left/Right** â\x80\x94 Navigate through tasks or agents in increasing or decreasing order.
 
 These shortcuts are available across boards, chat panels, and the Agents overview.
 
@@ -60,12 +60,22 @@ You do not need OpenRouter-specific keys in Hypertask; the runtime handles excha
 
 </Aside>
 
+**Claude Haiku 5.5** is now Hypertask's default AI model for everyone, replacing Haiku 4.5. The new default is available across all plans, offering consistent model behavior for all users. When Haiku 5.5 is selected, it behaves equivalently to GPT 6 Luna in all supported surfaces including AI Task Writer, Agent Chat, and code-generation workflows.
+
+Model quality now reflects real-world usage: Claude Haiku 5.5 cost per request is approximately 1.7× higher than GPT 6 Luna due to longer answer lengths, though the per-token price is identical. The model is fully operational on all supported environments, including Free and paid subscriptions.
+
+<Aside type="tip">
+
+Once the model is selected in your profile, the choice applies globally to any AI feature you use, keeping agent behavior and output style consistent across tasks, boards, and workspace contexts.
+
+</Aside>
+
 ### Quiet mode
 
 Quiet mode controls how agent activity appears in run activities and thread comments. It applies to agents in active runs:
 
-- **Run activity** — by default, agents write detailed progress chatter to the run activity tab. Quiet mode suppresses most run activity logs.
-- **Thread comments** — quiet mode disables comment generation. Comments are only posted for specific actions:
+- **Run activity** â\x80\x94 by default, agents write detailed progress chatter to the run activity tab. Quiet mode suppresses most run activity logs.
+- **Thread comments** â\x80\x94 quiet mode disables comment generation. Comments are only posted for specific actions:
   - Question
   - Decision
   - Handoff
