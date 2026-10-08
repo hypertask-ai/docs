@@ -342,6 +342,25 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 
 <span class="label label--brand">Improvement</span> When you assign a task from the assign picker, closing the picker or pressing Escape no longer drops the assignment. The human assignee name stays on the task and persists across page reloads and subsequent checks. This applies whether you assign from the board card or from a direct task link. ([HTPR-6962](https://app.hypertask.ai/detail/project-15/6962)).
 
-### QA findings
+### Faster task opening
 
-QA pass on 2026-10-04 confirms that for all users (not just those behind a feature flag), tickets appear instantly with no loading animation, back/forward work correctly, suggested questions show immediately in the AI panel, and there are no console errors or visual jitter after opening.
+<span class="label label--brand">Improved</span> Pressing **Back** after opening a subtask now shows the parent task immediately instead of the subtask for up to a few seconds, and **Forward** returns you to the subtask if needed. Opening a task directly from saved data shows it reliably within about 0.3 seconds on both desktop and mobile, eliminating previous delays. ([HTPR-6991](https://app.hypertask.ai/detail/project-15/6991)).
+
+### Navigating to previous titles in Inbox
+
+<span class="label label--brand">Improved</span> Using **J** or the arrow keys to move to the next Inbox item now loads and displays it within about 0.3 seconds on desktop and mobile, removing lag that previously held up the wrong ticket title for up to several seconds. ([HTPR-7001](https://app.hypertask.ai/detail/project-15/7001)).
+
+### No flash of the ticket title after opening a board card
+
+<span class="label label--brand">Fixed</span> Pressing **Back** right after opening a board card now shows the board immediately, with no flash of the ticket title. In at least 19 of 20 quick Backs (within 0.3 seconds of opening a card), you see only the board, not the ticket, and the board is visible within 1 second. ([HTPR-7003](https://app.hypertask.ai/detail/project-15/7003)).
+
+## Related topics
+
+<CardGrid>
+  <LinkCard title="Boards & Sections" description="Organize work with Kanban-style boards, customizable sections, and multiple views." href="/features/boards/" />
+  <LinkCard title="Search" description="Search across tasks with operators, suggestions, and a tips panel." href="/features/search/" />
+  <LinkCard title="Pages" description="Full-screen notepads attached to tasks, RAG-fed, and workable by agents and humans." href="/features/pages/" />
+  <LinkCard title="MCP Integration" description="Connect AI agents to Hypertask via the Model Context Protocol." href="/mcp/overview/" />
+  <LinkCard title="CLI Reference" description="Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal." href="/cli/reference/" />
+  <LinkCard title="AI Features" description="AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow." href="/features/ai-features/" />
+</CardGrid>
