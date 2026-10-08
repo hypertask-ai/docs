@@ -47,9 +47,9 @@ This flag toggles behavior server-side and in the UI, and a corresponding settin
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** — Generate a draft for the active text field.
-- **/ai rewrite** — Improve or rethink what you typed.
-- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
+- **/ai** â\x80\x94 Generate a draft for the active text field.
+- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
+- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -84,7 +84,7 @@ This separation prevents context from bleeding between unrelated tasks and keeps
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flows â\x80\x94 use the AI Task Writer, context menus, and panel-based chat â\x80\x94 and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ---
 
@@ -96,8 +96,8 @@ On mobile, the New Task flow focuses on description input via voice dictation. Y
 
 After dictating, two save buttons appear:
 
-- **Save with task writer (primary)** — Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
-- **Save (ghost)** — Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
+- **Save with task writer (primary)** â\x80\x94 Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
+- **Save (ghost)** â\x80\x94 Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
 
 Title and task properties are collapsed behind two pill buttons. Select them to reveal title and property fields after you've saved your words.
 
@@ -220,20 +220,20 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
 
-- **Ctrl+Tab** — Move to the next agent.
-- **Shift+Ctrl+Tab** — Move to the previous agent.
-- **Alt+Left/Right** — Navigate through agents one step at a time.
+- **Ctrl+Tab** â\x80\x94 Move to the next agent.
+- **Shift+Ctrl+Tab** â\x80\x94 Move to the previous agent.
+- **Alt+Left/Right** â\x80\x94 Navigate through agents one step at a time.
 
 ### Send a message and compose focus
 
-- **Ctrl+Enter** — Send the current message in the chat input.
-- **Ctrl+O** — Open links from the latest reply in a new tab, when available.
-- **Ctrl+Q** — Focus the chat input field (works on boards and chat-specific views).
+- **Ctrl+Enter** â\x80\x94 Send the current message in the chat input.
+- **Ctrl+O** â\x80\x94 Open links from the latest reply in a new tab, when available.
+- **Ctrl+Q** â\x80\x94 Focus the chat input field (works on boards and chat-specific views).
 
 ### Search tasks and add agents
 
 - @ inside the chat input to search for tasks by name and start a context-aware conversation.
-- + — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
+- + â\x80\x94 Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
@@ -282,6 +282,6 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 
 <span class="label label--brand">Behavior change</span> <p>Page loads now render without downward shifting for board, inbox, and ticket pages on both desktop and mobile. Before this change, content would briefly shift while rows populated from top to bottom; the layout now paints in place (jump scores 0.00 or below) and the AI chat sidebar no longer jumps on load.</p>
 
-<span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internally—helping users distinguish failures from normal responses.</p>
+<span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internallyâ\x80\x94helping users distinguish failures from normal responses.</p>
 
-<a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)</a>
+<a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)
