@@ -3,6 +3,8 @@ title: "Images and Attachments"
 description: "Send HEIC/HEIF photos, view them everywhere (thumbnails, inline, galleries, lightboxes), force or exempt from preview, and resize images on pages."
 ---
 
+import { Aside, Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
 We treat HEIC and HEIF images like any other file: they render consistently across thumbnails, inline previews, galleries, and lightbox views. If a preview isn't suitable, exclude the format from previews or use a low-res fallback.
 
 ## Supported formats
@@ -25,10 +27,33 @@ We treat HEIC and HEIF images like any other file: they render consistently acro
 ## Downloading HEIC/HEIF
 
 HEIC and HEIF photos uploaded to tasks and comments retain their original file format in the download. When you click **Download** on an attachment:
+
 - The original HEIC/HEIF file is downloaded, preserving the full image quality
 - Previews across the platform use the generated JPEG copy for faster rendering and broader compatibility
 
 This ensures you can access the highest-quality version of your photos while maintaining fast, consistent previews everywhere else.
+
+## Who can download attachments
+
+<span class="label label--brand">New</span> Only people who can see the parent ticket can download its attachments. Access is scoped to the task: observers outside the ticket cannot reach downloads even if they can view the board.
+
+### How it works
+
+- When opening a task or viewing the task detail lightbox, the system checks your board and task membership before exposing download URLs to the client.
+- If you cannot see the ticket, downloads appear as `not found` or are inaccessible regardless of your board-level access.
+- Owners, members, and regular board members who see the ticket can download files normally. Agents that have been granted task-level visibility also see downloads.
+- This change prevents unauthorized downloads for attachments that originated on private or board-limited tasks.
+
+### What this protects
+
+- Attachments stored on private tickets are not reachable by users who should not see that context.
+- AI-generated task previews now respect the same access gate, ensuring draft images on private tickets are not exposed outside the intended scope.
+- Regular downloads continue to work as before for anyone with proper ticket visibility.
+
+### When it applies
+
+- Board owners, task members, and AI agents with access to a ticket can download its attachments.
+- External viewers, board guests, or users who lack task visibility cannot reach downloads, even if they can view the broader board.
 
 ## Excluding previews
 
@@ -51,6 +76,7 @@ If the lightbox shows a broken image icon for a non-decodable file:
 ## Warnings for unexpected content
 
 If a file exhibits preview or display issues (broken icons, no thumbnail, or an unexpected format shown), check:
+
 - The file is flagged as excluded from previews (if the goal was to prevent preview).
 - The file is a HEIC/HEIF image under preview logic (historically, some browsers rendered these as named files before conversion completed).
 
@@ -62,6 +88,7 @@ If a file exhibits preview or display issues (broken icons, no thumbnail, or an 
 ## Paste support
 
 You can paste photos directly into comments and task descriptions. The system handles both HEIC/HEIF files and regular image formats in the same paste handler:
+
 - HEIC/HEIF: Preserves the original and generates a JPEG preview
 - JPEG/PNG/WebP: Downloads as-is
 
@@ -84,6 +111,7 @@ This gives you a single paste workflow whether you're uploading from Photos via 
 ### When this helps
 
 This change helps users on restrictive networks (including some corporate Wi-Fi and VPNs) where:
+
 - The image host is blocked, resulting in broken images or connection errors.
 - You cannot easily unblock the domain.
 - You don't have control over network policy.
@@ -110,7 +138,7 @@ You can manually adjust image size on pages and in ticket descriptions.
 
 ### Persisted size
 
-- After you drag an image's resize handle and see “Saved,” the image's width is saved to that page or ticket description.
+- After you drag an image's resize handle and see "Saved," the image's width is saved to that page or ticket description.
 - Reloading the page or ticket keeps the image at the custom size instead of reverting to auto-fit.
 - Using multiple sizes on the same page works as expected: each one stays where you set it.
 
