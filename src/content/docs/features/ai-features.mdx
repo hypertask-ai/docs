@@ -47,9 +47,9 @@ This flag toggles behavior server-side and in the UI, and a corresponding settin
 
 Start a comment or task description with **/ai** to open the AI Task Writer.
 
-- **/ai** — Generate a draft for the active text field.
-- **/ai rewrite** — Improve or rethink what you typed.
-- **/ai fix** — Correct grammar, sharpen tone, or expand with details.
+- **/ai** â\x80\x94 Generate a draft for the active text field.
+- **/ai rewrite** â\x80\x94 Improve or rethink what you typed.
+- **/ai fix** â\x80\x94 Correct grammar, sharpen tone, or expand with details.
 
 The assistant drafts directly into the field, ready for your review.
 
@@ -70,7 +70,6 @@ These natural language due date phrases recognize common temporal expressions an
 ### Apply view defaults with Ctrl+J
 
 When you write a ticket with Ctrl+J inside a saved view, the system now respects the view's filters and defaults. The new ticket automatically inherits:
-
 - Filters (labels, assignees, priority, size, etc.)
 - Column assignment from the view
 - Visibility in the view immediately upon creation
@@ -89,18 +88,30 @@ The AI Task Writer now preserves screenshot file links pasted into your draft. T
 When you open the AI chat panel on a task that hasn't been visited before, the assistant starts with a clean slate. The system ignores any existing chat history from previous tickets and begins a fresh conversation, so each unopened ticket gets its own independent chat session.
 
 <Aside type="tip">
-
 This separation prevents context from bleeding between unrelated tasks and keeps each chat focused on the work at hand.
-
 </Aside>
 
 ### ChatProvider and hooks
 
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
-This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
+This is automatically handled for standard flows â\x80\x94 use the AI Task Writer, context menus, and panel-based chat â\x80\x94 and is handled by the fallback behavior on detail pages that load the provider safely.
 
 ---
+
+## Task Writer now respects language preferences
+
+### Generate headings in the requested language
+
+The AI Task Writer now respects language requests when you ask it to write in a specific language. When a prompt includes a language instruction (for example, "Please write in German" or "In English, describe this..."), the assistant applies the language to headings, descriptions, and related text.
+
+This applies across both the editor panels and automated drafts. For example, if you ask the Task Writer to "Write an onboarding checklist for new customers in German", the resulting headings on the created ticket will appear in German (Problemfeld, Betroffener Bildschirm, Akzeptanzkriterien, etc.).
+
+You can continue to edit or regenerate any generated text. The language preference persists within the current session, and requests with mixed language instructions are interpreted by considering the last explicit language specifier.
+
+---
+
+
 
 ## Mobile dictation flow
 
@@ -109,9 +120,8 @@ This is automatically handled for standard flows — use the AI Task Writer, con
 On mobile, the New Task flow focuses on description input via voice dictation. You can dictate your task directly into a single text box and attach images if needed.
 
 After dictating, two save buttons appear:
-
-- **Save with task writer (primary)** — Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
-- **Save (ghost)** — Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
+- **Save with task writer (primary)** â\x80\x94 Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
+- **Save (ghost)** â\x80\x94 Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
 
 Title and task properties are collapsed behind two pill buttons. Select them to reveal title and property fields after you've saved your words.
 
@@ -124,16 +134,13 @@ Agent Chat use cases rely on several native behaviors: running in multiple views
 ### Key selection for agents without a board
 
 When you start a chat session on a task or board without a dedicated AI key, the system uses a fallback key selection strategy:
-
 1. **Session board key:** If a session board exists for the context, the system uses that board's AI key.
 2. **User team key:** If no session board key is available, the system uses your team's default AI key.
 
 This allows direct chats to succeed even when chat lanes don't have their own dedicated AI provider configured. The system falls back gracefully across these levels rather than failing completely.
 
 <Aside type="note">
-
 You must have at least one valid AI key configured for your team to use AI Chat. If your team and all session boards lack an active AI key, the chat fails with a clear access error and does not trigger an incident ticket.
-
 </Aside>
 
 ### Sort the chat list by recent activity
@@ -145,16 +152,13 @@ If you sorted the list previously, you may notice the ordering has changed to be
 ### Model selection per engine
 
 Agent Chat respects the engine configured on an agent when selecting a model:
-
 - **Claude-based agents** use Claude models (for example, claude-sonnet-5). The chat lane does not inject Codex-style model names or IDs for Claude agents.
 - **Codex-based agents** use Codex models (for example, gpt-5.6-luna). The chat lane does not inject Claude-style model names for Codex agents.
 
 If an agent's engine and model match during configuration, Agent Chat uses that pairing directly. Mismatches in model naming between the configuration and runtime (for example, legacy Codex-style names on Claude engines) are resolved server-side; chat must operationalize the correct model per engine.
 
 <Aside type="tip">
-
 Chat lane configuration must align with the agent's engine. Changes to engine/model requirements should be made in the agent's settings first, then propagated to the chat lane to avoid operational conflicts.
-
 </Aside>
 
 ### @mention agents to route messages
@@ -170,9 +174,7 @@ To route a message to a specific agent, prefix it with their @handle and space i
 The assistant transforms this into a direct message routing request and delivers it to the mentioned agent's chat lane. The reply appears in the sidebar chat under the agent's name, including their profile context and available tools.
 
 <Aside type="tip">
-
 Agent mentions work on both board and inbox sidechat contexts. Use @mention formatting to switch from default AI assistant routing to a targeted agent thread.
-
 </Aside>
 
 ### Concurrent Agent Chat sessions
@@ -184,9 +186,7 @@ Multiple agents can interact with a user in separate, independent chat panels. E
 When an Agent Chat turn fails to finish within the timeout window, the thread restarts automatically. The new turn uses fresh context for the current agent, and the user can continue the conversation from scratch.
 
 <Aside type="note">
-
 This recovery replaces the previously convoluted flow for stuck threads. You no longer need to page refresh to resume work.
-
 </Aside>
 
 ### Stop work during an active turn
@@ -211,9 +211,7 @@ Do you want to accept this proposal and proceed?
 - The proposal is accessible via the `chat.propose` MCP tool when needed in agent workflows.
 
 <Aside type="tip">
-
 If a proposal doesn't match intent, simply decline it. The thread moves forward without creating output that doesn't fit current needs.
-
 </Aside>
 
 ### Handling incomplete board columns
@@ -233,30 +231,27 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 ### Navigate the agent roster
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
-
-- **Ctrl+Tab** — Move to the next agent.
-- **Shift+Ctrl+Tab** — Move to the previous agent.
-- **Alt+Left/Right** — Navigate through agents one step at a time.
+- **Ctrl+Tab** â\x80\x94 Move to the next agent.
+- **Shift+Ctrl+Tab** â\x80\x94 Move to the previous agent.
+- **Alt+Left/Right** â\x80\x94 Navigate through agents one step at a time.
 
 ### Send a message and compose focus
 
-- **Ctrl+Enter** — Send the current message in the chat input.
-- **Ctrl+O** — Open links from the latest reply in a new tab, when available.
-- **Ctrl+Q** — Focus the chat input field (works on boards and chat-specific views).
+- **Ctrl+Enter** â\x80\x94 Send the current message in the chat input.
+- **Ctrl+O** â\x80\x94 Open links from the latest reply in a new tab, when available.
+- **Ctrl+Q** â\x80\x94 Focus the chat input field (works on boards and chat-specific views).
 
 ### Search tasks and add agents
 
 - @ inside the chat input to search for tasks by name and start a context-aware conversation.
-- + — Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
+- + â\x80\x94 Add a new agent using an existing creation flow, if the roster button is present or you've enabled the relevant settings.
 
 ### Speaker bubbles and theme
 
 - Agent reply bubbles now use the theme's primary color for consistent visual hierarchy. Theme colors are applied automatically across light and dark modes, maintaining readability and stylistic alignment.
 
 <Aside type="tip">
-
 These controls apply when Agent Chat is open. Some shortcuts, such as Ctrl+Enter for sending and Ctrl+Q for focusing the input, also function in the main command palette when you're in a compatible view.
-
 </Aside>
 
 ## AI dev agents
@@ -285,9 +280,7 @@ A dev agent configured to use OpenRouter with the model name **Hy4** is now avai
 Once deployed, the agent will start pulling tasks from its lane once the idle timer has completed since its last active turn. Monitor launch rows on the ledger to validate that the Hy4 launch is listed and active.
 
 <Aside type="note">
-
 You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handle the exchange of credentials and model mapping. If you plan to autofill other OpenRouter lanes beyond Hy4, include OPENROUTER_GLM_API_KEY for squad-based workflows.
-
 </Aside>
 
 ---
@@ -296,14 +289,12 @@ You do not need OpenRouter-specific keys in Hypertask; the SDK and runtime handl
 
 <span class="label label--brand">Behavior change</span> <p>Page loads now render without downward shifting for board, inbox, and ticket pages on both desktop and mobile. Before this change, content would briefly shift while rows populated from top to bottom; the layout now paints in place (jump scores 0.00 or below) and the AI chat sidebar no longer jumps on load.</p>
 
-<span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internally—helping users distinguish failures from normal responses.</p>
+<span class="label label--brand">Improved</span> <p>AI-route fallbacks now report a polite fallback message to users instead of silently failing with generic text. Broken AI requests still preserve the graceful fallback experience, now accompanied by clearer indication that a request failed internallyâ\x80\x94helping users distinguish failures from normal responses.</p>
 
 <a href="https://app.hypertask.ai/detail/project-15/6805">HTPR-6805</a> (v0.2.11 CLI improvements), <a href="https://app.hypertask.ai/detail/project-15/6898">HTPR-6898</a> (in-place page loads), <a href="https://app.hypertask.ai/detail/project-15/6816">HTPR-6816</a> (AI-route fallback messaging)
 
 ---
 
 <Aside type="note">
-
 For additional discussion and related improvements, see <a href="https://app.hypertask.ai/detail/project-15/7012">HTPR-7012</a> about handling teams without an AI key.
-
 </Aside>
