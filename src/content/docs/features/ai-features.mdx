@@ -53,6 +53,20 @@ Start a comment or task description with **/ai** to open the AI Task Writer.
 
 The assistant drafts directly into the field, ready for your review.
 
+### Respect due dates from prompts
+
+When creating a task with **Ctrl+J**, the AI Task Writer now understands relative due dates like "Friday", "tomorrow", or absolute dates like "2026-10-16". The assistant fills in the Due date field accordingly and leaves it empty when you don't mention a deadline.
+
+```bash
+# Ctrl+J: Ask for a deadline and the task saves with the date
+"Review onboarding, by next Friday"
+
+# Ctrl+J: Leave out the date and the task has no due date
+"Draft the Q3 survey, marked for review"
+```
+
+These natural language due date phrases recognize common temporal expressions and convert them to the task's Due date field for your calendar and filtering.
+
 ### Apply view defaults with Ctrl+J
 
 When you write a ticket with Ctrl+J inside a saved view, the system now respects the view's filters and defaults. The new ticket automatically inherits:
