@@ -466,7 +466,7 @@ The shared command validator in the CLI normalizes ticket references. Accepted t
 
 Legacy comment endpoints previously trusted the `botUserId` or `userId` from a client-supplied header. These are now verified against the target board's membership and the editor's access. Attempting to post a comment or task mutation without access results in an authorization error from the server.
 
-This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board or task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
+This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board/task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
 
 ## Manage board columns panel ([HTPR-6217](https://app.hypertask.ai/detail/project-15/6217))
 The **Manage board columns** panel in every board now correctly lists all existing columns, including columns added after the last time the panel was opened.
@@ -542,12 +542,12 @@ After this change:
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
-- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows →/← still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
+- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows ↖/↗ still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
 
 - Tap or click any card on Kanban to open it.
-- Use arrows →/← or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
+- Use arrows ↖/↗ or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
 - Card-related keyboard shortcuts (add, edit, comment, move…) work on both focused and selected cards.
 
@@ -565,7 +565,7 @@ On desktop boards, hover a card to reveal its selection checkbox. Press <kbd>X</
 
 The bottom selection bar's **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
 
-## Board staleness indicators
+### Board staleness indicators
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
 
 ## Board scroll position on back navigation ([HTPR-6998](https://app.hypertask.ai/detail/project-15/6998))
