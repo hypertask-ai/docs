@@ -1,6 +1,6 @@
 ---
-title: Board & Subtask Visibility
-description: Configure which tasks and subtasks are visible to users across boards, saved views, tables, and AI Chat.
+title: "Board & Subtask Visibility"
+description: "Configure which tasks and subtasks are visible to users across boards, saved views, tables, and AI Chat."
 ---
 
 import { Aside, Tabs, TabItem, Steps, Card, CardGrid, Table, LinkCard } from '@astrojs/starlight/components';
@@ -36,7 +36,21 @@ Supported modes are enumerated in the table below, and they behave consistently 
 | Visibility — disabled      | Subtasks are omitted from read and create responses.      | Subtasks cannot be created or shown; `displaySubtasks` appears as `false` |
 | Visibility — inherited     | Subtasks follow their parent board's visible sections.     | Used when a parent board or saved view explicitly sets this mode |
 
-### Rail and sidebar behavior
+## Board access for writes
+
+<span class="label label--brand">Fixed</span> All write paths now consistently gate the target board or task before mutating. Members cannot bypass access checks by switching identities.
+
+This applies across CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`), MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`), and the REST API (`board_update_task`, `board_add_comment`, and the legacy comment endpoint `/api/board/comment`). Integrated validations ensure operations are isolated to their intended board/task and places write actions behind the same membership gate used for downloads.
+
+### Why write gating matters
+
+- Matching access semantics between reads and writes prevents accidental cross-board updates.
+- Boards with constrained visibility (Basic, Dimmed) can rely on a stable access model even when multiple identities are involved.
+- CLI, MCP, and REST workflows stay aligned: no identity switch or hidden flag can bypass board membership checks.
+
+You can read more about access control for downloads in the [Images and Attachments](/features/images/) documentation, which documents that files are only reachable for people who see the parent ticket.
+
+## Rail and sidebar behavior
 
 When you disable the **Rail** (sidebar) in Appearance settings, the following applies:
 
