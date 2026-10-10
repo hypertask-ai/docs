@@ -1,0 +1,90 @@
+---
+title: "Flags Page"
+description: "Use flags to track important tasks and collaborate on quality and release readiness."
+---
+
+Flags are a dedicated view that lets you quickly flag tasks by status, type, release risk, and more. You can then filter and re‑flag tasks as conditions change.
+
+## Access the Flags page
+
+The Flags page appears in your view tabs when you have flaggable tasks. Click its tab to see all flagged tasks grouped by the filter you last applied.
+
+![Flags view tabs showing a Flags tab](/assets/flags-tabs.png)
+
+**Who can see flags:** Owner and QA have flag access by default.
+
+## Add a flag
+
+To flag a task, select it and choose an option from the flags picker:
+
+1. Open the task details.
+2. In the Flags section, click the **Flag** button.
+3. Pick a filter (Status, Type, Release risk, or Sort).
+4. Optionally pick a specific option; otherwise the flag is applied to all options under that category.
+
+The task immediately appears in the Flags page under the selected filter.
+
+<Aside type="tip">
+Specifying an option (for example, selecting **Bug** from **Type**) limits the flag to that option only. When you re‑flag the same task, use the same filter and option to keep it grouped correctly.
+</Aside>
+
+## Filter flags
+
+The Flags page always attaches a set of filters to the current view. All flags are shown under the same filter row and count together:
+
+- **Status** – Choose from Unreleased, In Progress, or Done.
+- **Type** – Choose from Story, Bug, or Task.
+- **Release risk** – High, Medium, or Low.
+- **Sort** – Newest, Oldest, or Alphabetical.
+
+Selecting any filter opens the standard picker for that option and shows the count of flagged tasks under each choice. The total follows both the search term and the filter set.
+
+**Example:** You select Status = Unreleased, then select Type = Bug. The page now shows only bugs that are unreleased, and the count reflects `Unreleased × Bug`. Adding another filter constraint (for example, Release risk = High) tightens the view.
+
+## Use flags in workflows
+
+<Steps>
+
+1. **Pre‑release review:** Flag all Unreleased and High‑risk tasks before a release to ensure nothing is overlooked. Check and unflag items as they pass.
+2. **Bug triage:** Use Flags to group bugs by type (Bug), then filter by Status and Release risk to prioritize what to fix next.
+3. **Sprint cleanup:** Apply a Status = Unreleased flag, then use Flags to quickly scan and unflag tasks that were inadvertently staged.
+
+</Steps>
+
+Create and update flags while browsing tasks, board views, or the Flags view itself. Flags are per‑board—Flags on one board do not affect tasks on other boards. Flags persist and update automatically as tasks change status, type, or risk.
+
+## Keyboard shortcuts
+
+<details>
+<summary>View all keyboard shortcuts</summary>
+
+| Shortcut | Action |
+|----------|--------|
+| **L** | Flag/unflag a selected task |
+| **Ctrl+L** (Windows/Linux) or **Cmd+L** (Mac) | Open the flags picker |
+| **Ctrl+Shift+L** (Windows/Linux) or **Cmd+Shift+L** (Mac) | Remove all flags from a selected task |
+
+</details>
+
+## FAQ
+
+<details>
+<summary>Can I organize flags into custom groups?</summary>
+
+No. Flags are organized using the built‑in filter categories (Status, Type, Release risk, Sort) and their options. Use the combination of filters to group for your workflow.
+
+</details>
+
+<details>
+<summary>Who can apply or remove flags?</summary>
+
+Owner and QA users can flag and unflag tasks on a board. Other members see the flags but cannot change them.
+
+</details>
+
+<details>
+<summary>Do flags appear on the board cards?</summary>
+
+No. Flags are visible only in the Flags page and task details. The Flags filter is not rendered on board cards.
+
+</details>
