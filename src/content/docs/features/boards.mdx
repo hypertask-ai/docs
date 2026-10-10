@@ -8,7 +8,6 @@ The shipping gate for this page was on 2026-10-03 (Owner+QA preview only). Botto
 </aside>
 
 ### Ticket links without a ticket number ([HTPR-6818])
-
 <span class="label label--brand">Bug fix</span> Links to ticket pages that omit the ticket number are now redirected to the board before any page renders, avoiding React error #419 (hydration mismatch from render state issues).
 
 Before this fix, URLs like <code>https://app.hypertask.ai/detail/project-5515</code> would attempt to render a page and partially display content before jumping to the board, triggering a React error in the browser. After the fix, the request is redirected directly to the board page without rendering the intermediate state, preventing the error across desktop, mobile, light and dark themes for both test and production users.
@@ -16,7 +15,6 @@ Before this fix, URLs like <code>https://app.hypertask.ai/detail/project-5515</c
 Real ticket links retain their normal behavior and open the ticket detail page as expected.
 
 ### Ticket links after moves ([HTPR-6839])
-
 <span class="label label--brand">Fixed</span> When you move a ticket between boards, old links like <code>https://app.hypertask.ai/detail/project-15/6641</code> now redirect you to the ticket under its new number instead of showing an unavailable page.
 
 Before this fix, moving a ticket would assign it a new number and leave old links broken. Now, tickets store their old number at move time and the app follows the redirect, so shares and bookmarks continue to work. The CLI also follows redirects when resolving ticket IDs, so commands like <code>hypertask task show &lt;old-number&gt;</code> open the correct ticket.
@@ -24,7 +22,6 @@ Before this fix, moving a ticket would assign it a new number and leave old link
 Some extremely old links from before this feature was available may still show unavailable. Those links require a separate backfill and do not receive redirects for privacy reasons.
 
 ## Creating a board
-
 From the web UI, click **New board** to create a blank board. You can also generate a board with AI-powered content:
 
 From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your board structure and sections. The AI generates sections and optionally pre-seeds tasks.
@@ -32,11 +29,9 @@ From a board, use **Ctrl+K** and run **"Create board with AI"** to describe your
 If you invoke AI board creation and the model doesn't return a response after 45 seconds, the fetch cancels and an error is returned instead of leaving you in a stuck state. This prevents indefinite loading when the AI generation hangs.
 
 ## Board titles in browser navigation
-
 The browser title shows the board name and saved-view name when you navigate to a board. The server builds the title from board and saved-view metadata instead of replacing it with a generic title, so your browser tabs and history reflect your actual view.
 
 ## Click-through prefixes for easier moving ([HTPR-5770])
-
 <span class="label label--brand">Feature</span> Each board's ticket prefix is now deterministic based on the board title, making it easier to refer to tasks across similar boards. AI-generated task descriptions, quick toggles, and ticket lookups now use these stable prefixes instead of random identifiers.
 
 - Identical titles across boards now produce one stable base prefix with predictable numeric suffixes (e.g. **aexp-1** / **aexp2-1** from longer titles, **aexp-2** / **aexp2-2**, etc.).
@@ -46,7 +41,6 @@ The browser title shows the board name and saved-view name when you navigate to 
 Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
 
 ## App shell surface shortcuts
-
 When the **left icon rail (beta)** is enabled on desktop, use a single number key to move between the main surfaces:
 
 | Key | Surface |
@@ -60,13 +54,11 @@ When the **left icon rail (beta)** is enabled on desktop, use a single number ke
 These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings → Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
 
 ## Fast task entry
-
 When quick entry is enabled, click the **+** at the top or bottom of a Kanban column to open a compact title field in that position. Press <kbd>Enter</kbd> to save the card and keep the empty field open for the next title. Press <kbd>Esc</kbd> to close it; reopening the same field restores an unsaved title.
 
 The existing shortcuts still open the full task creator: <kbd>C</kbd> adds at the top and <kbd>Shift+C</kbd> adds at the bottom. Use <kbd>Alt+C</kbd> for fast entry at the top or <kbd>Alt+Shift+C</kbd> for fast entry at the bottom.
 
 ## Adding and managing columns
-
 Every board starts with a single default section. To add more:
 
 1. From the view tab bar, use **Ctrl+K**, search for **"Add column"** (or **"Add section"**), and follow the dialog prompts.
@@ -99,23 +91,32 @@ hypertask view create --name "Doing" --project 15
 - **Sort order:** `asc` (ascending) or `desc` (descending)
 
 ### Column visibility
-
 <span class="label label--brand">Behavior change</span> A newly added column is visible in **every view of the board** immediately after creation. There is no need to manually include it in Saved Views or other board views.
 
 This ensures that tasks moved into a new section appear in all view contexts (built-in splits, Saved Views, and per-browser preferences) without extra setup.
 
-## Board hide-empty-columns clearing on last ticket removal
+### Deleting a board's last column ([HTPR-7043])
+<span class="label label--brand">Fixed</span> When you try to delete a board's last column, the system now shows a helpful error instead of flashing the board blank.
 
+**Before:** Attempting to delete the board's last column would temporarily clear the board's columns, making the board appear empty on the UI.
+
+**After:** When you attempt to delete the last column, the following message appears: <strong>"This is the board's last column. Move or delete its cards first."</strong> The cards and column remain visible so you can undo or take alternative action.
+
+This change prevents confusion when moving tasks out of the last column and provides clear guidance on how to proceed with removing a column.
+
+### Deleting an empty column
+If a column contains no tasks, you can delete it directly. The column numbers and layout then shift to reflect the change, and the remaining columns reindex to fill the gap.
+
+## Board hide-empty-columns clearing on last ticket removal
 Before this behavior change, when the last ticket was removed from a board that had columns with all tasks in that removed ticket, those columns disappeared. The board appeared to have no columns, even though the board still had sections that were hidden.
 
-The system now clears the `hide-empty-columns` state for that board when the last ticket leaves. Empty columns remain visible, showing you all sections where you can drop new tickets, and the "no columns to show" help screen is not displayed because the board still has sections.
+The system now clears the <code>hide-empty-columns</code> state for that board when the last ticket leaves. Empty columns remain visible, showing you all sections where you can drop new tickets, and the "no columns to show" help screen is not displayed because the board still has sections.
 
 This change prevents getting stuck in a no-columns state and ensures empty columns show as a normal empty state where you can continue adding tasks.
 
 See HTPR-6550 ([link](https://app.hypertask.ai/detail/project-15/6550)).
 
 ## Built-in splits
-
 Every board ships with four built-in views, on by default. A split's tab appears in the view tab bar only while it contains at least one task, so an empty board shows none of them ([HTPR-4996](https://app.hypertask.ai/detail/project-15/4996)):
 
 - **My Tasks** — tasks assigned to you. Each member sees their own slice of the board.
@@ -128,7 +129,6 @@ Built-in splits need no setup and cannot be edited or deleted; they don't appear
 For agents (CLI/MCP): these views are client-side filters over the board's tasks; the API exposes no extra endpoint for them. Equivalent queries: tasks where `assignees` contains your user id (My Tasks), `dueDate < now` and status `Normal` (Overdue), `waitingOnUserId` set or a `BlockedBy` relation (Blocked), assignee rows with `agentId` set (Agents).
 
 ## My Tasks view controls ([HTPR-6569](https://app.hypertask.ai/detail/project-15/6569))
-
 <span class="label label--brand">Behavior change</span> My Tasks now uses the same Save view and Reset controls as Kanban. The separate Save button is removed while saving and resetting continue to work as before.
 
 From the **Ctrl+K** command palette, you can still use **Save view as** to create a Saved view, and **Reset view** to revert My Tasks to its default set of built-in filters. Keyboard shortcuts like <kbd>Ctrl+S</kbd> and <kbd>Ctrl+R</kbd> no longer scroll the board; they now open the Save view and Reset dialogs respectively.
@@ -136,7 +136,6 @@ From the **Ctrl+K** command palette, you can still use **Save view as** to creat
 This change makes view management across My Tasks and other board views more consistent.
 
 ## Public intake endpoint for the Agent Template board ([HTPR-6502](https://app.hypertask.ai/detail/project-15/6502))
-
 <span class="label label--brand">Feature</span> External agents and users can now file corrections on the Agent Template board without signing in or using an API key.
 
 **POST https://app.hypertask.ai/api/agent-template/feedback** accepts requests to create tasks in the Agent Template board's **Backlog** section. Each submission is:
@@ -174,17 +173,14 @@ curl -sS -X POST "https://app.hypertask.ai/api/agent-template/feedback" \
 All labels must already exist on the Agent Template board before use. This endpoint is ideal for automated pipelines, scoping bots, or human users who want to report issues without navigating authentication flows.
 
 ### Midscene QA board coverage
-
 <span class="label label--brand">Enhancement</span> Midscene AI-driven testing now provides deeper coverage of board workflows, including five key board flows with stale-flow repairs and a nightly heartbeat watchdog for monitoring board health.
 
 The QA expansion uses live DOM inspection to verify critical board interactions end-to-end with automated regression coverage for recurrent issues like stale sections and orphaned tasks.
 
 ## Saved views
-
 Saved views are named filter/sort configurations stored on a project. They make it easy to quickly jump to a common view of specific tasks.
 
 ### The views bar
-
 Saved views appear as pills in a **single row above the board**, with the board's own name as the first pill:
 
 - The row **scrolls sideways** rather than wrapping. A board with many views no longer pushes the columns down the page.
@@ -192,7 +188,6 @@ Saved views appear as pills in a **single row above the board**, with the board'
 - Drag a pill to reorder your views. The board's own pill cannot be moved.
 
 ### Create a saved view
-
 From the app:
 
 1. Open any board
@@ -240,7 +235,6 @@ Or from the app: use **Ctrl+K**, search for the view name, and select it from th
 ## Board interactions and state
 
 ### Board titles in browser navigation ([HTPR-5420](https://app.hypertask.ai/detail/project-15/5420))
-
 The browser title reflects the board and saved-view name when you navigate to a board. The server builds the title from authorized board and saved-view metadata, so Next.js no longer replaces it with a generic title during navigation.
 
 This change applies to:
@@ -253,13 +247,11 @@ This change applies to:
 Full regression coverage includes these views to prevent unexpected title behavior.
 
 ### Instant board painting from IndexedDB snapshot ([HTPR-5722](https://app.hypertask.ai/detail/project-15/5722))
-
 <span class="label label--brand">Performance improvement</span> Boards now paint instantly from a locally cached IndexedDB snapshot. When you open a board, it loads fast without waiting for a full fetch, and authentication revocation runs in the background. If authorization is denied, the board clears and navigates home softly instead of forcing a hard reload.
 
 This Linear-style approach eliminates page flicker and server roundtrips. No reload paths are involved in typical board opening; only real authorization failures trigger a full clear and navigation.
 
 ### Board stability on load
-
 <span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
 
 - Columns appear once and remain visible across desktop and mobile, light and dark.
@@ -267,25 +259,20 @@ This Linear-style approach eliminates page flicker and server roundtrips. No rel
 - Loading actions like opening a ticket and returning, or reloading the page, continue to work correctly.
 
 ### Folder/collection-level board grouping (beta)
-
 <span class="label label--info">Beta feature</span> Boards can now be grouped into collections (formerly called folders) to keep your workspace organized. Collections are rendered in a collapsible section of the board switcher.
 
 No documented API is available for remote collections yet; they are managed from the web UI.
 
 ### Board focus after saving a view ([HTPR-5201](https://app.hypertask.ai/detail/project-15/5201))
-
 When you save a board view, the keyboard focus stays on your current card instead of jumping to the last card in the active column. This matches the behavior observed when other modals (command palette, board manager, column manager, search) close: the board restores focus to the card you were on, keeping your focus consistent across interactions.
 
 ### Board reset-to-default
-
 The **Reset to default** action for board views is now authenticated, access-scoped, transactional, and idempotent. This prevents 500 errors when resetting non-owned board views ([HTPR-5362](https://app.hypertask.ai/detail/project-15/5362)).
 
 ### Faster boardTasks responses ([HTPR-5449](https://app.hypertask.ai/detail/project-15/5449))
-
 The boardTasks endpoint no longer performs redundant authenticated-user lookups after the board access guard completes. This reduces unnecessary work and improves response times on desktop, with consistent behavior across views.
 
 ### Board columns and in-flight agent turns ([HTPR-5545](https://app.hypertask.ai/detail/project-15/5545))
-
 <span class="label label--brand">Behavior change</span> An agent turn can no longer be canceled by a board column move. The worker now protects in-flight deliveries from cancellation caused by section changes or board hygiene moves.
 
 Two independent guards enforce this behavior on the deployed worker:
@@ -296,18 +283,17 @@ Two independent guards enforce this behavior on the deployed worker:
 With these guards in place, board moves by the Agent Manager or Board Maintainer no longer fail an in-flight agent turn.
 
 ### View focus restoration after switching ([HTPR-6333](https://app.hypertask.ai/detail/project-15/6333))
-
 <span class="label label--brand">Behavior change</span> When you switch between views (such as My Tasks, Overdue, or Agents), the board now scrolls horizontally so that any focused card is fully visible from the left edge when possible. If the focused card would stay partially off-screen, the board moves enough to keep the card visible.
 
 Previously, switching views could leave the board persistently scrolled to the right without bringing the focused card into view. With this change, focus restoration is more predictable and matches adjacent behavior: the primary view re-positions horizontally for the focused card, and subsequent view switches follow the same rule.
 
 ## Mobile board switcher ordering ([HTPR-5654](https://app.hypertask.ai/detail/project-15/5654))
-
 When you open the board picker or switch boards on mobile:
 
 - Search starts with focus, so you can begin typing immediately.
 - Arrow keys and <kbd>Enter</kbd> navigate and select filtered results.
 - Boards are ordered by latest activity with your current board pinned at the top:
+
   - The board you're currently looking at appears first.
   - Followed by boards with the most recent task updates.
   - Ordering logic is preserved between opens without reshuffling the list.
@@ -316,7 +302,6 @@ When you open the board picker or switch boards on mobile:
 This behavior uses the same ordering logic as the desktop board switcher while maintaining a stable MRU order session-wide on mobile devices. ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625)).
 
 ### Mobile board switcher search ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625))
-
 In addition to the ordering behavior above, the mobile board switcher supports focused search on launch:
 
 - Search input automatically receives keyboard focus when the picker opens.
@@ -326,7 +311,6 @@ In addition to the ordering behavior above, the mobile board switcher supports f
 - The current board stays pinned at the top during filter operations, ensuring a consistent positional reference.
 
 ## Board sidebar behavior
-
 The left sidebar organizes your boards into collapsible teams. When you group boards by team, they appear in the group's accordion. Within a team's group, the boards are sorted so that your most-used teams appear first.
 
 - Boards are ranked by the most recently opened board inside a team.
@@ -334,7 +318,6 @@ The left sidebar organizes your boards into collapsible teams. When you group bo
 - The sorting is applied consistently across collapsed and expanded sections, keeping high-activity teams easily accessible.
 
 ### Board switcher sort order ([HTPR-5476](https://app.hypertask.ai/detail/project-15/5476))
-
 When you use **Shift+M** (board picker) or the board switcher, boards now appear based on their last activity rather than creation order:
 
 1. The board you're currently looking at is shown first.
@@ -344,7 +327,6 @@ When you use **Shift+M** (board picker) or the board switcher, boards now appear
 This aligns with the agents page's activity-based sorting and ensures your most active boards are always prioritized when navigating.
 
 ### Mobile board switcher search and ordering ([HTPR-5625](https://app.hypertask.ai/detail/project-15/5625))
-
 When you open the board picker or switch boards on mobile, search is focused on launch. Boards are ordered by latest activity with your current board pinned at the top, using the same desktop ordering logic as the board switcher:
 
 - Search starts with focus, so you can begin typing immediately.
@@ -353,13 +335,11 @@ When you open the board picker or switch boards on mobile, search is focused on 
 - Ordering is preserved without reshuffling between opens, keeping active boards stable visually on mobile.
 
 ## Guest boards
-
 - Anonymously visit an empty guest board for the app.hypertask.ai host (hypertask.ai in production).
 - Enter the guest board directly from the root URL logged out (no redirect hop) ([HTPR-4845](https://app.hypertask.ai/detail/project-15/4845)). The guest board is seeded once and persists until you log in or sign up.
 - The cookie consent banner and "Log in" and "Sign up" buttons appear in the header for logged-out visitors ([HTPR-4883](https://app.hypertask.ai/detail/project-15/4883)).
 
 ### Guest demo behavior
-
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
@@ -367,7 +347,6 @@ Guest demo boards provide a guided onboarding experience:
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
-
 If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
 
 The empty state:
@@ -377,7 +356,6 @@ The empty state:
 - Matches your theme and is consistent with other empty states in the app
 
 ## Free tier limits
-
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
 
 - App web interface
@@ -400,7 +378,6 @@ ht --create-board secret-project
 ```
 
 ## Interactive onboarding modal toggle
-
 During guest demo onboarding, interactive modals that ask users to confirm actions (accept invitations, archive views, etc.) use a boolean "toggle" state. The modal handler expects a simple boolean value to acknowledge or dismiss the prompt.
 
 If a modal implementation incorrectly passes a non-boolean placeholder instead of a valid boolean toggle, the modal crashes with a `this.props.toggle is not a function` error when it attempts to invoke the toggle prop.
@@ -417,7 +394,6 @@ The fix ensures that every interactive modal in the demo onboarding path receive
 Regression tests in this release verify modal toggle behavior across these four key onboarding scenes, ensuring future changes to the onboarding UI cannot reintroduce the same crash pattern.
 
 ## Compact modal palette
-
 Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g., the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
 
 **Default behavior (compact)**
@@ -449,7 +425,6 @@ Layout notes:
 Includes the modal sizing changes that ship with the updated modal scale and palette alignment.
 
 ## Cards and selection
-
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
 This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
@@ -459,33 +434,28 @@ Before this change, selected (but not focused) cards would ignore these shortcut
 This behavior matches the expectations you're used to in similar Kanban tools and keeps shortcut use smooth during rapid navigation through tasks and modals.
 
 ### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
-
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
 Before this fix ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874)), the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
 
-After the fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
+After this fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
 This improves the polish of your flow when scanning or sliding your mouse across a board.
 
 ### Batch selection
-
 On desktop boards, hover a card to reveal its selection checkbox. Press <kbd>X</kbd> while a card is active, click its checkbox, or hold <kbd>Shift</kbd> while clicking another card in the same column to select the inclusive range. Selected cards stay selected when focus moves to another card.
 
 The bottom selection bar's **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
 
 ### Board staleness indicators
-
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
 
 ## In-app feedback routing
-
 In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
 
 ## Board access for writes
-
 Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
 
 - CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
@@ -499,19 +469,16 @@ Legacy comment endpoints previously trusted the `botUserId` or `userId` from a c
 This unified gating ensures that operations are isolated to their intended board/task and that sensitive actions (state updates, comments, descriptions) cannot bypass access checks introduced by your configuration or workflow patterns. Before this fix, some write path variations would not consistently gate the target board or task, and affected comment endpoints trusted an unverified client identifier, opening a window for cross-board access errors. All write surfaces are now protected consistently.
 
 ## Manage board columns panel ([HTPR-6217](https://app.hypertask.ai/detail/project-15/6217))
-
 The **Manage board columns** panel in every board now correctly lists all existing columns, including columns added after the last time the panel was opened.
 
 Previously, the panel would show an empty list or stale data if the current board's column state hadn't been refreshed.
 
 ### How it works
-
 - **Refresh on open:** When you click the Manage board columns button, the panel loads the latest column state from the server for that board.
 - **Edit safely:** Each column row remains editable, and changes (renames, reordering) are persisted when you confirm the panel.
 - **Cross-board state isolation:** Columns for another board are not mixed in; each board maintains its own column set.
 
 ### How to verify
-
 1. Open any board with several columns and note their names (e.g. Doing → Review → Done).
 2. Click the **Manage board columns** button.
 3. Confirm you see all the expected columns listed.
@@ -522,8 +489,14 @@ This change ensures that managing columns is reliable regardless of how recently
 
 <span class="label label--brand">Behavior change</span> The **Manage board columns** dialog now keeps keyboard focus inside it. <kbd>Tab</kbd> and <kbd>Enter</kbd> no longer reach tasks behind the panel. Reorder, edit, visibility, add, and back controls work by keyboard, so you can manage columns without leaving the keyboard.
 
-## Board-column scrolling with J/K keyboard shortcuts ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
+### Mobile board-column deletion tooltip ([HTPR-7043])
+<span class="label label--brand">Visual change</span> On mobile, when you long-press to reveal deletion options for the last column on a board, the system now shows a tooltip instead of a full-height modal: *"This is the board's last column. Move or delete its cards first."*
 
+**Before:** Deleting the board's final column on mobile would flash the board blank, and no error or tooltip was displayed.
+
+**After:** The tooltip appears on top of the column when the last-column restriction is triggered, and the column and its cards remain visible in the UI. This prevents confusion between deleting an empty vs. the final column on mobile.
+
+## Board-column scrolling with J/K keyboard shortcuts ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884))
 <span class="label label--brand">Fixed</span> In Kanban board or table views, pressing <kbd>J</kbd> or <kbd>K</kbd> to navigate a column now scrolls only that column, leaving the board and column headers in place.
 
 Before this change, repeated <kbd>J</kbd> or <kbd>K</kbd> presses would scroll the entire board, causing headers to move out of view and making long columns difficult to navigate.
@@ -537,13 +510,11 @@ After this fix ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)):
 This behavior applies throughout board and table views, including My Tasks, Overdue, Blocked, and any custom saved views.
 
 ## Click rows in Layout command palette pop-ups ([HTPR-6848](https://app.hypertask.ai/detail/project-15/6884))
-
 <span class="label label--brand">Fixed</span> When you open the <kbd>Ctrl+K</kbd> Layout command palette, click **Rename board**, and type a new name, clicking any row in the pop-up (for example, **"Change name to [new name]"**) now saves the board and doesn't crash the page.
 
 Before this fix, clicking a row that had no click handler threw an error, so only pressing <kbd>Enter</kbd> worked. Now every row in these pop-ups is protected, so clicking safely renames the board just like pressing Enter.
 
 ## Boards load lighter and faster ([HTPR-6844](https://app.hypertask.ai/detail/project-15/6844))
-
 <span class="label label--brand">Performance improvement</span> Boards now fetch long text fields (description, playbook) and subscription history only when those UI components open.
 
 Before this change, opening a board would eagerly load all project scalars, team data, Google accounts, activity metadata, and the complete subscription-history list. These fields are usually not needed to paint cards or display the current plan.
@@ -556,14 +527,12 @@ After this fix:
 - Long text and billing history are loaded lazily as you interact with those UI elements.
 
 ### Technical notes
-
 - The project and team queries now use minimal, UI-specific selects instead of broad `include` clauses.
 - Subscription history is loaded only when plan or billing details are displayed.
 - Activity metadata and playbook are fetched when those views open.
 - No impact on existing API contracts or MCP tools—only the internal query strategy changed.
 
 ### Ticket selection and clicking ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
-
 <span class="label label--brand">Fixed</span> Clicking a card on a board now reliably opens its detail view across desktop and mobile, with no broken interactions or silent failures.
 
 Before this fix, ticket clicks on certain boards would produce no visible response, leaving users with no way to open a selected task from the Kanban interface.
@@ -573,37 +542,33 @@ After this change:
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
-- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows ← / → still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
+- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows →/← still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
 
 - Tap or click any card on Kanban to open it.
-- Use arrows ← / → or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
+- Use arrows →/← or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
 - Card-related keyboard shortcuts (add, edit, comment, move…) work on both focused and selected cards.
 
 ### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
-
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
 Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
 
-After the fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
+After this fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
 This improves the polish of your flow when scanning or sliding your mouse across a board.
 
 ### Batch selection
-
 On desktop boards, hover a card to reveal its selection checkbox. Press <kbd>X</kbd> while a card is active, click its checkbox, or hold <kbd>Shift</kbd> while clicking another card in the same column to select the inclusive range. Selected cards stay selected when focus moves to another card.
 
 The bottom selection bar's **Open actions** button opens the command palette for the selected cards. <kbd>Ctrl</kbd> or <kbd>Cmd</kbd> + <kbd>E</kbd> archives them. <kbd>A</kbd> opens batch assignment, <kbd>T</kbd> opens batch tags, and <kbd>M</kbd> opens batch move. Press <kbd>Esc</kbd> to clear the selection. If an operation fails for a card, that card stays selected so you can retry it.
 
 ## Board staleness indicators
-
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
 
 ## Board scroll position on back navigation ([HTPR-6998](https://app.hypertask.ai/detail/project-15/6998))
-
 <span class="label label--brand">Fixed</span> When you move from a board to a search result or open a ticket from a board and then return with the browser's Back button or a Back link, the board now preserves your scroll position instead of resetting to the top.
 
 Before this fix, navigating away and back would restore the board view at the top, forcing you to scroll and re-find your place. Now, the board remembers where you left off and continues from there, matching the expected scroll restoration behavior across search, task detail pages, and browser navigation.
@@ -611,5 +576,4 @@ Before this fix, navigating away and back would restore the board view at the to
 <Aside type="note">The fix applies to tall boards where scrolling is common, such as detailed project help boards, release notes trackers, or inspection-style Kanban columns.</Aside>
 
 ## In-app feedback routing
-
 In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
