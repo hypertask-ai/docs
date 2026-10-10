@@ -1,6 +1,6 @@
 ---
-title: What is Hypertask?
-description: AI-native project management for teams and AI agents â\x80\x94 manage tasks, collaborate in real-time, and connect AI agents with MCP, CLI, and REST APIs.
+title: "What is Hypertask?"
+description: "AI-native project management for teams and AI agents — manage tasks, collaborate in real-time, and connect AI agents with MCP, CLI, and REST APIs."
 ---
 
 import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/components';
@@ -8,16 +8,16 @@ import { Steps, TabItem, Tabs, Aside, Card, CardGrid } from '@astrojs/starlight/
 # What is Hypertask?
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-  <Card title="AI-native collaboration" icon="ð\x9f\x94\x90">
-    Built with agents first. Hypertask comes with an intelligent co-worker that can read your board, create tasks, and respond to commentsâ\x80\x94all via Chat, CLI, MCP, or REST.
+  <Card title="AI-native collaboration" icon="🤖">
+    Built with agents first. Hypertask comes with an intelligent co-worker that can read your board, create tasks, and respond to comments—all via Chat, CLI, MCP, or REST.
   </Card>
-  <Card title="Full control, no lock-in" icon="ð\x9f\x93§">
+  <Card title="Full control, no lock-in" icon="🛡️">
     Use built-in or programmatic auth. The CLI, MCP and REST APIs cover every piece of your workflow, so you own the experience.
   </Card>
-  <Card title="Workspace-ready" icon="ð\x9f\x8f¢">
+  <Card title="Workspace-ready" icon="🏢">
     Multi-tenant workspaces with optional boards per workspace, team invites, role-based permissions, and real-time collaboration for many teams.
   </Card>
-  <Card title="Modern UX" icon="â\x9a¡">
+  <Card title="Modern UX" icon="✨">
     Clean Kanban boards, calendar views, a unified Inbox for mentions and updates, and a Theme picker supporting Light, Dark, AMOLED, and custom Paper theme.
   </Card>
 </div>
@@ -71,16 +71,14 @@ Here's a quick overview of the key concepts you'll use in Hypertask.
 | **Workspace** | The top-level container for your organization. Board owners can choose whether a board belongs to one workspace or automatically inherits from the owner. |
 | **Board** | A flexible surface for organizing work: Kanban columns, tables, lists, or calendars. Boards contain sections, views, and tasks. |
 | **Section** | A column on a Kanban board with tasks that share a common state or trigger. Sections support drag-to-reorder. |
-| **View** | A custom perspective on a boardâ\x80\x94filtering, sorting, grouping, or hiding tasks. Views can be pinned, hidden, or deleted as needed. |
+| **View** | A custom perspective on a board—filtering, sorting, grouping, or hiding tasks. Views can be pinned, hidden, or deleted as needed. |
 | **Task** | A unit of work with a title, description, assignee, tags, subtasks, and relations with other tasks and issues. |
-| **Chat** | An in-app AI assistant that understands your contextâ\x80\x94tasks, boards, messages, and more. You can create and edit saved GPTs, speed up writing, and control agents and time tracking. |
+| **Chat** | An in-app AI assistant that understands your context—tasks, boards, messages, and more. You can create and edit saved GPTs, speed up writing, and control agents and time tracking. |
 | **Inbox** | A unified feed of mentions, important items, reactions, and updates across your boards. Unread items are highlighted and accessible via keyboard navigation. |
 | **Agents** | Autonomous AI agents that can pull context from your board, create and update tasks, respond to comments, run schedules, and interact with your workspace via tools. |
 
 <Aside type="note">
-
 It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and your own SMTP for signing in, with Firebase kept exclusively for push notifications. You can also integrate via CLI, MCP, or REST without going through the app UI at all.
-
 </Aside>
 
 ## Getting started
@@ -105,14 +103,12 @@ It's Email-native, but not Firebase-dependent. Hypertask uses Better Auth and yo
 Hypertask has a rich set of keyboard shortcuts across surfaces. Press <kbd>Ctrl+K</kbd> to open the command palette and search for shortcuts by name.
 
 <Aside>
-
-Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and ð\x9f\x91\x86 on macOS.
-
+Depending on your OS, <kbd>Ctrl</kbd> is <kbd>Control</kbd> on Windows/Linux and ⌘ on macOS.
 </Aside>
 
-<code>Ctrl+K</code> â\x80\x94 Open command palette for shortcuts and actions.
+<code>Ctrl+K</code> — Open command palette for shortcuts and actions.
 
-<code>Ctrl+G</code> â\x80\x94 Navigate surfaces (Inbox â\x86\x92 Boards â\x86\x92 My Tasks â\x86\x92 Chat), as needed.
+<code>Ctrl+G</code> — Navigate surfaces (Inbox → Boards → My Tasks → Chat), as needed.
 
 ### Live shortcuts
 
@@ -124,7 +120,7 @@ The header's **Login** button shows a "Press L to log in" tooltip when you hover
 
 ## Onboarding
 
-First-time users see an <strong>Onboarding Tour</strong> when they sign in. You can replay it at any time by pressing <kbd>Ctrl+K</kbd>, searching for **"Onboarding tour"**, and selecting the replay option.
+First-time users see an <strong>Onboarding Tour</strong> when they sign in. You can replay it at any time by pressing <kbd>Ctrl+K</kbd>, searching for "Onboarding tour", and selecting the replay option.
 
 The tour walks you through connecting AI, creating your first board, and using key features. Invited teammates see a trimmed version that skips heavy setup but still introduces essential workflows.
 
@@ -140,11 +136,10 @@ Hypertask uses server-side authentication and ensures that other users' data nev
 - <strong>Strict account linking</strong>: Linking a Google login to an unverified local account is blocked, ensuring verified local accounts are not orphaned.
 - <strong>Multi-tenant isolation</strong>: By design, boards, views, and tasks belong to the user. Archive and other features show only your data unless explicitly shared.
 - <strong>Single-use login and verification links</strong>: When you request a new sign-in link or account verification email, the link is valid for one use only. Attempting to reuse a link shows an "invalid or expired" message and does not grant a session.
+- <strong>Board-level access for files</strong>: Only people who can see a ticket can download its attachments. Access is scoped to the task: observers outside the ticket cannot reach files and previews, even if they can view the board.
 
 <Aside type="tip">
-
 For finer-grained security, you can use the REST API to enforce claims, tokens, and additional checks for your integrations.
-
 </Aside>
 
 ## Frequently asked questions
