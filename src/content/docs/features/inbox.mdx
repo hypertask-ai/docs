@@ -11,7 +11,7 @@ The **Inbox** gathers all notifications (mentions, assignments, and more) into a
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette and search for **"Inbox"**, or go to the Inbox page from the sidebar. The inbox shows:
 - **Unread notifications** from mentions, assignments, reactions, and follow updates
 - **Actionable items** like tasks, notifications with dismiss options (undo, dismiss all, undo all), and confirmed operations (invites, feedback)
-- **Important tasks** â\x80\x94 rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
+- **Important tasks** — rows marked with the **Important** label appear first, in priority order and timeline-sorted (newest first)
 
 ### Replying to notification emails
 Reply directly to a task notification email to add your response as a comment on the task. Send the reply from the same email address as your Hypertask account so Hypertask can verify it and post it under your name.
@@ -30,6 +30,22 @@ The inbox can be grouped into multiple views:
 
 ### Saved views and sorting
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g., top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
+
+## Filtered agent chatter in inbox
+
+<Aside type="note">
+
+Only questions and real messages reach the inbox. Agent FYI @mentions appear in the inbox but not in Important, keeping your top row focused on actionable items.
+
+</Aside>
+
+To respect the inbox's purpose of surfacing work that needs your attention, Hypertask now filters agent chatter:
+
+- **Questions and direct questions** — Agent comments that look like questions (starting with "Can you", "How do", etc.) or contain a question mark immediately land in your inbox.
+- **FYI @mentions** — Agent comments that are informational and include @yourname show in your inbox but not in the Important split. These are visible but don't push tasks you care about to the top.
+- **Chatty agent messages** — Agent comments that lack question marks and aren't @mentioned are still visible in the task detail and on the board, but they don't generate inbox notifications.
+
+This change keeps your inbox focused on discussions that need your attention while still surfacing agent updates that are meaningful to you.
 
 ## Inbox row hover behavior
 On desktop (light and dark mode), hovering over an inbox row now shows the **archive** and **snooze** icons in exactly where the timestamp used to be. This prevents the row content from shifting or wobbling as you move your mouse across the list:
@@ -86,7 +102,7 @@ Previously, users who had deleted or lost their legacy cookie would hit silent 4
 Board data is deferred until Inbox is usable to improve startup performance. When you navigate to Inbox, the previous-board query is paused while Inbox contains placeholder data and automatically resumes after IndexedDB, network, or optimistic data is available. This ensures that on signed-in reloads, no Board request occurs before usable data, and warm-up of the previous-board query waits for stable IndexedDB and network readiness ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431)).
 
 ## Parallel inbox detail loading
-**Inbox details now load concurrently** instead of sequentially to reduce wait times. Previously, who-did-what, unread counts, and rewards fetched in separate sequential stagesâ\x80\x94waiting for each to complete before starting the next. Now these operations start together where their dependencies allow, cutting waits particularly in populated inboxes. The improvement applies across desktop and mobile, light and dark, for both first visits and repeat loads.
+**Inbox details now load concurrently** instead of sequentially to reduce wait times. Previously, who-did-what, unread counts, and rewards fetched in separate sequential stages—waiting for each to complete before starting the next. Now these operations start together where their dependencies allow, cutting waits particularly in populated inboxes. The improvement applies across desktop and mobile, light and dark, for both first visits and repeat loads.
 
 <Aside type="tip">You'll notice faster inboxes especially with many notifications and/or slower network connections.</Aside>
 
@@ -94,7 +110,7 @@ Board data is deferred until Inbox is usable to improve startup performance. Whe
 Each inbox load now dedupes notifications and access calls to a single round trip instead of multiple concurrent calls ([HTPR-6063](https://app.hypertask.ai/detail/project-15/6063)). This reduces redundant requests and improves load times when many notifications or assignments are present, particularly on slower network connections.
 
 ## Inbox row selection and bulk archiving
-You can now select multiple rows in the Inbox and archive them in bulk using **Shift+E**. This works across filtered lists and views. The multiple selection allows you to quickly clear out large batches of notifications without opening them individually, mirroring the bulk-archive behavior in Saved views. Selected rows are persisted until you commit the action, ensuring you can review the working set before archiving ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206)).
+You can now select multiple rows in the Inbox and archive them in bulk using **Shift+E**. This works across filtered lists and views. The multiple selection allows you to quickly clear out large batches of notifications without opening them individually, mirroring the bulk-archive behavior in Saved views ([HTPR-6206](https://app.hypertask.ai/detail/project-15/6206)). Selected rows are persisted until you commit the action, ensuring you can review the working set before archiving.
 
 ## Undo inbox items safely ([HTPR-6527](https://app.hypertask.ai/detail/project-15/6527))
 Undoing an inbox item now safely handles empty row slots. Previously, undoing an item with a missing row slot could trigger a `waitingOnSynthetic` error and crash the inbox list. When the undo path encounters a hole in the data structure, the system now skips the empty slot instead of blocking, and the inbox list remains stable after the undo completes.
@@ -112,7 +128,7 @@ On narrow screens, the undo button appears on inbox rows under undoable items. U
 
 <Aside type="note">The undo action is available via snack bar buttons on inbox rows on mobile, or by selecting an undo action from the row's action menu on desktop.</Aside>
 
-## Inbox boundary jumps (HTPR-5431)
+## Inbox boundary jumps ([HTPR-5431](https://app.hypertask.ai/detail/project-15/5431))
 When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg</kbd> and <kbd>GG</kbd> to jump to the top or bottom of the list. This fix ensures that:
 - Pressing <kbd>gg</kbd> moves focus to the first item and scrolls the list to center that row on screen.
 - Pressing <kbd>GG</kbd> moves focus to the last item and scrolls the list to center that row on screen.
@@ -120,10 +136,10 @@ When the inbox list is longer than the screen, use <kbd>G</kbd> twice or <kbd>gg
 
 This change addresses the case where moving to the last item (via <kbd>G</kbd><kbd>G</kbd>) changed which inbox row was highlighted, but the long list stayed in its old position on screen. Now top and bottom jumps center the matching row and handle filtered and empty inboxes safely.
 
-## Keyboard navigation (HTPR-7000)
-- <kbd>J</kbd> â\x80\x94 Move focus down
-- <kbd>K</kbd> â\x80\x94 Move focus up
-- <kbd>Enter</kbd> â\x80\x94 Open task or draft
+## Keyboard navigation ([HTPR-7000](https://app.hypertask.ai/detail/project-15/7000))
+- <kbd>J</kbd> — Move focus down
+- <kbd>K</kbd> — Move focus up
+- <kbd>Enter</kbd> — Open task or draft
 
 Previously, pressing <kbd>J</kbd> or the next arrow while viewing an Inbox item would display the wrong ticket for more than 15 seconds, making intentional sound-based navigation unpredictable. Now, these shortcuts reliably open and move focus to the correct item, synchronizing visual focus with keyboard interaction.
 
@@ -163,7 +179,7 @@ This means hidden rows (e.g., notifications from tasks you've archived, filtered
 ### Reconfirmation on preview changes
 If the set of visible rows changes while Inbox Zero is open, the reconfirmation prompt appears again. This protects you from accidentally committing to the wrong batch when switching between views, confirming tasks that are out of scope, or otherwise altering what's included in the visible scope.
 
-**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K â\x86\x92 "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
+**Confirmation required**: After validation, Inbox Zero confirms the changes before committing, ensuring accidental bulk-action clears don't lose work. Ctrl+K → "Clear inbox to zero" now always shows you what it will archive and waits for your explicit confirmation before applying the changes. This prevents accidental sweeps and preserves live workflows.
 
 ### Limitations
 - Inbox Zero only sees the **visible** portion of the All tab at the moment you open it; items hidden by board filters, privacy settings, or a previous archiving action are out of scope.
@@ -180,16 +196,16 @@ Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bo
 Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. When available, the Important split is enabled, helping new users immediately experience AI-driven prioritization.
 
 ## Remind options in the Inbox ([HTPR-6946](https://app.hypertask.ai/detail/project-15/6946))
-When you open a notification card on the Inbox page, the Remind panel options now behave as you expect: choosing a Remind option clears the notification and leaves you in the Inbox view. Under HTPR-6946, clicking **Remind** and choosing an option such as "Later today" or "Tomorrow" closes the Remind panel, removes the notification, and keeps your view in the Inbox. This makes selecting reminders a one-click, task-agnostic action.
+When you open a notification card on the Inbox page, the Remind panel options now behave as you expect: choosing a Remind option clears the notification and leaves you in the Inbox view. Under [HTPR-6946](https://app.hypertask.ai/detail/project-15/6946), clicking **Remind** and choosing an option such as "Later today" or "Tomorrow" closes the Remind panel, removes the notification, and keeps your view in the Inbox. This makes selecting reminders a one-click, task-agnostic action.
 
 ## OpenWiki
 OpenWiki is a RAG-powered notepad available on each task, supporting AI-optimized queries and your custom documentation. When you add notes to a task, they're versioned and can be queried by agents whenever they investigate that task.
 
 OpenWiki notifications include an **OpenWiki** badge and action buttons:
-- **View** â\x80\x94 Open the OpenWiki page for the associated task
-- **Refresh** â\x80\x94 Pull the latest RAG content from connected documentation
-- **Dismiss** â\x80\x94 Remove the notification from your inbox without affecting the underlying task
-- **Undo** â\x80\x94 Re-add a dismissed OpenWiki notification
+- **View** — Open the OpenWiki page for the associated task
+- **Refresh** — Pull the latest RAG content from connected documentation
+- **Dismiss** — Remove the notification from your inbox without affecting the underlying task
+- **Undo** — Re-add a dismissed OpenWiki notification
 
 To keep up-to-date with OpenWiki activity, use the Refresh button in the notification card, which fetches fresh content from your connected knowledge base.
 
@@ -219,17 +235,17 @@ The read model follows your account-scoped setting. When you switch boards and r
 ## Real-time updates
 Inbox notifications now update in real-time using WebSocket connections. As notifications are created or changed, the server broadcasts updates to all connected clients, eliminating manual page refreshes.
 
-- **Subscription on client:** `useInboxRealtime` hook in the frontend layer subscribes to inbox changes for the current user.
-- **Broadcast mechanism:** `broadcastInboxChange` fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest).
+- **Subscription on client**: `useInboxRealtime` hook in the frontend layer subscribes to inbox changes for the current user.
+- **Broadcast mechanism**: `broadcastInboxChange` fires whenever a notification is created or modified, notifying all subscribed clients instantly across all supported surfaces (app, CLI, MCP, manifest).
 
 Sibling-rows cleanup after archiving now propagates in real-time. When you archive a notification, its sibling rows in the Reactions split are immediately cleared in the local view without needing to refresh. This mirrors the server-side sibling cleanup and keeps the inbox UI in sync with your actions.
 
 This ensures your inbox always reflects the latest state of mentions, assignments, reactions, and follow updates without needing to refresh manually.
 
 ## Active split highlighting
-The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views â\x80\x94 ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
+The inbox now uses stronger, more consistent bolding for the active split tab across all views. On the light theme, the active split (e.g., Important) shows clearly bold black text, while inactive tabs remain in regular weight and neutral colors. This consistency extends to all split views: Inbox, Notifications, and Saved views — ensuring the active context is immediately clear whether you're browsing from Kanban, Calendar, Table, or Inbox ([HTPR-6207](https://app.hypertask.ai/detail/project-15/6207)).
 
-## Mobile inbox icon behaviour (HTPR-6365)
+## Mobile inbox icon behaviour ([HTPR-6365](https://app.hypertask.ai/detail/project-15/6365))
 When viewing tasks on mobile, the blue remove-from-inbox control now correctly displays only for tasks that belong to your inbox. Tasks opened from the Kanban board that are not in your inbox will no longer show this icon, matching the same logic used on the Inbox screen.
 
 ## Mobile inbox performance ([HTPR-6934](https://app.hypertask.ai/detail/project-15/6934))
@@ -249,34 +265,34 @@ Comments are now always readable at every window width, including narrow desktop
 
 <Aside type="note">The fix applies to both desktop web and the mobile "Desktop site" mode when trails to conditional desktop rendering were active.</Aside>
 
-## Fixed: Remind from inbox keeps you in Inbox ([HTPR-7064])
+## Fixed: Remind from inbox keeps you in Inbox ([HTPR-7064](https://app.hypertask.ai/detail/project-15/7064))
 <span class="label label--brand">Fixed</span> When you open a notification and choose "Remind," the task page no longer steals focus and leaves the notification.
 Before this fix, selecting a reminder time would open the task and keep the notification in your Inbox, requiring an extra click to return. Now, clicking **Remind** and choosing an option such as "Later today" or "Tomorrow" automatically closes the Remind panel, removes the notification, and keeps your view in the Inbox, making Remind a one-click action.
 
-## Fixed: Signed-in users without legacy profile cookie no longer get silent 401s ([HTPR-7073])
+## Fixed: Signed-in users without legacy profile cookie no longer get silent 401s ([HTPR-7073](https://app.hypertask.ai/detail/project-15/7073))
 <span class="label label--brand">Fixed</span> Signed-in users without the older profile cookie no longer get silent 401 errors when accessing board pages, ticket pages with custom fields, AI chat history, connections, calendar views, and velocity reports.
 Previously, users who had deleted or lost their legacy cookie would hit hidden 401 responses when trying to load these surfaces. Now the app resolves the underlying session issue server-side and renders the appropriate content, ensuring consistent access for all authorized users regardless of cookie state.
 
 <Aside type="note">If you can normally log in and access boards, this change does not require any action. It only fixes errors that occurred for users who were already authenticated but had missing cookies.</Aside>
 
 ## Keyboard shortcuts
-- <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
-- <kbd>Ctrl</kbd> + <kbd>F</kbd> â\x80\x94 Search across all notifications
-- <kbd>N</kbd> â\x80\x94 Create a new task from the active board
-- <kbd>Space</kbd> â\x80\x94 Mark current item as read/unread
-- <kbd>Esc</kbd> â\x80\x94 Close modal, draft error, or focused search
-- <kbd>E</kbd> â\x80\x94 Archive notification
-- <kbd>Enter</kbd> â\x80\x94 Open task or draft
-- <kbd>J</kbd> â\x80\x94 Move focus down
-- <kbd>K</kbd> â\x80\x94 Move focus up
-- <kbd>Ctrl</kbd> + <kbd>A</kbd> â\x80\x94 Select all from current split
-- <kbd>Ctrl</kbd> + <kbd>X</kbd> â\x80\x94 Select message
-- <kbd>Shift</kbd> + <kbd>E</kbd> â\x80\x94 Bulk Archive (select rows or visible set)
+- <kbd>Ctrl</kbd> + <kbd>K</kbd> — Open command palette with inbox options: **Snooze**, **Read/Unread**, **Mark Read**, **Clear inbox to zero**, **Go to archived inbox**
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> — Search across all notifications
+- <kbd>N</kbd> — Create a new task from the active board
+- <kbd>Space</kbd> — Mark current item as read/unread
+- <kbd>Esc</kbd> — Close modal, draft error, or focused search
+- <kbd>E</kbd> — Archive notification
+- <kbd>Enter</kbd> — Open task or draft
+- <kbd>J</kbd> — Move focus down
+- <kbd>K</kbd> — Move focus up
+- <kbd>Ctrl</kbd> + <kbd>A</kbd> — Select all from current split
+- <kbd>Ctrl</kbd> + <kbd>X</kbd> — Select message
+- <kbd>Shift</kbd> + <kbd>E</kbd> — Bulk Archive (select rows or visible set)
 
 ### J/K navigation to inbox drafts
 <Aside type="tip">Press <kbd>J</kbd> and <kbd>K</kbd> across the inbox to navigate between items and <kbd>Enter</kbd> to open a draft. The navigation works across mixed content including notifications and drafts.</Aside>
 
 ### Merge actions
-Use <kbd>Ctrl</kbd> + <kbd>K</kbd> â\x80\x94 **Merge into inbox** to consolidate multiple activities into a single notification entry.
+Use <kbd>Ctrl</kbd> + <kbd>K</kbd> → **Merge into inbox** to consolidate multiple activities into a single notification entry.
 
-<Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</Aside>
+<Aside type="tip">Merging is especially useful for high-mention frequency where your inbox would otherwise flood with individual mention rows.</aside>
