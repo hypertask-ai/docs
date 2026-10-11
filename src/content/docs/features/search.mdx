@@ -96,3 +96,21 @@ When you type a filter operator such as `from:` or `assignee:` and select a pers
 - **# board picker**: Start typing `#` to select or create boards.
 
 Pickers appear when typing a people or board-related operator such as `from:`, `assignee:`, or `in:`.
+
+## New tasks appear immediately in search
+
+<Aside type="tip">
+
+Tasks created through the API now appear in search results right away without needing to update their title.
+
+</Aside>
+
+Previously, when you created tickets via the API without a title update, the search index would not reflect the new entries. Now, Hypertask updates the search index immediately after task creation, so the new tasks show up when you search.
+
+To verify it’s live:
+
+- Create a new task using the API or CLI with just a description.
+- Switch to the search screen and use a keyword from the description to see the new task appear in results.
+- No additional steps like editing the title are required.
+
+This change applies to all API surfaces, including the MCP tools and REST endpoints, and makes search results consistent across all task creation flows.
