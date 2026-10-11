@@ -56,7 +56,7 @@ When the **left icon rail (beta)** is enabled on desktop, use a single number ke
 These shortcuts are ignored while you are typing, using a modal, or holding a modifier key. They are also listed in **Settings → Shortcuts**, the <kbd>?</kbd> shortcut panel, and the <kbd>Ctrl/Cmd+K</kbd> command palette while the beta rail is active.
 
 ## Fast task entry
-When quick entry is enabled, click the **+** at the top or bottom of a Kanban column to open a compact title field in that position. Press <kbd>Enter</kbd> to save the card and keep the empty field open for the next title. Press <kbd>Esc</kbd> to close it; reopening the same field restores an unsaved title.
+When quick entry is enabled, click the **+** at the top or bottom of a Kanban column to open a compact title field in that position. Press <kbd>Enter</kbd> to save the card and keep the empty field open for the next title. Press <kbd>Esc</kbd> to close it; reopening the field starts empty and throws away any typed text.
 
 The existing shortcuts still open the full task creator: <kbd>C</kbd> adds at the top and <kbd>Shift+C</kbd> adds at the bottom. Use <kbd>Alt+C</kbd> for fast entry at the top or <kbd>Alt+Shift+C</kbd> for fast entry at the bottom.
 
@@ -544,12 +544,12 @@ After this change:
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
-- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows ↖/↗ still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
+- **Keyboard navigation:** Keyboard shortcuts that select a card via arrows → or ← still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
 
 - Tap or click any card on Kanban to open it.
-- Use arrows ↖/↗ or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
+- Use arrows → or ← or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
 - Card-related keyboard shortcuts (add, edit, comment, move…) work on both focused and selected cards.
 
