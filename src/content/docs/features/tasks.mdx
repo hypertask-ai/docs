@@ -143,7 +143,7 @@ This change makes view management across My Tasks and other board views more con
 
 ## Creating a task
 
-From a board or inbox, click **New task** (or use the keyboard shortcut **Ctrl+N** / **Cmd+N**). This opens the task creator with the following top-level sections:
+From a board or inbox, click **New task** (or use the keyboard shortcut **Ctrl+N** / <kbd>Cmd+N</kbd>). This opens the task creator with the following top-level sections:
 
 - **Title**: The name or headline of the work.
 - **Description**: Optional text explaining what to do.
@@ -153,11 +153,11 @@ From a board or inbox, click **New task** (or use the keyboard shortcut **Ctrl+N
 - **Priority**: Choose Low, Medium, or High.
 - **Estimated time**: Optionally specify hours or a low-high range if needed.
 
-Use **Write with AI** (**Ctrl+K** / **Cmd+K**, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
+Use **Write with AI** (**Ctrl+K** / <kbd>Cmd+K</kbd>, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
 
 ### New Task creator
 
-<span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / **Cmd+J** and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
+<span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / <kbd>Cmd+J</kbd> and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
 
 ## OAuth connection flow
 
@@ -181,10 +181,10 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 
 ### Keyboard shortcuts
 
-- **Ctrl+K** / **Cmd+K**: Open the command palette with AI-assisted task editing and Quick Actions.
-- **Ctrl+N** / **Cmd+N**: Create a new task from anywhere on a board.
-- **Ctrl+O** / **Cmd+O**: Open the link or auto-save picker when in a task detail view or comment.
-- **Ctrl+J** / **Cmd+J**: Create a new task while opening the AI Task Writer for instant text generation ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
+- **Ctrl+K** / <kbd>Cmd+K</kbd>: Open the command palette with AI-assisted task editing and Quick Actions.
+- **Ctrl+N** / <kbd>Cmd+N</kbd>: Create a new task from anywhere on a board.
+- **Ctrl+O** / <kbd>Cmd+O</kbd>: Open the link or auto-save picker when in a task detail view or comment.
+- **Ctrl+J** / <kbd>Cmd+J</kbd>: Create a new task while opening the AI Task Writer for instant text generation ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
 
 ## Task Reporter
 
@@ -251,7 +251,7 @@ Common actions include:
 - **Archive**: Hide the task from current views while keeping it in the archive.
 - **Delete**: Permanently remove the task. Delete is now available via the **Commands** menu in the task toolbar or description.
 
-<span class="label label--brand">Undo for archive</span> When you archive a task, undo appears on the notification. Clicking **Undo** immediately restores the task to its original column without refreshing the page. The task stays restored after reloads and across archiving variants like archiving via the task menu or with the Ctrl+E keyboard shortcut.
+<span class="label label--brand">Undo for archive</span> When you archive a task, undo appears on the notification. Clicking **Undo** immediately restores the task to its original column without refreshing the page. The task stays restored after reloads and across archiving variants like archiving via the task menu or with the <kbd>Ctrl+E</kbd> keyboard shortcut.
 
 ## Relations between tasks
 
@@ -296,7 +296,7 @@ The Task Writer writes tasks in your team's style. It uses board-aware prompts, 
 
 ### Using the Task Writer
 
-- From a board: **Ctrl+J** / **Cmd+J** and select **Create with AI** — **Task Writer**.
+- From a board: **Ctrl+J** / <kbd>Cmd+J</kbd> and select **Create with AI** — **Task Writer**.
 - From the command palette: **Ctrl+K** — search for "Task Write" and select it.
 - From a task: Click the AI icon in the task header and select **Task Writer**.
 
@@ -325,18 +325,18 @@ This lets you browse through tasks inside the app while the rest of your session
 
 - Median open times are ~0.15 seconds on desktop and ~0.17 seconds on mobile.
 - The first open after a board loads takes about 0.25 to 0.33 seconds; subsequent opens are closer to 0.13 to 0.18 seconds.
-- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before ([HTPR-6853](https://app.hypertask.ai/detail/project-15/6853)).
+- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority stay warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before ([HTPR-6855](https://app.hypertask.ai/detail/project-15/6855)).
 
 ### Visual smoothness
 
-<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
+<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6895](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
 
 ### Keyboard shortcuts
 
 We recommend using keyboard shortcuts to navigate:
 
-- **Ctrl+J** / **Cmd+J** to jump to a task or open it with the Task Writer.
-- **Ctrl+O** / **Cmd+O** to jump to a task or link from within the task detail.
+- **Ctrl+J** / <kbd>Cmd+J</kbd> to jump to a task or open it with the Task Writer.
+- **Ctrl+O** / <kbd>Cmd+O</kbd> to jump to a task or link from within the task detail.
 
 These shortcuts preserve the instant-open feel and keep you moving without page spins or wait states.
 
@@ -355,6 +355,10 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 ### No flash of the ticket title after opening a board card
 
 <span class="label label--brand">Fixed</span> Pressing **Back** right after opening a board card now shows the board immediately, with no flash of the ticket title. In at least 19 of 20 quick Backs (within 0.3 seconds of opening a card), you see only the board, not the ticket, and the board is visible within 1 second. ([HTPR-7003](https://app.hypertask.ai/detail/project-15/7003)).
+
+### Task detail view loads only once
+
+<span class="label label--brand">Fix</span> Opening a task from the board no longer loads the task detail view twice. The comment section now loads once after the task UI and before the top bar, eliminating redundant data fetching and improving perceived speed on repeat visits. ([HTPR-7103](https://app.hypertask.ai/detail/project-15/7103)).
 
 ## Related topics
 
