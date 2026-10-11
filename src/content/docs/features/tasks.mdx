@@ -36,7 +36,7 @@ Once in multi-select mode:
 
 Selected rows persist until you commit an action, so you can review the working set before bulk-actioning multiple tasks.
 
-> **Tip**: The selection model matches the way you select tasks in Kanban, so if you're comfortable bulk-archiving or moving tasks on a board, the pattern transfers directly to My Tasks.
+> **Tip**: The selection model matches the way you select tasks in Kanban, so if you are comfortable bulk-archiving or moving tasks on a board, the pattern transfers directly to My Tasks.
 
 ### Tasks you're snoozed on
 
@@ -207,7 +207,7 @@ The task description supports rich text and file attachments. When you're the **
 
 - To remove an attachment, open the description in edit mode, click the attachment you want to remove, and save. Only the items you deselect will be removed; remaining attachments are preserved as one copy each.
 
-<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-339/6629))
+<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-15/339/6629))
 
 ## Agent lease interactions
 
@@ -248,6 +248,8 @@ The comment thread shows all comments on the task. By default, when you open a t
 <span class="label label--brand">Improvement</span> Long task pages and comment threads now send their initial snapshot only once, reducing data copies and decoding passes. Repeat visit times drop from roughly 2.2 seconds to about 0.6 seconds. The change applies to tasks with many comments or long descriptions and focuses on the initial load speed, preserving all existing behavior for navigation, real-time updates, and comment handling.
 
 <span class="label label--brand">Fix</span> The comment box on ticket pages is now positioned immediately below the last comment instead of appearing in the middle of the task. It previously moved under the task description, causing the interface to split the comment content unnaturally. The comment section now renders after other content and before the top bar, keeping comments at the bottom of the page as expected ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
+
+<span class="label label--brand">Fix</span> A shared comment link now opens on that comment instead of the ticket top, with the comment visible on screen on both desktop and mobile. The link scrolls directly to the referenced comment when you open it—for example, from Slack or email—making it easier to reference specific points in a conversation. This fix improves navigation for long threads with hundreds of comments and helps ticket descriptions stay readable even on narrow phones ([https://app.hypertask.ai/detail/project-15/7090](https://app.hypertask.ai/detail/project-15/7090)).
 
 ### Actions
 
