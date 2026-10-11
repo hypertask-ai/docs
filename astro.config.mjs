@@ -31,6 +31,7 @@ export default defineConfig({
         },
       ],
       sidebar: [
+        { label: 'Connect a new agent', link: '/connect-an-agent/' },
         { label: 'Changelog', link: '/changelog/' },
         {
           label: 'Features',
