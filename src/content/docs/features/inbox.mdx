@@ -31,23 +31,30 @@ The inbox can be grouped into multiple views:
 ### Saved views and sorting
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g., top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
 
-## Filtered agent chatter in inbox
+## Decisions split for waiting work
 
-<Aside type="note">
+<Aside type="note">Use the Decisions split to see only tickets where Valentin must approve or reject, in your Inbox and on every board.</Aside>
 
-Only questions and real messages reach the inbox. Agent FYI @mentions appear in the inbox but not in Important, keeping your top row focused on actionable items.
+Add a Decisions split to your Inbox and view Decisions tickets on every board. This split shows tickets waiting specifically on your yes or no decision:
 
-</Aside>
+- **Inbox:** A Decisions split sits next to Important, showing only decisions you need to make.
+- **Every board:** A Decisions view keeps decision-ready tickets visible at a glance across your workspaces.
 
-To respect the inbox's purpose of surfacing work that needs your attention, Hypertask now filters agent chatter:
-
-- **Questions and direct questions** — Agent comments that look like questions (starting with "Can you", "How do", etc.) or contain a question mark immediately land in your inbox.
-- **FYI @mentions** — Agent comments that are informational and include @yourname show in your inbox but not in the Important split. These are visible but don't push tasks you care about to the top.
-- **Chatty agent messages** — Agent comments that lack question marks and aren't @mentioned are still visible in the task detail and on the board, but they don't generate inbox notifications.
-
-This change keeps your inbox focused on discussions that need your attention while still surfacing agent updates that are meaningful to you.
+Open the clickable wireframe to visualize the Decisions split and view:
+- Questions that explicitly ask for your approval or rejection
+- Tasks marked with a "waited on Valentin for yes/no" label
+- Priority-ordered list of pending decisions
 
 <Aside type="tip">
-Passengers who saw mes: hidden badges aren't about mu library. I'll add quest address.
-Background width.
+The Decisions split leans on your existing labels and row types. It doesn't add new UI; it surfaces what's already tracked so you never miss a decision point.
 </Aside>
+
+## Numbered pins in the mobile inbox
+
+On mobile, each inbox row now shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
+
+- **Numbered pins** appear on desktop and mobile inbox rows
+- The numbers correspond to timeline order (newest first)
+- This keeps your attention on the most recent important items without relying solely on the top position
+
+<Aside type="tip">The numbered pins complement the timeline-sorted order for returning visits, giving you a quick visual guide to your recent notifications.</Aside>
