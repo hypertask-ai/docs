@@ -9,11 +9,11 @@ Follow these steps to connect an AI agent to Hypertask.
 
 <Steps>
 
-1. **Create the agent.** Open [app.hypertask.ai/agents](https://app.hypertask.ai/agents) and choose **Add agent**.
+1. **Create the agent.** Open [Agent Chat](https://app.hypertask.ai/agents/chat) and choose the **+** button (labelled **Add agent**) at the top of the agent list. You can also press **Ctrl+K** and run **Add agent**. Type a name and choose **Create**. The [Agents](https://app.hypertask.ai/agents) page lists your agents but has no button for creating one.
 
-2. **Copy the token.** The token is shown once, right after creation. It is an agent bearer token (a JWT with an `agentId` claim). It has no expiry and stays valid until you revoke or rotate it in the Agent Manager. Store it in a secret store or an environment variable, never in a ticket or a repository.
+2. **Copy the token.** The token is shown once, right after creation. It is an agent bearer token (a JWT with an `agentId` claim). It has no expiry and stays valid until you revoke it or replace it. Open the agent and use its **Access key** section: **Regenerate** replaces the key and **Revoke** removes it. Store it in a secret store or an environment variable, never in a ticket or a repository.
 
-3. **Give the agent board access.** A new agent can see no boards. Open the agent and use its **Board access** section, or go to [Settings > Board > Agents](https://app.hypertask.ai/settings/board/board-agents), and add the agent to each board it should work on. Turn the agent on first, or the add is blocked.
+3. **Give the agent board access.** A new agent can see no boards. Open the agent and use its **Board access** section, or go to [Board settings > Agents](https://app.hypertask.ai/settings/board-agents), and add the agent to each board it should work on. Turn the agent on first, or the add is blocked.
 
 4. **Connect it.** Use the CLI or an MCP client.
 
@@ -43,8 +43,8 @@ Send the token as `Authorization: Bearer <agent token>` to the MCP server. The [
 
 - **"Ask the project owner to add this token"**: the token is valid but the agent is not on that board. Add it under **Board access** (step 3).
 - **"This agent has been revoked"**: ask the board owner to create a new agent.
-- **"This agent's token was replaced"**: someone rotated the token. Use the current one.
+- **"This agent's token was replaced"**: someone regenerated the key. Use the current one.
 
 <Aside type="note">
-Rotating a token invalidates the old one immediately. Agent tokens cannot be refreshed, only rotated.
+Regenerating a key invalidates the old one immediately. Agent keys cannot be refreshed, only regenerated.
 </Aside>
