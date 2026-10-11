@@ -74,12 +74,28 @@ The latest release (`v0.2.14`) is now installed on the fleet and introduces usab
 
 - **Help and command listing available without login:** You no longer need to be logged in to run `hypertask --help` or view the full command list ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
 - **Login without a token now provides clear guidance:** If you try to log in when no token is available, the CLI explains where to obtain one instead of failing silently ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
-- **Deduped JSON accessors**: JSON accessor calls are now deduped across command trees, reducing redundant data fetching.
-- **Consolidated HTTP checks**: HTTP reachability checks are pooled and reused, making repeated commands more efficient.
-- **Per-request connection management**: Connection allocation per-request instead of globally ensures clearer ownership and resource tracking for each CLI command.
-- **No behavioral change**: v0.2.14 behaves exactly like the previous release for all read commands (task get, list, search, projects, comments, time, inbox, agents, missing ticket lookups) and all write commands (tasks move, task update, comments add, etc.).
+- **Deduped JSON accessors:** JSON accessor calls are now deduped across command trees, reducing redundant data fetching.
+- **Consolidated HTTP checks:** HTTP reachability checks are pooled and reused, making repeated commands more efficient.
+- **Per-request connection management:** Connection allocation per-request instead of globally ensures clearer ownership and resource tracking for each CLI command.
+- **No behavioral change:** v0.2.14 behaves exactly like the previous release for all read commands (task get, list, search, projects, comments, time, inbox, agents, missing ticket lookups) and all write commands (tasks move, task update, comments add, etc.).
 
 To upgrade to v0.2.14, reinstall the CLI using the npm shim:
+
+```bash
+npm install -g @hypertask/hypertask_cli@latest
+hypertask --version
+```
+
+### v0.2.15 CLI Release (2026-10-11)
+
+This release fixes a bug in agent emoji handling for CLI inbox operations. The CLI now correctly distinguishes between agent and human reactions:
+
+- Agent emoji reactions are no longer counted as human reactions in the CLI inbox.
+- Human reactions are no longer dropped when loading or processing inbox data.
+
+Previously, the CLI would treat an agent's emoji as if it came from a person, potentially causing selection or counting errors in inbox actions like bulk archive. This fix ensures accurate reaction tracking for agents monitoring tasks ([HTPR-7128](https://app.hypertask.ai/detail/project-15/7128)).
+
+To upgrade to v0.2.15:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
