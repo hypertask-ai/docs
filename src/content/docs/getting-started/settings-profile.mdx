@@ -68,6 +68,21 @@ On authenticated startup, Hypertask reuses a fresh account-scoped user profile c
 
 ---
 
+## Preferences via signed login
+
+Preferences now load and save correctly with a signed login alone, without requiring the older profile cookie. As long as your session is signed in, the Preferences page can read and write settings such as Play GIFs, text size, and theme, and changes persist across reloads.
+
+```bash
+# Signed in with your session only
+# Navigate to Settings → Task page
+# Toggle Play GIFs or adjust a setting
+# The change is saved immediately and survives navigation
+```
+
+This simplifies session handling so a single authentication flow serves all content and settings across the app.
+
+---
+
 ## Management keys
 
 Management keys are credentials you create for programmatic access via the API. You can use them to integrate Hypertask with CI pipelines, automation scripts, or other tools.
@@ -107,7 +122,6 @@ Team-scoped keys restrict access to a single team:
 - Share keys with external contractors who only need access to a specific team.
 
 ---
-
 
 ## Common Actions
 
