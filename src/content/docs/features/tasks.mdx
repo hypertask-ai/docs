@@ -41,6 +41,7 @@ Selected rows persist until you commit an action, so you can review the working 
 ### Tasks you're snoozed on
 
 To temporarily hide tasks from your My Tasks view, set a **snooze**. When you snooze until a date:
+
 - The task no longer appears in My Tasks until that date passes
 - The snooze date sets a calendar reminder so you can resurface the task later
 
@@ -49,6 +50,7 @@ A snooze is per task and independent of other views. Tasks remain otherwise acce
 ### Saved views
 
 You can create and manage saved views on My Tasks to customize what you see. These views support:
+
 - **Full filtering**: Filter by title, assignee, priority, due date, labels, and more. Filter options match the Kanban board filter menu, so you can use familiar screen-level controls directly on My Tasks.
 - **Sorting**: Sort by any of the same fields, with priority as the primary sort key.
 - **Board selection**: Show tasks from one board or across multiple boards.
@@ -65,6 +67,7 @@ To create a saved view, open My Tasks and use the view toolbar to pick filters a
 ### Excluding tasks you don't need
 
 To hide distracting or temporary tasks:
+
 - Use **View filters** to show or hide assignments, priorities, or tags that don't match your current focus.
 - Create and pin a custom view with the exact criteria you want to see.
 - Review tasks by tag or priority and archive or move them away when no longer relevant.
@@ -80,6 +83,7 @@ To access this view, navigate to the board and select **All Tasks** from the vie
 ### How All Tasks works
 
 All Tasks uses a single fetch pass that loads rows once and builds board splits from those rows. As a result:
+
 - Each board sees its own split of the task list.
 - Quiet boards do not lose splits in favor of busy boards.
 - The view is stable and deterministic across sessions.
@@ -93,6 +97,7 @@ Since All Tasks is board-wide, it aggregates tasks from all active columns and s
 ### Search filters
 
 When searching within a board or in saved views, you can now narrow results using search operators on fields:
+
 - **from:** Restrict to tasks created by a specific user.
 - **assignee:** Restrict to tasks assigned to a specific person.
 - **in:** Restrict to tasks in a board, section, or column.
@@ -112,6 +117,7 @@ When searching within a board or in saved views, you can now narrow results usin
 - Combining multiple operators is supported—for example, `from:alice label:urgent dates:>2026-09-30` to find urgent tasks created by Alice after a certain date.
 
 To apply search filters:
+
 1. Open **Kanban** or **Table View**.
 2. On the board header (or in the saved view toolbar), select **Filter**.
 3. Choose a field and an operator, then enter a value or pick from the options.
@@ -177,7 +183,7 @@ Open a task to view and edit all its fields. Unsupported columns or fields may b
 To edit the task description:
 
 - On desktop: Click or tap the description area, then edit.
-- On mobile: Double-tap the description to open the editor; a single tap remains in read mode.
+- Mobile: Double-tap the description to open the editor; a single tap remains in read mode.
 
 If you are the **Task Reporter** (see below), you can edit the description directly. Only the Task Reporter can edit the description.
 
@@ -189,7 +195,7 @@ With the **Task Reporter**, anyone on the task can update the task description d
 
 - **Task Reporter** is available to any human assignee or worker on a task. The feature is not available for closed tasks.
 - When you open the description in edit mode, you become the **Task Reporter** for that task.
-- Only the Task Reporter can edit the task description. This prevents concurrent edits and restores the semantic meaning of "owner of the description field."
+- Only the Task Reporter can edit the description. This prevents concurrent edits and restores the semantic meaning of "owner of the description field."
 - If you close the description without saving any changes, the status clears and the next person to open it becomes the Task Reporter.
 
 This model ensures a clear ownership of the description field, similar to comment ownership, which helps teams coordinate around tasks without stepping on each other's work.
@@ -200,7 +206,7 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 
 - To remove an attachment, open the description in edit mode, click the attachment you want to remove, and save. Only the items you deselect will be removed; remaining attachments are preserved as one copy each.
 
-<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-15/339/6629))
+<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-15/339/6629)).
 
 ## Agent lease interactions
 
@@ -209,6 +215,7 @@ When you make manual changes to a task—"moving, assigning, unassigning, archiv
 ## Task detail view
 
 Open a task to see:
+
 - Header with title, status section, assignees, workers, priority, and due date.
 - Description area with optional attachments.
 - Sections: Comments, Relations, Subtasks, Times, and Pages.
@@ -220,6 +227,7 @@ Open a task to see:
 ### Linked pull requests
 
 Tasks can link to GitHub pull requests. The pull request section displays each linked PR with its status:
+
 - **Open, Merged, Closed**: Show the current status as reported by GitHub.
 - **Last observed**: The last-known status before the page loads.
 - **Fetching...**: Indicates a background refresh is in progress.
@@ -245,6 +253,7 @@ The comment thread shows all comments on the task. By default, when you open a t
 ### Actions
 
 Common actions include:
+
 - **Back**: Navigate back to the board using the ← Back to task button.
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
@@ -256,6 +265,7 @@ Common actions include:
 ## Relations between tasks
 
 Create relationships between tasks to surface context without leaving tasks:
+
 - **Block**: Mark a task as blocking another task.
 - **Blocked by**: Identify what indirectly holds a task back.
 - **Duplicate**: Link to other tasks that represent the same work item.
@@ -278,6 +288,7 @@ When another browser, the CLI, or an agent changes a task, its open detail page 
 ## Time tracking
 
 Track work hours on tasks via the **Times** section:
+
 - **B** opens the time entry modal from the task, or use the command palette ("Log time").
 - Manual per-day rows let you log time for any calendar day without a timer.
 - Export time logs as CSV for payroll or reporting.
@@ -313,6 +324,7 @@ After the Task Writer generates a draft, you can refine it just like any other A
 ### Browser history
 
 The browser back and forward buttons now behave consistently with the app:
+
 - Press **Back** to return to the board. The board remains loaded and you can stay there.
 - Press **Forward** to re-open the last ticket you viewed.
 
@@ -331,6 +343,7 @@ This lets you browse through tasks inside the app while the rest of your session
 ### Keyboard shortcuts
 
 We recommend using keyboard shortcuts to navigate:
+
 - **Ctrl+J** / <kbd>Cmd+J</kbd> to jump to a task or open it with the Task Writer.
 - **Ctrl+O** / <kbd>Cmd+O</kbd> to jump to a task or link from within the task detail.
 
@@ -355,6 +368,10 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 ### Task detail view loads only once
 
 <span class="label label--brand">Fix</span> Opening a task from the board no longer loads the task detail view twice. The comment section now loads once after the task UI and before the top bar, eliminating redundant data fetching and improving perceived speed on repeat visits. ([HTPR-7103](https://app.hypertask.ai/detail/project-15/7103)).
+
+### Board tap loading
+
+<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth. ([HTPR-7105](https://app.hypertask.ai/detail/project-15/7105)).
 
 ### Faster open on cold phone
 
