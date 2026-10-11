@@ -45,12 +45,15 @@ As you type, Hypertask suggests:
 
 ## Person name matching behavior ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
 
-When filtering by people using the `from:` or `assignee:` operators, Hypertask now matches pitch-and-cased names exactly.
+**Owner and QA preview:**
 
-- **Before:** `from:valentin` would match every user named "Valentin" regardless of capitalization or diacritics.
-- **After:** `from:valentin` finds only tasks created by a person named exactly "Valentin" (case-sensitive).
+- **Typed person filters**: When you type a name for `from:`, `assignee:`, and currently `commenter:`, it matches every person you can see whose name or email contains that text, ignoring case and accents. For example, `from:valentin` finds Valentin Yeo and any account named valentinyeo; `assignee:yc` finds Yusuf C. and any name containing "yc" in the email. Using `-from:valentin` excludes all those matches.
+- **People from the picker**: A person you select from the autocomplete list is matched exactly, so `from: Valentin Yeo` narrows to just that person.
+- **Without the flag**: If the `<flag:htpr-6881-search-fuzzy-person>` is off, typed person filters require the exact full name and case-sensitive search.
 
-This makes search results more predictable when you know the exact name you're looking for. A person picked from the autocomplete list is still matched exactly, ensuring search results stay in sync with the people picker.
+<div class="asideInfo">
+<small>Preview for owners and QA only. General release is scheduled after final QA sign-off on fuzzy matching for all users.</small>
+</div>
 
 ## Tips panel
 
@@ -58,7 +61,7 @@ When the search bar is empty or focused, a <strong>tips panel</strong> lists eve
 
 ## Keyboard navigation in search
 
-- **Navigate suggestions**: Use ← and → (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
+- **Navigate suggestions**: Use â├<sup>â├</sup> and â├<sup>â├</sup> (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
   - In empty search, <kbd>j</kbd>/<kbd>k</kbd> moves through tips.
   - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
 - **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
@@ -73,7 +76,7 @@ Results appear while you type via debounced search. No need to press <kbd>Enter<
 
 ## Chips
 
-After applying filters, clickable chips appear in the search bar. Click a chip's × to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
+After applying filters, clickable chips appear in the search bar. Click a chip's Ãâ╖ to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
 
 **Board chips** now display the board icon and name (e.g., `board:inne`), with no extra `#` prefix.
 
