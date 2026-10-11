@@ -55,7 +55,7 @@ The assistant drafts directly into the field, ready for your review.
 
 ### Respect due dates from prompts
 
-When creating a task with **Ctrl+J**, the AI Task Writer now understands relative due dates like "Friday", "tomorrow", or absolute dates like "2026-10-16". The assistant fills in the Due date field accordingly and leaves it empty when you don't mention a deadline.
+When creating a task with **Ctrl+J**, the AI Task Writer understands relative due dates like "Friday", "tomorrow", or absolute dates like "2026-10-16" and fills in the Due date field accordingly. If you don't mention a deadline, it leaves the date empty.
 
 ```bash
 # Ctrl+J: Ask for a deadline and the task saves with the date
@@ -69,7 +69,8 @@ These natural language due date phrases recognize common temporal expressions an
 
 ### Apply view defaults with Ctrl+J
 
-When you write a ticket with Ctrl+J inside a saved view, the system now respects the view's filters and defaults. The new ticket automatically inherits:
+When you write a ticket with **Ctrl+J** inside a saved view, the system respects the view's filters and defaults. The new ticket automatically inherits:
+
 - Filters (labels, assignees, priority, size, etc.)
 - Column assignment from the view
 - Visibility in the view immediately upon creation
@@ -78,6 +79,20 @@ When you write a ticket with Ctrl+J inside a saved view, the system now respects
 # Keyboard shortcut: Ctrl+J creates a ticket with view defaults
 # The task opens in the same view and adopts its filters and defaults
 ```
+
+### Fix AI chat false “in progress” after Ctrl+J
+
+After creating a ticket with **Ctrl+J**, the AI chat no longer displays a false “another reply is in progress” message. You can immediately ask follow‑up questions and receive timely answers instead of being blocked by the outdated status.
+
+```bash
+# Ctrl+J: Generate a task, then ask more
+"Create a bug report for the login timeout by Friday @dev-team"
+
+# Chat responds quickly without unnecessary wait states
+"Can you summarize what we know about login timeouts?"
+```
+
+This fix ensures the chat accurately reflects the current AI state so your conversation stays smooth across task generation and review.
 
 ### Preserve screenshot references
 
@@ -118,6 +133,7 @@ You can continue to edit or regenerate any generated text. The language preferen
 On mobile, the New Task flow focuses on description input via voice dictation. You can dictate your task directly into a single text box and attach images if needed.
 
 After dictating, two save buttons appear:
+
 - **Save with task writer (primary)** — Press this to structure your words into a complete ticket. The AI Task Writer converts your paragraph into a structured task with title, description, and settings, saving it directly without requiring additional editing.
 - **Save (ghost)** — Press this to store the raw, unstructured words as typed. Content remains in the description field, ready for you to review or refine before using Save with task writer.
 
@@ -132,6 +148,7 @@ Agent Chat use cases rely on several native behaviors: running in multiple views
 ### Key selection for agents without a board
 
 When you start a chat session on a task or board without a dedicated AI key, the system uses a fallback key selection strategy:
+
 1. **Session board key:** If a session board exists for the context, the system uses that board's AI key.
 2. **User team key:** If no session board key is available, the system uses your team's default AI key.
 
@@ -150,6 +167,7 @@ If you sorted the list previously, you may notice the ordering has changed to be
 ### Model selection per engine
 
 Agent Chat respects the engine configured on an agent when selecting a model:
+
 - **Claude-based agents** use Claude models (for example, claude-sonnet-5). The chat lane does not inject Codex-style model names or IDs for Claude agents.
 - **Codex-based agents** use Codex models (for example, gpt-5.6-luna). The chat lane does not inject Claude-style model names for Codex agents.
 
@@ -231,6 +249,7 @@ Agent Chat provides several keyboard shortcuts for navigation, interaction, and 
 ### Navigate the agent roster
 
 Use the following shortcuts to cycle between available agents in the left-pane roster:
+
 - **Ctrl+Tab** — Move to the next agent.
 - **Shift+Ctrl+Tab** — Move to the previous agent.
 - **Alt+Left/Right** — Navigate through agents one step at a time.
