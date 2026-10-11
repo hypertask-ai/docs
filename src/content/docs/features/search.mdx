@@ -15,6 +15,12 @@ Use operators to filter tasks by specific fields:
 - **assignee:** Restrict to tasks assigned to a specific person.
 - **in:** Restrict to tasks in a board, section, or column.
 - **label:** Restrict to tasks with a specific label.
+  - **Board-scoped label suggestions (Owner + QA preview):**
+    - When a board is picked with an `in:` or `board:` chip, `label:` only suggests labels from that board.
+    - Each label shows the number of search results on the right (open and done, not archived).
+    - Labels with zero results appear at the bottom, greyed out.
+    - Without a board selected, all your labels appear (same-name labels merged into one row).
+  - <div class="asideInfo"><small>Preview for owners and QA only. Behind the `<flag:htpr-6878-search-label-scope>` flag.</small></div>
 - **is:** Narrow by type; for example, `is:card` to show only standard cards.
 - **dates:** Show tasks matching a date condition.
   - `dates:2026-10-03` Tasks with this exact due date.
@@ -61,7 +67,7 @@ When the search bar is empty or focused, a <strong>tips panel</strong> lists eve
 
 ## Keyboard navigation in search
 
-- **Navigate suggestions**: Use â├<sup>â├</sup> and â├<sup>â├</sup> (or <kbd>j</kbd> and <kbd>k</kbd>) to move through values and tips without typing.
+- **Navigate suggestions**: Use ↓ (or <kbd>j</kbd>) and ↑ (or <kbd>k</kbd>) to move through values and tips without typing.
   - In empty search, <kbd>j</kbd>/<kbd>k</kbd> moves through tips.
   - In a typed query, <kbd>j</kbd>/<kbd>k</kbd> move through results while you type.
 - **Accept a suggestion**: <kbd>Tab</kbd> or <kbd>Enter</kbd> inserts the pending value.
@@ -76,7 +82,7 @@ Results appear while you type via debounced search. No need to press <kbd>Enter<
 
 ## Chips
 
-After applying filters, clickable chips appear in the search bar. Click a chip's Ãâ╖ to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
+After applying filters, clickable chips appear in the search bar. Click a chip's X to remove it. Clearing text keeps filter chips until you press <kbd>Backspace</kbd> one extra time.
 
 **Board chips** now display the board icon and name (e.g., `board:inne`), with no extra `#` prefix.
 
