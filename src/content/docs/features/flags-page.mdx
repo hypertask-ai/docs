@@ -5,7 +5,7 @@ description: "Use flags to track important tasks and collaborate on quality and 
 
 import { Aside, Steps } from '@astrojs/starlight/components';
 
-Flags are a dedicated view that lets you quickly flag tasks by status, type, release risk, and more. You can then filter and re‑flag tasks as conditions change.
+Flags are a dedicated view that lets you quickly flag tasks by status, type, release risk, and more. You can then filter and re‑flag tasks as conditions change. After [this fix](https://app.hypertask.ai/detail/project-15/7084), every flag card now displays the correct type label (Bug, Feature, or Improvement) instead of always showing "Bug", making it easier to see the flag's purpose at a glance.
 
 ## Access the Flags page
 
@@ -27,7 +27,9 @@ To flag a task, select it and choose an option from the flags picker:
 The task immediately appears in the Flags page under the selected filter.
 
 <Aside type="tip">
+
 Specifying an option (for example, selecting **Bug** from **Type**) limits the flag to that option only. When you re‑flag the same task, use the same filter and option to keep it grouped correctly.
+
 </Aside>
 
 ## Filter flags
