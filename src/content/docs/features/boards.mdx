@@ -60,6 +60,10 @@ When quick entry is enabled, click the **+** at the top or bottom of a Kanban co
 
 The existing shortcuts still open the full task creator: <kbd>C</kbd> adds at the top and <kbd>Shift+C</kbd> adds at the bottom. Use <kbd>Alt+C</kbd> for fast entry at the top or <kbd>Alt+Shift+C</kbd> for fast entry at the bottom.
 
+**Box behavior:** On the board and in table view, when typing a long card title the box grows line by line up to a maximum of 8 lines, then scrolls so the full title stays readable while you type. The box shows a quiet "Create task" button and an X to close it; <kbd>Enter</kbd> still saves the card. After adding a card, the box shrinks back to its compact state.
+
+📝 For related flags, see <strong>htpr-6175-quick-entry-cards</strong> (quick add box) and <strong>htpr-6873-quick-entry-grow</strong> (growing box behavior). These flags were live for QA (Owner+QA) and fully enabled for everyone on 2026-10-03.
+
 ## Adding and managing columns
 Every board starts with a single default section. To add more:
 
