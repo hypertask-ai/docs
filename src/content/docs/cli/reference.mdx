@@ -36,7 +36,7 @@ On Windows x64, download the native executable with PowerShell:
 
 ```powershell
 Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/hypertask-windows-x86_64.exe -OutFile hypertask.exe
-\\hypertask.exe --version
+hypertask.exe --version
 ```
 
 Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
@@ -68,14 +68,18 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
-### v0.2.11 CLI Release
+### v0.2.14 CLI Release (2026-10-11)
 
-The latest release (`v0.2.11`) is now installed on the fleet and reflects CLI connectivity improvements:
+The latest release (`v0.2.14`) is now installed on the fleet and introduces usability improvements:
 
+- **Help and command listing available without login:** You no longer need to be logged in to run `hypertask --help` or view the full command list ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
+- **Login without a token now provides clear guidance:** If you try to log in when no token is available, the CLI explains where to obtain one instead of failing silently ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
 - **Deduped JSON accessors**: JSON accessor calls are now deduped across command trees, reducing redundant data fetching.
 - **Consolidated HTTP checks**: HTTP reachability checks are pooled and reused, making repeated commands more efficient.
 - **Per-request connection management**: Connection allocation per-request instead of globally ensures clearer ownership and resource tracking for each CLI command.
-- **No behavioral change**: v0.2.11 behaves exactly like 0.2.10 for all read commands (ticket get, list, search, projects, comments, time, inbox, agents, missing ticket lookups). To upgrade, reinstall the CLI using the npm shim:
+- **No behavioral change**: v0.2.14 behaves exactly like the previous release for all read commands (task get, list, search, projects, comments, time, inbox, agents, missing ticket lookups) and all write commands (tasks move, task update, comments add, etc.).
+
+To upgrade to v0.2.14, reinstall the CLI using the npm shim:
 
 ```bash
 npm install -g @hypertask/hypertask_cli@latest
