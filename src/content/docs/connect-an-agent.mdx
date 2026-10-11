@@ -1,0 +1,50 @@
+---
+title: "Connect a new agent"
+description: "Create a Hypertask agent, copy its token, give it board access and connect it with the CLI or MCP."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Follow these steps to connect an AI agent to Hypertask.
+
+<Steps>
+
+1. **Create the agent.** Open [app.hypertask.ai/agents](https://app.hypertask.ai/agents) and choose **Add agent**.
+
+2. **Copy the token.** The token is shown once, right after creation. It is an agent bearer token (a JWT with an `agentId` claim). It has no expiry and stays valid until you revoke or rotate it in the Agent Manager. Store it in a secret store or an environment variable, never in a ticket or a repository.
+
+3. **Give the agent board access.** A new agent can see no boards. Open the agent and use its **Board access** section, or go to [Settings > Board > Agents](https://app.hypertask.ai/settings/board/board-agents), and add the agent to each board it should work on. Turn the agent on first, or the add is blocked.
+
+4. **Connect it.** Use the CLI or an MCP client.
+
+</Steps>
+
+## CLI
+
+```bash
+npm i -g @hypertask/hypertask_cli
+hypertask capabilities --json
+```
+
+`hypertask capabilities --json` lists every command the CLI supports. It does not authenticate. To act as the agent, pass the token:
+
+```bash
+export HT_TOKEN="<agent token>"
+hypertask context
+```
+
+You can also pass `--token <agent token>` on a single command. `hypertask login --token <agent token>` works too, but it saves the token in `~/.hypertask/config.json`, so prefer the environment variable on shared machines. See the [CLI reference](/cli/reference/).
+
+## MCP
+
+Send the token as `Authorization: Bearer <agent token>` to the MCP server. The [MCP overview](/mcp/overview/) has client setup, and [Creating agents](/mcp/agents/) shows the configuration snippet.
+
+## Troubleshooting
+
+- **"Ask the project owner to add this token"**: the token is valid but the agent is not on that board. Add it under **Board access** (step 3).
+- **"This agent has been revoked"**: ask the board owner to create a new agent.
+- **"This agent's token was replaced"**: someone rotated the token. Use the current one.
+
+<Aside type="note">
+Rotating a token invalidates the old one immediately. Agent tokens cannot be refreshed, only rotated.
+</Aside>
