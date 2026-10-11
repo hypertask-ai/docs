@@ -329,7 +329,7 @@ This lets you browse through tasks inside the app while the rest of your session
 
 ### Visual smoothness
 
-<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6895](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
+<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
 
 ### Keyboard shortcuts
 
@@ -359,6 +359,10 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 ### Task detail view loads only once
 
 <span class="label label--brand">Fix</span> Opening a task from the board no longer loads the task detail view twice. The comment section now loads once after the task UI and before the top bar, eliminating redundant data fetching and improving perceived speed on repeat visits. ([HTPR-7103](https://app.hypertask.ai/detail/project-15/7103)).
+
+### Faster open on cold phone
+
+<span class="label label--brand">Improved</span> Opening a task on a cold phone with no cached data now shows its title and description sooner (11.8 s vs 14.1 s median, 95th-percentile gap of ~2.3 s). The first load paints the title and description earlier, while controls like assignee and priority still warm up afterward, keeping the experience instant and frictionless. ([HTPR-7091](https://app.hypertask.ai/detail/project-15/7091)).
 
 ## Related topics
 
