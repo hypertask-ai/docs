@@ -80,9 +80,9 @@ When you write a ticket with **Ctrl+J** inside a saved view, the system respects
 # The task opens in the same view and adopts its filters and defaults
 ```
 
-### Fix AI chat false “in progress” after Ctrl+J
+### Fix AI chat false "in progress" after Ctrl+J
 
-After creating a ticket with **Ctrl+J**, the AI chat no longer displays a false “another reply is in progress” message. You can immediately ask follow‑up questions and receive timely answers instead of being blocked by the outdated status.
+After creating a ticket with **Ctrl+J**, the AI chat no longer displays a false "another reply is in progress" message. You can immediately ask follow-up questions and receive timely answers instead of being blocked by the outdated status.
 
 ```bash
 # Ctrl+J: Generate a task, then ask more
@@ -111,6 +111,36 @@ This separation prevents context from bleeding between unrelated tasks and keeps
 When using AI chat features on server-rendered routes like task detail pages, ensure the UI is rendered within the `ChatProvider` boundary. This prevents hydration errors and ensures proper context control for hooks like `useAiChatContext`.
 
 This is automatically handled for standard flows — use the AI Task Writer, context menus, and panel-based chat — and is handled by the fallback behavior on detail pages that load the provider safely.
+
+---
+
+## AI Chat naming and reliability
+
+### AI chats named automatically
+
+AI chats now start with context-aware names instead of "New AI Chat":
+
+- **No ticket attached:** Chat uses the board name as its initial title.
+- **Ticket attached:** Chat uses the ticket title as its initial title.
+- **After first message:** The chat adopts your first message as the name.
+
+You can rename any chat manually, and future sessions preserve your chosen name.
+
+<Aside type="tip">
+For example, opening AI Chat on a ticket titled "Investigate login timeout" creates a chat with that title. After sending "Can you summarize what we know?", the chat automatically renames to that message for easy identification later.
+</Aside>
+
+### Connection loss handling
+
+The AI chat now recovers gracefully from network interruptions during message submission:
+
+- If the network drops momentarily after you press Send, the chat identifies the failure and resubmits the question.
+- The AI then receives and responds to your prompt, working as if the network didn't disconnect.
+- This applies consistently across desktop and mobile views.
+
+<Aside type="tip">
+Before this change, a single dropped connection would cause the chat to give up entirely and never retry. Now transient network blips are automatically recovered without affecting the conversation.
+</Aside>
 
 ---
 
