@@ -201,6 +201,14 @@ This model ensures a clear ownership of the description field, similar to commen
 
 Note: While you are the Task Reporter, you cannot switch to another task description edit until the current edit state closes, preserving a single active description edit at a time.
 
+## Description and attachments
+
+The task description supports rich text and file attachments. When you're the **Task Reporter** (see above), you can edit the description directly. Since opening the description for editing also saves your changes, removing attachments is a one-step process:
+
+- To remove an attachment, open the description in edit mode, click the attachment you want to remove, and save. Only the items you deselect will be removed; remaining attachments are preserved as one copy each.
+
+<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-339/6629))
+
 ## Agent lease interactions
 
 When you make manual changes to a task—"moving, assigning, unassigning, archiving, or deleting"—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
