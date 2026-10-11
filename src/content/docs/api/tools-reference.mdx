@@ -10,11 +10,15 @@ import { Aside } from '@astrojs/starlight/components';
 Every tool the Hypertask MCP server exposes at `https://mcp.hypertask.ai/mcp`, with its parameters. Requests need a `Bearer` token in the `Authorization` header.
 
 <Aside type="tip">
+
 This page is generated from the server's own `tools/list` response, so it cannot drift from what an agent actually gets. Call `hypertask_hello` first — it returns a welcome map of the whole surface.
+
 </Aside>
 
 <Aside type="note">
+
 AI Chat inside the app exposes its own, mostly overlapping set of tools. It can write too, but it does not have the skills, task-relation or agent-coordination tools, and it splits some of these into separate tools. See [MCP Integration](/mcp/overview/) for the differences.
+
 </Aside>
 
 **81 tools.**
@@ -77,13 +81,13 @@ Planning fields (non-optional in practice): For every task in `tasks[]`, you MUS
 
 Single board, full manifest: Prefer **one** board with the entire decomposed backlog (100-250+ tasks when warranted) in **one** create_board call. Do not split across multiple boards or thin the task list to avoid timeouts unless the user explicitly asked for separate boards or a summary-only board. If the tool fails with a request timeout, that is an environment/MCP HTTP timeout—the operator should raise CREATE_BOARD_REQUEST_TIMEOUT_MS (or equivalent), not shard work across boards by default.
 
-Board title: Use a **short, unique board name** (usually the product or program). Do **not** stack the product name plus a long document title plus dates in title—that reads as duplicated scope; put doc names, ingest notes, and dates in **description** and `source_summary`.
+Board title: Use a **short, unique board name** (usually the product or program). Do **not** stack the product name plus a long document title plus dates in title—that reads as duplicated scope; put doc names, ingest notes, and dates in `description` and `source_summary`.
 
 Technical: Requires `team_id` from `get_user_context.teams` (UUID string or number). `sections` are `{ title }` objects in column order. Each task needs exactly one of `section_index` (0-based into sections) or `section_title` (must match a section title). Per task also use: `description` (HTML), `label_names` (must match manifest labels), `priority`, `estimate`, optional `due_date`. Optional `source_summary` for audit trail.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `team_id` | string \| integer | Yes | Team/workspace id (numeric or UUID string from get_user_context.teams) |
+| `team_id` | string | integer | Yes | Team/workspace id (numeric or UUID string from get_user_context.teams) |
 | `title` | string | Yes | New board title |
 | `description` | string | No | Optional board description (HTML if product requires) |
 | `sections` | object[] | Yes | Delivery workflow columns left-to-right (array order): intake → committed → building → verify → done. Use domain-specific titles (Linear/Jira-style), not phase buckets like Discovery/Foundation unless the user asked for a phased roadmap. Avoid bland generic names as the default choice. |
@@ -146,7 +150,7 @@ Add, update, or delete a comment. Use action: `add` (create comment, requires ta
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `action` | `add` \| `update` \| `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only). Defaults to `add`. |
+| `action` | `add` | `update` | `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only). Defaults to `add`. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., `<p>Text</p>`). |
 | `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include `{ user_id, display_name }` for each. |
@@ -188,7 +192,7 @@ Assign or unassign a person or agent to a task. Use `intent` (default `assign`) 
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `intent` | `assign` \| `unassign` | No | assign: idempotent add — assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
+| `intent` | `assign` | `unassign` | No | assign: idempotent add — assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
 | `user_id` | integer | No | User ID to assign or unassign (use intent: unassign to remove). |
 | `user_ids` | integer[] | No | For multiple mode: user IDs; each user follows intent (assign = idempotent, unassign = remove). |
 | `agent_id` | UUID string | No | Agent owner only: assign or unassign one of your own agents to the task, no user_id needed. Mirrors the REST agent_id field. |
@@ -219,7 +223,7 @@ Creates a new task in a project. Requires project_id and title. Optionally set d
 | `section_id` | integer | No | The section ID to place the task in. Use hypertask_section with action=list to find available sections. |
 | `priority` | integer | No | Priority index: 0=None, 1=Urgent, 2=High, 3=Medium, 4=Low |
 | `estimate` | integer | No | Estimate index: 0=no size; 2=XS, 3=S, 4=M, 5=L, 6=XL (matches product; 1 and 7 invalid). |
-| `labels` | string \| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
+| `labels` | string | number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
 | `due_date` | string | No | Due date in ISO 8601 format (e.g. "2026-03-10" or "2026-03-10T00:00:00Z"). |
 | `parent_task_id` | number | No | The parent task ID to create the task as a sub-task of. If not provided, the task will be created as a top-level task. |
 | `assignee` | integer[] | No |  |
@@ -255,7 +259,7 @@ Creates or updates a relation between two tasks. Identify each task with exactly
 | `source_ticket_number` | string | No |  |
 | `target_task_id` | integer | No |  |
 | `target_ticket_number` | string | No |  |
-| `relation_type` | `RelatedTo` \| `BlockedBy` \| `BlockedTo` | Yes |  |
+| `relation_type` | `RelatedTo` | `BlockedBy` | `BlockedTo` | Yes |  |
 
 ### `hypertask_list_tasks`
 
@@ -271,13 +275,13 @@ Lists tasks with comprehensive filtering options. Filter by project, section (co
 | `project_id` | integer | No |  |
 | `section_id` | integer | No |  |
 | `section` | string | No |  |
-| `assigned_to` | string \| integer | No |  |
-| `priority` | `Urgent` \| `High` \| `Medium` \| `Low` | No |  |
+| `assigned_to` | string | integer | No |  |
+| `priority` | `Urgent` | `High` | `Medium` | `Low` | No |  |
 | `has_due_date` | boolean | No |  |
 | `due_date_before` | string | No |  |
 | `due_date_after` | string | No |  |
-| `status` | `Normal` \| `Archive` \| `Deleted` | No |  |
-| `labels` | string \| integer | No |  |
+| `status` | `Normal` | `Archive` | `Deleted` | No |  |
+| `labels` | string | integer | No |  |
 | `created_by` | integer | No |  |
 | `updated_since` | string | No |  |
 | `created_since` | string | No |  |
@@ -286,8 +290,8 @@ Lists tasks with comprehensive filtering options. Filter by project, section (co
 | `search` | string | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
-| `sort_by` | `createdAt` \| `updatedAt` \| `dueDate` \| `priority` \| `title` \| `lastUsedAt` | No |  |
-| `sort_order` | `asc` \| `desc` | No |  |
+| `sort_by` | `createdAt` | `updatedAt` | `dueDate` | `priority` | `title` | `lastUsedAt` | No | Field to sort by |
+| `sort_order` | `asc` | `desc` | No | Sort direction |
 
 ### `hypertask_move_task_between_boards`
 
@@ -340,7 +344,7 @@ Searches for tasks by name, description, or ticket number. Enhanced with filters
 | `cursor` | string | No | Next page token |
 | `board_id` | integer | No |  |
 | `project_id` | integer | No |  |
-| `assigned_to` | string \| integer | No |  |
+| `assigned_to` | string | integer | No |  |
 | `priority` | `None` | `Urgent` | `High` | `Medium` | `Low` | No |  |
 | `section` | string | No |  |
 | `has_due_date` | boolean | No |  |
@@ -363,8 +367,8 @@ Updates a task after assessing get_comments and get_tasks. Updates description, 
 | `estimate` | integer | No |  |
 | `status` | `Normal` | `Archive` | `Deleted` | No |  |
 | `sectionId` | integer | No |  |
-| `labels` | string \| number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
-| `due_date` | string \| null | No | Due date in ISO 8601 format (e.g. "2026-03-10"). Pass null to clear/remove the due date. |
+| `labels` | string | number[] | No | Label IDs to set on the task. Get available labels from get_user_context or list_projects (each project includes labels). Replaces existing labels; empty array removes all. |
+| `due_date` | string | null | No | Due date in ISO 8601 format (e.g. "2026-03-10"). Pass null to clear/remove the due date. |
 | `assignee` | integer[] | No |  |
 | `parent_task_id` | number | No | The parent task ID to update the task as a sub-task of. |
 
@@ -413,7 +417,6 @@ Each tool exposed by the MCP server now includes an annotation indicating whethe
 ### Simplified task update pipeline
 
 The tool update pipeline has been simplified to reduce duplication and improve reliability:
-
 - The new update pipeline is now exclusively exposed at `/api/v1/tasks` (for create/update) and `/api/v1/tasks/:taskId` (for put/patch/updates), under the `flag:api_router_migration` feature flag.
 - The test catalog now uses the schema from the typed client, sharing contracts with the server.
 - Tool annotations have been audited, and any missing labels or incorrect categories have been corrected.
@@ -433,7 +436,7 @@ Lists all users in the authenticated user's teams, including users that are memb
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `project_id` | integer | No |  |
-| `team_id` | integer \| string | No |  |
+| `team_id` | integer | string | No |  |
 | `name` | string | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
@@ -451,8 +454,8 @@ Lists all relations for a given task (for example, "Give me all relations for th
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
-| `relation_type` | string \| null | No |  |
-| `direction` | string \| null | No |  |
+| `relation_type` | string | null | No |  |
+| `direction` | string | null | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
 
@@ -465,8 +468,8 @@ Lists all related tasks for a given task, optionally filtered by relation type (
 | `task_id` | integer | No |  |
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
-| `relation_type` | string \| null | No |  |
-| `direction` | string \| null | No |  |
+| `relation_type` | string | null | No |  |
+| `direction` | string | null | No |  |
 | `limit` | integer | No |  |
 | `offset` | integer | No |  |
 
@@ -480,7 +483,7 @@ Unlinks a relation between two tasks for a specified task ID and relation type. 
 | `ticket_number` | string | No |  |
 | `project_id` | integer | No |  |
 | `relation_type` | string | Yes |  |
-| `direction` | string \| null | No |  |
+| `direction` | string | null | No |  |
 
 ### `hypertask_composition_unlink`
 
@@ -505,7 +508,7 @@ Lists all relations associated with a given page, optionally filtered by relatio
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `page_id` | integer | No |  |
-| `relation_type` | string \| null | No |  |
+| `relation_type` | string | null | No |  |
 
 ---
 
@@ -537,6 +540,16 @@ Restore one or multiple archived inbox notifications so they appear in the inbox
 
 ---
 
+## Tickets and MCP (HTPR-7121)
+
+When an agent creates a ticket through MCP with a column or label, the server now provides clear, actionable error messages instead of "Resource not found":
+
+- If a column does not exist in the project, the error explicitly states: "Section with ID {id} not found in project {projectId}".
+- If a label does not exist in the project, the error explicitly states: "Label with name '{name}' not found in project {projectId}".
+- Labels given by name work correctly, matching user expectations.
+
+Previously, a wrong column or label would result in a vague "Resource not found". Now the server identifies and reports the problematic identifier, making it much easier to fix configuration issues.
+
 ## Time tracking
 
 ### `hypertask_time`
@@ -545,11 +558,11 @@ Track time with action: start, stop, status, running, report, or log. Start/stop
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `start` \| `stop` \| `status` \| `running` \| `report` \| `log` | Yes |  |
+| `action` | `start` | `stop` | `status` | `running` | `report` | `log` | Yes |  |
 | `task` | string | No | task id, unique index, or ticket id (required for start/stop/status/log) |
 | `minutes` | number | No | minutes to log (required for action=log) |
-| `board` | string \| number | No |  |
-| `user` | string \| number | No | numeric user id or "me" |
+| `board` | string | number | No |  |
+| `user` | string | number | No | numeric user id or "me" |
 | `from` | string | No |  |
 | `to` | string | No |  |
 | `running` | boolean | No |  |
