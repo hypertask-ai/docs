@@ -44,7 +44,7 @@ Error responses use this general shape:
 
 ## REST API structure and migration
 
-Hypertask's REST API is gradually being rewritten from the legacy Pages Router to the App Router. Writes for key resources (tasks, projects, sections, and notifications) are already shipping behind feature flags, with the old Routes and path structure preserved when the flags are off to maintain compatibility until clients are fully migrated. A typed API client is also under development, currently shipped in slices behind its own feature flag.
+Hypertask's REST API has completed its migration from the legacy Pages Router to the App Router. Writes for key resources (tasks, projects, sections, and notifications) now use the App Router exclusively. The old Routes have been retired once the new-structure flag was fully enabled, eliminating duplicate code paths and simplifying the codebase.
 
 ### Typed API client
 
@@ -59,34 +59,34 @@ Chat session paging, writes, and the OpenAPI description now use the typed clien
 
 **Flags:**
 - `flag:typed_client` — controls typed client exposure (chat session paging and writes, plus OpenAPI).
-- `flag:api_router_migration` — controls task/product/section/notification writes behind new routes.
+- `flag:api_router_migration` — disperses now; both flags are widely enabled.
 
 **Notes:**
 - The new client uses shared contracts; existing utilities and parsers can depend on the same schemas.
-- The old Routes continue to serve traffic while clients are migrated.
-- Flags can be toggled per Server instance to allow Owners and QAs to preview endpoints before general rollout.
+- All derived clients now use the unified App Router endpoints.
+- Flags are available per Server instance for Owner/QA preview access during rollout.
 
-### Router migration notes
+### Router migration (final state)
 
-New writes are under a feature flag (`flag:api_router_migration`). When the flag is on, the following resources use App Router endpoints:
+All writes for these resources now use App Router endpoints:
 
 ```text
-POST /api/v1/tasks              # create/update via new router
+POST /api/v1/tasks              # create/update via App Router
 POST /api/v1/projects
 POST /api/v1/projects/:projectId/sections
 POST /api/v1/notifications
 ```
 
-When the flag is off, the legacy Routes are used; the schema and response shapes remain the same, so clients can continue to work without changes.
+The legacy Routes have been retired. The schema and response shapes remain the same as before; existing clients require no change.
 
 ### Sections and notifications (typed writes)
 
-A typed writer now handles `sectionId` and `notificationId` parameters for sections and notifications. These writes are behind the same `flag:api_router_migration` switch used by other App Router writes:
+A typed writer now handles `sectionId` and `notificationId` parameters for sections and notifications, fully integrated with the App Router:
 
 - **Sections:** Section creates, renames, moves, and deletes use the typed writer.
 - **Notifications:** Reading, marking as unread, archiving, and unarchiving flows use the typed writer.
 
-When the flag is off, sections and notifications continue to use legacy Routes with the same schemas and response shapes.
+All these operations now proceed via the consolidated App Router endpoints.
 
 ### Session validated identity
 
@@ -117,3 +117,7 @@ When fetching sessions via the Sessions rows API and using `?prefer=paged=true`,
 ### Board detail and parent/subtask payloads
 
 The board detail responses for the Sessions rows API and session detail endpoints now include parent and child subtask payloads directly in the board-level response. This makes it easier for clients to compute relationships and summaries without additional follow-up calls. Parent and child lists are arrays of child task objects (subtasks) always attached to the applicable session and board.
+
+<Aside type="info">
+The App Router migration is now complete and the legacy Routes have been retired. For questions or edge cases during this transition, contact support or raise a ticket in Hypertask with your specific use case.
+</Aside>
