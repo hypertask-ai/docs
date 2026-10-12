@@ -61,7 +61,7 @@ To hide distracting or temporary tasks:
 - Create and pin a custom view with the exact criteria you want to see.
 - Review tasks by tag or priority and archive or move them away when no longer relevant.
 
-> **Note:** Saved views are scoped to the current team. Cross-board filters and sorting are supported, so you can see, for example, "all high-priority inbox tasks across all boards" in a single custom view.
+> **Note:** Saved views are scoped to the current team. Cross-board filters and sorting are supported, so you can see, for example, all high-priority inbox tasks across all boards in a single custom view.
 
 ### All Tasks view
 The **All Tasks** view provides an at-a-glance overview of every active task across the board. It builds split views for each board section (To Do, In Progress, Done, etc.) from a single source of truth.
@@ -75,7 +75,7 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 - The view is stable and deterministic across sessions.
 
 ### Drawing from multiple streams
-Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
+Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters-not just what's pinned or currently in one section.
 
 **Note:** Unlike **My Tasks** saved views, All Tasks does not automatically filter out onboarding, demo, template, and staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
@@ -271,7 +271,7 @@ After the Task Writer generates a draft, you can refine it just like any other A
 ### What you see
 - **Click to open**: When you tap or click a task, it appears in about 0.15 to 0.3 seconds on both desktop and mobile.
 - **No loading animation**: No full-screen spinner, no pulsing grey bars, no brief placeholder state.
-- **Suggested questions right away**: If the AI panel is open, suggested questions appear immediately—not waiting for the API response.
+- **Suggested questions right away**: If the AI panel is open, suggested questions appear immediately-not waiting for the API response.
 
 ### Browser history
 The browser back and forward buttons now behave consistently with the app:
@@ -283,7 +283,7 @@ This lets you browse through tasks inside the app while the rest of your session
 ### Performance details
 - Median open times are ~0.15 seconds on desktop and ~0.17 seconds on mobile.
 - The first open after a board loads takes about 0.25 to 0.33 seconds; subsequent opens are closer to 0.13 to 0.18 seconds.
-- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority still warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before ([HTPR-6855](https://app.hypertask.ai/detail/project-15/6855)).
+- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority still warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds-considerably faster than before ([HTPR-6855](https://app.hypertask.ai/detail/project-15/6855)).
 
 ### Visual smoothness
 <span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
