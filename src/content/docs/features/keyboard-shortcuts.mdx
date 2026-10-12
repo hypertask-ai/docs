@@ -319,7 +319,6 @@ To show previously hidden columns:
 
 ## Board palette (HTPR-4522)
 Press <kbd>Ctrl</kbd> + <kbd>B</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>B</kbd> (Mac) to show the board palette overlay. On the left rail, the board palette displays your user account row with:
-
 - **Email or handle** - Click to open the account switcher dialog
 - **Avatar** - Click to open Account & Profile settings
 
@@ -357,7 +356,6 @@ The quick-log interface supports Hours and Minutes fields, board and user filter
 
 ## Timer shortcuts (HTPR-4414)
 Time tracking shortcuts are available when time tracking is enabled for your board or task:
-
 - **App shell rail** - Press <kbd>7</kbd> on the rail to open the running-timers view
 - **Task detail** - Press <kbd>Option</kbd> + <kbd>T</kbd> or <kbd>Alt+T</kbd> to start or stop the open task timer
 
@@ -381,7 +379,6 @@ The action is owner-only by default. It can be configured to be available to all
 
 ## Use everywhere, including Settings (HTPR-6871)
 <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) now opens the Command Palette on every signed-in page. This includes:
-
 - Boards, tickets, inbox, and search (existing behavior)
 - My Tasks view
 - All settings pages, such as Settings & General, Board general, and Appearance
@@ -391,7 +388,6 @@ On Mac, <kbd>Ctrl</kbd> + <kbd>K</kbd> also works in addition to <kbd>Cmd</kbd> 
 Public/sign-in pages, including the sign-in page, still ignore this shortcut.
 
 Escape behavior in Settings:
-
 - First <kbd>Esc</kbd> closes the command menu and keeps you in Settings
 - A second <kbd>Esc</kbd> exits Settings as usual
 
@@ -404,12 +400,15 @@ This makes the command palette consistently available for board actions, views, 
 ## Mobile page exit gesture (HTPR-6903)
 On mobile, pressing **<kbd>Esc</kbd>** in the full-screen Pages view now exits via the back action - just like other views in the app. With text typed but unsaved, <kbd>Esc</kbd> clears the unsaved draft. Without text, a single <kbd>Esc</kbd> closes the page and stays on the task.
 
-## Related topics
-<CardGrid>
-  <LinkCard title="Tasks" description="Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks." href="/features/tasks/" />
-  <LinkCard title="Search" description="Search across tasks with operators, suggestions, and a tips panel." href="/features/search/" />
-  <LinkCard title="Pages" description="Full-screen notepads attached to tasks, RAG-fed, and workable by agents and humans." href="/features/pages/" />
-  <LinkCard title="MCP Integration" description="Connect AI agents to Hypertask via the Model Context Protocol." href="/mcp/overview/" />
-  <LinkCard title="CLI Reference" description="Complete reference for the Hypertask CLI to manage tasks, projects, comments, and notifications from your terminal." href="/cli/reference/" />
-  <LinkCard title="AI Features" description="AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow." href="/features/ai-features/" />
-</CardGrid>
+## Ctrl+J board chip in inbox
+When you press <kbd>Ctrl+J</kbd> from the inbox, the new task box shows which board the task will land on, using the same board chip UI as the AI chat box. The chip is only visible in the inbox and other views that mix boards — on a board or ticket detail, the context is already obvious, so the chip stays hidden.
+
+**Board selection logic:**
+
+- **Focused ticket's board:** If a ticket is visible and focused in the inbox, <kbd>Ctrl+J</kbd> places the new task on that ticket's board.
+- **Open board split:** If there's no focused ticket, the task goes on the open board split.
+- **All or Important:** If no board is in context, <kbd>Ctrl+J</kbd> uses All or Important as a default board.
+
+Click the chip before saving to change the board.
+
+<Aside type="tip">From the inbox, <kbd>Ctrl+J</kbd> is the fastest way to start a new task on a specific board without exiting the feed.</Aside>
