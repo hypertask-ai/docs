@@ -145,7 +145,6 @@ This change makes view management across My Tasks and other board views more con
 <span class="label label--brand">Feature</span> External agents and users can now file corrections on the Agent Template board without signing in or using an API key.
 
 **POST https://app.hypertask.ai/api/agent-template/feedback** accepts requests to create tasks in the Agent Template board's **Backlog** section. Each submission is:
-
 - Cleaned and size-capped (title to 80 characters, body to 20,000 characters, full request to 32 KiB).
 - Limited to five requests per IP address per hour.
 - Checked for pre-existing labels to minimize duplicate feedback.
@@ -244,7 +243,6 @@ Or from the app: use **Ctrl+K**, search for the view name, and select it from th
 The browser title reflects the board and saved-view name when you navigate to a board. The server builds the title from authorized board and saved-view metadata, so Next.js no longer replaces it with a generic title during navigation.
 
 This change applies to:
-
 - Board tabs in the browser
 - History and back navigation
 - Shared board links
@@ -356,14 +354,12 @@ Guest demo boards provide a guided onboarding experience:
 If you log in or sign up to Hypertask and don't have any boards yet, you land on a project page that shows a real empty state instead of a blank screen. This provides clear guidance for new users and prevents the dead-end experience that previously occurred.
 
 The empty state:
-
 - Explains what boards are and how to create one
 - Offers quick actions to create a board or invite a teammate
 - Matches your theme and is consistent with other empty states in the app
 
 ## Free tier limits
 Free users (no active paid or team plan) are limited to a maximum of **3 owned boards**. This limit applies across all board-creation surfaces:
-
 - App web interface
 - CLI (`ht --create-board` / `ht board create`)
 - MCP tool (`boards.create`)
@@ -423,7 +419,6 @@ Hypertask's components now respect the compact visual scale by default, includin
 ```
 
 Layout notes:
-
 - Users see a cohesive font-sizes: 16px body, 14px UI labels, 13px subtitles.
 - Height is tightly calibrated: header 48px, input 44px, rows 36.
 - No onboarding is required; modals respect the current theme and compact palette by default.
@@ -463,7 +458,6 @@ In-app user feedback forms now create their tickets directly on Board 15 (Projec
 
 ## Board access for writes
 Hypertask ensures all write paths gate the target board or task before mutations occur. This applies across surfaces:
-
 - CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`)
 - MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`)
 - REST API `board_update_task`, `board_add_comment`, and the legacy comment endpoint (`/api/board/comment`)
@@ -508,7 +502,6 @@ This change ensures that managing columns is reliable regardless of how recently
 Before this change, repeated <kbd>J</kbd> or <kbd>K</kbd> presses would scroll the entire board, causing headers to move out of view and making long columns difficult to navigate.
 
 After this fix ([HTPR-6884](https://app.hypertask.ai/detail/project-15/6884)):
-
 - The column itself scrolls smoothly with the focused card.
 - The board surface and column headers remain fixed (stable headers).
 - Keyboard navigation feels responsive and local to the column.
@@ -526,7 +519,6 @@ Before this fix, clicking a row that had no click handler threw an error, so onl
 Before this change, opening a board would eagerly load all project scalars, team data, Google accounts, activity metadata, and the complete subscription-history list. These fields are usually not needed to paint cards or display the current plan.
 
 After this fix:
-
 - Board load payloads shrink (6.2 KB – 5.8 KB on small QA boards). Larger boards save proportionally more.
 - First visits open in about 1.5 seconds (was 1.6 seconds). Repeat visits are about 1.2 seconds (was 1.3 seconds).
 - All board functionality remains unchanged: cards, sidebar, filters, plan badges, and permissions work the same.
@@ -544,14 +536,12 @@ After this fix:
 Before this fix, ticket clicks on certain boards would produce no visible response, leaving users with no way to open a selected task from the Kanban interface.
 
 After this change:
-
 - **Desktop:** Tapping or clicking any card on a board immediately opens its detail view with no delay or silent failure.
 - **Mobile:** Even on smaller touch screens, card taps select the task and open its detail view cleanly and consistently.
 - **Search results:** When you focus a search result row, clicking it behaves the same as selecting and opening from within results.
 - **Keyboard navigation:** Keyboard shortcuts that select a card via arrows → or ← still require <kbd>Enter</kbd> to open the detail view, matching the board card selection pattern.
 
 This means you can rely on the consistent board-selection UI across all surfaces:
-
 - Tap or click any card on Kanban to open it.
 - Use arrows → or ← or <kbd>J</kbd> / <kbd>K</kbd> to focus a result or card.
 - Press <kbd>Enter</kbd> to open the selected card.
@@ -573,6 +563,15 @@ The bottom selection bar's **Open actions** button opens the command palette for
 
 ### Board staleness indicators
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
+
+### Board cards stay fresh after opening tasks ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009))
+<span class="label label--brand">Fixed</span> When you open a board card or task link, the card now reflects the latest state instead of stale values. Opening a ticket once loads its details without redundant fetches, and board cards update automatically once the ticket closes, ensuring you always see current information like assignee, labels, dates, and attachments.
+
+**Before:** Opening a ticket repeatedly downloaded the same detail data multiple times, and board cards could display outdated values after you closed the ticket.
+
+**After:** Opening a ticket from the board or by its link now downloads details only once, and board cards refresh to the latest state immediately after you close the ticket.
+
+This tighter loading flow reduces redundant operations and ensures the card surface remains accurate.
 
 ## Board scroll position on back navigation ([HTPR-6998](https://app.hypertask.ai/detail/project-15/6998))
 <span class="label label--brand">Fixed</span> When you move from a board to a search result or open a ticket from a board and then return with the browser's Back button or a Back link, the board now preserves your scroll position instead of resetting to the top.
