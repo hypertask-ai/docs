@@ -250,6 +250,8 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 <span class="label label--brand">Fix</span> A shared comment link now opens on that comment instead of the ticket top, with the comment visible on screen on both desktop and mobile. The link scrolls directly to the referenced comment when you open it—for example, from Slack or email—making it easier to reference specific points in a conversation. This fix improves navigation for long threads with hundreds of comments and helps ticket descriptions stay readable even on narrow phones ([https://app.hypertask.ai/detail/project-15/7090](https://app.hypertask.ai/detail/project-15/7090)).
 
+<span class="label label--brand">Behavior change</span> When the AI writer fails, the **Ctrl+J New Task** box now shows the real failure reason instead of hiding it; your note is still saved as a task. This applies to the New Task box and the AI Task Writer within task creation or description editing, surfacing the AI error clearly so you can retry with the right context. ([HTPR-7132](https://app.hypertask.ai/detail/project-15/7132)).
+
 ### Actions
 
 Common actions include:
@@ -376,6 +378,14 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 ### Faster open on cold phone
 
 <span class="label label--brand">Improved</span> Opening a task on a cold phone with no cached data now shows its title and description sooner (11.8 s vs 14.1 s median, 95th-percentile gap of ~2.3 s). The first load paints the title and description earlier, while controls like assignee and priority still warm up afterward, keeping the experience instant and frictionless. ([HTPR-7091](https://app.hypertask.ai/detail/project-15/7091)).
+
+### Ticket page no longer jumps on mobile
+
+<span class="label label--brand">Fix</span> The ticket page now stays stable on mobile, with the comment box appearing once and not moving as comments load, keeping text and layout aligned with desktop behavior. ([HTPR-7074](https://app.hypertask.ai/detail/project-15/7074)).
+
+### Comments no longer jump with content
+
+<span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load. Related: [https://app.hypertask.ai/detail/project-15/7046](https://app.hypertask.ai/detail/project-15/7046).
 
 ## Related topics
 
