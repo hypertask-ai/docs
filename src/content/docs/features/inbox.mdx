@@ -55,7 +55,6 @@ The Decisions split leans on your existing labels and row types. It doesn't add 
 </Aside>
 
 ## Numbered pins in the mobile inbox
-
 On mobile, each inbox row now shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
 
 - **Numbered pins** appear on desktop and mobile inbox rows
@@ -65,7 +64,15 @@ On mobile, each inbox row now shows a numbered indicator next to the sender name
 <Aside type="tip">The numbered pins complement the timeline-sorted order for returning visits, giving you a quick visual guide to your recent notifications.</Aside>
 
 ## Invite link validation across pages
-
 <span class="label label--brand">Improved</span> Pages that generate or use invite links now validate board context. **My Tasks** and **Inbox** no longer send invite-link requests without a board, which previously caused console errors. Requesting an invite link without a board now shows a clear message instead of a server error, keeping the console clean and providing explicit feedback when a board is required.
 
 This change applies across most pages that send invite links, ensuring any invalid requests surface a user-friendly message rather than an unhandled error.
+
+## Board chip in the new task box
+When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task box shows a board chip indicating the intended destination:
+
+- **Visible only in the inbox** — The chip appears to make the target board obvious when multiple boards are mixed in the view.
+- **Hidden elsewhere** — On a board or a ticket detail page, the context is already clear, so the chip is hidden.
+- **Editable** — Click the chip to choose a different board before saving the task.
+
+<Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket's board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
