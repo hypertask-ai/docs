@@ -29,7 +29,7 @@ The inbox can be grouped into multiple views:
 | **Notifications** | Notification icon | List of all notification types |
 
 ### Saved views and sorting
-Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g., top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
+Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g. top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
 
 ## Decisions split for waiting work
 
@@ -50,7 +50,6 @@ The Decisions split leans on your existing labels and row types. It doesn't add 
 </Aside>
 
 ## Numbered pins in the mobile inbox
-
 On mobile, each inbox row now shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
 
 - **Numbered pins** appear on desktop and mobile inbox rows
@@ -58,3 +57,9 @@ On mobile, each inbox row now shows a numbered indicator next to the sender name
 - This keeps your attention on the most recent important items without relying solely on the top position
 
 <Aside type="tip">The numbered pins complement the timeline-sorted order for returning visits, giving you a quick visual guide to your recent notifications.</Aside>
+
+## Invite link validation across pages
+
+<span class="label label--brand">Improved</span> Pages that generate or use invite links now validate board context. **My Tasks** and **Inbox** no longer send invite-link requests without a board, which previously caused console errors. Requesting an invite link without a board now shows a clear message instead of a server error, keeping the console clean and providing explicit feedback when a board is required.
+
+This change applies across most pages that send invite links, ensuring any invalid requests surface a user-friendly message rather than an unhandled error.
