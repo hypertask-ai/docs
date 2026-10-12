@@ -86,6 +86,20 @@ npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
 
+### v0.2.16 CLI Release (2026-10-12)
+
+This release fixes a crash when running AI reviews on large pull requests. The CLI now passes PR text to the review program through standard input instead of a command-line argument, preventing shell argument limits:
+
+- **No crash on large PRs:** AI review commands now work on arbitrarily large pull requests without hitting shell argument limits.
+- **Internal program path consistency:** The review program running on the server matches the code stored in the repository, verified in QA.
+
+To upgrade to v0.2.16:
+
+```bash
+npm install -g @hypertask/hypertask_cli@latest
+hypertask --version
+```
+
 ### v0.2.15 CLI Release (2026-10-11)
 
 This release fixes a bug in agent emoji handling for CLI inbox operations. The CLI now correctly distinguishes between agent and human reactions:
