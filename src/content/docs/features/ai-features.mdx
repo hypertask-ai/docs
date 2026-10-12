@@ -59,6 +59,14 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 | **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently; background jobs go through Anthropic’s half-price Batch endpoint. Usage is recorded as usage tracks regardless of whether a signed-in user is present. |
 | **Agent task lists** | Optimized reads for quick agent workloads; significant speedup for the slowest dataset slices. |
 
+## When AI is not available
+
+<span class="label label--brand">Behavior change</span> AI features now show clear guidance when a team does not have an AI key configured. Before this fix ([HTPR-7149](https://app.hypertask.ai/detail/project-15/7149)), teams without an AI key would see server errors when trying to use AI in agents or the CLI. Now, users receive a concise message directing them to add an AI key through the **Appearance & AI Models** settings page:
+
+> "AI features require an AI key. Configure your AI key in Appearance & AI Models."
+
+This applies to AI-powered task creation, filters, smart labels, and agent workflows that invoke AI.
+
 ## Settings
 
 - Choose your preferred AI model in the **Appearance & AI Models** settings page. Different models may produce different responses.
