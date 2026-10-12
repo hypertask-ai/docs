@@ -346,7 +346,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 ### Guest demo behavior
 Guest demo boards provide a guided onboarding experience:
 
-- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
+- **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g. create their first task or explore the board).
 - **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat-all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
@@ -396,7 +396,7 @@ The fix ensures that every interactive modal in the demo onboarding path receive
 Regression tests in this release verify modal toggle behavior across these four key onboarding scenes, ensuring future changes to the onboarding UI cannot reintroduce the same crash pattern.
 
 ## Compact modal palette
-Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g., the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
+Hypertask's components now respect the compact visual scale by default, including modals. Core modals such as Task Detail, Priority, and board actions follow the theme's typography tokens at 48px/16px (header) and 44px/14px (input), with 36px/13px row heights. Min-width is set to 560px to match sibling controls (e.g. the Command Palette). Legacy-sized modals are opt-in via an explicit `legacySizing` prop.
 
 **Default behavior (compact)**
 
@@ -550,7 +550,7 @@ This means you can rely on the consistent board-selection UI across all surfaces
 ### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
-Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover end-visible as a slight wobble as you slid your mouse across the board.
+Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended-visible as a slight wobble as you slid your mouse across the board.
 
 After this fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
@@ -582,3 +582,16 @@ Before this fix, navigating away and back would restore the board view at the to
 
 ## In-app feedback routing
 In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**-instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+
+---
+
+## Ctrl+J board target on inbox tasks
+From the inbox, pressing <kbd>Ctrl+J</kbd> creates a new task using the following board lookup:
+
+- **Focused ticket's board** — If you see a ticket in the inbox view, <kbd>Ctrl+J</kbd> places the new task on that ticket's board.
+- **Open board split** — If the inbox view is empty or a split without a focused card is active, the task goes on the currently open board split.
+- **All or Important** — If no board is in context, <kbd>Ctrl+J</kbd> uses All or Important as the default board.
+
+In the inbox, the new task area shows a board chip indicating the target board, mirroring the AI chat box behavior. This chip lets you change the board before saving the task.
+
+<Aside type="tip">Only on the inbox and other views that mix boards does the chip show. On a board or a ticket view, the chip is hidden since the board context is already obvious.</Aside>
