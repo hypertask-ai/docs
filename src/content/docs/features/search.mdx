@@ -113,4 +113,8 @@ To verify it’s live:
 - Switch to the search screen and use a keyword from the description to see the new task appear in results.
 - No additional steps like editing the title are required.
 
-This change applies to all API surfaces, including the MCP tools and REST endpoints, and makes search results consistent across all task creation flows.
+This change applies to all API surfaces, including the MCP tools and REST endpoints, and makes search results consistent across all task creation flows. ([HTPR-7131](https://app.hypertask.ai/detail/project-15/7131))
+
+<div class="asideInfo">
+<small>Also fixed slow AI calls that were stalling due to fresh server startup. Slow calls now finish in half the time or less.</small>
+</div>
