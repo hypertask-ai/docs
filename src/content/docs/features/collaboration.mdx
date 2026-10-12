@@ -12,7 +12,6 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 Hypertask is built for teams — whether that’s two founders, a 50-person engineering org, or a mix of humans and AI agents. Every feature is designed around the idea that project management is inherently collaborative.
 
 ## Shared modal spacing
-
 Shared modals now use a consistent 24px inset for headers and footers so layouts behave predictably:
 
 - Headers and footers are separated from content by 24px vertical spacing.
@@ -20,17 +19,14 @@ Shared modals now use a consistent 24px inset for headers and footers so layouts
 - Intentional full-bleed lists (e.g., searchable assignee/worker lists) preserve their visual, making them easy to scan without hitting UI boundaries.
 
 ## Follower notifications
-
 When you mention someone on a task, they’re automatically added as a follower so they receive updates. Hypertask also respects the explicit follower field on task pages: sending those emails now uses the correct recipient key, so deliveries succeed without silent failures.
 
 Profile photos are now included in assignment rows and activity history: photoURL is preserved across assignment and unassignment events, so cards, inbox items, and task detail history show the same person with a consistent avatar. When no usable image is available, the system falls back to initials instead of leaving holes.
 
 ## Slack integration
-
 Connect Slack directly to Hypertask so decisions about tickets live where your team already collaborates.
 
 ### Create tickets from Slack
-
 If your team minds decisions live in Slack instead of wandering into a separate tool:
 
 1. **Invite the Hypertask bot** to the Slack channel where you want to capture ticket candidates (e.g. `@Hypertask invite`).
@@ -44,7 +40,6 @@ If your team minds decisions live in Slack instead of wandering into a separate 
 The bot reads the entire thread, extracts a title and description using AI, creates the ticket on your default board, and replies in the same Slack thread with the ticket link. That thread is auto-watched, so follow-up summary comments appear directly on the ticket.
 
 ### Auto-summarize idle threads on tickets
-
 When a Slack thread mentions a ticket (by ID like `HTPR-123` or URL), Hypertask watches for quiet cycles:
 
 - The bot monitors tabs and channels you’ve connected.
@@ -54,7 +49,6 @@ When a Slack thread mentions a ticket (by ID like `HTPR-123` or URL), Hypertask 
 This way, conversations that started in Slack don’t die there — they live permanently on the right ticket for your team and agents.
 
 ### Requirements and setup
-
 - **Slack app permissions:** Ensure your Slack app has:
   - `chat:write` — to reply with ticket links
   - `chat:write.public` — to post in channels you don’t own
@@ -64,7 +58,6 @@ This way, conversations that started in Slack don’t die there — they live pe
 - **Workspace scope:** Slack integrations are team-scoped, so your connection is tied to your Hypertask team and limited to boards and tasks you have access to.
 
 ### Comparison with existing Slack integrations
-
 Hypertask natively integrates Slack with thread-aware sync, unlike the older workers:
 
 | Feature | `ht-slack` Worker | `inne-slack-scout` Agent | Hypertask Slack Integration |
@@ -77,15 +70,12 @@ Hypertask natively integrates Slack with thread-aware sync, unlike the older wor
 ---
 
 ## Team workspaces
-
 Workspaces are the top-level container in Hypertask. Each workspace groups related projects together and manages team membership.
 
 A workspace might represent your company, a department, or a client engagement. You can belong to multiple workspaces.
 
 ## Project members
-
 ### Inviting people
-
 Invite team members to a project by generating an **invite link**. Invite links support several controls:
 
 | Setting | Description |
@@ -99,7 +89,6 @@ Domain restrictions are useful when you want to share an invite link broadly (in
 </aside>
 
 ### Roles and permissions
-
 Project members are assigned one of three roles, each with different privileges for managing the project:
 
 | Role | Privileges |
@@ -118,7 +107,6 @@ To see who contributes which tasks:
 
 **Security note:** Members can only associate tasks they own to a specific board, and the system prevents them from adding tasks to boards in which they have no work. This ensures board-specific permissions are enforced.
 ### M and better Auth integration
-
 Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
 
 ### Login flow
@@ -135,13 +123,11 @@ All authentication flows are server-led. Firebase is retained exclusively for FC
 </aside>
 
 ### BYOK and API keys
-
 API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
 
 ---
 
 ### Settings navigation
-
 The **Settings → Team** navigation shows team-scoped panels. In typical teams, this section shows your team members and basic configuration options. In discounted teams, the billing display shows a clearer breakdown of your plan:
 
 - **Base price** — The full list price of your plan, shown with the expected period
@@ -151,8 +137,8 @@ The **Settings → Team** navigation shows team-scoped panels. In typical teams,
 <aside type="tip">
 This billing view makes the effective cost of your plan more transparent, especially for discounted enterprise or long-term pricing tiers.
 </aside>
-### Settings footer
 
+### Settings footer
 On every settings page, the viewport is now terminated by a **sticky footer** with quick access links and a labeled Sign out button:
 
 - **Feedback** — icons for general feedback and contact page opening
@@ -169,7 +155,6 @@ The sticky settings footer ensures you can quickly reach feedback tools and sign
 </aside>
 
 ### Switching accounts without logout
-
 When you’re already logged in and want to switch to a different account (for example, on the same browser):
 
 1. **Initiate new login** — Start logging in via email code or magic-link for the target account.
@@ -180,7 +165,6 @@ When you’re already logged in and want to switch to a different account (for e
 This ensures that account switching works correctly and you always see the correct user in the app.
 
 ### Persistent sign-in state
-
 After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn’t automatically log you out.
 
 Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
@@ -190,11 +174,9 @@ If you persist LocalStorage across sign-ins or sessions (e.g. in test environmen
 </aside>
 
 ## Scope-aware agents and membership
-
 Agents and team members are now **team-scoped**: an agent’s access is derived from the teams you belong to. This prevents cross-team leakage and ensures agents can only work on boards you have permission to access.
 
 ### Team-scoped agents
-
 When you create an agent, it inherits access to all teams you’re a member of:
 
 - **Access enforcement** — Hypertask uses server-side gates to verify the creator’s membership. If you don’t have permission to add the agent to a team, the operation is rejected.
@@ -207,7 +189,6 @@ This scoping applies when:
 - Using the agent in MCP tools or interactive sessions
 
 ### Local team agent visibility in comments
-
 Team agents appear in comments in a team-scoped way to prevent unauthorized access. Hypertask now ensures that a team agent’s name is only visible to users who have access to the task board on which the comment was posted.
 
 - **Before:** team agents were visible in comments even when the viewer did not have access to that specific board, which could lead to data leakage.
@@ -216,7 +197,6 @@ Team agents appear in comments in a team-scoped way to prevent unauthorized acce
 This ensures team-agent attribution cannot leak across boards and respects the access controls of each task.
 
 ### Platform-level team membership
-
 Team membership controls what agents you can create and configure:
 
 - **Team tab** — Shows your team and any board you’re a member of, plus the agents you can add to that team’s boards.
@@ -232,11 +212,9 @@ Agents are scoped by team, so you can safely reuse agents across projects in the
 </aside>
 
 ## Agent attribution in actions
-
 AI agents can act on your tasks using move, assignment, comment, or label-change actions. Hypertask now records which agent made the change, and the activity feed and CLI always show the agent’s name instead of the account that owned the task when the bot performed the action.
 
 ### What gets attributed
-
 Agents are attributed on write-time actions:
 
 - Comment posts
@@ -246,27 +224,23 @@ Agents are attributed on write-time actions:
 - Blocked-by edits
 
 ### Display in the activity feed
-
 The task feed shows the action details including the agent:
 
 - **Before:** Activities from agents showed the bot account name.
-- **After:** Activities from bots show the agent’s name (e.g. “Cursor Dev made this comment”), making it clear who performed the work.
+- **After:** Activities from bots show the agent’s name (e.g., “Cursor Dev made this comment”), making it clear who performed the work.
 
 ### CLI output
-
 When you run `hypertask comment list --include-activity`, the history section includes the agent for each post:
 
 - Bot-generated comments, moves, and assignments show the agent name.
 - Human-created content continues to show the human account name.
 
 ### Retired agents
-
 Agents that are retired or deleted still retain their attribution in the system. If a task was assigned by a retired agent, the history and CLI still show that agent’s name for transparency.
 
 This makes audit trails clearer for teams that rely on agents as on-call workers, since the feed always shows the person or bot that actually acted, not just the ticket owner.
 
 ## AI Agents
-
 AI agents can be added to boards just like human team members. When you add an agent to a board, it gains access to that board’s tasks and can be assigned work, @mentioned in comments, and participate in the project workflow.
 
 ### Adding agents to boards
@@ -287,7 +261,6 @@ Agents do not count as team seats toward your subscription limit. You can add as
 </aside>
 
 ### Agent access scope
-
 When you create an agent, it inherits access to all boards in projects where you’re a member. Use the board-level invite modal to **restrict which boards an agent can access** — boards not on the list treat the agent as if it doesn’t exist.
 
 This is useful when:
@@ -296,7 +269,6 @@ This is useful when:
 - You have specialized agents for different workflows and need to keep them scoped
 
 ## Feedback
-
 Give feedback directly from the app with a prominent call-to-action. The feedback button is always available at the bottom of the app shell rail and opens a fully-featured real feedback modal with:
 - Fast-track submission fields for quick suggestions
 - Rich text support so you can include screenshots, drafts, or detailed feature requests
@@ -308,7 +280,6 @@ Use the feedback button to share ideas, report bugs, or suggest improvements. Yo
 </aside>
 
 ## @mentions
-
 Type `@` in any comment to mention a team member. Mentions do two things:
 1. **Send a notification** — the mentioned person receives an inbox notification immediately.
 2. **Add as follower** — the mentioned person is automatically added as a follower on the task, so they receive future updates.
@@ -330,14 +301,12 @@ This means you can @mention external agents in comments and task descriptions to
 If an external agent isn’t receiving @mentions, verify that it has board-level access.
 
 ## Emoji reactions
-
 React to tasks and comments with emoji. Reactions serve as lightweight feedback — a quick thumbs-up to acknowledge work, a flag to signal concern, or a celebration when something ships.
 
 ### Fast like button
-
 For the most common reaction — a simple thumbs-up — Hypertask provides a **fast like button** that appears directly on task cards and comment rows. No need to open the full emoji picker:
 
-- **Mouse users:** hover over a task card or comment row to reveal the like button, which shows a tooltip with an "[L]" hint; click it to toggle your reaction on or off (the tooltip appears behind the button per production behavior).
+- **Mouse users:** hover over a task card or comment row to reveal the like button, which shows a tooltip with a "[L]" hint; click it to toggle your reaction on or off (the tooltip appears behind the button per production behavior).
 - **Mobile users:** tap the like button that appears inline alongside the comment or task actions.
 
 The like button is a shortcut for the thumbs-up reaction. It appears in the full reactions list alongside any other emoji your teammates have added, and it triggers the same notification to the author as any other reaction.
@@ -350,29 +319,24 @@ The like button is a shortcut for the thumbs-up reaction. It appears in the full
 | Comment reactions row (inline) | Thumbs-up integrated in the reactions row with the same behavior and tooltip hint |
 
 ### Mobile emoji picker
-
 On mobile devices, emoji reactions are organized into a docked picker that mimics popular messaging apps:
 - Picker appears docked at the bottom of the screen, aligned with the keyboard input area
 - A search bar on the Emoji tab lets you quickly find emojis by name
 - Selecting an emoji immediately applies it as a reaction, with the picker closing automatically
 
 ### Comment display
-
 Comments can be starred (saved) or pinned, and the visual indicators update based on comment state:
 1. **Pinned + saved** — only the orange pinned dot displays (saved state is suppressed)
 2. **Pinned only** — only the orange pinned dot displays
 3. **Saved only** — only the yellow saved/starred dot displays
 
 ### All reactions icon
-
 Click the activity icon next to a comment to see all reactions. This icon appears when someone has reacted in any way, whether it’s a like or another emoji expression.
 
 ## Agent decision requests
-
 Agents can now ask you for decisive feedback on tickets. When an agent encounters a decision that impacts work (e.g., "Archive this task," "Move to inactive," etc.), it opens a **decision request** on the ticket with one-tap approve/answer buttons.
 
 ### Triggering decision requests
-
 Decision requests appear as inline panels on the ticket:
 - **Approve** — Applies the agent’s suggested action with one tap
 - **Reject / More options** — Opens a menu with detailed choices or alternative actions
@@ -380,7 +344,6 @@ Decision requests appear as inline panels on the ticket:
 Agents only create decision requests when the suggested action clearly affects board state and benefits from human sign-off. Routine summaries, AI editor outputs, and informational messages do not trigger requests.
 
 ### Agent aftermath
-
 Once you respond:
 - **Approved decisions** — The agent applies the action to the ticket immediately (e.g., archives the task and adds a reason comment)
 - **Rejected or alternative** — The agent stops iterating on that item and moves on, leaving the ticket in its current state
@@ -388,7 +351,6 @@ Once you respond:
 You can review all pending decision requests anytime in the ticket feed — the panel stays visible until resolved.
 
 ## Real-time sync
-
 Hypertask keeps every connected client live — no manual refreshes needed. Changes made anywhere in the app (or via the CLI and MCP) appear instantly for everyone who has the same board open.
 
 **What updates in real time:**
@@ -400,7 +362,6 @@ Hypertask keeps every connected client live — no manual refreshes needed. Chan
 This is powered by **Pusher**, so updates are pushed directly to connected browsers. Creating a task from the CLI and watching it appear on an open board with no page reload is a first-class workflow — useful for monitoring agents running in your terminal or CI pipeline.
 
 ### Real-time collaborative text editing
-
 For simultaneous editing of the same task description, Hypertask uses **TipTap with Yjs**. Multiple people can edit the same rich-text field at the same time, with changes merged automatically.
 
 This applies to:
@@ -415,7 +376,6 @@ Real-time sync means AI agents editing task descriptions via MCP won’t overwri
 </aside>
 
 ## Managing comments
-
 You can manage comments on any task — including comments left by other team members or agents. This is useful when:
 - Cleaning up outdated or irrelevant comments
 - Removing agent-generated comments that are no longer needed
@@ -424,7 +384,6 @@ You can manage comments on any task — including comments left by other team me
 To delete a comment, open the task and use the delete option on the comment itself. Comment management is available to all project members — trust within the team is assumed for collaborative housekeeping.
 
 ### Comment hover panel
-
 The comment hover panel in table views and card lists is streamlined for faster access to actions:
 - **Reply** — standard reply action
 - **React** — add or remove a reaction (thumbs-up, favorite, flag, etc.)
@@ -438,11 +397,9 @@ Press and hold <kbd>Ctrl+K</kbd> (or the three-dot itself) to access the full me
 For the most common reaction, just hover and click the like button directly on the comment row. No need to open the full emoji picker.
 
 ### Mobile long press to actions
-
 On a phone, press and hold a comment to open the Command Center with that comment's actions at the top. **Edit comment** is first when you wrote the comment. Swiping a comment is off so it does not fight the task swipe that already moves you to the next or previous ticket ([HTPR-6514](https://app.hypertask.ai/detail/project-15/6514)).
 
 ### Mobile comment actions menu
-
 When you open a comment's Command Center on mobile, the first actions are the comment ones:
 - **Edit**: open the comment composer (shown first when you wrote the comment)
 - **Delete**: remove the comment from the thread
@@ -450,20 +407,17 @@ When you open a comment's Command Center on mobile, the first actions are the co
 - **Pin or turn off pin**: pin the comment to the top of the feed
 
 ### URL auto-linkification
-
 Bare URLs in comments are automatically converted into clickable links at render time, regardless of how the comment was created. This applies to comments posted via the web UI, CLI, MCP, or any API client — so a deploy URL pasted by a CLI script or an agent's status update with a link will always be clickable for your teammates.
 
 Links open in a new tab. URLs that are already formatted as hyperlinks or embedded inside images are left unchanged.
 
 ### Comment composer sizing
-
 The comment composer adapts to its available space. When the AI panel is open (especially in narrow column layouts), the composer expands to fit available width rather than staying fixed at a small size. This prevents text overflow and keeps the Send toolbar visible. Blurred composer states scroll smoothly instead of spilling content off the screen.
 
 On mobile, the composer automatically adjusts its positioning: it offsets by `max(keyboardInset, dockHeight)` so it rests on the tab bar when the keyboard is closed and correctly above the keyboard when you start typing. This ensures the composer remains visible and usable on task detail pages even with the bottom dock.
 
 ### Quoted replies
-
-When you reply to a comment, Hypertask inserts a placeholder for the quoted message. If you were typing before you selected the comment, the system adds a space before the quoted text so your existing words don’t run together:
+When you reply to a comment, Hypertask inserts a placeholder for the quoted message. If you were typing before you selected the comment, the system adds a space before the quoted text so your existing words don't run together:
 
 - **After existing text:** the reply includes `Your text [quotation start]` — `Your text "Original comment"` (space inserted automatically)
 - **Already after whitespace:** the quoted text appears and you can keep typing without an extra space
@@ -471,11 +425,9 @@ When you reply to a comment, Hypertask inserts a placeholder for the quoted mess
 This spacing is handled invisibly in the background, so quoted replies flow naturally into your sentence structure.
 
 ### GIFs and emoji in comments
-
 The comment composer includes a built-in **Emoji & GIFs picker** with two tabs, giving you Slack-style expressiveness in task discussions.
 
 #### Slash commands
-
 Type a slash command at the start of your comment to open the picker instantly:
 
 | Command | Action |
@@ -484,11 +436,9 @@ Type a slash command at the start of your comment to open the picker instantly:
 | `/giphy` | Opens the picker on the **GIFs** tab |
 
 #### Emoji tab
-
 Browse and search a full emoji library. Click any emoji to insert it into your comment at the cursor position.
 
 #### GIFs tab
-
 The GIFs tab is powered by **Giphy** and offers two modes:
 - **Trending** — shows popular GIFs by default when you open the tab.
 - **Search** — type any query to find a GIF that fits the moment.
@@ -500,7 +450,6 @@ GIF search requires a Giphy API key configured on the Hypertask deployment. If G
 </aside>
 
 ## Comment edit mode
-
 Edit a comment to refine your thoughts or fix mistakes. The editor includes keyboard shortcuts to help you work efficiently:
 
 | Shortcut | Action |
@@ -509,7 +458,6 @@ Edit a comment to refine your thoughts or fix mistakes. The editor includes keyb
 | **Ctrl+Enter** | Send the edited comment |
 
 ### Exiting edit mode
-
 When you’re in edit mode and want to abandon your changes:
 - **Mouse:** click the trash can icon in the edit-mode footer
 - **Keyboard:** press **ESC**
@@ -517,7 +465,6 @@ When you’re in edit mode and want to abandon your changes:
 Both options exit edit mode without posting the comment and without polluting the conversation with draft text.
 
 ## Activity logs
-
 Every change in Hypertask is recorded in the activity log — a full audit trail of who did what, and when.
 
 Tracked actions include:
@@ -531,7 +478,6 @@ Tracked actions include:
 Activity logs are available at the task level (see what happened to a specific task) and the project level (see all activity across the project).
 
 ### Comments-only view (default)
-
 The task feed defaults to **comments only** — history events such as field changes, assignments, and status moves are hidden to reduce noise. This keeps the conversation readable at a glance, especially on busy tickets.
 
 To reveal history events:
@@ -543,3 +489,27 @@ Both controls toggle history events on and off. You can also access **Show/Hide 
 <aside type="tip">
 If you need a full audit trail of every change on a task, use **Show history** (`Ctrl+Shift+H`) to surface all activity events inline with the comment thread.
 </aside>
+
+## Agent reactions
+Agents now respond to messages and comments with quick reactions rather than posting thank-you comments.
+
+### How it works
+When a human posts in a conversation, agents can respond with a thumbs-up or any emoji to acknowledge the message. This provides visual, lightweight feedback while keeping the conversation clear:
+
+- **Thumbs-up** by an agent shows quick approval or recognition
+- **Other emojis** (🎉, 🚀, ✅, etc.) provide more expressive feedback when appropriate
+
+### Presentation
+On desktop, hover over a task card or comment row to reveal the quick like button. Click it to add a thumbs-up reaction. The same reaction appears in the reactions list alongside any other emoji your teammates or agents have posted.
+
+On mobile, tap the like button inline next to the comment or task actions.
+
+Agents use the emoji picker to select any expression that best fits the conversation context—celebrations when a task ships, flags when concerns arise, or any consistent reaction style that reflects the tone of the discussion.
+
+### Use cases
+- Routine acknowledgments that don't merit a full comment
+- Celebrations after a milestone or successful delivery
+- Flags when something in the workflow needs attention
+- Any reaction that keeps conversations readable without clutter
+
+[https://app.hypertask.ai/detail/project-15/7122](https://app.hypertask.ai/detail/project-15/7122)
