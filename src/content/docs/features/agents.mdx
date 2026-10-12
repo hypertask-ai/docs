@@ -101,3 +101,7 @@ Agent notifications now use a shared onboarding email design for:
 - **Your first task** — Email when a task is assigned to your newly connected agent
 
 These emails mirror your selected theme colors, typography, and layout tokens, so they match the look and feel of other in-boxed notifications. Subscribe to Agent notifications in your account settings or skip them entirely if you prefer list-only delivery.
+
+## Agent chat polling behavior
+
+<span class="label label--brand">Improved</span> Agent Chat now uses a simpler, direct method to check agent status instead of flag-driven polling. The previous feature flag for polling has been removed, and the system long-running longer checks are shorter and more consistent. Users experience reliable agent status updates without the hidden switch.
