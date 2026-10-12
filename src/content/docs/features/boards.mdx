@@ -40,7 +40,7 @@ The browser title shows the board name and saved-view name when you navigate to 
 - Short, clean titles are compressed to predictable 3-4 character labels (e.g. **qa-2026-08-30-ui** becomes **QAUI**). This improves readability in UI fields where space is limited.
 - This deterministic behavior replaces the previous randomized prefix generator and simplifies workflows where multiple boards share similar naming patterns.
 
-Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix—paired with a predictable numeric suffix—makes task references understandable and consistent.
+Use ticket prefixes in the browser's address bar or AI prompts to reliably target tasks. The stable prefix-paired with a predictable numeric suffix-makes task references understandable and consistent.
 
 ## App shell surface shortcuts
 When the **left icon rail (beta)** is enabled on desktop, use a single number key to move between the main surfaces:
@@ -116,7 +116,7 @@ If a column contains no tasks, you can delete it directly. The column numbers an
 ## Board hide-empty-columns clearing on last ticket removal
 Before this behavior change, when the last ticket was removed from a board that had columns with all tasks in that removed ticket, those columns disappeared. The board appeared to have no columns, even though the board still had sections that were hidden.
 
-The system now clears the <code>hide-empty-columns</code> state for that board when the last ticket leaves. Empty columns remain visible, showing you all sections where you can drop new tickets, and the "no columns to show" help screen is not displayed because the board still has sections.
+The system now clears the <code>hide-empty-columns</code> state for that board when the last ticket leaves. Empty columns remain visible, showing you all sections where you can drop new tasks, and the "no columns to show" help screen is not displayed because the board still has sections.
 
 This change prevents getting stuck in a no-columns state and ensures empty columns show as a normal empty state where you can continue adding tasks.
 
@@ -256,7 +256,7 @@ Full regression coverage includes these views to prevent unexpected title behavi
 This Linear-style approach eliminates page flicker and server roundtrips. No reload paths are involved in typical board opening; only real authorization failures trigger a full clear and navigation.
 
 ### Board stability on load
-<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading—a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
+<span class="label label--brand">Bug fix</span> Boards now render consistently from first paint. Before this fix, columns would briefly disappear and reappear about a second after loading-a flash caused by the app rebuilding the board to read a feature flag. After this fix ([HTPR-6644](https://app.hypertask.ai/detail/project-15/6644)), the board stays steady without blanking out:
 
 - Columns appear once and remain visible across desktop and mobile, light and dark.
 - 8 successful board loads on test accounts, 0 instances of column flickering (down from 4 blinks in 5 loads before the fix).
@@ -347,7 +347,7 @@ When you open the board picker or switch boards on mobile, search is focused on 
 Guest demo boards provide a guided onboarding experience:
 
 - **Chat opens on load:** When a guest loads a demo board, the AI chat opens automatically with an initial prompt to help them get started (e.g., create their first task or explore the board).
-- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat—all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
+- **Sticky chat:** The chat remains visible for the duration of the guest session, acting as a persistent coach. The AI chat stays pinned to the sidebar during demo sessions so new users always see the AI assistant without hunting for it. A manual close no longer permanently suppresses the chat-all subsequent board reloads reopen it. This ensures new users always have guidance at hand as they discover boards and AI task creation.
 - **First board persisted:** When a guest creates their first board, it persists until they log into a full account, providing continuity as they graduate from the demo
 
 ## Boardless accounts
@@ -428,7 +428,7 @@ Includes the modal sizing changes that ship with the updated modal scale and pal
 ## Cards and selection
 On a board, when you select a card (click it or use navigation), its document / detail view remains open and its keyboard shortcuts become active even if the DOM focus falls back to the body.
 
-This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board—after returning from its detail view, closing a detail modal, or clicking empty board space.
+This means you can use shortcuts like **a** (add), **e** (edit), **c** (comment), **p** (move), **m** (assign), **t** (move to inbox), and **s** (archive) on a card while staying on the board-after returning from its detail view, closing a detail modal, or clicking empty board space.
 
 Before this change, selected (but not focused) cards would ignore these shortcuts because only the focused card had event listeners. Now, the document-level listener ensures all selected cards can receive these shortcuts.
 
@@ -437,7 +437,7 @@ This behavior matches the expectations you're used to in similar Kanban tools an
 ### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
-Before this fix ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874)), the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
+Before this fix ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874)), the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended-visible as a slight wobble as you slid your mouse across the board.
 
 After this fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
@@ -452,7 +452,7 @@ The bottom selection bar's **Open actions** button opens the command palette for
 Once a task moves into a section, it ages in view over time. To avoid visual noise, aged cards show a faint line at the top while fresh cards keep the section context clear. Use **Ctrl+K** and search for **"Show time on board"** to toggle staleness hints on or off. Staleness is controlled per board and does not change how tasks flow or their accumulated time tracking.
 
 ## In-app feedback routing
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**-instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
 
 ---
 
@@ -528,7 +528,7 @@ After this fix:
 - The project and team queries now use minimal, UI-specific selects instead of broad `include` clauses.
 - Subscription history is loaded only when plan or billing details are displayed.
 - Activity metadata and playbook are fetched when those views open.
-- No impact on existing API contracts or MCP tools—only the internal query strategy changed.
+- No impact on existing API contracts or MCP tools-only the internal query strategy changed.
 
 ### Ticket selection and clicking ([HTPR-6915](https://app.hypertask.ai/detail/project-15/6915))
 <span class="label label--brand">Fixed</span> Clicking a card on a board now reliably opens its detail view across desktop and mobile, with no broken interactions or silent failures.
@@ -550,7 +550,7 @@ This means you can rely on the consistent board-selection UI across all surfaces
 ### Card hover behavior ([HTPR-6874](https://app.hypertask.ai/detail/project-15/6874))
 <span class="label label--brand">Fixed</span> Cards on a board now stay stable when you hover over or move between them, without wobble or pushing lower cards down.
 
-Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover ended—visible as a slight wobble as you slid your mouse across the board.
+Before this fix, the small Command logo that appears when you hover a card was positioned 1 pixel taller than the card's top row. When you hovered a card, it would grow, pushing every card below it down, then shrink back into the gap as the hover end-visible as a slight wobble as you slid your mouse across the board.
 
 After this fix, all card hover effects are anchored to the card's layout without affecting the vertical position of neighboring cards. The card still highlights and reveals quick actions on hover, so the intended UX is preserved, but the visual bounce is gone.
 
@@ -581,4 +581,4 @@ Before this fix, navigating away and back would restore the board view at the to
 <Aside type="note">The fix applies to tall boards where scrolling is common, such as detailed project help boards, release notes trackers, or inspection-style Kanban columns.</Aside>
 
 ## In-app feedback routing
-In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**—instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
+In-app user feedback forms now create their tickets directly on Board 15 (Project 15), section **Bugs**, labeled **user-feedback**, and priority **Urgent**-instead of using the retired Board 2101. Notifications to contributors are unchanged. This routing keeps feedback close to your entry point and ensures it lands on a board that supports user signal.
