@@ -308,7 +308,7 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 <span class="label label--brand">Fixed</span> Pressing **Back** right after opening a board card now shows the board immediately, with no flash of the ticket title. In at least 19 of 20 quick Backs (within 0.3 seconds of opening a card), you see only the board, not the ticket, and the board is visible within 1 second. ([HTPR-7003](https://app.hypertask.ai/detail/project-15/7003)).
 
 ### Task detail downloads once
-<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches. ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009)).
+<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches. ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009)). See also [https://app.hypertask.ai/detail/project-15/7104](https://app.hypertask.ai/detail/project-15/7104) for the original pipeline issue that triggered redundant page loads.
 
 ### Board tap loading
 <span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth. ([HTPR-7105](https://app.hypertask.ai/detail/project-15/7105)).
