@@ -10,20 +10,20 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 <Steps>
 
 1. **AI-assisted task creation**
-    - Click <code>AI</code> in the top-right corner of any board, open the <code>Ask Hypertask AI</code> panel, and describe a task in plain English.
+    - Click `AI` in the top-right corner of any board, open the `Ask Hypertask AI` panel, and describe a task in plain English.
     - AI parses the description and creates a task pre-assigned to you with a title, description, and relevant tags (task types, priorities, area).
     - Review the generated task before saving; edit fields or refine the prompt and generate again.
 
 2. **Prompt-based filtering**
-    - In the <code>Board Filter</code>, type natural-language constraints like:
-        - <code>show me top-priority bugs</code>
-        - <code>tasks assigned to Valentin and due this week</code>
-    - Use combinations such as <code>high priority and not blocked</code>, and press <code>Enter</code> to apply.
+    - In the `Board Filter`, type natural-language constraints like:
+        - `show me top-priority bugs`
+        - `tasks assigned to Valentin and due this week`
+    - Use combinations such as `high priority and not blocked`, and press `Enter` to apply.
 
 3. **Smart labels**
     - Open a label (or the Manage Tags screen) and create a new label marked as a **smart label**.
     - In the "Smart label — AI keeps this label on matching tasks" field, define which tasks should carry it, for example:
-        - <code>backend issue, involves DB, high impact</code>
+        - `backend issue, involves DB, high impact`
     - Save; AI immediately classifies the board up to 500 existing tasks and adds the label to matches. Smart labels show a sparkle icon in label lists.
     - New tasks are classified when created; edited tasks are re-classified when title or description change; updating the prompt re-runs classification for the entire board.
 
@@ -31,8 +31,12 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
     - When many tasks qualify for a smart label or similar classification, Hypertask automatically routes heavy bulk workloads to a **half-price Batch API** for parallel processing at lower cost.
     - Users see the smart label appear on matching tasks and are logged of AI activity in the task activity feed.
 
-5. **AI Chat histories**
-    - Open AI Chat from the right rail or press <code>Ctrl/Cmd + I</code> to see a list of conversations.
+5. **Faster agent task lists**
+    - AI agents are now much quicker to load their task lists, especially after server warm-up.
+    - Previously slow database reads that fetched task lists have been optimized: the slowest 5% of calls improved from ~129 ms down to ~40 ms. The improvement consistently benefits agents on both warm and cold servers, making AI-driven workflows feel far more responsive.
+
+6. **AI Chat histories**
+    - Open AI Chat from the right rail or press `Ctrl/Cmd + I` to see a list of conversations.
     - In the full-screen chat view (desktop), the history list pages as the window resizes, and you scroll to load more older chats. Pick or filter from that list to open a chat.
     - On mobile, the list is limited; tap an entry to open its history.
     - The docked chat always shows your most recent chats inline; use the full-screen view for history navigation.
@@ -48,6 +52,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 | **Smart Labels** | Keeps labels on tasks that match your AI prompt; changes to tasks or the prompt trigger reclassification. |
 | **AI Chat** | Global assistant for questions, summarization, and quick actions, with full-screen history paging. |
 | **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently. |
+| **Agent task lists** | Optimized reads for quick agent workloads; significant speedup for the slowest dataset slices. |
 
 ## Settings
 
@@ -63,6 +68,6 @@ Smart labels and prompts are a best-effort AI signal. They do not substitute for
 
 <Aside type="tip">
 
-Use smart labels together with filters and saved views to create reusable patterns for recurring workloads (e.g., <code>on-call issues</code>, <code>quick fillers</code>, <code>enterprise integrations</code>).
+Use smart labels together with filters and saved views to create reusable patterns for recurring workloads (e.g., `on-call issues`, `quick fillers`, `enterprise integrations`).
 
 </Aside>
