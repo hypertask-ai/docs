@@ -213,7 +213,7 @@ Uploads one or more files to a task as attachments (same as web UI / CLI --attac
 
 ### `hypertask_create_task`
 
-Creates a new task in a project. Requires project_id and title. Optionally set description, section (by section_id), priority (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low), estimate, due_date (ISO 8601, e.g. "2026-03-10"), and labels. Use hypertask_section with action=list to find the correct section_id for the target column, parent_task_id to create task as a sub-task. IMPORTANT: If the user requests to create a task but does not specify which project or section, you MUST ask them to clarify before creating the task. Do not assume or pick a project/section automatically. First call get_user_context or list_projects to show available options, then ask the user to choose. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The created task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files after create: call hypertask_attach_files with ticket_number (or task_id) from the response and files[] (filename, content_type, data or url).
+Creates a new task in a project. Requires project_id and title. Optionally set description, section (by section_id), priority (0=None, 1=Urgent, 2=High, 3=Medium, 4=Low), estimate, due_date (ISO 8601, e.g. "2026-03-10"), and labels. Use hypertask_section with action=list to find the correct section_id for the target column, parent_task_id to create task as a sub-task. IMPORTANT: If the user requests to create a task but does not specify which project or section, you MUST ask them to clarify before creating the task. Do not assume or pick a project/section automatically. First call get_user_context or list_projects to show available options, then ask the user to choose. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The created task includes a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number. To attach files after create: call hypertask_attach_files with ticket_number (or task_id) from the response and files[] (filename, content_type, data or url).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -240,7 +240,7 @@ Finds related tasks across boards/projects the user can access. Provide task_id 
 
 ### `hypertask_get_tasks`
 
-Gets detailed information about one or more tasks including assignees, followers, priority, estimate, due date, labels, attachments, and comment count. Provide task_id as an array of numbers or ticket_number as an array of strings. Tasks are retrieved in parallel for efficiency. Each task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number (e.g., "HTPR-3550" — 3550).
+Gets detailed information about one or more tasks including assignees, followers, priority, estimate, due date, labels, attachments, and comment count. Provide task_id as an array of numbers or ticket_number as an array of strings. Tasks are retrieved in parallel for efficiency. Each task includes a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number (e.g., "HTPR-3550" — 3550).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -263,7 +263,7 @@ Creates or updates a relation between two tasks. Identify each task with exactly
 
 ### `hypertask_list_tasks`
 
-Lists tasks with comprehensive filtering options. Filter by project, section (column title or section_id), assignee, priority, due date, status, labels, and more. Supports pagination and sorting. Results are automatically limited to boards/projects the user has access to. Prefer section_id (positive integer) when known; otherwise use section with the exact section_title from hypertask_section action=list. The CLI resolves section names to section_id per project. Shared list params: `query`, `filter` (`section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`), `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
+Lists tasks with comprehensive filtering options. Filter by project, section (column title or section_id), assignee, priority, due date, status, labels, and more. Supports pagination and sorting. Results are automatically limited to boards/projects the user has access to. Prefer section_id (positive integer) when known; otherwise use section with the exact section_title from hypertask_section action=list. The CLI resolves section names to section_id per project. Shared list params: `query`, `filter` (`section`, `label`, `assignee`, `status`, `updated_since`, `has_pr`), `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -333,7 +333,7 @@ Gets the highest-priority unleased tasks from one accessible board. Optionally l
 
 ### `hypertask_search_tasks`
 
-Searches for tasks by name, description, or ticket number. Enhanced with filters for assignee (me/unassigned/user ID), priority, section, due date, and status. Results are automatically limited to boards/projects the user has access to. Use this to find tasks before adding comments or performing other actions. Shared list params: `query`, `filter`, `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number.
+Searches for tasks by name, description, or ticket number. Enhanced with filters for assignee (me/unassigned/user ID), priority, section, due date, and status. Results are automatically limited to boards/projects the user has access to. Use this to find tasks before adding comments or performing other actions. Shared list params: `query`, `filter`, `sort`, `fields`, `limit`, `cursor`. Each task includes a "url" field and a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -353,7 +353,7 @@ Searches for tasks by name, description, or ticket number. Enhanced with filters
 
 ### `hypertask_update_task`
 
-Updates a task after assessing get_comments and get_tasks. Updates description, title, priority, estimate, due_date (ISO 8601, e.g. "2026-03-10"), status(column/section), followers, labels, and more. Use this when the user wants to update a task. Requires task_id or ticket_number to identify the task. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The updated task includes a "link" field with the task URL: https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex} where uniqueIndex is extracted from the ticket number. To attach files without changing other fields: call hypertask_attach_files with the same task identifier and files[].
+Updates a task after assessing get_comments and get_tasks. Updates description, title, priority, estimate, due_date (ISO 8601, e.g. "2026-03-10"), status(column/section), followers, labels, and more. Use this when the user wants to update a task. Requires task_id or ticket_number to identify the task. CRITICAL: The description field MUST be in HTML format (e.g., `<p>Text</p>` for paragraphs, `<br>` for line breaks). Plain text descriptions will be rejected by the API. The updated task includes a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number. To attach files without changing other fields: call hypertask_attach_files with the same task identifier and files[].
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -544,8 +544,8 @@ Restore one or multiple archived inbox notifications so they appear in the inbox
 
 When an agent creates a ticket through MCP with a column or label, the server now provides clear, actionable error messages instead of "Resource not found":
 
-- If a column does not exist in the project, the error explicitly states: "Section with ID {id} not found in project {projectId}".
-- If a label does not exist in the project, the error explicitly states: "Label with name '{name}' not found in project {projectId}".
+- If a column does not exist in the project, the error explicitly states: "`Section with ID {id} not found in project {projectId}`".
+- If a label does not exist in the project, the error explicitly states: "`Label with name '{name}' not found in project {projectId}`".
 - Labels given by name work correctly, matching user expectations.
 
 Previously, a wrong column or label would result in a vague "Resource not found". Now the server identifies and reports the problematic identifier, making it much easier to fix configuration issues.
