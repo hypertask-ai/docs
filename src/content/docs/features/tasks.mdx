@@ -75,7 +75,7 @@ All Tasks uses a single fetch pass that loads rows once and builds board splits 
 - The view is stable and deterministic across sessions.
 
 ### Drawing from multiple streams
-Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what’s pinned or currently in one section.
+Since All Tasks is board-wide, it aggregates tasks from all active columns and sections, making it useful for a quick health check or high-level tracking when you need to see everything that matters—not just what's pinned or currently in one section.
 
 **Note:** Unlike **My Tasks** saved views, All Tasks does not automatically filter out onboarding, demo, template, and staging content, so those tasks may appear in the list. For visibility filtering, see [Board & Subtask Visibility](/features/board-visibility/).
 
@@ -134,6 +134,9 @@ Use **Write with AI** (**Ctrl+K** / <kbd>Cmd+K</kbd>, or the command palette) in
 
 ### New Task creator
 <span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / <kbd>Cmd+J</kbd> and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
+
+### AI writer failure reasons
+<span class="label label--brand">Fix</span> When the AI writer fails to generate a task, the **Ctrl+J New Task** box and the AI Task Writer now show the real failure reason instead of hiding it; your note is still saved as a task. If AI generation is not available, the text you entered appears without modification. This applies to task creation from boards, the inbox, and description editing in task details.
 
 ## OAuth connection flow
 When Hypertask connects to a board from an external site or app, Hypertask now shows an **approve screen** first. The screen names the connector and the exact site that will receive access, letting you confirm before any access is granted.
@@ -200,6 +203,8 @@ Tasks can link to GitHub pull requests. The pull request section displays each l
 
 This change eliminates wait times for tasks with linked PRs and provides an instant-open experience even when GitHub fetches are slower than usual.
 
+<span class="label label--brand">Security</span> Hypertask now verifies that incoming PR updates come from known GitHub accounts before accepting them. By default, this restriction applies only to board 15. Except for board 15, an updated PR can link to any public repository, and the update is accepted as long as it originates from a trusted GitHub account. For board 15, only PR updates from three specified accounts are permitted: Valentin Yeo and two others configured by the board team. This prevents unauthorized actors from creating, moving, or commenting on tasks in board 15 via external PRs.
+
 ### Comments
 The comment thread shows all comments on the task. By default, when you open a task with comments, the newest comment remains expanded so you can see the latest conversation.
 
@@ -212,8 +217,6 @@ The comment thread shows all comments on the task. By default, when you open a t
 <span class="label label--brand">Fix</span> The comment box on ticket pages is now positioned immediately below the last comment instead of appearing in the middle of the task. It previously moved under the task description, causing the interface to split the comment content unnaturally. The comment section now renders after other content and before the top bar, keeping comments at the bottom of the page as expected ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
 
 <span class="label label--brand">Fix</span> A shared comment link now opens on that comment instead of the ticket top, with the comment visible on screen on both desktop and mobile. The link scrolls directly to the referenced comment when you open it—for example, from Slack or email—making it easier to reference specific points in a conversation. This fix improves navigation for long threads with hundreds of comments and helps ticket descriptions stay readable even on narrow phones ([https://app.hypertask.ai/detail/project-15/7090](https://app.hypertask.ai/detail/project-15/7090)).
-
-<span class="label label--brand">Behavior change</span> When the AI writer fails, the **Ctrl+J New Task** box now shows the real failure reason instead of hiding it; your note is still saved as a task. This applies to the New Task box and the AI Task Writer within task creation or description editing, surfacing the AI error clearly so you can retry with the right context. ([HTPR-7132](https://app.hypertask.ai/detail/project-15/7132)).
 
 ### Actions
 Common actions include:
@@ -316,11 +319,11 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 ### Faster open on cold phone
 <span class="label label--brand">Improved</span> Opening a task on a cold phone with no cached data now shows its title and description sooner (11.8 s vs 14.1 s median, 95th-percentile gap of ~2.3 s). The first load paints the title and description earlier, while controls like assignee and priority still warm up afterward, keeping the experience instant and frictionless. ([HTPR-7091](https://app.hypertask.ai/detail/project-15/7091)).
 
-### Ticket page no longer jumps on mobile
-<span class="label label--brand">Fix</span> The ticket page now stays stable on mobile, with the comment box appearing once and not moving as comments load, keeping text and layout aligned with desktop behavior. ([HTPR-7074](https://app.hypertask.ai/detail/project-15/7074)).
+### Ticket page no longer shifts on mobile
+<span class="label label--brand">Fix</span> The ticket page no longer jumps on first load. The comment box appears once and never moves: 20 of 20 fresh loads on two test accounts, on both desktop and phone. Visual elements that previously filled in after the initial paint now appear immediately as part of the cached board data, keeping the title, description, and controls in place across platforms for all test accounts. ([HTPR-7074](https://app.hypertask.ai/detail/project-15/7074)).
 
 ### Comments no longer jump with content
-<span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load. Related: [https://app.hypertask.ai/detail/project-15/7046](https://app.hypertask.ai/detail/project-15/7046).
+<span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load. ([HTPR-7132](https://app.hypertask.ai/detail/project-15/7132)).
 
 ### Instant board tap
 <span class="label label--brand">New</span> Clicking a board card now initializes the task with a single board interaction instead of triggering redundant rendering. This keeps the opening experience snappy across desktop and mobile, especially afterboards have already been reloaded.
@@ -329,4 +332,4 @@ Loading address-bar updates that occur as part of the navigation are tracked cor
 
 ## Invited-in aspects and board validation
 
-<span class="label label--brand">Improved</span> Pages that use invite links now validate board context before sending requests. **My Tasks** and **Inbox** no longer fire invite-link requests without an associated board, which previously caused console errors for unmatched requests. With this fix, such invalid requests now surface a clear, user-facing message instead of a server error, keeping the console clean and providing explicit feedback when a board context is required.
+<span class="label label--brand">Improved</span> Pages that use invite links now validate board context before sending requests. **My Tasks** and **Inbox** no longer fire invite-link requests without an associated board, which previously caused console errors for unmatched requests. With this fix, such invalid requests now surface a clear, user-facing message instead of a server error, keeping the console clean and providing explicit feedback when a board context is required.'
