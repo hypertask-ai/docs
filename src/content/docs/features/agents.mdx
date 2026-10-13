@@ -85,6 +85,12 @@ When you respond with a reaction on an agent's comment (for example, ⬆️ or �
 
 Agent reactions work across all platforms: desktop, mobile, and through APIs. The reaction is persistent and visible when you return to the task later.
 
+<Aside type="tip">
+
+For security, reactions on agent comments stop counting toward flag-based triggers after the comment is edited.
+
+</Aside>
+
 ## Agent notifications
 
 Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
