@@ -89,9 +89,9 @@ When searching within a board or in saved views, you can now narrow results usin
 - **is:** Narrow by task type; for example, `is:card` to show only standard cards.
 - **dates:** Show tasks with dates matching a condition (by default, **by due**), or filter by due date ranges.
   - `dates:2026-09-30` For tasks with that exact due date.
-  - `dates:<2026-09-30` For tasks with a due date before.
-  - `dates:>2026-09-30` For tasks with a due date after.
-  - `dates:in-range 2026-09-01..2026-09-30` For tasks with a due date within the range.
+  - `dates:<2026-09-30` For tasks due before.
+  - `dates:>2026-09-30` For tasks due after.
+  - `dates:in-range 2026-09-01..2026-09-30` For tasks due within the range.
   - `dates:overdue` For tasks marked overdue.
   - `dates:today` For tasks due today.
   - `dates:this-week` For tasks due within the current week.
@@ -176,7 +176,7 @@ With the **Task Reporter**, anyone on the task can update the task description d
 ### Permissions
 - **Task Reporter** is available to any human assignee or worker on a task. The feature is not available for closed tasks.
 - When you open the description in edit mode, you become the **Task Reporter** for that task.
-- Only the Task Reporter can edit the description. This prevents concurrent edits and restores the semantic meaning of "owner of the description field."
+- Only the Task Reporter can edit the description. This prevents concurrent edits and restores the semantic meaning of "owner of the description field".
 - If you close the description without saving any changes, the status clears and the next person to open it becomes the Task Reporter.
 
 This model ensures a clear ownership of the description field, similar to comment ownership, which helps teams coordinate around tasks without stepping on each other's work.
@@ -190,7 +190,7 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 
 <span class="label label--brand">Fix</span> Deleting a task no longer creates an invalid undoable state. Undo is now always possible when restoring from deletion, ensuring tasks can be fully recovered and the undo system behaves consistently.
 
-<span class="label label--brand">Fix</span> Undo functionality has been consolidated under a single restoring rule. This ensures that restoring tasks after deletion behaves the same whether you use the Undo button or Ctrl+Z, with consistent behavior tracked through the board’s undo history.
+<span class="label label--brand">Fix</span> Undo functionality has been consolidated under a single restoring rule. This ensures that restoring tasks after deletion behaves the same whether you use the Undo button or Ctrl+Z, with consistent behavior tracked through the board's undo history.
 
 ### Agent lease interactions
 When you make manual changes to a task—"moving, assigning, unassigning, archiving, or deleting"—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
@@ -247,6 +247,8 @@ Common actions include:
 <span class="label label--brand">Security</span> A person who is not on a board can no longer add labels to it or modify label assignments on tasks. Outsiders now receive a Forbidden error, while board members continue to manage labels as before.
 
 <span class="label label--brand">Security</span> A team-only share link no longer exposes task content to outsiders. Before, the page sent the whole task and comments to unauthenticated users who only saw blurred content. Now an outsider sees an empty page with a Sign in or Login bar and cannot see task details or comments.
+
+<span class="label label--brand">Security</span> When you attempt to move or nest a task under another task on an inaccessible board, the operation is refused and nothing is saved. Hypertask validates board boundaries before allowing parent-child relationships across unrelated teams, preventing accidental exposure of foreign task titles or context ([HTPR-7167](https://app.hypertask.ai/detail/project-15/7167)).
 
 ## Relations between tasks
 Create relationships between tasks to surface context without leaving tasks:
