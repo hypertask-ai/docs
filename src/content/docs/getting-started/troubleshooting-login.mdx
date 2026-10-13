@@ -11,11 +11,11 @@ If the page appears stuck or doesn't finish loading, check these conditions:
 - **Popup blockers are enabled**: Allow popups for `hypertask.ai` to ensure authentication flows complete
 - **Network proxy or VPN**: Temporarily disable your proxy and try again
 
-[Some privacy-focused browser extensions and add-ons lock built-in Error objects to protect you from JavaScript errors. In rare cases this blocks Hypertask from properly creating error messages.](https://app.hypertask.ai/detail/project-15/6876)
+[Some privacy-focused browser extensions and add-ons lock built-in Error objects to protect you from JavaScript errors. In rare cases this blocks Hypertask from properly creating error messages.]({{< resolveSrc "https://app.hypertask.ai/detail/project-15/6876" >}})
 
 To work around this, try one of the following:
 
-- Disable privacy extensions during login, then re-enable them once you’ve signed in
+- Disable privacy extensions during login, then re-enable them once you've signed in
 - Open Hypertask in an Incognito window with extensions disabled — this is the quickest way to verify the issue is related to an extension
 
 ## "Email not found" or "Invalid email"
@@ -33,8 +33,9 @@ Create a free account or contact your team administrator if you don't see an opt
 
 When you start a new login for a different account from the same browser:
 
-- The previous user's session is properly cleared (Max-Age=0 cookies)
-- Both Better Auth and user identity cookies are set for the new account
+- All authentication cookies are properly invalidated after a sign-out (Max-Age=0)
+- New session cookies are set for the new account
+- Both Better Auth and user identity cookies are refreshed correctly
 - You're immediately redirected to a board as the new user
 
 Your logged-in state persists across sessions; hiding or closing the browser doesn't automatically log you out unless you explicitly sign out. Authentication is verified server-side on each request via the signed `ht_session` cookie.
@@ -42,7 +43,10 @@ Your logged-in state persists across sessions; hiding or closing the browser doe
 ## Sign-in security improvements (hypertask.ai login)
 
 - The sign-in email endpoint no longer returns verification codes or magic-link tokens to callers. This prevents callers from using the response to reset or take over an email account without direct access to the inbox.
+  - <div style="aspect-ratio: 16/9; margin: 0.75rem 0;"><iframe style="width: 100%; height: 100%;" src="https://www.youtube-nocookie.com/embed/J7GYxffM7FE" title="Hypertask Live Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 - Legacy API routes requiring only a non-authenticated session are now protected with signed login checks. Logged-out requests are now refused on all legacy routes, and the system uses verified `ht_session` cookies for all route access.
+- A valid sign-out invalidates login cookies in the browser and refreshes Better Auth sessions on the server, preventing copied or reused cookies from granting continued access after a user signs out.
+  - <div style="aspect-ratio: 16/9; margin: 0.75rem 0;"><iframe style="width: 100%; height: 100%;" src="https://www.youtube-nocookie.com/embed/T4JnbqyPovw" title="Hypertask Quickstart" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 Your credentials and login processes otherwise remain unchanged; simply use your email and password or the password reset flow as usual. If you receive password reset emails or confirmations, verify they were sent by `hypertask.ai`; invalid or forwarded reset links are not sent by Hypertask.
 
