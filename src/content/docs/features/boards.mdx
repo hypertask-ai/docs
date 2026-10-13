@@ -17,11 +17,12 @@ The shipping gate for this page was on 2026-10-03 (Owner+QA preview only). Botto
 - Only adds the signed-in person to the board that generated the invite.
 - Is refused when no login is provided.
 - Is refused if the invite target board differs from the invite source board.
+- Can only be resended by the board's owner and current members.
 
-**Behavior before this fix:** It was possible to use an invite intended for one board to add a user to a different board, potentially crossing team boundaries if the signed-in account had access to the target. The invite may have succeeded even when no appropriate board membership existed.
+**Behavior before this fix:** An invite could be successfully resent and used to create tickets on a different board, potentially exposing cross-team data.**
 
-**After this fix:** Each board’s access is gated strictly to that board’s scoped invite. If an invite is used outside its intended context, the system refuses the operation and no unauthorized access is granted.
+**After this fix:** Each board’s access is gated strictly. Invites can only be resent and used within their intended context. Users outside the board’s membership cannot leverage invites to access or create tickets on other boards. ([HTPR-7162](https://app.hypertask.ai/detail/project-15/7162), [HTPR-7176](https://app.hypertask.ai/detail/project-15/7176)).
 
-This change, verified on production ([HTPR-7162](https://app.hypertask.ai/detail/project-15/7162)), ensures invites are a scoped, safe method to grant board-level access without exposing cross-team boundaries.
+This change ensures invites are a scoped, safe method to grant board-level access without exposing cross-team boundaries.
 
 ## Creating a board
