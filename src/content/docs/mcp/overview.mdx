@@ -86,7 +86,7 @@ https://mcp.hypertask.ai/llms.txt
 The file returns a human-readable instructions block that includes:
 - **Connect-An-AI-Assistant block** with instructions and steps for Claude, ChatGPT, Claude Code, and CLI environments
 - **MCP endpoint URL** (`https://mcp.hypertask.ai/mcp`) for direct connection
-- **Authentication instructions** using JWT bearer tokens
+- Authentication instructions using JWT bearer tokens
 
 This enables AI assistants to self-discover and connect to Hypertask without manual configuration. For environments that support `llms.txt` parsing (such as Claude Desktop and ChatGPT's current and future releases), the protocol automatically applies the connection details.
 
@@ -180,7 +180,7 @@ This mode specifically applies to agent traffic; non-agent traffic remains subje
 
 ## User-inherent person token credential access
 
-A person token is now usable in place of a dedicated service account token when creating agents via MCP. Previously, using a person's token resulted in an "Authentication failed" error. For a person token to be able to create an agent, the person must have that token available through **MCP authentication** (e.g., logged in via MCP's embedded browser session) so the person's own MCP login can create an agent. Additionally, **help and capabilities tools** now require login, explaining where to obtain a token when trying to help an agent self-configure. The CLI help and command listing also require login. These improvements reduce the likelihood that a new agent will get stuck trying to connect standalone.
+A person token is now usable in place of a dedicated service account token when creating agents via MCP. Previously, using a person's token resulted in an "Authentication failed" error. For a person token to be able to create an agent, the person must have that token available through **MCP authentication** (e.g., logged in via MCP's embedded browser session) so that the person's own MCP login can create an agent. Additionally, **help and capabilities tools** now require login, explaining where to obtain a token when trying to help an agent self-configure. The CLI help and command listing also require login. These improvements reduce the likelihood that a new agent will get stuck trying to connect standalone.
 
 ## Full capability parity across surfaces
 
