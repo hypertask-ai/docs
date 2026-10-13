@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 import { z } from "zod";
 import { jwtVerify } from "jose";
+import { checkMdx } from "../../../scripts/mdx-rules.mjs";
 
 interface Env {
   GITHUB_TOKEN: string;
@@ -340,6 +341,15 @@ description: Short description for SEO.
       if (content.includes("import ") && !pagePath.endsWith(".mdx")) {
         pagePath = pagePath.replace(/\.md$/, ".mdx");
         if (!pagePath.endsWith(".mdx")) pagePath += ".mdx";
+      }
+
+      if (pagePath.endsWith(".mdx")) {
+        const problems = checkMdx(content);
+        if (problems.length) {
+          const text = problems.map((problem) => `${pagePath}:${problem}`).join("\n")
+            + `\ncheck-mdx: ${problems.length} problem(s) would break the docs build. Nothing was saved; fix the lines above and save again.`;
+          return { isError: true, content: [{ type: "text", text }] };
+        }
       }
 
       const msg = commit_message || `docs: update ${pagePath}`;

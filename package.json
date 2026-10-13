@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "node scripts/check-mdx.mjs && astro build",
+    "test:mdx": "node scripts/test-mdx-rules.mjs",
     "check:changelog": "node scripts/check-changelog.mjs",
     "test:changelog": "node scripts/test-changelog-legacy.mjs && node scripts/test-changelog-legacy-build.mjs",
     "preview": "astro preview",
