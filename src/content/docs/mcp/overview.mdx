@@ -349,6 +349,12 @@ Creating labels and managing saved views used to be listed here as unsupported. 
 3. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
 4. Restart your MCP client after updating the configuration.
 
+**"No tools listed after MCP sign-in"** — If you signed in successfully but the last step doesn't show tools:
+
+1. Verify you're using the correct MCP server addresses for your client. The primary address is `https://mcp.hypertask.ai/mcp`. Some clients have additional endpoints for meta-only loading: `https://mcp.hypertask.ai/mcp?tools=meta`.
+2. Check that your token has full access. Agent-specific flags like `htpr-6804-mcp-tools` affect which tools are visible, not the core listing.
+3. Ensure the client is configured to wait for the tool list. Some clients proceed immediately and skip displaying available tools.
+
 **"Authentication failed" when creating an agent with your person token** — If you're using a person token to create a new agent via MCP and get "Authentication failed", try using an agent token instead, or ensure you're authenticated via the MCP session in the browser first so that your person token can satisfy the credential requirements. See the agent authentication clarifications to reduce the likelihood an agent gets stuck trying to connect.
 
 ## Supported clients
