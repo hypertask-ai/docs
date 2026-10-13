@@ -36,9 +36,29 @@ Supported modes are enumerated in the table below, and they behave consistently 
 | Visibility — disabled      | Subtasks are omitted from read and create responses.      | Subtasks cannot be created or shown; `displaySubtasks` appears as `false` |
 | Visibility — inherited     | Subtasks follow their parent board's visible sections.     | Used when a parent board or saved view explicitly sets this mode |
 
+## Board access for reads
+
+<span class="label label--brand">Security fix</span> Hypertask now properly restricts board-visible resources (tasks, pages, tables, and column names/settings) to users who have access to the board. Standard tasks, tables, and pages show only work that belongs to boards you are a member of. Before this fix:
+
+- **Page access leak** – a page would keep its old-board access even after its task moved to another board, so users without access to the new board could still open and search the page.
+- **Column visibility leak** – any logged-in user could read another board’s column names and settings, including through search filters and tables.
+- **Cross-board exhaust** – a board member could search across all boards and open test pages, exposing additional columns and configuration.
+
+After the fix:
+
+- **Moving a task moves its pages** – when you move a task to another board, its pages are now restricted to users with access to that board. Users who cannot see the new board cannot open or search the page.
+- **Columns are board-scoped** – columns and their associated layout/filter settings from boards you’re not on are hidden. Only your boards contribute to search results and table columns.
+- **Search is scoped properly** – global search, filtered tables, and the search screen only return content you have board access to; cross-board data is filtered out at the backend.
+
+### Why board-aware access matters
+
+- **Prevents unauthorized access** across unrelated workspaces at a single login.
+- **Aligns searches and tables** with your effective board memberships.
+- **Keeps pages in context** – pages follow their task and stay visible only to the people who can see the new board.
+
 ## Board access for writes
 
-<span class="label label--brand">System hardening</span> All write paths consistently enforce membership-based access before mutating targets. Members cannot bypass access checks by switching identities or relying on CLI/MCP identities different from the session owner. This applies across CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`), MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`), and the REST API (`board_update_task`, `board_add_comment`, and the legacy comment endpoint `/api/board/comment`). Write actions are now strictly tied to the authenticated user's session and the board's membership settings; no identity swap creates a separate write context.
+All write paths consistently enforce membership-based access before mutating targets. Members cannot bypass access checks by switching identities or relying on CLI/MCP identities different from the session owner. This applies across CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`), MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`), and the REST API (`board_update_task`, `board_add_comment`, and the legacy comment endpoint `/api/board/comment`). Write actions are now strictly tied to the authenticated user's session and the board's membership settings; no identity swap creates a separate write context.
 
 ### Why write gating matters
 
