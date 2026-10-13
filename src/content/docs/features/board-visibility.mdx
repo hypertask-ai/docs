@@ -38,15 +38,14 @@ Supported modes are enumerated in the table below, and they behave consistently 
 
 ## Board access for writes
 
-<span class="label label--brand">Fixed</span> All write paths now consistently gate the target board or task before mutating. Members cannot bypass access checks by switching identities.
-
-This applies across CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`), MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`), and the REST API (`board_update_task`, `board_add_comment`, and the legacy comment endpoint `/api/board/comment`). Integrated validations ensure operations are isolated to their intended board/task and places write actions behind the same membership gate used for downloads.
+<span class="label label--brand">System hardening</span> All write paths consistently enforce membership-based access before mutating targets. Members cannot bypass access checks by switching identities or relying on CLI/MCP identities different from the session owner. This applies across CLI task and comment mutations (e.g., `task create`, `task update`, `comment add`), MCP task/comment tools (`board_update_task`, `board_add_comment`, `legacy_comment`), and the REST API (`board_update_task`, `board_add_comment`, and the legacy comment endpoint `/api/board/comment`). Write actions are now strictly tied to the authenticated user's session and the board's membership settings; no identity swap creates a separate write context.
 
 ### Why write gating matters
 
 - Matching access semantics between reads and writes prevents accidental cross-board updates.
 - Boards with constrained visibility (Basic, Dimmed) can rely on a stable access model even when multiple identities are involved.
 - CLI, MCP, and REST workflows stay aligned: no identity switch or hidden flag can bypass board membership checks.
+- Auto-assign and auto-archive operations are restricted to the effective membership context; claims or leases cannot authorize actions outside the session owner's permissions.
 
 You can read more about access control for downloads in the [Images and Attachments](/features/images/) documentation, which documents that files are only reachable for people who see the parent ticket.
 
