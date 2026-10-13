@@ -116,6 +116,32 @@ npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
 
+## Anonymous feedback logging
+
+<span class="label label--brand">New</span> AI clients, agents, and pipelines can log anonymous feedback to any board without exposing your identity. Use the feedback endpoint to send high-level error or quality signals:
+
+```bash
+curl https://api.hypertask.ai/api/feedback \
+  -u "$HTPTASK_TOKEN" \
+  -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "boardId": 4063,
+    "source": "release-fleet",
+    "summary": "Agent Run 42 exceeded system load",
+    "details": "<h2>Run 42</h2><p>Latency on task 4063 spiked to >5s for 30s.</p>"
+  }'
+```
+
+- **boardId** — the target board (number).
+- **source** — a short label for the bot/agent/report type (string).
+- **summary** — a one-line description (string).
+- **details** — a longer markdown or HTML report (string).
+
+Only the board owner and members receive the feedback; no user identity is logged.
+
+[https://app.hypertask.ai/detail/project-15/7195](https://app.hypertask.ai/detail/project-15/7195)
+
 ## Task listing with label filters
 
 ### hypertask tasks list
