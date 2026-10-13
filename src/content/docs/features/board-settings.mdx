@@ -9,7 +9,6 @@ Use board settings to plan one board and control its automatic behavior. Set its
 
 ## What this affects
 Board settings apply to individual boards on a project. They govern default behaviors that are applied consistently across tasks when rules are triggered:
-
 - **Archive actions** — Automatically archive old tasks or mark them for archival to keep your board clean.
 - **Project planning** — Set a target date, track milestones, and post the board's current health.
 - **Board notifications** — Mute ordinary inbox, email, and push notifications from this board only.
@@ -24,7 +23,6 @@ Board settings are stored at the board level, so you can tailor behaviors per wo
 
 ## Reach
 You can open board settings from:
-
 - **Ctrl+K command palette** — Search for **"Board settings"** and select your board. The board and team you opened from are now preselected.
 - **Board menu** — Open a board's menu and choose **Settings**.
 
@@ -157,8 +155,10 @@ To configure per-column auto-assign:
 2. Pick an assignee (group or individual) to apply as tasks are moved into that column. The assignment is additive and idempotent—moving a task back into another column and then into this column again respects the rule.
 3. When the rule applies, all tenants receive a notification and the assignee is messaged in the source channel if notifications are set up for the board.
 
-### Auto-assign on task creation (HTPR-5488)
-The per-column auto-assign rule now also applies to tasks created directly in a column. Previously, auto-assign only ran when tasks were moved; tickets filed straight into a column (via the bottom-of-column composer, from an inbox, or through CLI) would not be assigned. Now, any new task that lands in a column respects the column's auto-assign rule, whether it's moved in or created there directly.
+Auto-assign runs within the effective membership and session context enforced for board write access. Use board-visibility gating to control which users gain or retain write access to the board; ID-based attempts outside that context are scoped to the session owner's permissions.
+
+### Calling auto-assign via CLI/MCP
+When auto-assign is triggered by CLI or MCP tools, the assignee lookup is evaluated in the context of the authenticated user or tool's session. Actions cannot be authorized by leases or background jobs outside that session; approvals are enforced through the board's membership and write-access model.
 
 ### How to configure (defaults)
 - **Target columns** — Specify which columns should apply auto-assign triggers:
