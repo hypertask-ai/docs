@@ -18,3 +18,14 @@ Related flags are displayed on the card, making it easy to understand dependenci
 <span class="label label--brand">Feature</span> The search box remains on top while you scan through flags, keeping relevant information always in view without requiring re-navigation.
 
 Use the search filter to locate flags by title, description, or label. Searches stay focused, so you can type and filter without moving your cursor.
+
+### Reaction lifecycles on flags
+
+<span class="label label--brand">Security</span> Flag-based triggers respect reaction lifecycles. A thumbs-up or other emoji on a flag comment never counts toward decisions after that comment is edited.
+
+- **Before edit:** reactions on a flag comment contribute to flag-based workflow decisions
+- **After edit:** reactions on that comment no longer apply; only edits to unedited comments count
+
+This prevents an agent from reusing your earlier reaction after you refine the comment, while still letting flag owners update their reasoning without losing prior supportive reactions.
+
+[https://app.hypertask.ai/detail/project-15/7181](https://app.hypertask.ai/detail/project-15/7181)
