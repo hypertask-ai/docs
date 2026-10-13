@@ -42,9 +42,9 @@ Select multiple notifications with mouse clicks or keyboard navigation. When you
 | **Search** | Search icon | Text-based search across all boards |
 | **Notifications** | Notification icon | List of all notification types |
 
-### Saved views and sorting
+### Inbox filtering scope
 
-Press <kbd>Ctrl</kbd> + <kbd>K</kbd> and **"Go to saved views"** to jump into a saved layout (e.g. top clusters, Important, etc.). When you open a saved view or filter the list, the keyboard and row actions apply to what's visible. This means you can use <kbd>Shift</kbd> + <kbd>E</kbd> to bulk-archive the visible rows (clusters, Important siblings, or any filter set) without opening the command palette.
+New users in a board see notifications for private tasks, while users removed from a board no longer receive those notifications in their Inbox. To prevent a stale notification from reappearing, you can reply to it (or tap Undo) to remove it from your queue. Cleaning up unsubscribed notifications helps keep the Inbox focused and relevant.
 
 ## Decisions split for waiting work
 
@@ -62,13 +62,13 @@ Open the clickable wireframe to visualize the Decisions split and view:
 
 <Aside type="tip">
 
-The Decisions split leans on your existing labels and row types. It doesn't add new UI; it surfaces what's already tracked so you never miss a decision point.
+The Decisions split leans on your existing labels and row types. It doesn’t add new UI; it surfaces what’s already tracked so you never miss a decision point.
 
 </Aside>
 
 ## Numbered pins in the mobile inbox
 
-On mobile, each inbox row now shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
+On mobile, each inbox row shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
 
 - **Numbered pins** appear on desktop and mobile inbox rows
 - The numbers correspond to timeline order (newest first)
@@ -88,4 +88,4 @@ When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task
 - **Hidden elsewhere** — On a board or a ticket detail page, the context is already clear, so the chip is hidden.
 - **Editable** — Click the chip to choose a different board before saving the task.
 
-<Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket's board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
+<Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket’s board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
