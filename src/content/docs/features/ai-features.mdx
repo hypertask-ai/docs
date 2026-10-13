@@ -28,13 +28,13 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
     - New tasks are classified when created; edited tasks are re-classified when title or description change; updating the prompt re-runs classification for the entire board.
 
 4. **AI usage without a signed-in user**
-    - AI usage can now be recorded and stored as usage tracks even when calls don’t originate from a signed-in user.
+    - AI usage can now be recorded and stored as usage tracks even when calls don't originate from a signed-in user.
     - This allows external agents or systems invoking the AI APIs to function without requiring active authentication, while still producing usage records available to admins.
 
 5. **Batch-powered background workloads**
-    - Background smart labels and other AI classification runs that involve many tasks are routed to Anthropic’s Batch API at half price, allowing cost-efficient processing at scale.
+    - Background smart labels and other AI classification runs that involve many tasks are routed to Anthropic's Batch API at half price, allowing cost-efficient processing at scale.
     - Matching tasks receive their labels automatically; activity is logged in the task activity feed.
-    - You don’t see extra UI for this—it happens invisibly in the background with consistent results.
+    - You don't see extra UI for this—it happens invisibly in the background with consistent results.
 
 6. **Faster agent task lists**
     - AI agents are now much quicker to load their task lists, especially after server warm-up.
@@ -56,7 +56,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 | **Board filtering** | Understands natural-language constraints and builds dynamic filters. |
 | **Smart Labels** | Keeps labels on tasks that match your AI prompt; changes to tasks or the prompt trigger reclassification. |
 | **AI Chat** | Global assistant for questions, summarization, and quick actions, with full-screen history paging. |
-| **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently; background jobs go through Anthropic’s half-price Batch endpoint. Usage is recorded as usage tracks regardless of whether a signed-in user is present. |
+| **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently; background jobs go through Anthropic's half-price Batch endpoint. Usage is recorded as usage tracks regardless of whether a signed-in user is present. |
 | **Agent task lists** | Optimized reads for quick agent workloads; significant speedup for the slowest dataset slices. |
 
 ## When AI is not available
