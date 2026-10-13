@@ -10,6 +10,7 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 A task represents a unit of work that can be assigned, progressed, and tracked. It supports rich fields, priority levels, relationships, and subtasks.
 
 ## My Tasks
+
 **My Tasks** is your personal task list across boards. By default it shows tasks assigned to you.
 
 The list groups by due time: **Overdue**, **Today**, **This week**, **Later**, and **No due date**. Overdue stays at the top. Use **Group** to switch back to board groups. Saved My Tasks views remember the choice ([HTPR-6455](https://app.hypertask.ai/detail/project-15/6455)). Board split tabs still filter inside a time group.
@@ -143,17 +144,24 @@ When Hypertask connects to a board from an external site or app, Hypertask now s
 
 This prevents a signed-in user from inadvertently granting external sites access to their entire board without prior approval.
 
-## Editing a task
+## Managing task details
 Open a task to view and edit all its fields. Unsupported columns or fields may be hidden based on your team's board configuration.
 
-### Related fields
-- **Assignees**: Current human assignees with ability to add or remove. Added assignees trigger notifications.
-- **Workers**: Agent nodes and nodes can have their own assignee field, tracked separately from human assignees. Workers appear in the Relationships section under the *Workers* relation type.
-- **Sections**: Drag tasks between sections to change their column. This can trigger auto-assign rules if configured.
-- **Table view**: In Table view, you can also drag any row onto another section's card and the task moves into that section. The row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views. (Note: this only works when no column sort is active; on /my-tasks, rows are grouped by time or board, so dragging doesn't target a section.)
-- **Due date**: Click a date to pick another date or remove it. The date affects due date pickers and filter views.
-- **Priority**: Change priority to reflect updated urgency.
-- **Estimated time**: Type hours or a low-high range for time-tracking integration.
+### Priorities
+Assign a clear priority (Low, Medium, or High) to reflect the task's importance and replacement cost. Higher priorities should be shown ahead of lower ones in lists, table view, and filters.
+
+### Assignees
+- Added assignees trigger notifications to the task's assignees. If no assignee is specified, the task is unassigned.
+- Workers can have their own assignee field, tracked separately from human assignees. Workers appear in the Relationships section under the *Workers* relation type.
+
+### Due dates
+Click a date to pick another date or remove it. The date affects due date pickers and filter views. Predictive phrases like "tomorrow," "next week," and relative periods also persist.
+
+### Estimated time
+Type hours or a low-high range for time-tracking integration.
+
+### Section & column
+Drag tasks between sections to change their column. This can trigger auto-assign rules if configured. In Table view, you can also drag any row onto another section's card; the row is the drag handle, the section card is the drop target, and the change surfaces immediately in both views (Column sort must be off for this to work; on /my-tasks, rows are grouped by time or board, so dragging doesn't target a section directly).
 
 ### Description edition UX
 To edit the task description:
@@ -180,7 +188,11 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 
 <span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-15/339/6629)).
 
-## Agent lease interactions
+<span class="label label--brand">Fix</span> Deleting a task no longer creates an invalid undoable state. Undo is now always possible when restoring from deletion, ensuring tasks can be fully recovered and the undo system behaves consistently.
+
+<span class="label label--brand">Fix</span> Undo functionality has been consolidated under a single restoring rule. This ensures that restoring tasks after deletion behaves the same whether you use the Undo button or Ctrl+Z, with consistent behavior tracked through the board’s undo history.
+
+### Agent lease interactions
 When you make manual changes to a task—"moving, assigning, unassigning, archiving, or deleting"—Hypertask cancels any active agent lease on that task and persists the change. Human modifications take priority over agent tasks, but agent-versus-agent collision protection remains in place. This ensures your task updates are never blocked by an agent while you're working.
 
 ## Task detail view
@@ -225,6 +237,16 @@ Common actions include:
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
 - **Delete**: Permanently remove the task. Undo appears on the notification after deletion, clicking **Undo** restores the task to its previous column and keeps it available for future edits. For bulk deletions, undo restores all affected tasks together and still works with <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd>.
+
+<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches. ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009)).
+
+<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth. ([HTPR-7105](https://app.hypertask.ai/detail/project-15/7105)).
+
+<span class="label label--brand">Security</span> Tasks can link to GitHub pull requests. Board 15 now accepts automatic PR updates only from three known GitHub accounts: Valentin Yeo and two others configured by the board team, preventing outsiders from creating tasks, moving them to review, or commenting via PRs.
+
+<span class="label label--brand">Security</span> A person who is not on a board can no longer add labels to it or modify label assignments on tasks. Outsiders now receive a Forbidden error, while board members continue to manage labels as before.
+
+<span class="label label--brand">Security</span> A team-only share link no longer exposes task content to outsiders. Before, the page sent the whole task and comments to unauthenticated users who only saw blurred content. Now an outsider sees an empty page with a Sign in or Login bar and cannot see task details or comments.
 
 ## Relations between tasks
 Create relationships between tasks to surface context without leaving tasks:
