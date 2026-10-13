@@ -150,10 +150,24 @@ Add, update, or delete a comment. Use action: `add` (create comment, requires ta
 | `ticket_number` | string | No |  |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
-| `action` | `add` | `update` | `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only). Defaults to `add`. |
+| `action` | `add` | `update` | `delete` | No | Operation: \'add\' = create comment (requires task_id/ticket_number + text), \'update\' = edit comment (requires comment_id + text), \'delete\' = remove comment (requires comment_id only). Defaults to `add`. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., `<p>Text</p>`). |
 | `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include `{ user_id, display_name }` for each. |
+
+### Add anonymous feedback via comment
+
+<span class="label label--brand">New</span> Use `hypertask_add_comment_to_task` with a short summary plus details to log anonymous feedback to a board. Replace the task_id with the target board. Example for an error or incident log:
+
+```json
+{
+  "action": "add",
+  "text": "<p><b>Error Report (anonymous)</b></p><h2>Run 42</h2><p>Latency on task 4063 spiked to >5s for 30s.</p>",
+  "mentions": []
+}
+```
+
+Only the board owner and members are notified; your user identity is never exposed in the feedback payload. Use this for production error logs, incident summaries, or quality signals without logging to your inbox.
 
 ### `hypertask_get_comments_for_task`
 
@@ -182,7 +196,7 @@ Gets all comments for a specific task. Use task_id or ticket_number (e.g., "DEV-
 
 Use `hypertask_add_comment_to_task` with action `add` and an HTML embed containing the desired emoji to add an approval reaction to a comment. A reaction entry (type=`reaction`, content=`<p>🆗</p>`) is tracked under the comment's `reactions[]` field and can be listed from `hypertask_list_page_history` when targeting the associated page.
 
-### `hypertask_assign_user`
+### `,`
 
 Assign or unassign a person or agent to a task. Use `intent` (default `assign`) for an idempotent add, or `unassign` to remove the assignee. Use `hypertask_list_project_members` to resolve people and board agents. Provide one assignee identifier: `user_id`, `user_ids`, `agent_id`, or `assign_self`.
 
@@ -426,6 +440,18 @@ During this work, the legacy MCP server handling older clients has been deleted 
 
 ---
 
+## Agent reactions
+
+<span class="label label--brand"> Security </span> For security, reactions on agent comments no longer count for flag-based decisions after the comment is edited. A flag switch only considers unedited comments.
+
+<Aside type="tip">
+
+This ensures your thumbs-ups and other reactions remain meaningful when you clarify flag reasoning without losing prior signals.
+
+</Aside>
+
+---
+
 ## Agent-related metadata
 
 ### `hypertask_team_members`
@@ -545,7 +571,7 @@ Restore one or multiple archived inbox notifications so they appear in the inbox
 When an agent creates a ticket through MCP with a column or label, the server now provides clear, actionable error messages instead of "Resource not found":
 
 - If a column does not exist in the project, the error explicitly states: "`Section with ID {id} not found in project {projectId}`".
-- If a label does not exist in the project, the error explicitly states: "`Label with name '{name}' not found in project {projectId}`".
+- If a label does not exist in the project, the error explicitly states: "`Label with name \'{name}\' not found in project {projectId}`".
 - Labels given by name work correctly, matching user expectations.
 
 Previously, a wrong column or label would result in a vague "Resource not found". Now the server identifies and reports the problematic identifier, making it much easier to fix configuration issues.
