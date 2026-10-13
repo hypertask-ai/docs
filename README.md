@@ -94,3 +94,6 @@ All stable as of commit fa4577f1be5eeae35c35c442a2dc924e799e8335; canonical page
 ---
 
 The changelog entries in feature were internally matched to prior entries and finalized directly. I used only the category-A definitions and focus on consumer-facing coverage; no extra category B or C items were added or moved forward.
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for bug reports, ideas, and our contribution policy.
