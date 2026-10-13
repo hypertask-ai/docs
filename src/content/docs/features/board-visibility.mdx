@@ -1,6 +1,6 @@
 ---
-title: Board & Subtask Visibility
-description: Configure which tasks and subtasks are visible to users across boards, saved views, tables, and AI Chat.
+title: "Board & Subtask Visibility"
+description: "Configure which tasks and subtasks are visible to users across boards, saved views, tables, and AI Chat."
 ---
 
 import { Aside, Tabs, TabItem, Steps, Card, CardGrid, Table, LinkCard } from '@astrojs/starlight/components';
@@ -28,6 +28,20 @@ A board's top-level setting is configured from the board's header, using **Ctrl+
 
 This change ensures saved-view endpoints are scoped strictly, preventing cross-board data leakage through saved-view references or AI‑assisted view actions.
 
+## Profile details in board detail answers
+
+<span class="label label--brand">Security fix</span> Board detail answers now safely expose profile information. Before this fix, a board detail answer would show every profile field of the board owner and task assignees, including private details. After this fix:
+
+- **Private profile visibility** – Board members no longer see private profile details of the board owner or assignees.
+- **Limited exposure** – The old board detail answer now shows each person with only their `id`, `name`, and `photo`.
+- **Consistent behavior** – This applies to API responses that include profile details for tasks and owners, so public references (links, summaries, and views) respect the same privacy boundaries.
+
+### Why this matters
+
+- Boards with strict visibility settings can share detail previews without leaking sensitive profile data.
+- Agents and MCP tools that query board details show profile data consistent with visible vs. hidden modes.
+- Saved-view and AI-chat integrations that render profiles stay within the same privacy model as other board filtering.
+
 ## Board access for reads
 
 <span class="label label--brand">Security fix</span> Hypertask now properly restricts board-visible resources (tasks, pages, tables, and column names/settings) to users who have access to the board. Standard tasks, tables, and pages show only work that belongs to boards you are a member of. Before this fix:
@@ -39,7 +53,7 @@ This change ensures saved-view endpoints are scoped strictly, preventing cross-b
 After the fix:
 
 - **Moving a task moves its pages** – when you move a task to another board, its pages are now restricted to users with access to that board. Users who cannot see the new board cannot open or search the page.
-- **Columns are board-scoped** – columns and their associated layout/filter settings from boards you’re not on are hidden. Only your boards contribute to search results and table columns.
+- **Columns are board-scoped** – columns and their associated layout/filter settings from boards you're not on are hidden. Only your boards contribute to search results and table columns.
 - **Search is scoped properly** – global search, filtered tables, and the search screen only return content you have board access to; cross-board data is filtered out at the backend.
 
 ### Why board-aware access matters
