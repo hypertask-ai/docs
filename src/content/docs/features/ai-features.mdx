@@ -50,6 +50,10 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
     - On mobile, the list is limited; tap an entry to open its history.
     - The docked chat always shows your most recent chats inline; use the full-screen view for history navigation.
 
+9. **Comment summaries preserve open questions**
+    - When AI summarizes your comments, it now accurately reflects whether questions have been answered or remain unresolved.
+    - After this fix ([HTPR-7046](https://app.hypertask.ai/detail/project-15/7046)), comment summaries display `Open: ...` for unanswered questions instead of inventing an answer, and retain "still unresolved" language when appropriate.
+
 </Steps>
 
 ## Where AI appears
@@ -63,6 +67,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 | **Ticket AI suggestions** | Provides context-specific suggestions in ticket panels that mirror the ticket's subject and related data. |
 | **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently; background jobs go through Anthropic's half-price Batch endpoint. Usage is recorded as usage tracks regardless of whether a signed-in user is present. |
 | **Agent task lists** | Optimized reads for quick agent workloads; significant speedup for the slowest dataset slices. |
+| **Comment summaries** | Summarize comments and preserve whether questions remain open for human follow-up. |
 
 ## Task creation with AI writer
 
