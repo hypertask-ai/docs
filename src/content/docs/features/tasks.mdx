@@ -191,7 +191,7 @@ Open a task to see:
 - Task Reporter indicator marking who can edit the description.
 - **Top bar** with instant navigation and actions:
   - ← **Back to task** — Settings-style back button for navigation. On mobile, the back control matches the app's mobile back style with normal side spacing, making it easy to tap and fully visible up to 390px wide.
-  - **Save** — Only right-aligned action remaining in the top bar; **Delete** is now moved to the Commands menu in the description or toolbar.
+  - **Save** — Only right-aligned action remaining in the top bar; **Delete** is now moved to the **Undo** action in the Actions section.
 
 ### Linked pull requests
 Tasks can link to GitHub pull requests. The pull request section displays each linked PR with its status:
@@ -224,9 +224,7 @@ Common actions include:
 - **Move**: Relocate the task to a different section, board, or project.
 - **Duplicate**: Create a copy with the same fields. When duplicating a task, the new task includes the full description and can be copied to another board in one step (see board-level Duplicate in the [Boards & Sections](https://docs.hypertask.ai/features/boards/) docs).
 - **Archive**: Hide the task from current views while keeping it in the archive.
-- **Delete**: Permanently remove the task. Delete is now available via the **Commands** menu in the task toolbar or description.
-
-<span class="label label--brand">Undo for archive</span> When you archive a task, undo appears on the notification. Clicking **Undo** immediately restores the task to its original column without refreshing the page. The task stays restored after reloads and across archiving variants like archiving via the task menu or with the <kbd>Ctrl+E</kbd> keyboard shortcut. For bulk archiving multiple tasks, undo restores all of them together and still works with on <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd>.
+- **Delete**: Permanently remove the task. Undo appears on the notification after deletion, clicking **Undo** restores the task to its previous column and keeps it available for future edits. For bulk deletions, undo restores all affected tasks together and still works with <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd>.
 
 ## Relations between tasks
 Create relationships between tasks to surface context without leaving tasks:
@@ -332,4 +330,4 @@ Loading address-bar updates that occur as part of the navigation are tracked cor
 
 ## Invited-in aspects and board validation
 
-<span class="label label--brand">Improved</span> Pages that use invite links now validate board context before sending requests. **My Tasks** and **Inbox** no longer fire invite-link requests without an associated board, which previously caused console errors for unmatched requests. With this fix, such invalid requests now surface a clear, user-facing message instead of a server error, keeping the console clean and providing explicit feedback when a board context is required.'
+<span class="label label--brand">Improved</span> Pages that use invite links now validate board context before sending requests. **My Tasks** and **Inbox** no longer fire invite-link requests without an associated board, which previously caused console errors for unmatched requests. With this fix, such invalid requests now surface a clear, user-facing message instead of a server error, keeping the console clean and providing explicit feedback when a board context is required.
