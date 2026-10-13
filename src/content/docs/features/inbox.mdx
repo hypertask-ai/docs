@@ -46,6 +46,16 @@ Select multiple notifications with mouse clicks or keyboard navigation. When you
 
 New users in a board see notifications for private tasks, while users removed from a board no longer receive those notifications in their Inbox. To prevent a stale notification from reappearing, you can reply to it (or tap Undo) to remove it from your queue. Cleaning up unsubscribed notifications helps keep the Inbox focused and relevant.
 
+## Agent chatter in the inbox
+
+<span class="label label--brand">Improvement</span> Agent messages from the AI now stay out of the personal inbox. Agent-only comments (FYI messages) and agent chatter no longer appear as notifications for human users. Instead:
+
+- **Agent chatter ignored** – Pure agent commentary without a human @mention does not reach its owner's inbox.
+- **FYI mentions visible** – An agent FYI comment with a human @mention does appear in the inbox, making it clear the human is being included in the loop, but it stays out of the Important section.
+- **Only open questions land in Important** – When an agent poses a question that requires a human response, the message lands in the Important section so you can act on it first.
+
+This applies to all agents using Hypertask's AI integration and keeps your inbox focused on questions and actions directly tied to your own work.
+
 ## Decisions split for waiting work
 
 <span class="label label--brand">New</span> Use the Decisions split to see only tickets where you must approve or reject, in your Inbox and on every board.
@@ -57,7 +67,7 @@ Add a Decisions split to your Inbox and view Decisions tickets on every board. T
 
 Open the clickable wireframe to visualize the Decisions split and view:
 - Questions that explicitly ask for your approval or rejection
-- Tasks marked with a "waited on \{your name\} for yes/no" label
+- Tasks marked with a "waited on {your name} for yes/no" label
 - Priority-ordered list of pending decisions
 
 <Aside type="tip">
