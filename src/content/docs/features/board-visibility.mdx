@@ -18,23 +18,15 @@ A board's top-level setting is configured from the board's header, using **Ctrl+
 | **Dimmed**         | Visibility applies to the owning team only (BYOK & free teams are effectively Hidden). | No (inherits from parent if permitted) |
 | **Hidden**         | Layout shows only the owning team; other teams see an empty placeholder. | Only the owning team |
 
-### Saved-view subtask controls
+## Saved-view access control
 
-When access is **Visible**, saved views can further restrict subtask visibility via a new subtask controls property. This property is stored as part of the saved view's `view_query` payload and affects read responses from:
+<span class="label label--brand">Security fix</span> Saved-view endpoints now respect board membership data. Before requests are processed, Hypertask validates whether a user has access to the board that owns the saved view:
 
-- CLI (`--tasks` / `view show`)
-- MCP tools
-- Board & table API endpoints
-- AI Chat create/update actions
+- **Block access** – requests from users not on the board (including through chat API and MCP) are met with a `404 Not Found` result.
+- **Reject unauthorized reuse** – callers cannot rename, delete, or switch to saved views on boards they cannot access.
+- **Preserve their own data** – your own board still lists its saved views, exactly as before.
 
-Supported modes are enumerated in the table below, and they behave consistently when read through any surface:
-
-| Mode                       | CLI / MCP / API / AI Chat read effect                      | Notes |
-|----------------------------|------------------------------------------------------------|-------|
-| Visibility — all           | All task and subtask fields are shown.                     | Default when the board visibility is Visible |
-| Visibility — basic         | Only `title` and `description` are shown.                  | Same behavior as board-level Basic |
-| Visibility — disabled      | Subtasks are omitted from read and create responses.      | Subtasks cannot be created or shown; `displaySubtasks` appears as `false` |
-| Visibility — inherited     | Subtasks follow their parent board's visible sections.     | Used when a parent board or saved view explicitly sets this mode |
+This change ensures saved-view endpoints are scoped strictly, preventing cross-board data leakage through saved-view references or AI‑assisted view actions.
 
 ## Board access for reads
 
