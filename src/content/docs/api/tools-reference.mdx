@@ -254,12 +254,12 @@ Finds related tasks across boards/projects the user can access. Provide task_id 
 
 ### `hypertask_get_tasks`
 
-Gets detailed information about one or more tasks including assignees, followers, priority, estimate, due date, labels, attachments, and comment count. Provide task_id as an array of numbers or ticket_number as an array of strings. Tasks are retrieved in parallel for efficiency. Each task includes a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number (e.g., "HTPR-3550" — 3550).
+Gets detailed information about one or more tasks including assignees, followers, priority, estimate, due date, labels, attachments, and comment count. Provide task_id as an integer (single value) or array of integers, and ticket_number as a string (plain ticket number) or array of strings. Tasks are retrieved in parallel for efficiency. Each task includes a "link" field with the task URL: `https://app.hypertask.ai/detail/project-{projectId}/{uniqueIndex}` where uniqueIndex is extracted from the ticket number (e.g., "HTPR-3550" — 3550).
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `task_id` | integer[] | No |  |
-| `ticket_number` | string[] | No |  |
+| `ticket_number` | string | string[] | No | Provide a single ticket number string or an array of ticket numbers. |
 | `unique_index` | integer | No |  |
 | `project_id` | integer | No |  |
 
@@ -457,7 +457,7 @@ This ensures your thumbs-ups and other reactions remain meaningful when you clar
 ### `hypertask_team_members`
 
 Lists all users in the authenticated user's teams, including users that are members of the agent's team. If the user is not authenticated, it returns empty. Supports pagination and filtering by name. Each user object includes id, displayName, email, role, avatar color, and optional tags. The results are sorted by displayName (case-insensitive, alphabetically). Only users who belong to the user's teams are included in the results. If your user belongs to multiple teams, each user appears under each team. Each team is accompanied by its owner and members count. When you call this tool with `project_id`:
-- If project_id is passed and the team_id is omitted here (i.e., you do not belong to any teams, this tool returns empty), the API will attempt to find a team that has access to the project (e.g., via project ID-based permissions). If found, it returns the team and all its members. Otherwise, it returns [].
+- If project_id is passed and the team_id is omitted here (i.e., you do not belong to any teams, this tool returns empty), the API will attempt to find a team that has access to the project (e.g., via project ID-based permissions). If found, the returns the team and all its members. Otherwise, it returns [].
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -569,12 +569,23 @@ Restore one or multiple archived inbox notifications so they appear in the inbox
 ## Tickets and MCP (HTPR-7121)
 
 When an agent creates a ticket through MCP with a column or label, the server now provides clear, actionable error messages instead of "Resource not found":
-
 - If a column does not exist in the project, the error explicitly states: "`Section with ID {id} not found in project {projectId}`".
 - If a label does not exist in the project, the error explicitly states: "`Label with name \'{name}\' not found in project {projectId}`".
 - Labels given by name work correctly, matching user expectations.
 
 Previously, a wrong column or label would result in a vague "Resource not found". Now the server identifies and reports the problematic identifier, making it much easier to fix configuration issues.
+
+## Fix for get_tasks ticket lookup ([HTPR-7206](https://app.hypertask.ai/detail/project-15/7206))
+
+The `hypertask_get_tasks` tool now accepts a single ticket number as a string, not just an array of strings. You can fetch a task by passing a plain ticket number like "HTPR-7206" as `ticket_number`. Both single values and arrays are supported.
+
+```json
+{
+  "ticket_number": "HTPR-7206"
+}
+```
+
+---
 
 ## Time tracking
 
