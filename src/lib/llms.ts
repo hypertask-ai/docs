@@ -8,7 +8,6 @@ const SECTIONS: { title: string; prefix: string }[] = [
 	{ title: 'MCP', prefix: 'mcp/' },
 	{ title: 'API', prefix: 'api/' },
 	{ title: 'CLI', prefix: 'cli/' },
-	{ title: 'Design system', prefix: 'design-system/' },
 ];
 
 const strip = (id: string) => id.replace(/\.mdx?$/, '');
