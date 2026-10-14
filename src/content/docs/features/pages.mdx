@@ -22,15 +22,23 @@ Think of a Page as a full-screen notepad for thinking, planning, and research th
 
 ## Agent permissions for page operations
 
-<span class="label label--brand">Security fix</span> Hypertask now properly restricts page actions based on an agent’s access mode. Depending on the agent’s live configuration, it may be:
+<span class="label label--brand">Security fix</span> Hypertask now properly restricts page actions based on an agent's access mode. Depending on the agent's live configuration, it may be:
 
 - **Normal (read/write):** Can create, change, archive, and restore task pages.
 - **Read-only:** Can only read pages. Creating, changing, archiving, or restoring is refused.
 
 **Behavior before this fix:** A read-only agent was able to perform all four page actions (create, change, archive, restore) on task pages, bypassing its access mode and effectively gaining write-like permissions despite being restricted to reading.
 
-**After this fix:** The server checks an agent’s access mode before each page action. A read-only agent now receives a secure refusal for all four write operations, and the page remains unchanged.
+**After this fix:** The server checks an agent's access mode before each page action. A read-only agent now receives a secure refusal for all four write operations, and the page remains unchanged.
 
-This change, verified live on the QA team’s own board ([HTPR-7155](https://app.hypertask.ai/detail/project-15/7155)), ensures that agent permissions match the documented behavior.
+This change, verified live on the QA team's own board ([HTPR-7155](https://app.hypertask.ai/detail/project-15/7155)), ensures that agent permissions match the documented behavior.
+
+## Comments indexed for search
+
+<Aside type="tip">
+
+Comments now generate searchable search copies for long or empty text, like pages. Previously, very long or empty comments would be rejected by the AI service that generates search copies, and would not appear in results. This fix restores full search coverage for comment threads.
+
+</Aside>
 
 ## Mobile pinch zoom
