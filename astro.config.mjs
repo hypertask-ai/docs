@@ -60,6 +60,7 @@ export default defineConfig({
           'features/observability',
           'features/slack',
           'features/agents',
+          'features/agent-chat',
           'features/desktop',
           'features/images',
           'docs/features/images',

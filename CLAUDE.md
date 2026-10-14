@@ -49,7 +49,7 @@ src/content/docs/
 
 1. Create the `.mdx` file in the appropriate directory
 2. Add it to the sidebar in `astro.config.mjs`
-3. Push to `main` + run the deploy command below (the CF Pages project is not connected to GitHub)
+3. Open a PR to `main`; merging it deploys (see Deployment below)
 
 ### Local development
 
@@ -61,14 +61,11 @@ npm run build   # Build for production
 
 ### Deployment
 
-The CF Pages project `hypertask-docs` is **direct-upload only** (no Git integration), so `git push` does NOT auto-deploy. You must run wrangler explicitly:
+Every push to `main` deploys automatically: `.github/workflows/deploy.yml` ("Build and Deploy") runs `npm run build`, uploads `dist` to the Cloudflare Pages project `hypertask-docs` and purges the edge cache. Do not deploy by hand. `build-check.yml` runs the same build on every PR and push.
 
-```bash
-npm run build
-CLOUDFLARE_ACCOUNT_ID=6031a7dff0d4a6469414cfa8a6dedddf npx wrangler pages deploy dist --project-name hypertask-docs --branch main
-```
+`npm run build` starts with `scripts/check-mdx.mjs`, which names the file and line of anything that would break the site (bare `{braces}`, unknown components, frontmatter that is not valid YAML, MDX that cannot be parsed). One broken page stops every deploy, so run `npm run build` before you push.
 
-The daily changelog cron (`scripts/daily-changelog.sh`) handles this automatically - it runs `npm run build` + `wrangler pages deploy` after a successful git push, then purges the CF edge cache.
+Done means live: after the merge, the "Build and Deploy" run for the merge commit is green and https://docs.hypertask.ai shows the change. A failed deploy opens the GitHub issue "docs.hypertask.ai is not deploying".
 
 ## Remote MCP Server (for coworkers)
 

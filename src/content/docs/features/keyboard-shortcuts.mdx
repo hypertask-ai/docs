@@ -1,6 +1,6 @@
 ---
-title: Keyboard Shortcuts
-description: Complete keyboard shortcut reference for Windows, Linux, and Mac.
+title: "Keyboard Shortcuts"
+description: "Complete keyboard shortcut reference for Windows, Linux, and Mac."
 ---
 
 import { Aside, CardGrid, LinkCard } from '@astrojs/starlight/components';
@@ -82,6 +82,8 @@ Outside a text editor, undo restores the latest pending task, inbox, star, or pi
 
 ## Board
 
+Press <kbd>N</kbd> or <kbd>Shift</kbd> + <kbd>C</kbd> to open quick add in the focused column. If no column has focus, it uses the selected task's column, or the first visible column. These shortcuts do not run while you are typing or a modal is open. <kbd>C</kbd> still opens the full task creator.
+
 | Action | Windows/Linux | Mac |
 |--------|---------------|-----|
 | Add task in the full creator | <kbd>C</kbd> | <kbd>C</kbd> |
@@ -89,7 +91,7 @@ Outside a text editor, undo restores the latest pending task, inbox, star, or pi
 | Fast entry at bottom, when enabled | <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | <kbd>Option</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> |
 | Add sub-task | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>+</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>+</kbd> |
 | Add task at top | <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> | <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> |
-| Add task at bottom in the full creator | <kbd>Shift</kbd> + <kbd>C</kbd> | <kbd>Shift</kbd> + <kbd>C</kbd> |
+| Open quick add | <kbd>N</kbd> or <kbd>Shift</kbd> + <kbd>C</kbd> | <kbd>N</kbd> or <kbd>Shift</kbd> + <kbd>C</kbd> |
 | Open task | <kbd>Enter</kbd> | <kbd>Enter</kbd> |
 | Next view (old header design) | <kbd>]</kbd> | <kbd>]</kbd> |
 | Previous view | <kbd>[</kbd> | <kbd>[</kbd> |
@@ -99,7 +101,7 @@ Outside a text editor, undo restores the latest pending task, inbox, star, or pi
 | Move task up | <kbd>Shift</kbd> + <kbd>K</kbd> +  | <kbd>Shift</kbd> + <kbd>K</kbd> +  |
 | Move task right | <kbd>Shift</kbd> + <kbd>L</kbd> +  | <kbd>Shift</kbd> + <kbd>L</kbd> +  |
 | Move task left | <kbd>Shift</kbd> + <kbd>H</kbd> +  | <kbd>Shift</kbd> + <kbd>H</kbd> +  |
-| Cross-row movement and row-targeted throws (HTPR-5057) | <kbd>Shift</kbd> + <kbd>J/K</kbd> reorder within the current column; <kbd>Shift</kbd> + <kbd>L/H</kbd> throw to an adjacent column by default (original card preserved, then restored), and supporting vertical reorder via <kbd>Shift</kbd> + the arrow keys while holding the column throw key | |
+| Cross-row movement and row-targeted throws | <kbd>Shift</kbd> + <kbd>J/K</kbd> reorder within the current column; <kbd>Shift</kbd> + <kbd>L/H</kbd> throw to an adjacent column by default (original card preserved, then restored), and supporting vertical reorder via <kbd>Shift</kbd> + the arrow keys while holding the column throw key | |
 | Move task to the left | <kbd>Shift</kbd> + <kbd>L</kbd> + <kbd>Shift</kbd> +  | <kbd>Shift</kbd> + <kbd>L</kbd> + <kbd>Shift</kbd> +  |
 | Sort Kanban board | <kbd>Shift</kbd> + <kbd>S</kbd> | <kbd>Shift</kbd> + <kbd>S</kbd> |
 | Toggle table layout | <kbd>Shift</kbd> + <kbd>T</kbd> | <kbd>Shift</kbd> + <kbd>T</kbd> |
@@ -161,7 +163,7 @@ These controls apply when one or more cards are selected on a desktop board. Use
 | Follow task | <kbd>F</kbd> | <kbd>F</kbd> |
 | Unfollow task | <kbd>Alt</kbd> + <kbd>F</kbd> | <kbd>Alt</kbd> + <kbd>F</kbd> |
 
-<Aside type="tip" title="Ctrl+O lists every link and attachment ([HTPR-7050])">
+<Aside type="tip" title="Ctrl+O lists every link and attachment">
 View all links (Ctrl+O on the links and sub-tasks row) now lists every link and attachment on a ticket, including those in descriptions, comments, and attachment files. Previously, some links and files were missed.
 </Aside>
 
@@ -292,7 +294,7 @@ Focus chat input via <kbd>Ctrl+Q</kbd> now works on /chat and on boards when a d
 The Command Palette lists board and section actions, including "Hide column", "Show columns", "Archive board", "Delete board", and more. Use <kbd>Ctrl+K</kbd> and type keywords like "hide", "show", "archive", "delete" to quickly access relevant actions.
 </Aside>
 
-### Board settings from Ctrl+K (HTPR-6863)
+### Board settings from Ctrl+K
 When you search for **"Board settings"** in the Command Palette using <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the board picker now preselects the board you came from. This works whether you're on a ticket page, board page, or another view - even if you previously had a different team open in settings. Press <kbd>Esc</kbd> to cancel and restore your previous state.
 
 <Aside type="tip">
@@ -317,7 +319,7 @@ To show previously hidden columns:
 "Hide column" now targets the last clicked or currently hovered section rather than cycling through sections, making it easier to hide the specific column you're working with. The "Empty columns" command also reads the current state and filters both the Kanban view groups and the table view groups, showing "Show empty columns" when they're hidden and "Hide empty columns" when they're visible.
 </Aside>
 
-## Board palette (HTPR-4522)
+## Board palette
 Press <kbd>Ctrl</kbd> + <kbd>B</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>B</kbd> (Mac) to show the board palette overlay. On the left rail, the board palette displays your user account row with:
 - **Email or handle** - Click to open the account switcher dialog
 - **Avatar** - Click to open Account & Profile settings
@@ -328,10 +330,10 @@ This provides quick access to switching workspaces or reviewing your account con
 The board palette joins <kbd>Ctrl+K</kbd> as a non-intrusive way to access workspace settings while staying in context.
 </Aside>
 
-## Open Latest Updates (HTPR-4813)
+## Open Latest Updates
 Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) then search for **"Latest Updates"** in the board palette or command palette to open the Latest Updates panel from any route in the app. This provides quick access to see recent activity across your boards without leaving your current view.
 
-## Global Alt+Number board shortcuts (HTPR-5126)
+## Global Alt+Number board shortcuts
 **Before:** On the table view or any board view, <kbd>Alt</kbd> + <kbd>1-7</kbd> shortcuts did nothing even when the app-shell rail was supposed to be active, causing them to behave as no-ops.
 
 **After:** When the rail is enabled, <kbd>Alt</kbd> + <kbd>2-7</kbd> now correctly switch to their corresponding surfaces (Board = 2, Table = 3, Calendar = 4, AI Chat dock = 5, and Search = 6) from any view. On Mac, the global board switcher uses <kbd>Ctrl</kbd> + <kbd>2-7</kbd> instead of <kbd>Cmd</kbd> to avoid interfering with tab switching.
@@ -340,7 +342,7 @@ Press <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K<
 The app-shell rail and global Alt+Number shortcuts were designed to provide tactile, one-hand navigation across main surfaces. Enabling the rail (via account menu or command palette) unlocks these skips so they work reliably everywhere, not only on the rail itself.
 </Aside>
 
-## Time reports quick-log (HTPR-4329)
+## Time reports quick-log
 Quick-log time directly from the board or a task card using <kbd>Ctrl</kbd> + <kbd>K</kbd>:
 
 - **On a board or task card** - Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the quick-log dialog preconfigured for the selected card.
@@ -354,7 +356,7 @@ The quick-log interface supports Hours and Minutes fields, board and user filter
 |--------|---------------|-----|
 | Quick-log time on a selected board card | <kbd>Ctrl</kbd> + <kbd>K</kbd> | <kbd>Cmd</kbd> + <kbd>K</kbd> |
 
-## Timer shortcuts (HTPR-4414)
+## Timer shortcuts
 Time tracking shortcuts are available when time tracking is enabled for your board or task:
 - **App shell rail** - Press <kbd>7</kbd> on the rail to open the running-timers view
 - **Task detail** - Press <kbd>Option</kbd> + <kbd>T</kbd> or <kbd>Alt+T</kbd> to start or stop the open task timer
@@ -363,21 +365,21 @@ The timer indicator appears in the task card and task detail, showing whether a 
 
 See the <a href="/features/time-tracking/">Time Tracking</a> page for full details.
 
-## System-theme prediction (HTPR-5422)
+## System-theme prediction
 When you open the Command Palette with <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd> on Mac), theme-related options now display context-appropriate labels to make system-theme mode predictable. Retired numeric theme modes (1-5) redirect safely to the Appearance settings with your in-session command state preserved.
 
 <Aside type="tip">
 Theme options in the command palette now adapt to your system theme and gracefully redirect legacy theme choices to Appearance settings.
 </Aside>
 
-## Copy current page URL (HTPR-6112)
+## Copy current page URL
 When you open the Command Palette with <kbd>Ctrl+K</kbd> or <kbd>Cmd+K</kbd>, the action **"Copy current page URL"** copies the complete browser address, including the board, view, task, filters, and section. The action is available everywhere <kbd>Ctrl+K</kbd> opens, including task detail, calendar, and inbox views.
 
 <Aside type="note">
-The action is owner-only by default. It can be configured to be available to all users via the rollout switch feature flag.
+The action is available to everyone.
 </Aside>
 
-## Use everywhere, including Settings (HTPR-6871)
+## Use everywhere, including Settings
 <kbd>Ctrl</kbd> + <kbd>K</kbd> (Windows/Linux) or <kbd>Cmd</kbd> + <kbd>K</kbd> (Mac) now opens the Command Palette on every signed-in page. This includes:
 - Boards, tickets, inbox, and search (existing behavior)
 - My Tasks view
@@ -397,11 +399,11 @@ This makes the command palette consistently available for board actions, views, 
 - On mobile, press and hold a comment to open the Command Center with comment actions at the top. Edit comment is first when you wrote the comment.
 - Dictation remains the primary input method on mobile; Tap *Improve with AI* to refine your comments without leaving the input flow
 
-## Mobile page exit gesture (HTPR-6903)
+## Mobile page exit gesture
 On mobile, pressing **<kbd>Esc</kbd>** in the full-screen Pages view now exits via the back action - just like other views in the app. With text typed but unsaved, <kbd>Esc</kbd> clears the unsaved draft. Without text, a single <kbd>Esc</kbd> closes the page and stays on the task.
 
 ## Ctrl+J board chip in inbox
-When you press <kbd>Ctrl+J</kbd> from the inbox, the new task box shows which board the task will land on, using the same board chip UI as the AI chat box. The chip is only visible in the inbox and other views that mix boards — on a board or ticket detail, the context is already obvious, so the chip stays hidden.
+When you press <kbd>Ctrl+J</kbd> from the inbox, the new task box shows which board the task will land on, using the same board chip UI as the AI chat box. The chip is only visible in the inbox and other views that mix boards. On a board or ticket detail, the context is already obvious, so the chip stays hidden.
 
 **Board selection logic:**
 

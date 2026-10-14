@@ -17,61 +17,23 @@ MCP uses a tool-based architecture: the server advertises available operations (
 
 ## Transport
 
-Hypertask's MCP server uses Streamable HTTP at the URL below. A limited Owner + QA rollout answers without a server-side session. Other clients still use the existing session-backed path.
+Connect with Streamable HTTP at:
 
-The endpoint is:
-
-```
+```text
 https://mcp.hypertask.ai/mcp
 ```
 
-### Stateless transport (Owner + QA only)
+Send your bearer token on every request. The server handles each JSON-RPC request independently and does not create a server-side session. It does not require a session ID and ignores one if your client sends it.
 
-When the `htpr-6804-mcp-tools` flag is on for your account, the server treats each request as stateless: it answers JSON-RPC calls from the bearer token on that request and ignores any session ID. A limited set of tool responses is returned without a persistent connection. Null JSON-RPC entries no longer crash the stateless MCP handler; a gap / Fix / Status A batch such as `[null, ping]` returns -32600 for the bad entry and still answers ping. This stateless path is available to Owner and QA users only.
+Use POST for MCP calls. Responses are JSON, or an SSE-formatted response when the client requests only `text/event-stream`. There is no persistent stream at this endpoint. Authenticated GET and DELETE requests return **405 Method Not Allowed**.
 
-### Session-backed transport (all other users)
+### Older clients
 
-By default, requests are session-backed. Request/response pairs are multiplexed over a WebSocket connection.
+Clients that only support the older SSE transport can connect to `https://mcp.hypertask.ai/sse`. That connection creates a session. The client sends messages to the `/message?sessionId=...` address supplied by the stream. Both requests need the bearer token.
 
-Server-Sent Events are used when a long call streams progress, or as a fallback at `/sse` for older clients.
+### Tool discovery
 
-On the limited rollout, a session id is ignored if a client still sends one.
-
-Turn the flag on at https://app.hypertask.ai/admin/flags with key `htpr-6804-mcp-tools`.
-
-### Endpoints
-
-Once connected, the following endpoints are available:
-
-| Endpoint | Type | Description |
-|----------|------|-------------|
-| `/mcp` | Streamable HTTP | Primary MCP endpoint. Bearer token per request. Stateless no-session handling is a limited Owner + QA rollout |
-| `/sse` | SSE | Fallback for older clients that cannot speak Streamable HTTP |
-| `/message` | SSE | Companion path for the SSE fallback |
-| `/openapi.json` | OpenAPI schema | Auto-generated OpenAPI spec for ChatGPT and other clients |
-| `/health` | HTTP | Health check endpoint |
-| `/` | HTTP | Root 307 redirect to the main app for OAuth flows |
-
-## Cheap connect (Owner + QA)
-
-A limited Owner + QA rollout keeps the first tool list small for authenticated agent tokens. Clients with native tool deferral receive one short line per tool and load the full argument list and output shape through `hypertask_describe_tool`. Cursor and Codex can connect to `https://mcp.hypertask.ai/mcp?tools=meta` to receive only `hypertask_search_tools` and `hypertask_describe_tool`, search for a tool, and load its schema before calling it.
-
-Turn the flag on at https://app.hypertask.ai/admin/flags with key `htpr-6804-mcp-tools`.
-
-For access with tool restrictions, use `htpr-6804-mcp-tools`. Or use `htpr-6531-deferred-mcp-tools` to limit response line counts for exceeding AI clients. For all other accounts, the full catalog of tools is accessible.
-
-### Endpoints
-
-Once connected, the following endpoints are available:
-
-| Endpoint | Type | Description |
-|----------|------|-------------|
-| `/mcp` | Streamable HTTP | Primary MCP endpoint. Bearer token per request. Stateless no-session handling is a limited Owner + QA rollout |
-| `/sse` | SSE | Fallback for older clients that cannot speak Streamable HTTP |
-| `/message` | SSE | Companion path for the SSE fallback |
-| `/openapi.json` | OpenAPI schema | Auto-generated OpenAPI spec for ChatGPT and other clients |
-| `/health` | HTTP | Health check endpoint |
-| `/` | HTTP | Root 307 redirect to the main app for OAuth flows |
+The server lists tools grouped by resource, such as projects, tasks, and reports. Each tool has an `action` and an `input` object for that action's fields. Use the names and schemas returned by your client's tool list. The available actions depend on your token's permissions.
 
 ## AI Assistant Self-Onboarding
 
@@ -122,7 +84,7 @@ This is reflected in the MCP tools reference under appropriate endpoints (e.g., 
 
 ## Agent bearer tokens
 
-When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations — task creation, comment posting, assignments — are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
+When an autonomous agent authenticates with its own bearer token (distinct from a human user's token), all write operations - task creation, comment posting, assignments - are attributed to the agent itself, not to the agent's owner. This means activity logs, notifications, and task histories correctly reflect the agent as the actor, making it straightforward to audit which agent made which change.
 
 **Person tokens work for agent creation**: When you create an agent through MCP and authenticate with a person token (your own API key), the server now validates the authentication and returns an agent in addition to the usual service account agent response. Previously, using a person token resulted in "Authentication failed". Now, a person token can create an agent, and the connection details are returned so the new agent can be set up using its own token or managed through the CLI.
 
@@ -135,24 +97,20 @@ You can manage agents as service accounts with scoped API keys. Configure agents
 
 This makes each agent behave like a dedicated account with its own permission profile. Agents can be created, updated, or deactivated via MCP, and their scoped keys are scoped to the scopes they were assigned.
 
-## Persistent Speed Engineer
-
-On board 15, the Speed Engineer now runs in a brokered pattern. Its sessions are backed by a persistent worker that pulls capability from a localhost broker using a short-lived ticket/cycle. This isolates managed tokens and prevents direct access to credential files or unmanaged token usage. For board-15 task cycles, use the standard lease-based claim/heartbeat/release workflow shown in Agent Workflows; the agent identity itself remains scoped and the broker ensures it cannot read your credential files directly.
-
 ## Expose board AI custom instructions over MCP
 
 In addition to skills and playbooks, you can manage board AI custom instructions directly from MCP:
-- **GET `/api/mcp/projects/[projectId]/instructions`** — Retrieve the currently configured board-level custom instructions.
-- **PUT `/api/mcp/projects/[projectId]/instructions`** — Update or reset the board AI custom instructions.
+- **GET `/api/mcp/projects/[projectId]/instructions`** - Retrieve the currently configured board-level custom instructions.
+- **PUT `/api/mcp/projects/[projectId]/instructions`** - Update or reset the board AI custom instructions.
 
 This complements the MCP-exposed skills and playbooks, giving agents full control over board-level AI behavior without needing to navigate to the UI.
 
 ## Provide agent lease heartbeats
 
 Agents can safely claim, heartbeat, and release tasks via dedicated endpoints under `/api/mcp/tasks/lease/`:
-- **POST `/api/mcp/tasks/lease/claim`** — Claim an available task for handling.
-- **POST `/api/mcp/tasks/lease/heartbeat`** — Broadcast ongoing work (heartbeats) to keep the lease alive.
-- **POST `/api/mcp/tasks/lease/release`** — Release a claimed task so others can pick it up.
+- **POST `/api/mcp/tasks/lease/claim`** - Claim an available task for handling.
+- **POST `/api/mcp/tasks/lease/heartbeat`** - Broadcast ongoing work (heartbeats) to keep the lease alive.
+- **POST `/api/mcp/tasks/lease/release`** - Release a claimed task so others can pick it up.
 
 These endpoints allow agents to coordinate worker pools without races, supporting multi-agent workflows and shared task queues.
 
@@ -167,7 +125,7 @@ When you turn an agent back on, Hypertask mint a fresh MCP credential for it if 
 ## Move tasks to inbox via MCP
 
 You can now trigger tasks to move to your inbox programmatically:
-- **Move task to inbox** — Takes a task identifier (ID or uniqueIndex) and marks the task as unread, clearing any existing folder, adding it to the Inbox section, and resetting the priority to high.
+- **Move task to inbox** - Takes a task identifier (ID or uniqueIndex) and marks the task as unread, clearing any existing folder, adding it to the Inbox section, and resetting the priority to high.
 - Available via MCP tools and the CLI, enabling agents and workflows to reactively route high-priority work into your inbox.
 
 ## Agent-tier rate limits
@@ -178,9 +136,9 @@ Authenticated agent tokens that carry valid `htk_` API keys receive a higher rat
 
 This mode specifically applies to agent traffic; non-agent traffic remains subject to the base limits. Agent-tier tokens are detected via the `Authorization` header that must include a valid Hypertask API key.
 
-## User-inherent person token credential access
+## Creating agents with your own token
 
-A person token is now usable in place of a dedicated service account token when creating agents via MCP. Previously, using a person's token resulted in an "Authentication failed" error. For a person token to be able to create an agent, the person must have that token available through **MCP authentication** (e.g., logged in via MCP's embedded browser session) so that the person's own MCP login can create an agent. Additionally, **help and capabilities tools** now require login, explaining where to obtain a token when trying to help an agent self-configure. The CLI help and command listing also require login. These improvements reduce the likelihood that a new agent will get stuck trying to connect standalone.
+You can create an agent using your own bearer token when it has the required permissions. Configure that token in your MCP client. You do not need a separate browser session for MCP calls.
 
 ## Full capability parity across surfaces
 
@@ -234,14 +192,14 @@ Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run `claude
 
 <TabItem label="Cursor">
 
-Open **Settings > MCP Servers** and add a new server. Use the `?tools=meta` URL below for a small first load (Owner + QA flag above).
+Open **Settings > MCP Servers** and add a new server.
 
 ```json
 {
   "mcpServers": {
     "hypertasks": {
       "type": "http",
-      "url": "https://mcp.hypertask.ai/mcp?tools=meta",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -254,12 +212,12 @@ Open **Settings > MCP Servers** and add a new server. Use the `?tools=meta` URL 
 
 <TabItem label="ChatGPT">
 
-Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more — without needing native MCP support.
+Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more - without needing native MCP support.
 
 <Steps>
 
 1. In ChatGPT, open **My GPTs** (or the GPT editor for a custom GPT you control).
-2. Go to **Actions — Add action**.
+2. Go to **Actions - Add action**.
 3. Import the Hypertask OpenAPI schema from:
    ```
    https://mcp.hypertask.ai/openapi.json
@@ -330,7 +288,7 @@ The chat uses keyword scoring instead of first-come fill, so contextual terms li
 | Feature | Status | Details |
 |---------|--------|---------|
 | **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` works, but mentions can render as plain text without firing a notification. Pass structured mention objects (`user_id` + `display_name`) for reliable results. |
-| **Auto-linking ticket references** | Not supported | A ticket reference such as `HTPR-1234` inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_link_tasks` to create the relation explicitly. |
+| **Auto-linking ticket references** | Not supported | A ticket reference inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_link_tasks` to create the relation explicitly. |
 | **Pages and description history** | REST only | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, but have no MCP tool yet. |
 | **Agent infrastructure** | REST only, by design | Task leases, evidence, escalation, work sessions, service-account management, API keys and webhooks are REST endpoints only. They are plumbing for autonomous workers rather than things an assistant should call mid-conversation. |
 
@@ -342,30 +300,30 @@ Creating labels and managing saved views used to be listed here as unsupported. 
 
 ## Troubleshooting
 
-**"Failed to Connect to MCP"** — If your client cannot connect:
+**"Failed to Connect to MCP"** - If your client cannot connect:
 
 1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
 2. Confirm the URL is exactly `https://mcp.hypertask.ai/mcp` (including `/mcp`). Older clients can still use `https://mcp.hypertask.ai/sse`.
 3. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
 4. Restart your MCP client after updating the configuration.
 
-**"No tools listed after MCP sign-in"** — If you signed in successfully but the last step doesn't show tools:
+**"No tools listed after MCP sign-in"** - If you signed in successfully but the last step doesn't show tools:
 
-1. Verify you're using the correct MCP server addresses for your client. The primary address is `https://mcp.hypertask.ai/mcp`. Some clients have additional endpoints for meta-only loading: `https://mcp.hypertask.ai/mcp?tools=meta`.
-2. Check that your token has full access. Agent-specific flags like `htpr-6804-mcp-tools` affect which tools are visible, not the core listing.
+1. Verify you're using the correct MCP server addresses for your client. The primary address is `https://mcp.hypertask.ai/mcp`. Some clients have additional endpoints for meta-only loading: `https://mcp.hypertask.ai/mcp`.
+2. Check that your token has permission to use the actions you need.
 3. Ensure the client is configured to wait for the tool list. Some clients proceed immediately and skip displaying available tools.
 
-**"Authentication failed" when creating an agent with your person token** — If you're using a person token to create a new agent via MCP and get "Authentication failed", try using an agent token instead, or ensure you're authenticated via the MCP session in the browser first so that your person token can satisfy the credential requirements. See the agent authentication clarifications to reduce the likelihood an agent gets stuck trying to connect.
+**"Authentication failed" when creating an agent with your token** - Check the bearer token in your MCP client configuration and confirm it has permission to create agents. A browser sign-in does not replace the token on MCP requests.
 
 ## Supported clients
 
 Hypertask MCP works with any client that supports the MCP standard, and ChatGPT via the OpenAPI adapter:
-- **Claude Code** — Anthropic's CLI agent
-- **Claude Desktop** — Anthropic's desktop app
-- **Cursor** — AI-powered code editor
-- **Windsurf** — Codeium's AI editor
-- **ChatGPT** — via the Hypertask OpenAPI schema (custom actions / GPTs)
-- **Any MCP-compatible agent** — anything that speaks the protocol
+- **Claude Code** - Anthropic's CLI agent
+- **Claude Desktop** - Anthropic's desktop app
+- **Cursor** - AI-powered code editor
+- **Windsurf** - Codeium's AI editor
+- **ChatGPT** - via the Hypertask OpenAPI schema (custom actions / GPTs)
+- **Any MCP-compatible agent** - anything that speaks the protocol
 
 ## Next steps
 
