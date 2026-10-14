@@ -1,0 +1,11 @@
+Hypertask fixture
+Usage: hypertask <command>
+
+Commands:
+  task          Manage tasks
+  project
+      Manage boards
+  status        Show status
+
+Options:
+  --help        Show help

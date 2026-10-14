@@ -149,3 +149,7 @@ After deploying changelog updates, send a Telegram notification that includes:
 - Use `<Tabs>` for multi-client code examples (Claude Desktop, Claude Code, Cursor)
 - All API examples use `https://mcp.hypertask.ai` as base URL
 - Task descriptions and comments use **HTML**, not Markdown
+
+## Generated pages
+
+Never hand-edit `src/content/docs/api/tools-reference.mdx` or `src/content/docs/cli/commands.mdx`. Run `npm run refs` to regenerate them from live MCP tools and the released CLI. The user timers `docs-refs.timer` (every 30 minutes) and `docs-nightly.timer` (03:30 UTC daily) refresh references and check live exports, links and names. Install later with `scripts/install-docs-timers.sh`; failures log at journal error priority for the error collector to file a ticket.

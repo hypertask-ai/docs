@@ -1,0 +1,1 @@
+{"result":{"tools":[{"name":"hypertask_tasks","description":"Use {ticket} <tag> safely | now","inputSchema":{"type":"object","properties":{"z":{"type":"string","description":"a | b\nnew row"},"action":{"enum":["list","get"]}},"required":["action"]}},{"name":"hypertask_user_context","description":"Say hello","inputSchema":{"type":"object"}}]}}

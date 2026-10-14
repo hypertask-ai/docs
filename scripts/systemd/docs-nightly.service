@@ -1,0 +1,12 @@
+[Unit]
+Description=Check live Hypertask docs and built exports
+After=docs-refs.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash %h/.local/state/docs-refs/repo/scripts/docs-refresh.sh --nightly
+Environment=PATH=%h/.local/bin:%h/.npm-global/bin:/usr/local/bin:/usr/bin:/bin
+StandardOutput=journal
+StandardError=journal
+SyslogLevelPrefix=yes
+TimeoutStartSec=45min

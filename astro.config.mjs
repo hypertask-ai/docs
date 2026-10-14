@@ -98,6 +98,7 @@ export default defineConfig({
           label: 'CLI',
           items: [
             'cli/reference',
+            'cli/commands',
             'cli/tasks-assign',
           ],
         },

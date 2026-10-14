@@ -241,13 +241,13 @@ The OpenAPI schema is auto-generated from the same endpoints that power the MCP 
 
 AI Chat exposes equivalents for most MCP operations and shares the same assignment behavior layer. Its tool definitions are maintained separately, so each new MCP parameter still needs an AI Chat adapter when the input shape differs.
 
-AI Chat reads and writes, and it is not a reduced version of MCP. It manages tasks, comments, drafts, pages, labels, views, skills, sections, timers and task relations, assigns people or board agents, moves tasks between boards and to the inbox, reads board manifests and playbooks, checks agent presence, and raises decision requests. Its `hypertask_update_task` is the richest of any surface: it alone adds or removes a single label without replacing the rest, and writes to several tasks in one call.
+AI Chat reads and writes, and it is not a reduced version of MCP. It manages tasks, comments, drafts, pages, labels, views, skills, sections, timers and task relations, assigns people or board agents, moves tasks between boards and to the inbox, reads board manifests and playbooks, checks agent presence, and raises decision requests. Its task-update operation is the richest of any surface: it alone adds or removes a single label without replacing the rest, and writes to several tasks in one call.
 
 For assignment and unassignment, AI Chat accepts a person's user ID, `me`, display name, or email. It also accepts a board agent's display name or UUID. Agent matching is case-insensitive and board-scoped; a person-agent name collision returns an explicit ambiguity error.
 
-Only two MCP tools have no AI Chat equivalent, and neither is a capability gap: `hypertask_hello` (the connection-time onboarding map, which the chat gets from its system prompt) and the `report` action of `hypertask_time`.
+Two MCP operations have no AI Chat equivalent, and neither is a capability gap: the `hello` action of `hypertask_user_context` (the connection-time onboarding map, which the chat gets from its system prompt) and the `report` action of `hypertask_time`.
 
-Some capabilities are shared but named differently. MCP folds comment edits into `hypertask_add_comment_to_task`, unassign into `hypertask_assign_user`, and every timer action into `hypertask_time`, where AI Chat gives each its own tool.
+Some capabilities are shared but named differently. MCP folds comment edits into `hypertask_comments` (`action: "update"`), unassign into `hypertask_tasks` (`action: "assign"`), and every timer action into `hypertask_time`, where AI Chat gives each its own tool.
 
 AI Chat also has three tools no other surface has: `search_help_docs`, `rag_retrieval` over indexed board content, and `web_search`.
 
@@ -275,7 +275,7 @@ The **help-site AI chat** at [help.hypertask.ai](https://help.hypertask.ai) prov
 "how should an agent claim a task and keep it alive?"
 
 # Ask about a specific endpoint
-"show me the hypertask_create_task tool schema"
+"show me the hypertask_tasks tool schema for the create action"
 ```
 
 ### Retrieval
@@ -287,14 +287,14 @@ The chat uses keyword scoring instead of first-come fill, so contextual terms li
 
 | Feature | Status | Details |
 |---------|--------|---------|
-| **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_add_comment_to_task` works, but mentions can render as plain text without firing a notification. Pass structured mention objects (`user_id` + `display_name`) for reliable results. |
-| **Auto-linking ticket references** | Not supported | A ticket reference inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_link_tasks` to create the relation explicitly. |
-| **Pages and description history** | REST only | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, but have no MCP tool yet. |
-| **Agent infrastructure** | REST only, by design | Task leases, evidence, escalation, work sessions, service-account management, API keys and webhooks are REST endpoints only. They are plumbing for autonomous workers rather than things an assistant should call mid-conversation. |
+| **@mentions in comments** | Partial | The `mentions` parameter on `hypertask_comments` (`action: "add"`) works, but mentions can render as plain text without firing a notification. Pass structured mention objects (`user_id` + `display_name`) for reliable results. |
+| **Auto-linking ticket references** | Not supported | A ticket reference inside a comment posted over MCP is not turned into a related-task link the way the web UI does it. Call `hypertask_tasks` (`action: "link"`) to create the relation explicitly. |
+| **Pages and description history** | Supported | Version listing and restore for pages and task descriptions exist at `/api/mcp/pages/versions`, `/pages/restore`, `/tasks/description-versions` and `/tasks/description-restore`, and are exposed by the `versions` and `restore` actions on `hypertask_pages` and `hypertask_tasks`. |
+| **Agent infrastructure** | REST only, by design | Task leases, evidence, escalation, work sessions, service-account management, and API keys are REST endpoints only. Webhooks are exposed by `hypertask_webhooks`. They are plumbing for autonomous workers rather than things an assistant should call mid-conversation. |
 
 <Aside type="note">
 
-Creating labels and managing saved views used to be listed here as unsupported. Both work now, from every surface: `hypertask_create_label`, and the full `hypertask_create_view` / `update_view` / `delete_view` / `switch_view` set.
+Creating labels and managing saved views used to be listed here as unsupported. Both work now, from every surface: `hypertask_labels` (`action: "create"`), and the `create`, `update`, `delete` and `switch` actions of `hypertask_views`.
 
 </Aside>
 

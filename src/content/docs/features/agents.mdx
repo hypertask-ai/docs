@@ -17,24 +17,7 @@ From the web UI:
 4. Optionally enable **Team mode** by providing a provider billing API key to enable shared access. Agents default to **Private** mode.
 5. Save the agent. Hypertask generates a scoped API key under the agent's profile.
 
-Over MCP:
-
-```json
-{
-  "action": "create_agent",
-  "name": "Release Agent",
-  "description": "Tracks and creates release tasks for HTPR-* tickets",
-  "projectId": 15,
-  "boards": [153, 155],
-  "scopes": {
-    "actions": ["hypertask_create_task", "hypertask_add_comment_to_task", "hypertask_link_tasks"],
-    "memberships": {
-      "projectId": 15,
-      "boards": [153, 155]
-    }
-  }
-}
-```
+The MCP resource tools operate on tickets and comments, but agent creation uses the CLI or REST API below. See [CLI commands](/cli/commands/) for `hypertask agents create`.
 
 Over REST API (`POST /api/agents`):
 
