@@ -54,7 +54,8 @@ else
   FILES=(src/content/docs/api/tools-reference.mdx src/content/docs/cli/commands.mdx)
   if ! git diff --quiet -- "${FILES[@]}" || [[ -n "$(git ls-files --others --exclude-standard -- "${FILES[@]}")" ]]; then
     git add -- "${FILES[@]}"
-    git commit -m "docs: refresh generated MCP and CLI references"
+    git -c user.name="Hypertask docs refs" -c user.email="docs-refs@hypertask.ai" \
+      commit -m "docs: refresh generated MCP and CLI references"
     git push origin HEAD:main
   fi
 fi

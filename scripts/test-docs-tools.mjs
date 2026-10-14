@@ -109,7 +109,11 @@ if [[ "$1" == clone ]]; then
   printf 'fixture-lock' > "$dest/package-lock.json"
   printf 'console.log("nightly fixture passed");' > "$dest/scripts/docs-nightly.mjs"
 fi
-if [[ "$1" == diff ]]; then exit "\${CHANGED:-0}"; fi`);
+if [[ "$1" == diff ]]; then exit "\${CHANGED:-0}"; fi
+if [[ " $* " == *" commit "* && " $* " != *" user.email="* ]]; then
+  echo "fatal: unable to auto-detect email address" >&2
+  exit 128
+fi`);
   executable('stack-key', 'printf "fixture-token-not-a-secret\\n"');
   executable('npm', `printf 'npm %s\\n' "$*" >> "$TRACE"
 if [[ "$*" == ci ]]; then mkdir -p node_modules; fi
@@ -130,7 +134,7 @@ fi`);
   run([], { CHANGED: '1' });
   log = readFileSync(trace, 'utf8');
   assert.ok(!log.includes('npm ci'));
-  assert.ok(log.includes('git commit -m docs: refresh generated MCP and CLI references'));
+  assert.ok(log.includes('git -c user.name=Hypertask docs refs -c user.email=docs-refs@hypertask.ai commit -m docs: refresh generated MCP and CLI references'));
   assert.ok(log.includes('git push origin HEAD:main'));
   writeFileSync(trace, '');
   writeFileSync(join(home, '.local/state/docs-refs/repo/package-lock.json'), 'new-fixture-lock');
