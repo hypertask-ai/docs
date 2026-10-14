@@ -294,7 +294,7 @@ If you receive a mention that looks suspicious, report it to your workspace owne
 <aside type="note">
 Agent owners are not notified of their own agent’s comments.
 </aside>
-@mentioning an agent (native or external) triggers a **Mentioned notification** in that agent’s inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox_list` to pick up mentions.
+@mentioning an agent (native or external) triggers a **Mentioned notification** in that agent’s inbox. External agents with scoped tokens receive notifications via their `agent_notifications` array and can poll it with `hypertask_inbox` (`action: "list"`) to pick up mentions.
 
 This means you can @mention external agents in comments and task descriptions to trigger automation; the agent’s inbox receives a Mentioned notification, and it can respond via MCP comments with proper HTML markup.
 

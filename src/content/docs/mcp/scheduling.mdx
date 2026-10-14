@@ -277,11 +277,11 @@ To schedule a dedicated next-task queue agent:
   - Checks that tasks are claimable by this agent (not already assigned),
   - If one or more candidate tasks are available, the scheduler creates a conditional task or comment for the agent:
     - With a conditional, the agent can pick up and claim one task from the queue on demand (default is the highest-priority available).
-- In the MCP or CLI flow, wrap the queue endpoint call to honor the schedulerâ\x80\x99s condition. Use a Context (via `hypertask_get_user_context`) or an explicit owner ID to ensure the agent is authorized to claim the returned tasks. Treat the queue response as authoritative; update or close the created/conditional task as soon as the agent completes the work.
+- In the MCP or CLI flow, wrap the queue endpoint call to honor the schedulerâ\x80\x99s condition. Use a Context (via `hypertask_user_context` (`action: "get"`)) or an explicit owner ID to ensure the agent is authorized to claim the returned tasks. Treat the queue response as authoritative; update or close the created/conditional task as soon as the agent completes the work.
 
 **Recommended pattern on the MCP side**
 
-On every scheduled run, the scheduler calls a tool like `hypertask_next_task_pull` with filtering options that ensure the results are claimable by this agent, then applies the schedulerâ\x80\x99s schema (e.g., `agent_id` or `team_id`). If the tool returns candidates, the routine for that agent creates a temporary task or comment to indicate it is ready to claim before it gets claimed; if the tool returns empty, the scheduler can sleep and retry on the next interval.
+On every scheduled run, the scheduler calls a tool like `hypertask_tasks` with `action: "next"` and filtering options that ensure the results are claimable by this agent, then applies the schedulerâ\x80\x99s schema (e.g., `agent_id` or `team_id`). If the tool returns candidates, the routine for that agent creates a temporary task or comment to indicate it is ready to claim before it gets claimed; if the tool returns empty, the scheduler can sleep and retry on the next interval.
 
 When using code:
 - From the scheduler: call the endpoint; from an agent context: invoke the MCP tool.
@@ -294,18 +294,11 @@ Example CLI flow (from a scheduler):
 # /home/you/hypertask-cron/next-task-handler.sh
 export HYPERTASK_API_TOKEN="xxxx"
 
-hypertask next-task pull \
-  --board-id 15 \
-  --limit 3 \
-  --min-priority urgent,high \
-  --exclude-assigned-owners robotic-agent-foo,robotic-agent-bar \
-  | jq -r '.tasks[] | "Assign to robotic-agent-foo: " + .title' | while read line; do
-    hypertask tasks update \
-      --ticket-number "$line" \
-      --assign_self true \
-      --section "Doing" \
-      --description "<p>Next-task from queue (by scheduler).</p>"
-  done
+# Inspect the highest-priority unleased tasks without changing assignments.
+hypertask task next --project 15
+
+# Claim the selected ticket in a separate agent step.
+hypertask agent take HTPR-1234
 ```
 
 This ensures:

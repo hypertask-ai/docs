@@ -12,8 +12,9 @@
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
-import { join, dirname } from "node:path";
+import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const SERVER = process.env.HYPERTASK_MCP_URL ?? "https://mcp.hypertask.ai/mcp";
 const OUT = join(
@@ -59,7 +60,7 @@ async function fetchToolsWithRetry(token, attempts = 4) {
     } catch (error) {
       if (attempt >= attempts || !/returned (403|429|50\d)/.test(error.message)) throw error;
       const wait = attempt * 15_000;
-      console.error(`${error.message} — retrying in ${wait / 1000}s`);
+      console.error(`${error.message} - retrying in ${wait / 1000}s`);
       await sleep(wait);
     }
   }
@@ -68,6 +69,7 @@ async function fetchToolsWithRetry(token, attempts = 4) {
 async function fetchTools(token) {
   const res = await fetch(SERVER, {
     method: "POST",
+    signal: AbortSignal.timeout(30_000),
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
@@ -85,7 +87,7 @@ async function fetchTools(token) {
 }
 
 // The server answers over SSE even for a single response.
-function parseToolsPayload(body) {
+export function parseToolsPayload(body) {
   const payload = body.trimStart().startsWith("{")
     ? body
     : body.split("\n").find((line) => line.startsWith("data: "))?.slice(6);
@@ -105,8 +107,8 @@ const escapeText = (s = "") =>
 const escapeCell = (s = "") => escapeText(s).replace(/\|/g, "\\|").replace(/\n+/g, " ").trim();
 
 function typeOf(schema = {}) {
-  if (schema.enum) return schema.enum.map((v) => `\`${v}\``).join(" \\| ");
-  if (schema.anyOf) return schema.anyOf.map(typeOf).join(" \\| ");
+  if (schema.enum) return schema.enum.map((v) => `\`${v}\``).join(" | ");
+  if (schema.anyOf) return schema.anyOf.map(typeOf).join(" | ");
   if (schema.type === "array") return `${typeOf(schema.items ?? {})}[]`;
   return schema.type ?? "any";
 }
@@ -114,7 +116,7 @@ function typeOf(schema = {}) {
 function paramsTable(tool) {
   const schema = tool.inputSchema ?? {};
   const props = schema.properties ?? {};
-  const names = Object.keys(props);
+  const names = Object.keys(props).sort();
   if (names.length === 0) return "_Takes no parameters._";
 
   const required = new Set(schema.required ?? []);
@@ -135,10 +137,10 @@ function groupOf(name) {
   return GROUPS.find(([, pattern]) => pattern.test(name))?.[0] ?? "Other";
 }
 
-function render(tools) {
+export function render(tools) {
   const byGroup = new Map(GROUPS.map(([label]) => [label, []]));
   byGroup.set("Other", []);
-  for (const tool of [...tools].sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const tool of [...tools].sort((a, b) => a.name.localeCompare(b.name, "en"))) {
     byGroup.get(groupOf(tool.name)).push(tool);
   }
 
@@ -153,6 +155,9 @@ function render(tools) {
             escapeText(tool.description ?? ""),
             "",
             paramsTable(tool),
+            ...(tool.inputSchema?.properties?.input?.anyOf ?? []).map((variant) =>
+              `\n#### Input for \`${escapeText(variant.title ?? "action")}\`\n\n${paramsTable({ inputSchema: variant })}`
+            ),
           ].join("\n")
         )
         .join("\n\n");
@@ -172,12 +177,14 @@ import { Aside } from '@astrojs/starlight/components';
 Every tool the Hypertask MCP server exposes at \`https://mcp.hypertask.ai/mcp\`, with its parameters. Requests need a \`Bearer\` token in the \`Authorization\` header.
 
 <Aside type="tip">
-This page is generated from the server's own \`tools/list\` response, so it cannot drift from what an agent actually gets. Call \`hypertask_hello\` first — it returns a welcome map of the whole surface.
+This page is generated from the server's own \`tools/list\` response, so it cannot drift from what an agent actually gets. Start with \`hypertask_user_context\` and \`action: "hello"\` for the welcome map.
 </Aside>
 
 <Aside type="note">
-AI Chat inside the app exposes its own, larger set of tools covering the same ground, plus help-doc search and web search. It splits some of these tools apart (one per timer action, a separate unassign) and is missing only \`hypertask_hello\`. See [MCP Integration](/mcp/overview/) for the differences.
+Each resource tool selects an operation with \`action\`; put its fields in \`input\`. See [MCP Integration](/mcp/overview/) for connection instructions.
 </Aside>
+
+**Source:** Live MCP \`tools/list\`. Schema version \`${schemaVersion(tools)}\`.
 
 **${tools.length} tools.**
 
@@ -190,9 +197,26 @@ ${sections}
 // Machines whose IP the edge is currently challenging can pass a saved tools/list
 // response instead: curl it through a clean network, then
 //   node scripts/generate-mcp-reference.mjs tools.json
-const savedResponse = process.argv[2];
-const tools = savedResponse
-  ? parseToolsPayload(readFileSync(savedResponse, "utf8"))
-  : await fetchToolsWithRetry(readToken());
-writeFileSync(OUT, render(tools));
-console.log(`wrote ${OUT} — ${tools.length} tools`);
+// A content-derived version changes only when the tool descriptions or schemas do.
+function stable(value) {
+  if (Array.isArray(value)) return value.map(stable);
+  if (value && typeof value === "object") return Object.fromEntries(Object.keys(value).sort().map((key) => [key, stable(value[key])]));
+  return value;
+}
+export function schemaVersion(tools) {
+  return createHash("sha256").update(JSON.stringify(stable([...tools].sort((a, b) => a.name.localeCompare(b.name, "en"))))).digest("hex").slice(0, 12);
+}
+
+if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
+  try {
+    const savedResponse = process.argv[2];
+    const tools = savedResponse
+      ? parseToolsPayload(readFileSync(savedResponse, "utf8"))
+      : await fetchToolsWithRetry(readToken());
+    writeFileSync(OUT, render(tools));
+    console.log(`wrote ${OUT}: ${tools.length} tools (${schemaVersion(tools)})`);
+  } catch {
+    console.error("<3>MCP reference generation failed; check token and tools/list availability");
+    process.exitCode = 1;
+  }
+}

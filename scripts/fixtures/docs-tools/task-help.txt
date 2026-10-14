@@ -1,0 +1,12 @@
+Manage tasks
+
+Usage: hypertask task <command>
+
+Commands:
+  list
+      List tasks
+  get
+      Get a task
+
+Example:
+  hypertask task list --project <id>

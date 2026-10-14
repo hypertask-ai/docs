@@ -57,14 +57,16 @@ Use `--agent AGENT_UUID` when running with a human account token. Other commands
 
 <TabItem label="MCP">
 
-Call `hypertask_agent_webhook`:
+Call `hypertask_webhooks` (`action: "configure"`):
 
 ```json
 {
   "action": "configure",
-  "agent_id": "self",
-  "url": "https://agent.example.com/hypertask",
-  "events": ["comment.mention", "task.assigned", "task.unassigned", "comment.created", "task.updated", "task.created"]
+  "input": {
+    "agent_id": "self",
+    "url": "https://agent.example.com/hypertask",
+    "events": ["comment.mention", "task.assigned", "task.unassigned", "comment.created", "task.updated", "task.created"]
+  }
 }
 ```
 
@@ -188,7 +190,7 @@ app = Flask(__name__)
 secret = os.environ["HYPERTASK_WEBHOOK_SECRET"].encode()
 
 @app.post("/hypertask")
-def hypertask_webhook():
+def handle_webhook():
     raw_body = request.get_data(cache=True)
     timestamp = request.headers.get("X-Hypertask-Timestamp", "")
     received = request.headers.get("X-Hypertask-Signature", "")

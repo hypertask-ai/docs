@@ -45,7 +45,7 @@ Each section has:
 - **Section ID** — Used by MCP tools to move tasks between sections.
 
 <Aside>
-Use the `hypertask_section` MCP tool to move a task into a section by name. You don't need to know the section ID — just pass the section name as a string.
+Use `hypertask_projects` with `action: "manifest"` to find the section ID, then `hypertask_tasks` with `action: "update"` and `input.section_id` to move a task into that section.
 </Aside>
 
 ## Tasks
@@ -95,7 +95,7 @@ A task can have **multiple assignees**. All assignees:
 - Receive notifications when the task is updated or commented on
 - Are responsible for completing the work
 
-Use the `hypertask_assign_user` MCP tool to add or remove assignees programmatically.
+Use the `hypertask_tasks` (`action: "assign"`) MCP tool to add or remove assignees programmatically.
 
 ### Followers
 
@@ -167,7 +167,7 @@ You receive inbox notifications when:
 | **Task due date approaching** | Due date reminder |
 | **Task overdue** | Overdue warning |
 
-Inbox items can be **archived** once handled. Use `hypertask_inbox_list` to check notifications and `hypertask_inbox_archive` to clear them via MCP.
+Inbox items can be **archived** once handled. Use `hypertask_inbox` (`action: "list"`) to check notifications and `hypertask_inbox` (`action: "archive"`) to clear them via MCP.
 
 <Aside>
 AI agents should check their inbox at the start of each session to pick up newly assigned work. This is the recommended pattern for agent-driven task execution.

@@ -10,7 +10,10 @@
     "check:changelog": "node scripts/check-changelog.mjs",
     "test:changelog": "node scripts/test-changelog-legacy.mjs && node scripts/test-changelog-legacy-build.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "refs": "node scripts/generate-mcp-reference.mjs && node scripts/generate-cli-reference.mjs",
+    "nightly": "node scripts/docs-nightly.mjs",
+    "test:docs": "node scripts/test-docs-tools.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.17",

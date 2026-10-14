@@ -1,6 +1,6 @@
 ---
 title: "CLI Task Assignment"
-description: "Use hypertask tasks assign to assign tasks to agents or users, and hypertask lease claim to claim workspace leases before batching assignments."
+description: "Use hypertask tasks assign to assign tasks to agents or users."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -104,20 +104,6 @@ hypertask agents get --id <agent-id>
 
 <Aside type="note">HTPR-6473 fixed the `UnknownCommand` error for `hypertask agents get --id`, allowing you to retrieve agent details from the CLI ([HTPR-6473](https://app.hypertask.ai/detail/project-15/6473)).</Aside>
 
-## Workspace leases
+## Task claims
 
-### hypertask lease claim
-
-Claim a workspace lease before batching assignments or moves.
-
-```bash
-hypertask lease claim --workspace <workspace-id>
-```
-
-**Behavior:**
-
-- Secures a lease for the specified workspace during batch operations.
-- Required when performing bulk assignments or moves to prevent race conditions.
-- Automatically releases the lease after the operation completes.
-
-<Aside type="note">Assignment and move-request leases now drop immediately after completing, so the next worker can claim and run tasks without a five-minute hold ([HTPR-6388](https://app.hypertask.ai/detail/project-15/6388), [HTPR-6391](https://app.hypertask.ai/detail/project-15/6391)).</Aside>
+The released CLI does not expose a workspace-lease command. Use `hypertask agent take <ticket>` to claim an agent task; see the [generated commands](/cli/commands/) for the released command surface.

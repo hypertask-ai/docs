@@ -58,7 +58,6 @@ jobs:
                 "https://docs.hypertask.ai/changelog/",
                 "https://docs.hypertask.ai/llms.txt",
                 "https://docs.hypertask.ai/llms-full.txt",
-                "https://docs.hypertask.ai/llms-small.txt",
                 "https://docs.hypertask.ai/changelog.md"
               ]
             }'
