@@ -3,6 +3,11 @@ title: "Tasks"
 description: "Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks."
 ---
 
+---
+title: "Tasks"
+description: "Create, assign, and manage tasks with rich fields, priorities, relations, and subtasks."
+---
+
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 # Tasks
@@ -267,7 +272,7 @@ The task detail sidebar includes a rail of properties (title, priority, assignee
 
 **Task properties no longer scroll with the task thread**, keeping them pinned to the sidebar for easy access while browsing comments and history.
 
-When another browser, the CLI, or an agent changes a task, its open detail page refreshes the title, section, assignees, labels, priority, dates, status, attachments, and linked pull requests without a reload. If the live connection is unavailable, the page checks for changes every 10 seconds.
+When another browser, the CLI, or an agent changes a task, its open detail page refreshes the title, assignees, labels, priority, dates, status, attachments, and linked pull requests without a reload. If the live connection is unavailable, the page checks for changes every 10 seconds.
 
 ## Time tracking
 Track work hours on tasks via the **Times** section:
@@ -348,7 +353,7 @@ These shortcuts preserve the instant-open feel and keep you moving without page 
 <span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load. ([HTPR-7132](https://app.hypertask.ai/detail/project-15/7132)).
 
 ### Instant board tap
-<span class="label label--brand">New</span> Clicking a board card now initializes the task with a single board interaction instead of triggering redundant rendering. This keeps the opening experience snappy across desktop and mobile, especially afterboards have already been reloaded.
+<span class="label label--brand">New</span> Clicking a board card now initializes the task with a single board interaction instead of triggering redundant rendering. This keeps the opening experience snappy across desktop and mobile, especially after boards have already been reloaded.
 
 Loading address-bar updates that occur as part of the navigation are tracked correctly as navigations within the same page rather than distinct page loads. The change applies across all boards and view types—Kanban, table, and card lists—with consistent, performant behavior. ([HTPR-7104](https://app.hypertask.ai/detail/project-15/7104)).
 
