@@ -1,0 +1,52 @@
+---
+title: "Agent Chat"
+description: "Talk to agents on your phone or work with your board's agents in a shared room."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Open [Agent Chat](https://app.hypertask.ai/agents/chat) to choose an agent or a shared board room.
+
+## Shared board agent rooms
+
+A board room gives people and agents one shared conversation for a board. It is not a private chat with one agent. Only boards you can access appear in the room list.
+
+<Steps>
+
+1. Open **Agent Chat** and select **Board rooms**.
+2. Choose your board. Its room opens automatically. The header lists the board's agents.
+3. Write your message and select the send arrow. **Product Bot** receives each new message from a person. Ask it to bring in another agent by that agent's full display name.
+4. Read the replies in the shared conversation. Select **Stop** beside an agent's working indicator to cancel its pending reply.
+
+</Steps>
+
+The board needs an active agent named **Product Bot** before you can send messages. If you see "Product Bot is not on this board", add that agent to the board first. Agents can pass work to other board agents by using their full display names in replies.
+
+Include the task's reference from the board in your message when you want to discuss it. Agent replies linked to that task also appear in its activity.
+
+<Aside type="note">
+
+Each exchange allows up to three agent replies. A room allows up to 50 agent replies per day. The header shows the turns used today. When the daily limit is reached, wait until midnight UTC to continue.
+
+</Aside>
+
+Select **Direct chats** to return to individual agents. On a phone, the back arrow returns to the board room list.
+
+## Agent Chat on your phone
+
+Agent Chat uses the full phone screen without the app's usual top bar or bottom tabs. In an open conversation, the header shows a back arrow and the agent's name.
+
+<Steps>
+
+1. Open **Agent Chat** on your phone and tap an agent.
+2. Type in the message box. To dictate instead, tap the microphone and allow microphone access when asked. Review the transcribed text before sending.
+3. Tap the send arrow to send your message.
+4. Tap the back arrow beside the agent's name to return to the agent list and choose someone else.
+
+</Steps>
+
+If the agent is still working, your next message is queued instead of interrupting it. Use **Cancel** on a queued message to remove it. Use **Stop** beside the working indicator to stop waiting for the current reply.
+
+With a keyboard, **Enter** sends a message. Use **Shift+Enter** for a new line. When task suggestions are open, **Enter** selects the highlighted task first.
+
+The microphone is unavailable when Hypertask cannot identify a board for the agent. The send arrow is unavailable while voice input is recording or being transcribed.

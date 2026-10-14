@@ -1,6 +1,6 @@
 ---
-title: Quick Start
-description: Get up and running with Hypertask in under 5 minutes.
+title: "Quick Start"
+description: "Get up and running with Hypertask in under 5 minutes."
 ---
 
 import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/components';
@@ -9,7 +9,7 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
 <Steps>
 
-1. **Sign up** at [hypertask.ai](https://hypertask.ai) using email or Google. Bypass the onboarding routine on signup routes to land directly on your board ([HTPR-5639](https://app.hypertask.ai/detail/project-15/5639)).
+1. **Sign up** at [hypertask.ai](https://hypertask.ai) using email or Google.
 
 2. **Get onboarded.** Visitors landing at [hypertask.ai/demo](https://hypertask.ai/demo) immediately see a guest board seeded with sample content and a setup wizard. On desktop, the AI Task Writer opens by default; press <kbd>Ctrl</kbd> + <kbd>K</kbd> and select "Create board" to open the Board creation assistant, which walks you through naming, adding columns, and inviting people.
 
@@ -40,7 +40,7 @@ import { Steps, Tabs, TabItem, Aside, LinkCard } from '@astrojs/starlight/compon
 
 ## For AI agents (MCP)
 
-Hypertask exposes a full MCP server over SSE. Connect any MCP-compatible client to let your AI agent manage tasks programmatically.
+Hypertask exposes an MCP server over Streamable HTTP. Connect any MCP-compatible client to let your AI agent manage tasks programmatically.
 
 ### Get your API key
 
@@ -69,8 +69,8 @@ Add to your Claude Code MCP settings (`.claude/settings.json` or project-level `
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -88,8 +88,8 @@ Open **Settings > Developer > Edit Config** and add to `claude_desktop_config.js
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -109,8 +109,8 @@ Open **Settings > MCP Servers > Add Server** and configure:
 {
   "mcpServers": {
     "hypertasks": {
-      "type": "sse",
-      "url": "https://mcp.hypertask.ai/sse",
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
       "headers": {
         "Authorization": "Bearer YOUR_API_KEY"
       }
@@ -126,19 +126,24 @@ Replace `YOUR_API_KEY` with the token from the previous step.
 
 ### Verify the connection
 
-You can connect in two ways:
+Ask your client to call `hypertask_user_context` with the `hello` action:
 
-1. **From the onboarding flow** - as a new agent, you'll see a question-screen with 6 cards offering connection options. Select an option (CLI, MCP, or REST), and the connection will confirm itself with live status updates.
-
-2. **From any MCP client** - use the existing `hypertask_connect` tool. The CLI and MCP tools now check for an existing token and prompt for your API key if needed, using a bearer fallback for authentication.
-
-Once connected, your AI agent can list your projects:
-
+```json
+{
+  "action": "hello",
+  "input": {}
+}
 ```
+
+This returns your user details and accessible boards. Authentication comes from the bearer token in your client configuration, not from a connection tool.
+
+Next, ask:
+
+```text
 List all my Hypertask projects.
 ```
 
-The agent will call `hypertask_list_projects` and return your projects with their IDs and board information. If you see your projects, the connection is working.
+The agent calls `hypertask_projects` with `action: "list"`. If you see your boards, the connection is working. Older clients may still use the supported names `hypertask_hello` and `hypertask_list_projects`.
 
 ## Your first task workflow
 
@@ -174,7 +179,7 @@ AI agents follow this same workflow. A well-configured agent will check its inbo
 
 <LinkCard
   title="MCP Integration"
-  description="Deep dive into all 15 MCP tools and how agents interact with Hypertask."
+  description="Learn how MCP tools let agents work with Hypertask."
   href="/mcp/overview/"
 />
 

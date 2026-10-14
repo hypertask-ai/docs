@@ -29,3 +29,16 @@ This change ensures invites are a scoped, safe method to grant board-level acces
 **Behavior before this fix:** An unauthorized user could add columns to a board they were not part of, potentially affecting multiple team areas.**\n\n**After this fix:** Only board members (including board owners, members, and invited participants with valid access) can add columns. This restriction aligns with the board-wide access model and ensures that board structure changes are controlled within the intended team context. ([HTPR-7165](https://app.hypertask.ai/detail/project-15/7165)).
 
 ## Creating a board
+
+## Quick add with N or Shift+C
+
+Use quick add when you only need a task title. It works in both board and table views.
+
+1. Open your board. Focus a column or select a task in the column where you want to add work.
+2. Press **N** or **Shift+C**. A small title box opens in that column. If nothing is selected, it opens in the first column. In table view, it uses the selected row's section or the first section.
+3. Type a title and press **Enter** to create the task.
+4. Press **Escape** to close the box without creating another task.
+
+You can also open quick add with a column's **+** button. Press **C** without Shift to open the full task editor instead.
+
+The shortcuts do not run while you are typing in a field or while a dialog or command palette is open.

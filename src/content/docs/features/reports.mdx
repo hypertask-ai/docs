@@ -1,122 +1,63 @@
 ---
-title: Reports
-description: Review live analytics for your current board and manage reports created by AI and MCP tools.
+title: "Reports"
+description: "Review board velocity and manage saved reports created by AI, CLI, or MCP."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-The **Reports hub** (`/report`) combines two kinds of reporting:
+The **Reports hub** (`/report`) lists saved reports and board velocity reports for boards you can access.
 
-- **Board analytics** for the board you opened most recently
-- Saved reports created by AI chat, agents, CLI, or MCP
+## Review board velocity
 
-The hub shows one live analytics dashboard for the current board instead of a card for every board you can access. Saved reports remain available even when they belong to another board.
+Open **Reports**, then choose a board under **Velocity**. You can also open the command palette from a board and choose **Board velocity report**.
 
-## Review board analytics
+Choose **Today**, **7 days**, **14 days**, **30 days**, **3 months**, **6 months**, or **12 months**. The default is **30 days**.
 
-Open **Reports**, then choose **Board analytics** under **Current board**. The dashboard reads the board's current data each time it loads and refreshes when you return to the browser tab.
+The report shows:
 
-Choose a period at the top of the dashboard:
-
-- **Today**
-- **Yesterday**
-- **Last 7 days**
-- **Custom range**, with From and To dates
-
-The dashboard shows:
-
-- Tickets worked on during the period, including tickets that were updated, commented on, moved, or linked to a merged pull request
-- The median time to finish a ticket and tickets finished per week
+- Median time to finish a task and tasks finished per week
 - Finished work and comments by board member
-- Created versus finished tickets
-- Open and stale tickets by column
+- Created versus finished tasks
+- Open and stale tasks by column
 
-Ticket names open the ticket. Merged pull request names open the pull request in a new tab.
+## Create a saved report
+
+Ask AI chat or an agent to create a report for a board. You can also save HTML with the CLI or MCP. Saved reports appear under **Reports** in the hub, with their board, author, and last update time.
+
+### CLI
+
+Use a short slug, the board's numeric ID, a title, and an HTML file:
+
+```bash
+hypertask report create weekly-summary \
+  --project 15 \
+  --title "Weekly summary" \
+  --html-file ./weekly-summary.html
+```
+
+Use `--body` instead of `--html-file` to pass HTML directly. Add `--description` for a short summary. The CLI also supports `report list`, `report get`, `report update`, and `report delete`. Every command needs `--project`; every command except `list` also needs a slug. Deleting a report requires `--confirm`.
+
+### MCP
+
+Call `hypertask_reports` with the `create` action:
+
+```json
+{
+  "action": "create",
+  "input": {
+    "project_id": 15,
+    "slug": "weekly-summary",
+    "title": "Weekly summary",
+    "body_html": "<h1>Weekly summary</h1><p>Three tasks completed this week.</p>"
+  }
+}
+```
+
+Use `list`, `get`, `update`, or `delete` to manage saved reports. Open the URL returned by the tool to view the report.
 
 <Aside type="note">
-If **Current board** is empty, open the board you want to review and return to Reports.
+A saved report is a snapshot, not a live query. Include all data in its HTML. Inline styles and scripts work, but network requests and external script libraries do not. Update the report when its data changes.
 </Aside>
-
-## Review current task counts
-
-When Native Reports is available for your account, the Reports hub lists **Current tasks** under **Current board** for the board you opened most recently. Open it to see the board's current, non-archived tasks grouped by section and assignee.
-
-The report recalculates whenever you load it. A task appears once in its current section. A task with more than one assignee appears once under each assignee, and unassigned tasks have their own row.
-
-The report is responsive and read-only on a phone.
-
-## Create native reports ([HTPR-5815](https://app.hypertask.ai/detail/project-15/5815))
-
-When native reports behind NATIVE_REPORTS_ENABLED, use the command palette to create contextual native reports at a board: in the app, press <kbd>Ctrl+K</kbd> > **Create native report**; embed a create interaction via MCP board + writers. Walked through board identifiers, useful for templates (board/kanban/agents/related). Exported via /report?mode=CREATE or body with /report/filter, publish(show) preview. No native dashboard yet; native create and templates are additive to the hub.
-
-Example:
-
-```bash
-# CLI-based (if available)
-ht report create --board-id 15 --mode native --template kanban
-```
-
-Example MCP tool call:
-
-```bash
-# Not a real stub; illustrative call
-hypertask board_update_task --board-id 15 --task-id 5815 --body '
-{
-  "nativeReport": {
-    "create": {
-      "boardId": 15,
-      "mode": "board",
-      "template": "kanban",
-      "label": "Board Kanban Report"
-    }
-  }
-}'
-```
-
-## Open reports from the command palette
-
-From the **Ctrl+K** command palette, use **Go to Reports** to open the hub or **Board analytics report** to open analytics for the active board.
-
-Saved reports are listed separately in the hub. Opening one loads its saved content and board context.
-
-## Agent-authored reports
-
-Agents can author reports by:
-
-1. Using the **Conductor: Create report** tool on a board, with a prompt defining structure and filters.
-2. Calling **Report authoring** via CLI (`hypertask report create --agent`).
-3. Using MCP `hypertask_report_create` to build programmatic reports.
-
-Report templates often include:
-
-- Board and section selection
-- Required pivot fields (status, assignee, due date)
-- Optional dimension (size,.priority, tags
-
-Example: hourly team velocity snapshots collected by an agent.
-
-Usage example with the CLI:
-
-```bash
-hypertask report create \
-  --name "Weekly Velocity" \
-  --type velocity \
-  --board-id 15 \
-  --start "2026-08-01" \
-  --end "2026-08-31"
-```
-
-The hub loads the report at `/report` with the associated filters.
-
-## Integration with boards
-
-Board analytics always follows one board: the board you opened most recently. Agent-authored reports can still be saved for any board you can access and remain listed in the Reports hub.
-
-Use reports as a basis for:
-
-- Weekly standup summaries
-- Release retrospectives
-- Resource planning and overcommitment checks
 
 ## Status updates
 
@@ -126,17 +67,17 @@ A **status update** is an AI-written summary of what has happened on a board, sa
 
 The update has four parts:
 
-- **Headline** â€” one sentence on where the board stands
-- **Shipped** â€” work that reached a done column or was archived
-- **In flight** â€” work moving through the other columns
-- **Risks and blockers** â€” tickets sitting still or otherwise worth attention
+- **Headline** - one sentence on where the board stands
+- **Shipped** - work that reached a done column or was archived
+- **In flight** - work moving through the other columns
+- **Risks and blockers** - tickets sitting still or otherwise worth attention
 
-It is written from the same board data the velocity report uses â€” ticket movement over the window, per-column counts, staleness thresholds â€” so the figures it quotes are computed rather than generated. Ticket titles are passed to the model as data, not instructions, so a task title cannot steer what the summary claims.
+It is written from the same board data the velocity report uses - ticket movement over the window, per-column counts, staleness thresholds - so the figures it quotes are computed rather than generated. Ticket titles are passed to the model as data, not instructions, so a task title cannot steer what the summary claims.
 
 Each board keeps **one** status update, at a fixed address:
 
 ```
-/report/<board-slug>/status-update
+/report/project-<board-id>/status-update
 ```
 
 Regenerating rewrites that page rather than creating a new one, so a link to it always shows the current state. The default window is the last 7 days.
@@ -147,11 +88,7 @@ The slug `status-update` is reserved for this feature on every board. A report y
 
 ## Best practices
 
-- **Name consistently**: use pattern `Board/Project â€“ Report Type â€“ Period` for easy navigation.
-- **Re-use filters**: pin board filters to quick-access wells and reference those wells when generating reports.
-- **Refresh timely**: set agents to update reports daily or on board changes, depending on cadence needs.
-- **Lock stable templates**: freeze stable filters in saved report templates so agents can invoke them reliably.
-
-Related:
-- [Board Settings](./board-settings.mdx) â€” autoâ€¹assign, staleness, etc.
-- [Calendar view](./calendar.mdx) â€” task dates, dates, scheduling
+- Give reports clear titles and short slugs.
+- Include the reporting period in the content.
+- Update an existing report to keep the same link.
+- Use inline SVG or CSS for charts.
