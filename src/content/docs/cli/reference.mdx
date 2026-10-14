@@ -68,6 +68,14 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
+### Error reports
+
+From v0.2.18, when a command fails unexpectedly (a server error, a network problem, a response the CLI cannot read, or an internal error), the CLI sends Hypertask one short report so the failure becomes a bug ticket. The report holds only the command name (like `task create`), the error type, the HTTP status, the CLI version and your operating system. It never includes task content, ids, arguments or your token.
+
+Your own mistakes (an unknown flag, a missing task, no permission) are never reported. Reporting never changes the error message or exit code, and gives up after about 1.5 seconds.
+
+To turn it off, set `HYPERTASK_NO_ERROR_REPORTS=1`, or add `"error_reports": false` to `~/.hypertask/config.json`.
+
 ### v0.2.14 CLI Release (2026-10-11)
 
 The latest release (`v0.2.14`) is now installed on the fleet and introduces usability improvements:
