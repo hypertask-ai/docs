@@ -1,0 +1,37 @@
+---
+description: Consistent outline and corner style for cards and panels on task pages.
+title: Task page boxes: consistent outline and corner style
+tags: [Tasks]
+---
+
+The task page now displays **one consistent outline and corner style** for all content boxes. Cards share the same look across all visual themes.
+
+## Observable behavior
+
+Every content box on a task page uses a single outline per theme:
+
+| Theme | Outline thickness | Corner radius |
+|------:|------------------:|---------------:|
+| Porcelain | 1px (hairline) | 5px |
+| Graphite | 1px (hairline) | 5px |
+| AMOLED | 1px (hairline) | 5px |
+| Dia | 1px (hairline) | 10px |
+
+Affected boxes are:
+
+- Task description
+- Posted comments
+- Comment input
+- Details panel
+
+## Visual consistency
+
+There are **no half states** for the outline. The outline is either fully applied to all four sides of a box, or not applied at all.
+
+This change unifies the appearance of interactive elements and gives the task screen a more coherent visual language.
+
+## Default behavior
+
+No settings or toggles affect this behavior. The style is applied automatically.
+
+---
