@@ -57,13 +57,11 @@ export default defineConfig({
           'features/chat-board-filter',
           'features/cost-forecast',
           'features/superhuman-snippets',
-          'features/observability',
           'features/slack',
           'features/agents',
           'features/agent-chat',
           'features/desktop',
           'features/images',
-          'docs/features/images',
         ],
         },
         {
@@ -100,13 +98,6 @@ export default defineConfig({
             'cli/reference',
             'cli/commands',
             'cli/tasks-assign',
-          ],
-        },
-        {
-          label: 'Design system',
-          items: [
-            'design-system/visual-standard',
-            'design-system/typography',
           ],
         },
       ],
