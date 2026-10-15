@@ -76,24 +76,6 @@ Your own mistakes (an unknown flag, a missing task, no permission) are never rep
 
 To turn it off, set `HYPERTASK_NO_ERROR_REPORTS=1`, or add `"error_reports": false` to `~/.hypertask/config.json`.
 
-### v0.2.14 CLI Release (2026-10-11)
-
-The latest release (`v0.2.14`) is now installed on the fleet and introduces usability improvements:
-
-- **Help and command listing available without login:** You no longer need to be logged in to run `hypertask --help` or view the full command list ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
-- **Login without a token now provides clear guidance:** If you try to log in when no token is available, the CLI explains where to obtain one instead of failing silently ([HTPR-7119](https://app.hypertask.ai/detail/project-15/7119)).
-- **Deduped JSON accessors:** JSON accessor calls are now deduped across command trees, reducing redundant data fetching.
-- **Consolidated HTTP checks:** HTTP reachability checks are pooled and reused, making repeated commands more efficient.
-- **Per-request connection management:** Connection allocation per-request instead of globally ensures clearer ownership and resource tracking for each CLI command.
-- **No behavioral change:** v0.2.14 behaves exactly like the previous release for all read commands (task get, list, search, projects, comments, time, inbox, agents, missing ticket lookups) and all write commands (tasks move, task update, comments add, etc.).
-
-To upgrade to v0.2.14, reinstall the CLI using the npm shim:
-
-```bash
-npm install -g @hypertask/hypertask_cli@latest
-hypertask --version
-```
-
 ### v0.2.16 CLI Release (2026-10-12)
 
 This release fixes a crash when running AI reviews on large pull requests. The CLI now passes PR text to the review program through standard input instead of a command-line argument, preventing shell argument limits:
@@ -123,6 +105,16 @@ To upgrade to v0.2.15:
 npm install -g @hypertask/hypertask_cli@latest
 hypertask --version
 ```
+
+### v0.2.19 CLI Release (2026-10-15)
+
+CLI 0.2.19 improves error reporting when network problems occur during command execution.
+
+- **Read retries and clearer errors:** If the server does not respond while the CLI waits, it now retries once and surfaces the actual error instead of a bare "ReadFailed" message. Use `--help` or the full command list (`hypertask capabilities --json`) to see available updates. (Read more: [HTPR-7261](https://app.hypertask.ai/detail/project-15/7261), [HTPR-7262](https://app.hypertask.ai/detail/project-15/7262))
+
+This change applies to all commands that involve waiting for a server response, including task listing, task details, and other read operations.
+
+---
 
 ## Task listing with label filters
 
@@ -159,7 +151,6 @@ hypertask tasks list --labels cli,urgent
 ```
 
 <Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
-
 <Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0–4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
 
 ## Task move
