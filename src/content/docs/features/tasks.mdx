@@ -144,6 +144,9 @@ Use **Write with AI** (**Ctrl+K** / <kbd>Cmd+K</kbd>, or the command palette) in
 ### AI writer failure reasons
 <span class="label label--brand">Fix</span> When the AI writer fails to generate a task, the **Ctrl+J New Task** box and the AI Task Writer now show the real failure reason instead of hiding it; your note is still saved as a task. If AI generation is not available, the text you entered appears without modification. This applies to task creation from boards, the inbox, and description editing in task details.
 
+## Field validation
+Some fields are type-checked before submission. For example, the **ranking** parameter must be a string; passing a number will fail with an error.
+
 ## OAuth connection flow
 When Hypertask connects to a board from an external site or app, Hypertask now shows an **approve screen** first. The screen names the connector and the exact site that will receive access, letting you confirm before any access is granted.
 
