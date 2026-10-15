@@ -62,7 +62,6 @@ export default defineConfig({
           'features/agent-chat',
           'features/desktop',
           'features/images',
-          'features/trusted-domains',
         ],
         },
         {
