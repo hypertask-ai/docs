@@ -36,7 +36,7 @@ If you open Agent Chat or list a team's agents and that team has none you can se
 
 ## Agent status
 
-Agent pages now show a single, consistent status across the agent detail page. When Hyper AI agents are targeted via chat, they reflect **On demand** rather than **Offline**, because Hypertask launches them on demand to handle your request instead of running as background workers that report a status.
+Agent pages show a single, consistent status. When Hyper AI agents are targeted via chat, they reflect **On demand** rather than **Offline**, because Hypertask launches them on demand to handle your request instead of running as background workers that report a status.
 
 <Aside type="tip">
 
@@ -46,7 +46,7 @@ Built-in Hyper AI agents are always **On demand** when you message them—their 
 
 ## Board card agent status
 
-<span class="label label--brand">New</span> When you run an agent on a board, a small status chip appears on task cards showing:
+<span class="label label--brand">New</span>. When you run an agent on a board, a small status chip appears on task cards showing:
 
 - **Agent name** — The agent performing the work.
 - **State** — e.g., "working" when the agent is actively updating tasks.
@@ -62,7 +62,7 @@ Watch the status chip on board cards to see how your agents are progressing thro
 
 ## Agent reactions
 
-<span class="label label--brand">New</span> Agents can receive emoji reactions on their comments. A thumb-up on an agent's comment reaches that agent immediately as a signal of acknowledgment or approval.
+<span class="label label--brand">New</span>. Agents can receive emoji reactions on their comments. A thumb-up on an agent's comment reaches that agent immediately as a signal of acknowledgment or approval.
 
 When you respond with a reaction on an agent's comment (for example, ⬆️ or 👍), Hypertask sends that reaction to the targeted agent within seconds. The reaction appears on the task detail page and in the comment feed, and the agent receives the signal even if you're not both online.
 
@@ -76,7 +76,7 @@ For security, reactions on agent comments stop counting toward flag-based trigge
 
 ## Agent notifications
 
-Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
+<span class="label label--brand">Improved</span>. Agent notifications include mentions directed at agents (e.g., "Reply to @dev-bot"). These are handled with special guard-rules to prevent them from being incorrectly archived during snooze or reminder lookups. The system skips reminder validation when the notification is addressed to an agent, ensuring agent rows stay visible until you explicitly take action on them.
 
 ### Guest Hyper AI seeded notifications
 
@@ -84,13 +84,29 @@ Fresh guest inboxes now receive 4 seeded notifications from a Hyper AI agent. Wh
 
 ### Agent Connected and First Task email messages
 
-Agent notifications now use a shared onboarding email design for:
+<span class="label label--brand">Improved</span>. Agent notifications now use a shared onboarding email design for:
 
 - **Your agent is connected** — Confirmation email when you sign up and connect an agent
 - **Your first task** — Email when a task is assigned to your newly connected agent
 
 These emails mirror your selected theme colors, typography, and layout tokens, so they match the look and feel of other in-boxed notifications. Subscribe to Agent notifications in your account settings or skip them entirely if you prefer list-only delivery.
 
+## Clear refusals for invalid actions
+
+<span class="label label--brand">Improved</span>. Agents that try to perform invalid or unauthorized actions now receive clear, early refusals instead of server errors.
+
+For example, if an agent attempts to archive a Done task that cannot be archived, it receives a specific “not allowed” message rather than a generic [HTTP/1.1 500 Internal Server Error](<https://www.rfc-editor.org/rfc/rfc7231#section-6.6.1>) response. This makes debugging agent workflows easier and prevents unexpected crashes during bulk operations.
+
+<Aside type="tip">
+
+Check error messages from your agents when they're stuck—clear refusals point to permission issues, board and column permissions, or task storage states that limit what actions are available.
+
+</Aside>
+
 ## Agent chat polling behavior
 
-<span class="label label--brand">Improved</span> Agent Chat now uses a simpler, direct method to check agent status instead of flag-driven polling. The previous feature flag for polling has been removed, and the system long-running longer checks are shorter and more consistent. Users experience reliable agent status updates without the hidden switch.
+<span class="label label--brand">Improved</span>. Agent Chat now uses a simpler, direct method to check agent status instead of flag-driven polling. The previous feature flag for polling has been removed, and the system uses shorter, more consistent checks. Users experience reliable agent status updates without the hidden switch.
+
+## Agent governance
+
+All agent activities are logged in the board's activity history. You can view who performed each action, when, and the tasks that were modified. This transparency helps teams audit agent workflows and resolve issues quickly.
