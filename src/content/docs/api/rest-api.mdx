@@ -42,6 +42,73 @@ Error responses use this general shape:
 }
 ```
 
+## Error handling
+
+Queries that include invalid date parameters receive API-level validation instead of server exceptions. For invalid or malformed `updated_since` filter values, the API returns HTTP 200 with a clear "invalid date" answer:
+
+```http
+200 OK
+Content-Type: application/json
+
+{
+  "success": true,
+  "data": [
+    {
+      "task_id": 123,
+      "title": "Example task",
+      "updated_at": "2026-08-01T10:00:00Z"
+    }
+  ]
+}
+```
+
+Previously, malformed date filters triggered a server crash. Now, the API surface treats malformed dates as user input and handles them gracefully with a sanitized response, maintaining the HTTP 200 shape while clearly communicating that the filter value was not a valid date.
+
+## API validation for tasks
+
+When creating or updating tasks, Hypertask validates required and optional fields at the API level. Invalid inputs return a 400 Bad Request instead of a 500 server error, making it easier for agents and clients to handle failures gracefully:
+
+- Null or empty `description` values trigger validation errors with a clear message.
+- Out-of-range values for numeric fields (for example, priority or estimate) are rejected with an explanatory error.
+- The API also validates field types; sending a string where a number is expected returns `code: invalid_type` in the error details.
+
+This behavior improves robustness of AI-driven workflows by surfacing actionable validation feedback rather than generic server errors.
+
+Example: Invalid task description
+
+```http
+400 Bad Request
+Content-Type: application/json
+
+{
+  "success": false,
+  "error": "Validation error",
+  "message": "description cannot be empty",
+  "details": {
+    "field": "description",
+    "code": "required"
+  }
+}
+```
+
+Example: Out-of-range priority
+
+```http
+400 Bad Request
+Content-Type: application/json
+
+{
+  "success": false,
+  "error": "Validation error",
+  "message": "priority must be between 0 and 4",
+  "details": {
+    "field": "priority",
+    "code": "out_of_range",
+    "value": 5
+  }
+}
+```
+
 ## REST API structure and migration
 
 Hypertask's REST API has completed its migration from the legacy Pages Router to the App Router. Writes for key resources (tasks, projects, sections, and notifications) now use the App Router exclusively. The old Routes have been retired once the new-structure flag was fully enabled, eliminating duplicate code paths and simplifying the codebase.
@@ -121,25 +188,3 @@ The board detail responses for the Sessions rows API and session detail endpoint
 <Aside type="note">
 The App Router migration is now complete and the legacy Routes have been retired. For questions or edge cases during this transition, contact support or raise a ticket in Hypertask with your specific use case.
 </Aside>
-
-## Error handling
-
-Queries that include invalid date parameters receive API-level validation instead of server exceptions. For invalid or malformed `updated_since` filter values, the API returns HTTP 200 with a clear "invalid date" answer:
-
-```http
-200 OK
-Content-Type: application/json
-
-{
-  "success": true,
-  "data": [
-    {
-      "task_id": 123,
-      "title": "Example task",
-      "updated_at": "2026-08-01T10:00:00Z"
-    }
-  ]
-}
-```
-
-Previously, malformed date filters triggered a server crash. Now, the API surface treats malformed dates as user input and handles them gracefully with a sanitized response, maintaining the HTTP 200 shape while clearly communicating that the filter value was not a valid date.
