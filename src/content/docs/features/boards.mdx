@@ -19,14 +19,19 @@ The shipping gate for this page was on 2026-10-03 (Owner+QA preview only). Botto
 - Is refused if the invite target board differs from the invite source board.
 - Can only be resended by the board's owner and current members.
 
-**Behavior before this fix:** An invite could be successfully resent and used to create tickets on a different board, potentially exposing cross-team data.**\n\n**After this fix:** Each board’s access is gated strictly. Invites can only be resent and used within their intended context. Users outside the board’s membership cannot leverage invites to access or create tickets on other boards. ([HTPR-7162](https://app.hypertask.ai/detail/project-15/7162), [HTPR-7176](https://app.hypertask.ai/detail/project-15/7176)).
+**Behavior before this fix:** An invite could be successfully resent and used to create tickets on a different board, potentially exposing cross-team data.**\\n\\n**After this fix:** Each board's access is gated strictly. Invites can only be resent and used within their intended context. Users outside the board's membership cannot leverage invites to access or create tickets on other boards. ([HTPR-7162](https://app.hypertask.ai/detail/project-15/7162), [HTPR-7176](https://app.hypertask.ai/detail/project-15/7176)).
 
 This change ensures invites are a scoped, safe method to grant board-level access without exposing cross-team boundaries.
 
 ### Adding columns and sections
 <span class="label label--brand">Security fix</span> Adding columns to a board is now restricted to board members only. A signed-in person who is not a member of the board's membership will be refused when attempting to add a column.
 
-**Behavior before this fix:** An unauthorized user could add columns to a board they were not part of, potentially affecting multiple team areas.**\n\n**After this fix:** Only board members (including board owners, members, and invited participants with valid access) can add columns. This restriction aligns with the board-wide access model and ensures that board structure changes are controlled within the intended team context. ([HTPR-7165](https://app.hypertask.ai/detail/project-15/7165)).
+**Behavior before this fix:** An unauthorized user could add columns to a board they were not part of, potentially affecting multiple team areas.**\\n\\n**After this fix:** Only board members (including board owners, members, and invited participants with valid access) can add columns. This restriction aligns with the board-wide access model and ensures that board structure changes are controlled within the intended team context. ([HTPR-7165](https://app.hypertask.ai/detail/project-15/7165)).
+
+### "Board unavailable" error screen handling
+<span class="label label--brand">Fix</span> The "Return to previous board" button now safely handles the "This board or ticket is unavailable" error screen.
+
+**Before this fix:** Clicking the "Return to previous board" button while encountering an unavailable board would trigger an immediate server request that caused the browser to crash.**\\n\\n**After this fix:** The button gracefully handles the unavailable state without crashing. Users can safely return to their previous board or navigate to another area of Hypertask without encountering errors. ([HTPR-7248](https://app.hypertask.ai/detail/project-15/7248)).
 
 ## Creating a board
 
