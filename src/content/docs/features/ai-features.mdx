@@ -34,7 +34,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 5. **Batch-powered background workloads**
     - Background smart labels and other AI classification runs that involve many tasks are routed to Anthropic's Batch API at half price, allowing cost-efficient processing at scale.
     - Matching tasks receive their labels automatically; activity is logged in the task activity feed.
-    - AI writes a compact representation of your content and sends it to the embed service, which can reject very long or empty text or refuse very long or empty text. On these failures, the upsert silently rotates the text and upserts without final vectors instead of failing, so comments and pages remain searchable with the relevant tags even when vectors aren’t generated.
+    - AI writes a compact representation of your content and sends it to the embed service, which can reject very long or empty text or refuse very long or empty text. On these failures, the upsert silently rotates the text and upserts without final vectors instead of failing, so comments and pages remain searchable with the relevant tags even when vectors aren't generated.
     - You don't see extra UI for this—it happens invisibly in the background with consistent results.
 
 6. **AI Chat suggestions for tickets**
@@ -54,6 +54,10 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 9. **Comment summaries preserve open questions**
     - When AI summarizes your comments, it now accurately reflects whether questions have been answered or remain unresolved.
     - After this fix ([HTPR-7046](https://app.hypertask.ai/detail/project-15/7046)), comment summaries display `Open: ...` for unanswered questions instead of inventing an answer, and retain "still unresolved" language when appropriate.
+
+10. **Bulk archiving avoids server errors**
+    - Agents that attempt to archive many tasks see a clear refusal message instead of a server crash.
+    - An earlier incident had agents trying to archive 31 Done tickets per day, triggering a 500 error. The fix now returns a direct `not allowed` response, keeping workflows smooth and errors visible for observers.
 
 </Steps>
 
