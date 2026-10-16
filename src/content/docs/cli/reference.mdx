@@ -24,7 +24,7 @@ This installs a lightweight npm shim that fetches and runs the official htz bina
 On Linux or macOS, run:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/hypertask-ai/cli/8a9245246cec8ddac4ab1dfccae5c5cba5c39707/scripts/install.sh | sh
+curl -fsSL https://hypertask.ai/install | sh
 hypertask --version
 ```
 
@@ -32,14 +32,14 @@ The installer detects x64 or ARM64, downloads the matching binary from the lates
 
 ### Via PowerShell (Windows x64)
 
-On Windows x64, download the native executable with PowerShell:
+On Windows x64, run in PowerShell:
 
 ```powershell
-Invoke-WebRequest https://github.com/hypertask-ai/cli/releases/latest/download/hypertask-windows-x86_64.exe -OutFile hypertask.exe
-hypertask.exe --version
+irm https://hypertask.ai/install.ps1 | iex
+hypertask --version
 ```
 
-Move `hypertask.exe` to a directory on your `PATH` to run it from any terminal.
+The installer downloads the native executable from the latest [GitHub release](https://github.com/hypertask-ai/cli/releases), verifies its SHA-256 checksum, installs it to `%LOCALAPPDATA%\Programs\Hypertask` and adds that folder to your user `PATH`. Open a new terminal afterwards to run `hypertask` from anywhere. Set `HYPERTASK_INSTALL_DIR` to choose another directory.
 
 ### Fleet auto-install behavior
 
