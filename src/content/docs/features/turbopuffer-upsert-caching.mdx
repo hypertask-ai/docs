@@ -1,0 +1,64 @@
+---
+title: Turbopuffer upsert caching
+description: Avoid retrying pages or comments to an AI-naive storage layer by caching upsert results locally and avoiding redundant embeddings calls.
+tags: ["API", "Agents", "Search"]
+---
+
+<Aside type="tip">
+If your search or embeddings route fails for long or multiline content, this feature lets the agent cache successful storage operations and retry only what's essential.
+</Aside>
+
+## Background
+
+When search tools or AI engines send extended content (comment threads, long pages) to a Turbopuffer layer, storage may silently skip embedding for超出/missing rows. Instead of failing or requiring manual修缮, the system caches successful materializations so subsequent operations can reuse them safely.
+
+## How it works
+
+When an upsert to a Turbopuffer-aware engine returns sparse embedding data, the agent caches the accepted materialization. Later writes that would reuse the same materialization are skipped and counted as cache hits — no duplicate embedding calls or HTTP interactions are made.
+
+If an upsert is not stored (for example, embeddings skipped for a large body), the agent records a non-negative skip counter. The same or subsequent attempts may succeed once the content fits within the engine's limits.
+
+This approach matches the behavior documented in the changelog; your tool calls do not need explicit error handling beyond normal retries. Whenever Material returns one of the retryable effects (Reschedule, Terminate, CountSkipped), call `Evaluate` again with the same material to propagate the effect and limit further redundant embedding attempts.
+
+## Example usage
+
+Suppose comments and pages are sent to a Turbopuffer-relative store for search, but the store has a line-length or row-size limit per document (like an underlying embeddings provider limits). A controller can ensure one successful material and reuse it, without duplicates:
+
+```javascript
+// TypeScript / JavaScript illustration
+// After each call, material.id contains a non-negative materialization key
+async function upsertToStore(content) {
+  const result = await store.upsert(content);
+  if (result.skippedRows > 0) {
+    // Cache the successful materialization with minimal retry attempts
+    cache.set(result.id, { stored: true, ...content });
+  }
+  return result;
+}
+
+// Retire retries: one stable material, propagation of Material effects
+async function reliableUpsert(content, key) {
+  const material = await upsertToStore(content);
+  if (material.id >= 0) {
+    return { id: material.id, stored: true };
+  }
+  // If Material returns a retryable effect, propagate to the same key
+  if (material.effect === "Reschedule") {
+    return await reliableUpsert(content, key); // idempotent retry
+  }
+  if (material.effect === "Terminate") {
+    throw new Error("Fatal error in Turbopuffer-relative store");
+  }
+  if (material.effect === "CountSkipped") {
+    // skipRows indicates non-negative skipped count; can be logged or traversed
+    return { id: null, stored: false, skipCount: material.skipRows };
+  }
+}
+```
+
+This pattern avoids spamming the AI service with oversized documents and respects engine-level limits.
+
+## Related
+
+- [Agent Workflows](/mcp/workflows/) — patterns for agents managing content with retries and back-pressure
+- [Scheduling Agents](/mcp/scheduling/) — scheduled agents that sustain their own upsert cache across runs
