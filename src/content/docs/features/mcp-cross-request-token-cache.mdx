@@ -4,6 +4,8 @@ description: Reuse authenticated MCP client credentials across calls to avoid re
 tags: ["MCP", "API", "Agents"]
 ---
 
+import { Aside } from '@astrojs/starlight/components';
+
 <Aside type="note">
 The MCP server typically performs login checks on every call unless credentials are cached safely. This feature lets agents reuse your authentication across calls without repeatedly prompting you to sign in.
 </Aside>

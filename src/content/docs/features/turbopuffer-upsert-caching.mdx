@@ -4,6 +4,8 @@ description: Avoid retrying pages or comments to an AI-naive storage layer by ca
 tags: ["API", "Agents", "Search"]
 ---
 
+import { Aside } from '@astrojs/starlight/components';
+
 <Aside type="tip">
 If your search or embeddings route fails for long or multiline content, this feature lets the agent cache successful storage operations and retry only what's essential.
 </Aside>
