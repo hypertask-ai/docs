@@ -1,0 +1,146 @@
+---
+title: Cross-request token cache
+description: Reuse authenticated MCP client credentials across calls to avoid repeated login prompts, with configurable token lifetime.
+tags: ["MCP", "API", "Agents"]
+---
+
+<Aside type="note">
+The MCP server typically performs login checks on every call unless credentials are cached safely. This feature lets agents reuse your authentication across calls without repeatedly prompting you to sign in.
+</Aside>
+
+## Authentication caching
+
+By default, each MCP tool call needs fresh login credentials from your Hypertask account (Bearer token in the Authorization header). If you want the agent to reuse the same authenticated session across multiple tool calls, enable cross-request credential caching on the MCP client.
+
+### Enable caching
+
+On your MCP client (Python, Node.js, etc.), attach your agent's token once and keep it alive for multiple calls:
+
+```html
+<!-- Python example: LangChain MCP Client -->
+from langchain_mcp import MCPServer
+
+# Use your agent's token once
+AGENT_TOKEN = "<your-agent-token>"
+
+mcps = MCPServer(
+    tools=["list", "tasks.create"],
+    headers={
+        "Authorization": f"Bearer {AGENT_TOKEN}"
+    },
+    keep_alive=True  <!-- enable caching between calls -->
+)
+
+# Reuse the same session for multiple operations
+mcps.tasks.create(input={"title": "Ship the change"})
+mcps.tasks.create(input={"title": "Update docs"})
+# No repeat login required when keep_alive is enabled
+```
+
+In Node.js (LangChain or direct MCP client), maintain a single HTTP client session and set keep-alive options:
+
+```javascript
+// Node.js example: LangChain MCP Client
+import { MCPServer } from "@langchain/mcp";
+
+const AGENT_TOKEN = process.env.AGENT_TOKEN;
+
+const mcps = new MCPServer({
+  tools: ["list", "tasks.create", "tasks.update"],
+  baseUrl: "https://mcp.hypertask.ai/mcp",
+  headers: {
+    "Authorization": `Bearer ${AGENT_TOKEN}`
+  },
+  keepAlive: true  // reuse login via long-lived HTTP connection
+});
+
+await mcps.tasks.create({ input: { title: "Ship the change" } });
+await mcps.tasks.create({ input: { title: "Update docs" } });
+// No repeat authorization prompts when keepAlive is enabled
+```
+
+If you use a dynamic MCP client generator (for example, LangChain `getMCPTools`), bake in client characteristics that avoid per-call tokenisation:
+
+```javascript
+// Node.js: ensure generator produces one client per session
+const { listMCPTools, getMCPClient } = require("@hypertask/mcp");
+
+const mcpTools = await listMCPTools({
+  baseUrl: "https://mcp.hypertask.ai/mcp",
+  headers: { "Authorization": `Bearer ${AGENT_TOKEN}` }
+});
+
+// Use getMCPClient with keepAlive: true once per session
+const client = getMCPClient(mcpTools, { keepAlive: true });
+```
+
+### Cache lifetime
+
+Your agent token enables ephemeral agent credentials within your session. For highly sensitive projects or tighter security, you may rotate or revoke tokens more frequently. If your API or config enforces token expiration (for example, hard expiration windows that don't align with session lifetimes), disable caching and let the MCP client re-authenticate automatically on each call.
+
+To force fresh authentication, specify a new agent token per session or clear/refetch tokens on long-running sessions:
+
+```javascript
+// Node.js: rotate token per session
+const refreshToken = await refreshAgentToken(expiredToken);
+const client = getMCPClient(mcpTools, {
+  baseUrl: "https://mcp.hypertask.ai/mcp",
+  headers: {
+    "Authorization": `Bearer ${refreshToken}`
+  }
+});
+```
+
+### Choose the right mode
+
+<table>
+
+<tr>
+
+<th>Use caching when</th>
+
+<th>Avoid caching when</th>
+
+</tr>
+
+<tr>
+
+<td>Agents run within a recurring session with predictable occasional actions (background scheduler, responsive agent).</td>
+
+<td>Agents run under high-turnover credentials (per-runtime tokens).</td>
+
+</tr>
+
+<tr>
+
+<td>Running locally within a trusted environment.</td>
+
+<td>Exposing agents with shared tokens in shared or temporary runtimes (CI runners, sandboxed containers).</td>
+
+</tr>
+
+<tr>
+
+<td>Long-lived MCP client sessions with well-defined shutdown hooks.</td>
+
+<td>Token-lifetime events (hard expiration) that conflict with client keep-alive mode.</td>
+
+</tr>
+
+</table>
+
+## How it works
+
+When credentials are cached, the MCP client maintains an authenticated HTTP session for an internal lease with the Hypertask login server. Subsequent tool calls reuse this session; the server does not re-check sign-in for claims covered by the lease.
+
+If caching is disabled, each tool call sends fresh login verification; tokens must remain valid per call.
+
+This caching behavior does not store long-lived secret values in persistent storage (unless your MCP client's keep-alive configuration does so for your own session lifecycle). The Hypertask backend enforces granular controls on, for example, token revocation windowing and agent credential lifetimes, and you can reconcile this with your external secret management.
+
+## Related
+
+- [MCP Integration](/mcp/overview/) — connect agents to Hypertask via Model Context Protocol
+- [Creating Agents](/mcp/agents/) — create and manage autonomous AI agents and their tokens
+- [Agent SDK](/mcp/agent-sdk/) — build custom agents inspired by Linear and Plane's patterns
+- [Agent webhooks](/mcp/agent-webhooks/) — understand what wakes an agent and configure callbacks
+- [Scheduling Agents](/mcp/scheduling/) — run agents on a schedule using GitHub Actions, Vercel cron, etc.
