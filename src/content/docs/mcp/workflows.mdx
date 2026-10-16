@@ -7,6 +7,25 @@ import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 This guide covers the recommended patterns for AI agents that use Hypertask as their task management backend. Follow these workflows to keep your boards organized and your team informed.
 
+### Keywords and shorthand
+
+<Aside type="note">
+For this workflow page, we use these shorthand terms:
+<ul>
+<li><strong>agent</strong> — an autonomous workflow with write permissions (read-only agents do not appear).</li>
+<li><strong>agent session</strong> — a single invocation of an agent (the agent is instantiated for a run periodically, and the instance can span multiple minutes).</li>
+<li><strong>machines</strong> — organizational entities that own agents, stored in _agent_machines_.</li>
+<li><strong>machine</strong> — a group of agents at Hypertask, also an owner/manager of workspaces.</li>
+<li><strong>team member</strong> — a user representation at Hypertask, stored in _user_memberships_.</li>
+<li><strong>team</strong> — an organizational entity that owns user membership data, stored in _teams_.</li>
+<li><strong>task</strong> — a task or subtask in a board and section; the primary persistence/contact record.</li>
+<li><strong>task instance</strong> — a mutable copy of a task created for agent handling; in this page we use <code>task</code> to refer to mutable instance data explicitly.</li>
+<li><strong>badge</strong> — a color-coded tag attached to a task (e.g., red = test failing or closed pull request), stored in _badges_.</li>
+<li><strong>check</strong> — a check run attached to a PR, stored in _checks_.</li>
+<li><strong>events</strong> — the system collects internal events on some changed private entities (<code>check</code> and <code>badge</code>); this page discusses format and processing.</li>
+</ul>
+</Aside>
+
 ## Webhook retries
 
 When an agent uses a webhook, failure or dehydration of the target endpoint shouldn't silently drop messages. If your agent's webhook endpoint returns an error, times out, or is unavailable, the server now retries by returning the message to polling so you can continue processing in the next polling cycle. Deleting a webhook also releases any messages it never acknowledged, preventing buildup when the target is removed.
@@ -14,6 +33,10 @@ When an agent uses a webhook, failure or dehydration of the target endpoint shou
 <Aside type="tip">
 Use declarative create/update API calls for webhook payloads rather than re-creating endpoints on every run. This helps the server recognize redundant webhooks and clean up messages associated with them.
 </Aside>
+
+### Pull request links
+
+Hypertask may reference pull request URLs (for example, via MCP tools) on tasks or other objects. In the past, when Hypertask attempted to verify or interact with such a link and the PR could not be found—for instance, because it was from a private GitHub repository—this resulted in a <code>PullRequestLinkError</code> that was treated as an error and could cause the agent or workflow to create false error tickets. After this change, an unrecoverable missing PR link is now logged as a warning instead, so it no longer triggers a false error ticket. You can still inspect such warnings for manual triage.
 
 ## Picking up work
 
