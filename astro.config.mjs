@@ -51,6 +51,8 @@ export default defineConfig({
           'features/keyboard-shortcuts',
           'features/pages',
           'features/skills',
+          'features/turbopuffer-upsert-caching',
+          'features/mcp-cross-request-token-cache',
           'features/favorites',
           'features/byok',
           'features/board-settings',
