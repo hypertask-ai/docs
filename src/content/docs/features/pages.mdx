@@ -35,10 +35,6 @@ This change, verified live on the QA team's own board ([HTPR-7155](https://app.h
 
 ## Comments indexed for search
 
-<Aside type="tip">
-
-Comments now generate searchable search copies for long or empty text, like pages. Previously, very long or empty comments would be rejected by the AI service that generates search copies, and would not appear in results. This fix restores full search coverage for comment threads.
-
-</Aside>
+<span class="label label--brand">Fix</span> Comments that are very long or empty now generate searchable search copies. Previously the AI service that creates these copies would reject such comments, leaving them invisible in results. Now they are compressed and indexed, keeping full search coverage for comment threads. This change is part of the broader Turbopuffer upsert optimization ([HTPR-7212](https://app.hypertask.ai/detail/project-15/7212)), which also affects page content indexing.
 
 ## Mobile pinch zoom
