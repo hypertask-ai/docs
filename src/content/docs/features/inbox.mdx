@@ -49,7 +49,6 @@ New users in a board see notifications for private tasks, while users removed fr
 ## Agent chatter in the inbox
 
 <span class="label label--brand">Improvement</span> Agent messages from the AI now stay out of the personal inbox. Agent-only comments (FYI messages) and agent chatter no longer appear as notifications for human users. Instead:
-
 - **Agent chatter ignored** – Pure agent commentary without a human @mention does not reach its owner's inbox.
 - **FYI mentions visible** – An agent FYI comment with a human @mention does appear in the inbox, making it clear the human is being included in the loop, but it stays out of the Important section.
 - **Only open questions land in Important** – When an agent poses a question that requires a human response, the message lands in the Important section so you can act on it first.
@@ -59,7 +58,6 @@ This applies to all agents using Hypertask's AI integration and keeps your inbox
 ## Numbered pins in the mobile inbox
 
 On mobile, each inbox row shows a numbered indicator next to the sender name. This creates a visual order that matches the date you received the notification, making it easier to scan recent items:
-
 - **Numbered pins** appear on desktop and mobile inbox rows
 - The numbers correspond to timeline order (newest first)
 - This keeps your attention on the most recent important items without relying solely on the top position
@@ -67,13 +65,18 @@ On mobile, each inbox row shows a numbered indicator next to the sender name. Th
 <Aside type="tip">The numbered pins complement the timeline-sorted order for returning visits, giving you a quick visual guide to your recent notifications.</Aside>
 
 ## Invite link validation across pages
+
 <span class="label label--brand">Improved</span> Pages that generate or use invite links now validate board context. **My Tasks** and **Inbox** no longer send invite-link requests without a board, which previously caused console errors. Requesting an invite link without a board now shows a clear message instead of a server error, keeping the console clean and providing explicit feedback when a board is required.
 
 This change applies across most pages that send invite links, ensuring any invalid requests surface a user-friendly message rather than an unhandled error.
 
-## Board chip in the new task box
-When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task box shows a board chip indicating the intended destination:
+## Shortcuts tip visibility
 
+<span class="label label--brand">Improved</span> When using keyboard shortcuts to archive tasks or notifications (such as <kbd>Ctrl</kbd> + <kbd>E</kbd>), the tip that shows which shortcut to press to archive (for example, "press E to archive") now appears reliably. This tip was previously hidden when the inbox was cleared by repeatedly using archive shortcuts that closed the bottom shortcut bar or when reaching inbox zero. Opening the bottom shortcut bar or navigating to the Inbox makes the tip visible again.
+
+## Board chip in the new task box
+
+When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task box shows a board chip indicating the intended destination:
 - **Visible only in the inbox**: The chip appears to make the target board obvious when multiple boards are mixed in the view.
 - **Hidden elsewhere**: On a board or a ticket detail page, the context is already clear, so the chip is hidden.
 - **Editable**: Click the chip to choose a different board before saving the task.
