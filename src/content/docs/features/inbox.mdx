@@ -72,7 +72,9 @@ This change applies across most pages that send invite links, ensuring any inval
 
 ## Shortcuts tip visibility
 
-<span class="label label--brand">Improved</span> When using keyboard shortcuts to archive tasks or notifications (such as <kbd>Ctrl</kbd> + <kbd>E</kbd>), the tip that shows which shortcut to press to archive (for example, "press E to archive") now appears reliably. This tip was previously hidden when the inbox was cleared by repeatedly using archive shortcuts that closed the bottom shortcut bar or when reaching inbox zero. Opening the bottom shortcut bar or navigating to the Inbox makes the tip visible again.
+<span class="label label--brand">Improved</span> When using the archive keyboard shortcuts (<kbd>Ctrl</kbd> + <kbd>E</kbd> or <kbd>Shift</kbd> + <kbd>E</kbd>), the tip that shows which shortcut to press (for example, "press E to archive") now appears and stays visible. The tip is tied to the bottom shortcut bar ("Ctrl+K for Command center, J to go down...").
+
+Before this fix, repeatedly archiving would close the bottom shortcut bar or clear the inbox, causing the tip to disappear and making it hard to see which key shortcut to use. The tip is automatically disabled when the shortcut bar is hidden for the session, so navigating to the Inbox or re-opening the shortcut bar restores visibility.
 
 ## Board chip in the new task box
 
@@ -81,4 +83,4 @@ When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task
 - **Hidden elsewhere**: On a board or a ticket detail page, the context is already clear, so the chip is hidden.
 - **Editable**: Click the chip to choose a different board before saving the task.
 
-<Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket’s board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
+<Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket's board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
