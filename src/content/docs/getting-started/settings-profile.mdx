@@ -28,6 +28,16 @@ Hypertask uses Better Auth server-side authentication with configurable login se
 - **Persistent sign-in links** — Access a persistent sign-in link that doesn't expire until used.
 - **Clean sign-out** — All flows support immediate session invalidation and cookie clearing.
 
+## Privacy & cookies
+
+Hypertask respects your right to control how your data is collected. By default, tracking is disabled until you make an explicit choice:
+
+- **No tracking until consent** — Tracking cookies and IP lookups are not stored or performed until you select an option.
+- **Consent banner** — Every visitor sees a cookie banner on login, signup, and when you open a signed-in board.
+- **Shared consent choice** — Your tracking preferences on hypertask.ai are shared across all Hypertask products and tracked behavior follows your choice.
+
+This ensures your data is not collected without your knowledge or agreement.
+
 ---
 
 ## Appearance
@@ -38,9 +48,7 @@ The **Appearance** tab controls the visual look of your interface:
 - **Font size** — Adjust text size across the app for better readability.
 - **Reduced motion** — Reduce animations for a calmer environment.
 
----
-
-## Task Page
+## Task page
 
 The **Task page** tab configures behavior specific to how tasks display:
 
@@ -50,9 +58,7 @@ The **Task page** tab configures behavior specific to how tasks display:
 
 These settings apply to the task detail view and the task editor across all boards.
 
----
-
-## AI Settings
+## AI settings
 
 The **AI Settings** tab in the Task page section allows you to configure how the AI assistant behaves across your tasks and comments:
 
@@ -60,13 +66,9 @@ The **AI Settings** tab in the Task page section allows you to configure how the
 
 These instructions are applied automatically when the AI drafts responses, edits descriptions, or proposes next steps in chat or comments.
 
----
-
 ## User profile caching
 
 On authenticated startup, Hypertask reuses a fresh account-scoped user profile cached at the app shell layer. The cached profile remains valid for about 5 minutes, reducing repeated `/api/users/getById` refetches and improving cold start performance. The cache is automatically invalidated and refreshed as needed.
-
----
 
 ## Preferences via signed login
 
@@ -80,8 +82,6 @@ Preferences now load and save correctly with a signed login alone, without requi
 ```
 
 This simplifies session handling so a single authentication flow serves all content and settings across the app.
-
----
 
 ## Management keys
 
@@ -121,8 +121,6 @@ Team-scoped keys restrict access to a single team:
 - Provide read-only access to a CI bot that only needs to monitor one team.
 - Share keys with external contractors who only need access to a specific team.
 
----
-
 ## Common Actions
 
 ### Change your avatar or name
@@ -133,8 +131,6 @@ Team-scoped keys restrict access to a single team:
 4. Click **Save** to apply changes.
 
 See [Keyboard Shortcuts](/features/keyboard-shortcuts/) for cmd-k access to Profile and General.
-
----
 
 ## Keyboard Shortcuts
 
