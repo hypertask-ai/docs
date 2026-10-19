@@ -141,6 +141,9 @@ Use **Write with AI** (**Ctrl+K** / <kbd>Cmd+K</kbd>, or the command palette) in
 ### New Task creator
 <span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / <kbd>Cmd+J</kbd> and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
 
+### Edit a task with AI
+<span class="label label--brand">New</span> Click **Edit with AI** under a task's description to open the AI chat in the sidebar on that task. It asks "How do you want to edit this task?" and offers ready-made requests: **Rewrite in plain words**, **Shorten the title**, **Add acceptance criteria**, **Split into sub-tasks**, and **Turn the error log into steps to reproduce**. Pick one or type your own, and the chat updates the task in place. The AI button in the description and comment editor opens the same chat. On an open task, **Ctrl+J** / <kbd>Cmd+J</kbd> still opens the New Task window.
+
 ### AI writer failure reasons
 <span class="label label--brand">Fix</span> When the AI writer fails to generate a task, the **Ctrl+J New Task** box and the AI Task Writer now show the real failure reason instead of hiding it; your note is still saved as a task. If AI generation is not available, the text you entered appears without modification. This applies to task creation from boards, the inbox, and description editing in task details.
 
