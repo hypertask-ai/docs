@@ -7,7 +7,8 @@ STATE="${HOME}/.local/state/docs-refs"
 REPO="${DOCS_REFS_REPO:-${STATE}/repo}"
 REMOTE="${DOCS_REFS_REMOTE:-git@github.com:hypertask-ai/docs.git}"
 STEP=setup
-trap 'status=$?; if (( status != 0 )); then printf "<3>docs-refs failed during %s (exit %s)\n" "$STEP" "$status" >&2; fi' EXIT
+# systemd emits the error-priority failure; keep step context informational.
+trap 'status=$?; if (( status != 0 )); then printf "<6>docs-refs failed during %s (exit %s)\n" "$STEP" "$status" >&2; fi' EXIT
 mkdir -p "$STATE"
 exec 9>"${STATE}/run.lock"
 flock -w 1800 9
@@ -28,7 +29,7 @@ cd "$REPO"
 if [[ "${1:-}" != "--nightly" ]]; then
   STEP=fetch
   git fetch origin main
-  git reset --hard origin/main
+  git merge --ff-only origin/main
 fi
 STEP=dependencies
 LOCK_HASH=$(sha256sum package-lock.json | cut -d ' ' -f 1)
