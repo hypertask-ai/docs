@@ -53,7 +53,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 
 9. **Comment summaries preserve open questions**
     - When AI summarizes your comments, it now accurately reflects whether questions have been answered or remain unresolved.
-    - After this fix ([HTPR-7046](https://app.hypertask.ai/detail/project-15/7046)), comment summaries display `Open: ...` for unanswered questions instead of inventing an answer, and retain "still unresolved" language when appropriate.
+    - Comment summaries display `Open: ...` for unanswered questions instead of inventing an answer, and retain "still unresolved" language when appropriate.
 
 10. **Bulk archiving avoids server errors**
     - Agents that attempt to archive many tasks see a clear refusal message instead of a server crash.
@@ -106,7 +106,12 @@ The AI Task Writer is a prompt-based task creation flow that generates complete,
 
 ### How it works today
 
-The Task Writer writes tasks in your team's style. It uses board-aware prompts, pulls task templates from boards, and uses search to find related tickets instead of inventing them.
+The Task Writer uses the board's saved [custom instructions](/getting-started/settings-profile/#ai-settings) whenever you write a ticket with **Ctrl+J** compose, ask AI chat to **create a ticket**, or use the CLI/MCP task writer.
+
+- **Board format** — Keeps the section layout shared by past tickets, such as Problem, Hypothesis, Control, Variation, and a scoring section, while keeping each section short.
+- **Custom fields** — Fills the board's [Number, Select, Text, Date, and Checkbox fields](/features/custom-fields/) when the instructions or past tickets show what to use. For example, a score field can match the score in the title. Values that do not fit the field are skipped.
+
+It also uses search to find related tickets instead of inventing them.
 
 ### Using the Task Writer
 
@@ -118,7 +123,7 @@ After the Task Writer generates a draft, you can refine it just like any other A
 
 ## When AI is not available
 
-<span class="label label--brand">Behavior change</span> AI features now show clear guidance when a team does not have an AI key configured. Before this fix ([HTPR-7149](https://app.hypertask.ai/detail/project-15/7149)), teams without an AI key would see server errors when trying to use AI in agents or the CLI. Now, users receive a concise message directing them to add an AI key through the **Appearance & AI Models** settings page:
+<span class="label label--brand">Behavior change</span> AI features now show clear guidance when a team does not have an AI key configured. Previously, teams without an AI key would see server errors when trying to use AI in agents or the CLI. Now, users receive a concise message directing them to add an AI key through the **Appearance & AI Models** settings page:
 
 > "AI features require an AI key. Configure your AI key in Appearance & AI Models."
 
