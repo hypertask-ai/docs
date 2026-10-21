@@ -1,0 +1,118 @@
+name: Docs Refs Schedule
+
+# Replaces the VPS docs-refs.timer (YPER4-546). Regenerates the MCP tools and
+# CLI command references and pushes them to main when they change.
+# The scheduled-jobs environment holds this job's own agent login and push key;
+# only this file may name it (scripts/check-scheduled-env.mjs).
+
+on:
+  schedule:
+    - cron: '0,30 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: docs-refs-main
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Regenerate references
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    environment: scheduled-jobs
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check the agent login
+        env:
+          HYPERTASK_MCP_TOKEN: ${{ secrets.DOCS_REFS_HT_TOKEN }}
+          EXPECTED_AGENT_ID: ${{ vars.DOCS_REFS_AGENT_ID }}
+        run: node scripts/check-agent-token.mjs
+
+      - name: Generate MCP reference
+        env:
+          HYPERTASK_MCP_TOKEN: ${{ secrets.DOCS_REFS_HT_TOKEN }}
+        run: node scripts/generate-mcp-reference.mjs
+
+      - name: Generate CLI reference
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/generate-cli-reference.mjs
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish changed references
+        env:
+          DOCS_REFS_PUSH_KEY: ${{ secrets.DOCS_REFS_PUSH_KEY }}
+          PUBLISH: ${{ vars.DOCS_REFS_PUBLISH }}
+        run: |
+          set +x
+          FILES=(src/content/docs/api/tools-reference.mdx src/content/docs/cli/commands.mdx)
+          if git diff --quiet -- "${FILES[@]}" && [ -z "$(git ls-files --others --exclude-standard -- "${FILES[@]}")" ]; then
+            echo "references unchanged"
+            exit 0
+          fi
+          git diff --stat -- "${FILES[@]}"
+          if [ "$PUBLISH" != "true" ]; then
+            echo "references changed; publishing is off until DOCS_REFS_PUBLISH is true"
+            exit 0
+          fi
+          [ -n "$DOCS_REFS_PUSH_KEY" ] || { echo "push key missing"; exit 1; }
+          KEYDIR=$(mktemp -d)
+          trap 'rm -rf "$KEYDIR"' EXIT
+          printf '%s\n' "$DOCS_REFS_PUSH_KEY" > "$KEYDIR/key"
+          chmod 600 "$KEYDIR/key"
+          echo "github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl" > "$KEYDIR/known_hosts"
+          export GIT_SSH_COMMAND="ssh -i $KEYDIR/key -o IdentitiesOnly=yes -o UserKnownHostsFile=$KEYDIR/known_hosts -o StrictHostKeyChecking=yes"
+          git add -- "${FILES[@]}"
+          git -c user.name="Hypertask docs refs" -c user.email="docs-refs@hypertask.ai" \
+            commit -m "docs: refresh generated MCP and CLI references"
+          git push git@github.com:hypertask-ai/docs.git HEAD:main
+
+  report:
+    name: Report a failed refresh
+    needs: refresh
+    if: always() && (needs.refresh.result == 'failure' || needs.refresh.result == 'cancelled')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Open or update the failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT: ${{ github.sha }}
+          RESULT: ${{ needs.refresh.result }}
+        run: |
+          TITLE="Docs references are not refreshing"
+          EXISTING=$(gh issue list --state open --search "$TITLE in:title" --json number -q '.[0].number')
+          BODY="The scheduled MCP and CLI reference refresh ended with: ${RESULT}.
+
+          Run: ${RUN_URL}
+          Commit: ${COMMIT}"
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$BODY"
+          else
+            gh issue create --title "$TITLE" --body "$BODY"
+          fi
