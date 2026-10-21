@@ -155,8 +155,9 @@ export function render(tools) {
             escapeText(tool.description ?? ""),
             "",
             paramsTable(tool),
+            ...(tool.name === "hypertask_hello" ? ["", readFileSync(new URL("./reference-notes/hello.md", import.meta.url), "utf8").trim()] : []),
             ...(tool.inputSchema?.properties?.input?.anyOf ?? []).map((variant) =>
-              `\n#### Input for \`${escapeText(variant.title ?? "action")}\`\n\n${paramsTable({ inputSchema: variant })}`
+              `\n#### Input for \`${escapeText(variant.title ?? "action")}\`\n\n${paramsTable({ inputSchema: variant })}${tool.name === "hypertask_user_context" && variant.title === "hello" ? "\n\n" + readFileSync(new URL("./reference-notes/hello.md", import.meta.url), "utf8").trim() : ""}`
             ),
           ].join("\n")
         )
