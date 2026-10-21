@@ -35,9 +35,40 @@ hypertask context
 
 You can also pass `--token <agent token>` on a single command. `hypertask login --token <agent token>` works too, but it saves the token in `~/.hypertask/config.json`, so prefer the environment variable on shared machines. See the [CLI reference](/cli/reference/).
 
+### After token login
+
+On a private machine, save the token and ask for readable output:
+
+```bash
+hypertask login --token <token> --human
+```
+
+```text
+Signed in as Claude Code (agent of Maria Lopez)
+Board: Product Launch
+https://app.hypertask.ai/project?id=9142
+
+Next steps your agent can run now:
+  1. See the board:          hypertask task list --project 9142
+  2. Create a first task:    hypertask task create --project 9142 --title "My first task"
+  3. Read the board rules:   hypertask project playbook 9142
+
+Or just ask your agent: "What's on my Hypertask board?"
+```
+
+This example uses a fictional agent and board. Login checks the token right away. If the check succeeds, it shows your identity and the newest board the token can see. You can then ask your agent to run one of the steps.
+
+Without `--human`, the output is JSON. It keeps `success`, `saved`, and `configPath`, and adds `signedInAs`, `board`, and `nextSteps`. If you can see several boards, `moreBoards` suggests `hypertask project list`. See the [login reference](/cli/commands/#hypertask-login) for the fields.
+
+If the check fails because of a network or server error, login still saves the token and shows the previous output. That saved-token message does not confirm the token is valid.
+
 ## MCP
 
 Send the token as `Authorization: Bearer <agent token>` to the MCP server. The [MCP overview](/mcp/overview/) has client setup, and [Creating agents](/mcp/agents/) shows the configuration snippet.
+
+After connecting, ask your client to call `hypertask_hello`, or `hypertask_user_context` with `action: "hello"` in the resource tool interface. The reply includes the agent identity, a `startBoard`, and three `nextSteps`. With a personal user token, `agent` is `null`. If no board is available, `startBoard` is `null`.
+
+The client is asked to say who it is signed in as and offer to show the board, create a first task, or read the board rules. Each step includes both a CLI command and an MCP tool call. See the [hello reference](/api/tools-reference/#hello-guided-start).
 
 ## Troubleshooting
 

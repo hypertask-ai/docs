@@ -17,9 +17,9 @@ This page is generated from the server's own `tools/list` response, so it cannot
 Each resource tool selects an operation with `action`; put its fields in `input`. See [MCP Integration](/mcp/overview/) for connection instructions.
 </Aside>
 
-**Source:** Live MCP `tools/list`. Schema version `561d0acdec59`.
+**Source:** Live MCP `tools/list`. Schema version `8ff823e61673`.
 
-**20 tools.**
+**21 tools.**
 
 ---
 
@@ -162,8 +162,8 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `hello` \| `get` | Yes | Operation to perform on this resource. |
-| `input` | object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `hello` \| `get` \| `profile` \| `connections` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `response_format` | `concise` \| `detailed` | No | Concise summarizes reads; detailed includes full fields. Writes always retain their receipts. Defaults to `concise`. |
@@ -172,7 +172,38 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 _Takes no parameters._
 
+##### Hello guided start
+
+The `hypertask_hello` tool and `GET https://mcp.hypertask.ai/api/mcp/hello` return a guided start. In the resource tool interface, call `hypertask_user_context` with `action: "hello"`.
+
+| Field | What it contains |
+|-------|------------------|
+| `agent` | The agent's `id` and `displayName`. It is `null` for a personal user token. |
+| `startBoard` | The newest board the token can see, with `id`, `title`, and `boardUrl`. It is `null` when no board is available. |
+| `nextSteps` | Three suggested steps. Each has `step`, a CLI `command`, an MCP `tool`, and MCP `arguments`. |
+
+For the fictional board Product Launch (`9142`), the steps are:
+
+| Step | CLI command | MCP tool | MCP arguments |
+|------|-------------|----------|---------------|
+| See the board | `hypertask task list --project 9142` | `hypertask_list_tasks` | `{"project_id": 9142}` |
+| Create a first task | `hypertask task create --project 9142 --title "My first task"` | `hypertask_create_task` | `{"project_id": 9142, "title": "My first task"}` |
+| Read the board rules | `hypertask project playbook 9142` | `hypertask_get_board_playbook` | `{"project_id": 9142}` |
+
+The tool description asks MCP clients to say who they are signed in as and offer these steps. For example: "Signed in as Claude Code (agent of Maria Lopez). Your board is Product Launch. Would you like to see the board, create a first task, or read the board rules?"
+
 #### Input for `get`
+
+_Takes no parameters._
+
+#### Input for `profile`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `display_name` | string | No | Human profile display name or the new managed agent's display name. |
+| `photo_url` | string | No | Public URL of the authenticated human user's profile image. |
+
+#### Input for `connections`
 
 _Takes no parameters._
 
@@ -220,6 +251,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `attachments` | object[] | No | Files to attach after the operation succeeds. Each file needs filename, content_type, and exactly one of data (base64 bytes; 3145728 decoded bytes total) or url (HTTP(S), for files up to 15 MB). |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `content_type` | `html` \| `markdown` | No | Input format for text. Defaults to HTML. |
+| `kind` | `question` \| `qa` \| `done` | No | question for a decision by a person, qa for a QA verdict, done for the closing summary; leave out for progress notes, which go to the agent log |
 | `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include &#123; user_id, display_name } for each. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `reply_to_comment_id` | integer | No | For agent replies, the comment ID that invoked the agent. This routes the answer to the requester's Important inbox. |
@@ -1100,17 +1132,55 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `presence` | Yes | Operation to perform on this resource. |
-| `input` | object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `list` \| `presence` \| `create` \| `revoke` \| `archive` \| `delete` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `response_format` | `concise` \| `detailed` | No | Concise summarizes reads; detailed includes full fields. Writes always retain their receipts. Defaults to `concise`. |
+
+#### Input for `list`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
+| `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
+| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
+| `offset` | integer | No | Number of matching rows to skip; prefer cursor continuation when supported. |
+| `query` | string | No | Free-text search over the list. Same name on every list tool. |
+| `sort` | string | No | Sort as field or field:asc\|desc, for example updatedAt:desc. |
 
 #### Input for `presence`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `team_id` | string | Yes | Team or workspace identifier discovered through user_context. |
+
+#### Input for `create`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `display_name` | string | Yes | Human profile display name or the new managed agent's display name. |
+| `project_ids` | integer[] | No | Numeric board ids to which the new managed agent will belong. Defaults to ``. |
+| `role` | `read` \| `write` \| `admin` | No | Managed agent role on its assigned boards. Defaults to `write`. |
+
+#### Input for `revoke`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
+
+#### Input for `archive`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
+
+#### Input for `delete`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
 
 ### `hypertask_attachments`
 
@@ -1443,6 +1513,34 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. Defaults to `4`. |
 | `query` | string | Yes | Text to search; ticket search also supports documented search operators. |
+
+### `hypertask_tokens`
+
+Does: Mint an account MCP token or revoke signed account MCP tokens.
+Use when: Use only when a human explicitly requests account credential administration.
+Do not use when: Do not use for managed agent credentials; creating or revoking an identity uses hypertask_agents instead.
+Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. expires_in_days sets token lifetime; revoke uses token or revoke_all. Mint returns a credential once; store it securely and never quote it in conversation.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `action` | `mint` \| `revoke` | Yes | Operation to perform on this resource. |
+| `input` | object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
+| `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
+| `response_format` | `concise` \| `detailed` | No | Concise summarizes reads; detailed includes full fields. Writes always retain their receipts. Defaults to `concise`. |
+
+#### Input for `mint`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `expires_in_days` | integer | No | Lifetime of the new account MCP token in days, from 1 to 365. Defaults to `30`. |
+
+#### Input for `revoke`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `revoke_all` | boolean | No | Revoke all signed account MCP tokens when true; use only with explicit user approval. |
+| `token` | string | No | Signed account MCP token to revoke; never include it in user-visible output. |
 
 ### `hypertask_webhooks`
 

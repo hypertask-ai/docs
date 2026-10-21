@@ -29,6 +29,11 @@ assert.notEqual(cli, renderCliReference(entries, '0.2.18'));
 assert.deepEqual(checkMdx(cli), []);
 assert.deepEqual(await parseMdx(cli), []);
 assert.deepEqual(await parseMdx(renderCliReference([{ path: [], help: 'literal ``` {value} <tag> |' }], 'test')), []);
+const login = renderCliReference([{ path: ['login'], help: 'Usage: hypertask login' }], 'test');
+assert.ok(login.includes('### Guided start after token login'));
+for (const field of ['signedInAs', 'configPath', 'moreBoards']) assert.ok(login.includes(field));
+assert.deepEqual(await parseMdx(login), []);
+assert.ok(!cli.includes('### Guided start after token login'));
 const tools = parseToolsPayload(fixture('tools.json'));
 assert.deepEqual(parseToolsPayload('data: ' + fixture('tools.json')), tools);
 assert.throws(() => parseToolsPayload('{}'), /no tools/);
@@ -39,6 +44,17 @@ assert.equal(schemaVersion(tools), schemaVersion([...tools].reverse()));
 assert.notEqual(schemaVersion(tools), schemaVersion([...tools, { name: 'hypertask_new' }]));
 assert.deepEqual(checkMdx(mcp), []);
 assert.deepEqual(await parseMdx(mcp), []);
+for (const tool of [
+  { name: 'hypertask_hello' },
+  { name: 'hypertask_user_context', inputSchema: { properties: { input: { anyOf: [{ title: 'hello' }, { title: 'get' }] } } } },
+]) {
+  const hello = render([tool]);
+  assert.equal(hello.split('##### Hello guided start').length, 2);
+  for (const field of ['displayName', 'startBoard', 'boardUrl', 'project_id', 'hypertask_get_board_playbook']) assert.ok(hello.includes(field));
+  assert.deepEqual(await parseMdx(hello), []);
+}
+assert.ok(!render([{ name: 'hypertask_other' }]).includes('##### Hello guided start'));
+assert.ok(!render([{ name: 'hypertask_user_context', inputSchema: { properties: { input: { anyOf: [{ title: 'get' }] } } } }]).includes('##### Hello guided start'));
 assert.deepEqual(extractLinks(fixture('links.html')), ['/style.css', '/features/tasks/?a=1&b=2#top', '../boards/', 'https://example.com/', 'mailto:a@example.com', '#self']);
 assert.deepEqual(extractToolNames('`hypertask_tasks` hypertask_tasks hypertask_missing @hypertask/hypertask_cli hypertask_cli'), ['hypertask_tasks', 'hypertask_missing']);
 const commands = new Set(['task', 'task list', 'task get', 'login']);
