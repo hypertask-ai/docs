@@ -19,7 +19,8 @@ concurrency:
 jobs:
   refresh:
     name: Regenerate references
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
+    # Idle until the operator has created the environment, agent and push key.
+    if: vars.DOCS_REFS_ENABLED == 'true' && github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     environment: scheduled-jobs
     timeout-minutes: 45
