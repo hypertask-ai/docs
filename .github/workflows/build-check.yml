@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     name: Build the site
-    runs-on: [self-hosted, contabo]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
