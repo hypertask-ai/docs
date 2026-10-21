@@ -79,8 +79,8 @@ Before this fix, repeatedly archiving would close the bottom shortcut bar or cle
 ## Board chip in the new task box
 
 When you use <kbd>Ctrl+J</kbd> to create a new task from the inbox, the new task box shows a board chip indicating the intended destination:
-- **Visible only in the inbox**: The chip appears to make the target board obvious when multiple boards are mixed in the view.
-- **Hidden elsewhere**: On a board or a ticket detail page, the context is already clear, so the chip is hidden.
+- **Always visible**: The chip appears as soon as the box opens, so you always see the target board.
+- **Same everywhere**: On a board or a ticket detail page, it shows that page's board.
 - **Editable**: Click the chip to choose a different board before saving the task.
 
 <Aside type="note">Ctrl+J uses the same board selection logic as the AI chat box: the focused ticket's board if there is one, otherwise the open board split, and finally the last used board for All or Important views.</Aside>
