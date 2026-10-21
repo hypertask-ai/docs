@@ -11,7 +11,7 @@ on:
 jobs:
   deploy:
     name: Build and deploy to Cloudflare Pages
-    runs-on: [self-hosted, contabo]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
