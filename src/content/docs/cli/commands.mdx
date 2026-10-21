@@ -1805,7 +1805,9 @@ Next steps your agent can run now:
 Or just ask your agent: "What's on my Hypertask board?"
 ```
 
-Token login checks the token right away. On success, it shows who you are signed in as and the newest board the token can see. The example above uses a fictional agent and board.
+Token login checks the token right away. On success, it shows who you are signed in as and the newest board across all boards the token can see. A missing title falls back to the short name. The example above uses a fictional write agent and board.
+
+The CLI prints the server's steps: read-only agents get two steps, list and playbook, with no create step. If no board is available, `--human` says "No board yet. Create one in your Hypertask web app."
 
 JSON is the default output. It keeps `success`, `saved`, and `configPath`, and adds:
 
@@ -1813,10 +1815,10 @@ JSON is the default output. It keeps `success`, `saved`, and `configPath`, and a
 |-------|------------------|
 | `signedInAs` | The signed-in identity, including `name`. |
 | `board` | The board's `id`, `title`, and `url`. |
-| `nextSteps` | A list of suggested steps, each with a CLI `command`. |
+| `nextSteps` | The server's suggested steps (three for write agents, two for read-only agents, none without a board), each with a CLI `command`. |
 | `moreBoards` | A hint to run `hypertask project list` when the token can see several boards. |
 
-If the check fails because of a network or server error, login still saves the token. It returns the previous saved-token output without the guided start. Saving a token does not mean the check passed.
+The CLI waits at most about 1.5 seconds for the guide. If it times out or fails because of a network or server error, login still saves the token. It returns the previous saved-token output without the guided start. Saving a token does not mean the check passed.
 
 ## `hypertask logout`
 
