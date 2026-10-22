@@ -9,28 +9,25 @@ Agents are autonomous workers that create, update, and manage tasks on your boar
 
 ## Create and configure agents
 
-From the web UI:
+Follow [Connect a new agent](/connect-an-agent/) for the full setup:
 
-1. Press **Ctrl+K**, open **Manage agents**, and select **New agent**.
-2. Enter an agent name and description.
-3. Choose a project and optionally limit the agent to specific boards.
-4. Optionally enable **Team mode** by providing a provider billing API key to enable shared access. Agents default to **Private** mode.
-5. Save the agent. Hypertask generates a scoped API key under the agent's profile.
+1. **Create:** In [Agent Chat](https://app.hypertask.ai/agents/chat), choose **+ Add agent**. This creates an agent with no boards and shows its token once. Alternatively, open a team board and use **Ctrl+K > Create agent** with **External** selected. That path adds the agent to the current board and opens its page.
+2. **Copy the token:** Save the Chat token before closing the dialog. If you did not copy a token from board-based creation, use **Access key > Regenerate** on the agent page and copy the new token.
+3. **Add boards:** The person who owns the agent opens [Agents](https://app.hypertask.ai/agents), opens the agent, expands **Board access**, and ticks a board they can access. Turn the agent on first if disabled. Changes save immediately. **Board settings > Agents** only lists agents already attached; it has no add control.
 
-The MCP resource tools operate on tickets and comments, but agent creation uses the CLI or REST API below. See [CLI commands](/cli/commands/) for `hypertask agents create`.
+Private agents are visible only to their owner. An agent can only join boards in its team; the first board establishes that team.
 
-Over REST API (`POST /api/agents`):
+<Aside type="note">
+An agent cannot add itself to a board, whatever its role. Admin agents can add other agents of the same owner only on boards they already belong to. Do not promote an agent to admin to onboard it; ask its owner to grant access.
+</Aside>
 
-```json
-{
-  "name": "Release Agent",
-  "description": "Tracks and creates release tasks for HTPR-* tickets",
-  "projectId": 15,
-  "boards": [153, 155]
-}
+For scripted setup, use the [CLI agent commands](/cli/commands/#hypertask-agents-create). To add a board to an existing agent, run this with the owner's own login, not the agent token or an agent-bound connection:
+
+```bash
+hypertask agents update --id <agent UUID> --add-project <board id>
 ```
 
-The response contains the agent UUID and a token for authenticating the bearer token over MCP or HTTP.
+Agent invitations need the agent UUID, not its display name.
 
 If you open Agent Chat or list a team's agents and that team has none you can see, Hypertask adds a Hyper AI agent on a board of that team so the list is not empty. This also works when you can use the team but are not yet a member of a board.
 

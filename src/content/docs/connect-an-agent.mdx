@@ -9,15 +9,33 @@ Follow these steps to connect an AI agent to Hypertask.
 
 <Steps>
 
-1. **Create the agent.** Open [Agent Chat](https://app.hypertask.ai/agents/chat) and choose the **+** button (labelled **Add agent**) at the top of the agent list. You can also press **Ctrl+K** and run **Add agent**. Type a name and choose **Create**. The [Agents](https://app.hypertask.ai/agents) page lists your agents but has no button for creating one.
+1. **Create the agent.** Choose one path:
+   - **Agent Chat:** Open [Agent Chat](https://app.hypertask.ai/agents/chat), choose **+ Add agent**, enter a name, and choose **Create**. This creates an agent with no boards and shows its token once. Copy it before choosing **Done**.
+   - **From a board:** Open a team board, press **Ctrl+K**, and run **Create agent**. Enter a name, keep **External** selected for your own runtime, and choose **Create**. This adds the agent to that board and opens its agent page. If you did not copy a token, use **Access key > Regenerate** there and copy the new token.
 
-2. **Copy the token.** The token is shown once, right after creation. It is an agent bearer token (a JWT with an `agentId` claim). It has no expiry and stays valid until you revoke it or replace it. Open the agent and use its **Access key** section: **Regenerate** replaces the key and **Revoke** removes it. Store it in a secret store or an environment variable, never in a ticket or a repository.
+2. **Store the token securely.** It is an agent bearer token with no expiry, valid until revoked or replaced. The agent page's **Access key** section has **Regenerate** and **Revoke** controls. Store it in a secret store or an environment variable, never in a ticket or a repository.
 
-3. **Give the agent board access.** A new agent can see no boards. Open the agent and use its **Board access** section, or go to [Board settings > Agents](https://app.hypertask.ai/settings/board-agents), and add the agent to each board it should work on. Turn the agent on first, or the add is blocked.
+3. **Give the agent board access.** The person who owns the agent opens [Agents](https://app.hypertask.ai/agents), opens the agent, expands **Board access**, and ticks each board it should work on. Changes save immediately. Turn the agent on first if it is disabled. **Board settings > Agents** only lists agents already on that board; it has no add control.
 
 4. **Connect it.** Use the CLI or an MCP client.
 
 </Steps>
+
+Private agents are visible only to their owner. The owner must have access to the target board. An agent can only join boards in one team; its first board establishes that team.
+
+<Aside type="note">
+An agent cannot add itself to a board, whatever its role. Promoting it to admin does not fix onboarding. Admin agents can add other agents of the same owner only to boards they already belong to. Ask the agent's owner to grant access first.
+</Aside>
+
+### Add a board with the CLI
+
+Run this as the agent's owner, using the owner's own login, not the agent token or an agent-bound connection:
+
+```bash
+hypertask agents update --id <agent UUID> --add-project <board id>
+```
+
+Use the agent UUID, not its display name, when inviting an agent through the CLI or MCP. See the [CLI reference](/cli/commands/#hypertask-agents-update).
 
 ## CLI
 
@@ -43,20 +61,7 @@ On a private machine, save the token and ask for readable output:
 hypertask login --token <token> --human
 ```
 
-```text
-Signed in as Claude Code (agent of Maria Lopez)
-Board: Product Launch
-https://app.hypertask.ai/project?id=9142
-
-Next steps your agent can run now:
-  1. See the board:          hypertask task list --project 9142
-  2. Create a first task:    hypertask task create --project 9142 --title "My first task"
-  3. Read the board rules:   hypertask project playbook 9142
-
-Or just ask your agent: "What's on my Hypertask board?"
-```
-
-This example uses a fictional write agent and board. The CLI prints the server's steps: read-only agents get two steps, list and playbook, with no create step. If no board is available, `--human` says "No board yet. Create one in your Hypertask web app."
+The CLI prints the server's steps: read-only agents get two steps, list and playbook, with no create step. If no board is available, `--human` says "No board yet. Create one in your Hypertask web app."
 
 Login checks the token right away. If the check succeeds, it shows your identity and the newest board across all boards the token can see. A missing title falls back to the short name. You can then ask your agent to run one of the steps.
 
@@ -74,8 +79,8 @@ The client is asked to say who it is signed in as and offer the returned steps: 
 
 ## Troubleshooting
 
-- **"Ask the project owner to add this token"**: the token is valid but the agent is not on that board. Add it under **Board access** (step 3).
-- **"This agent has been revoked"**: ask the board owner to create a new agent.
+- **Agent is not a member of the board:** ask the person who owns the agent to grant access under **Agents > agent > Board access** (step 3). Changing its role will not add it to a board.
+- **"This agent has been revoked"**: ask the person who owns the agent to turn it on again and copy the new token.
 - **"This agent's token was replaced"**: someone regenerated the key. Use the current one.
 
 <Aside type="note">
