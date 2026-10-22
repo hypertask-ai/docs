@@ -1,11 +1,22 @@
 ---
 title: AI Chat Board Filter
-description: Use a board filter in AI Chat to show all chats or limit to a specific board's chats.
+description: Choose a ticket or board scope for docked AI Chat, and filter chat history by board.
 ---
 
 import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Use the board filter in AI Chat to quickly focus on chats from one board, or view all chats across your boards. Set a default to start side by side.
+
+## Docked AI chat scope
+
+Use the scope menu in the docked AI chat to choose what the conversation is about:
+
+- **Current board** — the default scope; focuses on the board you are viewing.
+- **Current ticket** — available on a ticket page; focuses on that ticket's title, description, and comments. The scope stays on **Current board** until you choose **Current ticket**, and switches back to **Current board** when you leave the ticket.
+- **Pinned boards** — choose a pinned board as the scope.
+- **All boards** — includes all your accessible boards.
+
+**Current ticket** is only available in the docked chat on a ticket page. The full-screen chat page is unchanged.
 
 ## Board filter behavior
 
