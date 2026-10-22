@@ -35,6 +35,8 @@ Clients that only support the older SSE transport can connect to `https://mcp.hy
 
 The server lists tools grouped by resource, such as projects, tasks, and reports. Each tool has an `action` and an `input` object for that action's fields. Use the names and schemas returned by your client's tool list. The available actions depend on your token's permissions.
 
+When an MCP client writes a task description or comment that references an uploaded image or image link, the image appears inline by default. Ask for "attachment only" or "link only", or set `inline_images` to `false`, to keep it as an attachment or link instead. Uploading images to someone else's comment adds attachments without changing their text.
+
 ## AI Assistant Self-Onboarding
 
 Memorystore apps and public marketing pages on hypertask.ai can automatically discover the MCP server address by opening the `llms.txt` file:
