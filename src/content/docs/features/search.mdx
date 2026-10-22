@@ -15,23 +15,18 @@ Use operators to filter tasks by specific fields:
 
 - **from:** Restrict to tasks created by a specific person.
 - **assignee:** Restrict to tasks assigned to a specific person.
-- **in:** Restrict to tasks in a board, section, or column.
+- **commenter:** Restrict to tasks commented on by a specific person.
+- **in:** Restrict to tasks in a board, section, or column; `board:` also filters by board.
 - **label:** Restrict to tasks with a specific label.
   - **Board-scoped label suggestions (Owner + QA preview):**
     - When a board is picked with an `in:` or `board:` chip, `label:` only suggests labels from that board.
     - Each label shows the number of search results on the right (open and done, not archived).
     - Labels with zero results appear at the bottom, greyed out.
     - Without a board selected, all your labels appear (same-name labels merged into one row).
-  - <div class="asideInfo"><small>Preview for owners and QA only. Behind the `<flag:htpr-6878-search-label-scope>` flag.</small></div>
+  - <div class="asideInfo"><small>Preview for owners and QA only. Available when board-scoped label suggestions are enabled.</small></div>
 - **is:** Narrow by type; for example, `is:card` to show only standard cards.
-- **priority:** Filter by task priority.
-  - `priority:` or `priority:` Tasks with a given priority.
-  - `priority:high priority:` Tasks with priority set to high.
-  - `priority:=high priority:` Alias for `priority:high priority:`.
-  - `priority:medium priority:` Tasks with medium priority.
-  - `priority:=medium priority:` Alias for `priority:medium priority:`.
-  - `priority:low priority:` Tasks with low priority.
-  - `priority:=low priority:` Alias for `priority:low priority:`.
+- **priority:** Filter by task priority: `priority:urgent`, `priority:high`, `priority:medium`, or `priority:low`.
+- **type:** Filter by result type: `type:ticket` for tickets or `type:comment` for comments.
 - **dates:** Show tasks matching a date condition.
   - `dates:2026-10-03` Tasks with this exact due date.
   - `dates:<2026-10-03` Tasks due before.
@@ -46,13 +41,12 @@ Use operators to filter tasks by specific fields:
   - `has:due-date` Tasks with a due date.
   - `has:attachment` Tasks with at least one attachment.
   - `has:comment` Tasks with at least one comment.
+- **"exact phrase":** Match an exact phrase, for example `"bug report"`.
+- **-word:** Exclude results containing a word, for example `-blocked`.
 
 These operators work together; combine them, for example `from:alice label:urgent dates:>2026-10-03` to find urgent tasks created by Alice after a specific date.
 
-Slack-style operators:
-
-- **"quoted phrase":** Match tasks that contain a quoted phrase exactly. For example, `"bug report"` finds tasks that include that exact phrase, while `bug report` finds tasks that contain either word separately.
-- **-word:** Exclude tasks that contain a specific word or phrase. For example, `-blocked` excludes tasks with the word "blocked" in the title, description, or comments.
+Quoted phrases and `-word` exclusions stay plain text in the search box, rather than becoming coloured operator chips.
 
 ## Autocomplete
 
@@ -60,18 +54,19 @@ As you type, Hypertask suggests:
 
 - **Filter names**: Type `la`, `fr`, or `is` to reveal `label:`, `from:`, and `is:` with ghost text. Press <kbd>Tab</kbd> or <kbd>Enter</kbd> to accept.
 - **Filter values**: After typing `from:` or `label:`, a dropdown shows people or labels. After typing `is:`, a dropdown shows states like `open`, `done`, and `archived`.
-  - `priority:` and `priority:=` suggest `high priority:`, `medium priority:`, `low priority:`, and aliases: `:=high priority:`, `:=medium priority:`, `:=low priority:`.
+  - `priority:` suggests `urgent`, `high`, `medium`, and `low`.
+  - `type:` suggests `ticket` and `comment`.
   - `has:` shows `attachment`, `comment`, and `due-date` options.
   - `dates:` shows presets: `today`, `this-week`, `last 7 days`, plus a date picker.
-- **Filter types have unique colours**: People (blue), boards (green), labels (amber), status (violet), dates (coral).
+- **Filter types have unique colours**: `from:`/`@`, `assignee:`, and `commenter:` are purple; `in:`/`#` and `board:` are blue; `label:` is rose; `is:` and `priority:` are green; dates are amber; `has:` and `type:` are cyan. Slack-style operators autocomplete with the same colours as the other operators.
 
-## Person name matching behavior ([HTPR-6881](https://app.hypertask.ai/detail/project-15/6881))
+## Person name matching behavior
 
 **Owner and QA preview:**
 
 - **Typed person filters**: When you type a name for `from:`, `assignee:`, and currently `commenter:`, it matches every person you can see whose name or email contains that text, ignoring case and accents. For example, `from:valentin` finds Valentin Yeo and any account named valentinyeo; `assignee:yc` finds Yusuf C. and any name containing "yc" in the email. Using `-from:valentin` excludes all those matches.
 - **People from the picker**: A person you select from the autocomplete list is matched exactly, so `from: Valentin Yeo` narrows to just that person.
-- **Without the flag**: If the `<flag:htpr-6881-search-fuzzy-person>` is off, typed person filters require the exact full name and case-sensitive search.
+- **Without the flag**: If fuzzy person matching is off, typed person filters require the exact full name and case-sensitive search.
 
 <div class="asideInfo">
 <small>Preview for owners and QA only. General release is scheduled after final QA sign-off on fuzzy matching for all users.</small>
@@ -79,7 +74,7 @@ As you type, Hypertask suggests:
 
 ## Tips panel
 
-When the search bar is empty or focused, a <strong>tips panel</strong> lists every operator with an example and plain meaning. Click any tip to insert it. Saved searches and recent searches also appear inside the tips panel.
+When the search bar is empty or focused, a <strong>tips panel</strong> lists every operator with an example and plain meaning. Tips include `priority:high`, `type:ticket`, `"exact phrase"`, and `-word`. Click any tip to insert it. Saved searches and recent searches also appear inside the tips panel.
 
 ## Keyboard navigation in search
 
@@ -129,7 +124,7 @@ To verify it’s live:
 - Switch to the search screen and use a keyword from the description to see the new task appear in results.
 - No additional steps like editing the title are required.
 
-This change applies to all API surfaces, including the MCP tools and REST endpoints, and makes search results consistent across all task creation flows. ([HTPR-7131](https://app.hypertask.ai/detail/project-15/7131))
+This change applies to all API surfaces, including the MCP tools and REST endpoints, and makes search results consistent across all task creation flows.
 
 <div class="asideInfo">
 <small>Also fixed slow AI calls that were stalling due to fresh server startup. Slow calls now finish in half the time or less.</small>
