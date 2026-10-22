@@ -64,6 +64,10 @@ Content-Type: application/json
 
 Previously, malformed date filters triggered a server crash. Now, the API surface treats malformed dates as user input and handles them gracefully with a sanitized response, maintaining the HTTP 200 shape while clearly communicating that the filter value was not a valid date.
 
+## Images in task descriptions and comments
+
+When an API request writes a task description or comment that references an uploaded image or image link, the image appears inline by default. Set `inline_images` to `false` in the request to keep it as an attachment or link instead. Uploading images to someone else's comment adds attachments without changing their text.
+
 ## API validation for tasks
 
 When creating or updating tasks, Hypertask validates required and optional fields at the API level. Invalid inputs return a 400 Bad Request instead of a 500 server error, making it easier for agents and clients to handle failures gracefully:
