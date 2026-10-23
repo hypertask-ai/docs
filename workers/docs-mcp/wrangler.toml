@@ -6,6 +6,8 @@ compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 [vars]
+# Comma-separated positive user IDs; empty disables all writes.
+DOCS_EDITOR_USER_IDS = ""
 GITHUB_OWNER = "valentinyeo"
 GITHUB_REPO = "HypertaskDocs"
 GITHUB_BRANCH = "main"
