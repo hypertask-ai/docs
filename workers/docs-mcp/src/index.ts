@@ -13,6 +13,9 @@ interface Env {
   GITHUB_BRANCH: string;
   DOCS_BASE_PATH: string;
   CONFIG_FILE_PATH: string;
+  DOCS_EDITOR_USER_IDS?: string;
+  OAUTH_ISSUER?: string;
+  OAUTH_AUDIENCE?: string;
 }
 
 // --- GitHub API helpers ---
@@ -237,25 +240,62 @@ async function resolvePagePath(
 
 // --- JWT validation ---
 
-async function validateJwt(
-  token: string,
-  secret: string
-): Promise<{ sub: string; email?: string }> {
-  const secretKey = new TextEncoder().encode(secret);
-  const { payload } = await jwtVerify(token, secretKey);
-  return {
-    sub: payload.sub as string,
-    email: (payload as Record<string, unknown>).email as string | undefined,
-  };
+interface Caller {
+  userId: number;
+}
+
+async function validateJwt(token: string, env: Env): Promise<Caller> {
+  const secretKey = new TextEncoder().encode(env.JWT_SECRET);
+  const { payload } = await jwtVerify(token, secretKey, {
+    algorithms: ["HS256"],
+  });
+  // Match pairs, not independent lists: other app JWTs share this signing key.
+  const acceptedPair =
+    (payload.iss === "hypertask" && payload.aud === "mcp-api") ||
+    (payload.iss === (env.OAUTH_ISSUER || "https://app.hypertask.ai") &&
+      payload.aud === (env.OAUTH_AUDIENCE || "http://localhost:3001"));
+  if (
+    !acceptedPair ||
+    typeof payload.sub !== "string" ||
+    !payload.sub.trim() ||
+    typeof payload.userId !== "number" ||
+    !Number.isSafeInteger(payload.userId) ||
+    payload.userId <= 0
+  ) {
+    throw new Error("Invalid caller claims");
+  }
+  // Agent MCP and OAuth tokens intentionally omit exp; jwtVerify checks it if present.
+  return { userId: payload.userId };
 }
 
 // --- Build MCP Server ---
 
-function createMcpServer(env: Env): McpServer {
+function createMcpServer(env: Env, caller: Caller): McpServer {
   const server = new McpServer({
     name: "hypertask-docs",
     version: "1.0.0",
   });
+  const editors = new Set(
+    (env.DOCS_EDITOR_USER_IDS || "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter((id) => /^[1-9]\d*$/.test(id))
+      .map(Number)
+      .filter(Number.isSafeInteger)
+  );
+  const canEdit = editors.has(caller.userId);
+  const authorizeMutation = (tool: string) => {
+    console.log(JSON.stringify({
+      decision: canEdit ? "allowed" : "refused",
+      tool,
+      userId: caller.userId,
+    }));
+    return canEdit;
+  };
+  const forbidden = {
+    isError: true,
+    content: [{ type: "text" as const, text: "not a docs editor" }],
+  };
 
   // Tool: list_pages
   server.tool(
@@ -337,6 +377,8 @@ description: Short description for SEO.
         .describe("Git commit message (default: 'docs: update {path}')"),
     },
     async ({ path: pagePath, content, commit_message }) => {
+      if (!authorizeMutation("write_page")) return forbidden;
+
       // Ensure .mdx extension if content has imports
       if (content.includes("import ") && !pagePath.endsWith(".mdx")) {
         pagePath = pagePath.replace(/\.md$/, ".mdx");
@@ -388,6 +430,8 @@ description: Short description for SEO.
       commit_message: z.string().optional().describe("Git commit message"),
     },
     async ({ page, commit_message }) => {
+      if (!authorizeMutation("delete_page")) return forbidden;
+
       const resolved = await resolvePagePath(env, page);
       if (!resolved) {
         return {
@@ -449,6 +493,8 @@ description: Short description for SEO.
       commit_message: z.string().optional().describe("Git commit message"),
     },
     async ({ content, commit_message }) => {
+      if (!authorizeMutation("update_sidebar_config")) return forbidden;
+
       const msg = commit_message || "docs: update sidebar config";
       await writeRepoFile(env, env.CONFIG_FILE_PATH, content, msg);
       return {
@@ -468,6 +514,8 @@ description: Short description for SEO.
     "Trigger a Cloudflare Pages rebuild to publish the latest changes from GitHub to docs.hypertask.ai. If the deploy hook is not configured, returns manual deploy instructions.",
     {},
     async () => {
+      if (!authorizeMutation("trigger_deploy")) return forbidden;
+
       if (!env.CF_PAGES_DEPLOY_HOOK) {
         return {
           content: [
@@ -618,8 +666,9 @@ export default {
     }
 
     const token = authHeader.slice(7);
+    let caller: Caller;
     try {
-      await validateJwt(token, env.JWT_SECRET);
+      caller = await validateJwt(token, env);
     } catch {
       return new Response(
         JSON.stringify({
@@ -648,7 +697,7 @@ export default {
     });
 
     // Create and connect the MCP server
-    const server = createMcpServer(env);
+    const server = createMcpServer(env, caller);
     await server.connect(transport);
 
     // Handle the request

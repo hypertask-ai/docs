@@ -40,3 +40,29 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  docs-mcp:
+    name: Check docs MCP authorization
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workers/docs-mcp
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: workers/docs-mcp/package-lock.json
+
+      - name: Install worker dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Typecheck worker
+        run: npm run typecheck
+
+      - name: Test HTTP authorization with stubbed outbound fetch
+        run: npm test
