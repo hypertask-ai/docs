@@ -263,3 +263,15 @@ test("authorization precedes MDX validation and deploy configuration checks", as
     { decision: "refused", tool: "trigger_deploy", userId: 13 },
   ]);
 });
+
+test("configured OAuth issuer and audience replace the defaults", async (t) => {
+  const h = harness(t);
+  const overrides = { OAUTH_ISSUER: "https://issuer.example.invalid", OAUTH_AUDIENCE: "docs-audience" };
+  const custom = { iss: overrides.OAUTH_ISSUER, aud: overrides.OAUTH_AUDIENCE, sub: "firebase-uid" };
+  const allowed = await call(sign(claims(custom)), "trigger_deploy", {}, overrides);
+  assert.equal(allowed.status, 200);
+  assert.notEqual(allowed.data.result.isError, true);
+  const legacy = await call(sign(claims(pairs[1])), "trigger_deploy", {}, overrides);
+  assert.equal(legacy.status, 401);
+  assert.deepEqual(h.outbound.map(({ method }) => method), ["POST"]);
+});

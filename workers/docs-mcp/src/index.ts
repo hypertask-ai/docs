@@ -14,6 +14,8 @@ interface Env {
   DOCS_BASE_PATH: string;
   CONFIG_FILE_PATH: string;
   DOCS_EDITOR_USER_IDS?: string;
+  OAUTH_ISSUER?: string;
+  OAUTH_AUDIENCE?: string;
 }
 
 // --- GitHub API helpers ---
@@ -242,16 +244,16 @@ interface Caller {
   userId: number;
 }
 
-async function validateJwt(token: string, secret: string): Promise<Caller> {
-  const secretKey = new TextEncoder().encode(secret);
+async function validateJwt(token: string, env: Env): Promise<Caller> {
+  const secretKey = new TextEncoder().encode(env.JWT_SECRET);
   const { payload } = await jwtVerify(token, secretKey, {
     algorithms: ["HS256"],
   });
   // Match pairs, not independent lists: other app JWTs share this signing key.
   const acceptedPair =
     (payload.iss === "hypertask" && payload.aud === "mcp-api") ||
-    (payload.iss === "https://app.hypertask.ai" &&
-      payload.aud === "http://localhost:3001");
+    (payload.iss === (env.OAUTH_ISSUER || "https://app.hypertask.ai") &&
+      payload.aud === (env.OAUTH_AUDIENCE || "http://localhost:3001"));
   if (
     !acceptedPair ||
     typeof payload.sub !== "string" ||
@@ -666,7 +668,7 @@ export default {
     const token = authHeader.slice(7);
     let caller: Caller;
     try {
-      caller = await validateJwt(token, env.JWT_SECRET);
+      caller = await validateJwt(token, env);
     } catch {
       return new Response(
         JSON.stringify({
