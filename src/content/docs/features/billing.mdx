@@ -18,11 +18,11 @@ Stripe uses your team name as the display name on invoices and in the billing po
 Seats represent active users with individual access to Hypertask. Each seat corresponds to a user with login credentials and full access to the platform features.
 
 **Seat limits by plan:**
-- Free tier: No active seat limit
+- Free plan: Unlimited members; up to 2 boards; up to 250 open tickets; files up to 10 MB each on tickets and comments. Archived tickets and archived boards don't count, so archiving frees room. Teams already over a limit keep everything; they just can't add more until they're under it or upgrade. You'll see a short message, and nothing you already have is deleted or locked.
 - Paid and team plans: Active seat limits per plan
 - Enterprise: Custom seat limits
 
-When you create or add accounts, new seats are allocated automatically. Upgrading your plan increases your seat capacity, unrestricted reassignments are tracked for billing reconciliation.
+When you create or add accounts, new seats are allocated automatically. Upgrading your paid plan increases your seat capacity; unrestricted reassignments are tracked for billing reconciliation.
 
 ## Cost forecasting
 
@@ -66,7 +66,7 @@ Seat allocation follows consistent rules across surfaces:
 
 - New user creation adds a seat to your allocation
 - Adding teammates in the app, via CLI, or through API all respect the same capacity checks
-- Free-tier users may add teams and the first seat without restrictions
+- Free plan members are unlimited
 - Upgrading your plan increases your tracked capacity and adds seats automatically within the new tier bounds
 
 ## Team ownership verification
