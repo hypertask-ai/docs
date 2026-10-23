@@ -85,6 +85,37 @@ A Cloudflare Worker at `hypertask-docs-mcp.valentin-603.workers.dev` provides re
 | `update_sidebar_config` | Update sidebar config |
 | `trigger_deploy` | Trigger Cloudflare Pages rebuild |
 
+### Caller authorization
+All seven tools remain visible. `list_pages`, `read_page`, and `read_sidebar_config` are read-only for any accepted caller. Before doing anything else, `write_page`, `delete_page`, `update_sidebar_config`, and `trigger_deploy` check the caller's numeric `userId` against `DOCS_EDITOR_USER_IDS` and log one JSON line containing only `decision` (`allowed`/`refused`), `tool`, and `userId`. Refused mutations return the MCP error `not a docs editor` without fetching GitHub or the deploy hook.
+
+`DOCS_EDITOR_USER_IDS` is a Worker var: comma-separated positive safe integers, e.g. `12, 34`. Whitespace is trimmed; malformed entries are ignored. Empty/missing means **no writes**, including deploys. Valentin chooses the editor IDs; do not use emails or Firebase subjects.
+
+Only HS256 JWTs signed with `JWT_SECRET` and one of these exact `(iss, aud)` pairs are accepted:
+- MCP: `("hypertask", "mcp-api")`.
+- OAuth access: `("https://app.hypertask.ai", "http://localhost:3001")` (the app's default OAuth audience, not the docs URL).
+
+A nonempty string `sub` and a positive safe-integer numeric `userId` are required; missing/invalid claims return HTTP 401, even for reads. `exp` is optional because agent tokens intentionally never expire; when present, expiration is checked. Expired tokens, other token purposes, legacy audiences, and crossed issuer/audience pairs get 401.
+
+JWT inventory verified against app `origin/production` at `5c261c1707799b6d22b2e90d4bd7b8a8016bfea7` (paths below are in the app repo):
+
+| JWT signed with JWT_SECRET | iss / aud (source defaults) | sub / userId | exp behavior | App source |
+|---|---|---|---|---|
+| MCP | `hypertask` / `mcp-api` | email / numeric app user ID | 30d default, caller-overridable; absent for agents | `src/lib/mcp/auth/verifyJwt.ts:441-480` (pair constants `:12-13`) |
+| OAuth access | `https://app.hypertask.ai` / `http://localhost:3001` | Firebase UID / numeric app user ID | 90d default, caller-overridable (refresh-capable mobile: 1h); absent for agents | `src/lib/mcp/auth/verifyJwt.ts:483-537`, `src/lib/mcp/oauthTokenContract.ts:3-7`, `src/app/oauth/token/route.ts:525-533` (mobile TTL `:32`, selection `:449-451`, refresh `:187-193`) |
+| Email-link login | `hypertask` / `email-link` | email / absent | 15 minutes | `src/app/api/auth/send-email-link/route.ts:17-19`, `:123-131` |
+| Instant-signup email verification | `hypertask` / `email-verification` | email / absent | 30 minutes | `src/app/api/auth/instant-signup/route.ts:16-18`, `:33-41` |
+| Calendar feed | `hypertask` / `calendar-feed` | absent / session user ID | 365 days | `src/app/api/calendar/feed-url/route.ts:7-23` |
+
+The last three are always rejected. App `JWT_ISSUER`, `JWT_OAUTH_AUDIENCE`, `JWT_AUDIENCE`, and `JWT_VERIFICATION_AUDIENCE` can override source defaults; no environment/secret values were inspected. Before rollout, confirm the app's non-secret issuer/audience configuration still matches the two accepted pairs; otherwise review/update the explicit pairs and tests, never broaden to any same-key JWT. Session cookies, consent tokens, unsubscribe links, inbound-reply signatures, and upload grants use custom HMAC formats (some fall back to JWT_SECRET), not JWTs; OAuth refresh tokens are random opaque values, not JWTs.
+
+### Worker checks (no deployment)
+Run `node --experimental-strip-types --test workers/docs-mcp/test/*.test.mjs` from the repo root, or `npm test --prefix workers/docs-mcp`, with Node 22 and the worker's existing dependencies. Tests import the real TypeScript `/mcp` fetch handler, sign JWTs with a test-only secret, and stub global fetch; they never call GitHub or a deploy hook. No extra test framework or compilation is needed. `npm run typecheck --prefix workers/docs-mcp` checks Worker types. `.github/workflows/build-check.yml` runs both in a separate worker job using the worker lockfile.
+
+### Rollout and rollback
+Worker deployment is separate from the site build and requires Valentin's approval. The runner must ask Valentin for the editor IDs (`DOCS_EDITOR_USER_IDS`, empty until chosen), confirm accepted issuer/audience pairs, and arrange `JWT_SECRET` matching the app, a repo-scoped `GITHUB_TOKEN` with Contents write access, and `CF_PAGES_DEPLOY_HOOK` if editor deploys are wanted. Confirm the repository/branch vars target the intended docs repo. Never print these secrets.
+
+**Rolling back to the old Worker restores open writes to any same-key token.** If rolling back, pause writes by rotating/revoking the GitHub PAT and/or removing the deploy hook as appropriate; removing the hook alone does not stop GitHub writes, and rotating the PAT alone does not stop hook calls. This operational choice belongs to Valentin.
+
 ### Client config (for coworkers' `.claude/settings.json`)
 ```json
 {
