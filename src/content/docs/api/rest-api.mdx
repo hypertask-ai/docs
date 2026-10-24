@@ -179,7 +179,7 @@ Compatibility: The consensus across the auth, MCP, public, webhook, logged-out, 
 - Public integrations that already manage `ht_session` via the app workload continue untouched.
 - Work that previously shipped `nookies_user` directly (e.g., via server-to-server calls) should now explicitly sign or add `ht_session` with the same `id`, but it is a rare pattern in practice.
 
-If your pattern relies on unsigned `nookies_user` outside these call sites, see [`/api/session/verify`](https://app.hypertask.ai/api/session/verify) to validate the signed session instead.
+If your pattern relies on unsigned `nookies_user` outside these call sites, validate the signed session instead.
 
 ### Session paging (Rows)
 
