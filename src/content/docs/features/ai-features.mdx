@@ -7,6 +7,22 @@ import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
 AI is woven through every part of Hypertask — create tasks, filter your board, smart-label workloads, and manage daily operations without leaving the workflow you already use.
 
+## Included AI
+
+Each team has an allowance for AI work on Hypertask's AI key. It resets on the 1st of each month at 00:00 UTC.
+
+| Plan | Monthly included AI | Daily limit |
+| --- | --- | --- |
+| Paid plans | $5 per paid seat. We use the most paid seats your team had that month. | None |
+| Free plan | $1 per team. | $0.25 per team |
+| Bring-your-own-key plan | $2.50 per accepted member. We use the most accepted members your team had that month. | None |
+
+Chat, the task writer, summaries and background AI features all count toward the same team allowance when they use Hypertask's key. On the free plan, answers may be shorter near the daily limit.
+
+On the bring-your-own-key plan, calls on your own AI key are never limited or counted toward this allowance. The allowance applies only when you use Hypertask's key.
+
+## Using AI
+
 <Steps>
 
 1. **AI-assisted task creation**
@@ -27,9 +43,9 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
     - Save; AI immediately classifies the board up to 500 existing tasks and adds the label to matches. Smart labels show a sparkle icon in label lists.
     - New tasks are classified when created; edited tasks are re-classified when title or description change; updating the prompt re-runs classification for the entire board.
 
-4. **AI usage without a signed-in user**
-    - AI usage can now be recorded and stored as usage tracks even when calls don't originate from a signed-in user.
-    - This allows external agents or systems invoking the AI APIs to function without requiring active authentication, while still producing usage records available to admins.
+4. **Public demo chat**
+    - Start a demo guest session to use the public demo chat.
+    - Demo chat has its own limits.
 
 5. **Batch-powered background workloads**
     - Background smart labels and other AI classification runs that involve many tasks are routed to Anthropic's Batch API at half price, allowing cost-efficient processing at scale.
@@ -70,7 +86,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 | **Smart Labels** | Keeps labels on tasks that match your AI prompt; changes to tasks or the prompt trigger reclassification. |
 | **AI Chat** | Global assistant for questions, summarization, and quick actions, with full-screen history paging. |
 | **Ticket AI suggestions** | Provides context-specific suggestions in ticket panels that mirror the ticket's subject and related data. |
-| **Bulk AI workloads** | Heavy classification runs use the Batch API to handle large boards efficiently; background jobs go through Anthropic's half-price Batch endpoint. Usage is recorded as usage tracks regardless of whether a signed-in user is present. |
+| **Bulk AI workloads** | Background AI work handles large boards and counts toward the same team allowance when it uses Hypertask's key. |
 | **Agent task lists** | Optimized reads for quick agent workloads; significant speedup for the slowest dataset slices. |
 | **Comment summaries** | Summarize comments and preserve whether questions remain open for human follow-up. |
 
@@ -100,7 +116,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
 - **Task created anyway** — Your original description or note is preserved as a task, so you can retry AI later or edit it manually.
 - **Applies everywhere** — This fix covers task creation from boards, the inbox, and when editing task descriptions.
 
-If AI generation is not available (for example, your team has not configured an AI key), the text you entered appears without modification, keeping your workflow uninterrupted.
+If AI generation is not available, the text you entered appears without modification, keeping your workflow uninterrupted.
 
 ### AI Task Writer
 
@@ -127,11 +143,9 @@ When Ctrl+J or AI chat writes a task description or comment that references an u
 
 ## When AI is not available
 
-<span class="label label--brand">Behavior change</span> AI features now show clear guidance when a team does not have an AI key configured. Previously, teams without an AI key would see server errors when trying to use AI in agents or the CLI. Now, users receive a concise message directing them to add an AI key through the **Appearance & AI Models** settings page:
+When your team's allowance is used up, AI replies say so and suggest upgrading or adding your own AI key.
 
-> "AI features require an AI key. Configure your AI key in Appearance & AI Models."
-
-This applies to AI-powered task creation, filters, smart labels, and agent workflows that invoke AI.
+Open **Settings > AI usage** to see how much your team has used and when the allowance resets.
 
 ## Settings
 
