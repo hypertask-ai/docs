@@ -125,6 +125,28 @@ After the Task Writer generates a draft, you can refine it just like any other A
 
 When Ctrl+J or AI chat writes a task description or comment that references an uploaded image or image link, the image appears inline in the text by default. Ask for "attachment only" or "link only" to keep it as an attachment or link instead.
 
+## Included AI allowance
+
+Included AI is shared across your team and resets each calendar month (UTC).
+
+| Team plan | Monthly included AI | Daily limit |
+|-----------|---------------------|-------------|
+| **Paid** | $5 per paid seat | No separate daily limit |
+| **Free** | $1 per team | $0.25 per team |
+| **BYOK** | $2.50 per member for calls using Hypertask's key | No separate daily limit |
+
+Free teams must stay within both limits; the daily limit resets at midnight UTC. Paid allowances use your team's highest paid seat count for the month. BYOK allowances use the highest member count for the month, counting the owner and accepted members once each.
+
+Background AI, including smart labels and summaries, counts toward the same allowance as interactive AI when it uses Hypertask's key. It does not have a separate extra budget.
+
+Calls using [your own provider key](/features/byok/) do not use the included allowance. For BYOK teams, any AI that runs on Hypertask's key counts toward the BYOK allowance above.
+
+<Aside type="note">
+When the included allowance is reached, further calls on Hypertask's key are refused. Your own-key calls can continue. Free teams can try again after the relevant daily or monthly reset, upgrade, or add their own key.
+</Aside>
+
+Demo chat requires an active demo guest session. If prompted, start the demo again to keep chatting.
+
 ## When AI is not available
 
 <span class="label label--brand">Behavior change</span> AI features now show clear guidance when a team does not have an AI key configured. Previously, teams without an AI key would see server errors when trying to use AI in agents or the CLI. Now, users receive a concise message directing them to add an AI key through the **Appearance & AI Models** settings page:
