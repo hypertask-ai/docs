@@ -2,7 +2,10 @@ import type { APIRoute, GetStaticPaths } from 'astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const docs = await getCollection('docs');
+	const docs = await getCollection('docs', ({ data }) => {
+		// Starlight drops draft pages from production HTML. Keep this markdown mirror in step.
+		return import.meta.env.MODE !== 'production' || data.draft === false;
+	});
 	const changes = await getCollection('changelog');
 	return [
 		...docs.map((entry) => ({
