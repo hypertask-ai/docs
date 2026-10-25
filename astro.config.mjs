@@ -59,6 +59,7 @@ export default defineConfig({
           'features/chat-board-filter',
           'features/cost-forecast',
           'features/superhuman-snippets',
+          'features/integrations',
           'features/slack',
           'features/agents',
           'features/agent-chat',

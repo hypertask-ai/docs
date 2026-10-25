@@ -1,0 +1,26 @@
+---
+title: Integrations
+description: What Hypertask connects to today, including Cursor and Codex, and what is not available yet.
+---
+
+Hypertask works with Cursor and Codex. Both connect through MCP, the same way as any other MCP client.
+
+## Works today
+
+These are in **Settings**, then **Connect**:
+
+- **[MCP](/mcp/overview/).** Works with any MCP client, such as Claude, Claude Code, Cursor, and Codex.
+- **[CLI](/cli/reference/).** The `hypertask` command.
+- **[REST API](/api/rest-api/).**
+- **[Webhooks](/mcp/agent-webhooks/).** Signed requests to a URL you control.
+
+**Figma** is under **Settings**, then **Profile**, then **Accounts**. Connect a Figma account there. Hypertask uses that connection when a task includes a Figma link.
+
+**ChatGPT** uses an OpenAPI action. The steps are on [MCP Integration](/mcp/overview/#client-configuration), under the ChatGPT tab.
+
+## Not available yet
+
+- **Slack app.** Not available yet.
+- **GitHub per board.** Connecting GitHub to a board is not available yet.
+- **Google Calendar sync.** Not available yet. Due dates still appear on the Hypertask [calendar](/features/calendar/).
+- **Other importers.** There is no Jira, Trello, or Asana sync, and no other native importer.
