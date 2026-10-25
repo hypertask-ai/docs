@@ -1,0 +1,36 @@
+---
+title: "Mobile and desktop apps"
+description: "How to use Hypertask on Android and iPhone, and what to use on Windows and Mac."
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Hypertask on a phone is the web app at [app.hypertask.ai](https://app.hypertask.ai), installed on the device. On a computer, use that same site in a browser, or install it from the browser.
+
+## Is there a mobile app?
+
+### Android
+
+The official Android app is a Trusted Web Activity wrapper of [app.hypertask.ai](https://app.hypertask.ai). It opens the web app with its own launcher icon, splash screen, and push notifications. The project README says to download the APK from the [Android releases page](https://github.com/hypertask-ai/android/releases).
+
+<Aside type="note">
+That releases page is the download location. If no APK is listed there yet, install the web app with Add to Home Screen until a release is published.
+</Aside>
+
+### iPhone and other phones
+
+Install the web app with **Add to Home Screen**.
+
+On an iPhone, open [app.hypertask.ai](https://app.hypertask.ai) in Safari, tap **Share**, then **Add to Home Screen**. On other phones, use the browser's **Add to Home Screen** or **Install** command.
+
+The site publishes a web app manifest named Hypertask with `display` set to `standalone`, so the home-screen icon opens Hypertask without the browser toolbar. The live manifest is [app.hypertask.ai/manifest.webmanifest](https://app.hypertask.ai/manifest.webmanifest).
+
+## Is there a desktop app for Windows or Mac?
+
+Use the web app in a browser. Chrome and Edge can also install [app.hypertask.ai](https://app.hypertask.ai) as an app from the address bar. That installed window is the same web app.
+
+<Aside type="caution" title="No signed desktop download">
+Hypertask does not publish a signed desktop installer for Windows or Mac.
+</Aside>
+
+[hypertask-desktop](https://github.com/hypertask-ai/hypertask-desktop) is an early-pilot native client written in Rust with GPUI. It covers Inbox, Board, and Task detail, and you build it from source. The repository has no GitHub release and no signed download.

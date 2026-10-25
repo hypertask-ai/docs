@@ -5,6 +5,9 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
   site: 'https://docs.hypertask.ai',
   markdown: { smartypants: false },
+  redirects: {
+    '/features/desktop': '/getting-started/apps/',
+  },
   integrations: [
     starlight({
       title: 'Hypertask Docs',
@@ -62,7 +65,6 @@ export default defineConfig({
           'features/slack',
           'features/agents',
           'features/agent-chat',
-          'features/desktop',
           'features/images',
         ],
         },
@@ -70,6 +72,7 @@ export default defineConfig({
           label: 'Getting started',
           items: [
           'getting-started/introduction',
+          'getting-started/apps',
           'getting-started/quickstart',
           'getting-started/concepts',
           'getting-started/settings-profile',
