@@ -7,9 +7,4 @@ import Default from '@astrojs/starlight/components/PageFrame.astro';
 	<slot name="sidebar" slot="sidebar" />
 	<slot />
 </Default>
-<!--
-  Classic script (not async, defer, or module) so the widget can read
-  data-mode from document.currentScript. It restores the same conversation
-  from localStorage on each page load.
--->
 <script is:inline src="https://help.hypertask.ai/widget/widget.js" data-mode="docked"></script>

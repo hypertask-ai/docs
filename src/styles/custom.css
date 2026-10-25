@@ -243,10 +243,14 @@ body.hypertask-chat-docked mobile-starlight-toc nav {
 }
 
 /* Floating launcher below 900px: 48px button, 20px from the corner.
-   Keep the end of the page, and open mobile UI, clear of it. */
+   Keep lines, the end of the page, and open mobile UI clear of it. */
 @media (max-width: 899px) {
 	.main-frame {
 		padding-bottom: calc(48px + 20px + 12px);
+	}
+
+	body main {
+		padding-inline-end: calc(48px + 16px + 8px);
 	}
 
 	body[data-mobile-menu-expanded] #chat-widget-btn,
