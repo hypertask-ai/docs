@@ -1,6 +1,6 @@
 ---
 title: "Collaboration"
-description: "Work together with team workspaces, real-time editing, mentions, reactions, and activity logs."
+description: "Share a board with Admins and Members. There is no Viewer role. Invite a client to one board, and see who manages billing."
 ---
 
 <aside class="tip">
@@ -42,39 +42,17 @@ Invite team members to a project by generating an **invite link**. Invite links 
 Domain restrictions are useful when you want to share an invite link broadly (in Slack, for example) but limit access to people within your organization.
 </aside>
 
-### Roles and permissions
-Project members are assigned one of three roles, each with different privileges for managing the project:
+### Roles and access
 
-| Role | Privileges |
-|------|------------|
-| **Owner** | Full control over the project: invite or remove members, board settings (renaming, sharing, archiving, deleting), view billing (plan + invoices), set payment method and invoicing email, and **grant or revoke Admin** permissions for other members |
-| **Admin** | All day-to-day task work (create, edit, delete, assign, reply in comments) plus the ability **invite/remove other members**, modify board settings, and view billing (plan + invoices) |
-| **Member** | All day-to-day task work (create, edit, delete, assign, reply in comments) with no additional permissions |
+A board has an owner. The owner can set each other person to **Admin** or **Member**. Those are the only two roles you can assign, and the owner’s own role cannot be changed.
 
-To see who contributes which tasks:
+There is no Viewer role and no read-only role. Someone who only needs to look at a board still joins as an Admin or a Member.
 
-1. Open the project board.
-2. Check the board header for member avatars and counts.
-3. Hover over an avatar to see their role (Owner, Admin, or Member).
+Manage the people on a board in **Settings > Board > Members**. That list is for the board you have open.
 
----
+To let a client see a single board, invite them to that board only. People see a board when they own it or are a member of it, so a client invited to one board does not see your other boards.
 
-**Security note:** Members can only associate tasks they own to a specific board, and the system prevents them from adding tasks to boards in which they have no work. This ensures board-specific permissions are enforced.
-### M and better Auth integration
-Hypertask uses **Better Auth** for server-led authentication. When you log in via email code or magic-link, the response includes both the Better Auth session and your nookies_user and ht_session cookies:
-
-### Login flow
-1. **Initiate login** — Click email code or magic-link in the login modal.
-2. **Server processes** — Better Auth verifies your identity on the server.
-3. **Response includes cookies** — The login response sets:
-   - **Better Auth session** — Server-side session for your authentication.
-   - **nookies_user** — Client-side user identity token.
-   - **ht_session** — Server-validated signature for cookie integrity.
-4. **Redirect to board** — You’re redirected to a board in the app.
-
-<aside type="note">
-All authentication flows are server-led. Firebase is retained exclusively for FCM push notifications, not for user identity sign-ins.
-</aside>
+Billing is under **Settings > Team > Billing**. The team owner can view billing and update the payment method. The team owner, the board owner, or a board Admin can view billing details and change the billing email.
 
 ### BYOK and API keys
 API key management is available to **BYOK (Bring Your Own Key)** teams. BYOK teams see and manage API keys directly in the **Settings → Team** navigation. For non-BYOK teams, the API Keys entry is hidden from this section.
@@ -106,25 +84,6 @@ The previously misleading **Profile > Account** section is no longer displayed. 
 
 <aside type="tip">
 The sticky settings footer ensures you can quickly reach feedback tools and sign out, no matter which settings panel you’re in.
-</aside>
-
-### Switching accounts without logout
-When you’re already logged in and want to switch to a different account (for example, on the same browser):
-
-1. **Initiate new login** — Start logging in via email code or magic-link for the target account.
-2. **Previous session cleared** — The login response now properly clears the previous user’s Better Auth session cookies (Max-Age=0). This prevents the old user’s session from persisting.
-3. **Fresh cookies set** — Both Better Auth and nookies_user/ht_session are set for the new logging-in user.
-4. **Redirect to board** — You’re now logged in as the intended user.
-
-This ensures that account switching works correctly and you always see the correct user in the app.
-
-### Persistent sign-in state
-After login, your session persists until you explicitly sign out. Hiding or closing the browser doesn’t automatically log you out.
-
-Your logged-in state is managed by the combination mentioned above. LocalStorage holds transient UI state (such as the current user object via Recoil), but the actual authentication identity is verified server-side on each request via the signed ht_session cookie.
-
-<aside type="caution">
-If you persist LocalStorage across sign-ins or sessions (e.g. in test environments), old user data may be retained. In production, sessions always refresh to the correct user on each login.
 </aside>
 
 ## Scope-aware agents and membership
