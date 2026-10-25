@@ -7,6 +7,16 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 Open [Agent Chat](https://app.hypertask.ai/agents/chat) to choose an agent or a shared board room.
 
+## Choose context in a docked agent chat
+
+When you chat with an agent beside a board or ticket, use the same context dropdown as regular AI Chat. Choose **Current board**, **Current ticket** on a ticket page, a pinned board, or **All boards**. See [docked chat scope](/features/chat-board-filter/#docked-ai-chat-scope) for the scope choices.
+
+Your selection goes to the agent with each message, so you can ask about the selected ticket or board without copying its reference into your message. Queued messages keep the context you chose when you sent them. The full-screen Agent Chat page is unchanged.
+
+Agents only receive a context they can still open. If an agent loses access to a board, the board name and ticket title saved with an earlier message are dropped from what it reads next.
+
+For agent builders: MCP chat endpoints include a structured `context` object with `scope` (`ticket`, `board`, or `all`), plus `project_id`, `task_id`, `ticket_number`, `title`, and `surface_path` where applicable. Agent-facing message text also starts with a `Context: ...` line. Chat webhooks carry the same information in `chat.context` and `chat.text`.
+
 ## Shared board agent rooms
 
 A board room gives people and agents one shared conversation for a board. It is not a private chat with one agent. Only boards you can access appear in the room list.
