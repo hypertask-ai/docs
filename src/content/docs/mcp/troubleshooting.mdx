@@ -1,0 +1,141 @@
+---
+title: "MCP troubleshooting"
+description: "Fix an expired API key, an expired MCP token, or a connection that stops on Approve and connect."
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+An AI client that used to work is refused, or the Hypertask page stops before the connection finishes. Match the message you see to one section below.
+
+The MCP address is `https://mcp.hypertask.ai/mcp`. Send the credential as `Authorization: Bearer` followed by the key or token.
+
+## An API key expired
+
+### What you see
+
+The client is refused with HTTP **401**. The error text is:
+
+> Authentication required. Send a bearer token on every request.
+
+In Hypertask, open **Settings → Connect → Developer access**. A REST API key past its date is marked **Expired**.
+
+Under **Settings → Connect → Management keys**, each row shows **Expires** and a date, or **Never**.
+
+### Why
+
+You pick the lifetime when you create the key. The choices are **Never**, **30 days**, **90 days**, and **365 days**.
+
+A new REST API key starts on **90 days**. A new management key starts on **Never**. A REST API key past its date is left out of authentication, so the client receives the 401 above. A management key the server does not accept is refused with the same 401.
+
+Management keys also have a scope:
+
+| Scope | What it can do |
+| --- | --- |
+| **Management** | Manage agents and keys |
+| **Usage** | Read team AI usage and model spend |
+| **Full access** | Task and data endpoints as well. This scope stays on the whole account. |
+
+### What to do
+
+<Steps>
+
+1. Open [app.hypertask.ai](https://app.hypertask.ai) and sign in.
+2. Open **Settings**, then **Connect**.
+3. For a REST API key, open **Developer access**. For a management key, open **Management keys**. Check the expiry on the key your client uses.
+4. Create a new key. Choose **Never**, or **30 days**, **90 days**, or **365 days**. Copy it when it is shown. It is not shown again.
+5. On a management key, choose the scope that matches what the client does. Use **Full access** for task and board calls.
+6. Paste the new key into the client in place of the old one, then restart the client.
+
+</Steps>
+
+<Aside type="note">
+
+REST API keys are on **Developer access**. Management keys are the next item in that same **Connect** list, beside **MCP**, **CLI**, and **REST API**.
+
+</Aside>
+
+## An MCP token expired
+
+A token you generate in Settings and a connection you approve in the browser do not last the same amount of time.
+
+### A token you generated in Settings
+
+**What you see.** The client is refused with the same HTTP **401** and the same error text as an expired API key:
+
+> Authentication required. Send a bearer token on every request.
+
+In **Settings → Connect → MCP**, an active token shows **Token active** and **Expires** with a date.
+
+**Why.** **Generate** and **Renew** on that screen create a bearer token that lasts **30 days**. After that date, Hypertask does not accept it. **Renew** replaces the previous token, and clients that still have the old value are disconnected.
+
+**What to do.**
+
+<Steps>
+
+1. Open [app.hypertask.ai](https://app.hypertask.ai) and sign in.
+2. Open **Settings → Connect → MCP**.
+3. Choose **Renew** if a token is active, or **Generate** if it is not.
+4. Choose **Copy**, paste the token into the client, and restart the client.
+
+</Steps>
+
+### A connection you approved in the browser
+
+**What you see.** The client keeps working without a key pasted into a config file until the access token expires. Then it is refused with the same HTTP **401**:
+
+> Authentication required. Send a bearer token on every request.
+
+The Hypertask mobile callback is the exception. When its refresh token is past its date, the token endpoint returns:
+
+> invalid_grant — Refresh token is invalid or expired
+
+**Why.** Approving the connection in the browser gives a normal MCP client an access token that lasts **90 days**. That client does not receive a refresh token. When the 90 days are up, start the connection again.
+
+The mobile callback `hypertask-native://oauth/callback` receives a **1 hour** access token and a **90 day** refresh token when that client is registered for refresh and the approval is not for an agent. A refresh before the refresh token expires replaces both: the new access token lasts 1 hour, and the new refresh token lasts 90 days from the refresh. After the refresh token's date, the response is `invalid_grant` with the description above.
+
+**What to do.**
+
+<Steps>
+
+1. In the AI client, start the Hypertask connection again. Do not keep calling with the old token.
+2. Sign in at [app.hypertask.ai](https://app.hypertask.ai) if asked. The login page heading is **Authorize MCP Client**.
+3. On the page titled **Approve connection**, choose **Approve and connect**.
+4. Return to the client and try the call again.
+
+</Steps>
+
+## Approve and connect did not finish
+
+### What you see
+
+The browser page is titled **Approve connection**. A request that can still be approved says the app wants to connect to your Hypertask account, and the button is **Approve and connect**.
+
+When the request can no longer be approved, the heading is:
+
+> Connection request expired
+
+and the text under it is:
+
+> Start the connection again from the app you were using.
+
+If the app is gone from Hypertask, the heading is **Connection request could not be completed** and the text is **This app is no longer registered with Hypertask.**
+
+### Why
+
+The approval is tied to the account you are signed in with, and it stays valid for **5 minutes**. You see **Connection request expired** when you are signed out, when the signed-in account is not the one that started the request, or when those 5 minutes have passed.
+
+If the sign-in cookies do not match, Hypertask clears them and sends you to the login page. After you sign in, and the login page still has the connection parameters, Hypertask sends you on to finish the connection.
+
+Choosing **Approve and connect** on an expired request returns you to the same **Connection request expired** page. The old tab cannot be completed.
+
+### What to do
+
+<Steps>
+
+1. Close the expired approve tab.
+2. On [app.hypertask.ai](https://app.hypertask.ai), sign out if you are still signed in, then sign in again.
+3. In the AI client, start the Hypertask connection again.
+4. When the page says the app wants to connect, choose **Approve and connect**.
+5. If the page says the app is no longer registered, or **Connection request expired** comes back, [contact support](https://www.hypertask.ai/support).
+
+</Steps>

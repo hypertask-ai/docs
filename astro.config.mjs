@@ -80,6 +80,7 @@ export default defineConfig({
           label: 'MCP',
           items: [
           'mcp/overview',
+          'mcp/troubleshooting',
           'mcp/agent-team',
           'mcp/workflows',
           'mcp/scheduling',

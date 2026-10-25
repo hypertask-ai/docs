@@ -74,7 +74,7 @@ You can also reach the MCP token dialog directly from the command palette: press
 
 <Aside type="caution">
 
-Tokens expire after **30 days**. If your agent stops authenticating, generate a new one from Settings.
+A token you generate on this screen expires after **30 days**. Renew it here and paste the new value into the client. A connection you approve in the browser lasts **90 days**. If the client is refused, see [MCP troubleshooting](/mcp/troubleshooting/).
 
 </Aside>
 
@@ -302,12 +302,13 @@ Creating labels and managing saved views used to be listed here as unsupported. 
 
 ## Troubleshooting
 
-**"Failed to Connect to MCP"** - If your client cannot connect:
+Expired API keys, a 30-day token from Settings, a 90-day approved connection, and a connection that stops on **Approve and connect** are covered in [MCP troubleshooting](/mcp/troubleshooting/).
 
-1. Verify your token has not expired (tokens expire after 30 days). Generate a new one from **Settings** in the Hypertask app.
-2. Confirm the URL is exactly `https://mcp.hypertask.ai/mcp` (including `/mcp`). Older clients can still use `https://mcp.hypertask.ai/sse`.
-3. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
-4. Restart your MCP client after updating the configuration.
+**"Failed to Connect to MCP"** — If the credential is still current and the client cannot connect:
+
+1. Confirm the URL is exactly `https://mcp.hypertask.ai/mcp` (including `/mcp`). Older clients can still use `https://mcp.hypertask.ai/sse`.
+2. Check that the `Authorization` header is formatted as `Bearer <token>` with a space after "Bearer".
+3. Restart your MCP client after updating the configuration.
 
 **"No tools listed after MCP sign-in"** - If you signed in successfully but the last step doesn't show tools:
 
@@ -330,6 +331,7 @@ Hypertask MCP works with any client that supports the MCP standard, and ChatGPT 
 ## Next steps
 
 <CardGrid>
+  <LinkCard title="MCP troubleshooting" description="Expired keys, a 90-day connection, and a failed approve step." href="/mcp/troubleshooting/" />
   <LinkCard title="CLI Reference" description="Install the terminal CLI and manage tasks from your shell." href="/cli/reference/" />
   <LinkCard title="Agent Workflows" description="Patterns for how AI agents should pick up and complete work." href="/mcp/workflows/" />
   <LinkCard title="MCP Tools Reference" description="Complete parameter reference for all tools, including time tools." href="/api/tools-reference/" />
