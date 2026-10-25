@@ -27,13 +27,13 @@ Hypertask supports the following provider types:
 Provider access is tied to your project-level permissions. Only owners and admins can add or remove keys for a project.
 </Aside>
 
-## Provider interchangeability (HTPR-5492)
+## Provider interchangeability
 
 Agents can use interchangeable provider implementations for AI operations. The current overriding provider must be defined per-run by specifying an absolute provider URL. This may be a built-in (e.g., https://claude.com or https://codex.com) or a custom endpoint. Valid URLs are validated on input and persisted where applicable.
 
 After providing a URL and verifying it, the provider becomes active for that run. Agent workflows using MCP tools or external schedulers can reference this provider URL to guarantee consistent model selection and access control across runs—no manual command-line environment variable overwrite is required when a provider URL is configured.
 
-## GDPR-safe mode (HTPR-4405)
+## GDPR-safe mode
 
 Enable GDPR-safe mode to remove all China-hosted providers from your configuration across the platform. This toggle removes providers from settings and selectors and rejects BYOK keys that list China-hosted endpoints. The setting applies globally to your team workspace and persists across devices.
 
@@ -97,7 +97,7 @@ Bring key-based providers or self-hosted services into Hypertask by adding a cus
 
 Custom endpoints are stored securely and tied to your account and project access levels.
 
-## Ephemeral per-turn provider home (HTPR-5500)
+## Ephemeral per-turn provider home
 
 During agent agent runs that connect to a provider home, each turn creates an ephemeral directory for that turn. The provider home is scoped to the current turn and doesn't persist across turns. Before each turn starts:
 

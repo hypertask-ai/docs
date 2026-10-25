@@ -97,7 +97,7 @@ This release fixes a bug in agent emoji handling for CLI inbox operations. The C
 - Agent emoji reactions are no longer counted as human reactions in the CLI inbox.
 - Human reactions are no longer dropped when loading or processing inbox data.
 
-Previously, the CLI would treat an agent's emoji as if it came from a person, potentially causing selection or counting errors in inbox actions like bulk archive. This fix ensures accurate reaction tracking for agents monitoring tasks ([HTPR-7128](https://app.hypertask.ai/detail/project-15/7128)).
+Previously, the CLI would treat an agent's emoji as if it came from a person, potentially causing selection or counting errors in inbox actions like bulk archive. This fix ensures accurate reaction tracking for agents monitoring tasks.
 
 To upgrade to v0.2.15:
 
@@ -110,7 +110,7 @@ hypertask --version
 
 CLI 0.2.19 improves error reporting when network problems occur during command execution.
 
-- **Read retries and clearer errors:** If the server does not respond while the CLI waits, it now retries once and surfaces the actual error instead of a bare "ReadFailed" message. Use `--help` or the full command list (`hypertask capabilities --json`) to see available updates. (Read more: [HTPR-7261](https://app.hypertask.ai/detail/project-15/7261), [HTPR-7262](https://app.hypertask.ai/detail/project-15/7262))
+- **Read retries and clearer errors:** If the server does not respond while the CLI waits, it now retries once and surfaces the actual error instead of a bare "ReadFailed" message. Use `--help` or the full command list (`hypertask capabilities --json`) to see available updates.
 
 This change applies to all commands that involve waiting for a server response, including task listing, task details, and other read operations.
 
@@ -150,8 +150,8 @@ hypertask tasks list --project 15 --filter section=AI Review --filter has_pr=red
 hypertask tasks list --labels cli,urgent
 ```
 
-<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels ([HTPR-6475](https://app.hypertask.ai/detail/project-15/6475)).</Aside>
-<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0–4), matching the web UI and API. `none` matches tasks without an assigned priority ([HTPR-6799](https://app.hypertask.ai/detail/project-15/6799)).</Aside>
+<Aside type="note">The `tasks list --labels` flag was previously a no-op. It now correctly filters tasks by the provided labels.</Aside>
+<Aside type="note">The `--filter priority` option now accepts both priority names (`urgent`, `high`, `medium`, `low`, `none`) and numeric values (0–4), matching the web UI and API. `none` matches tasks without an assigned priority.</Aside>
 
 ## Task move
 
@@ -195,13 +195,13 @@ hypertask tasks move PRODUCT-456 --section "In Review"
 hypertask tasks move PRODUCT-456 --assignee @valentin
 ```
 
-<Aside type="note">The `comments add --improve` flag now correctly accepts a bare flag without a value and defaults to readability improvement ([HTPR-6574](https://app.hypertask.ai/detail/project-15/6574)).</Aside>
+<Aside type="note">The `comments add --improve` flag now correctly accepts a bare flag without a value and defaults to readability improvement.</Aside>
 
 ## Project management errors are informative
 
 <span class="label label--brand">Bug fix</span> Task creation now reports project membership failures with clear guidance instead of showing an internal server error or generic failure when the token lacks access.
 
-Previously, using a non-member token to create a task resulted in a generic "hypertask: the server could not complete the command" exit code 4. After this fix ([HTPR-6486](https://app.hypertask.ai/detail/project-15/6486)), the same command returns:
+Previously, using a non-member token to create a task resulted in a generic "hypertask: the server could not complete the command" exit code 4. After this fix, the same command returns:
 
 ```bash
 # Using a token without project 5156 access
@@ -245,7 +245,7 @@ hypertask project update 4060 --title "Agents & Infra"
 hypertask project update 4060 --title "Agents & Infra" --description "<p>Infrastructure-related tasks and boards.</p>"
 ```
 
-<span class="label label--brand">Behavior change</span> Renaming a board from the app previously did not check board membership; agents and users could rename boards they were not members of. Board updates now require write access to the board. Only board members are allowed to update the board. ([HTPR-6846](https://app.hypertask.ai/detail/project-15/6846))
+<span class="label label--brand">Behavior change</span> Renaming a board from the app previously did not check board membership; agents and users could rename boards they were not members of. Board updates now require write access to the board. Only board members are allowed to update the board.
 
 ---
 

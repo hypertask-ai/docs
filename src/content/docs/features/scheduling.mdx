@@ -52,7 +52,7 @@ Save custom filters, sorting, board selection, and hidden columns to create pers
 - **Board selection**: Show tasks from one board or across multiple boards
 - **Done columns hidden by default**: Keep focused on active work
 
-<span class="label label--brand">Behavior change</span> Saved views now use the same save, reset, and Ctrl+K picker flows that you use on the Kanban board for deep controls. The Scope button (including Involvement, Detail, and Group scope) and its corresponding command now open the consistent board picker panel you see throughout the app, with search and standard keyboard navigation for "up to scope" actions. This keeps your palette familiar across inbox and board surfaces (HTPR-6930).
+<span class="label label--brand">Behavior change</span> Saved views now use the same save, reset, and Ctrl+K picker flows that you use on the Kanban board for deep controls. The Scope button (including Involvement, Detail, and Group scope) and its corresponding command now open the consistent board picker panel you see throughout the app, with search and standard keyboard navigation for "up to scope" actions. This keeps your palette familiar across inbox and board surfaces.
 
 > **Tip**: Create a My Tasks saved view to align on active priorities; at any time you can reorder the view's filters, sorting, or board selection without losing them.
 
@@ -161,7 +161,7 @@ POST   /api/task-templates/apply             # { "templateId": 7 }
 
 **To open it:** <kbd>G</kbd> then <kbd>M</kbd>, or <kbd>Ctrl+K</kbd> and **Go to my tasks**, or visit `/my-tasks`.
 
-It shows every open task assigned to you as a **table**, the same table the board uses. By default the sections are due-time groups: **Overdue**, **Today**, **This week**, **Later**, and **No due date**. Overdue stays first. Use **Group** to switch to one section per board. Saved My Tasks views remember that choice ([HTPR-6455](https://app.hypertask.ai/detail/project-15/6455)).
+It shows every open task assigned to you as a **table**, the same table the board uses. By default the sections are due-time groups: **Overdue**, **Today**, **This week**, **Later**, and **No due date**. Overdue stays first. Use **Group** to switch to one section per board. Saved My Tasks views remember that choice.
 
 **Ordering puts urgent work first.** In time groups, Overdue is the first section. In board groups, boards that contain overdue tasks sort above boards that do not. Inside a group, overdue tasks lead, then the rest by due date, with undated tasks last.
 

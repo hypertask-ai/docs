@@ -243,7 +243,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `sort` | string | No | Sort as field or field:asc\|desc, for example updatedAt:desc. |
 | `sort_order` | `asc` \| `desc` | No | Ascending or descending sort direction. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `add`
@@ -260,7 +260,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `reply_to_invocation_id` | integer | No | For agent replies, the agent Mentioned notification ID that invoked the agent. Use this when the mention was in the task description, which has no comment ID. Routes the answer to the requester's Important inbox. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Comment text for add/update. HTML or structural markdown; content_type can explicitly select either format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `update`
@@ -287,7 +287,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 Does: Read, create, update, move, assign and relate tickets, including context, trees and description versions.
 Use when: Use when working with a known ticket or a filtered board queue; list finds overdue work and context includes comments and recent activity.
 Do not use when: Do not use for fuzzy text discovery or editing comments; use hypertask_search or hypertask_comments instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Prefer ticket_number (for example HTPR-1234); get accepts one identifier or a list, while context requires task_id and project_id. Normal, Archive and Deleted describe storage state, not workflow columns; section names describe workflow.
+Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Prefer ticket_number; get accepts one identifier or a list, while context requires task_id and project_id. Normal, Archive and Deleted describe storage state, not workflow columns; section names describe workflow.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -333,7 +333,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer \| integer[] | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string \| string[] | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string \| string[] | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `context`
@@ -350,7 +350,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `depth` | integer | No | How many levels deep to show. Use 0 for the root only; omit for the full tree. |
 | `task_id` | integer | No | Numeric task ID |
-| `ticket_number` | string | No | Ticket number of the task (e.g. HTPR-15) |
+| `ticket_number` | string | No | Ticket number of the task |
 
 #### Input for `next`
 
@@ -369,7 +369,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 | `version_id` | integer | No | Required when action is restore. |
 
@@ -379,7 +379,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 | `version_id` | integer | No | Required when action is restore. |
 
@@ -391,14 +391,14 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `relation_type` | `RelatedTo` \| `BlockedBy` \| `BlockedTo` | No | Required when action is link. |
 | `source_project_id` | integer | No | Numeric board id for a source ticket identified by source_unique_index. |
 | `source_task_id` | integer | No | Numeric source ticket id for a link or unlink action. |
-| `source_ticket_number` | string | No | Stable source ticket key, for example HTPR-1234. |
+| `source_ticket_number` | string | No | Stable source ticket key. |
 | `source_unique_index` | integer | No | Source ticket number within source_project_id; both fields must be supplied together. |
 | `target_project_id` | integer | No | Destination board id for a move, or target board id for relation identification. |
 | `target_task_id` | integer | No | Numeric target ticket id for a link or unlink action. |
-| `target_ticket_number` | string | No | Stable target ticket key, for example HTPR-1235. |
+| `target_ticket_number` | string | No | Stable target ticket key. |
 | `target_unique_index` | integer | No | Target ticket number within target_project_id; supply both fields together. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `links`
@@ -409,14 +409,14 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `relation_type` | `RelatedTo` \| `BlockedBy` \| `BlockedTo` | No | Required when action is link. |
 | `source_project_id` | integer | No | Numeric board id for a source ticket identified by source_unique_index. |
 | `source_task_id` | integer | No | Numeric source ticket id for a link or unlink action. |
-| `source_ticket_number` | string | No | Stable source ticket key, for example HTPR-1234. |
+| `source_ticket_number` | string | No | Stable source ticket key. |
 | `source_unique_index` | integer | No | Source ticket number within source_project_id; both fields must be supplied together. |
 | `target_project_id` | integer | No | Destination board id for a move, or target board id for relation identification. |
 | `target_task_id` | integer | No | Numeric target ticket id for a link or unlink action. |
-| `target_ticket_number` | string | No | Stable target ticket key, for example HTPR-1235. |
+| `target_ticket_number` | string | No | Stable target ticket key. |
 | `target_unique_index` | integer | No | Target ticket number within target_project_id; supply both fields together. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `unlink`
@@ -427,14 +427,14 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `relation_type` | `RelatedTo` \| `BlockedBy` \| `BlockedTo` | No | Required when action is link. |
 | `source_project_id` | integer | No | Numeric board id for a source ticket identified by source_unique_index. |
 | `source_task_id` | integer | No | Numeric source ticket id for a link or unlink action. |
-| `source_ticket_number` | string | No | Stable source ticket key, for example HTPR-1234. |
+| `source_ticket_number` | string | No | Stable source ticket key. |
 | `source_unique_index` | integer | No | Source ticket number within source_project_id; both fields must be supplied together. |
 | `target_project_id` | integer | No | Destination board id for a move, or target board id for relation identification. |
 | `target_task_id` | integer | No | Numeric target ticket id for a link or unlink action. |
-| `target_ticket_number` | string | No | Stable target ticket key, for example HTPR-1235. |
+| `target_ticket_number` | string | No | Stable target ticket key. |
 | `target_unique_index` | integer | No | Target ticket number within target_project_id; supply both fields together. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `create`
@@ -471,7 +471,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `section_id` | integer | No | Numeric workflow column id; discover it with projects manifest. |
 | `status` | `Normal` \| `Archive` \| `Deleted` | No | Storage state for tasks or projects (Normal, Archive, Deleted), or decision state where supported; not a workflow column. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
@@ -483,7 +483,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `target_project_id` | integer | Yes | The destination board/project ID. The task will be moved to this board. |
 | `target_section_id` | integer | No | Optional section/column ID on the target board. Use hypertask_section with action=list and the target project to find available section IDs. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `assign`
@@ -495,7 +495,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `intent` | `assign` \| `unassign` | No | assign: idempotent add ; assigns if not already assigned; if already assigned, no-op. unassign: remove this user from assignees. Defaults to `assign`. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 | `user_id` | integer | No | User ID to assign or unassign (use intent: unassign to remove). |
 | `user_ids` | integer[] | No | For multiple mode: user IDs; each user follows intent (assign = idempotent, unassign = remove). |
@@ -528,7 +528,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Draft text. Required for create and update. MUST be HTML format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `list`
@@ -540,7 +540,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Draft text. Required for create and update. MUST be HTML format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `update`
@@ -552,7 +552,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Draft text. Required for create and update. MUST be HTML format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `publish`
@@ -564,7 +564,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Draft text. Required for create and update. MUST be HTML format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `delete`
@@ -576,7 +576,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Draft text. Required for create and update. MUST be HTML format. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 ---
@@ -607,7 +607,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `parent_page_id` | integer | No | Existing parent page identifier for a nested page. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
@@ -638,7 +638,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `search`
@@ -996,7 +996,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 | `user_id` | integer | Yes | The project member whose inbox receives the task. Required. |
 
@@ -1207,7 +1207,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `files` | object[] | Yes | Files to upload; each has filename, content_type and exactly one of data (base64) or url. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 ### `hypertask_custom_fields`
@@ -1267,7 +1267,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `status` | `pending` \| `answered` \| `cancelled` | No | Optional status filter for list. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `list`
@@ -1282,7 +1282,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `status` | `pending` \| `answered` \| `cancelled` | No | Optional status filter for list. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `get`
@@ -1297,7 +1297,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `status` | `pending` \| `answered` \| `cancelled` | No | Optional status filter for list. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `answer`
@@ -1312,7 +1312,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `status` | `pending` \| `answered` \| `cancelled` | No | Optional status filter for list. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `cancel`
@@ -1327,7 +1327,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `selected_option` | string | No | Exact option to select. Required for answer. |
 | `status` | `pending` \| `answered` \| `cancelled` | No | Optional status filter for list. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 ### `hypertask_labels`
@@ -1506,7 +1506,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `text` | string | No | Comment, draft or related-search text; comment formatting uses content_type. |
-| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. |
+| `ticket_number` | string | No | Stable full ticket key; tasks get accepts an array of keys. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `help`

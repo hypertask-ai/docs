@@ -9,7 +9,7 @@ Connect a Slack workspace from Hypertask settings. Hypertask summarizes threads 
 
 ## What it does
 
-**Thread summaries.** When a message in a channel the bot belongs to contains a ticket number such as `HTPR-123`, or a link like `app.hypertask.ai/detail/project-15/123`, Hypertask watches that thread. After the thread has been quiet for 30 minutes, it posts one comment on each matched ticket: a one-sentence outcome, two to four bullets for decisions and unresolved asks, who took part, and a link to the Slack thread. Later messages get another comment after the next 30 quiet minutes. Hypertask posts these summary comments.
+**Thread summaries.** When a message in a channel the bot belongs to contains a ticket number or a link, Hypertask watches that thread. After the thread has been quiet for 30 minutes, it posts one comment on each matched ticket: a one-sentence outcome, two to four bullets for decisions and unresolved asks, who took part, and a link to the Slack thread. Later messages get another comment after the next 30 quiet minutes. Hypertask posts these summary comments.
 
 **A ticket from a channel thread.** Mention `@Hypertask` in a channel and ask it to create, make, add, open, or write a task or ticket. `@Hypertask create a task for this` is the usual form. Hypertask reads the thread, writes a title and a short description from that conversation, files the ticket on the default project, and replies in the thread with the link. That thread stays watched, so later discussion is summarized onto the new ticket. A channel mention that asks to create a task uses this path and the default project. To choose the board, use `/ht create` with `--project`, or send a direct message.
 

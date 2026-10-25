@@ -18,7 +18,7 @@ A task represents a unit of work that can be assigned, progressed, and tracked. 
 
 **My Tasks** is your personal task list across boards. By default it shows tasks assigned to you.
 
-The list groups by due time: **Overdue**, **Today**, **This week**, **Later**, and **No due date**. Overdue stays at the top. Use **Group** to switch back to board groups. Saved My Tasks views remember the choice ([HTPR-6455](https://app.hypertask.ai/detail/project-15/6455)). Board split tabs still filter inside a time group.
+The list groups by due time: **Overdue**, **Today**, **This week**, **Later**, and **No due date**. Overdue stays at the top. Use **Group** to switch back to board groups. Saved My Tasks views remember the choice. Board split tabs still filter inside a time group.
 
 ### Scope in My Tasks
 <span class="label label--brand">Improvement</span> The **Scope** button in My Tasks and the standard **Scope** command in <kbd>Ctrl+K</kbd> now open the same board picker list. The panel has been redesigned to match the board picker you use throughout the app, with search and standard keyboard navigation for quick filtering and selection. The previous, custom implementation has been replaced with the consistent board picker experience.
@@ -120,7 +120,7 @@ Search filters apply at the board level in Kanban and in saved views. The availa
 - # board picker: Start typing # to select or create boards.
 
 ## My Tasks toolbar
-<span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group. Active controls turn blue like Kanban, and Group shows its current choice ([HTPR-6938](https://app.hypertask.ai/detail/project-15/6938)). Overdue tooltips on red counts now appear over each overdue item. The toolbar also uses the same Save view and Reset controls as Kanban board views.
+<span class="label label--brand">Behavior change</span> The My Tasks toolbar now uses icon-only controls with tooltips for Involvement, Columns, Scope, Filters, Sort, and Group. Active controls turn blue like Kanban, and Group shows its current choice. Overdue tooltips on red counts now appear over each overdue item. The toolbar also uses the same Save view and Reset controls as Kanban board views.
 
 From the **Ctrl+K** command palette, you can still use **Save view as** to create a saved view, and **Reset view** to revert My Tasks to its default set of built-in filters. Keyboard shortcuts like **Ctrl+S** and **Ctrl+R** no longer open popovers on the board; they now open the Save view and Reset dialogs respectively.
 
@@ -139,7 +139,7 @@ From a board or inbox, click **New task** (or use the keyboard shortcut **Ctrl+N
 Use **Write with AI** (**Ctrl+K** / <kbd>Cmd+K</kbd>, or the command palette) in the description area to turn a brief task idea into a fleshed-out task.
 
 ### New Task creator
-<span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / <kbd>Cmd+J</kbd> and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task** ([HTPR-6937](https://app.hypertask.ai/detail/project-15/6937)).
+<span class="label label--brand">New</span> The task creator window (formerly the "Compose" button) can be opened from any view with **Ctrl+J** / <kbd>Cmd+J</kbd> and is now live for everyone. The window behaves like a task creator with Search and New Task tabs, Ctrl+K and Ctrl+J tooltips, and Tab/Shift+Tab switching. It retains your old window size and grows as you type, and the New Task button is renamed to **New Task**.
 
 ### Edit a task with AI
 <span class="label label--brand">New</span> Click **Edit with AI** under a task's description to open the AI chat in the sidebar on that task. It asks "How do you want to edit this task?" and offers ready-made requests: **Rewrite in plain words**, **Shorten the title**, **Add acceptance criteria**, **Split into sub-tasks**, and **Turn the error log into steps to reproduce**. Pick one or type your own, and the chat updates the task in place. The AI button in the description and comment editor opens the same chat. On an open task, **Ctrl+J** / <kbd>Cmd+J</kbd> still opens the New Task window.
@@ -197,7 +197,7 @@ Note: While you are the Task Reporter, you cannot switch to another task descrip
 ### Saved attachments
 - To remove an attachment, open the description in edit mode, click the attachment you want to remove, and save. Only the items you deselect will be removed; remaining attachments are preserved as one copy each.
 
-<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved. ([HTPR-6629](https://app.hypertask.ai/detail/project-15/339/6629)).
+<span class="label label--brand">Fix</span> A previous bug caused the wrong attachment files to be saved when removing items from a description. When you had two or more description files attached, removing one would incorrectly save a duplicate of the other file. This is now fixed so that always only one copy of each remaining attachment is saved.
 
 <span class="label label--brand">Fix</span> Deleting a task no longer creates an invalid undoable state. Undo is now always possible when restoring from deletion, ensuring tasks can be fully recovered and the undo system behaves consistently.
 
@@ -237,9 +237,9 @@ The comment thread shows all comments on the task. By default, when you open a t
 
 <span class="label label--brand">Improvement</span> Long task pages and comment threads now send their initial snapshot only once, reducing data copies and decoding passes. Repeat visit times drop from roughly 2.2 seconds to about 0.6 seconds. The change applies to tasks with many comments or long descriptions and focuses on the initial load speed, preserving all existing behavior for navigation, real-time updates, and comment handling.
 
-<span class="label label--brand">Fix</span> The comment box on ticket pages is now positioned immediately below the last comment instead of appearing in the middle of the task. It previously moved under the task description, causing the interface to split the comment content unnaturally. The comment section now renders after other content and before the top bar, keeping comments at the bottom of the page as expected ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
+<span class="label label--brand">Fix</span> The comment box on ticket pages is now positioned immediately below the last comment instead of appearing in the middle of the task. It previously moved under the task description, causing the interface to split the comment content unnaturally. The comment section now renders after other content and before the top bar, keeping comments at the bottom of the page as expected.
 
-<span class="label label--brand">Fix</span> A shared comment link now opens on that comment instead of the ticket top, with the comment visible on screen on both desktop and mobile. The link scrolls directly to the referenced comment when you open it—for example, from Slack or email—making it easier to reference specific points in a conversation. This fix improves navigation for long threads with hundreds of comments and helps ticket descriptions stay readable even on narrow phones ([https://app.hypertask.ai/detail/project-15/7090](https://app.hypertask.ai/detail/project-15/7090)).
+<span class="label label--brand">Fix</span> A shared comment link now opens on that comment instead of the ticket top, with the comment visible on screen on both desktop and mobile. The link scrolls directly to the referenced comment when you open it—for example, from Slack or email—making it easier to reference specific points in a conversation. This fix improves navigation for long threads with hundreds of comments and helps ticket descriptions stay readable even on narrow phones.
 
 ### Actions
 Common actions include:
@@ -249,9 +249,9 @@ Common actions include:
 - **Archive**: Hide the task from current views while keeping it in the archive.
 - **Delete**: Permanently remove the task. Undo appears on the notification after deletion, clicking **Undo** restores the task to its previous column and keeps it available for future edits. For bulk deletions, undo restores all affected tasks together and still works with <kbd>Ctrl</kbd> / <kbd>Cmd</kbd>+<kbd>Z</kbd>.
 
-<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches. ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009)).
+<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches.
 
-<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth. ([HTPR-7105](https://app.hypertask.ai/detail/project-15/7105)).
+<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth.
 
 <span class="label label--brand">Security</span> Tasks can link to GitHub pull requests. Board 15 now accepts automatic PR updates only from three known GitHub accounts: Valentin Yeo and two others configured by the board team, preventing outsiders from creating tasks, moving them to review, or commenting via PRs.
 
@@ -259,7 +259,7 @@ Common actions include:
 
 <span class="label label--brand">Security</span> A team-only share link no longer exposes task content to outsiders. Before, the page sent the whole task and comments to unauthenticated users who only saw blurred content. Now an outsider sees an empty page with a Sign in or Login bar and cannot see task details or comments.
 
-<span class="label label--brand">Security</span> When you attempt to move or nest a task under another task on an inaccessible board, the operation is refused and nothing is saved. Hypertask validates board boundaries before allowing parent-child relationships across unrelated teams, preventing accidental exposure of foreign task titles or context ([HTPR-7167](https://app.hypertask.ai/detail/project-15/7167)).
+<span class="label label--brand">Security</span> When you attempt to move or nest a task under another task on an inaccessible board, the operation is refused and nothing is saved. Hypertask validates board boundaries before allowing parent-child relationships across unrelated teams, preventing accidental exposure of foreign task titles or context.
 
 ## Relations between tasks
 Create relationships between tasks to surface context without leaving tasks:
@@ -319,10 +319,10 @@ This lets you browse through tasks inside the app while the rest of your session
 ### Performance details
 - Median open times are ~0.15 seconds on desktop and ~0.17 seconds on mobile.
 - The first open after a board loads takes about 0.25 to 0.33 seconds; subsequent opens are closer to 0.13 to 0.18 seconds.
-- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority still warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before ([HTPR-6855](https://app.hypertask.ai/detail/project-15/6855)).
+- The first open after a board loads now paints its cached title and description before expensive editing property controls, so the title and description appear instantly while controls like assignees, status, and priority still warm. This tighter paint-first sequence reduces the first-open delta to about 0.10 seconds—considerably faster than before.
 
 ### Visual smoothness
-<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts ([HTPR-6899](https://app.hypertask.ai/detail/project-15/6899)). ([HTPR-6955](https://app.hypertask.ai/detail/project-15/6955)).
+<span class="label label--brand">Fix</span> Ticket pages no longer shift or jitter after opening. Visual elements that previously filled in after the initial paint now appear instantly as part of the cached board data, keeping the title, description, and controls in place across desktop and mobile for all test accounts.
 
 ### Keyboard shortcuts
 We recommend using keyboard shortcuts to navigate:
@@ -332,36 +332,36 @@ We recommend using keyboard shortcuts to navigate:
 These shortcuts preserve the instant-open feel and keep you moving without page spins or wait states.
 
 ### Assignee persistence
-<span class="label label--brand">Improvement</span> When you assign a task from the assign picker, closing the picker or pressing Escape no longer drops the assignment. The human assignee name stays on the task and persists across page reloads and subsequent checks. This applies whether you assign from the board card or from a direct task link. ([HTPR-6962](https://app.hypertask.ai/detail/project-15/6962)).
+<span class="label label--brand">Improvement</span> When you assign a task from the assign picker, closing the picker or pressing Escape no longer drops the assignment. The human assignee name stays on the task and persists across page reloads and subsequent checks. This applies whether you assign from the board card or from a direct task link.
 
 ### Faster task opening
-<span class="label label--brand">Improved</span> Pressing **Back** after opening a subtask now shows the parent task immediately instead of the subtask, with no "Loading..." flash, and **Forward** returns you to the subtask if needed. Opening a task directly from cached data shows it reliably within about 0.3 seconds on both desktop and mobile, eliminating previous delays. ([HTPR-7004](https://app.hypertask.ai/detail/project-15/7004)).
+<span class="label label--brand">Improved</span> Pressing **Back** after opening a subtask now shows the parent task immediately instead of the subtask, with no "Loading..." flash, and **Forward** returns you to the subtask if needed. Opening a task directly from cached data shows it reliably within about 0.3 seconds on both desktop and mobile, eliminating previous delays.
 
 ### Navigating to previous titles in Inbox
-<span class="label label--brand">Improved</span> Using **J** or the arrow keys to move to the next Inbox item now loads and displays it within about 0.3 seconds on desktop and mobile, removing lag that previously held up the wrong ticket title for up to several seconds. ([HTPR-7001](https://app.hypertask.ai/detail/project-15/7001)).
+<span class="label label--brand">Improved</span> Using **J** or the arrow keys to move to the next Inbox item now loads and displays it within about 0.3 seconds on desktop and mobile, removing lag that previously held up the wrong ticket title for up to several seconds.
 
 ### No flash of the ticket title after opening a board card
-<span class="label label--brand">Fixed</span> Pressing **Back** right after opening a board card now shows the board immediately, with no flash of the ticket title. In at least 19 of 20 quick Backs (within 0.3 seconds of opening a card), you see only the board, not the ticket, and the board is visible within 1 second. ([HTPR-7003](https://app.hypertask.ai/detail/project-15/7003)).
+<span class="label label--brand">Fixed</span> Pressing **Back** right after opening a board card now shows the board immediately, with no flash of the ticket title. In at least 19 of 20 quick Backs (within 0.3 seconds of opening a card), you see only the board, not the ticket, and the board is visible within 1 second.
 
 ### Task detail downloads once
-<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches. ([HTPR-7009](https://app.hypertask.ai/detail/project-15/7009)). See also [https://app.hypertask.ai/detail/project-15/7104](https://app.hypertask.ai/detail/project-15/7104) for the original pipeline issue that triggered redundant page loads.
+<span class="label label--brand">Fix</span> Opening a ticket now downloads its details once, and board cards stay up to date. Before this fix, opening a task from the board or by its link would trigger 2 to 3 redundant data fetches.
 
 ### Board tap loading
-<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth. ([HTPR-7105](https://app.hypertask.ai/detail/project-15/7105)).
+<span class="label label--brand">Fix</span> On mobile, tapping a board card no longer loads the task page twice. The board now shows the task without redundant data fetches, eliminating a flash or stutter that previously occurred. This fix applies across all boards and resizes, keeping the board-tap experience smooth.
 
 ### Faster open on cold phone
-<span class="label label--brand">Improved</span> Opening a task on a cold phone with no cached data now shows its title and description sooner (11.8 s vs 14.1 s median, 95th-percentile gap of ~2.3 s). The first load paints the title and description earlier, while controls like assignee and priority still warm up afterward, keeping the experience instant and frictionless. ([HTPR-7091](https://app.hypertask.ai/detail/project-15/7091)).
+<span class="label label--brand">Improved</span> Opening a task on a cold phone with no cached data now shows its title and description sooner (11.8 s vs 14.1 s median, 95th-percentile gap of ~2.3 s). The first load paints the title and description earlier, while controls like assignee and priority still warm up afterward, keeping the experience instant and frictionless.
 
 ### Ticket page no longer shifts on mobile
-<span class="label label--brand">Fix</span> The ticket page no longer jumps on first load. The comment box appears once and never moves: 20 of 20 fresh loads on two test accounts, on both desktop and phone. Visual elements that previously filled in after the initial paint now appear immediately as part of the cached board data, keeping the title, description, and controls in place across platforms for all test accounts. ([HTPR-7074](https://app.hypertask.ai/detail/project-15/7074)).
+<span class="label label--brand">Fix</span> The ticket page no longer jumps on first load. The comment box appears once and never moves: 20 of 20 fresh loads on two test accounts, on both desktop and phone. Visual elements that previously filled in after the initial paint now appear immediately as part of the cached board data, keeping the title, description, and controls in place across platforms for all test accounts.
 
 ### Comments no longer jump with content
-<span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load. ([HTPR-7132](https://app.hypertask.ai/detail/project-15/7132)).
+<span class="label label--brand">Behavior change</span> The comment box and comment thread no longer shift downward as content loads, so the task layout stays consistent across desktop and mobile from open to load.
 
 ### Instant board tap
 <span class="label label--brand">New</span> Clicking a board card now initializes the task with a single board interaction instead of triggering redundant rendering. This keeps the opening experience snappy across desktop and mobile, especially after boards have already been reloaded.
 
-Loading address-bar updates that occur as part of the navigation are tracked correctly as navigations within the same page rather than distinct page loads. The change applies across all boards and view types—Kanban, table, and card lists—with consistent, performant behavior. ([HTPR-7104](https://app.hypertask.ai/detail/project-15/7104)).
+Loading address-bar updates that occur as part of the navigation are tracked correctly as navigations within the same page rather than distinct page loads. The change applies across all boards and view types—Kanban, table, and card lists—with consistent, performant behavior.
 
 ## Invited-in aspects and board validation
 

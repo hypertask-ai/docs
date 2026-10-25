@@ -31,10 +31,10 @@ Think of a Page as a full-screen notepad for thinking, planning, and research th
 
 **After this fix:** The server checks an agent's access mode before each page action. A read-only agent now receives a secure refusal for all four write operations, and the page remains unchanged.
 
-This change, verified live on the QA team's own board ([HTPR-7155](https://app.hypertask.ai/detail/project-15/7155)), ensures that agent permissions match the documented behavior.
+This change, verified live on the QA team's own board, ensures that agent permissions match the documented behavior.
 
 ## Comments indexed for search
 
-<span class="label label--brand">Fix</span> Comments that are very long or empty now generate searchable search copies. Previously the AI service that creates these copies would reject such comments, leaving them invisible in results. Now they are compressed and indexed, keeping full search coverage for comment threads. This change is part of the broader Turbopuffer upsert optimization ([HTPR-7212](https://app.hypertask.ai/detail/project-15/7212)), which also affects page content indexing.
+<span class="label label--brand">Fix</span> Comments that are very long or empty now generate searchable search copies. Previously the AI service that creates these copies would reject such comments, leaving them invisible in results. Now they are compressed and indexed, keeping full search coverage for comment threads. This change is part of the broader Turbopuffer upsert optimization, which also affects page content indexing.
 
 ## Mobile pinch zoom
