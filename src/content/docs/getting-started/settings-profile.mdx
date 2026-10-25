@@ -85,41 +85,26 @@ This simplifies session handling so a single authentication flow serves all cont
 
 ## Management keys
 
-Management keys are credentials you create for programmatic access via the API. You can use them to integrate Hypertask with CI pipelines, automation scripts, or other tools.
+Management keys let API, CLI, MCP, and AI chat clients manage agents and credentials. Create them under **Settings → Connect → Management keys**, next to MCP, CLI, and REST API.
 
-### Account-scoped keys
+<Steps>
 
-Account-scoped keys grant access to everything in your account:
+1. Open [app.hypertask.ai](https://app.hypertask.ai) and sign in.
+2. Open **Settings**, then **Connect**, then **Management keys**.
+3. Enter a name, choose a scope, and choose an expiry.
+4. Choose **Create key**. Copy the key immediately. It is shown once.
 
-1. Open your Profile page in the app.
-2. Switch to the **General** tab.
-3. Click **Create new management key**.
-4. Give the key a description (e.g., "CI pipeline") and click **Save**.
-5. The key is displayed only once — save it immediately.
+</Steps>
 
-These keys are attached to your account and can access all boards and tasks.
+**Scope** is **Management**, **Usage**, or **Full access**. Full access stays on the whole account. Usage reads team AI usage and spend. Management manages agents and keys.
 
-### Team-scoped keys
+**Expiry** is **Never**, **30 days**, **90 days**, or **365 days**. A new management key starts on **Never**. The list shows **Expires** and a date, or **Never**.
 
-Team-scoped keys restrict access to a single team:
+When team-scoped keys are available, Management and Usage can be limited to one team. Full access cannot. A team key stops working if you lose access to that team.
 
-1. Open your Profile page in the app.
-2. Switch to the **General** tab.
-3. Click **Create team-scoped key**.
-4. Select the team the key should manage from the dropdown.
-5. Give the key a description and click **Save**.
-6. The key is displayed only once — save it immediately.
+REST API keys are on the same **Connect** screen, under **Developer access**. They use the same four expiry choices, and a new REST API key starts on **90 days**.
 
-**Behaviour:**
-
-- Only the selected team's eligible agents and usage are managed with this key.
-- Losing access to that team permanently disables its team-scoped keys.
-- When the feature is turned off in Settings, the key is removed and no longer usable.
-
-**Use cases:**
-
-- Provide read-only access to a CI bot that only needs to monitor one team.
-- Share keys with external contractors who only need access to a specific team.
+If a client is refused after a key's date, see [MCP troubleshooting](/mcp/troubleshooting/).
 
 ## Common Actions
 
