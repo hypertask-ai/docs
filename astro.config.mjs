@@ -14,6 +14,7 @@ export default defineConfig({
       favicon: '/glyph-white.png',
       components: {
         SiteTitle: './src/components/SiteTitle.astro',
+        PageFrame: './src/components/PageFrame.astro',
       },
       customCss: ['./src/styles/custom.css'],
       head: [

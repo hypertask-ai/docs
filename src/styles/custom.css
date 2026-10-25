@@ -161,3 +161,96 @@ h1#_top,
 .card-grid {
 	gap: 1rem;
 }
+
+/*
+  HyperAI dock (help.hypertask.ai widget, data-mode="docked").
+  The widget adds .hypertask-chat-docked at >=900px and sets
+  body margin-right to --hypertask-chat-dock-width. Do not set that margin here.
+  Fixed Starlight bars are positioned against the viewport, so they need the
+  same right inset or they slide under the dock.
+*/
+body.hypertask-chat-docked header.header {
+	right: var(--hypertask-chat-dock-width, 400px);
+	width: auto;
+}
+
+body.hypertask-chat-docked mobile-starlight-toc nav {
+	right: var(--hypertask-chat-dock-width, 400px);
+}
+
+/* The dock replaces the right rail until the article, left nav, and a full
+   TOC column (45rem + 18.75rem) fit beside the 400px dock: 107.5rem.
+   Below 72rem Starlight already uses the fixed "On this page" bar instead,
+   so that bar stays and only gets the right inset above. */
+@media (max-width: 107.49rem) {
+	body.hypertask-chat-docked {
+		--__toc-width: 0rem;
+	}
+}
+
+@media (min-width: 72rem) and (max-width: 107.49rem) {
+	body.hypertask-chat-docked {
+		--__toc-width: 0rem;
+		--sl-content-margin-inline: auto;
+	}
+
+	body.hypertask-chat-docked .right-sidebar-container {
+		display: none;
+	}
+
+	body.hypertask-chat-docked .main-pane {
+		width: 100%;
+	}
+}
+
+@media (min-width: 107.5rem) {
+	body.hypertask-chat-docked .right-sidebar {
+		right: var(--hypertask-chat-dock-width, 400px);
+		left: auto;
+		width: var(--sl-sidebar-width);
+	}
+}
+
+/* 400px dock + 18.75rem sidebar + a 32rem article. Narrower than that, fold
+   the sidebar into the menu button so the article stays readable. */
+@media (max-width: 75.75rem) {
+	body.hypertask-chat-docked {
+		--sl-content-inline-start: 0px;
+	}
+
+	body.hypertask-chat-docked .sidebar-pane {
+		--sl-sidebar-visibility: hidden;
+		right: var(--hypertask-chat-dock-width, 400px);
+		left: 0;
+		width: auto;
+		background-color: var(--sl-color-bg-sidebar);
+	}
+
+	body.hypertask-chat-docked [aria-expanded='true'] ~ .sidebar-pane {
+		--sl-sidebar-visibility: visible;
+	}
+
+	body.hypertask-chat-docked starlight-menu-button button {
+		display: flex;
+		right: calc(var(--hypertask-chat-dock-width, 400px) + var(--sl-nav-pad-x));
+	}
+
+	body.hypertask-chat-docked header.header {
+		padding-inline-end: calc(
+			var(--sl-nav-gap) + var(--sl-nav-pad-x) + var(--sl-menu-button-size)
+		);
+	}
+}
+
+/* Floating launcher below 900px: 48px button, 20px from the corner.
+   Keep the end of the page, and open mobile UI, clear of it. */
+@media (max-width: 899px) {
+	.main-frame {
+		padding-bottom: calc(48px + 20px + 12px);
+	}
+
+	body[data-mobile-menu-expanded] #chat-widget-btn,
+	body:has(mobile-starlight-toc details[open]) #chat-widget-btn {
+		visibility: hidden;
+	}
+}
