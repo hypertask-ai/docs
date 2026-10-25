@@ -971,7 +971,7 @@ Options:
   --project <id>
       Project ID (carries the team's AI settings)
   --task <ticket>
-      Ticket to resolve the project from, e.g. HTPR-4650
+      Ticket to resolve the project from
 
 Example:
   hypertask ai improve --command <name>
@@ -991,7 +991,7 @@ Options:
   --project <id>
       Project ID (defaults to the task's board)
   --task <ticket>
-      Ticket to use as context, e.g. HTPR-4650
+      Ticket to use as context
   --mode <task-writer|write-with-ai>
       task-writer drafts a description, write-with-ai drafts a comment
   --instructions <text>
@@ -3093,7 +3093,7 @@ Options:
   --due <date>
       Due date (ISO 8601)
   --parent-task <ref>
-      Parent task: internal id or ticket ref (e.g. HTPR-4578)
+      Parent task: internal id or ticket ref
   --section <id|name>
       Section ID or name (e.g. 4005 or "Doing")
   --assignee <list>
@@ -3367,7 +3367,7 @@ Usage: hypertask task tree [options]
 
 Options:
   --ticket <ticket>
-      Ticket number (e.g. HTPR-15)
+      Ticket number
   --task-id <id>
       Numeric task ID
   --depth <n>
@@ -3465,7 +3465,7 @@ Options:
   --remove-label <list>
       Alias of --remove-labels. Remove labels without dropping the ones you did not name (repeatable).
   --parent-task <ref>
-      Parent task: internal id or ticket ref (e.g. HTPR-4578)
+      Parent task: internal id or ticket ref
   --clear-parent
       Detach this task from its parent
   --attach <path>

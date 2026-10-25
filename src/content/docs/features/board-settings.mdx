@@ -44,7 +44,7 @@ Keep data in sync across browsers by default for authenticated board and table r
 ```
 
 ## Ticket prefix
-Each board has a deterministic ticket prefix (e.g., HTPR, YPER4, HYFA). Owners can rename the prefix from board settings without changing existing ticket numbers. Prefixes are 2–5 letters or digits, unique within the team, and appear as live previews (e.g., **HTPR-6839** becomes **NEW-6839**).
+Each board has a deterministic ticket prefix (e.g., HTPR, YPER4, HYFA). Owners can rename the prefix from board settings without changing existing ticket numbers. Prefixes are 2–5 letters or digits, unique within the team, and appear as live previews.
 
 ### How to change a prefix
 From the app:
@@ -66,7 +66,7 @@ From the command palette, type **"ticket prefix"** to jump to this setting. The 
 
 ### Rationale
 - **Instant updates:** The displayed ID is built from the board's current prefix and the ticket's number, so changing the prefix is a quick update instead of rewriting every ticket.
-- **Backwards compatibility:** Old ticket IDs keep resolving via aliases, just like old numbers already do (e.g., `https://app.hypertask.ai/detail/project-15/6839`).
+- **Backwards compatibility:** Old ticket IDs keep resolving via aliases, just like old numbers already do.
 - **Avoid clashes:** Moved tickets take the next free number, so prefixes and numbers never conflict, even after deleting tickets or changing prefixes.
 
 <Aside type="tip">
@@ -191,14 +191,14 @@ Hypertask tracks rule executions at the board level for review:
 Hygiene protects performance and schema stability over time. Project owners should rely on boards and historiques for governance rather than logs after a few days.
 </Aside>
 
-## Synced IndexedDB defaults (HTPR-5260)
+## Synced IndexedDB defaults
 You can choose between two read models for Boards and Tables:
 - **Synchronized IndexedDB (default)** — Active when no `<code>?local_db=0</code>` in the URL. Keeps data in sync across opened tabs and browsers smoothly, at the cost of higher CPU and a small memory overhead. Use this if you regularly open the same board in multiple tabs or devices.
 - **Local IndexedDB (optional)** — Activated by appending `<code>?local_db=0</code>` to the URL. Reads and writes stay in the local browser state, giving high performance with less CPU and a smaller footprint. Data may not reflect changes from other tabs or browsers until you reload.
 
 This defaults to the synchronized model for authenticated Board and Table routes. The system preserves the opt-out via URL flags, so local flow can still be opted into for testing or performance-sensitive workflows.
 
-## Auto-error routing targeting Bugs (HTPR-5386)
+## Auto-error routing targeting Bugs
 When auto-error tickets are routed to sections, Hypertask now targets the exact Bugs section by default instead of the board's default column. This applies globally for boards with a specific Bugs section. Boards without a clearly defined Bugs section fall back to the current default section behavior. Changes take effect after board settings are saved.
 
 <Aside type="tip">

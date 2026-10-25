@@ -40,7 +40,7 @@ Assign a person to the entire board:
 hypertask tasks assign --project 15 --assignee valentin@team.com --all
 ```
 
-<Aside type="note">Re-assigning the same user returns `already-assigned` without creating a duplicate assignment row ([HTPR-6279](https://app.hypertask.ai/detail/project-15/6279)).</Aside>
+<Aside type="note">Re-assigning the same user returns `already-assigned` without creating a duplicate assignment row.</Aside>
 
 ## Clear all assignments
 
@@ -84,7 +84,7 @@ hypertask task update <ticket> --clear-assignees
 - Useful when you want to explicitly signal an unassignment.
 - Performs the same operation as passing empty `--assignee`.
 
-<Aside type="note">HTPR-6520 shipped support for empty `--assignee` and `--clear-assignees` to clear all assignees on a task or board ([HTPR-6520](https://app.hypertask.ai/detail/project-15/6520)).</Aside>
+<Aside type="note">Shipped support for empty `--assignee` and `--clear-assignees` to clear all assignees on a task or board.</Aside>
 
 ## Agent details
 
@@ -102,7 +102,7 @@ hypertask agents get --id <agent-id>
 - Returns an error if no matching agent is found.
 - Requires authentication.
 
-<Aside type="note">HTPR-6473 fixed the `UnknownCommand` error for `hypertask agents get --id`, allowing you to retrieve agent details from the CLI ([HTPR-6473](https://app.hypertask.ai/detail/project-15/6473)).</Aside>
+<Aside type="note">Fixed the `UnknownCommand` error for `hypertask agents get --id`, allowing you to retrieve agent details from the CLI.</Aside>
 
 ## Task claims
 
