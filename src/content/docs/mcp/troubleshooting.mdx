@@ -85,13 +85,7 @@ In **Settings → Connect → MCP**, an active token shows **Token active** and 
 
 > Authentication required. Send a bearer token on every request.
 
-The Hypertask mobile callback is the exception. When its refresh token is past its date, the token endpoint returns:
-
-> invalid_grant — Refresh token is invalid or expired
-
 **Why.** Approving the connection in the browser gives a normal MCP client an access token that lasts **90 days**. That client does not receive a refresh token. When the 90 days are up, start the connection again.
-
-The mobile callback `hypertask-native://oauth/callback` receives a **1 hour** access token and a **90 day** refresh token when that client is registered for refresh and the approval is not for an agent. A refresh before the refresh token expires replaces both: the new access token lasts 1 hour, and the new refresh token lasts 90 days from the refresh. After the refresh token's date, the response is `invalid_grant` with the description above.
 
 **What to do.**
 
@@ -136,6 +130,6 @@ Choosing **Approve and connect** on an expired request returns you to the same *
 2. On [app.hypertask.ai](https://app.hypertask.ai), sign out if you are still signed in, then sign in again.
 3. In the AI client, start the Hypertask connection again.
 4. When the page says the app wants to connect, choose **Approve and connect**.
-5. If the page says the app is no longer registered, or **Connection request expired** comes back, [contact support](https://www.hypertask.ai/support).
+5. If the page says the app is no longer registered, or **Connection request expired** comes back, [contact support](https://help.hypertask.ai).
 
 </Steps>
