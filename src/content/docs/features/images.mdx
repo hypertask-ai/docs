@@ -35,13 +35,13 @@ This ensures you can access the highest-quality version of your photos while mai
 
 ## Who can download attachments
 
-<span class="label label--brand">New</span> Only people who can see the parent ticket can download its attachments. Access is scoped to the task: observers outside the ticket cannot reach downloads even if they can view the board.
+<span class="label label--brand">New</span> Only people who can see the parent ticket can download its attachments. Access follows board membership: people who are not the owner, an Admin, or a Member of that board cannot reach downloads.
 
 ### How it works
 
-- When opening a task or viewing the task detail lightbox, the system checks your board and task membership before exposing download URLs to the client.
-- If you cannot see the ticket, downloads appear as `not found` or are inaccessible regardless of your board-level access.
-- Owners, members, and regular board members who see the ticket can download files normally. Agents that have been granted task-level visibility also see downloads.
+- When opening a task or viewing the task detail lightbox, the system checks that you own the board or are an Admin or Member before exposing download URLs.
+- If you are not on the board, downloads come back as not found.
+- The board owner, Admins, and Members who can see the ticket can download files. Agents on that board can download too.
 - This change prevents unauthorized downloads for attachments that originated on private or board-limited tasks.
 
 ### What this protects
@@ -52,8 +52,8 @@ This ensures you can access the highest-quality version of your photos while mai
 
 ### When it applies
 
-- Board owners, task members, and AI agents with access to a ticket can download its attachments.
-- External viewers, board guests, or users who lack task visibility cannot reach downloads, even if they can view the broader board.
+- The board owner, Admins, Members, and AI agents on the board can download its attachments.
+- People who are not the board owner, an Admin, or a Member cannot reach downloads. A public share link can show the board, and it does not let them download.
 
 ## Excluding previews
 
