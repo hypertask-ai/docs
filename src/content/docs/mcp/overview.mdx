@@ -56,13 +56,13 @@ This enables AI assistants to self-discover and connect to Hypertask without man
 
 ### Authentication
 
-MCP connections are authenticated with **JWT bearer tokens**. To get your token:
+MCP connections are authenticated with **JWT bearer tokens**. To get your personal API key:
 
 <Steps>
 
 1. Open [app.hypertask.ai](https://app.hypertask.ai) and sign in.
-2. Go to **Settings** (gear icon in the sidebar).
-3. Copy your **API key** from the MCP section.
+2. Go to **Settings** (gear icon in the sidebar), then **Connect**, then **MCP**.
+3. Copy your personal API key (**Generate** or **Renew**, then **Copy**).
 
 </Steps>
 
@@ -154,7 +154,7 @@ We also measure that claim. The agents dashboard can show a weekly MCP-versus-CL
 
 <TabItem label="Claude Desktop">
 
-Add to your Claude Desktop config file (`claude_desktop_config.json`):
+Add to your Claude Desktop config file (`claude_desktop_config.json`). Use your personal API key from Hypertask: **Settings** (gear icon) → **Connect** → **MCP** → copy API key.
 
 ```json
 {
@@ -174,7 +174,7 @@ Add to your Claude Desktop config file (`claude_desktop_config.json`):
 
 <TabItem label="Claude Code">
 
-Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run `claude mcp add --transport http hypertask https://mcp.hypertask.ai/mcp`:
+Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run `claude mcp add --transport http hypertask https://mcp.hypertask.ai/mcp`. Use your personal API key from Hypertask: **Settings** (gear icon) → **Connect** → **MCP** → copy API key.
 
 ```json
 {
@@ -194,7 +194,7 @@ Add to your project's `.mcp.json` or global `~/.claude/mcp.json`, or run `claude
 
 <TabItem label="Cursor">
 
-Open **Settings > MCP Servers** and add a new server.
+Open **Settings > MCP Servers** and add a new server. Use your personal API key from Hypertask: **Settings** (gear icon) → **Connect** → **MCP** → copy API key.
 
 ```json
 {
@@ -214,7 +214,7 @@ Open **Settings > MCP Servers** and add a new server.
 
 <TabItem label="VS Code">
 
-Open the Command Palette (<kbd>Ctrl+Shift+P</kbd> / <kbd>Cmd+Shift+P</kbd>) and run **MCP: Open User Configuration**, or add this to `.vscode/mcp.json`. Requires VS Code 1.99 or later.
+Open the Command Palette (<kbd>Ctrl+Shift+P</kbd> / <kbd>Cmd+Shift+P</kbd>) and run **MCP: Open User Configuration**, or add this to `.vscode/mcp.json`. Requires VS Code 1.99 or later. Use your personal API key from Hypertask: **Settings** (gear icon) → **Connect** → **MCP** → copy API key.
 
 ```json
 {
@@ -238,7 +238,7 @@ Open the Command Palette (<kbd>Ctrl+Shift+P</kbd> / <kbd>Cmd+Shift+P</kbd>) and 
 
 1. Open **Settings > Connectors > Personal connectors > New MCP server**.
 2. Enter `https://mcp.hypertask.ai/mcp`.
-3. Choose **Bearer token** and paste the token from Hypertask **Settings → Connect → MCP** (**Generate** or **Renew**, then **Copy**).
+3. Choose **Bearer token** and paste your personal API key from Hypertask **Settings** (gear icon) → **Connect** → **MCP** (**Generate** or **Renew**, then **Copy**).
 
 </Steps>
 
@@ -258,7 +258,7 @@ Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom act
    ```
    https://mcp.hypertask.ai/openapi.json
    ```
-4. Under **Authentication**, choose **API Key** and paste your Hypertask API key (the same token you use for MCP). Set the header name to `Authorization` and the value format to `Bearer YOUR_API_KEY`.
+4. Under **Authentication**, choose **API Key** and paste your personal API key from **Settings** (gear icon) → **Connect** → **MCP**. Set the header name to `Authorization` and the value format to `Bearer YOUR_API_KEY`.
 5. Save the action. ChatGPT will now list the available Hypertask operations and can call them on your behalf.
 
 </Steps>
