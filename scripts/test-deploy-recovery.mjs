@@ -8,7 +8,7 @@ const workflow = readFileSync(new URL('../.github/workflows/deploy.yml', import.
 const recovery = workflow.match(/      - name: Close recovered deploy alarm\n([\s\S]*?)(?=\n      - name:|$)/);
 assert.ok(recovery, 'successful deployments must resolve the failure alarm');
 assert.match(recovery[1], /        if: success\(\)/);
-assert.ok(workflow.indexOf(recovery[0]) > workflow.indexOf('- name: Purge Cloudflare edge cache'));
+assert.ok(workflow.indexOf(recovery[0]) > workflow.indexOf('- name: Report a failed deploy'));
 assert.match(workflow, /- name: Report a failed deploy\n        if: failure\(\)/);
 const shell = recovery[1].split('        run: |\n')[1].replace(/^          /gm, '');
 const dir = mkdtempSync(join(tmpdir(), 'docs-deploy-recovery-'));
@@ -40,6 +40,8 @@ if (args[0] === 'api') {
     return { status: result.status, calls: readFileSync(callsFile, 'utf8').trim().split('\n').filter(Boolean).map(JSON.parse) };
   };
   const success = run();
+  assert.equal(success.calls[0][1], 'repos/hypertask-ai/docs/actions/workflows/deploy.yml/runs?branch=main&per_page=1');
+  assert.equal(success.calls[0].at(-1), '.workflow_runs[0].head_sha');
   assert.equal(success.status, 0);
   assert.deepEqual(success.calls.filter(c => c[1] === 'close').map(c => c[2]), ['84', '91']);
   for (const call of success.calls.filter(c => c[1] === 'close')) {
