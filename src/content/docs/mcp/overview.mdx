@@ -212,6 +212,40 @@ Open **Settings > MCP Servers** and add a new server.
 
 </TabItem>
 
+<TabItem label="VS Code">
+
+Open the Command Palette (<kbd>Ctrl+Shift+P</kbd> / <kbd>Cmd+Shift+P</kbd>) and run **MCP: Open User Configuration**, or add this to `.vscode/mcp.json`. Requires VS Code 1.99 or later.
+
+```json
+{
+  "servers": {
+    "hypertask-mcp": {
+      "type": "http",
+      "url": "https://mcp.hypertask.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_API_KEY"
+      }
+    }
+  }
+}
+```
+
+</TabItem>
+
+<TabItem label="Lovable">
+
+<Steps>
+
+1. Open **Settings > Connectors > Personal connectors > New MCP server**.
+2. Enter `https://mcp.hypertask.ai/mcp`.
+3. Choose **Bearer token** and paste the token from Hypertask **Settings → Connect → MCP** (**Generate** or **Renew**, then **Copy**).
+
+</Steps>
+
+Requires a paid Lovable plan.
+
+</TabItem>
+
 <TabItem label="ChatGPT">
 
 Hypertask exposes an **OpenAPI schema** that ChatGPT can consume as a custom action or GPT integration. This lets ChatGPT create tasks, list projects, search tickets, and more - without needing native MCP support.
@@ -324,8 +358,10 @@ Hypertask MCP works with any client that supports the MCP standard, and ChatGPT 
 - **Claude Code** - Anthropic's CLI agent
 - **Claude Desktop** - Anthropic's desktop app
 - **Cursor** - AI-powered code editor
+- **VS Code** - 1.99 or later, via **MCP: Open User Configuration** or `.vscode/mcp.json`
 - **Windsurf** - Codeium's AI editor
 - **ChatGPT** - via the Hypertask OpenAPI schema (custom actions / GPTs)
+- **Lovable** - personal connectors on a paid plan, with a bearer token
 - **Any MCP-compatible agent** - anything that speaks the protocol
 
 ## Next steps
