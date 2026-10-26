@@ -1,0 +1,30 @@
+---
+title: Security and privacy
+description: Sign-in methods, session length, account deletion, and where to read the privacy policy.
+---
+
+## Do you support SSO or SAML login?
+
+No. Hypertask does not offer SSO, SAML, or SCIM.
+
+You can sign in with Google, with email, or with a passkey. Email sign-in sends a temporary login link and a verification code. The login page shows **Sign in with a passkey** when the browser supports passkeys. Add or remove a passkey in **Settings → Profile → Accounts**.
+
+A signed-in session lasts 30 days. Using Hypertask refreshes that session about once a day, which starts the 30 days again.
+
+## Is Hypertask GDPR compliant, and where is my data stored?
+
+The [privacy policy](https://hypertask.ai/privacy) is from Hypertask Lab Ltd. in London. It describes your right to request access to the personal information Hypertask holds, and to ask for a correction when that information is inaccurate, incomplete, or out of date. Third parties named in the policy include Google Analytics, Gmail, and Stripe. Google Calendar is included only if you connect it.
+
+These docs do not state a data hosting region, and they do not include a data processing agreement. For data-processing questions, [contact support](https://docs.hypertask.ai/getting-started/contact-support/).
+
+## Can I delete my account?
+
+Yes. Open **Settings → Profile → General**. Under **Danger zone**, choose **Delete account**.
+
+The screen says this wipes your boards and data, and that your email can sign up again from scratch. Confirming shows that this cannot be undone and that everything you own is wiped. Hypertask then signs you out.
+
+Cancel your subscription before you delete the account. If a subscription is still active, deletion is refused, and the screen says it could not delete your account.
+
+## Can I export my data?
+
+There is no data export in the app. You can read tasks with the [REST API](/api/rest-api/) and the [CLI](/cli/reference/) (`hypertask task list`).
