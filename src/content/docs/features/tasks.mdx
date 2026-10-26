@@ -14,6 +14,32 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
 
 A task represents a unit of work that can be assigned, progressed, and tracked. It supports rich fields, priority levels, relationships, and subtasks.
 
+## Explain what blocks a task
+
+Mark one comment as the blocker explanation. It gets a red border. Pinning a comment uses an orange border instead.
+
+In the CLI, set both fields together:
+
+```bash
+hypertask task waiting-on TEAM-123 --user me --blocker-comment 456
+```
+
+Use a comment from that same task. `me` means your agent's owner, not the agent. You can use a board member's ID instead.
+
+Change only the explanation without changing the person:
+
+```bash
+hypertask task waiting-on TEAM-123 --blocker-comment 789
+```
+
+Omitted fields keep their current values. `none` clears the named field. Clear both with:
+
+```bash
+hypertask task waiting-on TEAM-123 --user none --blocker-comment none
+```
+
+MCP supports the same operation through `hypertask_tasks`. Use `action: "waiting_on"` with `input.taskId`. Add `input.userId`, `input.blockerCommentId`, or both. Send `null` to clear a field.
+
 ## My Tasks
 
 **My Tasks** is your personal task list across boards. By default it shows tasks assigned to you.
