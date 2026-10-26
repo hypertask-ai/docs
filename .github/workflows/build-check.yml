@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Test deploy alarm recovery
+        run: node scripts/test-deploy-recovery.mjs
+
       - name: Test MDX rules
         run: npm run test:mdx
 
