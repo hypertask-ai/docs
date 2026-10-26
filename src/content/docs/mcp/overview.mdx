@@ -287,38 +287,6 @@ Some capabilities are shared but named differently. MCP folds comment edits into
 
 AI Chat also has three tools no other surface has: `search_help_docs`, `rag_retrieval` over indexed board content, and `web_search`.
 
-## Help-site AI chat
-
-The **help-site AI chat** at [help.hypertask.ai](https://help.hypertask.ai) provides real-time documentation and MCP guidance. This chat is automatically enriched with Hypertask's MCP server knowledge, including tool descriptions, schemas, and workflows.
-
-### Knowledge coverage
-- **MCP tools:** Instant understanding of all MCP operations (tools, parameters)
-- **Workflow patterns:** Guidance from MCP agent workflows (e.g. safe task claiming, heartbeat loops)
-- **API schemas:** Embeds OpenAPI specs and model responses to answer "what can I call with these parameters?"
-- **Board content:** RAG-based retrieval over indexed tasks, comments, and pages for contextual answers
-
-### Performance
-- **Model:** google/gemini-3.5-flash-lite via the Vercel AI Gateway
-- **Streaming:** Real-time tokens around 0.3s to first token
-- **Multimodal:** Text and image questions in a single model
-
-### Try it
-```bash
-# Ask about tools
-"which MCP tools exist for time tracking?"
-
-# Ask about workflows
-"how should an agent claim a task and keep it alive?"
-
-# Ask about a specific endpoint
-"show me the hypertask_tasks tool schema for the create action"
-```
-
-### Retrieval
-The chat uses keyword scoring instead of first-come fill, so contextual terms like "cli", "mcp", and "task" score accurately. Answers link to specific MCP tools, API endpoints, and board content.
-
----
-
 ## Known limitations
 
 | Feature | Status | Details |
