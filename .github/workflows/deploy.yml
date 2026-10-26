@@ -99,4 +99,3 @@ jobs:
             [ -n "$ISSUE" ] || continue
             gh issue close "$ISSUE" --comment "Deployment recovered. Build, Pages upload and cache purge succeeded for ${GITHUB_SHA}: ${RUN_URL}"
           done <<< "$ISSUES"
-
