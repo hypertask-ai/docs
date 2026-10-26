@@ -13,6 +13,7 @@ jobs:
     name: Build and deploy to Cloudflare Pages
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
       issues: write
 

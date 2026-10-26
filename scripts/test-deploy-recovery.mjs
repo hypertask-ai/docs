@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const workflow = readFileSync(new URL('../.github/workflows/deploy.yml', import.meta.url), 'utf8');
+assert.match(workflow, /    permissions:\n      actions: read\n      contents: read\n      issues: write/);
 const recovery = workflow.match(/      - name: Close recovered deploy alarm\n([\s\S]*?)(?=\n      - name:|$)/);
 assert.ok(recovery, 'successful deployments must resolve the failure alarm');
 assert.match(recovery[1], /        if: success\(\)/);
