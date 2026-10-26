@@ -120,6 +120,20 @@ Tasks in any column are eligible: backlog, in-progress, review, and so on.
 Use the **Archive after** setting on columns you keep as a long-running backlog. Combine with staleness for a two-layer cleanup rule.
 </Aside>
 
+## Set a column work limit
+
+Use a work limit to spot crowded columns without blocking task moves.
+
+1. Open the board and click a column title.
+2. In **Manage board columns**, open that column's settings.
+3. Enter a positive whole number in **Work limit**.
+4. Leave the field to save the limit.
+
+The column count shows active tasks / limit and turns red above the limit.
+The count includes active tasks hidden by filters. Archived and deleted tasks do not count.
+You can still create and move tasks when the column is over its limit.
+Clear **Work limit** to remove the limit. The limit belongs to the column, so saved views share it.
+
 ## Staleness detection
 Staleness rules keep track of active tasks that have not been moved, updated, or interacted with in a defined window. This helps surface forgotten items that might need re-evaluation or removal.
 
@@ -129,7 +143,7 @@ Configuration:
 - **Auto-assign stale tasks** (Optional) — Toggle the rule that moves or re-assigns stale tasks to a specific column or assignee.
 - **Stale reminders** (Optional) — Get notified when tasks reach the staleness threshold so you can prioritize review or cleanup.
 
-When staleness is enabled, stale Kanban cards show the task's age on the board before its age in the current column. Use Ctrl+K to toggle staleness for the board or the current view.
+When staleness is enabled, Kanban cards show the task's age on the board before its age in the current column. Fresh cards show muted ages. Cards become amber at the warning threshold and red at the hot threshold. Use Ctrl+K to toggle staleness for the board or the current view.
 
 ### Filtering stale vs healthy
 Every staleness filter is named so that typing **stale** in the filter menu finds all of them:
