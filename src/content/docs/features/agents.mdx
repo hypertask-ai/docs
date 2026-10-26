@@ -12,7 +12,7 @@ Agents are autonomous workers that create, update, and manage tasks on your boar
 Follow [Connect a new agent](/connect-an-agent/) for the full setup:
 
 1. **Create:** In [Agent Chat](https://app.hypertask.ai/agents/chat), choose **+ Add agent**. This creates an agent with no boards and shows its token once. Alternatively, open a team board and use **Ctrl+K > Create agent** with **External** selected. That path adds the agent to the current board and opens its page.
-2. **Copy the token:** Save the Chat token before closing the dialog. If you did not copy a token from board-based creation, use **Access key > Regenerate** on the agent page and copy the new token.
+2. **Copy the token:** Save the Chat token before closing the dialog. If you did not copy a token from board-based creation, use **Access key > Regenerate** on the agent page and copy the new token. The access key is for a managed agent's own identity, and connecting your own editor (VS Code, Cursor, Claude Code) uses your personal API key from **Settings** (gear icon) → **Connect** → **MCP** instead ([Authentication](/mcp/overview/#authentication)).
 3. **Add boards:** The person who owns the agent opens [Agents](https://app.hypertask.ai/agents), opens the agent, expands **Board access**, and ticks a board they can access. Turn the agent on first if disabled. Changes save immediately. **Board settings > Agents** only lists agents already attached; it has no add control.
 
 Private agents are visible only to their owner. An agent can only join boards in its team; the first board establishes that team.
