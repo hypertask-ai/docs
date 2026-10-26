@@ -1,22 +1,48 @@
 ---
 title: "Pages"
-description: Full-screen notepads attached to tasks, RAG-fed, versioned, and workable by agents and humans.
+description: Create board documents, link tickets, and find pages.
 ---
 
 import { Aside, Card, CardGrid, LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
 
-Full-screen pages for explorations, deep dives, and research attached directly to a task. Pages are markdown-editable, versioned, and automatically indexed for the AI so agents can read, extend, and search them from any surface — CLI, MCP, REST, or AI Chat.
+Pages keep research and notes on your boards. A page can stand alone or link tickets. Open **Pages** below **Table** in the sidebar. You can also use **Commands → Go to Pages**.
 
 ## What is a Page?
 
-Think of a Page as a full-screen notepad for thinking, planning, and research that lives on top of a task. Every page is tied to a specific task, so it stays in context of the work you're on. Pages are:
+A page belongs to a board. Linking a ticket does not grant access. Pages follow their board’s existing permissions. Pages are:
 
-- **Task-bound:** Live inside a task detail and accessible from the task row.
+- **Board-owned:** Stand alone or link multiple tickets.
 - **Markdown-first:** Write in markdown; the editor renders rich HTML with TipTap.
 - **Agent-friendly:** Created, appended, updated, and archived programmatically via CLI, MCP, REST, and AI Chat.
 - **RAG-indexed:** Every write is indexed so the AI can search, summarize, and reason over page content.
 - **Versioned:** Every change is captured with history and restore capabilities.
 - **Conflict-safe:** Optimistic-lock guards return a 409 conflict if multiple agents try to write at once.
+
+## Create and find pages
+
+1. Open **Pages** from the sidebar or Commands.
+2. Choose **This board** or **All boards**.
+3. Search by page title or content.
+4. Choose **New page** to start a document.
+5. Choose its board when prompted.
+
+Your title and content save automatically.
+**Archived pages** lists documents removed from active lists.
+
+## Link tickets and pages
+
+On a page, choose **+ Link ticket**.
+Pick an existing ticket from the search window.
+**Linked tickets** shows the page’s visible ticket links.
+Choose **Unlink** to remove a link.
+Unlinking keeps the page and ticket.
+
+On a ticket, choose **+ Link page**.
+Pick an existing page from the list.
+The page then appears in that ticket’s **Pages**.
+Commands also includes **Link page** and **Link ticket**.
+
+Pages without visible tickets show **Back to Pages**.
 
 ---
 
