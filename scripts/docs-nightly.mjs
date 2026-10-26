@@ -108,8 +108,12 @@ export async function runNightly(root = ROOT, site = SITE) {
   const commands = new Set([...cliReference.matchAll(/^## `hypertask ([^`]+)`/gm)].map((m) => m[1]));
   if (!tools.size || !commands.size) failures.push('generated references are empty');
   let links = 0;
+  const redirects = new Set();
   for (const file of htmlFiles) {
-    for (const href of extractLinks(readFileSync(file, 'utf8'))) {
+    const html = readFileSync(file, 'utf8');
+    const head = parse(html).childNodes.find((node) => node.tagName === 'html')?.childNodes.find((node) => node.tagName === 'head');
+    if (head?.childNodes.some((node) => node.tagName === 'meta' && node.attrs.some((attr) => attr.name === 'http-equiv' && attr.value.toLowerCase() === 'refresh'))) redirects.add(file);
+    for (const href of extractLinks(html)) {
       links++;
       try {
         if (localLinkFile(href, file, dist, site) === '') failures.push(`${relative(root, file)}: broken link ${href}`);
@@ -134,8 +138,7 @@ export async function runNightly(root = ROOT, site = SITE) {
       }
     }
   }
-  // Built HTML covers every content page, sidebar route and changelog detail.
-  const exports = htmlFiles.filter((file) => relative(dist, file) !== '404.html').map((file) => {
+  const exports = htmlFiles.filter((file) => relative(dist, file) !== '404.html' && !redirects.has(file)).map((file) => {
     const page = relative(dist, file).replace(/\/index\.html$/, '').replace(/\.html$/, '');
     return page + '.md';
   });

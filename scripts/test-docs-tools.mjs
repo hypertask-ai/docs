@@ -80,7 +80,7 @@ const server = createServer((request, response) => {
 await new Promise((done) => server.listen(0, '127.0.0.1', done));
 const site = `http://127.0.0.1:${server.address().port}`;
 try {
-  for (const dir of ['dist/a', 'src/content/docs/api', 'src/content/docs/cli', 'src/content/changelog']) mkdirSync(join(root, dir), { recursive: true });
+  for (const dir of ['dist/a', 'dist/old', 'src/content/docs/api', 'src/content/docs/cli', 'src/content/changelog']) mkdirSync(join(root, dir), { recursive: true });
   const put = (path, text) => writeFileSync(join(root, path), text);
   put('dist/a/index.html', '<a href="/a/">A</a>');
   put('dist/a.md', '# A');
@@ -96,7 +96,11 @@ try {
   assert.equal(localLinkFile('https://elsewhere.test/', join(root, 'dist/a/index.html'), join(root, 'dist'), site), null);
   assert.equal((await checkUrl(site + '/missing')).error, 'HTTP 404');
   assert.equal((await checkUrl(site + '/empty')).error, 'empty response');
+  put('dist/old/index.html', '<!doctype html><meta http-equiv="refresh" content="0;url=/a/"><link rel="canonical" href="' + site + '/a/"><a href="/a/">Moved</a>');
   assert.deepEqual(await runNightly(root, site), []);
+  put('dist/old/index.html', '<meta http-equiv="refresh" content="0;url=/absent/"><a href="/absent/">Moved</a>');
+  assert.ok((await runNightly(root, site)).some((failure) => failure.includes('broken link /absent/')));
+  put('dist/old/index.html', '<meta http-equiv="refresh" content="0;url=/a/"><a href="/a/">Moved</a>');
   put('dist/a/index.html', '<a href="/absent/">Bad</a>');
   put('src/content/docs/a.mdx', '`hypertask_missing` `hypertask task typo` ![bad](/absent.png)');
   put('dist/a.md', '');
