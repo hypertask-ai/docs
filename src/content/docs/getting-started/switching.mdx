@@ -1,0 +1,23 @@
+---
+title: Switching from Trello, Jira, or Asana
+description: Switching from Trello, Jira, Asana, or Linear. Hypertask has no task import. Create tasks with an agent over MCP or the CLI.
+---
+
+Switching from Trello, Jira, or Asana usually starts with two questions: whether existing tasks can move over, and how Hypertask differs from Linear or Jira.
+
+## Importing tasks
+
+Hypertask has no task import. There is no one-click import from Trello, Jira, Asana, or Linear. The import routes in the product import [AI skills](/features/skills/), not tasks.
+
+Export a CSV from the old tool. Connect an agent over [MCP](/mcp/overview/) or the [CLI](/cli/reference/), and ask it to create the tasks from that file.
+
+- CLI: [`hypertask task create`](/cli/commands/#hypertask-task-create) creates one task. It needs a project id and a title.
+- MCP: [`hypertask_tasks`](/api/tools-reference/#hypertask_tasks) with action `create` creates one task the same way.
+
+[Agent workflows](/mcp/workflows/) describe how an agent lists board work and creates tasks.
+
+## How Hypertask differs
+
+- **Keyboard-first UI.** The [search screen](/features/search-screen/) is a keyboard-first way to find tasks, and the app publishes its [keyboard shortcuts](/features/keyboard-shortcuts/).
+- **AI agents.** Agents [pick up board work](/mcp/workflows/) over MCP and the CLI.
+- **BYOK plan.** [Bring Your Own Key](/features/byok/) uses your own model keys. [Included AI](/features/ai-features/#included-ai-allowance) describes the Free, Pro, and BYOK allowances.
