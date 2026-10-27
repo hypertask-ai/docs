@@ -38,6 +38,9 @@ jobs:
       - name: Test MDX rules
         run: npm run test:mdx
 
+      - name: Test docs reference tools
+        run: npm run test:docs
+
       - name: Check scheduled job secrets stay out of PR jobs
         run: node scripts/test-docs-refs-schedule.mjs && node scripts/check-scheduled-env.mjs
 

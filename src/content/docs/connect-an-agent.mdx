@@ -73,7 +73,7 @@ The CLI waits at most about 1.5 seconds for the guide. If it times out or fails 
 
 Send the token as `Authorization: Bearer <agent token>` to the MCP server. The [MCP overview](/mcp/overview/) has client setup, and [Creating agents](/mcp/agents/) shows the configuration snippet.
 
-After connecting, ask your client to call `hypertask_user_context` with `action: "hello"` in MCP v2 (consolidated tools, on for Everyone), or `hypertask_hello` in the legacy catalog. The reply includes the agent identity, a `startBoard`, and three `nextSteps` for write agents, or two for read-only agents (no create step). With a personal user token, `agent` is `null`. If no board is available, `startBoard` is `null` and `nextSteps` is empty.
+After connecting, ask your client to call `hypertask_user_context` with `action: "hello"` for a guided start. The reply includes the agent identity, a `startBoard`, and three `nextSteps` for write agents, or two for read-only agents (no create step). With a personal user token, `agent` is `null`. If no board is available, `startBoard` is `null` and `nextSteps` is empty.
 
 The client is asked to say who it is signed in as and offer the returned steps: show the board, create a first task if allowed, or read the board rules. Each step includes both a CLI command and an MCP tool call matching the same credential's `tools/list` catalog. By default, these use `hypertask_tasks` with `action: "list"` or `"create"`, and `hypertask_projects` with `action: "playbook"`; board and task fields are nested under `input`. See the [hello reference](/api/tools-reference/#hello-guided-start).
 
