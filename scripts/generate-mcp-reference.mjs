@@ -182,6 +182,8 @@ This page is generated from the server's own \`tools/list\` response, so it cann
 </Aside>
 
 <Aside type="note">
+Built-in chat has its own tool catalogue. See [What AI chat can do](/features/ai-chat-capabilities/) for surface differences.
+
 Each resource tool selects an operation with \`action\`; put its fields in \`input\`. See [MCP Integration](/mcp/overview/) for connection instructions.
 </Aside>
 
