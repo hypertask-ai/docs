@@ -3,6 +3,8 @@ title: "AI Features"
 description: "AI-powered task creation, voice dictation, text enhancement, and an intelligent co-worker built into your workflow."
 ---
 
+For tools and limits, see [What AI chat can do](/features/ai-chat-capabilities/).
+
 import { Aside, Card, CardGrid, Steps } from '@astrojs/starlight/components';
 
 AI is woven through every part of Hypertask — create tasks, filter your board, smart-label workloads, and manage daily operations without leaving the workflow you already use.
@@ -97,6 +99,8 @@ Select **New chat** to start a separate conversation. Creating a ticket with the
 
 1. **Open the New Task box** — Use <kbd>Ctrl+J</kbd> on desktop or <kbd>Cmd+J</kbd> to open the New Task creator from boards, the inbox, or any view. On the Tasks page, click **New Task** in the toolbar.
 
+   To change the destination, press <kbd>Ctrl+Shift+B</kbd> (or <kbd>Cmd+Shift+B</kbd> on Mac). The board picker lists recently visited boards first, then sorts ties alphabetically. It remembers board visits in this browser. Search for a board and press <kbd>Enter</kbd>, or click its name.
+
 2. **Describe your task** — Enter a brief description of the work you need done. You can type directly or let AI expand your ideas.
 
 3. **Let AI write the task** — Reviews your inputs and generates a complete, structured task with a title, description, priority, and relevant tags. AI respects your board's templates and style when available.
@@ -108,6 +112,14 @@ Select **New chat** to start a separate conversation. Creating a ticket with the
 6. **Answer the follow-up questions** — The new task opens with the AI chat sidebar next to it. Under **Questions and ideas for this ticket**, it shows 2 to 4 questions and improvement ideas written for that task, such as an open decision to settle or acceptance criteria to add. Click one to send it in the same chat.
 
 </Steps>
+
+### Creating tickets through AI Chat
+
+Ask AI Chat to create a ticket. Its saved link appears before writing finishes.
+Open it while its description is being written. The finished title, description,
+priority and size follow. Saved title or description edits stop automatic replacement.
+If writing fails, the saved ticket remains. Chat tells you its description is
+unfinished. Finish that ticket instead of creating another.
 
 ### AI writer failure reasons
 

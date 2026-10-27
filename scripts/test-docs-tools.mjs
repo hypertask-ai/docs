@@ -57,6 +57,12 @@ assert.ok(!render([{ name: 'hypertask_other' }]).includes('##### Hello guided st
 assert.ok(!render([{ name: 'hypertask_user_context', inputSchema: { properties: { input: { anyOf: [{ title: 'get' }] } } } }]).includes('##### Hello guided start'));
 assert.deepEqual(extractLinks(fixture('links.html')), ['/style.css', '/features/tasks/?a=1&b=2#top', '../boards/', 'https://example.com/', 'mailto:a@example.com', '#self']);
 assert.deepEqual(extractToolNames('`hypertask_tasks` hypertask_tasks hypertask_missing @hypertask/hypertask_cli hypertask_cli'), ['hypertask_tasks', 'hypertask_missing']);
+const onboarding = readFileSync(new URL('../src/content/docs/connect-an-agent.mdx', import.meta.url), 'utf8');
+const currentReference = readFileSync(new URL('../src/content/docs/api/tools-reference.mdx', import.meta.url), 'utf8');
+const currentTools = new Set([...currentReference.matchAll(/^### `([^`]+)`/gm)].map((match) => match[1]));
+assert.ok(currentTools.size > 0);
+assert.ok(extractToolNames(onboarding).includes('hypertask_user_context'));
+for (const name of extractToolNames(onboarding)) assert.ok(currentTools.has(name), `connect-an-agent.mdx: unknown tool ${name}`);
 const commands = new Set(['task', 'task list', 'task get', 'login']);
 assert.deepEqual(unknownCliMentions('`hypertask tasks list --limit 1`\n```sh\nhypertask task get abc\n```\n`claude mcp add hypertask https://mcp.example.com`', commands), []);
 assert.deepEqual(unknownCliMentions('`hypertask task typo` `hypertask nonexistent`', commands), ['task typo', 'nonexistent']);

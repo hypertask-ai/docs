@@ -1,0 +1,55 @@
+---
+title: What AI chat can do
+description: Compare built-in chat, connected agents, and the CLI, including permissions and limits.
+---
+
+Ask a product question for a documentation-backed answer.
+For example: “How do I connect an agent?”
+The answer should include its source article.
+
+## Choose your surface
+
+| Surface | Available tools | What it can change | Boundaries |
+| --- | --- | --- | --- |
+| Board sidebar | Board, ticket, comment, inbox, page, skill, agent, and time tools | Accessible tickets, comments, labels, assignments, pages, and supported board settings | The selected scope limits board context. Opening chat grants no extra permissions. |
+| Full-screen chat | The same built-in tools as the sidebar | The same supported changes as the sidebar | A chat's scope still matters. Switching screens grants no extra access. |
+| Floating chat | The same built-in tools as the sidebar | The same supported changes as the sidebar | Floating changes presentation, not permissions or tools. |
+| Phone chat | Built-in chat tools | The same supported board changes | Small screens can use different controls. Tools still enforce account permissions. |
+| Connected MCP client | Tools returned by that connection's tool list | Actions allowed by its token and role | Read-only agents cannot write. Clients choose how they use tool guidance. |
+| CLI | Commands listed by `hypertask --help` | Supported commands allowed by its login | The CLI runs commands, not an assistant. Its calling agent chooses what to run. |
+
+Built-in chat supports skills and task relationships.
+Its tools are not an identical MCP catalogue.
+For connection details, see [MCP Integration](/mcp/overview/).
+The [MCP Tools Reference](/api/tools-reference/) lists external tools.
+The [CLI Reference](/cli/commands/) lists available commands.
+
+## Ask about the product
+
+Product questions use the help search tool first.
+This includes plans, prices, limits, shortcuts, and setup.
+Answers should be short, with relevant article links.
+They should not reproduce entire articles.
+
+An undocumented feature is “not documented”, not promised.
+You can ask to file a clarification ticket.
+A failed lookup does not prove feature absence.
+
+Questions about your work use board tools instead.
+Examples include “Find my overdue tickets” or “Summarize comments”.
+Help search does not search your private tickets.
+
+## Limits
+
+- Chat cannot access boards your login cannot access.
+- Tool availability can vary by role and connection.
+- A missing tool cannot perform the requested action.
+- Chat should explain that limitation, without claiming success.
+- Bulk changes can require your explicit confirmation.
+- A link does not prove navigation or saving.
+- Attachments depend on model and supported file handling.
+- Uploading an image does not guarantee image understanding.
+- Chat cannot see your screen beyond supplied context.
+- Documentation can lag behind newly released changes.
+
+For everyday examples, see [AI Features](/features/ai-features/).

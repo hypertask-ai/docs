@@ -13,6 +13,7 @@ jobs:
     name: Build and deploy to Cloudflare Pages
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
       issues: write
 
@@ -62,10 +63,6 @@ jobs:
               ]
             }'
 
-      # Everything here pushes straight to main, so a failed deploy is the only
-      # signal the site has stopped updating — and nobody watches the runs tab.
-      # In July 2026 every deploy failed for eleven days before anyone noticed.
-      # Raise one issue, and keep raising it until the build is green again.
       - name: Report a failed deploy
         if: failure()
         env:
@@ -86,3 +83,20 @@ jobs:
           else
             gh issue create --title "$TITLE" --body "$BODY"
           fi
+
+      - name: Close recovered deploy alarm
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          HEAD_SHA=$(gh api "repos/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml/runs?branch=main&per_page=1" --jq '.workflow_runs[0].head_sha')
+          if [ "$HEAD_SHA" != "$GITHUB_SHA" ]; then
+            exit 0
+          fi
+          ISSUES=$(gh issue list --state open --search '"docs.hypertask.ai is not deploying" in:title' \
+            --json number,title --jq '.[] | select(.title == "docs.hypertask.ai is not deploying") | .number')
+          while read -r ISSUE; do
+            [ -n "$ISSUE" ] || continue
+            gh issue close "$ISSUE" --comment "Deployment recovered. Build, Pages upload and cache purge succeeded for ${GITHUB_SHA}: ${RUN_URL}"
+          done <<< "$ISSUES"
