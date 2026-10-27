@@ -41,6 +41,7 @@ export default defineConfig({
           label: 'Features',
           items: [
           'features/ai-features',
+          'features/ai-chat-capabilities',
           'features/boards',
           'features/search-screen',
           'features/tasks',
