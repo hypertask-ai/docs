@@ -303,6 +303,25 @@ The Task Writer writes tasks in your team's style. It uses board-aware prompts, 
 
 After the Task Writer generates a draft, you can refine it just like any other AI-generated comment or description.
 
+### Board task templates
+
+Save a representative ticket through **Ctrl+K → Save as template**.
+Open **Settings → Board → Task templates** to edit its name, title pattern,
+and description structure. Use names such as **Bug** or **A/B test** so the
+writer can match your request to the right template.
+
+Simple descriptions support headings written with `##` and plain paragraphs.
+Rich descriptions remain read-only here to preserve their formatting;
+you can still change their names and title patterns.
+If someone else saves first, reload before saving your changes.
+
+When you explicitly request ideas, the writer fills them in one pass using
+board tickets, documents, memory, and custom instructions. For example,
+“Write an A/B test with five headlines” produces five finished headlines,
+not placeholders. A matched template's title pattern and headings stay in
+place. Required ICE scores include the component scores and mark estimates.
+Ordinary editing requests still preserve your source instead of inventing copy.
+
 ## Instant ticket opening
 <span class="label label--brand">New</span> Tickets now load instantly from cached board data, with no spinner, no "Loading..." text, and no placeholder animation. The entire opening experience is fast and lag-free across desktop and mobile.
 
