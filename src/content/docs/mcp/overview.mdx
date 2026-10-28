@@ -320,6 +320,13 @@ Expired API keys, a 30-day token from Settings, a 90-day approved connection, an
 
 **"Authentication failed" when creating an agent with your token** - Check the bearer token in your MCP client configuration and confirm it has permission to create agents. A browser sign-in does not replace the token on MCP requests.
 
+**Unknown input field** — Remove the unsupported field.
+A nearby spelling may suggest the accepted name.
+For example, `contnet` in a comment suggests `text`.
+Use the suggestion, then retry the request.
+Unrelated names receive no guess.
+Suggestions never change which fields are accepted.
+
 ## Supported clients
 
 Hypertask MCP works with any client that supports the MCP standard, and ChatGPT via the OpenAPI adapter:
