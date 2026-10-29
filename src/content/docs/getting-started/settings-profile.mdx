@@ -66,6 +66,17 @@ The **AI Settings** tab in the Task page section allows you to configure how the
 
 These instructions are applied automatically when the AI drafts responses, edits descriptions, or proposes next steps in chat or comments.
 
+## Ask the AI to change a setting
+
+On any Settings page you can ask the AI chat, in plain words, for a change on that page:
+
+- Say what you want: "switch me to the dark theme", "turn off email notifications for comments", or "make Anna an admin on this board".
+- The reply carries one **Setting change** card showing the setting, its current value and the new value. Nothing changes until you press **Apply**; press **Cancel** and nothing happens.
+- Once a change lands, the card offers **Undo**, which puts the previous value back.
+- The card also shows **Open setting**, so you can go to the control yourself.
+
+The AI uses your own rights, exactly as if you clicked. A board member cannot change what only the board owner may change, and access and people changes always go through the same card. If a change is not something it can make, it tells you where the setting lives and opens that page.
+
 ## User profile caching
 
 On authenticated startup, Hypertask reuses a fresh account-scoped user profile cached at the app shell layer. The cached profile remains valid for about 5 minutes, reducing repeated `/api/users/getById` refetches and improving cold start performance. The cache is automatically invalidated and refreshed as needed.
