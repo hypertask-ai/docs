@@ -48,6 +48,7 @@ AI is woven through every part of Hypertask — create tasks, filter your board,
     - Previously slow database reads that fetched task lists have been optimized: the slowest 5% of calls improved from ~129 ms down to ~40 ms. The improvement consistently benefits agents on both warm and cold servers, making AI-driven workflows feel far more responsive.
 
 8. **AI Chat histories**
+    - A spinner marks chats that are replying. The sidebar header and conversation list show it. Each chat keeps its own indicator. It disappears when replying finishes, fails, or stops.
     - Open AI Chat from the right rail or press `Ctrl/Cmd + I` to see a list of conversations.
     - In the full-screen chat view (desktop), the history list pages as the window resizes, and you scroll to load more older chats. Pick or filter from that list to open a chat.
     - On mobile, the list is limited; tap an entry to open its history.
