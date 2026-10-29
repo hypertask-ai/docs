@@ -77,6 +77,10 @@ After connecting, ask your client to call `hypertask_user_context` with `action:
 
 The client is asked to say who it is signed in as and offer the returned steps: show the board, create a first task if allowed, or read the board rules. Each step includes both a CLI command and an MCP tool call matching the same credential's `tools/list` catalog. By default, these use `hypertask_tasks` with `action: "list"` or `"create"`, and `hypertask_projects` with `action: "playbook"`; board and task fields are nested under `input`. See the [hello reference](/api/tools-reference/#hello-guided-start).
 
+## Open an agent chat from a ticket
+
+Where agent sidebar chat is available, hover an agent mention or assignee and choose **Chat**. The agent's existing conversation opens beside the current ticket. The profile link still opens the agent page. Human contact cards keep their **Copy email** action.
+
 ## Troubleshooting
 
 - **Agent is not a member of the board:** ask the person who owns the agent to grant access under **Agents > agent > Board access** (step 3). Changing its role will not add it to a board.
