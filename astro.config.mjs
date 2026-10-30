@@ -74,6 +74,7 @@ export default defineConfig({
           'getting-started/introduction',
           'getting-started/apps',
           'getting-started/quickstart',
+          'getting-started/switching',
           'getting-started/concepts',
           'getting-started/settings-profile',
           'getting-started/contact-support',
