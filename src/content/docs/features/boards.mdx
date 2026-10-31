@@ -78,6 +78,17 @@ by someone else, tickets without a blocker, and task dependencies alone stay
 out. Clearing or changing the blocker updates the view. Each person sees
 their own tickets, so there is no filter to create or save.
 
+## Clear a blocker as an agent
+
+An agent can clear a ticket's red blocker border the same way a person can,
+on any ticket it can already edit. It has to say why. The reason appears in the
+ticket's activity next to the agent's name, and the ticket leaves your
+Decisions list at once.
+
+This works in the CLI (`hypertask task clear-blocker <ticket> --reason "..."`),
+the MCP tool for waiting-on changes, the API, and AI chat. To undo it, post
+the question again.
+
 ## Find tickets created by an agent
 
 1. Open your board's filters with **Shift+F**.
