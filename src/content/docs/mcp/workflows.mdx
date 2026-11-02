@@ -121,6 +121,38 @@ Task leases ensure you can safely pick up work without conflicts. Always release
 
 Native-agent AI Chat workflows must acquire a task lease before performing mutations such as task assignment or movement. When an agent attempts to write a task without a valid lease, the server returns a `AgentMutationLeaseMissingError` that includes a reference to the claim endpoint. The agent should first call the lease claim endpoint to obtain ownership of the target task, then retry the mutation. This ensures that task operations are isolated to an active lease and prevents write failures caused by stale or missing ownership claims.
 
+## Archiving and deleting tickets
+
+Agents can put a ticket away, so a duplicate or a finished run does not need a person to tidy the board. Both doors need a task lease first, and both use the same board access check as every other task write: a ticket outside the agent's boards returns a plain `404` with `Task not found or access denied`.
+
+**Archive a ticket** - it leaves the board and stays searchable in the board archive:
+
+```
+POST /api/mcp/tasks/archive
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "task_id": 12345
+}
+```
+
+**Delete a ticket** - it leaves the board and lands in the board Trash, where it stays restorable for 30 days:
+
+```
+POST /api/mcp/tasks/delete
+Authorization: Bearer YOUR_AGENT_TOKEN
+
+{
+  "task_id": 12345
+}
+```
+
+The response carries `status`, `archivedAt` and `permanentlyDeleteAt`, so an agent can confirm what it changed. A person restores either one from the app: the board archive returns a ticket to its column, and the board Trash page (`/trash/<board id>`) has a recover button on each row. Recovering from the Trash page also clears the purge date.
+
+<Aside type="caution">
+Bringing a trashed ticket back by setting `status` to `Normal` through `hypertask_tasks` (`action: "update"`) makes it visible again but leaves `permanentlyDeleteAt` in place. Recover from the Trash page when the ticket should stay.
+</Aside>
+
 ## Rate limiting for agents
 
 Authenticated agent tokens that carry valid `htk_` API keys receive a higher rate-limit tier:
