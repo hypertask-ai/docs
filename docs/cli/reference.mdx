@@ -273,7 +273,15 @@ hypertask search "dark mode" --project 15 --limit 5
 
 ```bash
 hypertask comment list HTPR-2992
+hypertask comment list --task HTPR-2992 --project 15
 ```
+
+| Flag | Description |
+|------|-------------|
+| `--task <id-or-ticket>` | Ticket or task id, as an alternative to the positional argument |
+| `--include-activity` | Read task activity alongside comments |
+
+The ticket is either the positional argument or `--task`, and the positional wins when both are given. `--project` reads a bare number as that board's index. Add `--json` for one machine-readable document.
 
 ### comment add
 
