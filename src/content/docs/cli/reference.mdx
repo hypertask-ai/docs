@@ -68,6 +68,12 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
+### Unknown commands
+
+A command that does not exist is answered as a command: `hypertask task lst HYFA-70 --project 15` prints `unknown command: lst`, the commands that do exist, and `did you mean: list`, instead of blaming the flag that followed it.
+
+When the guessed word lives under another command, the answer says where the work is. From v0.2.35, `hypertask task comments HYFA-70` answers `unknown command: comments` and `a ticket's comments are read with: hypertask comment list <ticket>`.
+
 ### Error reports
 
 From v0.2.18, when a command fails unexpectedly (a server error, a network problem, a response the CLI cannot read, or an internal error), the CLI sends Hypertask one short report so the failure becomes a bug ticket. The report holds only the command name (like `task create`), the error type, the HTTP status, the CLI version and your operating system. It never includes task content, ids, arguments or your token.
