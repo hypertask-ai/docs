@@ -283,6 +283,8 @@ hypertask comment list --task HTPR-2992 --project 15
 
 The ticket is either the positional argument or `--task`, and the positional wins when both are given. `--project` reads a bare number as that board's index. Add `--json` for one machine-readable document.
 
+Comments belong to this command, not to `task`. A wrong command says where the work lives: `hypertask task comments HTPR-2992` answers `unknown command: comments` and `a ticket's comments are read with: hypertask comment list <ticket>`.
+
 ### comment add
 
 ```bash
