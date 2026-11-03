@@ -193,19 +193,34 @@ hypertask project list
 
 ```bash
 hypertask project sections 15
+hypertask project sections --project 15
 ```
 
 ### project members
 
 ```bash
 hypertask project members 15
+hypertask project members --project 15
 ```
 
 ### project labels
 
 ```bash
 hypertask project labels 15
+hypertask project labels --project 15
 ```
+
+### project manifest
+
+```bash
+hypertask project manifest 15
+hypertask project manifest --project 15
+```
+
+The board reads (`project manifest`, `project members`, `project sections`,
+`project labels`, `project playbook`, `project instructions`) take the board as
+`--project <id>` or as the positional id, the same way the task commands do.
+Naming two different boards in one call, or naming none, is an error.
 
 ### project section create
 
