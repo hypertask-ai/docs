@@ -85,7 +85,7 @@ _Takes no parameters._
 
 ### `hypertask_list_project_members`
 
-Lists project/team members for a given project. Also includes all agents created by members in the board. Use this before adding a comment with @mentions to resolve display names to user IDs. Returns id, displayName, and email for each member. Match @DisplayName in comment text to displayName (case-insensitive, longest match first). Pass resolved { user_id, display_name } in the mentions array when calling add_comment_to_task.
+Lists project/team members for a given project. Also includes all agents created by members in the board. Call it when you need a person's user id or want to see the names a comment can mention. Returns id, displayName, and email for each member. You can call add_comment_to_task with the display name itself in the mentions array; pass { user_id, display_name } when you already know both.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -121,7 +121,7 @@ Add, update, or delete a comment. Use action: add (create comment, requires task
 | `action` | `add` \| `update` \| `delete` | No | Operation: 'add' = create comment (requires task_id/ticket_number + text), 'update' = edit comment (requires comment_id + text), 'delete' = remove comment (requires comment_id only) Defaults to `add`. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `text` | string | No | Comment text. Required for add and update. MUST be HTML format (e.g., "&lt;p&gt;Text&lt;/p&gt;"). |
-| `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include { user_id, display_name } for each. |
+| `mentions` | (string \| object)[] | No | One entry per person mentioned in the text. Pass a display name or a user id (`"Mohsin"` or `"193"`) and the server resolves it against the board members, turning each @Name in the text into a real mention that notifies the person. An unknown or ambiguous name is refused with close matches and nothing posts. The object form `{ user_id, display_name }` still works. |
 
 ### `hypertask_get_comments_for_task`
 
