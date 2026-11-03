@@ -78,6 +78,29 @@ by someone else, tickets without a blocker, and task dependencies alone stay
 out. Clearing or changing the blocker updates the view. Each person sees
 their own tickets, so there is no filter to create or save.
 
+## Mark the comment that explains a block
+
+A ticket can name the person who blocks it, and one comment can carry the
+reason. That comment is the blocker comment.
+
+1. Hover the comment, then click the **More** button (three dots) that appears at its right end. The command menu opens for that comment.
+2. Choose **Mark as blocker**.
+3. The comment gets a red frame. Choose **Unmark as blocker** to take it away.
+
+Only a real comment can carry the frame; activity rows cannot. One ticket has
+at most one blocker comment. Marking a second comment moves the frame.
+
+Agents use the same marker from the command line. The blocker comment and the
+blocking person are separate, so one can be set without the other:
+
+```bash
+hypertask task blocker-comment HTPR-123 --comment-id 456
+hypertask task waiting-on HTPR-123 --user 6
+```
+
+An agent that clears a blocker records why it did, so the ticket keeps a note
+of who cleared it.
+
 ## Find tickets created by an agent
 
 1. Open your board's filters with **Shift+F**.
