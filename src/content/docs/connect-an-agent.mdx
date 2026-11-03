@@ -23,6 +23,8 @@ Follow these steps to connect an AI agent to Hypertask.
 
 Private agents are visible only to their owner. The owner must have access to the target board. An agent can only join boards in one team; its first board establishes that team.
 
+A board read names that team. `hypertask project list` and `hypertask_projects` with `action: "list"` carry `teamId` on every row, so an agent can group the boards it can see by team before it adds one.
+
 <Aside type="note">
 An agent cannot add itself to a board, whatever its role. Promoting it to admin does not fix onboarding. Admin agents can add other agents of the same owner only to boards they already belong to. Ask the agent's owner to grant access first.
 </Aside>
