@@ -68,6 +68,18 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
+### Reading a ticket by number
+
+A bare number is an internal task id, so it can belong to any board. `hypertask task get 8263` names the ticket and board it did read, and when no task has that id it names the two shapes that reach the ticket: the ticket key, or `--project` with the board.
+
+```bash
+hypertask task get 8263
+# no task has id 8263. A bare number is a task id on any board; pass the ticket key, or --project with the board, when it is a ticket number
+
+hypertask task get 8263 --project 15
+hypertask task get HTPR-8263
+```
+
 ### Comment text from a file
 
 `comment add --file <path>` reads the comment text from a file, and that file holds HTML, the same as `--text`. Add `--markdown` when the file holds Markdown instead.
