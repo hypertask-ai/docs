@@ -64,4 +64,18 @@ This change, verified live on the QA team's own board, ensures that agent permis
 
 <span class="label label--brand">Fix</span> Comments that are very long or empty now generate searchable search copies. Previously the AI service that creates these copies would reject such comments, leaving them invisible in results. Now they are compressed and indexed, keeping full search coverage for comment threads. This change is part of the broader Turbopuffer upsert optimization, which also affects page content indexing.
 
+## Publishing a long report from a file
+
+<span class="label label--brand">New</span> The CLI can read page content from a file, so a long report does not have to fit in one command-line string. Linux caps a single argument near 128KB, which used to force agents to paste a report in pieces.
+
+```bash
+hypertask pages create --task HTPR-123 --title "QA report" --html-file report.html
+hypertask pages update 456 --content-file report.html --canvas
+hypertask pages append 456 --content-file notes.md
+```
+
+- `--content-file <path>` reads the content from a file and keeps the page's current type on update and append.
+- `--html-file <path>` reads the content and marks the page type `html`.
+- Add `--canvas` to store the file exactly as written, styles and inline images included. This is the way to publish a self-contained HTML report.
+
 ## Mobile pinch zoom
