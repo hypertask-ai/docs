@@ -68,6 +68,16 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
+### Comment text from a file
+
+`comment add --file <path>` reads the comment text from a file, and that file holds HTML, the same as `--text`. Add `--markdown` when the file holds Markdown instead.
+
+```bash
+hypertask comment add HTPR-2992 --file comment.html
+```
+
+`--html-file` is not a `comment add` flag; it belongs to `report create` and `report update`. A wrong flag is refused with exit code 2, and the error lists the flags that command does accept.
+
 ### Unknown commands
 
 A command that does not exist is answered as a command: `hypertask task lst HYFA-70 --project 15` prints `unknown command: lst`, the commands that do exist, and `did you mean: list`, instead of blaming the flag that followed it.
