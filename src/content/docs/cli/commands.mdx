@@ -3463,15 +3463,15 @@ Example:
 ## `hypertask task move`
 
 ```text
-Move task: use ticket + --section for same board, or numeric task id + --to for another project
+Move task: ticket + section (or --section) for the same board, or numeric task id + --to for another project
 
-Usage: hypertask task move <ticket-or-task-id> [options]
+Usage: hypertask task move <ticket-or-task-id> [section] [options]
 
 Options:
   --project <id>
       Project ID; treats a numeric task reference as its board index
   --section <name>
-      Destination section name within same board (e.g. "Doing", "Done")
+      Destination section name within same board (e.g. "Doing", "Done"); the value may also be the second argument
   --to <id>
       Target project ID — cross-board move (first arg must be numeric task id)
   --to-section <id>
