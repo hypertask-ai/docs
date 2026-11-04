@@ -9,6 +9,24 @@ The native Hypertask CLI lets you manage tasks, projects, comments, and notifica
 
 Connecting an agent token? See [Connect a new agent](/connect-an-agent/).
 
+## Find blockers
+
+```bash
+hypertask blockers --user me
+hypertask blockers --user 123 --project 15 --project 42 --state waiting --json
+hypertask inbox list --waiting-on me
+```
+
+`blockers` lists tasks waiting on the chosen person across accessible boards. Use `me` or a numeric user ID with `--user`. Repeat `--project` to limit the results to specific board IDs, and add `--json` for JSON output. `hypertask inbox list --waiting-on me` is an alias.
+
+Each result includes the marked question, recommendation, task link, board and column, priority, and wait time. Filter with `--state`:
+
+- `waiting`: no human reply or reaction after the question.
+- `answered`: the chosen person replied after the question or reacted to it.
+- `no-question`: the task has no marked Question.
+
+These commands are read-only; they do not clear blockers.
+
 ## Install
 
 ### Via npm (recommended)
