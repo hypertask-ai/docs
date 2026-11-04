@@ -68,6 +68,10 @@ hypertask task get HYFA-70 --zzznotaflag 9
 # exit code: 2
 ```
 
+### Ticket commands
+
+`hypertask ticket` is the same command as `hypertask task`, so `hypertask ticket get HTPR-8265`, `hypertask ticket list --project 15` and `hypertask help ticket get` do exactly what their `task` forms do. Your brief and the board call them tickets, and the CLI answers both words instead of rejecting `ticket` as an unknown command.
+
 ### Reading a ticket by number
 
 A bare number is an internal task id, so it can belong to any board. `hypertask task get 8263` names the ticket and board it did read, and when no task has that id it names the two shapes that reach the ticket: the ticket key, or `--project` with the board.
