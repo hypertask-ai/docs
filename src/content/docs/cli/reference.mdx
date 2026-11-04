@@ -127,6 +127,34 @@ hypertask activity add HTPR-1 --text "Checked the deploy log; the build passed."
 
 Post a comment for people with `--kind question`, `qa` or `done`. Read the log back with `hypertask task agent-log <ticket>`, and `hypertask activity last <ticket>` answers where the log is read instead of listing the comment commands. From v0.2.38.
 
+### Ticket identifiers
+
+A ticket has a short key, like `HTPR-8537`, and a list prints an internal `id` too.
+The two share one number range, so a bare number is the internal id, and that id can
+sit on any board.
+
+A read names the ticket it landed on:
+
+```bash
+hypertask task get 1172
+# 1172 is task id 1172: HTPR-481 on Hypertask. A bare number is an internal id on any board;
+# pass the ticket number, or --project with the board, when the board matters
+```
+
+A write cannot be undone, so a write that names a bare number writes nothing:
+
+```bash
+hypertask activity add 1172 --text "note"
+# nothing was written: 1172 is task id 1172: HTPR-481 on Hypertask.
+# Pass the ticket number to write to the ticket, or id:1172 to write to that task
+# exit code: 2
+```
+
+Write with the ticket key (`hypertask activity add HTPR-481 --text "note"`), a bare
+ticket number plus `--project <board id>`, or `id:<n>` when you mean the internal id.
+This covers `comment add`, `activity add`, `task update`, `task assign`,
+`task unassign`, `task description restore` and `task inbox move`.
+
 ### Error reports
 
 From v0.2.18, when a command fails unexpectedly (a server error, a network problem, a response the CLI cannot read, or an internal error), the CLI sends Hypertask one short report so the failure becomes a bug ticket. The report holds only the command name (like `task create`), the error type, the HTTP status, the CLI version and your operating system. It never includes task content, ids, arguments or your token.
