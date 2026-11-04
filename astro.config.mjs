@@ -14,6 +14,8 @@ export default defineConfig({
       favicon: '/glyph-white.png',
       components: {
         SiteTitle: './src/components/SiteTitle.astro',
+        Header: './src/components/Header.astro',
+        ThemeProvider: './src/components/ThemeProvider.astro',
         PageFrame: './src/components/PageFrame.astro',
       },
       customCss: ['./src/styles/custom.css'],
@@ -30,7 +32,7 @@ export default defineConfig({
           tag: 'link',
           attrs: {
             rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@700&family=Newsreader:wght@500&display=swap',
+            href: 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:wght@400&display=swap',
           },
         },
       ],
