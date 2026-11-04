@@ -65,6 +65,17 @@ hypertask_tasks({
 
 `filter.has_pr=red` matches the red PR badge on the board: failing checks or a closed pull request. `fields` returns only those columns, so this call stays small.
 
+For task list or search, exclude columns with `filter.section_not`:
+
+```js
+hypertask_tasks({
+  action: "list",
+  input: { project_id: 15, filter: { section_not: ["Done", "Archived"] } }
+})
+```
+
+You can also use a comma-separated string, such as `"Done, Archived"`. Column titles are matched without regard to case or surrounding spaces. Do not combine `section_not` with `section`.
+
 ## Claiming tasks with leases
 
 To safely claim a task without racing with other agents, use task leases. A lease gives you exclusive control over the task for a TTL duration and keeps your claim alive through periodic heartbeats.
