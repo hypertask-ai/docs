@@ -56,6 +56,7 @@ hypertask task list --project 15 --section "Doing"
 | `--project <id>` | Filter by project ID |
 | `--section <name>` | Filter by section name |
 | `--assigned-to <value>` | Filter by assignee |
+| `--assignee <value>` | Filter by assignee (same as `--assigned-to`) |
 | `--created-by <id>` | Filter by creator |
 | `--priority <list>` | Comma-separated priorities |
 | `--sort-by <field>` | Sort by createdAt, updatedAt, or dueDate |
@@ -369,7 +370,7 @@ hypertask task assign HTPR-3050 --user 42
 
 ```bash
 hypertask task list --project 15 --priority urgent,high
-hypertask task list --project 15 --assigned-to unassigned
+hypertask task list --project 15 --assigned-to unassigned  # or --assignee unassigned
 hypertask search "payment" --project 15
 ```
 
