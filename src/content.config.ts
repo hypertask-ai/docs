@@ -1,11 +1,12 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { docsLoader } from '@astrojs/starlight/loaders';
-import { docsSchema } from '@astrojs/starlight/schema';
+import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
 import { readFile } from 'node:fs/promises';
 import { announcementKeys, legacyChangelogPaths, parseLegacyChangelog } from './lib/changelog-legacy.mjs';
 
 export const collections = {
+	i18n: defineCollection({ loader: i18nLoader(), schema: i18nSchema() }),
 	docs: defineCollection({
 		loader: {
 			...docsLoader(),

@@ -17,6 +17,7 @@ export default defineConfig({
         Header: './src/components/Header.astro',
         ThemeProvider: './src/components/ThemeProvider.astro',
         PageFrame: './src/components/PageFrame.astro',
+        PageTitle: './src/components/PageTitle.astro',
       },
       customCss: ['./src/styles/custom.css'],
       head: [
