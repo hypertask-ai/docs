@@ -12,7 +12,7 @@ const title = path === '/' ? 'Overview' : Astro.locals.starlightRoute.entry.data
   <slot />
 </Default>
 <footer class="docs-footer">© 2026 Hypertask Lab Ltd.</footer>
-<script is:inline src="https://help.hypertask.ai/widget/widget.js" data-mode="docked"></script>
+<script is:inline src="https://help.hypertask.ai/widget/widget.js" data-mode="floating"></script>
 <script is:inline>
   document.addEventListener('keydown', function (event) {
     if (event.metaKey && event.key.toLowerCase() === 'i') {
@@ -25,16 +25,13 @@ const title = path === '/' ? 'Overview' : Astro.locals.starlightRoute.entry.data
   });
   document.addEventListener('click', function (event) {
     if (!event.target.closest('[data-ask-help]')) return;
-    var dock = document.getElementById('chat-widget-dock-toggle');
     var launcher = document.getElementById('chat-widget-btn');
-    if (dock && dock.offsetParent !== null) {
+    if (window.HypertaskHelp && typeof window.HypertaskHelp.open === 'function') {
       event.preventDefault();
-      if (dock.getAttribute('aria-expanded') !== 'true') dock.click();
-      var frame = document.getElementById('chat-widget-iframe');
-      if (frame) frame.focus();
-    } else if (launcher) {
+      window.HypertaskHelp.open();
+    } else if (launcher && launcher.style.display !== 'none') {
       event.preventDefault();
-      if (launcher.style.display !== 'none') launcher.click();
+      launcher.click();
     }
   });
 </script>
