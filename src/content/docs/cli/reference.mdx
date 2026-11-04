@@ -84,6 +84,15 @@ hypertask task get 8263 --project 15
 hypertask task get HTPR-8263
 ```
 
+### Reading a ticket from its app link
+
+A ticket link copied from the address bar works wherever the CLI takes a ticket. The board and the ticket number are read from the link, so a pasted link does what `8263 --project 15` does. A `#comment-<id>` anchor, a query string and later path segments are ignored, and a `--project` that names another board is refused instead of reading the wrong one.
+
+```bash
+hypertask task get https://app.hypertask.ai/detail/project-15/8456
+hypertask comment list https://app.hypertask.ai/detail/project-15/8456 --limit 5
+```
+
 ### Comment text from a file
 
 `comment add --file <path>` reads the comment text from a file, and that file holds HTML, the same as `--text`. Add `--markdown` when the file holds Markdown instead.
