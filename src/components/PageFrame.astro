@@ -1,10 +1,40 @@
 ---
 import Default from '@astrojs/starlight/components/PageFrame.astro';
+const path = Astro.url.pathname;
+const section = path.startsWith('/features/') ? 'Web App' : path.startsWith('/mcp/') || path.startsWith('/api/') || path.startsWith('/connect-an-agent/') ? 'MCP for AI agents' : path.startsWith('/cli/') ? 'CLI reference' : path.startsWith('/changelog/') ? 'Changelog' : 'Getting started';
+const title = path === '/' ? 'Overview' : Astro.locals.starlightRoute.entry.data.title;
 ---
 
 <Default>
-	<slot name="header" slot="header" />
-	<slot name="sidebar" slot="sidebar" />
-	<slot />
+  <slot name="header" slot="header" />
+  <slot name="sidebar" slot="sidebar" />
+  <div class="mobile-breadcrumb" aria-label="Breadcrumb">{section} <span aria-hidden="true">›</span> <span>{title}</span></div>
+  <slot />
 </Default>
+<footer class="docs-footer">© 2026 Hypertask Lab Ltd.</footer>
 <script is:inline src="https://help.hypertask.ai/widget/widget.js" data-mode="docked"></script>
+<script is:inline>
+  document.addEventListener('keydown', function (event) {
+    if (event.metaKey && event.key.toLowerCase() === 'i') {
+      var link = document.querySelector('[data-ask-help]');
+      if (link) {
+        event.preventDefault();
+        link.click();
+      }
+    }
+  });
+  document.addEventListener('click', function (event) {
+    if (!event.target.closest('[data-ask-help]')) return;
+    var dock = document.getElementById('chat-widget-dock-toggle');
+    var launcher = document.getElementById('chat-widget-btn');
+    if (dock && dock.offsetParent !== null) {
+      event.preventDefault();
+      if (dock.getAttribute('aria-expanded') !== 'true') dock.click();
+      var frame = document.getElementById('chat-widget-iframe');
+      if (frame) frame.focus();
+    } else if (launcher) {
+      event.preventDefault();
+      if (launcher.style.display !== 'none') launcher.click();
+    }
+  });
+</script>

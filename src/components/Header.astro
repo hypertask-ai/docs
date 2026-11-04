@@ -1,0 +1,30 @@
+---
+import config from 'virtual:starlight/user-config';
+import Search from 'virtual:starlight/components/Search';
+import SiteTitle from 'virtual:starlight/components/SiteTitle';
+import SocialIcons from 'virtual:starlight/components/SocialIcons';
+
+const path = Astro.url.pathname;
+const tabs = [
+  { label: 'Getting started', href: '/getting-started/introduction/', active: path === '/' || path.startsWith('/getting-started/') },
+  { label: 'Web App', href: '/features/boards/', active: path.startsWith('/features/') },
+  { label: 'MCP for AI agents', href: '/mcp/overview/', active: path.startsWith('/mcp/') || path.startsWith('/api/') || path.startsWith('/connect-an-agent/') },
+  { label: 'CLI reference', href: '/cli/reference/', active: path.startsWith('/cli/') },
+  { label: 'Changelog', href: '/changelog/', active: path.startsWith('/changelog/') },
+];
+const showSearch = config.pagefind || config.components.Search !== '@astrojs/starlight/components/Search.astro';
+---
+<div class="docs-header">
+  <div class="docs-header-main">
+    <SiteTitle />
+    <div class="docs-search">{showSearch && <Search />}</div>
+    <div class="docs-header-links">
+      <SocialIcons />
+      <a href="https://help.hypertask.ai/help">Help</a>
+      <a class="open-app" href="https://app.hypertask.ai/login">Open app</a>
+    </div>
+  </div>
+  <nav class="section-tabs" aria-label="Documentation sections">
+    {tabs.map((tab) => <a href={tab.href} aria-current={tab.active ? 'page' : undefined}>{tab.label}</a>)}
+  </nav>
+</div>
