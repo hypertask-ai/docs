@@ -1,0 +1,122 @@
+name: Docs MCP
+
+on:
+  pull_request:
+    paths:
+      - 'workers/docs-mcp/**'
+      - '.github/workflows/docs-mcp.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'workers/docs-mcp/**'
+      - '.github/workflows/docs-mcp.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      approved: ${{ steps.approval.outputs.approved }}
+    defaults:
+      run:
+        working-directory: workers/docs-mcp
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Compare approved commit exactly
+        id: approval
+        env:
+          APPROVED_SHA: ${{ vars.DOCS_MCP_APPROVED_SHA }}
+        shell: bash
+        run: |
+          if [[ "$APPROVED_SHA" =~ ^[0-9a-f]{40}$ && "$APPROVED_SHA" == "$GITHUB_SHA" ]]; then
+            echo 'approved=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - run: npx tsc --noEmit
+      - name: Run safety tests when present
+        run: |
+          if [ -f test/authorization.test.mjs ]; then
+            npm test
+          else
+            echo 'Safety tests missing; release remains blocked.'
+          fi
+      - run: npx wrangler deploy --dry-run
+
+  release:
+    needs: checks
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && needs.checks.outputs.approved == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: docs-mcp-release
+      cancel-in-progress: false
+    defaults:
+      run:
+        working-directory: workers/docs-mcp
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+      - name: Release safety preflight
+        run: |
+          test -f test/authorization.test.mjs
+          npm run typecheck
+          npm test
+          python3 - <<'PY'
+          import tomllib
+          with open('wrangler.toml', 'rb') as f:
+              config = tomllib.load(f)
+          assert config.get('name') == 'hypertask-docs-mcp', 'Wrong worker name'
+          assert config.get('vars', {}).get('DOCS_EDITOR_USER_IDS') == '', 'DOCS_EDITOR_USER_IDS must be explicitly empty'
+          PY
+      - name: Deploy and collect evidence
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: 6031a7dff0d4a6469414cfa8a6dedddf
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/docs-mcp-evidence"
+          printf 'Commit: %s\n' "$GITHUB_SHA" > "$RUNNER_TEMP/docs-mcp-evidence/deploy.log"
+          npx wrangler deploy --keep-vars --var DOCS_EDITOR_USER_IDS: --message "$GITHUB_SHA" 2>&1 | \
+            awk '/^(Total Upload:|Uploaded hypertask-docs-mcp |Deployed hypertask-docs-mcp |Current Version ID:)/ { print }' | \
+            tee -a "$RUNNER_TEMP/docs-mcp-evidence/deploy.log"
+          npx wrangler deployments list --json | python3 -c '
+          import json, re, sys
+          def clean(value):
+              if isinstance(value, list):
+                  return [clean(item) for item in value if isinstance(item, (dict, list))]
+              if isinstance(value, dict):
+                  return {key: clean(item) for key, item in value.items()
+                          if isinstance(item, (dict, list)) or
+                          (isinstance(item, str) and (
+                              (key in ("id", "created_on") and re.fullmatch(r"[0-9a-fA-F:TZ.+-]{1,80}", item)) or
+                              (key in ("message", "workers/message") and re.fullmatch(r"[0-9a-f]{40}", item))))}
+              return value
+          json.dump(clean(json.load(sys.stdin)), sys.stdout, indent=2)
+          ' > "$RUNNER_TEMP/docs-mcp-evidence/deployments.json"
+          {
+            echo "### Docs MCP deployment"
+            echo "Commit: $GITHUB_SHA"
+            echo 'URL: https://hypertask-docs-mcp.valentin-603.workers.dev/mcp'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload deployment evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: docs-mcp-deployment-evidence
+          path: ${{ runner.temp }}/docs-mcp-evidence/
+          if-no-files-found: ignore
