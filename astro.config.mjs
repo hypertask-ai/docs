@@ -45,6 +45,7 @@ export default defineConfig({
             { label: 'Overview', link: '/' },
             'getting-started/introduction',
             { label: 'Quickstart', slug: 'getting-started/quickstart' },
+            'getting-started/switching',
             { label: 'Core concepts', slug: 'getting-started/concepts' },
             'getting-started/settings-profile',
             'getting-started/security-and-privacy',
