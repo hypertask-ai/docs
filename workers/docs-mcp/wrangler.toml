@@ -6,6 +6,11 @@ compatibility_flags = ["nodejs_compat"]
 workers_dev = true
 
 [vars]
+# Comma-separated positive user IDs; empty disables all writes.
+DOCS_EDITOR_USER_IDS = ""
+# Must match the app's JWT_ISSUER and JWT_OAUTH_AUDIENCE when production sets them.
+OAUTH_ISSUER = "https://app.hypertask.ai"
+OAUTH_AUDIENCE = "http://localhost:3001"
 GITHUB_OWNER = "valentinyeo"
 GITHUB_REPO = "HypertaskDocs"
 GITHUB_BRANCH = "main"
