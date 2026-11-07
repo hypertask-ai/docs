@@ -47,6 +47,7 @@ export default defineConfig({
             { label: 'Quickstart', slug: 'getting-started/quickstart' },
             { label: 'Core concepts', slug: 'getting-started/concepts' },
             'getting-started/settings-profile',
+            'getting-started/security-and-privacy',
             'getting-started/troubleshooting-login',
             'getting-started/apps',
             'getting-started/contact-support',
