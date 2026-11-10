@@ -21,13 +21,17 @@ An authorized operator must:
    be preserved before approving.
 2. Confirm PR #106 is merged, the safety tests pass, and
    `DOCS_EDITOR_USER_IDS` is explicitly empty in `wrangler.toml`.
-3. Set the repository variable `DOCS_MCP_APPROVED_SHA` to the exact, full
-   lowercase SHA of the approved main commit. Dispatch **Docs MCP** on main.
-   A missing or mismatched SHA skips release. A new main commit needs a new
-   approval; dispatch cannot select an arbitrary checkout ref.
+3. Set the repository variable `DOCS_MCP_APPROVED_SHA` to the approved worker
+   content: the full lowercase tree SHA of `workers/docs-mcp`, which the checks
+   job prints as `Worker content`. Dispatch **Docs MCP** on main. A missing or
+   mismatched value skips release. The full main commit SHA is also accepted,
+   but a worker-content value keeps working while only docs pages change; any
+   change under `workers/docs-mcp` needs a new value. Dispatch cannot select an
+   arbitrary checkout ref.
 4. Review the deployment evidence and run live read and write-refusal checks.
-   The SHA and worker URL appear in the job summary. The artifact contains
-   deployment metadata and filtered status output, not binding values.
+   The commit, the worker content and the worker URL appear in the job summary.
+   The artifact contains deployment metadata and filtered status output, not
+   binding values.
 
 Deployment preserves existing Cloudflare variables with `--keep-vars` and
 forces `DOCS_EDITOR_USER_IDS` empty. It does not configure OAuth. Do not use an
