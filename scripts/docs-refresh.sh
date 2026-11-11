@@ -39,8 +39,12 @@ if [[ ! -d node_modules || ! -f .git/docs-refs-lock-hash || "$(cat .git/docs-ref
 fi
 if [[ "${1:-}" != "--nightly" ]]; then
   STEP=generators
-  HYPERTASK_MCP_TOKEN=$(stack-key hypertask HT_ANNOUNCER_AGENT_TOKEN)
-  [[ -n "$HYPERTASK_MCP_TOKEN" ]]
+  # A missing 1Password item reads as a bare "op-cache failed"; name the item so
+  # the journal says what to restore.
+  if ! HYPERTASK_MCP_TOKEN=$(stack-key hypertask HT_ANNOUNCER_AGENT_TOKEN 2>/dev/null) || [[ -z "$HYPERTASK_MCP_TOKEN" ]]; then
+    printf '<3>docs-refs cannot read HT_ANNOUNCER_AGENT_TOKEN from the "hypertask" item in the "Hypertask Agents" vault\n' >&2
+    exit 1
+  fi
   export HYPERTASK_MCP_TOKEN
   npm run refs
   unset HYPERTASK_MCP_TOKEN

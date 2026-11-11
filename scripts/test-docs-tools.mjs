@@ -140,7 +140,8 @@ if [[ " $* " == *" commit "* && " $* " != *" user.email="* ]]; then
   echo "fatal: unable to auto-detect email address" >&2
   exit 128
 fi`);
-  executable('stack-key', 'printf "fixture-token-not-a-secret\\n"');
+  executable('stack-key', `if [[ "\${STACK_KEY_FAIL:-0}" == 1 ]]; then echo "stack-key: op-cache failed" >&2; exit 1; fi
+printf "fixture-token-not-a-secret\\n"`);
   executable('npm', `printf 'npm %s\\n' "$*" >> "$TRACE"
 if [[ "$*" == ci ]]; then mkdir -p node_modules; fi
 if [[ "$*" == 'run refs' ]]; then [[ "\${HYPERTASK_MCP_TOKEN:-}" == fixture-token-not-a-secret ]]; fi
@@ -171,6 +172,7 @@ fi`);
   log = readFileSync(trace, 'utf8');
   assert.ok(log.includes('npm run build') && !log.includes('run refs') && !log.includes('git fetch'));
   assert.throws(() => run([], { FAIL_BUILD: '1' }), (error) => error.status === 1 && error.stderr.includes('<6>docs-refs failed during build') && !error.stderr.includes('<3>docs-refs failed') && !error.stderr.includes('fixture-token-not-a-secret'));
+  assert.throws(() => run([], { STACK_KEY_FAIL: '1' }), (error) => error.status === 1 && error.stderr.includes('cannot read HT_ANNOUNCER_AGENT_TOKEN from the "hypertask" item') && !error.stderr.includes('fixture-token-not-a-secret'));
   const arbitrary = join(home, 'developer-repo');
   mkdirSync(join(arbitrary, '.git'), { recursive: true });
   assert.throws(() => run([], { DOCS_REFS_REPO: arbitrary }), (error) => error.status === 1 && error.stderr.includes('dedicated automation clone'));
