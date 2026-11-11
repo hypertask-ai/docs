@@ -19,9 +19,9 @@ Built-in chat has its own tool catalogue. See [What AI chat can do](/features/ai
 Each resource tool selects an operation with `action`; put its fields in `input`. See [MCP Integration](/mcp/overview/) for connection instructions.
 </Aside>
 
-**Source:** Live MCP `tools/list`. Schema version `5cd847fdeb5b`.
+**Source:** Live MCP `tools/list`. Schema version `0c3cca447ad2`.
 
-**21 tools.**
+**22 tools.**
 
 ---
 
@@ -36,8 +36,8 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \| `manifest` \| `playbook` \| `create` \| `rename` \| `members` \| `archive` \| `invite_member` \| `get_playbook` \| `set_playbook` \| `get_instructions` \| `set_instructions` \| `hygiene` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `list` \| `manifest` \| `playbook` \| `create` \| `rename` \| `members` \| `archive` \| `invite_member` \| `get_playbook` \| `set_playbook` \| `get_instructions` \| `set_instructions` \| `hygiene` \| `github_repos` \| `set_github_repos` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
@@ -167,6 +167,20 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | Yes | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `working_rules` | string | No | Board-specific workflow instructions to store in the playbook. |
 
+#### Input for `github_repos`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | integer | Yes | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+
+#### Input for `set_github_repos`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `project_id` | integer | Yes | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `repository_ids` | string[] | Yes | The repository ids value for this operation. |
+| `version` | string | Yes | The version value for this operation. |
+
 ### `hypertask_user_context`
 
 Does: Orient to the authenticated user, their accessible boards and account connections, list every enabled feature-kind flag and core product destinations with verified URLs where known, or update their own profile.
@@ -176,8 +190,8 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `hello` \| `get` \| `profile` \| `connections` \| `features` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `hello` \| `get` \| `features` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
@@ -213,17 +227,6 @@ The tool description asks MCP clients to say who they are signed in as and offer
 
 _Takes no parameters._
 
-#### Input for `profile`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `display_name` | string | No | Human profile display name or the new managed agent's display name. |
-| `photo_url` | string | No | Public URL of the authenticated human user's profile image. |
-
-#### Input for `connections`
-
-_Takes no parameters._
-
 #### Input for `features`
 
 _Takes no parameters._
@@ -234,15 +237,15 @@ _Takes no parameters._
 
 ### `hypertask_comments`
 
-Does: Without a kind, a reply target or an @mention of a person (and no images or attachments), an agent comment is saved to the hidden ticket agent log, which people do not see. To post for people, pass kind: question for a decision by a person, qa for a QA verdict, or done for the closing summary. List comments and activity, add replies, and edit or delete permitted comments.
-Use when: Use to discuss a ticket or inspect its conversation; list with include_activity also retrieves work history. For a person to decide, add a ticket comment with a line starting Question: and @mention that person using a real mention, not just their name. The mention notification appears in their Inbox; when Decisions is enabled for them and the notification is visible, the unanswered ticket appears in Inbox, split Decisions: https://app.hypertask.ai/inbox?split=Decisions. A later non-agent comment by that person on the ticket removes it from Decisions. Ordinary mentions are not Decisions. Structured decision records are separate; creating one alone does not create this Question: + @mention workflow. Use a comment, not a page, to request a decision.
+Does: List, add, edit, delete, pin or star ticket comments. Untyped agent notes stay hidden, including replies and mentions. Files require kind. Use question for decisions, qa for verdicts, or done for summaries. People comments use short plain sentences; technical details and status belong in the agent log. A hidden log post answers 202, not 201.
+Use when: Use to discuss a ticket or inspect its conversation; list with include_activity also retrieves work history, and pin keeps one answer at the top. For a person to decide, add a ticket comment with a line starting Question: and @mention that person using a real mention, not just their name. The mention notification appears in their Inbox; when Decisions is enabled for them and the notification is visible, the unanswered ticket appears in Inbox, split Decisions: https://app.hypertask.ai/inbox?split=Decisions. A later non-agent comment by that person on the ticket removes it from Decisions. Ordinary mentions are not Decisions. Structured decision records are separate; creating one alone does not create this Question: + @mention workflow. Use a comment, not a page, to request a decision.
 Do not use when: Do not use for ticket descriptions or unpublished drafts; use hypertask_tasks or hypertask_drafts instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. text is HTML unless content_type=markdown; comment_id is required to edit or delete, and ticket identifiers locate list/add targets. Ownership and board membership still apply. board_id is an alias for project_id.
+Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset to 0; use returned pagination or narrower filters. text is HTML unless content_type=markdown; comment_id is required to edit, delete, pin or star, and ticket identifiers locate list/add targets. A star is the caller’s own private marker. Ownership and board membership still apply. board_id is an alias for project_id.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \| `add` \| `update` \| `delete` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `list` \| `add` \| `pin` \| `star` \| `update` \| `delete` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
@@ -255,7 +258,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `board_id` | integer | No | Alias for project_id. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `id` | integer | No | Existing page identifier, an alias of page_id. |
 | `include_activity` | boolean | No | Include task activity history such as label, move, assignment, and priority changes. Defaults to false. Defaults to `false`. |
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
@@ -276,11 +279,53 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `board_id` | integer | No | Alias for project_id. |
 | `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
 | `content_type` | `html` \| `markdown` | No | Input format for text. Defaults to HTML. |
-| `has_attachments` | boolean | No | Set true when files will be attached after creation so an agent post stays a comment instead of going to the agent log |
+| `has_attachments` | boolean | No | Set true when files will be attached after creation. Agents must also choose kind: question, qa or done. |
 | `id` | integer | No | Existing page identifier, an alias of page_id. |
 | `inline_images` | boolean | No | The inline images value for this operation. |
-| `kind` | `question` \| `qa` \| `done` | No | Without a kind, a reply target or an @mention of a person (and no images or attachments), an agent comment is saved to the hidden ticket agent log, which people do not see. To post for people, pass kind: question for a decision by a person, qa for a QA verdict, or done for the closing summary. |
-| `mentions` | object[] | No | Required when text contains @mentions. Resolve via list_project_members, then include &#123; user_id, display_name } for each. |
+| `kind` | `question` \| `qa` \| `done` | No | An agent comment with no kind is refused and nothing is saved, even for replies or mentions. Resend with kind question, qa or done for people, or use hypertask activity add for the agent log. Attachments require an explicit kind. People comments use short plain sentences, without technical details or status lines. To post for people, pass kind: question for a decision by a person, qa for a QA verdict, or done for the closing summary. |
+| `mentions` | string \| object[] | No | One entry per person mentioned in the text. Pass a display name or user id ("Mohsin" or "193") and the server resolves it against the board members, turning each @Name in the text into a real mention that notifies the person. An unknown or ambiguous name is refused with close matches and nothing posts. Object form &#123; user_id, display_name } still works. List names with list_project_members. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `reply_to_comment_id` | integer | No | For agent replies, the comment ID that invoked the agent. This routes the answer to the requester's Important inbox. |
+| `reply_to_invocation_id` | integer | No | For agent replies, the agent Mentioned notification ID that invoked the agent. Use this when the mention was in the task description, which has no comment ID. Routes the answer to the requester's Important inbox. |
+| `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
+| `text` | string | No | Comment text for add/update. HTML or structural markdown; content_type can explicitly select either format. |
+| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. task_number is accepted as an alias. |
+| `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
+
+#### Input for `pin`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `attachments` | object[] | No | Files to attach after the operation succeeds. Each file needs filename, content_type, and exactly one of data (base64 bytes; 3145728 decoded bytes total) or url (HTTP(S), for files up to 15 MB). |
+| `board_id` | integer | No | Alias for project_id. |
+| `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
+| `content_type` | `html` \| `markdown` | No | Input format for text. Defaults to HTML. |
+| `has_attachments` | boolean | No | Set true when files will be attached after creation. Agents must also choose kind: question, qa or done. |
+| `id` | integer | No | Existing page identifier, an alias of page_id. |
+| `inline_images` | boolean | No | The inline images value for this operation. |
+| `kind` | `question` \| `qa` \| `done` | No | An agent comment with no kind is refused and nothing is saved, even for replies or mentions. Resend with kind question, qa or done for people, or use hypertask activity add for the agent log. Attachments require an explicit kind. People comments use short plain sentences, without technical details or status lines. To post for people, pass kind: question for a decision by a person, qa for a QA verdict, or done for the closing summary. |
+| `mentions` | string \| object[] | No | One entry per person mentioned in the text. Pass a display name or user id ("Mohsin" or "193") and the server resolves it against the board members, turning each @Name in the text into a real mention that notifies the person. An unknown or ambiguous name is refused with close matches and nothing posts. Object form &#123; user_id, display_name } still works. List names with list_project_members. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `reply_to_comment_id` | integer | No | For agent replies, the comment ID that invoked the agent. This routes the answer to the requester's Important inbox. |
+| `reply_to_invocation_id` | integer | No | For agent replies, the agent Mentioned notification ID that invoked the agent. Use this when the mention was in the task description, which has no comment ID. Routes the answer to the requester's Important inbox. |
+| `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
+| `text` | string | No | Comment text for add/update. HTML or structural markdown; content_type can explicitly select either format. |
+| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. task_number is accepted as an alias. |
+| `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
+
+#### Input for `star`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `attachments` | object[] | No | Files to attach after the operation succeeds. Each file needs filename, content_type, and exactly one of data (base64 bytes; 3145728 decoded bytes total) or url (HTTP(S), for files up to 15 MB). |
+| `board_id` | integer | No | Alias for project_id. |
+| `comment_id` | integer | No | Comment ID. Required for update and delete. Obtain from get_comments_for_task. |
+| `content_type` | `html` \| `markdown` | No | Input format for text. Defaults to HTML. |
+| `has_attachments` | boolean | No | Set true when files will be attached after creation. Agents must also choose kind: question, qa or done. |
+| `id` | integer | No | Existing page identifier, an alias of page_id. |
+| `inline_images` | boolean | No | The inline images value for this operation. |
+| `kind` | `question` \| `qa` \| `done` | No | An agent comment with no kind is refused and nothing is saved, even for replies or mentions. Resend with kind question, qa or done for people, or use hypertask activity add for the agent log. Attachments require an explicit kind. People comments use short plain sentences, without technical details or status lines. To post for people, pass kind: question for a decision by a person, qa for a QA verdict, or done for the closing summary. |
+| `mentions` | string \| object[] | No | One entry per person mentioned in the text. Pass a display name or user id ("Mohsin" or "193") and the server resolves it against the board members, turning each @Name in the text into a real mention that notifies the person. An unknown or ambiguous name is refused with close matches and nothing posts. Object form &#123; user_id, display_name } still works. List names with list_project_members. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `reply_to_comment_id` | integer | No | For agent replies, the comment ID that invoked the agent. This routes the answer to the requester's Important inbox. |
 | `reply_to_invocation_id` | integer | No | For agent replies, the agent Mentioned notification ID that invoked the agent. Use this when the mention was in the task description, which has no comment ID. Routes the answer to the requester's Important inbox. |
@@ -296,7 +341,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `comment_id` | integer | Yes | Numeric id of an existing comment to edit, delete or attach files to. |
 | `content_type` | `html` \| `markdown` | No | Input format for text. Defaults to HTML. |
 | `inline_images` | boolean | No | The inline images value for this operation. |
-| `mentions` | object[] | No | Objects containing user_id and display_name to resolve and notify comment mentions. |
+| `mentions` | string \| object[] | No | One entry per person mentioned in the text. Pass a display name or user id ("Mohsin" or "193") and the server resolves it against the board members, turning each @Name in the text into a real mention that notifies the person. An unknown or ambiguous name is refused with close matches and nothing posts. Object form &#123; user_id, display_name } still works. List names with list_project_members. |
 | `text` | string | Yes | Comment, draft or related-search text; comment formatting uses content_type. |
 
 #### Input for `delete`
@@ -314,12 +359,12 @@ Parameters and caveats: action selects an operation; input contains only that op
 Does: Read, create, update, move, assign and relate tickets, including context, trees and description versions.
 Use when: Use when working with a known ticket or a filtered board queue; list finds overdue work and context includes comments and recent activity.
 Do not use when: Do not use for fuzzy text discovery or editing comments; use hypertask_search or hypertask_comments instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Prefer ticket_number (for example HTPR-1234); get accepts one identifier or a list, while context requires task_id and project_id. Normal, Archive and Deleted describe storage state, not workflow columns; section names describe workflow. board_id is an alias for project_id.
+Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Prefer ticket_number (for example HTPR-1234); get accepts one identifier or a list, and the same fields projection as list. Context requires task_id and project_id. Normal, Archive and Deleted describe storage state, not workflow columns; section names describe workflow. board_id is an alias for project_id.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \| `get` \| `context` \| `tree` \| `next` \| `versions` \| `restore` \| `link` \| `links` \| `unlink` \| `create` \| `update` \| `move` \| `waiting_on` \| `assign` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| any \| any \| object \| any \| any \| object \| object \| object \| object \| object \| any \| any \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `list` \| `get` \| `context` \| `tree` \| `next` \| `versions` \| `restore` \| `link` \| `links` \| `unlink` \| `create` \| `update` \| `move` \| `waiting_on` \| `follow` \| `archive` \| `delete` \| `assign` \| `share` \| `share_state` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| any \| any \| object \| any \| any \| object \| object \| object \| object \| object \| any \| any \| object \| object \| object \| object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
@@ -337,7 +382,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `due_date_after` | string | No | ISO 8601 lower bound on ticket due dates. |
 | `due_date_before` | string | No | ISO 8601 upper bound on ticket due dates, useful for overdue work. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `has_attachments` | boolean | No | Require tickets with attachments when true, or without attachments when false. |
 | `has_comments` | boolean | No | Require tickets with comments when true, or without comments when false. |
 | `has_due_date` | boolean | No | Require tickets with a due date when true, or without a due date when false. |
@@ -348,7 +393,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `query` | string | No | Free-text search over the list. Same name on every list tool. |
 | `search` | string | No | Text filter for the existing task or project list. |
-| `section` | string | No | Workflow column title to match, not the ticket storage status. |
+| `section` | string | No | Workflow column title to match, or its numeric column id; an all-digit value is always read as a column id. Not the ticket storage status. |
 | `section_id` | integer | No | Numeric workflow column id; discover it with projects manifest. |
 | `sort` | string | No | Sort as field or field:asc\|desc, for example updatedAt:desc. |
 | `sort_by` | `createdAt` \| `updatedAt` \| `dueDate` \| `priority` \| `title` \| `lastUsedAt` | No | Field to sort the result list by. |
@@ -361,6 +406,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `board_id` | integer | No | Alias for project_id. |
+| `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
 | `id` | integer | No | Existing page identifier, an alias of page_id. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `task_id` | integer \| integer[] | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
@@ -394,7 +440,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `labels` | string | No | Label filter or assignment values in the shape accepted by this action. |
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
-| `section` | string | No | Workflow column title to match, not the ticket storage status. |
+| `section` | string | No | Workflow column title to match, or its numeric column id; an all-digit value is always read as a column id. Not the ticket storage status. |
 
 #### Input for `versions`
 
@@ -535,9 +581,41 @@ Parameters and caveats: action selects an operation; input contains only that op
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
+| `agentId` | string \| null | No | Board member agent ID to wait on, or null to clear the agent. Do not send with a userId. |
 | `blockerCommentId` | integer \| null | No | Comment on this task explaining the blocker; null clears the marker. Send with userId to change both atomically. |
+| `reason` | string | No | Why the blocker is cleared. Required when an agent sets blockerCommentId to null on a task that has one; it is written in the note that says who cleared it. |
 | `taskId` | integer | Yes | Task database ID from get_tasks. |
 | `userId` | integer \| null | No | Board member user ID to wait on, or null to clear. |
+
+#### Input for `follow`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `action` | `follow` \| `unfollow` \| `star` \| `unstar` \| `remind` \| `read` | Yes | follow starts following the task, unfollow stops, star and unstar bookmark it privately, remind sets one reminder, read returns the current state. |
+| `remindAt` | string | No | ISO 8601 date time for the reminder; required by remind and ignored by other actions. |
+| `taskId` | integer | Yes | Task database ID from get_tasks. |
+
+#### Input for `archive`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `board_id` | integer | No | Alias for project_id. |
+| `id` | integer | No | Existing page identifier, an alias of page_id. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
+| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. task_number is accepted as an alias. |
+| `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
+
+#### Input for `delete`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `board_id` | integer | No | Alias for project_id. |
+| `id` | integer | No | Existing page identifier, an alias of page_id. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
+| `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. task_number is accepted as an alias. |
+| `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 
 #### Input for `assign`
 
@@ -554,6 +632,18 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
 | `user_id` | integer | No | User ID to assign or unassign (use intent: unassign to remove). |
 | `user_ids` | integer[] | No | For multiple mode: user IDs; each user follows intent (assign = idempotent, unassign = remove). |
+
+#### Input for `share`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `taskId` | integer | Yes | Task database ID from get_tasks. |
+
+#### Input for `share_state`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `taskId` | integer | Yes | Task database ID from get_tasks. |
 
 ---
 
@@ -762,7 +852,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `auto_assign` | integer \| string \| null | No | For update: numeric user ID or agent UUID to auto-assign tickets entering this column. null clears the rule. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `include_hidden` | boolean | No | For list: include hidden columns. |
 | `include_tasks` | boolean | No | For get: include tasks in the column. Default true. |
 | `is_done` | boolean,null | No | For update: tickets in this column are finished. Reports count them as completed, Inbox Zero clears them, and agents stop treating them as blocking. null clears the flag and falls back to guessing from the column name. |
@@ -784,7 +874,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `auto_assign` | integer \| string \| null | No | For update: numeric user ID or agent UUID to auto-assign tickets entering this column. null clears the rule. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `include_hidden` | boolean | No | For list: include hidden columns. |
 | `include_tasks` | boolean | No | For get: include tasks in the column. Default true. |
 | `is_done` | boolean,null | No | For update: tickets in this column are finished. Reports count them as completed, Inbox Zero clears them, and agents stop treating them as blocking. null clears the flag and falls back to guessing from the column name. |
@@ -806,7 +896,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `auto_assign` | integer \| string \| null | No | For update: numeric user ID or agent UUID to auto-assign tickets entering this column. null clears the rule. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `include_hidden` | boolean | No | For list: include hidden columns. |
 | `include_tasks` | boolean | No | For get: include tasks in the column. Default true. |
 | `is_done` | boolean,null | No | For update: tickets in this column are finished. Reports count them as completed, Inbox Zero clears them, and agents stop treating them as blocking. null clears the flag and falls back to guessing from the column name. |
@@ -828,7 +918,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `auto_assign` | integer \| string \| null | No | For update: numeric user ID or agent UUID to auto-assign tickets entering this column. null clears the rule. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `include_hidden` | boolean | No | For list: include hidden columns. |
 | `include_tasks` | boolean | No | For get: include tasks in the column. Default true. |
 | `is_done` | boolean,null | No | For update: tickets in this column are finished. Reports count them as completed, Inbox Zero clears them, and agents stop treating them as blocking. null clears the flag and falls back to guessing from the column name. |
@@ -850,7 +940,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `auto_assign` | integer \| string \| null | No | For update: numeric user ID or agent UUID to auto-assign tickets entering this column. null clears the rule. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `include_hidden` | boolean | No | For list: include hidden columns. |
 | `include_tasks` | boolean | No | For get: include tasks in the column. Default true. |
 | `is_done` | boolean,null | No | For update: tickets in this column are finished. Reports count them as completed, Inbox Zero clears them, and agents stop treating them as blocking. null clears the flag and falls back to guessing from the column name. |
@@ -891,7 +981,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
 | `offset` | integer | No | Number of matching rows to skip; prefer cursor continuation when supported. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
-| `sort_by` | `createdAt` \| `updatedAt` \| `dueDate` \| `priority` \| `title` \| `lastUsedAt` | No | Field to sort the result list by. |
+| `sort_by` | `title` \| `createdAt` \| `lastUsedAt` | No | Field to sort the result list by. |
 | `sort_order` | `asc` \| `desc` | No | Ascending or descending sort direction. |
 | `visibility` | `Public` \| `Private` | No | Whether a saved view is shared (Public) or private to its owner (Private). |
 
@@ -923,6 +1013,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `assignee_ids` | integer \| string[] | No | Task assignments use numeric human user ids; saved view filters also accept managed agent UUIDs. These are not display names. |
 | `board_filters` | object | No | Structured filters for a saved board view. |
+| `label_match` | `ALL` \| `ANY` \| `HIDE` | No | The label match value for this operation. |
 | `label_names` | string[] | No | Board label names to include in a task manifest or saved view filter. |
 | `match` | `ALL` \| `ANY` | No | Whether saved view filter groups match all criteria or any criterion. |
 | `set_as_default` | boolean | No | Make the saved view the user's default board view. |
@@ -1025,6 +1116,12 @@ Parameters and caveats: action selects an operation; input contains only that op
 ---
 
 ## Inbox
+
+### `hypertask_chat_inbox`
+
+Lists up to 50 oldest unanswered sidebar chat messages for this agent token. Returns id, sessionId, text and userName. Does not claim the messages. Refreshes the online heartbeat at most every 30 seconds. Call at startup and again on the next run. No separate chat registration is needed.
+
+_Takes no parameters._
 
 ### `hypertask_inbox`
 
@@ -1204,60 +1301,22 @@ Parameters and caveats: action selects an operation; input contains only that op
 Does: List owned agent identities, inspect live team presence, or create, revoke, archive or permanently delete an owned agent.
 Use when: Use for agent identity administration or to see which agents are active on a team.
 Do not use when: Do not use for ticket assignees or webhook delivery; use hypertask_tasks assign or hypertask_webhooks instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Human or management credentials are required for administration; presence requires team_id (a positive integer number or non-empty UUID string). Creating returns a credential once, and delete is irreversible.
+Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Human or management credentials are required for administration; presence requires team_id (a positive integer number or non-empty UUID string). Creating returns a credential once; create with ensure true instead returns the existing or new agent id by display_name, with no credential, for use as as_agent. Delete is irreversible. request_board_access and get_board_access_request use the calling agent identity; the owner decides in Inbox Decisions and a grant never raises the agent role.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \| `presence` \| `create` \| `revoke` \| `archive` \| `delete` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `presence` | Yes | Operation to perform on this resource. |
+| `input` | object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
 | `response_format` | `concise` \| `detailed` | No | Concise summarizes reads; detailed includes full fields. Writes always retain their receipts. Defaults to `concise`. |
-
-#### Input for `list`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
-| `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
-| `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
-| `offset` | integer | No | Number of matching rows to skip; prefer cursor continuation when supported. |
-| `query` | string | No | Free-text search over the list. Same name on every list tool. |
-| `sort` | string | No | Sort as field or field:asc\|desc, for example updatedAt:desc. |
 
 #### Input for `presence`
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `team_id` | string \| integer | Yes | Team or workspace identifier discovered through user_context. |
-
-#### Input for `create`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `display_name` | string | Yes | Human profile display name or the new managed agent's display name. |
-| `project_ids` | integer[] | No | Numeric board ids to which the new managed agent will belong. Defaults to ``. |
-| `role` | `read` \| `write` \| `admin` | No | Managed agent role on its assigned boards. Defaults to `write`. |
-
-#### Input for `revoke`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
-
-#### Input for `archive`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
-
-#### Input for `delete`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `agent_id` | string | Yes | Owned managed agent UUID; webhook actions also accept self for the authenticated agent. |
 
 ### `hypertask_attachments`
 
@@ -1287,6 +1346,16 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `task_id` | integer | No | Numeric ticket id; get accepts an array, while other actions usually accept a single id. |
 | `ticket_number` | string | No | Stable full ticket key such as HTPR-1234; tasks get accepts an array of keys. task_number is accepted as an alias. |
 | `unique_index` | integer | No | Ticket number within a board; requires project_id. Prefer ticket_number when known. |
+
+### `hypertask_chat_reply`
+
+Replies in the same sidebar chat. Use sessionId and id from hypertask_chat_inbox as session_id and reply_to_message_id. Requires this agent token. A repeat of the same reply returns the existing reply.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `reply_to_message_id` | string | Yes | The human message id returned by the chat inbox. |
+| `session_id` | string | Yes | The sessionId returned by the chat inbox. |
+| `text` | string | Yes | Your reply to the person in this chat. |
 
 ### `hypertask_custom_fields`
 
@@ -1437,7 +1506,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. |
 | `offset` | integer | No | Number of matching rows to skip; prefer cursor continuation when supported. |
 | `project_id` | integer | Yes | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
@@ -1456,7 +1525,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 Does: Files anonymous, deduplicated feedback about Hypertask and returns the ticket receipt.
 Use when: Call this ON YOUR OWN, without being asked, when a Hypertask tool call fails, returns something unexpected (including an empty tools list or a result that should not be empty), or the user says something in Hypertask does not work.
 Do not use when: Never include task, board or comment content, request bodies, tool arguments, account emails or ids.
-Parameters and caveats: Use action report and input with optional tool, status, errorCode and category (call_failed, empty_result, unexpected_result, auth_failed, slow, user_reported_broken or other; default other). Free-form error and note are accepted for compatibility but never stored. Structured fields must not contain credentials. Surface is mcp and the client comes from MCP clientInfo when available. Repeated errors bump an open ticket. Account hourly limits are 10 new reports and 30 bumps.
+Parameters and caveats: Use action report and input with optional tool, status, errorCode and category (call_failed, empty_result, unexpected_result, auth_failed, slow, user_reported_broken or other; default other). Add kind (bug, friction, missing or idea) and a short plain note when you are one of our own team's agents: the server cleans the note and keeps it on the ticket. For customer agents a free-form note and error are accepted but never stored. Structured fields must not contain credentials. Surface is mcp and the client comes from MCP clientInfo when available. Repeated errors bump an open ticket. Account hourly limits are 10 new reports and 30 bumps.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
@@ -1474,21 +1543,22 @@ Parameters and caveats: Use action report and input with optional tool, status, 
 | `category` | `call_failed` \| `empty_result` \| `unexpected_result` \| `auth_failed` \| `slow` \| `user_reported_broken` \| `other` | No | Structured failure category; defaults to other. Defaults to `other`. |
 | `error` | string | No | Accepted for compatibility. Free text is never stored. |
 | `errorCode` | string | No | The errorCode value for this operation. |
-| `note` | string | No | Accepted for compatibility. Free text is never stored. |
+| `kind` | `bug` \| `friction` \| `missing` \| `idea` | No | What the reporter saw: bug, friction, missing or idea. Our own team's agents only; kept on the ticket. |
+| `note` | string | No | A short plain note. Kept, cleaned first, only for our own team's agents; never stored for customer agents. |
 | `status` | integer | No | Storage state for tasks or projects (Normal, Archive, Deleted), or decision state where supported; not a workflow column. |
 | `tool` | string | No | The tool value for this operation. |
 
 ### `hypertask_reports`
 
-Does: List, read, create, update or delete saved HTML reports on a board.
+Does: List, read, create, update or delete saved HTML reports on a board, read the board speed report as numbers, or draft the board status update from those numbers.
 Use when: Use for a persistent board report rather than an ephemeral answer.
 Do not use when: Do not use to compute time totals or to edit ordinary pages; use hypertask_time report or hypertask_pages instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Identifiers and required fields depend on the selected action; writes keep existing authorization and confirmation rules.
+Parameters and caveats: action selects an operation, including velocity, which returns the board speed report numbers with no HTML, and status_update, which drafts and saves the board status update; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. Identifiers and required fields depend on the selected action; writes keep existing authorization and confirmation rules.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `action` | `list` \| `get` \| `create` \| `update` \| `delete` | Yes | Operation to perform on this resource. |
-| `input` | object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
+| `action` | `list` \| `get` \| `velocity` \| `create` \| `update` \| `delete` \| `status_update` | Yes | Operation to perform on this resource. |
+| `input` | object \| object \| object \| object \| object \| object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
 | `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
 | `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
 | `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
@@ -1501,6 +1571,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `body_html` | string | No | HTML body of a saved report. |
 | `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
 | `slug` | string | No | Stable report or skill slug used to locate the document. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 
@@ -1511,6 +1582,18 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `body_html` | string | No | HTML body of a saved report. |
 | `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
+| `slug` | string | No | Stable report or skill slug used to locate the document. |
+| `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
+
+#### Input for `velocity`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `body_html` | string | No | HTML body of a saved report. |
+| `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
 | `slug` | string | No | Stable report or skill slug used to locate the document. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 
@@ -1521,6 +1604,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `body_html` | string | No | HTML body of a saved report. |
 | `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
 | `slug` | string | No | Stable report or skill slug used to locate the document. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 
@@ -1531,6 +1615,7 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `body_html` | string | No | HTML body of a saved report. |
 | `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
 | `slug` | string | No | Stable report or skill slug used to locate the document. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 
@@ -1541,6 +1626,18 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `body_html` | string | No | HTML body of a saved report. |
 | `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
+| `slug` | string | No | Stable report or skill slug used to locate the document. |
+| `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
+
+#### Input for `status_update`
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `body_html` | string | No | HTML body of a saved report. |
+| `description` | string,null | No | Description text for the resource; ticket description format is selected with content_type. |
+| `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
+| `range` | string | No | The range value for this operation. |
 | `slug` | string | No | Stable report or skill slug used to locate the document. |
 | `title` | string | No | Human-readable title of the ticket, board, column, page or view. |
 
@@ -1568,14 +1665,14 @@ Parameters and caveats: action selects an operation; input contains only that op
 | `board_id` | integer | No | Numeric board id to restrict the search; a board is a project. |
 | `cursor` | string | No | Opaque cursor from the previous page. Prefer this over offset. |
 | `fields` | string \| string[] | No | Projection. Comma string or array, for example title,url. |
-| `filter` | object | No | Structured filters. Keys: section, label, assignee, status, updated_since, has_pr. |
+| `filter` | object | No | Structured filters. Keys: section, section_not, label, assignee, status, updated_since, has_pr. |
 | `has_due_date` | boolean | No | Require tickets with a due date when true, or without a due date when false. |
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. Defaults to `10`. |
 | `priority` | `None` \| `Urgent` \| `High` \| `Medium` \| `Low` \| `None` \| `Urgent` \| `High` \| `Medium` \| `Low`[] | No | Ticket priority index or supported priority name; 0=None, 1=Urgent, 2=High, 3=Medium, 4=Low. |
 | `project_id` | integer | No | Board id discovered with projects list or user_context; usually numeric, while time reports accept its string form. |
 | `query` | string | Yes | Text to search; ticket search also supports documented search operators. |
-| `section` | string | No | Workflow column title to match, not the ticket storage status. |
-| `sort` | string | No | Sort as field or field:asc\|desc, for example updatedAt:desc. |
+| `section` | string | No | Workflow column title to match, or its numeric column id; an all-digit value is always read as a column id. Not the ticket storage status. |
+| `sort` | string | No | Sort as one of id, createdAt, updatedAt, title, dueDate, ticketNumber, or field:asc or field:desc. Example: updatedAt:desc. |
 | `status` | `Normal` \| `Archive` \| `Deleted` | No | Storage state for tasks or projects (Normal, Archive, Deleted), or decision state where supported; not a workflow column. |
 
 #### Input for `semantic`
@@ -1605,35 +1702,6 @@ Parameters and caveats: action selects an operation; input contains only that op
 |-----------|------|----------|-------------|
 | `limit` | integer | No | Maximum rows requested from the existing endpoint; use the top-level limit to cap the response. Defaults to `4`. |
 | `query` | string | Yes | Text to search; ticket search also supports documented search operators. |
-
-### `hypertask_tokens`
-
-Does: Mint an account MCP token or revoke signed account MCP tokens.
-Use when: Use only when a human explicitly requests account credential administration.
-Do not use when: Do not use for managed agent credentials; creating or revoking an identity uses hypertask_agents instead.
-Parameters and caveats: action selects an operation; input contains only that operation’s documented fields. response_format defaults to concise for reads; detailed retains full fields. limit defaults to 20 (maximum 50) and offset defaults to 0 for bounded read results; use returned pagination or narrower filters. expires_in_days sets token lifetime; revoke uses token or revoke_all. Mint returns a credential once; store it securely and never quote it in conversation.
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `action` | `mint` \| `revoke` | Yes | Operation to perform on this resource. |
-| `input` | object \| object | No | Action-specific fields documented in the corresponding input schema. Fields depend on action; use the variant whose title is the action. |
-| `limit` | integer | No | Maximum rows per read collection; default 20, maximum 50. Defaults to `20`. |
-| `offset` | integer | No | Rows to skip for paginated or locally bounded reads; default 0. Prefer an input cursor when supplied. Defaults to `0`. |
-| `page` | integer | No | 1-based page number; page 1 is the first page. An offset that equals the page start is accepted; any other offset is refused. |
-| `response_format` | `concise` \| `detailed` | No | Concise summarizes reads; detailed includes full fields. Writes always retain their receipts. Defaults to `concise`. |
-
-#### Input for `mint`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `expires_in_days` | integer | No | Lifetime of the new account MCP token in days, from 1 to 365. Defaults to `30`. |
-
-#### Input for `revoke`
-
-| Parameter | Type | Required | Description |
-|-----------|------|----------|-------------|
-| `revoke_all` | boolean | No | Revoke all signed account MCP tokens when true; use only with explicit user approval. |
-| `token` | string | No | Signed account MCP token to revoke; never include it in user-visible output. |
 
 ### `hypertask_webhooks`
 
