@@ -29,6 +29,20 @@ A page belongs to a board. Linking a ticket does not grant access. Pages follow 
 Your title and content save automatically.
 **Archived pages** lists documents removed from active lists.
 
+## Search finds a page from different words
+
+<span class="label label--brand">Improvement</span> Pages were already sent to the search index, but page search only matched the exact words you typed. Page search now reads that index, the same way ticket search does, so a page written as "view tab count includes cards in hidden columns" is found by "tab counter includes cards that the view hides".
+
+What changed for you:
+
+- **The Pages screen** returns the right page for a question written in your own words, up to 50 results per search.
+- **Agents** get the same behaviour through the page search tool in REST, MCP and AI Chat.
+- **Exact words still work**, and exact matches stay first in the list.
+- **Board access is unchanged.** A page is only returned when the current page still passes the same board, project, archive and link checks, so better ranking never shows a page you could not open.
+- **No search, no change.** The unfiltered page list behaves exactly as before.
+
+The release switch is `htpr-9017-smart-page-search`. With it off, page search falls back to matching the exact words you typed.
+
 ## Link tickets and pages
 
 On a page, choose **+ Link ticket**.
