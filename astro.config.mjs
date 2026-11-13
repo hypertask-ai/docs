@@ -22,6 +22,10 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       head: [
         {
+          tag: 'script',
+          attrs: { src: 'https://cdn.usefathom.com/script.js', 'data-site': 'SSBYTYUQ', defer: true },
+        },
+        {
           tag: 'link',
           attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         },
