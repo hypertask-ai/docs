@@ -1,6 +1,6 @@
 ---
 title: "Inbox & Notifications"
-description: "Manage your incoming notifications, Snooze, and Important section."
+description: "Manage your incoming notifications, Snooze, Important, and Decisions."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -53,6 +53,14 @@ Before archiving a batch, chat previews every affected ticket, including other m
 ### Inbox filtering scope
 
 New users in a board see notifications for private tasks, while users removed from a board no longer receive those notifications in their Inbox. To prevent a stale notification from reappearing, you can reply to it (or tap Undo) to remove it from your queue. Cleaning up unsubscribed notifications helps keep the Inbox focused and relevant.
+
+## Decisions
+
+Tickets waiting on your decision show in two places.
+
+In the **Inbox**, open the **Decisions** split. A ticket is listed there when someone @mentions you in a comment that has a line starting with **Question:**, and you have not answered yet. A later comment you write yourself removes that ticket. A comment posted by an agent does not. Clearing the blocker on that ticket also removes it. An ordinary mention does not appear in Decisions. Open the ticket from this split and Hypertask jumps to the question.
+
+On a board, open the **Decisions** view from the view tabs on desktop, or the view picker on your phone. It shows tickets in the **UX Sign-off** column, and in a column titled with your name followed by **review** (for example, **Alex review**). Empty columns stay hidden. Each person sees their own review column.
 
 ## Agent chatter in the inbox
 
