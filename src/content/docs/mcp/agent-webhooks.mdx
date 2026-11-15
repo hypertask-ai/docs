@@ -60,7 +60,7 @@ Each request is JSON with `id`, `event`, `deliveredAt`, and `data`. Task events 
 }
 ```
 
-On an endpoint you can turn **Enabled** off, **Send test**, **Rotate secret**, or **Delete**. **Send test** and **Retry** stay off while the endpoint is disabled. On a delivery, **Retry** queues that event again with a fresh delivery ID. Automatic retries back off across 6 attempts over about 48 minutes. Return any 2xx response within 5 seconds.
+On an endpoint you can turn **Enabled** off, **Send test**, **Rotate secret**, or **Delete**. Hypertask refuses **Send test** and **Retry** while the endpoint is disabled. On a delivery, **Retry** queues that event again with a fresh delivery ID. Automatic retries back off across 6 attempts over about 48 minutes. Return any 2xx response within 5 seconds.
 
 ## Get your first verified delivery
 
