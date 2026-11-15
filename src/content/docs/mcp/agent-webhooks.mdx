@@ -1,11 +1,66 @@
 ---
 title: "Agent webhooks"
-description: "Understand what wakes an agent, what Hypertask sends, how to verify it, and how to work without a public URL."
+description: "Get a signed webhook when a task changes in your team, with no agent, or wake an agent. Covers verification and working without a public URL."
 ---
 
 import { Aside, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-A webhook is an instant notification from Hypertask to your agent. When a selected event happens, Hypertask sends a signed HTTPS request to one receiver you control. Polling still works without a webhook, but the agent learns about changes on its next check instead of immediately.
+A webhook is a signed HTTPS request Hypertask sends to a URL you control. Use a team webhook when you want events from your team and you do not want to set up an agent. Use an agent webhook when you want an agent to wake up. Polling still works without a webhook, but the agent learns about changes on its next check instead of immediately.
+
+## Team webhooks, no agent needed
+
+You do not need an agent to get a webhook when a task changes in your team. Open **Settings** (gear icon), then **Connect**, then **Webhooks**. The **How webhooks work** link on that page opens this article.
+
+Hypertask sends a signed request to your own URL the moment something happens in this team. No agent needed. Each endpoint has its own secret and delivery log. Only the team owner can add or manage these endpoints. A team can have up to 20 endpoints.
+
+<Steps>
+
+1. Under **Add endpoint**, enter a public HTTPS URL. Hypertask POSTs JSON there and signs every request. The URL cannot be `localhost` or a private network address.
+2. Under **Board scope**, leave **All boards in this team**, or choose one board.
+3. Leave the events you want selected, then select **Add endpoint**.
+4. Copy the signing secret now. Hypertask shows it once. It starts with `whsec_`. Use it to verify the `X-Hypertask-Signature` header. See [Verify the signature](#verify-the-signature).
+5. Leave **Enabled** on, then select **Send test**. Your URL receives a signed `ping` delivery. Confirm it in that endpoint's delivery log.
+
+</Steps>
+
+<Aside type="caution">
+
+Store the signing secret in your secret manager. **Rotate secret** replaces it and shows the new value once. **Delete** removes the endpoint.
+
+</Aside>
+
+| Event | When Hypertask sends it |
+|---|---|
+| `task.created` | A task is created |
+| `task.updated` | A task's section, status, or due date changes |
+| `task.assigned` | A person or agent is assigned to a task |
+| `task.unassigned` | A person or agent is removed from a task |
+| `comment.created` | A comment is added to a task |
+| `comment.mention` | A comment mentions one or more agents |
+
+Each request is JSON with `id`, `event`, `deliveredAt`, and `data`. Task events put the task under `data.task` (`id`, `ticketNumber`, `projectId`, `title`) and the actor under `data.actor` (`userId`, `agentId`). `task.updated` also includes `data.changes` with at least one of `section`, `status`, or `dueDate`. A test payload uses `event: "ping"` and has no task.
+
+```json
+{
+  "id": "53d179e1-84b8-48a3-807a-cf8e5b88930b",
+  "event": "task.updated",
+  "deliveredAt": "2026-08-13T10:15:00.000Z",
+  "data": {
+    "task": {
+      "id": 27397,
+      "ticketNumber": "DOC-12",
+      "projectId": 15,
+      "title": "Ship the release notes"
+    },
+    "changes": {
+      "status": { "from": "Normal", "to": "Archive" }
+    },
+    "actor": { "userId": 6, "agentId": null }
+  }
+}
+```
+
+On an endpoint you can turn **Enabled** off, **Send test**, **Rotate secret**, or **Delete**. Hypertask refuses **Send test** and **Retry** while the endpoint is disabled. On a delivery, **Retry** queues that event again with a fresh delivery ID. Automatic retries back off across 6 attempts over about 48 minutes. Return any 2xx response within 5 seconds.
 
 ## Get your first verified delivery
 
