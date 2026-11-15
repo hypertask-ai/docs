@@ -63,20 +63,10 @@ Pages without visible tickets show **Back to Pages**.
 
 ## Agent permissions for page operations
 
-<span class="label label--brand">Security fix</span> Hypertask now properly restricts page actions based on an agent's access mode. Depending on the agent's live configuration, it may be:
+What an agent may do with pages depends on its access mode:
 
 - **Normal (read/write):** Can create, change, archive, and restore task pages.
 - **Read-only:** Can only read pages. Creating, changing, archiving, or restoring is refused.
-
-**Behavior before this fix:** A read-only agent was able to perform all four page actions (create, change, archive, restore) on task pages, bypassing its access mode and effectively gaining write-like permissions despite being restricted to reading.
-
-**After this fix:** The server checks an agent's access mode before each page action. A read-only agent now receives a secure refusal for all four write operations, and the page remains unchanged.
-
-This change, verified live on the QA team's own board, ensures that agent permissions match the documented behavior.
-
-## Comments indexed for search
-
-<span class="label label--brand">Fix</span> Comments that are very long or empty now generate searchable search copies. Previously the AI service that creates these copies would reject such comments, leaving them invisible in results. Now they are compressed and indexed, keeping full search coverage for comment threads. This change is part of the broader Turbopuffer upsert optimization, which also affects page content indexing.
 
 ## Publishing a long report from a file
 
@@ -91,5 +81,3 @@ hypertask pages append 456 --content-file notes.md
 - `--content-file <path>` reads the content from a file and keeps the page's current type on update and append.
 - `--html-file <path>` reads the content and marks the page type `html`.
 - Add `--canvas` to store the file exactly as written, styles and inline images included. This is the way to publish a self-contained HTML report.
-
-## Mobile pinch zoom
