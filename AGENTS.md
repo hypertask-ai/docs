@@ -14,7 +14,7 @@ Claim before work: assign yourself and move the ticket to In Progress. Move it a
 
 ## Pull requests
 
-One ticket per PR. Title: `HEFE-n [TYPE] title`. TYPE is DOCS, FIX, or INFRA.
+One ticket per PR. Title: `HEFE-n [TYPE] title`. TYPE is one the merge check accepts: BUG, IMPROVE, FEATURE, INFRA, QA or REFACTOR. Docs changes use IMPROVE; fixes use BUG.
 
 Branch from `origin/main`. Target `main`.
 
