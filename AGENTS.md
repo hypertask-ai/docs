@@ -41,7 +41,10 @@ Commits use a GitHub noreply email, never a real one. No secrets.
 
 Do not deploy by hand. A merge to `main` runs the "Build and Deploy" workflow (`.github/workflows/deploy.yml`). On a push to `main` (changes under `.github/` are ignored) or a manual run, it installs with `npm ci`, runs `npm run build`, uploads `dist` to the Cloudflare Pages project `hypertask-docs`, and purges the edge cache. A failed run opens the GitHub issue "docs.hypertask.ai is not deploying". A later green run closes it.
 
-After that deploy, the help chat picks up docs through `sync-docs` in `valentinyeo/ai-chatbot`.
+The help chat does not update on its own. After the deploy is green, run the docs sync (manual only):
+`gh workflow run sync-docs.yml -R valentinyeo/ai-chatbot`. No access to that private repo? Ask the Support lead to run it.
+
+Then check help chat answers in `valentinyeo/ai-chatbot` with `npm run replay` (scores `eval/replay-v0.jsonl` against the live help site). replay-v1 does not exist yet (HEFE-78).
 
 ## Who merges
 
